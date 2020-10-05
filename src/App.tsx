@@ -1,24 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Input from './components/atoms/Input/Input';
 
 function App() {
+  const [text, setText] = useState<string>('');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setText(e.target.value);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <Input onChange={handleChange} name={'name'} labelText={'Imię'} value={text} required={true} />
     </div>
   );
 }
