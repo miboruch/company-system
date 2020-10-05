@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Input from './components/atoms/Input/Input';
+import Layout from './components/Layout';
 
 function App() {
   const [text, setText] = useState<string>('');
@@ -11,9 +11,9 @@ function App() {
   };
 
   return (
-    <div className='App'>
+    <Layout>
       <Input onChange={handleChange} name={'name'} labelText={'Imię'} value={text} required={true} />
-    </div>
+    </Layout>
   );
 }
 
