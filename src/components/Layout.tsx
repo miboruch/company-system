@@ -7,6 +7,14 @@ import SEO from './SEO';
 const Wrapper = styled.div`
   width: 100%;
   min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+`;
+
+const Menu = styled.div`
+  width: 300px;
+  height: 100vh;
+  background-color: green;
 `;
 
 interface Props {
@@ -19,7 +27,10 @@ const Layout: React.FC<Props> = ({ children }) => {
       <SEO />
       <GlobalStyle />
       <ThemeProvider theme={theme}>
-        <Wrapper>{children}</Wrapper>
+        <Wrapper>
+          <Menu />
+          {children}
+        </Wrapper>
       </ThemeProvider>
     </>
   );

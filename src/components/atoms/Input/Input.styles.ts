@@ -8,19 +8,20 @@ const InputWrapper = styled.div`
 const StyledLabel = styled.label`
   color: rgba(0, 0, 0, 0.6);
   position: absolute;
-  top: 0;
+  top: 7px;
   left: 0;
   transition: transform 0.5s ease;
   transform-origin: left;
+  
   ${({ theme }) => theme.mq.standard} {
-    color: #fff;
+    color: #1d1d1d;
   }
 `;
 
 const StyledInput = styled.input`
   width: 100%;
   font-size: 16px;
-  font-family: ${({ theme }) => theme.font.family.futura};
+  //font-family: ${({ theme }) => theme.font.family.futura};
   color: rgba(0, 0, 0, 0.6);
   height: 36px;
   background: transparent !important;
@@ -34,11 +35,11 @@ const StyledInput = styled.input`
   }
 
   &:focus ~ ${StyledLabel} {
-    transform: scale(0.8) translateY(-20px);
+    transform: scale(0.8) translateY(-25px);
   }
 
   &:valid ~ ${StyledLabel} {
-    transform: scale(0.8) translateY(-20px);
+    transform: scale(0.8) translateY(-25px);
   }
 
   &:valid {
@@ -51,7 +52,7 @@ const StyledInput = styled.input`
   }
 
   ${({ theme }) => theme.mq.standard} {
-    color: #fff;
+    color: #1d1d1d;
   }
 `;
 
