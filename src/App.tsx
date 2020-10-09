@@ -1,72 +1,17 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
-import Input from './components/atoms/Input/Input';
 import Layout from './components/Layout';
-import MenuTemplate from './components/templates/MenuTemplate/MenuTemplate';
-import GridWrapper from './components/templates/GridWrapper/GridWrapper';
-
-const StyledWrapper = styled.div`
-  width: 100%;
-  height: 100vh;
-  place-items: center;
-  display: grid;
-  grid-template-columns: 25% 75%;
-  grid-template-rows: 100px auto;
-  grid-template-areas: 'name header' 'list content';
-`;
-
-const Content = styled.div`
-  width: 100%;
-  height: 100%;
-  background-color: red;
-  grid-area: content;
-  display: flex;
-  align-items: center;
-`;
-
-const Title = styled.h1`
-  grid-area: name;
-`;
-
-const List = styled.div`
-  width: 100%;
-  height: 100%;
-  background-color: yellow;
-  grid-area: list;
-`;
-
-const Header = styled.header`
-  width: 100%;
-  height: 100%;
-  background-color: blue;
-  grid-area: header;
-`;
+import LandingPage from './pages/LandingPage/LandingPage';
 
 function App() {
-  const [text, setText] = useState<string>('');
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setText(e.target.value);
-  };
-
   return (
     <Layout>
-      <MenuTemplate>
-        <GridWrapper>
-          <Title>hello</Title>
-          <List>asd</List>
-          <Header />
-          <Content>
-            <Input onChange={handleChange} name={'name'} labelText={'Imię'} value={text} required={true} />
-          </Content>
-        </GridWrapper>
-      </MenuTemplate>
-
-      {/*<div style={{ display: 'flex', flexDirection: 'column' }}>*/}
-      {/*  <p>Hello</p>*/}
-      {/*  <p>again</p>*/}
-      {/*</div>*/}
+      <Router>
+        <Switch>
+          <Route path={'/'} component={LandingPage} />
+        </Switch>
+      </Router>
     </Layout>
   );
 }
