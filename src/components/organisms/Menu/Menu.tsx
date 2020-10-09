@@ -9,6 +9,7 @@ const MenuWrapper = styled.div`
   top: 0;
   left: 0;
   z-index: 10;
+  padding: 7rem 2rem 3rem;
 
   ${({ theme }) => theme.mq.standard} {
     width: 300px;
