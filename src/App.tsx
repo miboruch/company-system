@@ -4,6 +4,7 @@ import './App.css';
 import Input from './components/atoms/Input/Input';
 import Layout from './components/Layout';
 import MenuTemplate from './components/templates/MenuTemplate/MenuTemplate';
+import GridWrapper from './components/templates/GridWrapper/GridWrapper';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -52,14 +53,14 @@ function App() {
   return (
     <Layout>
       <MenuTemplate>
-        <StyledWrapper>
+        <GridWrapper>
           <Title>hello</Title>
           <List>asd</List>
           <Header />
           <Content>
             <Input onChange={handleChange} name={'name'} labelText={'Imię'} value={text} required={true} />
           </Content>
-        </StyledWrapper>
+        </GridWrapper>
       </MenuTemplate>
 
       {/*<div style={{ display: 'flex', flexDirection: 'column' }}>*/}
