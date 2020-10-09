@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import './App.css';
 import Input from './components/atoms/Input/Input';
 import Layout from './components/Layout';
+import MenuTemplate from './components/templates/MenuTemplate/MenuTemplate';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -50,14 +51,16 @@ function App() {
 
   return (
     <Layout>
-      <StyledWrapper>
-        <Title>hello</Title>
-        <List>asd</List>
-        <Header />
-        <Content>
-          <Input onChange={handleChange} name={'name'} labelText={'Imię'} value={text} required={true} />
-        </Content>
-      </StyledWrapper>
+      <MenuTemplate>
+        <StyledWrapper>
+          <Title>hello</Title>
+          <List>asd</List>
+          <Header />
+          <Content>
+            <Input onChange={handleChange} name={'name'} labelText={'Imię'} value={text} required={true} />
+          </Content>
+        </StyledWrapper>
+      </MenuTemplate>
 
       {/*<div style={{ display: 'flex', flexDirection: 'column' }}>*/}
       {/*  <p>Hello</p>*/}

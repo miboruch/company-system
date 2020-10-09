@@ -2,15 +2,14 @@ import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { theme } from '../styles/theme';
 import GlobalStyle from '../styles/GlobalStyle';
-import Menu from './organisms/Menu/Menu';
 import SEO from './SEO';
 
 const Wrapper = styled.div`
   width: 100%;
   min-height: 100vh;
+  position: relative;
   display: flex;
   flex-direction: row;
-  position: relative;
 `;
 
 interface Props {
@@ -23,10 +22,7 @@ const Layout: React.FC<Props> = ({ children }) => {
       <SEO />
       <GlobalStyle />
       <ThemeProvider theme={theme}>
-        <Wrapper>
-          <Menu />
-          {children}
-        </Wrapper>
+        <Wrapper>{children}</Wrapper>
       </ThemeProvider>
     </>
   );

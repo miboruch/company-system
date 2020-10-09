@@ -22,7 +22,14 @@ export const theme = {
   }, {} as { [key: string]: string }),
   font: {
     family: {
-      montserrat: 'Test'
+      avantGarde: 'Avant Garde, sans-serif'
+    },
+    weight: {
+      bold: 700,
+      demi: 600,
+      medium: 500,
+      book: 400,
+      light: 300
     }
   },
   colors: {
