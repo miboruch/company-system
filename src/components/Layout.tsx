@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { theme } from '../styles/theme';
 import GlobalStyle from '../styles/GlobalStyle';
+import Menu from './organisms/Menu/Menu';
 import SEO from './SEO';
 
 const Wrapper = styled.div`
@@ -9,12 +10,7 @@ const Wrapper = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: row;
-`;
-
-const Menu = styled.div`
-  width: 300px;
-  height: 100vh;
-  background-color: green;
+  position: relative;
 `;
 
 interface Props {
