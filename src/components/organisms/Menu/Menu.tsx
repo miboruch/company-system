@@ -1,28 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
-
-interface IMenu {
-  isOpen: boolean;
-}
-
-const MenuWrapper = styled.div<IMenu>`
-  width: 100%;
-  height: 100vh;
-  background-color: #ccc;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 10;
-  padding: 7rem 2rem 3rem;
-  transform: translateX(${({ isOpen }) => (isOpen ? '0' : '-100%')});
-  transition: transform 0.6s ease;
-
-  ${({ theme }) => theme.mq.desktop} {
-    width: 300px;
-    position: static;
-    transform: translateX(0);
-  }
-`;
+import { menuItems } from '../../../utils/menuItems';
+import { MenuWrapper, LinkWrapper, StyledLink, MenuItemsWrapper } from './Menu.styles';
 
 interface Props {
   isOpen: boolean;
@@ -31,7 +9,14 @@ interface Props {
 const Menu: React.FC<Props> = ({ isOpen }) => {
   return (
     <MenuWrapper isOpen={isOpen}>
-      <p>Hello</p>
+      <MenuItemsWrapper>
+        {menuItems.map(({ name, link, icon }, index) => (
+          <LinkWrapper isActive={index === 0}>
+            {icon}
+            <StyledLink to={link}>{name}</StyledLink>
+          </LinkWrapper>
+        ))}
+      </MenuItemsWrapper>
     </MenuWrapper>
   );
 };

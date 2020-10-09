@@ -34,6 +34,7 @@ export const theme = {
   },
   colors: {
     background: '#f6f6f1',
+    menuBackground: '#F8F8FA',
     infoButton: 'rgba(0,0,0,0.8)',
     // infoButton: '#aeaeae',
     green: '#429f33',
