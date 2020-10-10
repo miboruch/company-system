@@ -37,6 +37,7 @@ const LinkWrapper = styled.div<LinkWrapperInterface>`
   svg {
     path {
       fill: ${({ isActive }) => (isActive ? '#212121' : '#CACACF')};
+      transition: fill 0.3s ease;
     }
   }
 `;
@@ -46,6 +47,7 @@ const StyledLink = styled(Link)`
   font-size: 14px;
   padding: 2rem 0;
   margin-top: 4px;
+  transition: color 0.3s ease;
 `;
 
 const MenuItemsWrapper = styled.div`

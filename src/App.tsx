@@ -10,6 +10,7 @@ function App() {
       <Router>
         <Switch>
           <Route path={'/'} component={LandingPage} />
+          <Route path={'/home'} component={LandingPage} />
         </Switch>
       </Router>
     </Layout>
