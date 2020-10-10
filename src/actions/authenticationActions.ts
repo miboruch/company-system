@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { AUTH_FAILURE, AUTH_LOGOUT, AUTH_START, AUTH_SUCCESS, AuthenticationActionTypes, SET_NEW_ACCESS_TOKEN, SET_USER_DATA } from '../types/authenticationTypes';
-import { Dispatch } from 'redux';
+import { Action, Dispatch } from 'redux';
 import { AppTypes } from '../types/appActionTypes';
 import { API_URL } from '../utils/config';
 
@@ -10,7 +10,7 @@ const authStart = (): AuthenticationActionTypes => {
   };
 };
 
-const authSuccess = (token: string, refreshToken: string, userId: string, expireIn: number): AuthenticationActionTypes => {
+const authSuccess = (token: string, refreshToken: string, expireIn: number): AuthenticationActionTypes => {
   localStorage.setItem('token', token);
   localStorage.setItem('refreshToken', refreshToken);
   localStorage.setItem('expireDate', new Date(expireIn).toLocaleString());
@@ -19,8 +19,7 @@ const authSuccess = (token: string, refreshToken: string, userId: string, expire
     type: AUTH_SUCCESS,
     payload: {
       token,
-      refreshToken,
-      userId
+      refreshToken
     }
   };
 };
@@ -47,6 +46,7 @@ const authLogout = (): AuthenticationActionTypes => {
 };
 
 const setUserData = (
+  userId: string,
   email: string,
   name: string,
   lastName: string,
@@ -58,6 +58,7 @@ const setUserData = (
   return {
     type: SET_USER_DATA,
     payload: {
+      userId,
       email,
       name,
       lastName,
@@ -69,31 +70,21 @@ const setUserData = (
   };
 };
 
-const setNewAccessToken = (token: string, expireIn: number): AuthenticationActionTypes => {
-  localStorage.setItem('token', token);
-  localStorage.setItem('expireDate', new Date(expireIn).toLocaleString());
-
-  return {
-    type: SET_NEW_ACCESS_TOKEN,
-    payload: {
-      token
-    }
-  };
-};
-
-const getNewAccessToken = (refreshToken: string) => async (dispatch: Dispatch<AppTypes>) => {
+const getNewAccessToken = (refreshToken: string) => async (dispatch: Dispatch<AppTypes | any>) => {
   try {
     const { data } = await axios.post(`${API_URL}/auth/token`, {
       refreshToken: refreshToken
     });
 
-    dispatch(setNewAccessToken(data.accessToken, data.expireIn));
+    dispatch(authSuccess(data.accessToken, refreshToken, data.expireIn));
+    dispatch(authTimeout(refreshToken, data.expireIn - new Date().getTime()));
   } catch (error) {
     console.log(error);
   }
 };
 
 const authTimeout = (refreshToken: string, expireMilliseconds: number) => {
+  console.log(`Auth timeout, set timeout will run in ${expireMilliseconds / 1000} seconds`);
   return setTimeout(async () => {
     await getNewAccessToken(refreshToken);
   }, expireMilliseconds);
@@ -107,7 +98,7 @@ export const getUserData = (token: string) => async (dispatch: Dispatch<AppTypes
       }
     });
 
-    dispatch(setUserData(data.email, data.name, data.lastName, data.dateOfBirth, data.country, data.city, data.address));
+    dispatch(setUserData(data._id, data.email, data.name, data.lastName, data.dateOfBirth, data.country, data.city, data.address));
   } catch (error) {
     console.log(error);
   }
@@ -122,7 +113,7 @@ export const userLogin = (email: string, password: string, successCallback: () =
       password
     });
 
-    dispatch(authSuccess(data.token, data.refreshToken, data.id, data.expireIn));
+    dispatch(authSuccess(data.token, data.refreshToken, data.expireIn));
     successCallback();
 
     const milliseconds = data.expireIn - new Date().getTime();
@@ -144,5 +135,27 @@ export const userLogout = (refreshToken: string) => async (dispatch: Dispatch<Ap
     dispatch(authLogout());
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const authenticateCheck = () => async (dispatch: Dispatch<AppTypes | any>) => {
+  const token = localStorage.getItem('token');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const expireDate = localStorage.getItem('expireDate');
+
+  if (token && refreshToken && expireDate) {
+    dispatch(authStart());
+    const expDate = new Date(expireDate);
+    dispatch(getUserData(token));
+
+    if (expDate <= new Date()) {
+      dispatch(getNewAccessToken(refreshToken));
+      //
+    } else {
+      dispatch(authSuccess(token, refreshToken, new Date(expireDate).getTime()));
+      dispatch(authTimeout(refreshToken, expDate.getTime() - new Date().getTime()));
+    }
+  } else {
+    refreshToken ? dispatch(userLogout(refreshToken)) : dispatch(authLogout());
   }
 };

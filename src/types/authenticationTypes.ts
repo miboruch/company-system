@@ -14,7 +14,6 @@ export interface AuthSuccess {
   payload: {
     token: string;
     refreshToken: string;
-    userId: string;
   };
 }
 
@@ -37,6 +36,7 @@ export interface SetNewAccessToken {
 export interface SetUserData {
   type: typeof SET_USER_DATA;
   payload: {
+    userId: string;
     email: string;
     name: string;
     lastName: string;

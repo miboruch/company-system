@@ -5,9 +5,9 @@ interface DefaultState {
   isLoggedIn: boolean;
   token: string | null;
   refreshToken: string | null;
-  userId: string | null;
   error: string | null;
   userData: null | {
+    userId: string | null;
     email: string;
     name: string;
     lastName: string;
@@ -23,7 +23,6 @@ const initialState: DefaultState = {
   isLoggedIn: false,
   token: null,
   refreshToken: null,
-  userId: null,
   error: null,
   userData: null
 };
@@ -42,8 +41,7 @@ export const authenticationReducer = (state = initialState, action: Authenticati
         isLoading: false,
         isLoggedIn: true,
         token: action.payload.token,
-        refreshToken: action.payload.refreshToken,
-        userId: action.payload.userId
+        refreshToken: action.payload.refreshToken
       };
     case 'AUTH_FAILURE':
       return {
@@ -52,7 +50,6 @@ export const authenticationReducer = (state = initialState, action: Authenticati
         isLoggedIn: false,
         token: null,
         refreshToken: null,
-        userId: null,
         error: action.payload
       };
     case 'AUTH_LOGOUT':
@@ -63,13 +60,13 @@ export const authenticationReducer = (state = initialState, action: Authenticati
         error: null,
         token: null,
         refreshToken: null,
-        userId: null,
         userData: null
       };
     case 'SET_USER_DATA':
       return {
         ...state,
         userData: {
+          userId: action.payload.userId,
           email: action.payload.email,
           name: action.payload.name,
           lastName: action.payload.lastName,
