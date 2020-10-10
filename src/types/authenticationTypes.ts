@@ -24,3 +24,5 @@ export interface AuthFailure {
 export interface AuthLogout {
   type: typeof AUTH_LOGOUT;
 }
+
+export type AuthenticationActionTypes = AuthStart | AuthSuccess | AuthFailure | AuthLogout;
