@@ -3,7 +3,8 @@ import { AuthenticationActionTypes, AUTH_START, AUTH_SUCCESS, AUTH_FAILURE, AUTH
 interface DefaultState {
   isLoading: boolean;
   isLoggedIn: boolean;
-  token: string | null;
+  accessToken: string | null;
+  refreshToken: string | null;
   userId: string | null;
   error: string | null;
   userData: null | {
@@ -20,7 +21,8 @@ interface DefaultState {
 const initialState: DefaultState = {
   isLoading: false,
   isLoggedIn: false,
-  token: null,
+  accessToken: null,
+  refreshToken: null,
   userId: null,
   error: null,
   userData: null
@@ -39,7 +41,8 @@ export const authenticationReducer = (state = initialState, action: Authenticati
         ...state,
         isLoading: false,
         isLoggedIn: true,
-        token: action.payload.token,
+        accessToken: action.payload.accessToken,
+        refreshToken: action.payload.refreshToken,
         userId: action.payload.userId
       };
     case 'AUTH_FAILURE':
@@ -47,7 +50,8 @@ export const authenticationReducer = (state = initialState, action: Authenticati
         ...state,
         isLoading: false,
         isLoggedIn: false,
-        token: null,
+        accessToken: null,
+        refreshToken: null,
         userId: null,
         error: action.payload
       };
@@ -57,7 +61,8 @@ export const authenticationReducer = (state = initialState, action: Authenticati
         isLoading: false,
         isLoggedIn: false,
         error: null,
-        token: null,
+        accessToken: null,
+        refreshToken: null,
         userId: null,
         userData: null
       };

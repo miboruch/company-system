@@ -11,9 +11,9 @@ export interface AuthStart {
 export interface AuthSuccess {
   type: typeof AUTH_SUCCESS;
   payload: {
-    token: string;
+    accessToken: string;
+    refreshToken: string;
     userId: string;
-    expireIn: number;
   };
 }
 
@@ -24,6 +24,9 @@ export interface AuthFailure {
 
 export interface AuthLogout {
   type: typeof AUTH_LOGOUT;
+  payload: {
+    refreshToken: string;
+  };
 }
 
 export interface SetUserData {
