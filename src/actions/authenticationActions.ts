@@ -93,14 +93,46 @@ const getNewAccessToken = (refreshToken: string) => async (dispatch: Dispatch<Ap
   }
 };
 
-const authTimeout = (refreshToken: string, expireTime: number) => {
+const authTimeout = (refreshToken: string, expireMilliseconds: number) => {
   return setTimeout(async () => {
     await getNewAccessToken(refreshToken);
-    //expireTime - new Date().getTime() / 1000
-  }, expireTime * 1000);
+  }, expireMilliseconds);
 };
 
-export const logout = (refreshToken: string) => async (dispatch: Dispatch<AppTypes>) => {
+export const getUserData = (token: string) => async (dispatch: Dispatch<AppTypes>) => {
+  try {
+    const { data } = await axios.get(`${API_URL}/user/user-data`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    dispatch(setUserData(data.email, data.name, data.lastName, data.dateOfBirth, data.country, data.city, data.address));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const userLogin = (email: string, password: string, successCallback: () => void) => async (dispatch: Dispatch<AppTypes>) => {
+  try {
+    dispatch(authStart());
+
+    const { data } = await axios.post(`${API_URL}/auth/login`, {
+      email,
+      password
+    });
+
+    dispatch(authSuccess(data.token, data.refreshToken, data.id, data.expireIn));
+    successCallback();
+
+    const milliseconds = data.expireIn - new Date().getTime();
+    authTimeout(data.refreshToken, milliseconds);
+  } catch (error) {
+    dispatch(authFailure());
+  }
+};
+
+export const userLogout = (refreshToken: string) => async (dispatch: Dispatch<AppTypes>) => {
   try {
     dispatch(authStart());
     await axios.delete(`${API_URL}/auth/logout`, {
