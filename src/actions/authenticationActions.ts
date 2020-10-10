@@ -138,6 +138,31 @@ export const userLogout = (refreshToken: string) => async (dispatch: Dispatch<Ap
   }
 };
 
+export const userRegister = (
+  email: string,
+  password: string,
+  repeatedPassword: string,
+  name: string,
+  lastName: string,
+  dateOfBirth: string | Date,
+  phoneNumber: string,
+  country: string,
+  city: string,
+  address: string
+) => async (dispatch: Dispatch<AppTypes>) => {
+  try{
+    dispatch(authStart());
+
+    const {data} = await axios.post(`${API_URL}/auth/register`, {
+      email, password, repeatedPassword, name, lastName, dateOfBirth, phoneNumber, country, city, address
+    })
+
+    dispatch(authSuccess(data.token, data.refreshToken, data.expireIn));
+  }catch(error){
+    dispatch(authFailure());
+  }
+};
+
 export const authenticateCheck = () => async (dispatch: Dispatch<AppTypes | any>) => {
   const token = localStorage.getItem('token');
   const refreshToken = localStorage.getItem('refreshToken');
