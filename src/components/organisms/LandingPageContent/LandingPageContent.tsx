@@ -21,7 +21,7 @@ const LandingPageContent: React.FC<Props> = () => {
       <Header />
       <Test>wdqwdqw</Test>
       <Content>
-        <Input onChange={handleChange} name={'name'} labelText={'Imię'} value={text} required={true} />
+        <Input onChange={handleChange} name={'name'} labelText={'Imię'} type={'string'} value={text} required={true} />
       </Content>
     </GridWrapper>
   );

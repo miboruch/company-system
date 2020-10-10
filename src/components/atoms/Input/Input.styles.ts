@@ -12,7 +12,8 @@ const StyledLabel = styled.label`
   left: 0;
   transition: transform 0.5s ease;
   transform-origin: left;
-  
+  font-size: 12px;
+
   ${({ theme }) => theme.mq.standard} {
     color: #1d1d1d;
   }
@@ -21,7 +22,7 @@ const StyledLabel = styled.label`
 const StyledInput = styled.input`
   width: 100%;
   font-size: 16px;
-  //font-family: ${({ theme }) => theme.font.family.futura};
+  font-family: ${({ theme }) => theme.font.family.avantGarde};
   color: rgba(0, 0, 0, 0.6);
   height: 36px;
   background: transparent !important;

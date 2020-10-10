@@ -37,7 +37,7 @@ export const theme = {
     menuBackground: '#F8F8FA',
     infoButton: 'rgba(0,0,0,0.8)',
     // infoButton: '#aeaeae',
-    green: '#429f33',
+    green: '#54C172',
     darkGreen: '#3e6406',
     red: '#9f3333',
     footerLinks: '#b6b6b6',

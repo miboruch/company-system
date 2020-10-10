@@ -6,15 +6,16 @@ interface Props {
   name: string;
   value: string;
   required: boolean;
+  type: string;
   readonly labelText: string;
   readonly isError?: boolean;
   readonly errorMessage?: string;
 }
 
-const Input: React.FC<Props> = ({ onChange, name, labelText, isError, errorMessage, ...props }) => {
+const Input: React.FC<Props> = ({ onChange, name, value, required, type, labelText, isError, errorMessage, ...props }) => {
   return (
     <InputWrapper>
-      <StyledInput name={name} onChange={onChange} {...props} />
+      <StyledInput name={name} onChange={onChange} value={value} required={required} type={type} {...props} />
       <StyledLabel>{isError ? errorMessage : labelText}</StyledLabel>
     </InputWrapper>
   );
