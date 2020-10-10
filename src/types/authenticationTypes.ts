@@ -2,6 +2,7 @@ export const AUTH_START = 'AUTH_START';
 export const AUTH_SUCCESS = 'AUTH_SUCCESS';
 export const AUTH_FAILURE = 'AUTH_FAILURE';
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
+export const SET_NEW_ACCESS_TOKEN = 'SET_NEW_ACCESS_TOKEN';
 export const SET_USER_DATA = 'SET_USER_DATA';
 
 export interface AuthStart {
@@ -11,7 +12,7 @@ export interface AuthStart {
 export interface AuthSuccess {
   type: typeof AUTH_SUCCESS;
   payload: {
-    accessToken: string;
+    token: string;
     refreshToken: string;
     userId: string;
   };
@@ -24,8 +25,12 @@ export interface AuthFailure {
 
 export interface AuthLogout {
   type: typeof AUTH_LOGOUT;
+}
+
+export interface SetNewAccessToken {
+  type: typeof SET_NEW_ACCESS_TOKEN;
   payload: {
-    refreshToken: string;
+    token: string;
   };
 }
 
@@ -42,4 +47,4 @@ export interface SetUserData {
   };
 }
 
-export type AuthenticationActionTypes = AuthStart | AuthSuccess | AuthFailure | AuthLogout | SetUserData;
+export type AuthenticationActionTypes = AuthStart | AuthSuccess | AuthFailure | AuthLogout | SetNewAccessToken | SetUserData;
