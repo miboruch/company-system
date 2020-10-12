@@ -7,6 +7,7 @@ import SEO from './SEO';
 const Wrapper = styled.div`
   width: 100%;
   min-height: 100vh;
+  background-color: ${({ theme }) => theme.colors.backgroundColor};
   position: relative;
   display: flex;
   flex-direction: row;

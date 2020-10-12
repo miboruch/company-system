@@ -41,16 +41,19 @@ const UserIcon = styled(User)`
 
 const SpinnerWrapper = styled.div`
   width: 100%;
-  height: 50vh;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  align-items: center;
+  height: 100vh;
+  display: grid;
+  place-items: center;
 `;
 
 const Title = styled.h1`
   grid-area: name;
+  font-weight: ${({ theme }) => theme.font.weight.demi};
+  align-self: flex-start;
+
+  ${({ theme }) => theme.mq.hdReady} {
+    font-weight: ${({ theme }) => theme.font.weight.bold};
+  }
 `;
 
 export { HomeIcon, PaymentIcon, ListIcon, SupportIcon, UserIcon, SpinnerWrapper, Title };

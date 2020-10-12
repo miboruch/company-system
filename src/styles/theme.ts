@@ -38,6 +38,7 @@ export const theme = {
   },
   colors: {
     background: '#f6f6f1',
+    impactGray: '#ebebf3',
     menuBackground: '#F8F8FA',
     infoButton: 'rgba(0,0,0,0.8)',
     // infoButton: '#aeaeae',
