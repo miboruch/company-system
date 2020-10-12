@@ -33,4 +33,10 @@ const FlexWrapper = styled.div`
   margin-top: 3rem;
 `;
 
-export { StyledWrapper, StyledInput, StyledForm, Heading, FlexWrapper };
+const ErrorParagraph = styled.p`
+  margin-top: 2rem;
+  color: tomato;
+  font-size: 12px;
+`;
+
+export { StyledWrapper, StyledInput, StyledForm, Heading, FlexWrapper, ErrorParagraph };

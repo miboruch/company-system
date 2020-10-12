@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { AUTH_FAILURE, AUTH_LOGOUT, AUTH_START, AUTH_SUCCESS, AuthenticationActionTypes, SET_USER_DATA } from '../types/authenticationTypes';
+import { AuthenticationActionTypes, AUTH_FAILURE, AUTH_LOGOUT, AUTH_START, AUTH_SUCCESS, SET_USER_DATA } from '../types/authenticationTypes';
 import { Dispatch } from 'redux';
 import { AppTypes } from '../types/appActionTypes';
 import { API_URL } from '../utils/config';

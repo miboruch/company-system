@@ -40,6 +40,7 @@ export const authenticationReducer = (state = initialState, action: Authenticati
         ...state,
         isLoading: false,
         isLoggedIn: true,
+        error: null,
         token: action.payload.token,
         refreshToken: action.payload.refreshToken
       };

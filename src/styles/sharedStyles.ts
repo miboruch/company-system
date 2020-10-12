@@ -39,4 +39,14 @@ const UserIcon = styled(User)`
   ${iconStyles}
 `;
 
-export { HomeIcon, PaymentIcon, ListIcon, SupportIcon, UserIcon };
+const SpinnerWrapper = styled.div`
+  width: 100%;
+  height: 50vh;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+`;
+
+export { HomeIcon, PaymentIcon, ListIcon, SupportIcon, UserIcon, SpinnerWrapper };

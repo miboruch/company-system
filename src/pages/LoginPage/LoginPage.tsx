@@ -8,16 +8,19 @@ import Input from '../../components/atoms/Input/Input';
 import Button from '../../components/atoms/Button/Button';
 import { AppTypes } from '../../types/appActionTypes';
 import { userLogin } from '../../actions/authenticationActions';
-import { StyledWrapper, StyledInput, StyledForm, Heading, FlexWrapper } from './LoginPage.styles';
+import { StyledWrapper, StyledInput, StyledForm, Heading, FlexWrapper, ErrorParagraph } from './LoginPage.styles';
+import { AppState } from '../../reducers/rootReducer';
+import { SpinnerWrapper } from '../../styles/sharedStyles';
+import Spinner from '../../components/atoms/Spinner/Spinner';
 
-type ConnectedProps = RouteComponentProps<any> & LinkDispatchProps;
+type ConnectedProps = RouteComponentProps<any> & LinkDispatchProps & LinkStateProps;
 
 interface InitialValues {
   email: string;
   password: string;
 }
 
-const LoginPage: React.FC<ConnectedProps> = ({ history, userLogin }) => {
+const LoginPage: React.FC<ConnectedProps> = ({ history, userLogin, error, isLoading }) => {
   const initialValues: InitialValues = {
     email: '',
     password: ''
@@ -30,24 +33,40 @@ const LoginPage: React.FC<ConnectedProps> = ({ history, userLogin }) => {
   return (
     <StyledWrapper>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-        {({ handleChange, values }) => (
-          <StyledForm>
-            <Heading>Panel pracownika firmy</Heading>
-            <StyledInput onChange={handleChange} type={'email'} name={'email'} value={values.email} required={true} labelText={'Email'} />
-            <Input onChange={handleChange} type={'password'} name={'password'} value={values.password} required={true} labelText={'Hasło'} />
-            <FlexWrapper>
-              <Button type={'submit'} text={'Zaloguj'} />
-            </FlexWrapper>
-          </StyledForm>
-        )}
+        {({ handleChange, values }) =>
+          isLoading ? (
+            <SpinnerWrapper>
+              <Spinner />
+            </SpinnerWrapper>
+          ) : (
+            <StyledForm>
+              <Heading>Zaloguj się do panelu</Heading>
+              <StyledInput onChange={handleChange} type={'email'} name={'email'} value={values.email} required={true} labelText={'Email'} />
+              <Input onChange={handleChange} type={'password'} name={'password'} value={values.password} required={true} labelText={'Hasło'} />
+              <FlexWrapper>
+                <Button type={'submit'} text={'Zaloguj'} />
+              </FlexWrapper>
+              {error && <ErrorParagraph>Niepoprawny email lub hasło</ErrorParagraph>}
+            </StyledForm>
+          )
+        }
       </Formik>
     </StyledWrapper>
   );
 };
 
+interface LinkStateProps {
+  error: string | null;
+  isLoading: boolean;
+}
+
 interface LinkDispatchProps {
   userLogin: (email: string, password: string, successCallback: () => void) => void;
 }
+
+const mapStateToProps = ({ authenticationReducer: { error, isLoading } }: AppState): LinkStateProps => {
+  return { error, isLoading };
+};
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
   return {
@@ -55,4 +74,4 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDi
   };
 };
 
-export default connect(null, mapDispatchToProps)(LoginPage);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
