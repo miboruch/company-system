@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import Button from '../../atoms/Button/Button';
 
 interface IMenu {
   isOpen: boolean;
@@ -57,4 +58,10 @@ const MenuItemsWrapper = styled.div`
   margin-top: 8rem;
 `;
 
-export { MenuWrapper, LinkWrapper, StyledLink, MenuItemsWrapper };
+const ButtonWrapper = styled.div`
+  position: absolute;
+  bottom: 4rem;
+  left: 2rem;
+`;
+
+export { MenuWrapper, LinkWrapper, StyledLink, MenuItemsWrapper, ButtonWrapper };
