@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Menu from '../../organisms/Menu/Menu';
-import Hamburger from '../../atoms/Hamburger/Hamburger';
-import { MenuTemplateWrapper, Header } from './MenuTemplate.styles';
+import Header from '../../molecules/Header/Header';
+import { MenuTemplateWrapper } from './MenuTemplate.styles';
 
 interface Props {
   children: React.ReactNode;
@@ -20,9 +20,7 @@ const MenuTemplate: React.FC<Props> = ({ children }) => {
 
   return (
     <MenuTemplateWrapper>
-      <Header>
-        <Hamburger isOpen={isMenuOpen} toggleMenu={toggleMenu} />
-      </Header>
+      <Header isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
       <Menu isOpen={isMenuOpen} />
       {children}
     </MenuTemplateWrapper>

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const StyledButton = styled.button`
   width: 180px;
-  height: 42px;
+  height: 38px;
   background-color: transparent;
   border-radius: 100px;
   border: 1px solid ${({ theme }) => theme.colors.infoButton};

@@ -1,55 +1,35 @@
 import React from 'react';
-import { Formik, Form } from 'formik';
-import styled from 'styled-components';
+import { RouteComponentProps } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { bindActionCreators } from 'redux';
+import { Formik } from 'formik';
 import Input from '../../components/atoms/Input/Input';
 import Button from '../../components/atoms/Button/Button';
+import { AppTypes } from '../../types/appActionTypes';
+import { userLogin } from '../../actions/authenticationActions';
+import { StyledWrapper, StyledInput, StyledForm, Heading, FlexWrapper } from './LoginPage.styles';
 
-const StyledWrapper = styled.div`
-  width: 100%;
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-`;
+type ConnectedProps = RouteComponentProps<any> & LinkDispatchProps;
 
-const StyledForm = styled(Form)`
-  width: 100%;
-  padding: 2rem 3rem;
-`;
-
-const StyledInput = styled(Input)`
-  margin-bottom: 5rem;
-`;
-
-const Heading = styled.h1`
-  font-size: 36px;
-  font-weight: ${({ theme }) => theme.font.weight.medium};
-  color: #212121;
-  margin-bottom: 6rem;
-  letter-spacing: -1px;
-`;
-
-const FlexWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  margin-top: 3rem;
-`;
-
-interface Props {}
 interface InitialValues {
   email: string;
   password: string;
 }
 
-const LoginPage: React.FC<Props> = () => {
+const LoginPage: React.FC<ConnectedProps> = ({ history, userLogin }) => {
   const initialValues: InitialValues = {
     email: '',
     password: ''
   };
 
+  const handleSubmit = (values: InitialValues): void => {
+    userLogin(values.email, values.password, () => history.push('/'));
+  };
+
   return (
     <StyledWrapper>
-      <Formik initialValues={initialValues} onSubmit={(values) => console.log(values)}>
+      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         {({ handleChange, values }) => (
           <StyledForm>
             <Heading>Panel pracownika firmy</Heading>
@@ -65,4 +45,14 @@ const LoginPage: React.FC<Props> = () => {
   );
 };
 
-export default LoginPage;
+interface LinkDispatchProps {
+  userLogin: (email: string, password: string, successCallback: () => void) => void;
+}
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
+  return {
+    userLogin: bindActionCreators(userLogin, dispatch)
+  };
+};
+
+export default connect(null, mapDispatchToProps)(LoginPage);

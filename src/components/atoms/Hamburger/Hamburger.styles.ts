@@ -42,12 +42,12 @@ const InnerHamburger = styled.div<IHamburger>`
     transition: all 0.5s ease;
   }
   ::before {
-    width: ${({ isOpen }) => (isOpen ? '32px' : '26px')};
-    top: ${({ isOpen }) => (isOpen ? '0' : '-2px')};
+    width: 32px;
+    top: ${({ isOpen }) => (isOpen ? '0' : '-3px')};
     transform: rotate(${({ isOpen }) => (isOpen ? '40deg' : '0deg')});
   }
   ::after {
-    width: 32px;
+    width: ${({ isOpen }) => (isOpen ? '32px' : '26px')};
     top: ${({ isOpen }) => (isOpen ? '0' : '2px')};
     transform: rotate(${({ isOpen }) => (isOpen ? '-40deg' : '0deg')});
   }

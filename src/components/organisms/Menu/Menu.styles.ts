@@ -45,6 +45,7 @@ const LinkWrapper = styled.div<LinkWrapperInterface>`
 const StyledLink = styled(Link)`
   color: inherit;
   font-size: 14px;
+  font-weight: ${({ theme }) => theme.font.weight.medium};
   padding: 2rem 0;
   margin-top: 4px;
   transition: color 0.3s ease;

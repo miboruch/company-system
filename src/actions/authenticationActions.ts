@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { AUTH_FAILURE, AUTH_LOGOUT, AUTH_START, AUTH_SUCCESS, AuthenticationActionTypes, SET_NEW_ACCESS_TOKEN, SET_USER_DATA } from '../types/authenticationTypes';
-import { Action, Dispatch } from 'redux';
+import { AUTH_FAILURE, AUTH_LOGOUT, AUTH_START, AUTH_SUCCESS, AuthenticationActionTypes, SET_USER_DATA } from '../types/authenticationTypes';
+import { Dispatch } from 'redux';
 import { AppTypes } from '../types/appActionTypes';
 import { API_URL } from '../utils/config';
 
@@ -77,16 +77,16 @@ const getNewAccessToken = (refreshToken: string) => async (dispatch: Dispatch<Ap
     });
 
     dispatch(authSuccess(data.accessToken, refreshToken, data.expireIn));
+    dispatch(getUserData(data.accessToken));
     dispatch(authTimeout(refreshToken, data.expireIn - new Date().getTime()));
   } catch (error) {
     console.log(error);
   }
 };
 
-const authTimeout = (refreshToken: string, expireMilliseconds: number) => {
-  console.log(`Auth timeout, set timeout will run in ${expireMilliseconds / 1000} seconds`);
+const authTimeout = (refreshToken: string, expireMilliseconds: number) => (dispatch: Dispatch<AppTypes | any>) => {
   return setTimeout(async () => {
-    await getNewAccessToken(refreshToken);
+    dispatch(getNewAccessToken(refreshToken));
   }, expireMilliseconds);
 };
 
@@ -104,7 +104,7 @@ export const getUserData = (token: string) => async (dispatch: Dispatch<AppTypes
   }
 };
 
-export const userLogin = (email: string, password: string, successCallback: () => void) => async (dispatch: Dispatch<AppTypes>) => {
+export const userLogin = (email: string, password: string, successCallback: () => void) => async (dispatch: Dispatch<AppTypes | any>) => {
   try {
     dispatch(authStart());
 
@@ -117,7 +117,7 @@ export const userLogin = (email: string, password: string, successCallback: () =
     successCallback();
 
     const milliseconds = data.expireIn - new Date().getTime();
-    authTimeout(data.refreshToken, milliseconds);
+    dispatch(authTimeout(data.refreshToken, milliseconds));
   } catch (error) {
     dispatch(authFailure());
   }
@@ -126,11 +126,7 @@ export const userLogin = (email: string, password: string, successCallback: () =
 export const userLogout = (refreshToken: string) => async (dispatch: Dispatch<AppTypes>) => {
   try {
     dispatch(authStart());
-    await axios.delete(`${API_URL}/auth/logout`, {
-      data: {
-        refreshToken: refreshToken
-      }
-    });
+    await axios.post(`${API_URL}/auth/logout`, { refreshToken: refreshToken });
 
     dispatch(authLogout());
   } catch (error) {
@@ -150,15 +146,24 @@ export const userRegister = (
   city: string,
   address: string
 ) => async (dispatch: Dispatch<AppTypes>) => {
-  try{
+  try {
     dispatch(authStart());
 
-    const {data} = await axios.post(`${API_URL}/auth/register`, {
-      email, password, repeatedPassword, name, lastName, dateOfBirth, phoneNumber, country, city, address
-    })
+    const { data } = await axios.post(`${API_URL}/auth/register`, {
+      email,
+      password,
+      repeatedPassword,
+      name,
+      lastName,
+      dateOfBirth,
+      phoneNumber,
+      country,
+      city,
+      address
+    });
 
     dispatch(authSuccess(data.token, data.refreshToken, data.expireIn));
-  }catch(error){
+  } catch (error) {
     dispatch(authFailure());
   }
 };
@@ -175,9 +180,9 @@ export const authenticateCheck = () => async (dispatch: Dispatch<AppTypes | any>
 
     if (expDate <= new Date()) {
       dispatch(getNewAccessToken(refreshToken));
-      //
     } else {
       dispatch(authSuccess(token, refreshToken, new Date(expireDate).getTime()));
+      dispatch(getUserData(token));
       dispatch(authTimeout(refreshToken, expDate.getTime() - new Date().getTime()));
     }
   } else {
