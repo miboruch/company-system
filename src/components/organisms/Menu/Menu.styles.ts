@@ -18,7 +18,7 @@ const MenuWrapper = styled.div<IMenu>`
   transform: translateX(${({ isOpen }) => (isOpen ? '0' : '-100%')});
   transition: transform 0.6s ease;
 
-  ${({ theme }) => theme.mq.desktop} {
+  ${({ theme }) => theme.mq.hdReady} {
     width: 300px;
     position: static;
     transform: translateX(0);

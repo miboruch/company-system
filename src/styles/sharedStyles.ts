@@ -49,4 +49,8 @@ const SpinnerWrapper = styled.div`
   align-items: center;
 `;
 
-export { HomeIcon, PaymentIcon, ListIcon, SupportIcon, UserIcon, SpinnerWrapper };
+const Title = styled.h1`
+  grid-area: name;
+`;
+
+export { HomeIcon, PaymentIcon, ListIcon, SupportIcon, UserIcon, SpinnerWrapper, Title };

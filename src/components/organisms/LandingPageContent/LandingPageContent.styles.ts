@@ -9,10 +9,6 @@ const Content = styled.div`
   align-items: center;
 `;
 
-const Title = styled.h1`
-  grid-area: name;
-`;
-
 const List = styled.div`
   width: 100%;
   height: 100%;
@@ -34,9 +30,9 @@ const Test = styled.section`
   height: 50%;
   background-color: brown;
 
-  ${({ theme }) => theme.mq.desktop} {
+  ${({ theme }) => theme.mq.hdReady} {
     display: none;
   }
 `;
 
-export { Content, Title, List, Header, Test };
+export { Content, List, Header, Test };

@@ -5,7 +5,7 @@ const MenuTemplateWrapper = styled.div`
   min-height: 100%;
   position: relative;
 
-  ${({ theme }) => theme.mq.desktop} {
+  ${({ theme }) => theme.mq.hdReady} {
     display: flex;
     flex-direction: row;
   }

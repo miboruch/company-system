@@ -20,7 +20,7 @@ const StyledHamburger = styled.button`
     outline: none;
   }
 
-  ${({ theme }) => theme.mq.desktop} {
+  ${({ theme }) => theme.mq.hdReady} {
     display: none;
   }
 `;

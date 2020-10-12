@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Input from '../../atoms/Input/Input';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
-import { Content, Title, List, Header, Test } from './LandingPageContent.styles';
+import { Content, List, Header, Test } from './LandingPageContent.styles';
+import { Title } from '../../../styles/sharedStyles';
 
 interface Props {}
 

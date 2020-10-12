@@ -12,7 +12,7 @@ const StyledHeader = styled.header`
   padding: 0 2rem;
   align-items: center;
 
-  ${({ theme }) => theme.mq.desktop} {
+  ${({ theme }) => theme.mq.hdReady} {
     display: none;
   }
 `;

@@ -3,7 +3,9 @@ interface Breakpoints {
   tabletS: number;
   tablet: number;
   standard: number;
-  desktop: number;
+  hdReady: number;
+  quadHd: number;
+  fullHd: number;
 }
 
 export const breakpoints: Breakpoints = {
@@ -11,7 +13,9 @@ export const breakpoints: Breakpoints = {
   tabletS: 512,
   tablet: 710,
   standard: 1024,
-  desktop: 1440
+  hdReady: 1280,
+  quadHd: 1440,
+  fullHd: 1920
 };
 
 export const theme = {
