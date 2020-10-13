@@ -48,7 +48,7 @@ export const theme = {
     footerLinks: '#b6b6b6',
     landingBackground: '#0E0E0E',
     landingGray: '#5A5A5A',
-    white: '#f5f5f5',
+    white: '#fff',
     qrBackground: '#50D889',
     blue: '#1573E3'
   }

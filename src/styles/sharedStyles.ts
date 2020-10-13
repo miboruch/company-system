@@ -56,4 +56,10 @@ const Title = styled.h1`
   }
 `;
 
-export { HomeIcon, PaymentIcon, ListIcon, SupportIcon, UserIcon, SpinnerWrapper, Title };
+const Paragraph = styled.p`
+  font-size: 14px;
+  font-weight: ${({ theme }) => theme.font.weight.medium};
+  line-height: 21px;
+`;
+
+export { HomeIcon, PaymentIcon, ListIcon, SupportIcon, UserIcon, SpinnerWrapper, Title, Paragraph };

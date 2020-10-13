@@ -2,13 +2,6 @@ import styled from 'styled-components';
 import { Form } from 'formik';
 import Input from '../../components/atoms/Input/Input';
 
-const StyledWrapper = styled.div`
-  width: 100%;
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-`;
-
 const StyledForm = styled(Form)`
   width: 100%;
   padding: 2rem 3rem;
@@ -39,4 +32,4 @@ const ErrorParagraph = styled.p`
   font-size: 12px;
 `;
 
-export { StyledWrapper, StyledInput, StyledForm, Heading, FlexWrapper, ErrorParagraph };
+export { StyledInput, StyledForm, Heading, FlexWrapper, ErrorParagraph };

@@ -8,10 +8,11 @@ import Input from '../../components/atoms/Input/Input';
 import Button from '../../components/atoms/Button/Button';
 import { AppTypes } from '../../types/appActionTypes';
 import { userLogin } from '../../actions/authenticationActions';
-import { StyledWrapper, StyledInput, StyledForm, Heading, FlexWrapper, ErrorParagraph } from './LoginPage.styles';
+import { StyledInput, StyledForm, Heading, FlexWrapper, ErrorParagraph } from './LoginPage.styles';
 import { AppState } from '../../reducers/rootReducer';
 import { SpinnerWrapper } from '../../styles/sharedStyles';
 import Spinner from '../../components/atoms/Spinner/Spinner';
+import LoginTemplate from '../../components/templates/LoginTemplate/LoginTemplate';
 
 type ConnectedProps = RouteComponentProps<any> & LinkDispatchProps & LinkStateProps;
 
@@ -31,7 +32,7 @@ const LoginPage: React.FC<ConnectedProps> = ({ history, userLogin, error, isLoad
   };
 
   return (
-    <StyledWrapper>
+    <LoginTemplate current={'login'}>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         {({ handleChange, values }) =>
           isLoading ? (
@@ -51,7 +52,7 @@ const LoginPage: React.FC<ConnectedProps> = ({ history, userLogin, error, isLoad
           )
         }
       </Formik>
-    </StyledWrapper>
+    </LoginTemplate>
   );
 };
 

@@ -3,7 +3,8 @@ import styled from 'styled-components';
 const StyledButton = styled.button`
   width: 180px;
   height: 38px;
-  background-color: transparent;
+  padding-top: 4px;
+  background-color: ${({theme}) => theme.colors.white};
   border-radius: 100px;
   border: 1px solid ${({ theme }) => theme.colors.infoButton};
   font-family: ${({ theme }) => theme.font.family.avantGarde};
