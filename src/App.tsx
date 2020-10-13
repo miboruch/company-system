@@ -12,6 +12,7 @@ import { bindActionCreators } from 'redux';
 import { authenticateCheck } from './actions/authenticationActions';
 import PrivateRoute from './hoc/PrivateRoute';
 import CompaniesPage from './pages/CompaniesPage/CompaniesPage';
+import RegisterPage from './pages/RegisterPage/RegisterPage';
 
 interface Props {}
 
@@ -27,6 +28,7 @@ const App: React.FC<ConnectedProps> = ({ history, authenticationCheck }) => {
       <Switch>
         <Route path={'/'} exact component={LandingPage} />
         <Route path={'/login'} component={LoginPage} />
+        <Route path={'/register'} component={RegisterPage} />
         <PrivateRoute path={'/home'} component={LandingPage} />
         <PrivateRoute path={'/companies'} component={CompaniesPage} />
       </Switch>

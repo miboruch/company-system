@@ -5,7 +5,7 @@ type PageContextType = {
   setCurrentPage: (page: number) => void;
 };
 
-const PageContext = React.createContext<PageContextType>({
+export const PageContext = React.createContext<PageContextType>({
   currentPage: 0,
   setCurrentPage: (page) => {}
 });

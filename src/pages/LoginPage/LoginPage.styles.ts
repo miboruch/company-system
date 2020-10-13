@@ -3,7 +3,7 @@ import { Form } from 'formik';
 import Input from '../../components/atoms/Input/Input';
 import { Link } from 'react-router-dom';
 
-const Wrapper = styled.div`
+const AuthWrapper = styled.div`
   width: 100%;
   height: 100%;
   display: grid;
@@ -61,4 +61,4 @@ const StyledLink = styled(Link)`
   color: ${({ theme }) => theme.colors.dark};
 `;
 
-export { Wrapper, StyledInput, StyledForm, Heading, FlexWrapper, ErrorParagraph, FlexWrapperDefault, AccountParagraph, StyledLink };
+export { AuthWrapper, StyledInput, StyledForm, Heading, FlexWrapper, ErrorParagraph, FlexWrapperDefault, AccountParagraph, StyledLink };
