@@ -62,4 +62,10 @@ const Paragraph = styled.p`
   line-height: 21px;
 `;
 
-export { HomeIcon, PaymentIcon, ListIcon, SupportIcon, UserIcon, SpinnerWrapper, Title, Paragraph };
+const FlexWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+`;
+
+export { HomeIcon, PaymentIcon, ListIcon, SupportIcon, UserIcon, SpinnerWrapper, Title, Paragraph, FlexWrapper };

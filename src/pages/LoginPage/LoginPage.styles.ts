@@ -1,6 +1,18 @@
 import styled from 'styled-components';
 import { Form } from 'formik';
 import Input from '../../components/atoms/Input/Input';
+import { Link } from 'react-router-dom';
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+
+  ${({ theme }) => theme.mq.hdReady} {
+    width: 60%;
+  }
+`;
 
 const StyledForm = styled(Form)`
   width: 100%;
@@ -32,4 +44,21 @@ const ErrorParagraph = styled.p`
   font-size: 12px;
 `;
 
-export { StyledInput, StyledForm, Heading, FlexWrapper, ErrorParagraph };
+const FlexWrapperDefault = styled(FlexWrapper)`
+  justify-content: flex-start;
+`;
+
+const AccountParagraph = styled.p`
+  color: ${({ theme }) => theme.colors.lightGray};
+  font-size: 14px;
+
+  ${({ theme }) => theme.mq.hdReady} {
+    font-size: 16px;
+  }
+`;
+
+const StyledLink = styled(Link)`
+  color: ${({ theme }) => theme.colors.dark};
+`;
+
+export { Wrapper, StyledInput, StyledForm, Heading, FlexWrapper, ErrorParagraph, FlexWrapperDefault, AccountParagraph, StyledLink };

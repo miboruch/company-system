@@ -44,7 +44,7 @@ const StyledInput = styled.input`
   }
 
   &:valid {
-    border-bottom-color: rgba(173, 255, 178, 0.5);
+    border-bottom-color: rgba(93, 129, 55, 0.92);
   }
 
   &:invalid {
