@@ -3,7 +3,6 @@ import styled from 'styled-components';
 const InputWrapper = styled.div`
   position: relative;
   width: 100%;
-  margin: 3rem 0;
 `;
 
 const StyledLabel = styled.label`

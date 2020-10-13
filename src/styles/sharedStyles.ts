@@ -70,9 +70,6 @@ const FlexWrapper = styled.div`
 
 const StyledLabel = styled.label`
   color: rgba(0, 0, 0, 0.6);
-  position: absolute;
-  top: 7px;
-  left: 0;
   transition: transform 0.5s ease;
   transform-origin: left;
   font-size: 12px;

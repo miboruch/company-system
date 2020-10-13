@@ -4,7 +4,7 @@ interface RegisterDataInterface {
   email?: string;
   name?: string;
   lastName?: string;
-  dateOfBirth?: Date | string | null;
+  dateOfBirth?: Date | undefined | null;
   password?: string;
   repeatedPassword?: string;
   phoneNumber?: string;

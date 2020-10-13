@@ -1,12 +1,12 @@
 import React from 'react';
-import LoginTemplate from '../../components/templates/LoginTemplate/LoginTemplate';
+import LoginTemplate, { TemplatePage } from '../../components/templates/LoginTemplate/LoginTemplate';
 import RegisterUserController from '../../components/compound/RegisterUser/RegisterUserController';
 
 interface Props {}
 
 const RegisterPage: React.FC<Props> = () => {
   return (
-    <LoginTemplate current={'register'}>
+    <LoginTemplate page={TemplatePage.Register}>
       <RegisterUserController />
     </LoginTemplate>
   );
