@@ -9,6 +9,14 @@ const AuthWrapper = styled.div`
   display: grid;
   place-items: center;
 
+  ${({ theme }) => theme.mq.tablet} {
+    width: 80%;
+  }
+
+  ${({ theme }) => theme.mq.standard} {
+    width: 70%;
+  }
+
   ${({ theme }) => theme.mq.hdReady} {
     width: 60%;
   }

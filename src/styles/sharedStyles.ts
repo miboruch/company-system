@@ -66,6 +66,12 @@ const FlexWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  align-items: center;
+`;
+
+const DoubleFlexWrapper = styled(FlexWrapper)`
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const StyledLabel = styled.label`
@@ -79,4 +85,10 @@ const StyledLabel = styled.label`
   }
 `;
 
-export { HomeIcon, PaymentIcon, ListIcon, SupportIcon, UserIcon, SpinnerWrapper, Title, Paragraph, FlexWrapper, StyledLabel };
+const BackParagraph = styled.p`
+  color: ${({ theme }) => theme.colors.landingGray};
+  font-size: 14px;
+  cursor: pointer;
+`;
+
+export { HomeIcon, PaymentIcon, ListIcon, SupportIcon, UserIcon, SpinnerWrapper, Title, Paragraph, FlexWrapper, StyledLabel, BackParagraph, DoubleFlexWrapper };

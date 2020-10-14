@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import Button from '../../../atoms/Button/Button';
 
 import 'react-datepicker/dist/react-datepicker.css';
+import { PageContext } from '../context/PageContext';
 
 const StyledInput = styled(Input)`
   margin-bottom: 5rem;
@@ -23,6 +24,7 @@ type defaultValues = {
 
 const MainRegisterDataPage: React.FC = () => {
   const { data, setData } = useContext(RegisterDataContext);
+  const { currentPage, setCurrentPage } = useContext(PageContext);
 
   const initialValues: defaultValues = {
     email: data.email ? data.email : '',
@@ -32,7 +34,8 @@ const MainRegisterDataPage: React.FC = () => {
   };
 
   const handleSubmit = (values: defaultValues): void => {
-    console.log(values);
+    setData({ ...data, ...values });
+    setCurrentPage(currentPage + 1);
   };
 
   return (

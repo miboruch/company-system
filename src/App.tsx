@@ -26,9 +26,9 @@ const App: React.FC<ConnectedProps> = ({ history, authenticationCheck }) => {
   return (
     <Layout>
       <Switch>
-        <Route path={'/'} exact component={LandingPage} />
         <Route path={'/login'} component={LoginPage} />
         <Route path={'/register'} component={RegisterPage} />
+        <PrivateRoute path={'/'} exact component={LandingPage} />
         <PrivateRoute path={'/home'} component={LandingPage} />
         <PrivateRoute path={'/companies'} component={CompaniesPage} />
       </Switch>
