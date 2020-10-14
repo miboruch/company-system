@@ -5,6 +5,7 @@ import RegisterTemplate from './templates/RegisterTemplate/RegisterTemplate';
 import MainRegisterDataPage from './pages/MainRegisterDataPage';
 import ProgressionBar from './components/ProgressionBar/ProgressionBar';
 import PasswordPage from './pages/PasswordPage';
+import ContactDataPage from './pages/ContactDataPage';
 
 interface Props {}
 
@@ -18,6 +19,9 @@ const RegisterUserController: React.FC<Props> = () => {
         </RegisterTemplate>
         <RegisterTemplate pageIndex={1}>
           <PasswordPage />
+        </RegisterTemplate>
+        <RegisterTemplate pageIndex={2}>
+          <ContactDataPage />
         </RegisterTemplate>
       </PageContextProvider>
     </RegisterDataContextProvider>

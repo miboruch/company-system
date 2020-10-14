@@ -70,6 +70,7 @@ const FlexWrapper = styled.div`
 `;
 
 const DoubleFlexWrapper = styled(FlexWrapper)`
+  width: 100%;
   justify-content: space-between;
   align-items: center;
 `;
