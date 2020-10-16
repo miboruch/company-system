@@ -12,7 +12,6 @@ const StyledArrowButton = styled.div<ArrowButtonInterface>`
   border: none;
   position: relative;
   cursor: pointer;
-  z-index: 50;
   transform: rotate(${({ direction }) => (direction === Direction.Right ? '180deg' : '0')});
 
   &:focus {

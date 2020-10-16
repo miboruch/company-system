@@ -4,8 +4,6 @@ import { Direction } from '../../../types/globalTypes';
 
 interface Props {
   onClick?: () => void;
-  // type?: 'button' | 'submit' | 'reset' | undefined;
-  // disabled?: boolean;
   direction?: Direction;
 }
 

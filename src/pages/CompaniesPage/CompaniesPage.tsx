@@ -9,6 +9,7 @@ import { CompanyInterface } from '../../types/modelsTypes';
 import { AppState } from '../../reducers/rootReducer';
 import { SpinnerWrapper, EmptyParagraph, AddIcon, Title } from '../../styles/sharedStyles';
 import { Table, AddCompanyWrapper, AddCompanyParagraph } from './CompaniesPage.styles';
+import AddCompanyController from '../../components/compound/AddCompany/AddCompanyController';
 
 type ConnectedProps = Props & LinkStateProps;
 
@@ -54,6 +55,7 @@ const CompaniesPage: React.FC<ConnectedProps> = ({ token }) => {
           </AddCompanyWrapper>
         </GridWrapper>
       )}
+      <AddCompanyController isOpen={true} setOpen={() => console.log('close component')} />
     </MenuTemplate>
   );
 };
