@@ -4,11 +4,87 @@
   border: none;
   border-bottom: 1px solid rgba(255, 70, 92, 0.5);
   margin-bottom: 3rem;
-  color: #1d1d1d;
+  color: rgba(0, 0, 0, 0.6);
   font-size: 16px;
   font-family: Avant Garde, sans-serif;
 }
 
 .phone-input:focus {
   outline: none;
+}
+
+.react-datepicker {
+  width: 300px !important;
+}
+
+.react-datepicker-wrapper {
+  margin-bottom: 3rem;
+  width: 100% !important;
+}
+
+.react-datepicker__input-container {
+  border: none;
+  border-bottom: 1px solid rgba(255, 70, 92, 0.5);
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 16px;
+  font-family: Avant Garde, sans-serif;
+}
+
+.react-datepicker__input-container input {
+  width: 100%;
+  border: none;
+  height: 36px;
+}
+
+.react-datepicker__input-container input:focus {
+  outline: none;
+}
+
+.react-datepicker {
+  font-size: 12px !important;
+  font-family: Avant Garde, sans-serif !important;
+  z-index: 5 !important;
+}
+
+.react-datepicker__month-container {
+  width: 100% !important;
+}
+
+.react-datepicker__header {
+  background-color: white !important;
+}
+
+.react-datepicker__current-month {
+  padding: 0.4rem 0;
+}
+
+.react-datepicker__navigation {
+  padding: 0.4rem 0;
+}
+
+.react-datepicker__day-names {
+  padding: 0.4rem 1rem;
+}
+
+.react-datepicker-popper {
+  z-index: 10 !important;
+}
+
+.react-datepicker-ignore-onclickoutside {
+  font-family: Avant Garde, sans-serif !important;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.react-datepicker__input-container {
+  font-family: Avant Garde, sans-serif !important;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.react-datepicker__input-container input {
+  font-family: Avant Garde, sans-serif !important;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.react-datepicker__week {
+  padding: 0.3rem 0;
 }

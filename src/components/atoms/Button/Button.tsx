@@ -8,11 +8,12 @@ interface Props {
   type: 'button' | 'submit' | 'reset' | undefined;
   text: string;
   isPrimary?: boolean;
+  disabled?:boolean;
 }
 
-const Button: React.FC<Props> = ({ onClick, type, text, isPrimary }) => {
+const Button: React.FC<Props> = ({ onClick, type, text, disabled, isPrimary }) => {
   return (
-    <StyledButton onClick={onClick} type={type}>
+    <StyledButton onClick={onClick} type={type} disabled={disabled}>
       {text}
     </StyledButton>
   );

@@ -46,12 +46,6 @@ const FlexWrapper = styled.div`
   margin-top: 3rem;
 `;
 
-const ErrorParagraph = styled.p`
-  margin-top: 2rem;
-  color: tomato;
-  font-size: 12px;
-`;
-
 const FlexWrapperDefault = styled(FlexWrapper)`
   justify-content: flex-start;
 `;
@@ -69,4 +63,4 @@ const StyledLink = styled(Link)`
   color: ${({ theme }) => theme.colors.dark};
 `;
 
-export { AuthWrapper, StyledInput, StyledForm, Heading, FlexWrapper, ErrorParagraph, FlexWrapperDefault, AccountParagraph, StyledLink };
+export { AuthWrapper, StyledInput, StyledForm, Heading, FlexWrapper, FlexWrapperDefault, AccountParagraph, StyledLink };

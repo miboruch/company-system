@@ -4,7 +4,7 @@ const StyledButton = styled.button`
   width: 180px;
   height: 38px;
   padding-top: 4px;
-  background-color: ${({theme}) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.white};
   border-radius: 100px;
   border: 1px solid ${({ theme }) => theme.colors.infoButton};
   font-family: ${({ theme }) => theme.font.family.avantGarde};
@@ -38,6 +38,11 @@ const StyledButton = styled.button`
     height: 100%;
     transition: all 0.25s ease;
   }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: auto;
+  }
 `;
 
-export {StyledButton}
+export { StyledButton };

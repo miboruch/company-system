@@ -93,4 +93,31 @@ const BackParagraph = styled.p`
   cursor: pointer;
 `;
 
-export { HomeIcon, PaymentIcon, ListIcon, SupportIcon, UserIcon, SpinnerWrapper, Title, Paragraph, FlexWrapper, StyledLabel, BackParagraph, DoubleFlexWrapper };
+interface ErrorParagraphInterface {
+  isVisible: boolean;
+}
+
+const ErrorParagraph = styled.p<ErrorParagraphInterface>`
+  margin-top: 2rem;
+  color: tomato;
+  font-size: 12px;
+  opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
+  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+`;
+
+export {
+  HomeIcon,
+  PaymentIcon,
+  ListIcon,
+  SupportIcon,
+  UserIcon,
+  SpinnerWrapper,
+  Title,
+  Paragraph,
+  FlexWrapper,
+  StyledLabel,
+  BackParagraph,
+  DoubleFlexWrapper,
+  ErrorParagraph
+};

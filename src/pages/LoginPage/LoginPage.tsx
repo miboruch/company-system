@@ -8,9 +8,9 @@ import Input from '../../components/atoms/Input/Input';
 import Button from '../../components/atoms/Button/Button';
 import { AppTypes } from '../../types/appActionTypes';
 import { userLogin } from '../../actions/authenticationActions';
-import { AccountParagraph, AuthWrapper, ErrorParagraph, FlexWrapper, FlexWrapperDefault, Heading, StyledForm, StyledInput, StyledLink } from './LoginPage.styles';
+import { AccountParagraph, AuthWrapper, FlexWrapper, FlexWrapperDefault, Heading, StyledForm, StyledInput, StyledLink } from './LoginPage.styles';
 import { AppState } from '../../reducers/rootReducer';
-import { SpinnerWrapper } from '../../styles/sharedStyles';
+import { SpinnerWrapper, ErrorParagraph } from '../../styles/sharedStyles';
 import Spinner from '../../components/atoms/Spinner/Spinner';
 import LoginTemplate, { TemplatePage } from '../../components/templates/LoginTemplate/LoginTemplate';
 
@@ -53,7 +53,7 @@ const LoginPage: React.FC<ConnectedProps> = ({ history, userLogin, error, isLoad
                     Nie masz konta? <StyledLink to={'/register'}>zarejestruj się</StyledLink>
                   </AccountParagraph>
                 </FlexWrapperDefault>
-                {error && <ErrorParagraph>Niepoprawny email lub hasło</ErrorParagraph>}
+                <ErrorParagraph isVisible={!!error}>Niepoprawny email lub hasło</ErrorParagraph>
               </StyledForm>
             )
           }
