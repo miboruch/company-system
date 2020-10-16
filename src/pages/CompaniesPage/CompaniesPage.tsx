@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import GridWrapper from '../../components/templates/GridWrapper/GridWrapper';
 import MenuTemplate from '../../components/templates/MenuTemplate/MenuTemplate';
-import { Title } from '../../styles/sharedStyles';
-import { AppState } from '../../reducers/rootReducer';
 import { getAdminCompanies } from '../../utils/companyAPI';
-import { SpinnerWrapper } from '../../styles/sharedStyles';
 import Spinner from '../../components/atoms/Spinner/Spinner';
-import { CompanyInterface } from '../../types/modelsTypes';
 import CompanyBox from '../../components/molecules/CompanyBox/CompanyBox';
-import { Table, AddCompanyWrapper } from './CompaniesPage.styles';
+import { CompanyInterface } from '../../types/modelsTypes';
+import { AppState } from '../../reducers/rootReducer';
+import { SpinnerWrapper, EmptyParagraph, AddIcon, Title } from '../../styles/sharedStyles';
+import { Table, AddCompanyWrapper, AddCompanyParagraph } from './CompaniesPage.styles';
 
 type ConnectedProps = Props & LinkStateProps;
 
@@ -25,8 +24,6 @@ const CompaniesPage: React.FC<ConnectedProps> = ({ token }) => {
     })();
   }, [token]);
 
-  console.log(companies);
-
   return (
     <MenuTemplate>
       {isLoading ? (
@@ -38,7 +35,7 @@ const CompaniesPage: React.FC<ConnectedProps> = ({ token }) => {
           <Title>Twoje firmy</Title>
           <Table isEmpty={companies.length === 0}>
             {companies.length === 0 ? (
-              <p>Brak firm</p>
+              <EmptyParagraph>Brak firm</EmptyParagraph>
             ) : (
               companies.map((company) => (
                 <CompanyBox
@@ -51,8 +48,9 @@ const CompaniesPage: React.FC<ConnectedProps> = ({ token }) => {
               ))
             )}
           </Table>
-          <AddCompanyWrapper>
-            <p>Dodaj firme</p>
+          <AddCompanyWrapper onClick={() => console.log('open add company component')}>
+            <AddIcon />
+            <AddCompanyParagraph>Dodaj firme</AddCompanyParagraph>
           </AddCompanyWrapper>
         </GridWrapper>
       )}

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 interface TableProps {
   isEmpty: boolean;
@@ -6,7 +6,7 @@ interface TableProps {
 
 const Table = styled.section<TableProps>`
   width: 98%;
-  height: ${({ isEmpty }) => (isEmpty ? 'auto' : '80vh')};
+  height: 80vh;
   border: 1px solid ${({ theme }) => theme.colors.impactGray};
   border-radius: 30px;
   margin-top: 2rem;
@@ -19,6 +19,14 @@ const Table = styled.section<TableProps>`
     margin-top: 0;
     border-radius: 15px;
   }
+
+  ${({ isEmpty }) =>
+    isEmpty &&
+    css`
+      height: 60px;
+      display: grid;
+      place-items: center;
+    `}
 `;
 
 const AddCompanyWrapper = styled.div`
@@ -31,6 +39,15 @@ const AddCompanyWrapper = styled.div`
   background-color: #fff;
   bottom: 0;
   left: 0;
+  cursor: pointer;
 `;
 
-export { Table, AddCompanyWrapper };
+const AddCompanyParagraph = styled.p`
+  color: ${({ theme }) => theme.colors.black};
+  font-size: 12px;
+  font-weight: ${({ theme }) => theme.font.weight.medium};
+  margin-top: 0.2rem;
+  margin-left: 1.5rem;
+`;
+
+export { Table, AddCompanyWrapper, AddCompanyParagraph };

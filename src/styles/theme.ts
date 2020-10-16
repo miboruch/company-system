@@ -43,18 +43,12 @@ export const theme = {
     dark: '#212121',
     textGray: '#c8c8c9',
     backgroundHover: '#F3F3F5',
-
-    background: '#f6f6f1',
+    emptyText: '#d6d6d6',
     impactGray: '#ebebf3',
     menuBackground: '#F8F8FA',
-    infoButton: 'rgba(0,0,0,0.8)',
-    // darkGreen: '#3e6406',
-    red: '#9f3333',
-    footerLinks: '#b6b6b6',
-    landingBackground: '#0E0E0E',
-    landingGray: '#5A5A5A',
+    buttonColor: 'rgba(0,0,0,0.8)',
     white: '#fff',
-    qrBackground: '#50D889',
-    blue: '#1573E3'
+    black: '#000',
+    landingGray: '#5A5A5A'
   }
 };

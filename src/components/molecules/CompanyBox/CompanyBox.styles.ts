@@ -8,7 +8,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  padding: 0 2rem;
+  padding: 1rem 2.5rem;
   transition: background-color 0.3s ease;
 
   &:hover {

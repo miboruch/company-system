@@ -6,9 +6,9 @@ const StyledButton = styled.button`
   padding-top: 4px;
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 100px;
-  border: 1px solid ${({ theme }) => theme.colors.infoButton};
+  border: 1px solid ${({ theme }) => theme.colors.buttonColor};
   font-family: ${({ theme }) => theme.font.family.avantGarde};
-  color: ${({ theme }) => theme.colors.infoButton};
+  color: ${({ theme }) => theme.colors.buttonColor};
   font-weight: ${({ theme }) => theme.font.weight.medium};
   font-size: 14px;
   z-index: 1;

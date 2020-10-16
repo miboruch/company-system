@@ -4,6 +4,7 @@ import { ReactComponent as Payment } from '../assets/icons/payment.svg';
 import { ReactComponent as List } from '../assets/icons/list.svg';
 import { ReactComponent as Support } from '../assets/icons/support.svg';
 import { ReactComponent as User } from '../assets/icons/user.svg';
+import { ReactComponent as Add } from '../assets/icons/add.svg';
 
 const iconStyles = css`
   fill: #212121;
@@ -37,6 +38,11 @@ const SupportIcon = styled(Support)`
 
 const UserIcon = styled(User)`
   ${iconStyles}
+`;
+
+const AddIcon = styled(Add)`
+  width: 28px;
+  height: 28px;
 `;
 
 const SpinnerWrapper = styled.div`
@@ -106,12 +112,19 @@ const ErrorParagraph = styled.p<ErrorParagraphInterface>`
   transition: opacity 0.2s ease, visibility 0.2s ease;
 `;
 
+const EmptyParagraph = styled.p`
+  font-weight: ${({ theme }) => theme.font.weight.medium};
+  font-size: 14px;
+  color: ${({ theme }) => theme.colors.emptyText};
+`;
+
 export {
   HomeIcon,
   PaymentIcon,
   ListIcon,
   SupportIcon,
   UserIcon,
+  AddIcon,
   SpinnerWrapper,
   Title,
   Paragraph,
@@ -119,5 +132,6 @@ export {
   StyledLabel,
   BackParagraph,
   DoubleFlexWrapper,
-  ErrorParagraph
+  ErrorParagraph,
+  EmptyParagraph
 };
