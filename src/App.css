@@ -88,3 +88,35 @@
 .react-datepicker__week {
   padding: 0.3rem 0;
 }
+
+.react-datepicker__day-name {
+  color: #c8c8c9 !important;
+  margin: 0 1rem !important;
+}
+
+.react-datepicker__day {
+  margin: 0 1rem !important;
+}
+
+.react-datepicker__day--outside-month {
+  color: #c8c8c9 !important;
+}
+
+.react-datepicker__current-month {
+  font-size: 13px !important;
+}
+
+.react-datepicker__day--selected {
+  background-color: #54c172 !important;
+  color: #fff !important;
+  box-sizing: border-box !important;
+}
+
+.react-datepicker__day--keyboard-selected {
+  background-color: #fff !important;
+  color: #000 !important;
+}
+
+.react-datepicker__day--today {
+  border-bottom: 1px solid #54c172;
+}
