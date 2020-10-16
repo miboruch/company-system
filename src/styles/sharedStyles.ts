@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { Form } from 'formik';
 import { ReactComponent as Home } from '../assets/icons/home.svg';
 import { ReactComponent as Payment } from '../assets/icons/payment.svg';
 import { ReactComponent as List } from '../assets/icons/list.svg';
@@ -122,6 +123,7 @@ const MobileCompoundTitle = styled.h2`
   font-size: 20px;
   color: ${({ theme }) => theme.colors.black};
   font-weight: ${({ theme }) => theme.font.weight.medium};
+  margin-bottom: 3rem;
 `;
 
 export {

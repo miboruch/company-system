@@ -17,6 +17,7 @@ interface Props {}
 
 const CompaniesPage: React.FC<ConnectedProps> = ({ token }) => {
   const [isLoading, setLoading] = useState<boolean>(false);
+  const [isAddCompanyOpen, setAddCompanyOpen] = useState<boolean>(false);
   const [companies, setCompanies] = useState<Array<CompanyInterface>>([]);
 
   useEffect(() => {
@@ -49,13 +50,13 @@ const CompaniesPage: React.FC<ConnectedProps> = ({ token }) => {
               ))
             )}
           </Table>
-          <AddCompanyWrapper onClick={() => console.log('open add company component')}>
+          <AddCompanyWrapper onClick={() => setAddCompanyOpen(true)}>
             <AddIcon />
             <AddCompanyParagraph>Dodaj firme</AddCompanyParagraph>
           </AddCompanyWrapper>
         </GridWrapper>
       )}
-      <AddCompanyController isOpen={true} setOpen={() => console.log('close component')} />
+      <AddCompanyController isOpen={isAddCompanyOpen} setOpen={setAddCompanyOpen} />
     </MenuTemplate>
   );
 };
