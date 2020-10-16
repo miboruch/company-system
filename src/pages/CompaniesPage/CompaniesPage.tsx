@@ -8,6 +8,8 @@ import { AppState } from '../../reducers/rootReducer';
 import { getAdminCompanies } from '../../utils/companyAPI';
 import { SpinnerWrapper } from '../../styles/sharedStyles';
 import Spinner from '../../components/atoms/Spinner/Spinner';
+import { CompanyInterface } from '../../types/modelsTypes';
+import CompanyBox from '../../components/molecules/CompanyBox/CompanyBox';
 
 type ConnectedProps = Props & LinkStateProps;
 
@@ -18,12 +20,18 @@ const ContentWrapper = styled.section`
   padding: 0 2rem;
 `;
 
-const Table = styled.section`
+interface TableProps {
+  isEmpty: boolean;
+}
+
+const Table = styled.section<TableProps>`
   width: 98%;
-  height: 80vh;
+  height: ${({ isEmpty }) => (isEmpty ? 'auto' : '80vh')};
   border: 1px solid ${({ theme }) => theme.colors.impactGray};
   border-radius: 30px;
   margin-top: 2rem;
+  overflow: hidden;
+  overflow-y: scroll;
 
   ${({ theme }) => theme.mq.hdReady} {
     grid-area: content;
@@ -47,7 +55,7 @@ const AddCompanyWrapper = styled.div`
 
 const CompaniesPage: React.FC<ConnectedProps> = ({ token }) => {
   const [isLoading, setLoading] = useState<boolean>(false);
-  const [companies, setCompanies] = useState<[]>([]);
+  const [companies, setCompanies] = useState<Array<CompanyInterface>>([]);
 
   useEffect(() => {
     (async () => {
@@ -66,7 +74,21 @@ const CompaniesPage: React.FC<ConnectedProps> = ({ token }) => {
       ) : (
         <GridWrapper onlyHeader={true}>
           <Title>Twoje firmy</Title>
-          <Table></Table>
+          <Table isEmpty={companies.length === 0}>
+            {companies.length === 0 ? (
+              <p>Brak firm</p>
+            ) : (
+              companies.map((company) => (
+                <CompanyBox
+                  key={company._id}
+                  name={company.name}
+                  nip={company.nip}
+                  address={`${company.address}, ${company.city}`}
+                  callback={() => console.log('set currentCompany and redirect')}
+                />
+              ))
+            )}
+          </Table>
           <AddCompanyWrapper>
             <p>Dodaj firme</p>
           </AddCompanyWrapper>

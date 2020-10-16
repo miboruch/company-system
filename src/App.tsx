@@ -20,7 +20,7 @@ type ConnectedProps = Props & LinkDispatchProps & RouteComponentProps<any>;
 
 const App: React.FC<ConnectedProps> = ({ history, authenticationCheck }) => {
   useEffect(() => {
-    authenticationCheck(() => history.push('/home'));
+    authenticationCheck(() => history.push('/companies'));
   }, []);
 
   return (

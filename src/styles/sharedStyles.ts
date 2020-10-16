@@ -53,6 +53,7 @@ const Title = styled.h1`
 
   ${({ theme }) => theme.mq.hdReady} {
     font-weight: ${({ theme }) => theme.font.weight.bold};
+    align-self: center;
   }
 `;
 

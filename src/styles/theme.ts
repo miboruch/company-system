@@ -41,6 +41,9 @@ export const theme = {
     darkGreen: '#4C522A',
     lightGray: '#BCBCBC',
     dark: '#212121',
+    textGray: '#c8c8c9',
+    backgroundHover: '#F3F3F5',
+
     background: '#f6f6f1',
     impactGray: '#ebebf3',
     menuBackground: '#F8F8FA',

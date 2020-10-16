@@ -4,7 +4,7 @@ import DatePicker from 'react-datepicker';
 import { RegisterDataContext } from '../context/RegisterDataContext';
 import Input from '../../../atoms/Input/Input';
 import { StyledForm, Heading } from '../../../../pages/LoginPage/LoginPage.styles';
-import { FlexWrapper, Title, StyledLabel } from '../../../../styles/sharedStyles';
+import { FlexWrapper, Title, StyledLabel, DoubleFlexWrapper } from '../../../../styles/sharedStyles';
 import styled from 'styled-components';
 import Button from '../../../atoms/Button/Button';
 
@@ -46,8 +46,10 @@ const MainRegisterDataPage: React.FC = () => {
           <StyledInput onChange={handleChange} name={'email'} value={values.email} required={true} type={'email'} labelText={'Email'} />
           <StyledInput onChange={handleChange} name={'name'} value={values.name} required={true} type={'string'} labelText={'Imię'} />
           <StyledInput onChange={handleChange} name={'lastName'} value={values.lastName} required={true} type={'string'} labelText={'Nazwisko'} />
-          <StyledLabel>Data urodzenia</StyledLabel>
-          <DatePicker selected={values.dateOfBirth} onChange={(date) => setFieldValue('dateOfBirth', date)} />
+          <DoubleFlexWrapper style={{ marginBottom: '3rem' }}>
+            <StyledLabel>Data urodzenia</StyledLabel>
+            <DatePicker selected={values.dateOfBirth} onChange={(date) => setFieldValue('dateOfBirth', date)} />
+          </DoubleFlexWrapper>
           <FlexWrapper>
             <Button type={'submit'} text={'Dalej'} />
           </FlexWrapper>

@@ -28,7 +28,7 @@ const LoginPage: React.FC<ConnectedProps> = ({ history, userLogin, error, isLoad
   };
 
   const handleSubmit = (values: InitialValues): void => {
-    userLogin(values.email, values.password, () => history.push('/'));
+    userLogin(values.email, values.password, () => history.push('/companies'));
   };
 
   return (
