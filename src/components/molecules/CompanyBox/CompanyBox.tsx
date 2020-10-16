@@ -1,5 +1,6 @@
 import React from 'react';
-import { Wrapper, Name, Subparagraph } from './CompanyBox.styles';
+import { ContentWrapper, Name, Subparagraph, Wrapper } from './CompanyBox.styles';
+import ArrowButton from '../../atoms/ArrowButton/ArrowButton';
 
 interface Props {
   name: string;
@@ -10,10 +11,13 @@ interface Props {
 
 const CompanyBox: React.FC<Props> = ({ name, nip, address, callback }) => {
   return (
-    <Wrapper onClick={() => callback()}>
-      <Subparagraph>{nip}</Subparagraph>
-      <Name>{name}</Name>
-      <Subparagraph>{address}</Subparagraph>
+    <Wrapper>
+      <ContentWrapper>
+        <Subparagraph>{nip}</Subparagraph>
+        <Name>{name}</Name>
+        <Subparagraph>{address}</Subparagraph>
+      </ContentWrapper>
+      <ArrowButton onClick={() => callback()} />
     </Wrapper>
   );
 };

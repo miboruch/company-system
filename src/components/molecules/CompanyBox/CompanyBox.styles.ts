@@ -5,9 +5,9 @@ const Wrapper = styled.div`
   height: 80px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.impactGray};
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   padding: 1rem 2.5rem;
   transition: background-color 0.3s ease;
 
@@ -30,4 +30,9 @@ const Subparagraph = styled.p`
   margin: 0;
 `;
 
-export { Wrapper, Name, Subparagraph };
+const ContentWrapper = styled.section`
+  display: flex;
+  flex-direction: column;
+`;
+
+export { Wrapper, ContentWrapper, Name, Subparagraph };
