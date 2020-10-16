@@ -118,6 +118,12 @@ const EmptyParagraph = styled.p`
   color: ${({ theme }) => theme.colors.emptyText};
 `;
 
+const MobileCompoundTitle = styled.h2`
+  font-size: 20px;
+  color: ${({ theme }) => theme.colors.black};
+  font-weight: ${({ theme }) => theme.font.weight.medium};
+`;
+
 export {
   HomeIcon,
   PaymentIcon,
@@ -133,5 +139,6 @@ export {
   BackParagraph,
   DoubleFlexWrapper,
   ErrorParagraph,
-  EmptyParagraph
+  EmptyParagraph,
+  MobileCompoundTitle
 };

@@ -12,6 +12,7 @@ const StyledArrowButton = styled.div<ArrowButtonInterface>`
   border: none;
   position: relative;
   cursor: pointer;
+  padding: 2rem;
   transform: rotate(${({ direction }) => (direction === Direction.Right ? '180deg' : '0')});
 
   &:focus {
@@ -24,23 +25,22 @@ const StyledArrowButton = styled.div<ArrowButtonInterface>`
     position: absolute;
     width: 14px;
     height: 1px;
-    //top: 45%;
     background-color: ${({ theme }) => theme.colors.black};
     transition: all 0.5s ease;
     transform-origin: 50% 50%;
   }
   &::after {
     top: 50%;
-    left: 0;
+    left: 50%;
     transform-origin: bottom left;
-    transform: rotate(-40deg);
+    transform: translateX(-50%) rotate(-40deg);
   }
 
   &::before {
-    left: 0;
     top: 50%;
+    left: 50%;
     transform-origin: top left;
-    transform: rotate(40deg);
+    transform: translateX(-50%) rotate(40deg);
   }
 `;
 

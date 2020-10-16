@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import PageContextProvider from './context/PageContext';
 import AddCompanyTemplate from './templates/AddCompanyTemplate/AddCompanyTemplate';
 import AddCompanyHeader from './components/AddCompanyHeader/AddCompanyHeader';
+import { MobileCompoundTitle } from '../../../styles/sharedStyles';
 
 const MainWrapper = styled.div`
   width: 100%;
@@ -24,9 +25,9 @@ const AddCompanyController: React.FC<Props> = ({ isOpen, setOpen }) => {
   return (
     <MainWrapper>
       <PageContextProvider>
-        <AddCompanyHeader />
+        <AddCompanyHeader setBoxState={setOpen} />
         <AddCompanyTemplate pageIndex={0}>
-          <p>Test - strona 1</p>
+          <MobileCompoundTitle>Główne informacje o twojej firmie</MobileCompoundTitle>
         </AddCompanyTemplate>
       </PageContextProvider>
     </MainWrapper>

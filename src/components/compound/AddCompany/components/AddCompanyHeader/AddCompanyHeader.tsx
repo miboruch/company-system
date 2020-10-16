@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { PageContext } from '../../context/PageContext';
 import ArrowButton from '../../../../atoms/ArrowButton/ArrowButton';
 import { Direction } from '../../../../../types/globalTypes';
+import CloseButton from '../../../../atoms/CloseButton/CloseButton';
 
 const StyledHeader = styled.header`
   width: 100%;
@@ -14,15 +15,23 @@ const StyledHeader = styled.header`
   justify-content: space-between;
 `;
 
-interface Props {}
+const Text = styled.p`
+  font-weight: ${({ theme }) => theme.font.weight.demi};
+  color: ${({ theme }) => theme.colors.black};
+  font-size: 14px;
+`;
 
-const AddCompanyHeader: React.FC<Props> = () => {
+interface Props {
+  setBoxState: (isOpen: boolean) => void;
+}
+
+const AddCompanyHeader: React.FC<Props> = ({ setBoxState }) => {
   const { currentPage } = useContext(PageContext);
   return (
     <StyledHeader>
-      <ArrowButton direction={Direction.Left} />
-      <p>Krok {currentPage + 1}</p>
-      <p>Close button</p>
+      {currentPage !== 0 && <ArrowButton direction={Direction.Left} />}
+      <Text>Krok {currentPage + 1}</Text>
+      <CloseButton setBoxState={() => setBoxState(false)} />
     </StyledHeader>
   );
 };
