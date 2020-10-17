@@ -8,6 +8,13 @@ import { CompanyDataContext } from '../context/CompanyDataContext';
 import { PageContext } from '../context/PageContext';
 import Button from '../../../atoms/Button/Button';
 
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+`;
+
 const StyledInput = styled(Input)`
   margin-bottom: 5rem;
 `;
@@ -47,25 +54,27 @@ const MainCompanyInfo: React.FC<Props> = () => {
   return (
     <Formik onSubmit={handleSubmit} initialValues={initialValues}>
       {({ handleChange, values }) => (
-        <StyledForm>
-          <MobileCompoundTitle>Główne informacje o twojej firmie</MobileCompoundTitle>
-          <StyledInput onChange={handleChange} name={'name'} value={values.name} required={true} type={'text'} labelText={'Naza firmy'} />
-          <StyledInput onChange={handleChange} name={'nip'} value={values.nip} required={true} type={'text'} labelText={'NIP'} />
-          <StyledInput onChange={handleChange} name={'email'} value={values.email} required={true} type={'email'} labelText={'Email'} />
-          <div>
-            <StyledLabel>Numer telefonu</StyledLabel>
-            <NumberFormat
-              onValueChange={(values) => console.log(values)}
-              name={'phoneNumber'}
-              value={values.phoneNumber}
-              format={'### ### ###'}
-              className={'phone-input'}
-            />
-          </div>
-          <FlexWrapper>
-            <Button type={'submit'} text={'Dalej'} />
-          </FlexWrapper>
-        </StyledForm>
+        <Wrapper>
+          <StyledForm>
+            <MobileCompoundTitle>Główne informacje o twojej firmie</MobileCompoundTitle>
+            <StyledInput onChange={handleChange} name={'name'} value={values.name} required={true} type={'text'} labelText={'Naza firmy'} />
+            <StyledInput onChange={handleChange} name={'nip'} value={values.nip} required={true} type={'text'} labelText={'NIP'} />
+            <StyledInput onChange={handleChange} name={'email'} value={values.email} required={true} type={'email'} labelText={'Email'} />
+            <div>
+              <StyledLabel>Numer telefonu</StyledLabel>
+              <NumberFormat
+                onValueChange={(values) => console.log(values)}
+                name={'phoneNumber'}
+                value={values.phoneNumber}
+                format={'### ### ###'}
+                className={'phone-input'}
+              />
+            </div>
+            <FlexWrapper>
+              <Button type={'submit'} text={'Dalej'} />
+            </FlexWrapper>
+          </StyledForm>
+        </Wrapper>
       )}
     </Formik>
   );

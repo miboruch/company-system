@@ -13,6 +13,10 @@ const StyledHeader = styled.header`
   align-items: center;
   padding: 0 2rem;
   justify-content: space-between;
+
+  ${({ theme }) => theme.mq.hdReady} {
+    display: none;
+  }
 `;
 
 const Text = styled.p`

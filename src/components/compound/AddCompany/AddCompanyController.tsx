@@ -32,12 +32,16 @@ const MainWrapper = styled.div<MainWrapperInterface>`
 
 const Wrapper = styled.div`
   width: 100%;
-  height: calc(100vh - 80px);
+  height: 100vh;
 
   ${({ theme }) => theme.mq.hdReady} {
     width: 80%;
     height: 80vh;
     background-color: ${({ theme }) => theme.colors.white};
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 `;
 
@@ -49,10 +53,10 @@ interface Props {
 const AddCompanyController: React.FC<Props> = ({ isOpen, setOpen }) => {
   // TODO: gsap animation to open/close component
   return (
-    <MainWrapper isOpen={isOpen}>
-      <Wrapper>
-        <CompanyDataContextProvider>
-          <PageContextProvider>
+    <CompanyDataContextProvider>
+      <PageContextProvider>
+        <MainWrapper isOpen={isOpen}>
+          <Wrapper>
             <AddCompanyHeader setBoxState={setOpen} />
             <AddCompanyTemplate pageIndex={0}>
               <MainCompanyInfo />
@@ -60,10 +64,10 @@ const AddCompanyController: React.FC<Props> = ({ isOpen, setOpen }) => {
             <AddCompanyTemplate pageIndex={1} withoutPadding={true}>
               <MapPage />
             </AddCompanyTemplate>
-          </PageContextProvider>
-        </CompanyDataContextProvider>
-      </Wrapper>
-    </MainWrapper>
+          </Wrapper>
+        </MainWrapper>
+      </PageContextProvider>
+    </CompanyDataContextProvider>
   );
 };
 
