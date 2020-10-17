@@ -11,7 +11,8 @@ interface Props {
 
 const AddCompanyTemplate: React.FC<Props> = ({ pageIndex, children, withoutPadding }) => {
   const { currentPage } = useContext(PageContext);
-  return <>{currentPage === pageIndex && <Wrapper withoutPadding={!!withoutPadding}>{children}</Wrapper>}</>;
+  return <>{currentPage === pageIndex && children}</>;
+  // return <>{currentPage === pageIndex && <Wrapper withoutPadding={!!withoutPadding}>{children}</Wrapper>}</>;
 };
 
 export default AddCompanyTemplate;

@@ -14,10 +14,10 @@ const Wrapper = styled.div<WrapperProps>`
     height: 100%;
     background-color: ${({ theme }) => theme.colors.white};
     position: relative;
-    display: grid;
-    grid-template-columns: 25% 75%;
-    grid-template-rows: 100px auto;
-    grid-template-areas: 'title heading' 'list content';
+    //display: grid;
+    //grid-template-columns: 25% 75%;
+    //grid-template-rows: 100px auto;
+    //grid-template-areas: 'title heading' 'list content';
   }
 `;
 

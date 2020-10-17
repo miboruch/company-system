@@ -10,9 +10,15 @@ import Button from '../../../atoms/Button/Button';
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 100%;
+  height: calc(100% - 80px);
   display: grid;
   place-items: center;
+  padding: 0 2rem;
+
+  ${({ theme }) => theme.mq.hdReady} {
+    height: 100%;
+    grid-area: content;
+  }
 `;
 
 const StyledInput = styled(Input)`
