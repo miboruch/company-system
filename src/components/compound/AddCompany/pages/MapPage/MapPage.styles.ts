@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { MobileCompoundTitle } from '../../../../../styles/sharedStyles';
 
 const MapWrapper = styled.div`
   width: 100%;
@@ -19,23 +18,13 @@ const MapWrapper = styled.div`
   }
 `;
 
-const StyledCompoundTitle = styled(MobileCompoundTitle)`
-  padding: 0 2rem;
-  justify-self: flex-start;
-
-  ${({ theme }) => theme.mq.hdReady} {
-    grid-area: heading;
-    align-self: center;
-    margin: 0;
-  }
-`;
-
-const SubheadingWrapper = styled.div`
+const HeadingWrapper = styled.div`
   width: 100%;
   height: 50px;
+  padding-left: 2.5rem;
 
   ${({ theme }) => theme.mq.hdReady} {
-    grid-area: heading;
+    display: none;
   }
 `;
 
@@ -59,8 +48,8 @@ const ButtonWrapper = styled.div`
   left: 0;
   z-index: 10;
   background-color: white;
-  
-  ${({theme}) => theme.mq.hdReady}{
+
+  ${({ theme }) => theme.mq.hdReady} {
     display: flex;
     align-items: center;
     flex-direction: row;
@@ -69,4 +58,4 @@ const ButtonWrapper = styled.div`
   }
 `;
 
-export { MapWrapper, StyledCompoundTitle, SubheadingWrapper, CenterBox, ButtonWrapper };
+export { MapWrapper, HeadingWrapper, CenterBox, ButtonWrapper };

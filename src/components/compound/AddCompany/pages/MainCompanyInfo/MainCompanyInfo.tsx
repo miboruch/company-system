@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import NumberFormat from 'react-number-format';
 import { Formik } from 'formik';
-import { FlexWrapper, StyledLabel, MobileCompoundTitle } from '../../../../../styles/sharedStyles';
+import Button from '../../../../atoms/Button/Button';
+import { FlexWrapper, StyledLabel } from '../../../../../styles/sharedStyles';
 import { CompanyDataContext } from '../../context/CompanyDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
-import Button from '../../../../atoms/Button/Button';
-import { StyledForm, StyledInput, Wrapper, StyledCompoundTitle, MobileCompoundTitleNoneStandard, Subheading, HeadingWrapper } from './MainCompanyInfo.styles';
+import { Wrapper, StyledForm, StyledInput, MobileCompoundTitle, Subheading, HeadingWrapper } from '../../../../../styles/compoundStyles';
 
 type defaultValues = {
   name: string;
@@ -37,33 +37,30 @@ const MainCompanyInfo: React.FC<Props> = () => {
   return (
     <Formik onSubmit={handleSubmit} initialValues={initialValues}>
       {({ handleChange, values }) => (
-        <>
-          <StyledCompoundTitle>Uzupełnij informacje o swojej firmie</StyledCompoundTitle>
-          <Wrapper>
-            <StyledForm>
-              <HeadingWrapper>
-                <MobileCompoundTitle>Główne informacje o twojej firmie</MobileCompoundTitle>
-                <Subheading>Wszystkie pola są wymagane</Subheading>
-              </HeadingWrapper>
-              <StyledInput onChange={handleChange} name={'name'} value={values.name} required={true} type={'text'} labelText={'Naza firmy'} />
-              <StyledInput onChange={handleChange} name={'nip'} value={values.nip} required={true} type={'text'} labelText={'NIP'} />
-              <StyledInput onChange={handleChange} name={'email'} value={values.email} required={true} type={'email'} labelText={'Email'} />
-              <div>
-                <StyledLabel>Numer telefonu</StyledLabel>
-                <NumberFormat
-                  onValueChange={(values) => console.log(values)}
-                  name={'phoneNumber'}
-                  value={values.phoneNumber}
-                  format={'### ### ###'}
-                  className={'phone-input'}
-                />
-              </div>
-              <FlexWrapper>
-                <Button type={'submit'} text={'Dalej'} />
-              </FlexWrapper>
-            </StyledForm>
-          </Wrapper>
-        </>
+        <Wrapper>
+          <StyledForm>
+            <HeadingWrapper>
+              <MobileCompoundTitle>Główne informacje o twojej firmie</MobileCompoundTitle>
+              <Subheading>Wszystkie pola są wymagane</Subheading>
+            </HeadingWrapper>
+            <StyledInput onChange={handleChange} name={'name'} value={values.name} required={true} type={'text'} labelText={'Naza firmy'} />
+            <StyledInput onChange={handleChange} name={'nip'} value={values.nip} required={true} type={'text'} labelText={'NIP'} />
+            <StyledInput onChange={handleChange} name={'email'} value={values.email} required={true} type={'email'} labelText={'Email'} />
+            <div>
+              <StyledLabel>Numer telefonu</StyledLabel>
+              <NumberFormat
+                onValueChange={(values) => console.log(values)}
+                name={'phoneNumber'}
+                value={values.phoneNumber}
+                format={'### ### ###'}
+                className={'phone-input'}
+              />
+            </div>
+            <FlexWrapper>
+              <Button type={'submit'} text={'Dalej'} />
+            </FlexWrapper>
+          </StyledForm>
+        </Wrapper>
       )}
     </Formik>
   );

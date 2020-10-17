@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import Input from '../../../../atoms/Input/Input';
+import Input from '../components/atoms/Input/Input';
 import { Form } from 'formik';
-import { MobileCompoundTitle } from '../../../../../styles/sharedStyles';
+import { BackParagraph } from './sharedStyles';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -22,10 +22,6 @@ const Wrapper = styled.div`
   }
 `;
 
-const StyledInput = styled(Input)`
-  margin-bottom: 5rem;
-`;
-
 const StyledForm = styled(Form)`
   width: 100%;
   padding: 0 2rem;
@@ -35,13 +31,13 @@ const StyledForm = styled(Form)`
   }
 `;
 
-const MobileCompoundTitleNoneStandard = styled(MobileCompoundTitle)`
-  ${({ theme }) => theme.mq.hdReady} {
-    display: none;
-  }
+const MobileCompoundTitle = styled.h2`
+  font-size: 20px;
+  color: ${({ theme }) => theme.colors.black};
+  font-weight: ${({ theme }) => theme.font.weight.medium};
 `;
 
-const StyledCompoundTitle = styled(MobileCompoundTitle)`
+const StandardCompoundTitle = styled(MobileCompoundTitle)`
   display: none;
 
   ${({ theme }) => theme.mq.hdReady} {
@@ -59,7 +55,7 @@ const StyledCompoundTitle = styled(MobileCompoundTitle)`
 `;
 
 const HeadingWrapper = styled.div`
-  margin-bottom: 3rem;
+  margin-bottom: 5rem;
 `;
 
 const Subheading = styled.h3`
@@ -69,4 +65,16 @@ const Subheading = styled.h3`
   margin-top: 0.5rem;
 `;
 
-export { Wrapper, StyledInput, StyledForm, StyledCompoundTitle, MobileCompoundTitleNoneStandard, Subheading, HeadingWrapper };
+const StyledInput = styled(Input)`
+  margin-bottom: 5rem;
+`;
+
+const StyledBackParagraph = styled(BackParagraph)`
+  display: none;
+
+  ${({ theme }) => theme.mq.hdReady} {
+    display: block;
+  }
+`;
+
+export { Wrapper, StyledForm, StyledInput, MobileCompoundTitle, StandardCompoundTitle, HeadingWrapper, Subheading, StyledBackParagraph };

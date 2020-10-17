@@ -1,13 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
 import * as Leaflet from 'leaflet';
 import { Map, Marker, TileLayer } from 'react-leaflet';
-import { BackParagraph, SpinnerWrapper } from '../../../../../styles/sharedStyles';
 import Spinner from '../../../../atoms/Spinner/Spinner';
-import { markerCustomIcon } from '../../components/MapIcons/customMapIcons';
 import Button from '../../../../atoms/Button/Button';
+import { SpinnerWrapper } from '../../../../../styles/sharedStyles';
+import { markerCustomIcon } from '../../components/MapIcons/customMapIcons';
 import { CompanyDataContext } from '../../context/CompanyDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
-import { ButtonWrapper, CenterBox, MapWrapper, StyledCompoundTitle } from './MapPage.styles';
+import { ButtonWrapper, CenterBox, MapWrapper, HeadingWrapper } from './MapPage.styles';
+import { StyledBackParagraph } from '../../../../../styles/compoundStyles';
+import { MobileCompoundTitle } from '../../../../../styles/compoundStyles';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -20,7 +22,7 @@ interface Coords {
 
 const MapPage: React.FC<Props> = () => {
   const { data, setData } = useContext(CompanyDataContext);
-  const { currentPage, setCurrentPage } = useContext(PageContext);
+  const { setCurrentPage } = useContext(PageContext);
   const [isLoading, setLoading] = useState<boolean>(false);
   const [coords, setCoords] = useState<Coords>({ lat: data.lat || null, long: data.long || null });
   const [mapPositionLat, setMapPositionLat] = useState<number | null>(null);
@@ -42,10 +44,9 @@ const MapPage: React.FC<Props> = () => {
     </SpinnerWrapper>
   ) : (
     <>
-      {/*<SubheadingWrapper>*/}
-      <StyledCompoundTitle>Lokalizacja twojej firmy</StyledCompoundTitle>
-      {/*</SubheadingWrapper>*/}
-
+      <HeadingWrapper>
+        <MobileCompoundTitle>Zaznacz lokalizacje</MobileCompoundTitle>
+      </HeadingWrapper>
       <MapWrapper>
         <CenterBox>test</CenterBox>
         <Map
@@ -62,7 +63,7 @@ const MapPage: React.FC<Props> = () => {
           {coords.lat && coords.long && <Marker icon={markerCustomIcon} position={[coords.lat, coords.long]} />}
         </Map>
         <ButtonWrapper>
-          <BackParagraph onClick={() => setCurrentPage(PageSettingEnum.First)}>Wstecz</BackParagraph>
+          <StyledBackParagraph onClick={() => setCurrentPage(PageSettingEnum.First)}>Wstecz</StyledBackParagraph>
           <Button onClick={() => setCurrentPage(PageSettingEnum.Third)} type={'button'} text={'Dalej'} disabled={!coords.lat || !coords.long} />
         </ButtonWrapper>
       </MapWrapper>

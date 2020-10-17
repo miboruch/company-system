@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { Formik } from 'formik';
-import { BackParagraph, DoubleFlexWrapper, MobileCompoundTitle } from '../../../../../styles/sharedStyles';
+import Button from '../../../../atoms/Button/Button';
+import { DoubleFlexWrapper } from '../../../../../styles/sharedStyles';
 import { CompanyDataContext } from '../../context/CompanyDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
-import Button from '../../../../atoms/Button/Button';
-import { StyledForm, StyledInput, Wrapper } from './AddressInfo.styles';
+import { HeadingWrapper, MobileCompoundTitle, StyledForm, StyledInput, Subheading, Wrapper, StyledBackParagraph } from '../../../../../styles/compoundStyles';
 
 type defaultValues = {
   address: string;
@@ -35,12 +35,15 @@ const AddressInfo: React.FC<Props> = () => {
       {({ handleChange, values }) => (
         <Wrapper>
           <StyledForm>
-            <MobileCompoundTitle>Informacje o lokalizacji</MobileCompoundTitle>
+            <HeadingWrapper>
+              <MobileCompoundTitle>Główne informacje o twojej firmie</MobileCompoundTitle>
+              <Subheading>Wszystkie pola są wymagane</Subheading>
+            </HeadingWrapper>
             <StyledInput onChange={handleChange} name={'address'} value={values.address} required={true} type={'text'} labelText={'Adres'} />
             <StyledInput onChange={handleChange} name={'city'} value={values.city} required={true} type={'text'} labelText={'Miasto'} />
             <StyledInput onChange={handleChange} name={'country'} value={values.country} required={true} type={'text'} labelText={'Kraj'} />
             <DoubleFlexWrapper>
-              <BackParagraph onClick={() => setCurrentPage(PageSettingEnum.Second)}>Wstecz</BackParagraph>
+              <StyledBackParagraph onClick={() => setCurrentPage(PageSettingEnum.Second)}>Wstecz</StyledBackParagraph>
               <Button type={'submit'} text={'Dalej'} />
             </DoubleFlexWrapper>
           </StyledForm>

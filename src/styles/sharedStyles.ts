@@ -57,10 +57,12 @@ const Title = styled.h1`
   grid-area: name;
   font-weight: ${({ theme }) => theme.font.weight.demi};
   align-self: flex-start;
+  padding: 0 2rem;
 
   ${({ theme }) => theme.mq.hdReady} {
     font-weight: ${({ theme }) => theme.font.weight.bold};
     align-self: center;
+    padding: 0;
   }
 `;
 
@@ -119,13 +121,6 @@ const EmptyParagraph = styled.p`
   color: ${({ theme }) => theme.colors.emptyText};
 `;
 
-const MobileCompoundTitle = styled.h2`
-  font-size: 20px;
-  color: ${({ theme }) => theme.colors.black};
-  font-weight: ${({ theme }) => theme.font.weight.medium};
-  //margin-bottom: 3rem;
-`;
-
 const CompoundListWrapper = styled.div`
   grid-area: list;
   display: none;
@@ -154,6 +149,5 @@ export {
   DoubleFlexWrapper,
   ErrorParagraph,
   EmptyParagraph,
-  MobileCompoundTitle,
   CompoundListWrapper
 };

@@ -9,6 +9,7 @@ import MapPage from './pages/MapPage/MapPage';
 import AddressInfo from './pages/AddressInfo/AddressInfo';
 import CompoundStepBox from '../../molecules/CompoundStepBox/CompoundStepBox';
 import { addCompanySteps } from './utils/AddCompanySteps';
+import { StandardCompoundTitle } from '../../../styles/compoundStyles';
 
 interface MainWrapperInterface {
   isOpen: boolean;
@@ -102,6 +103,7 @@ const AddCompanyController: React.FC<Props> = ({ isOpen, setOpen }) => {
           <Wrapper>
             <AddCompanyHeader setBoxState={setOpen} />
             <CompoundTitle>Dodaj firme</CompoundTitle>
+            <StandardCompoundTitle>Uzupełnij informacje o swojej firmie</StandardCompoundTitle>
             {/*TODO: create component with list to get access to data*/}
             <ListWrapper>
               {addCompanySteps.map(({ stepName, description, pageIndex }) => (
