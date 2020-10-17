@@ -1,13 +1,13 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import * as Leaflet from 'leaflet';
 import { Map, Marker, TileLayer } from 'react-leaflet';
-import { SpinnerWrapper } from '../../../../../styles/sharedStyles';
+import { BackParagraph, SpinnerWrapper } from '../../../../../styles/sharedStyles';
 import Spinner from '../../../../atoms/Spinner/Spinner';
 import { markerCustomIcon } from '../../components/MapIcons/customMapIcons';
 import Button from '../../../../atoms/Button/Button';
 import { CompanyDataContext } from '../../context/CompanyDataContext';
-import { PageContext } from '../../context/PageContext';
-import { MapWrapper, StyledCompoundTitle, SubheadingWrapper, CenterBox, ButtonWrapper } from './MapPage.styles';
+import { PageContext, PageSettingEnum } from '../../context/PageContext';
+import { ButtonWrapper, CenterBox, MapWrapper, StyledCompoundTitle } from './MapPage.styles';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -62,7 +62,8 @@ const MapPage: React.FC<Props> = () => {
           {coords.lat && coords.long && <Marker icon={markerCustomIcon} position={[coords.lat, coords.long]} />}
         </Map>
         <ButtonWrapper>
-          <Button onClick={() => setCurrentPage(currentPage + 1)} type={'button'} text={'Dalej'} disabled={!coords.lat || !coords.long} />
+          <BackParagraph onClick={() => setCurrentPage(PageSettingEnum.First)}>Wstecz</BackParagraph>
+          <Button onClick={() => setCurrentPage(PageSettingEnum.Third)} type={'button'} text={'Dalej'} disabled={!coords.lat || !coords.long} />
         </ButtonWrapper>
       </MapWrapper>
     </>

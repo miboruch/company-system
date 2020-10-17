@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import PageContextProvider from './context/PageContext';
+import PageContextProvider, { PageSettingEnum } from './context/PageContext';
 import AddCompanyTemplate from './templates/AddCompanyTemplate/AddCompanyTemplate';
 import AddCompanyHeader from './components/AddCompanyHeader/AddCompanyHeader';
 import CompanyDataContextProvider from './context/CompanyDataContext';
@@ -39,6 +39,7 @@ const Wrapper = styled.div`
 
   ${({ theme }) => theme.mq.hdReady} {
     width: 80%;
+    //width: 90%;
     height: 80vh;
     position: relative;
     background-color: ${({ theme }) => theme.colors.white};
@@ -50,8 +51,12 @@ const Wrapper = styled.div`
     //align-items: center;
     display: grid;
     grid-template-columns: 25% 75%;
-    grid-template-rows: 100px auto;
+    grid-template-rows: 150px auto;
     grid-template-areas: 'title heading' 'list content';
+  }
+
+  ${({ theme }) => theme.mq.fullHd} {
+    width: 80%;
   }
 `;
 
@@ -72,13 +77,14 @@ const CompoundTitle = styled.h1`
   font-size: 36px;
   font-weight: ${({ theme }) => theme.font.weight.demi};
   letter-spacing: -1px;
-  padding: 0 2rem;
+  padding: 0 4rem;
   display: none;
 
   ${({ theme }) => theme.mq.hdReady} {
     display: block;
     grid-area: title;
     align-self: center;
+    justify-self: center;
   }
 `;
 
@@ -96,18 +102,19 @@ const AddCompanyController: React.FC<Props> = ({ isOpen, setOpen }) => {
           <Wrapper>
             <AddCompanyHeader setBoxState={setOpen} />
             <CompoundTitle>Dodaj firme</CompoundTitle>
+            {/*TODO: create component with list to get access to data*/}
             <ListWrapper>
               {addCompanySteps.map(({ stepName, description, pageIndex }) => (
                 <CompoundStepBox stepName={stepName} description={description} stepNumber={pageIndex + 1} isCompleted={false} allSteps={addCompanySteps.length} />
               ))}
             </ListWrapper>
-            <AddCompanyTemplate pageIndex={0}>
+            <AddCompanyTemplate pageIndex={PageSettingEnum.First}>
               <MainCompanyInfo />
             </AddCompanyTemplate>
-            <AddCompanyTemplate pageIndex={1} withoutPadding={true}>
+            <AddCompanyTemplate pageIndex={PageSettingEnum.Second} withoutPadding={true}>
               <MapPage />
             </AddCompanyTemplate>
-            <AddCompanyTemplate pageIndex={2}>
+            <AddCompanyTemplate pageIndex={PageSettingEnum.Third}>
               <AddressInfo />
             </AddCompanyTemplate>
           </Wrapper>

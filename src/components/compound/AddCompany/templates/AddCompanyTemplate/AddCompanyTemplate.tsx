@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { PageContext } from '../../context/PageContext';
+import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { Wrapper } from './AddCompanyTemplate.styles';
 
 interface Props {
-  pageIndex: number;
+  pageIndex: PageSettingEnum;
   children: React.ReactNode;
   withoutPadding?: boolean;
 }

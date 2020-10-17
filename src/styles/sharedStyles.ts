@@ -126,6 +126,18 @@ const MobileCompoundTitle = styled.h2`
   margin-bottom: 3rem;
 `;
 
+const CompoundListWrapper = styled.div`
+  grid-area: list;
+  display: none;
+  overflow: hidden;
+  overflow-y: scroll;
+
+  ${({ theme }) => theme.mq.hdReady} {
+    display: flex;
+    flex-direction: column;
+  }
+`;
+
 export {
   HomeIcon,
   PaymentIcon,
@@ -142,5 +154,6 @@ export {
   DoubleFlexWrapper,
   ErrorParagraph,
   EmptyParagraph,
-  MobileCompoundTitle
+  MobileCompoundTitle,
+  CompoundListWrapper
 };

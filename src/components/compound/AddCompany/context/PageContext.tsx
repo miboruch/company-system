@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
 
+export enum PageSettingEnum {
+  First = 0,
+  Second = 1,
+  Third = 2
+}
+
 type PageContextType = {
-  currentPage: number;
-  setCurrentPage: (page: number) => void;
+  currentPage: PageSettingEnum;
+  setCurrentPage: (page: PageSettingEnum) => void;
 };
 
 export const PageContext = React.createContext<PageContextType>({
-  currentPage: 0,
-  setCurrentPage: (page: number) => {}
+  currentPage: PageSettingEnum.First,
+  setCurrentPage: (page: PageSettingEnum) => {}
 });
 
 interface Props {
@@ -15,7 +21,7 @@ interface Props {
 }
 
 const PageContextProvider: React.FC<Props> = ({ children }) => {
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<PageSettingEnum>(PageSettingEnum.First);
 
   return <PageContext.Provider value={{ currentPage, setCurrentPage }}>{children}</PageContext.Provider>;
 };

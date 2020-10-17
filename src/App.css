@@ -3,6 +3,7 @@
   height: 30px;
   border: none;
   border-bottom: 1px solid rgba(255, 70, 92, 0.5);
+  background-color: transparent;
   margin-bottom: 3rem;
   color: rgba(0, 0, 0, 0.6);
   font-size: 16px;
@@ -11,6 +12,12 @@
 
 .phone-input:focus {
   outline: none;
+}
+
+@media all and (min-width: 1024px) {
+  .phone-input {
+    color: #1d1d1d;
+  }
 }
 
 .react-datepicker {

@@ -59,6 +59,14 @@ const ButtonWrapper = styled.div`
   left: 0;
   z-index: 10;
   background-color: white;
+  
+  ${({theme}) => theme.mq.hdReady}{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 2rem;
+  }
 `;
 
 export { MapWrapper, StyledCompoundTitle, SubheadingWrapper, CenterBox, ButtonWrapper };

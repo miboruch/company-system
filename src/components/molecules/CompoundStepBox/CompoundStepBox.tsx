@@ -12,7 +12,7 @@ const Wrapper = styled.div<WrapperProps>`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding: 1rem 2.5rem;
   transition: background-color 0.3s ease;
 
@@ -41,6 +41,15 @@ const ContentWrapper = styled.section`
   flex-direction: column;
 `;
 
+const Circle = styled.div`
+  width: 32px;
+  height: 32px;
+  background-color: transparent;
+  border: 1px solid ${({ theme }) => theme.colors.gray};
+  border-radius: 50%;
+  margin-right: 2rem;
+`;
+
 interface Props {
   stepName: string;
   description: string;
@@ -52,6 +61,7 @@ interface Props {
 const CompoundStepBox: React.FC<Props> = ({ stepName, description, stepNumber, isCompleted, allSteps }) => {
   return (
     <Wrapper allSteps={allSteps}>
+      <Circle />
       <ContentWrapper>
         <Subparagraph>Krok {stepNumber}</Subparagraph>
         <Name>{stepName}</Name>

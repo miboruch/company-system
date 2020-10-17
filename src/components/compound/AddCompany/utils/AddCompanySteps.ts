@@ -1,23 +1,25 @@
+import { PageSettingEnum } from '../context/PageContext';
+
 export interface StepObjectInterface {
   stepName: string;
   description: string;
-  pageIndex: number;
+  pageIndex: PageSettingEnum;
 }
 
 export const addCompanySteps: StepObjectInterface[] = [
   {
     stepName: 'Główne informacje o twojej firmie',
     description: 'Nazwa, NIP, email, numer telefonu',
-    pageIndex: 0
+    pageIndex: PageSettingEnum.First
   },
   {
     stepName: 'Lokalizacja twojej firmy',
     description: 'Pozycja na mapie',
-    pageIndex: 1
+    pageIndex: PageSettingEnum.Second
   },
   {
     stepName: 'Informacje o lokalizacji',
     description: 'Adres, miasto, kraj',
-    pageIndex: 2
+    pageIndex: PageSettingEnum.Third
   }
 ];

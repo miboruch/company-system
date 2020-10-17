@@ -53,7 +53,7 @@ const StyledInput = styled.input`
   }
 
   ${({ theme }) => theme.mq.standard} {
-    color: #1d1d1d;
+    color: ${({ theme }) => theme.colors.inputColorStandard};
   }
 `;
 

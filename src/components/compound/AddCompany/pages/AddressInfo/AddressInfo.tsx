@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { Formik } from 'formik';
-import { MobileCompoundTitle, FlexWrapper } from '../../../../../styles/sharedStyles';
+import { BackParagraph, DoubleFlexWrapper, MobileCompoundTitle } from '../../../../../styles/sharedStyles';
 import { CompanyDataContext } from '../../context/CompanyDataContext';
-import { PageContext } from '../../context/PageContext';
+import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import Button from '../../../../atoms/Button/Button';
-import { Wrapper, StyledInput, StyledForm } from './AddressInfo.styles';
+import { StyledForm, StyledInput, Wrapper } from './AddressInfo.styles';
 
 type defaultValues = {
   address: string;
@@ -16,7 +16,7 @@ interface Props {}
 
 const AddressInfo: React.FC<Props> = () => {
   const { data, setData } = useContext(CompanyDataContext);
-  const { currentPage, setCurrentPage } = useContext(PageContext);
+  const { setCurrentPage } = useContext(PageContext);
 
   const initialValues: defaultValues = {
     address: data.address ? data.address : '',
@@ -39,9 +39,10 @@ const AddressInfo: React.FC<Props> = () => {
             <StyledInput onChange={handleChange} name={'address'} value={values.address} required={true} type={'text'} labelText={'Adres'} />
             <StyledInput onChange={handleChange} name={'city'} value={values.city} required={true} type={'text'} labelText={'Miasto'} />
             <StyledInput onChange={handleChange} name={'country'} value={values.country} required={true} type={'text'} labelText={'Kraj'} />
-            <FlexWrapper>
+            <DoubleFlexWrapper>
+              <BackParagraph onClick={() => setCurrentPage(PageSettingEnum.Second)}>Wstecz</BackParagraph>
               <Button type={'submit'} text={'Dalej'} />
-            </FlexWrapper>
+            </DoubleFlexWrapper>
           </StyledForm>
         </Wrapper>
       )}
