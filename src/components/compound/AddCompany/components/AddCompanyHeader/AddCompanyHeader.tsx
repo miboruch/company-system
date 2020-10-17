@@ -26,10 +26,11 @@ interface Props {
 }
 
 const AddCompanyHeader: React.FC<Props> = ({ setBoxState }) => {
-  const { currentPage } = useContext(PageContext);
+  const { currentPage, setCurrentPage } = useContext(PageContext);
+
   return (
     <StyledHeader>
-      <ArrowButton direction={Direction.Left} isHidden={currentPage === 0} />
+      <ArrowButton direction={Direction.Left} isHidden={currentPage === 0} onClick={() => currentPage !== 0 && setCurrentPage(currentPage - 1)} />
       <Text>Krok {currentPage + 1}</Text>
       <CloseButton setBoxState={() => setBoxState(false)} />
     </StyledHeader>

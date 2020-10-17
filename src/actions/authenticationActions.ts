@@ -70,7 +70,7 @@ const setUserData = (
   };
 };
 
-const getNewAccessToken = (refreshToken: string, successCallback?: () => void) => async (dispatch: Dispatch<AppTypes | any>) => {
+const getNewAccessToken = (refreshToken: string, successCallback?: () => void, errorCallback?: () => void) => async (dispatch: Dispatch<AppTypes | any>) => {
   try {
     const { data } = await axios.post(`${API_URL}/auth/token`, {
       refreshToken: refreshToken
@@ -82,6 +82,8 @@ const getNewAccessToken = (refreshToken: string, successCallback?: () => void) =
     dispatch(authTimeout(refreshToken, data.expireIn - new Date().getTime()));
   } catch (error) {
     console.log(error);
+    !!errorCallback && errorCallback();
+    dispatch(userLogout(refreshToken));
   }
 };
 
@@ -124,7 +126,7 @@ export const userLogin = (email: string, password: string, successCallback: () =
   }
 };
 
-export const userLogout = (refreshToken: string, successCallback?: () => void) => async (dispatch: Dispatch<AppTypes>) => {
+export const userLogout = (refreshToken: string, successCallback?: () => void, errorCallback?: () => void) => async (dispatch: Dispatch<AppTypes>) => {
   try {
     dispatch(authStart());
     await axios.post(`${API_URL}/auth/logout`, { refreshToken: refreshToken });
@@ -132,6 +134,7 @@ export const userLogout = (refreshToken: string, successCallback?: () => void) =
     dispatch(authLogout());
     !!successCallback && successCallback();
   } catch (error) {
+    !!errorCallback && errorCallback();
     console.log(error);
   }
 };
@@ -170,7 +173,7 @@ export const userRegister = (
   }
 };
 
-export const authenticateCheck = (successCallback: () => void) => async (dispatch: Dispatch<AppTypes | any>) => {
+export const authenticateCheck = (successCallback: () => void, errorCallback: () => void) => async (dispatch: Dispatch<AppTypes | any>) => {
   const token = localStorage.getItem('token');
   const refreshToken = localStorage.getItem('refreshToken');
   const expireDate = localStorage.getItem('expireDate');
@@ -181,7 +184,7 @@ export const authenticateCheck = (successCallback: () => void) => async (dispatc
     dispatch(getUserData(token));
 
     if (expDate <= new Date()) {
-      dispatch(getNewAccessToken(refreshToken, successCallback));
+      dispatch(getNewAccessToken(refreshToken, successCallback, errorCallback));
     } else {
       dispatch(authSuccess(token, refreshToken, new Date(expireDate).getTime()));
       dispatch(getUserData(token));
@@ -189,6 +192,6 @@ export const authenticateCheck = (successCallback: () => void) => async (dispatc
       dispatch(authTimeout(refreshToken, expDate.getTime() - new Date().getTime()));
     }
   } else {
-    refreshToken ? dispatch(userLogout(refreshToken)) : dispatch(authLogout());
+    refreshToken ? dispatch(userLogout(refreshToken, errorCallback)) : dispatch(authLogout());
   }
 };

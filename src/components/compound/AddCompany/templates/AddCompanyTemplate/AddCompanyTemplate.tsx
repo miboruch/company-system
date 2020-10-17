@@ -3,21 +3,15 @@ import styled from 'styled-components';
 import { PageContext } from '../../context/PageContext';
 import { Wrapper } from './AddCompanyTemplate.styles';
 
-const ContentWrapper = styled.section`
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-`;
-
 interface Props {
   pageIndex: number;
   children: React.ReactNode;
+  withoutPadding?: boolean;
 }
 
-const AddCompanyTemplate: React.FC<Props> = ({ pageIndex, children }) => {
+const AddCompanyTemplate: React.FC<Props> = ({ pageIndex, children, withoutPadding }) => {
   const { currentPage } = useContext(PageContext);
-  return <ContentWrapper>{currentPage === pageIndex && children}</ContentWrapper>;
+  return <>{currentPage === pageIndex && <Wrapper withoutPadding={!!withoutPadding}>{children}</Wrapper>}</>;
 };
 
 export default AddCompanyTemplate;

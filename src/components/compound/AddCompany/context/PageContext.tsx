@@ -15,7 +15,7 @@ interface Props {
 }
 
 const PageContextProvider: React.FC<Props> = ({ children }) => {
-  const [currentPage, setCurrentPage] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   return <PageContext.Provider value={{ currentPage, setCurrentPage }}>{children}</PageContext.Provider>;
 };

@@ -16,7 +16,7 @@ type ConnectedProps = Props & LinkStateProps;
 interface Props {}
 
 const CompaniesPage: React.FC<ConnectedProps> = ({ token }) => {
-  const [isLoading, setLoading] = useState<boolean>(false);
+  const [isLoading, setLoading] = useState<boolean>(true);
   const [isAddCompanyOpen, setAddCompanyOpen] = useState<boolean>(false);
   const [companies, setCompanies] = useState<Array<CompanyInterface>>([]);
 

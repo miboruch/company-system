@@ -5,6 +5,7 @@ import AddCompanyTemplate from './templates/AddCompanyTemplate/AddCompanyTemplat
 import AddCompanyHeader from './components/AddCompanyHeader/AddCompanyHeader';
 import MainCompanyInfo from './pages/MainCompanyInfo';
 import CompanyDataContextProvider from './context/CompanyDataContext';
+import MapPage from './pages/MapPage';
 
 interface MainWrapperInterface {
   isOpen: boolean;
@@ -32,7 +33,6 @@ const MainWrapper = styled.div<MainWrapperInterface>`
 const Wrapper = styled.div`
   width: 100%;
   height: calc(100vh - 80px);
-  padding: 0 2rem;
 
   ${({ theme }) => theme.mq.hdReady} {
     width: 80%;
@@ -56,6 +56,9 @@ const AddCompanyController: React.FC<Props> = ({ isOpen, setOpen }) => {
             <AddCompanyHeader setBoxState={setOpen} />
             <AddCompanyTemplate pageIndex={0}>
               <MainCompanyInfo />
+            </AddCompanyTemplate>
+            <AddCompanyTemplate pageIndex={1} withoutPadding={true}>
+              <MapPage />
             </AddCompanyTemplate>
           </PageContextProvider>
         </CompanyDataContextProvider>

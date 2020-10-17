@@ -20,7 +20,10 @@ type ConnectedProps = Props & LinkDispatchProps & RouteComponentProps<any>;
 
 const App: React.FC<ConnectedProps> = ({ history, authenticationCheck }) => {
   useEffect(() => {
-    authenticationCheck(() => history.push('/companies'));
+    authenticationCheck(
+      () => history.push('/companies'),
+      () => history.push('/login')
+    );
   }, []);
 
   return (
@@ -37,7 +40,7 @@ const App: React.FC<ConnectedProps> = ({ history, authenticationCheck }) => {
 };
 
 interface LinkDispatchProps {
-  authenticationCheck: (successCallback: () => void) => void;
+  authenticationCheck: (successCallback: () => void, errorCallback: () => void) => void;
 }
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
