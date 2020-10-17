@@ -7,7 +7,7 @@ type PageContextType = {
 
 export const PageContext = React.createContext<PageContextType>({
   currentPage: 0,
-  setCurrentPage: (page) => {}
+  setCurrentPage: (page: number) => {}
 });
 
 interface Props {

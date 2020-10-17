@@ -4,6 +4,7 @@ import PageContextProvider from './context/PageContext';
 import AddCompanyTemplate from './templates/AddCompanyTemplate/AddCompanyTemplate';
 import AddCompanyHeader from './components/AddCompanyHeader/AddCompanyHeader';
 import MainCompanyInfo from './pages/MainCompanyInfo';
+import CompanyDataContextProvider from './context/CompanyDataContext';
 
 interface MainWrapperInterface {
   isOpen: boolean;
@@ -20,6 +21,24 @@ const MainWrapper = styled.div<MainWrapperInterface>`
   opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
   visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
   transition: opacity 0.3s ease, visibility 0.3s ease;
+
+  ${({ theme }) => theme.mq.hdReady} {
+    background-color: rgba(0, 0, 0, 0.6);
+    display: grid;
+    place-items: center;
+  }
+`;
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: calc(100vh - 80px);
+  padding: 0 2rem;
+
+  ${({ theme }) => theme.mq.hdReady} {
+    width: 80%;
+    height: 80vh;
+    background-color: ${({ theme }) => theme.colors.white};
+  }
 `;
 
 interface Props {
@@ -31,12 +50,16 @@ const AddCompanyController: React.FC<Props> = ({ isOpen, setOpen }) => {
   // TODO: gsap animation to open/close component
   return (
     <MainWrapper isOpen={isOpen}>
-      <PageContextProvider>
-        <AddCompanyHeader setBoxState={setOpen} />
-        <AddCompanyTemplate pageIndex={0}>
-          <MainCompanyInfo />
-        </AddCompanyTemplate>
-      </PageContextProvider>
+      <Wrapper>
+        <CompanyDataContextProvider>
+          <PageContextProvider>
+            <AddCompanyHeader setBoxState={setOpen} />
+            <AddCompanyTemplate pageIndex={0}>
+              <MainCompanyInfo />
+            </AddCompanyTemplate>
+          </PageContextProvider>
+        </CompanyDataContextProvider>
+      </Wrapper>
     </MainWrapper>
   );
 };

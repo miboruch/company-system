@@ -3,6 +3,7 @@ import { Direction } from '../../../types/globalTypes';
 
 interface ArrowButtonInterface {
   direction: Direction;
+  isHidden: boolean;
 }
 
 const StyledArrowButton = styled.div<ArrowButtonInterface>`
@@ -14,6 +15,8 @@ const StyledArrowButton = styled.div<ArrowButtonInterface>`
   cursor: pointer;
   padding: 2rem;
   transform: rotate(${({ direction }) => (direction === Direction.Right ? '180deg' : '0')});
+  opacity: ${({ isHidden }) => (isHidden ? 0 : 1)};
+  //visibility: ${({ isHidden }) => (isHidden ? 'hidden' : 'visible')};
 
   &:focus {
     outline: none;
