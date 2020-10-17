@@ -51,7 +51,7 @@ const MapPage: React.FC<Props> = () => {
         <Map
           center={[mapPositionLat ? mapPositionLat : 52, mapPositionLong ? mapPositionLong : 20]}
           whenReady={() => setLoading(false)}
-          zoom={5}
+          zoom={mapPositionLat && mapPositionLong ? 11 : 5}
           zoomControl={false}
           onClick={(e: Leaflet.LeafletMouseEvent) => {
             setCoords({ lat: e.latlng.lat, long: e.latlng.lng });

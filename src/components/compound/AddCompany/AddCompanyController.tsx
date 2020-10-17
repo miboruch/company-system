@@ -7,6 +7,8 @@ import CompanyDataContextProvider from './context/CompanyDataContext';
 import MainCompanyInfo from './pages/MainCompanyInfo/MainCompanyInfo';
 import MapPage from './pages/MapPage/MapPage';
 import AddressInfo from './pages/AddressInfo/AddressInfo';
+import CompoundStepBox from '../../molecules/CompoundStepBox/CompoundStepBox';
+import { addCompanySteps } from './utils/AddCompanySteps';
 
 interface MainWrapperInterface {
   isOpen: boolean;
@@ -41,6 +43,7 @@ const Wrapper = styled.div`
     position: relative;
     background-color: ${({ theme }) => theme.colors.white};
     border-radius: 30px;
+    overflow: hidden;
     //display: flex;
     //flex-direction: column;
     //justify-content: center;
@@ -55,9 +58,12 @@ const Wrapper = styled.div`
 const ListWrapper = styled.div`
   grid-area: list;
   display: none;
+  overflow: hidden;
+  overflow-y: scroll;
 
   ${({ theme }) => theme.mq.hdReady} {
-    display: block;
+    display: flex;
+    flex-direction: column;
   }
 `;
 
@@ -91,7 +97,9 @@ const AddCompanyController: React.FC<Props> = ({ isOpen, setOpen }) => {
             <AddCompanyHeader setBoxState={setOpen} />
             <CompoundTitle>Dodaj firme</CompoundTitle>
             <ListWrapper>
-              <p>list</p>
+              {addCompanySteps.map(({ stepName, description, pageIndex }) => (
+                <CompoundStepBox stepName={stepName} description={description} stepNumber={pageIndex + 1} isCompleted={false} allSteps={addCompanySteps.length} />
+              ))}
             </ListWrapper>
             <AddCompanyTemplate pageIndex={0}>
               <MainCompanyInfo />
