@@ -1,34 +1,11 @@
 import React, { useContext } from 'react';
-import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
-import { Formik, Form } from 'formik';
-import Input from '../../../atoms/Input/Input';
-import { MobileCompoundTitle, StyledLabel, FlexWrapper } from '../../../../styles/sharedStyles';
-import { CompanyDataContext } from '../context/CompanyDataContext';
-import { PageContext } from '../context/PageContext';
-import Button from '../../../atoms/Button/Button';
-
-const Wrapper = styled.div`
-  width: 100%;
-  height: calc(100% - 80px);
-  display: grid;
-  place-items: center;
-  padding: 0 2rem;
-
-  ${({ theme }) => theme.mq.hdReady} {
-    height: 100%;
-    grid-area: content;
-  }
-`;
-
-const StyledInput = styled(Input)`
-  margin-bottom: 5rem;
-`;
-
-const StyledForm = styled(Form)`
-  width: 100%;
-  padding: 0 2rem;
-`;
+import { Formik } from 'formik';
+import { MobileCompoundTitle, StyledLabel, FlexWrapper } from '../../../../../styles/sharedStyles';
+import { CompanyDataContext } from '../../context/CompanyDataContext';
+import { PageContext } from '../../context/PageContext';
+import Button from '../../../../atoms/Button/Button';
+import { Wrapper, StyledInput, StyledForm } from './MainCompanyInfo.styles';
 
 type defaultValues = {
   name: string;

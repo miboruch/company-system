@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import PageContextProvider from './context/PageContext';
 import AddCompanyTemplate from './templates/AddCompanyTemplate/AddCompanyTemplate';
 import AddCompanyHeader from './components/AddCompanyHeader/AddCompanyHeader';
-import MainCompanyInfo from './pages/MainCompanyInfo';
 import CompanyDataContextProvider from './context/CompanyDataContext';
-import MapPage from './pages/MapPage';
-import AddressInfo from './pages/AddressInfo';
+import MainCompanyInfo from './pages/MainCompanyInfo/MainCompanyInfo';
+import MapPage from './pages/MapPage/MapPage';
+import AddressInfo from './pages/AddressInfo/AddressInfo';
 
 interface MainWrapperInterface {
   isOpen: boolean;
