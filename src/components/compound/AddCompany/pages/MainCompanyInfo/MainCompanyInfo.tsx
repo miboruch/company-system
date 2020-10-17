@@ -5,7 +5,7 @@ import { FlexWrapper, StyledLabel, MobileCompoundTitle } from '../../../../../st
 import { CompanyDataContext } from '../../context/CompanyDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import Button from '../../../../atoms/Button/Button';
-import { StyledForm, StyledInput, Wrapper, StyledCompoundTitle, MobileCompoundTitleNoneStandard } from './MainCompanyInfo.styles';
+import { StyledForm, StyledInput, Wrapper, StyledCompoundTitle, MobileCompoundTitleNoneStandard, Subheading, HeadingWrapper } from './MainCompanyInfo.styles';
 
 type defaultValues = {
   name: string;
@@ -38,10 +38,13 @@ const MainCompanyInfo: React.FC<Props> = () => {
     <Formik onSubmit={handleSubmit} initialValues={initialValues}>
       {({ handleChange, values }) => (
         <>
-          <StyledCompoundTitle>Główne informacje o twojej firmie</StyledCompoundTitle>
+          <StyledCompoundTitle>Uzupełnij informacje o swojej firmie</StyledCompoundTitle>
           <Wrapper>
             <StyledForm>
-              <MobileCompoundTitle>Główne informacje o twojej firmie</MobileCompoundTitle>
+              <HeadingWrapper>
+                <MobileCompoundTitle>Główne informacje o twojej firmie</MobileCompoundTitle>
+                <Subheading>Wszystkie pola są wymagane</Subheading>
+              </HeadingWrapper>
               <StyledInput onChange={handleChange} name={'name'} value={values.name} required={true} type={'text'} labelText={'Naza firmy'} />
               <StyledInput onChange={handleChange} name={'nip'} value={values.nip} required={true} type={'text'} labelText={'NIP'} />
               <StyledInput onChange={handleChange} name={'email'} value={values.email} required={true} type={'email'} labelText={'Email'} />

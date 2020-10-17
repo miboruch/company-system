@@ -123,7 +123,7 @@ const MobileCompoundTitle = styled.h2`
   font-size: 20px;
   color: ${({ theme }) => theme.colors.black};
   font-weight: ${({ theme }) => theme.font.weight.medium};
-  margin-bottom: 3rem;
+  //margin-bottom: 3rem;
 `;
 
 const CompoundListWrapper = styled.div`

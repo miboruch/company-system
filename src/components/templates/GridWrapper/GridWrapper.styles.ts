@@ -7,7 +7,7 @@ interface GridProps {
 const StyledWrapper = styled.div<GridProps>`
   width: 100%;
   min-height: calc(100vh - 80px);
-  padding: 0 2rem;
+  //padding: 0 2rem;
   position: relative;
   display: flex;
   align-items: center;

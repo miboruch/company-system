@@ -27,7 +27,7 @@ const MainWrapper = styled.div<MainWrapperInterface>`
   transition: opacity 0.3s ease, visibility 0.3s ease;
 
   ${({ theme }) => theme.mq.hdReady} {
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: ${({ theme }) => theme.colors.blurBackground};
     display: grid;
     place-items: center;
   }

@@ -51,6 +51,7 @@ export const theme = {
     buttonColor: 'rgba(0,0,0,0.8)',
     white: '#fff',
     black: '#000',
-    landingGray: '#5A5A5A'
+    landingGray: '#5A5A5A',
+    blurBackground: 'rgba(180, 180, 180, 0.7)'
   }
 };

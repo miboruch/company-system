@@ -51,7 +51,22 @@ const StyledCompoundTitle = styled(MobileCompoundTitle)`
     grid-area: heading;
     align-self: center;
     margin: 0;
+    font-weight: ${({ theme }) => theme.font.weight.book};
+    letter-spacing: -1px;
+    color: ${({ theme }) => theme.colors.dark};
+    font-size: 18px;
   }
 `;
 
-export { Wrapper, StyledInput, StyledForm, StyledCompoundTitle, MobileCompoundTitleNoneStandard };
+const HeadingWrapper = styled.div`
+  margin-bottom: 3rem;
+`;
+
+const Subheading = styled.h3`
+  font-weight: ${({ theme }) => theme.font.weight.book};
+  color: #555454;
+  font-size: 12px;
+  margin-top: 0.5rem;
+`;
+
+export { Wrapper, StyledInput, StyledForm, StyledCompoundTitle, MobileCompoundTitleNoneStandard, Subheading, HeadingWrapper };
