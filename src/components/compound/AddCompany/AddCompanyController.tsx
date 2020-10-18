@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import gsap from 'gsap';
 import PageContextProvider, { PageSettingEnum } from './context/PageContext';
 import AddCompanyTemplate from './templates/AddCompanyTemplate/AddCompanyTemplate';
 import AddCompanyHeader from './components/AddCompanyHeader/AddCompanyHeader';
@@ -11,12 +12,10 @@ import CompoundStepBox from '../../molecules/CompoundStepBox/CompoundStepBox';
 import { addCompanySteps } from './utils/AddCompanySteps';
 import { StandardCompoundTitle } from '../../../styles/compoundStyles';
 import StepList from './components/StepList/StepList';
+import { useOutsideClick } from '../../../utils/customHooks';
+import CloseButton from '../../atoms/CloseButton/CloseButton';
 
-interface MainWrapperInterface {
-  isOpen: boolean;
-}
-
-const MainWrapper = styled.div<MainWrapperInterface>`
+const MainWrapper = styled.div`
   width: 100%;
   min-height: 100vh;
   position: fixed;
@@ -24,9 +23,6 @@ const MainWrapper = styled.div<MainWrapperInterface>`
   top: 0;
   left: 0;
   z-index: 1000;
-  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
-  visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
-  transition: opacity 0.3s ease, visibility 0.3s ease;
 
   ${({ theme }) => theme.mq.hdReady} {
     background-color: ${({ theme }) => theme.colors.blurBackground};
@@ -47,10 +43,6 @@ const Wrapper = styled.div`
     background-color: ${({ theme }) => theme.colors.white};
     border-radius: 30px;
     overflow: hidden;
-    //display: flex;
-    //flex-direction: column;
-    //justify-content: center;
-    //align-items: center;
     display: grid;
     grid-template-columns: 25% 75%;
     grid-template-rows: 150px auto;
@@ -78,31 +70,74 @@ const CompoundTitle = styled.h1`
   }
 `;
 
+const CloseButtonWrapper = styled.div`
+  display: none;
+
+  ${({ theme }) => theme.mq.hdReady} {
+    display: block;
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+  }
+`;
+
+const ContentWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+`;
+
 interface Props {
   isOpen: boolean;
   setOpen: (isOpen: boolean) => void;
 }
 
 const AddCompanyController: React.FC<Props> = ({ isOpen, setOpen }) => {
-  // TODO: gsap animation to open/close component
+  const mainWrapperRef = useRef<HTMLDivElement | null>(null);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
+
+  // useOutsideClick(wrapperRef, isOpen, () => setOpen(false));
+
+  useEffect(() => {
+    const mainWrapper: HTMLDivElement | null = mainWrapperRef.current;
+    const wrapper: HTMLDivElement | null = wrapperRef.current;
+
+    if (mainWrapper && wrapper) {
+      gsap.set([mainWrapper, wrapper, ...mainWrapper.children, ...wrapper.children], { autoAlpha: 0 });
+
+      tl.fromTo(mainWrapper, { autoAlpha: 0, y: '+=30' }, { autoAlpha: 1, y: 0, duration: 0.1 })
+        .fromTo(mainWrapper.children, { autoAlpha: 0, y: '+=20' }, { autoAlpha: 1, y: '0', duration: 0.2 })
+        .fromTo(wrapper.children, { y: '+=10' }, { autoAlpha: 1, y: 0, stagger: 0.1 });
+    }
+  }, []);
+
+  useEffect(() => {
+    isOpen ? tl.play() : tl.reverse();
+  }, [isOpen]);
+
   return (
     <CompanyDataContextProvider>
       <PageContextProvider>
-        <MainWrapper isOpen={isOpen}>
-          <Wrapper>
+        <MainWrapper ref={mainWrapperRef}>
+          <Wrapper ref={wrapperRef}>
+            <CloseButtonWrapper>
+              <CloseButton setBoxState={() => setOpen(false)} />
+            </CloseButtonWrapper>
             <AddCompanyHeader setBoxState={setOpen} />
             <CompoundTitle>Dodaj firme</CompoundTitle>
             <StandardCompoundTitle>Uzupełnij informacje o swojej firmie</StandardCompoundTitle>
             <StepList />
-            <AddCompanyTemplate pageIndex={PageSettingEnum.First}>
-              <MainCompanyInfo />
-            </AddCompanyTemplate>
-            <AddCompanyTemplate pageIndex={PageSettingEnum.Second} withoutPadding={true}>
-              <MapPage />
-            </AddCompanyTemplate>
-            <AddCompanyTemplate pageIndex={PageSettingEnum.Third}>
-              <AddressInfo />
-            </AddCompanyTemplate>
+            <ContentWrapper>
+              <AddCompanyTemplate pageIndex={PageSettingEnum.First}>
+                <MainCompanyInfo />
+              </AddCompanyTemplate>
+              <AddCompanyTemplate pageIndex={PageSettingEnum.Second} withoutPadding={true}>
+                <MapPage />
+              </AddCompanyTemplate>
+              <AddCompanyTemplate pageIndex={PageSettingEnum.Third}>
+                <AddressInfo />
+              </AddCompanyTemplate>
+            </ContentWrapper>
           </Wrapper>
         </MainWrapper>
       </PageContextProvider>
