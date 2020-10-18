@@ -27,15 +27,23 @@ const MapPage: React.FC<Props> = () => {
   const [coords, setCoords] = useState<Coords>({ lat: data.lat || null, long: data.long || null });
   const [mapPositionLat, setMapPositionLat] = useState<number | null>(null);
   const [mapPositionLong, setMapPositionLong] = useState<number | null>(null);
+  const [coordsError, setCoordsError] = useState<boolean>(false);
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      setLoading(true);
-      console.log(position);
-      setMapPositionLong(position.coords.longitude);
-      setMapPositionLat(position.coords.latitude);
-      setLoading(false);
-    });
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setLoading(true);
+        setCoordsError(false);
+        console.log(position);
+        setMapPositionLong(position.coords.longitude);
+        setMapPositionLat(position.coords.latitude);
+        setLoading(false);
+      },
+      () => {
+        setLoading(false);
+        setCoordsError(true);
+      }
+    );
   }, []);
 
   return isLoading ? (

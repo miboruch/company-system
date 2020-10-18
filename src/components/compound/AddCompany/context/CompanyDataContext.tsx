@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-interface CompanyDataInterface {
+export interface CompanyDataInterface {
   email?: string;
   name?: string;
   nip?: string;

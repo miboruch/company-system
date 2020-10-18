@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
 import Input from '../../../atoms/Input/Input';
@@ -23,6 +23,7 @@ type defaultValues = {
 const ContactDataPage: React.FC = () => {
   const { data, setData } = useContext(RegisterDataContext);
   const { currentPage, setCurrentPage } = useContext(PageContext);
+  const [formattedPhoneNumber, setFormattedPhoneNumber] = useState<string | null>(null);
 
   const handlePageBack = (): void => {
     setCurrentPage(currentPage - 1);
@@ -43,7 +44,7 @@ const ContactDataPage: React.FC = () => {
 
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-      {({ handleChange, values }) => (
+      {({ handleChange, values, setFieldValue }) => (
         <StyledForm>
           <Heading>Podaj informacje kontaktowe</Heading>
           <StyledInput onChange={handleChange} name={'address'} value={values.address} required={true} type={'text'} labelText={'Adres'} />
@@ -52,9 +53,12 @@ const ContactDataPage: React.FC = () => {
           <div>
             <StyledLabel>Numer telefonu</StyledLabel>
             <NumberFormat
-              onValueChange={(values) => console.log(values)}
+              onValueChange={({ formattedValue, value }) => {
+                setFieldValue('phoneNumber', value);
+                setFormattedPhoneNumber(formattedValue);
+              }}
               name={'phoneNumber'}
-              value={values.phoneNumber}
+              value={formattedPhoneNumber || values.phoneNumber}
               format={'### ### ###'}
               className={'phone-input'}
             />

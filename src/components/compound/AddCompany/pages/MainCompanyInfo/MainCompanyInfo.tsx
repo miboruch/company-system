@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import NumberFormat from 'react-number-format';
 import { Formik } from 'formik';
 import Button from '../../../../atoms/Button/Button';
@@ -19,6 +19,7 @@ interface Props {}
 const MainCompanyInfo: React.FC<Props> = () => {
   const { data, setData } = useContext(CompanyDataContext);
   const { setCurrentPage } = useContext(PageContext);
+  const [formattedPhoneNumber, setFormattedPhoneNumber] = useState<string | null>(null);
 
   const initialValues: defaultValues = {
     name: data.name ? data.name : '',
@@ -36,7 +37,7 @@ const MainCompanyInfo: React.FC<Props> = () => {
 
   return (
     <Formik onSubmit={handleSubmit} initialValues={initialValues}>
-      {({ handleChange, values }) => (
+      {({ handleChange, values, setFieldValue }) => (
         <Wrapper>
           <StyledForm>
             <HeadingWrapper>
@@ -49,9 +50,12 @@ const MainCompanyInfo: React.FC<Props> = () => {
             <div>
               <StyledLabel>Numer telefonu</StyledLabel>
               <NumberFormat
-                onValueChange={(values) => console.log(values)}
+                onValueChange={({ formattedValue, value }) => {
+                  setFieldValue('phoneNumber', value);
+                  setFormattedPhoneNumber(formattedValue);
+                }}
                 name={'phoneNumber'}
-                value={values.phoneNumber}
+                value={formattedPhoneNumber || values.phoneNumber}
                 format={'### ### ###'}
                 className={'phone-input'}
               />

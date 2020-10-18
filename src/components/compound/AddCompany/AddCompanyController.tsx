@@ -10,6 +10,7 @@ import AddressInfo from './pages/AddressInfo/AddressInfo';
 import CompoundStepBox from '../../molecules/CompoundStepBox/CompoundStepBox';
 import { addCompanySteps } from './utils/AddCompanySteps';
 import { StandardCompoundTitle } from '../../../styles/compoundStyles';
+import StepList from './components/StepList/StepList';
 
 interface MainWrapperInterface {
   isOpen: boolean;
@@ -61,18 +62,6 @@ const Wrapper = styled.div`
   }
 `;
 
-const ListWrapper = styled.div`
-  grid-area: list;
-  display: none;
-  overflow: hidden;
-  overflow-y: scroll;
-
-  ${({ theme }) => theme.mq.hdReady} {
-    display: flex;
-    flex-direction: column;
-  }
-`;
-
 const CompoundTitle = styled.h1`
   color: ${({ theme }) => theme.colors.dark};
   font-size: 36px;
@@ -104,12 +93,7 @@ const AddCompanyController: React.FC<Props> = ({ isOpen, setOpen }) => {
             <AddCompanyHeader setBoxState={setOpen} />
             <CompoundTitle>Dodaj firme</CompoundTitle>
             <StandardCompoundTitle>Uzupełnij informacje o swojej firmie</StandardCompoundTitle>
-            {/*TODO: create component with list to get access to data*/}
-            <ListWrapper>
-              {addCompanySteps.map(({ stepName, description, pageIndex }) => (
-                <CompoundStepBox stepName={stepName} description={description} stepNumber={pageIndex + 1} isCompleted={false} allSteps={addCompanySteps.length} />
-              ))}
-            </ListWrapper>
+            <StepList />
             <AddCompanyTemplate pageIndex={PageSettingEnum.First}>
               <MainCompanyInfo />
             </AddCompanyTemplate>

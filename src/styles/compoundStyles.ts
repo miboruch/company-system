@@ -77,4 +77,16 @@ const StyledBackParagraph = styled(BackParagraph)`
   }
 `;
 
-export { Wrapper, StyledForm, StyledInput, MobileCompoundTitle, StandardCompoundTitle, HeadingWrapper, Subheading, StyledBackParagraph };
+const ListWrapper = styled.div`
+  grid-area: list;
+  display: none;
+  overflow: hidden;
+  overflow-y: scroll;
+
+  ${({ theme }) => theme.mq.hdReady} {
+    display: flex;
+    flex-direction: column;
+  }
+`;
+
+export { Wrapper, StyledForm, StyledInput, MobileCompoundTitle, StandardCompoundTitle, HeadingWrapper, Subheading, StyledBackParagraph, ListWrapper };
