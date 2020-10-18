@@ -52,6 +52,7 @@ export const theme = {
     white: '#fff',
     black: '#000',
     landingGray: '#5A5A5A',
+    descriptionGray: '#807f80',
     blurBackground: 'rgba(180, 180, 180, 0.7)'
   }
 };

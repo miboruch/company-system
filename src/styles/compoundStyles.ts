@@ -78,10 +78,11 @@ const StyledBackParagraph = styled(BackParagraph)`
 `;
 
 const ListWrapper = styled.div`
+  width: 100%;
   grid-area: list;
   display: none;
   overflow: hidden;
-  overflow-y: scroll;
+  border-right: 1px solid ${({ theme }) => theme.colors.impactGray};
 
   ${({ theme }) => theme.mq.hdReady} {
     display: flex;

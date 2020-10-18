@@ -3,16 +3,13 @@ import styled from 'styled-components';
 const Content = styled.div`
   width: 100%;
   height: 100%;
-  background-color: red;
   grid-area: content;
-  display: flex;
-  align-items: center;
 `;
 
 const List = styled.div`
   width: 100%;
   height: 100%;
-  background-color: yellow;
+  //background-color: yellow;
   grid-area: list;
   display: flex;
   flex-direction: column;
@@ -23,6 +20,11 @@ const Header = styled.header`
   height: 100%;
   background-color: blue;
   grid-area: header;
+  display: none;
+
+  ${({ theme }) => theme.mq.hdReady} {
+    display: block;
+  }
 `;
 
 const Test = styled.section`
@@ -35,4 +37,18 @@ const Test = styled.section`
   }
 `;
 
-export { Content, List, Header, Test };
+const TileWrapper = styled.section`
+  width: 100%;
+  display: -webkit-box;
+  display: -moz-box;
+  overflow-x: scroll;
+  flex-direction: row;
+`;
+
+const ChartWrapper = styled.div`
+  width: 100%;
+  overflow-x: scroll;
+  margin-top: 3rem;
+`;
+
+export { Content, List, Header, Test, TileWrapper, ChartWrapper };

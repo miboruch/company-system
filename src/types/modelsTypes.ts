@@ -7,8 +7,15 @@ export interface CompanyInterface {
   lat: number;
   long: number;
   name: string;
-  nip: string
+  nip: string;
   owners: Array<string>;
   phoneNumber: string;
   _id: string;
+}
+
+export interface IncomeDataInterface {
+  createdDate: string | Date;
+  _id: string;
+  companyId: string;
+  incomeValue: number;
 }

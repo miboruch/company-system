@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 interface WrapperProps {
-  withoutPadding: boolean;
+  withoutPadding?: boolean;
 }
 
 const Wrapper = styled.div<WrapperProps>`

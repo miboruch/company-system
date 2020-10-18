@@ -58,11 +58,14 @@ const Title = styled.h1`
   font-weight: ${({ theme }) => theme.font.weight.demi};
   align-self: flex-start;
   padding: 0 2rem;
+  font-size: 30px;
+  letter-spacing: -1px;
 
   ${({ theme }) => theme.mq.hdReady} {
     font-weight: ${({ theme }) => theme.font.weight.bold};
     align-self: center;
-    padding: 0;
+    justify-self: flex-start;
+    margin-left: 5rem;
   }
 `;
 
