@@ -24,6 +24,7 @@ const StepList: React.FC<Props> = () => {
     <ListWrapper>
       {addCompanySteps.map(({ stepName, description, pageIndex }) => (
         <CompoundStepBox
+          key={pageIndex}
           onClick={() => setCurrentPage(pageIndex)}
           stepName={stepName}
           description={description}

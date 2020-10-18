@@ -29,13 +29,20 @@ const HeadingWrapper = styled.div`
 `;
 
 const CenterBox = styled.div`
-  width: 50px;
-  height: 15px;
+  width: 100px;
+  height: 30px;
+  font-size: 12px;
+  border-radius: 5px;
+  border: 1px solid ${({ theme }) => theme.colors.green};
+  color: ${({ theme }) => theme.colors.dark};
+  display: grid;
+  place-items: center;
   background-color: white;
   position: absolute;
-  top: 50%;
-  right: 5rem;
+  bottom: 120px;
+  right: 2rem;
   z-index: 50;
+  cursor: pointer;
 `;
 
 const ButtonWrapper = styled.div`

@@ -1,6 +1,6 @@
 import L from 'leaflet';
 
-const markerCustomColor = '#D37373';
+const markerCustomColor = '#454545';
 
 const markerHtmlStyles = `
     background-color: ${markerCustomColor};

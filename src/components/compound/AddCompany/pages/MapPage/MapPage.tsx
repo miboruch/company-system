@@ -12,6 +12,7 @@ import { StyledBackParagraph } from '../../../../../styles/compoundStyles';
 import { MobileCompoundTitle } from '../../../../../styles/compoundStyles';
 
 import 'leaflet/dist/leaflet.css';
+import { getLocation } from '../../../../../utils/mapFunctions';
 
 interface Props {}
 
@@ -25,55 +26,54 @@ const MapPage: React.FC<Props> = () => {
   const { setCurrentPage } = useContext(PageContext);
   const [isLoading, setLoading] = useState<boolean>(false);
   const [coords, setCoords] = useState<Coords>({ lat: data.lat || null, long: data.long || null });
-  const [mapPositionLat, setMapPositionLat] = useState<number | null>(null);
-  const [mapPositionLong, setMapPositionLong] = useState<number | null>(null);
+  const [mapPositionLat, setMapPositionLat] = useState<number | null | undefined>(null);
+  const [mapPositionLong, setMapPositionLong] = useState<number | null | undefined>(null);
   const [coordsError, setCoordsError] = useState<boolean>(false);
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setLoading(true);
-        setCoordsError(false);
-        console.log(position);
-        setMapPositionLong(position.coords.longitude);
-        setMapPositionLat(position.coords.latitude);
-        setLoading(false);
-      },
-      () => {
-        setLoading(false);
-        setCoordsError(true);
-      }
-    );
+    getLocation(setLoading, setMapPositionLat, setMapPositionLong, setCoordsError);
   }, []);
 
-  return isLoading ? (
-    <SpinnerWrapper>
-      <Spinner />
-    </SpinnerWrapper>
-  ) : (
+  const handleCenterMap = () => {
+    setMapPositionLat(data.lat);
+    setMapPositionLong(data.long);
+  };
+
+  return (
     <>
       <HeadingWrapper>
         <MobileCompoundTitle>Zaznacz lokalizacje</MobileCompoundTitle>
       </HeadingWrapper>
       <MapWrapper>
-        <CenterBox>test</CenterBox>
-        <Map
-          center={[mapPositionLat ? mapPositionLat : 52, mapPositionLong ? mapPositionLong : 20]}
-          whenReady={() => setLoading(false)}
-          zoom={mapPositionLat && mapPositionLong ? 11 : 5}
-          zoomControl={false}
-          onClick={(e: Leaflet.LeafletMouseEvent) => {
-            setCoords({ lat: e.latlng.lat, long: e.latlng.lng });
-            setData({ ...data, lat: e.latlng.lat, long: e.latlng.lng });
-          }}
-        >
-          <TileLayer attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
-          {coords.lat && coords.long && <Marker icon={markerCustomIcon} position={[coords.lat, coords.long]} />}
-        </Map>
-        <ButtonWrapper>
-          <StyledBackParagraph onClick={() => setCurrentPage(PageSettingEnum.First)}>Wstecz</StyledBackParagraph>
-          <Button onClick={() => setCurrentPage(PageSettingEnum.Third)} type={'button'} text={'Dalej'} disabled={!coords.lat || !coords.long} />
-        </ButtonWrapper>
+        {isLoading ? (
+          <SpinnerWrapper>
+            <Spinner />
+          </SpinnerWrapper>
+        ) : (
+          <>
+            {data.lat && data.long && <CenterBox onClick={() => handleCenterMap()}>Wyśrodkuj</CenterBox>}
+            <Map
+              center={[mapPositionLat ? mapPositionLat : 52, mapPositionLong ? mapPositionLong : 20]}
+              whenReady={() => setLoading(false)}
+              zoom={mapPositionLat && mapPositionLong ? 13 : 5}
+              zoomControl={false}
+              onClick={(e: Leaflet.LeafletMouseEvent) => {
+                setCoords({ lat: e.latlng.lat, long: e.latlng.lng });
+                setData({ ...data, lat: e.latlng.lat, long: e.latlng.lng });
+              }}
+            >
+              <TileLayer
+                attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+              />
+              {coords.lat && coords.long && <Marker icon={markerCustomIcon} position={[coords.lat, coords.long]} />}
+            </Map>
+            <ButtonWrapper>
+              <StyledBackParagraph onClick={() => setCurrentPage(PageSettingEnum.First)}>Wstecz</StyledBackParagraph>
+              <Button onClick={() => setCurrentPage(PageSettingEnum.Third)} type={'button'} text={'Dalej'} disabled={!coords.lat || !coords.long} />
+            </ButtonWrapper>
+          </>
+        )}
       </MapWrapper>
     </>
   );
