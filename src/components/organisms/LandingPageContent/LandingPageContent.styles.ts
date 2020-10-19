@@ -45,10 +45,4 @@ const TileWrapper = styled.section`
   flex-direction: row;
 `;
 
-const ChartWrapper = styled.div`
-  width: 100%;
-  overflow-x: scroll;
-  margin-top: 3rem;
-`;
-
-export { Content, List, Header, Test, TileWrapper, ChartWrapper };
+export { Content, List, Header, Test, TileWrapper };

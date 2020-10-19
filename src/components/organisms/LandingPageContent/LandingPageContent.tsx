@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import Input from '../../atoms/Input/Input';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
-import { Content, List, Header, Test, TileWrapper, ChartWrapper } from './LandingPageContent.styles';
+import { Content, List, Header, Test, TileWrapper } from './LandingPageContent.styles';
 import { Title } from '../../../styles/sharedStyles';
 import TaskTile from '../../molecules/TaskTile/TaskTile';
-import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts';
 import { AppState } from '../../../reducers/rootReducer';
 import { API_URL } from '../../../utils/config';
 import { IncomeDataInterface } from '../../../types/modelsTypes';
+import BarChart from '../../molecules/BarChart/BarChart';
 
 const LandingPageContent: React.FC<LinkStateProps> = ({ token }) => {
   const [text, setText] = useState<string>('');
@@ -35,8 +35,6 @@ const LandingPageContent: React.FC<LinkStateProps> = ({ token }) => {
     })();
   }, []);
 
-  console.log(data);
-
   return (
     <GridWrapper onlyHeader={true}>
       <Title>Home</Title>
@@ -49,16 +47,7 @@ const LandingPageContent: React.FC<LinkStateProps> = ({ token }) => {
           <TaskTile isCompleted={false} name={'Wykonanie usługi przycięcia drzew'} />
           <TaskTile isCompleted={false} name={'Wykonanie usługi przycięcia drzew'} />
         </TileWrapper>
-        <ChartWrapper>
-          <BarChart width={560} height={250} data={!!data ? data : []} barSize={30}>
-            <CartesianGrid strokeDasharray='3 3' />
-            <XAxis dataKey='createdDate' />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey='incomeValue' name={'Dochód'} fill='#2d2d2d' radius={[30, 30, 30, 30]} />
-          </BarChart>
-        </ChartWrapper>
+        <BarChart xAxisDataKey={'createdDate'} barDataKey={'incomeValue'} barDataName={'Dochód'} data={data} />
         <Test>wdqwdqw</Test>
         <Input onChange={handleChange} name={'name'} labelText={'Imię'} type={'string'} value={text} required={true} />
       </Content>
