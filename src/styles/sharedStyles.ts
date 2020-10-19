@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components';
-import { Form } from 'formik';
 import { ReactComponent as Home } from '../assets/icons/home.svg';
 import { ReactComponent as Payment } from '../assets/icons/payment.svg';
 import { ReactComponent as List } from '../assets/icons/list.svg';
