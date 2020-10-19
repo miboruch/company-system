@@ -11,8 +11,8 @@ interface ColorThemeInterface {
 
 const Wrapper = styled.div<ColorThemeInterface>`
   width: 100%;
-  height: 80px;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.impactGray};
+  height: 86px;
+  border-bottom: 1px solid ${({ colorTheme, theme }) => (colorTheme === ColorTheme.Light ? theme.colors.borderBottomDark : theme.colors.borderBottomLight)};
   display: flex;
   flex-direction: row;
   align-items: center;

@@ -11,6 +11,7 @@ import { API_URL } from '../../../utils/config';
 import { IncomeDataInterface } from '../../../types/modelsTypes';
 import BarChart from '../../molecules/BarChart/BarChart';
 import ListBox from '../../molecules/ListBox/ListBox';
+import AttendanceList from '../AttendanceList/AttendanceList';
 
 const LandingPageContent: React.FC<LinkStateProps> = ({ token }) => {
   const [text, setText] = useState<string>('');
@@ -23,7 +24,7 @@ const LandingPageContent: React.FC<LinkStateProps> = ({ token }) => {
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await axios.get(`${API_URL}/income/get-last-incomes?company_id=5f79a8e665bf093c1f418ee9&daysBack=30`, {
+        const { data } = await axios.get(`${API_URL}/income/get-last-incomes?company_id=5f79a8e665bf093c1f418ee9&daysBack=16`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -49,14 +50,7 @@ const LandingPageContent: React.FC<LinkStateProps> = ({ token }) => {
           <TaskTile isCompleted={false} name={'Wykonanie usługi przycięcia drzew'} />
         </TileWrapper>
         <BarChart xAxisDataKey={'createdDate'} barDataKey={'incomeValue'} barDataName={'Dochód'} data={data} />
-        <ListBox
-          name={'Mariusz Pawelski'}
-          date={'08/06/1998'}
-          bottomDescription={'mariusz.pawelski@gmail.com'}
-          callback={() => console.log('attendance clicked')}
-          // isEmpty={true}
-          isChecked={false}
-        />
+        <AttendanceList />
         <Test>wdqwdqw</Test>
         <Input onChange={handleChange} name={'name'} labelText={'Imię'} type={'string'} value={text} required={true} />
       </Content>

@@ -18,10 +18,11 @@ const BarChart: React.FC<Props> = ({ data, xAxisDataKey, barDataKey, barDataName
           <XAxis dataKey={xAxisDataKey} stroke={'#aaa'} tick={{ fontSize: 12 }} />
           <YAxis stroke={'#aaa'} tick={{ fontSize: 12 }} />
           <Tooltip
+            cursor={false}
             itemStyle={{
               color: '#2d2d2d',
               fontSize: '12px',
-              fontWeight: '500'
+              fontWeight: '500',
             }}
           />
           <Legend iconSize={16} />

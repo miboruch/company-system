@@ -8,23 +8,23 @@ interface Props {
   date: string | Date;
   bottomDescription: string;
   callback: () => void;
-  isAttendance?: boolean;
+  hours?: number | string;
 }
 
 interface EmptyIconInterface extends Props {
   isEmpty: boolean;
-  isChecked?: never;
+  isChecked?: undefined;
 }
 
 interface CheckedIconInterface extends Props {
   isChecked: boolean;
-  isEmpty?: never;
+  isEmpty?: undefined;
 }
 
-type ConnectedProps = EmptyIconInterface | CheckedIconInterface;
+export type ListBoxProps = EmptyIconInterface | CheckedIconInterface;
 
-const ListBox: React.FC<ConnectedProps> = ({ name, date, bottomDescription, callback, isAttendance, isEmpty, isChecked }) => {
-  const colorTheme: ColorTheme = isAttendance ? ColorTheme.Light : ColorTheme.Dark;
+const ListBox: React.FC<ListBoxProps> = ({ name, date, bottomDescription, callback, hours, isEmpty, isChecked }) => {
+  const colorTheme: ColorTheme = !!hours || hours === 0 ? ColorTheme.Light : ColorTheme.Dark;
   return (
     <Wrapper colorTheme={colorTheme}>
       <ContentWrapper>
@@ -35,7 +35,7 @@ const ListBox: React.FC<ConnectedProps> = ({ name, date, bottomDescription, call
           <Subparagraph colorTheme={colorTheme}>{bottomDescription}</Subparagraph>
         </div>
       </ContentWrapper>
-      <ArrowButton onClick={() => callback()} />
+      {hours || hours === 0 ? <Name colorTheme={colorTheme}>{hours}h</Name> : <ArrowButton onClick={() => callback()} />}
     </Wrapper>
   );
 };

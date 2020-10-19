@@ -37,7 +37,8 @@ export const theme = {
     }
   },
   colors: {
-    green: '#54C172',
+    // green: '#54C172',
+    green: '#85BE9B',
     darkGreen: '#4C522A',
     lightGray: '#BCBCBC',
     dark: '#212121',
@@ -48,6 +49,8 @@ export const theme = {
     impactGray: '#ebebf3',
     gray: '#d9d9d9',
     menuBackground: '#F8F8FA',
+    borderBottomLight: '#f9fbfc',
+    borderBottomDark: '#414445',
     buttonColor: 'rgba(0,0,0,0.8)',
     white: '#fff',
     black: '#000',

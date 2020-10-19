@@ -59,12 +59,15 @@ const Title = styled.h1`
   padding: 0 2rem;
   font-size: 30px;
   letter-spacing: -1px;
+  margin: 3rem 0;
 
   ${({ theme }) => theme.mq.hdReady} {
     font-weight: ${({ theme }) => theme.font.weight.bold};
     align-self: center;
     justify-self: flex-start;
     margin-left: 5rem;
+    margin-top: 0;
+    margin-bottom: 0;
   }
 `;
 
