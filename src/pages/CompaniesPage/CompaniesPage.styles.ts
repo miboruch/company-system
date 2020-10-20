@@ -15,9 +15,10 @@ const Table = styled.section<TableProps>`
 
   ${({ theme }) => theme.mq.hdReady} {
     grid-area: content;
-    width: 90%;
-    margin-top: 0;
+    width: 92%;
     border-radius: 15px;
+    align-self: flex-start;
+    margin: 0;
   }
 
   ${({ isEmpty }) =>

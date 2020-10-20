@@ -65,9 +65,14 @@ const Title = styled.h1`
     font-weight: ${({ theme }) => theme.font.weight.bold};
     align-self: center;
     justify-self: flex-start;
-    margin-left: 5rem;
+    padding: 0 1rem;
+    margin-left: 3rem;
     margin-top: 0;
     margin-bottom: 0;
+  }
+
+  ${({ theme }) => theme.mq.quadHd} {
+    margin-left: 5rem;
   }
 `;
 

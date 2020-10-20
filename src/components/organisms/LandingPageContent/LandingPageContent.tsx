@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import Input from '../../atoms/Input/Input';
@@ -13,10 +13,24 @@ import BarChart from '../../molecules/BarChart/BarChart';
 import ListBox from '../../molecules/ListBox/ListBox';
 import AttendanceList from '../AttendanceList/AttendanceList';
 import { ContentGridWrapper } from '../../../styles/HomePageContentGridStyles';
+import gsap from 'gsap';
 
 const LandingPageContent: React.FC<LinkStateProps> = ({ token }) => {
   const [text, setText] = useState<string>('');
   const [data, setData] = useState<Array<IncomeDataInterface> | null>(null);
+  const [daysBack, setDaysBackTo] = useState<number>(20);
+  const contentRef = useRef<HTMLDivElement | null>(null);
+  const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
+
+  useEffect(() => {
+    const content: HTMLDivElement | null = contentRef.current;
+
+    if (content) {
+      gsap.set([...content.children], { autoAlpha: 0 });
+
+      tl.fromTo(content.children, { autoAlpha: 0, y: '+=30' }, { autoAlpha: 1, y: 0, stagger: 0.2 });
+    }
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setText(e.target.value);
@@ -25,18 +39,18 @@ const LandingPageContent: React.FC<LinkStateProps> = ({ token }) => {
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await axios.get(`${API_URL}/income/get-last-incomes?company_id=5f79a8e665bf093c1f418ee9&daysBack=20`, {
+        const { data } = await axios.get(`${API_URL}/income/get-last-incomes?company_id=5f79a8e665bf093c1f418ee9&daysBack=${daysBack}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
         });
-        console.log(data);
+
         setData(data.map((income: IncomeDataInterface) => ({ ...income, createdDate: new Date(income.createdDate).toLocaleDateString() })));
       } catch (error) {
         console.log(error);
       }
     })();
-  }, []);
+  }, [daysBack]);
 
   return (
     <GridWrapper onlyHeader={true}>
@@ -45,13 +59,13 @@ const LandingPageContent: React.FC<LinkStateProps> = ({ token }) => {
       {/*<List />*/}
       <Content>
         {/*TODO: make another grid in this component - only hdReady resolutions */}
-        <ContentGridWrapper>
+        <ContentGridWrapper ref={contentRef}>
           <TileWrapper>
             <TaskTile isCompleted={false} name={'Wykonanie usługi przycięcia drzew'} />
             <TaskTile isCompleted={false} name={'Wykonanie usługi przycięcia drzew'} />
             <TaskTile isCompleted={false} name={'Wykonanie usługi przycięcia drzew'} />
           </TileWrapper>
-          <BarChart xAxisDataKey={'createdDate'} barDataKey={'incomeValue'} barDataName={'Dochód'} data={data} />
+          <BarChart xAxisDataKey={'createdDate'} barDataKey={'incomeValue'} barDataName={'Dochód'} data={data} setDaysBack={setDaysBackTo} />
           <AttendanceList />
           <ListBox
             name={'Roman Boruch'}

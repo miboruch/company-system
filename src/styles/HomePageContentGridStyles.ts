@@ -5,13 +5,14 @@ const ContentGridWrapper = styled.section`
   height: 100%;
 
   ${({ theme }) => theme.mq.hdReady} {
-    width: calc(100% - 3 * 2rem);
-    height: calc(100% - 3 * 2rem);
+    width: calc(100% - 2 * 2rem);
+    height: calc(100% - 2 * 2rem);
     display: grid;
     grid-template-columns: 29% 29% 42%;
     grid-template-rows: 28% 43% 29%;
     grid-template-areas: 'task task attendance' 'chart chart attendance' 'employees completedTasks attendance';
-    padding: 2rem;
+    //margin: 2rem 3rem;
+    padding: 2rem 3rem;
     grid-gap: 2rem;
   }
   

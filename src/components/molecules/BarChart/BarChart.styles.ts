@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import {ResponsiveContainer} from 'recharts';
 
 const ChartWrapper = styled.div`
   width: 100%;
@@ -10,4 +11,12 @@ const ChartWrapper = styled.div`
   }
 `;
 
-export { ChartWrapper };
+const StyledResponsiveContainer = styled(ResponsiveContainer)`
+  width: 200%;
+  
+  ${({ theme }) => theme.mq.standard} {
+    padding-left: 0;
+  }
+`;
+
+export { ChartWrapper, StyledResponsiveContainer };
