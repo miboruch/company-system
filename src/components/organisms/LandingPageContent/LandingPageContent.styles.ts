@@ -43,6 +43,10 @@ const TileWrapper = styled.section`
   display: -moz-box;
   overflow-x: scroll;
   flex-direction: row;
+
+  ${({ theme }) => theme.mq.hdReady} {
+    grid-area: task;
+  }
 `;
 
 export { Content, List, Header, Test, TileWrapper };

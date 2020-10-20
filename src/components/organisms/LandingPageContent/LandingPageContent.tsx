@@ -12,6 +12,7 @@ import { IncomeDataInterface } from '../../../types/modelsTypes';
 import BarChart from '../../molecules/BarChart/BarChart';
 import ListBox from '../../molecules/ListBox/ListBox';
 import AttendanceList from '../AttendanceList/AttendanceList';
+import { ContentGridWrapper } from '../../../styles/HomePageContentGridStyles';
 
 const LandingPageContent: React.FC<LinkStateProps> = ({ token }) => {
   const [text, setText] = useState<string>('');
@@ -44,15 +45,24 @@ const LandingPageContent: React.FC<LinkStateProps> = ({ token }) => {
       {/*<List />*/}
       <Content>
         {/*TODO: make another grid in this component - only hdReady resolutions */}
-        <TileWrapper>
-          <TaskTile isCompleted={false} name={'Wykonanie usługi przycięcia drzew'} />
-          <TaskTile isCompleted={false} name={'Wykonanie usługi przycięcia drzew'} />
-          <TaskTile isCompleted={false} name={'Wykonanie usługi przycięcia drzew'} />
-        </TileWrapper>
-        <BarChart xAxisDataKey={'createdDate'} barDataKey={'incomeValue'} barDataName={'Dochód'} data={data} />
-        <AttendanceList />
-        <ListBox name={'Roman Boruch'} date={'09-10-1987'} bottomDescription={'roman.boruch@gmail.com'} callback={() => console.log('roman')} isChecked={true}/>
-        <Input onChange={handleChange} name={'name'} labelText={'Imię'} type={'string'} value={text} required={true} />
+        <ContentGridWrapper>
+          <TileWrapper>
+            <TaskTile isCompleted={false} name={'Wykonanie usługi przycięcia drzew'} />
+            <TaskTile isCompleted={false} name={'Wykonanie usługi przycięcia drzew'} />
+            <TaskTile isCompleted={false} name={'Wykonanie usługi przycięcia drzew'} />
+          </TileWrapper>
+          <BarChart xAxisDataKey={'createdDate'} barDataKey={'incomeValue'} barDataName={'Dochód'} data={data} />
+          <AttendanceList />
+          <ListBox
+            name={'Roman Boruch'}
+            topDescription={'09-10-1987'}
+            bottomDescription={'roman.boruch@gmail.com'}
+            callback={() => console.log('roman')}
+            isChecked={true}
+            isCompanyBox={true}
+          />
+          <Input onChange={handleChange} name={'name'} labelText={'Imię'} type={'string'} value={text} required={true} />
+        </ContentGridWrapper>
       </Content>
     </GridWrapper>
   );

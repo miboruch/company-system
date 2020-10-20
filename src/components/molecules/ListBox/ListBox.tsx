@@ -5,30 +5,31 @@ import { CheckedIcon, EmptyIcon, NotCheckedIcon } from '../../../styles/iconStyl
 
 interface Props {
   name: string;
-  date: string | Date;
+  topDescription: string | Date;
   bottomDescription: string;
   callback: () => void;
+  isCompanyBox: boolean;
 }
 
 interface EmptyIconInterface extends Props {
   isEmpty: boolean;
-  isChecked?: undefined;
+  isChecked?: never;
 }
 
 interface CheckedIconInterface extends Props {
   isChecked: boolean;
-  isEmpty?: undefined;
+  isEmpty?: never;
 }
 
 export type ListBoxProps = EmptyIconInterface | CheckedIconInterface;
 
-const ListBox: React.FC<ListBoxProps> = ({ name, date, bottomDescription, callback, isEmpty, isChecked }) => {
+const ListBox: React.FC<ListBoxProps> = ({ name, topDescription, bottomDescription, callback, isEmpty, isChecked, isCompanyBox }) => {
   return (
     <Wrapper>
       <ContentWrapper>
-        {isEmpty ? <EmptyIcon /> : isChecked ? <CheckedIcon /> : <NotCheckedIcon />}
+        {!isCompanyBox && (isEmpty ? <EmptyIcon /> : isChecked ? <CheckedIcon /> : <NotCheckedIcon />)}
         <div>
-          <Subparagraph>{date}</Subparagraph>
+          <Subparagraph>{topDescription}</Subparagraph>
           <Name>{name}</Name>
           <Subparagraph>{bottomDescription}</Subparagraph>
         </div>

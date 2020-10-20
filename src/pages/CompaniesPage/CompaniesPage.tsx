@@ -10,6 +10,7 @@ import { AppState } from '../../reducers/rootReducer';
 import { SpinnerWrapper, EmptyParagraph, AddIcon, Title } from '../../styles/sharedStyles';
 import { Table, AddCompanyWrapper, AddCompanyParagraph } from './CompaniesPage.styles';
 import AddCompanyController from '../../components/compound/AddCompany/AddCompanyController';
+import ListBox from '../../components/molecules/ListBox/ListBox';
 
 type ConnectedProps = Props & LinkStateProps;
 
@@ -40,12 +41,14 @@ const CompaniesPage: React.FC<ConnectedProps> = ({ token }) => {
               <EmptyParagraph>Brak firm</EmptyParagraph>
             ) : (
               companies.map((company) => (
-                <CompanyBox
+                <ListBox
                   key={company._id}
                   name={company.name}
-                  nip={company.nip}
-                  address={`${company.address}, ${company.city}`}
+                  topDescription={company.nip}
+                  bottomDescription={`${company.address}, ${company.city}`}
                   callback={() => console.log('set currentCompany and redirect')}
+                  isCompanyBox={true}
+                  isChecked={false}
                 />
               ))
             )}

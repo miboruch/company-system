@@ -5,6 +5,9 @@ const StyledHeader = styled.header`
   height: 60px;
   background-color: white;
   position: relative;
+  //position: fixed;
+  //top: 0;
+  //left: 0;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;

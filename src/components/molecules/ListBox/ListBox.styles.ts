@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
   width: 100%;
   height: 86px;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.borderBottomLight};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.impactGray};
   display: flex;
   flex-direction: row;
   align-items: center;

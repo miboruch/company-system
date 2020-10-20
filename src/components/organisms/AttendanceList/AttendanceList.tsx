@@ -10,7 +10,9 @@ const StyledWrapper = styled.div`
   overflow: hidden;
 
   ${({ theme }) => theme.mq.hdReady} {
-    width: 500px;
+    width: 100%;
+    height: 100%;
+    grid-area: attendance;
   }
 `;
 
