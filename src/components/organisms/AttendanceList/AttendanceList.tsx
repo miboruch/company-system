@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import ListBox from '../../molecules/ListBox/ListBox';
-import {ListBoxProps} from '../../molecules/ListBox/ListBox';
+import AttendanceBox, { AttendanceBoxProps } from '../../molecules/AttendanceBox/AttendanceBox';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -18,13 +17,13 @@ const StyledWrapper = styled.div`
 interface Props {}
 
 const AttendanceList: React.FC<Props> = () => {
-  const attendanceArray:Array<any> = [
+  const attendanceArray: AttendanceBoxProps[] = [
     {
       name: 'Mariusz Pawelski',
       date: '08/06/1998',
       bottomDescription: 'mariusz.pawelski@gmail.com',
       callback: () => console.log('clicked'),
-      isChecked: true,
+      wasPresent: true,
       hours: 8
     },
     {
@@ -32,7 +31,7 @@ const AttendanceList: React.FC<Props> = () => {
       date: '08/06/1998',
       bottomDescription: 'michal.boruch@gmail.com',
       callback: () => console.log('clicked'),
-      isEmpty: true,
+      wasPresent: true,
       hours: 0
     },
     {
@@ -40,20 +39,20 @@ const AttendanceList: React.FC<Props> = () => {
       date: '08/06/1998',
       bottomDescription: 'jacek.kowalski@gmail.com',
       callback: () => console.log('clicked'),
-      isChecked: false,
+      wasPresent: true,
+      hours: 7
     }
-  ]
+  ];
   return (
     <StyledWrapper>
-      {attendanceArray.map(attendance => (
-        <ListBox
+      {attendanceArray.map((attendance) => (
+        <AttendanceBox
           name={attendance.name}
           date={attendance.date}
           bottomDescription={attendance.bottomDescription}
           callback={() => console.log('attendance clicked')}
-          isEmpty={attendance.isChecked ? undefined : attendance.isEmpty}
-          isChecked={!attendance.isEmpty && attendance.isChecked}
-          hours={attendance.hours ? attendance.hours : undefined}
+          wasPresent={attendance.wasPresent}
+          hours={attendance.hours && attendance.hours}
         />
       ))}
     </StyledWrapper>

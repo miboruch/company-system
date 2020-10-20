@@ -24,7 +24,7 @@ const LandingPageContent: React.FC<LinkStateProps> = ({ token }) => {
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await axios.get(`${API_URL}/income/get-last-incomes?company_id=5f79a8e665bf093c1f418ee9&daysBack=16`, {
+        const { data } = await axios.get(`${API_URL}/income/get-last-incomes?company_id=5f79a8e665bf093c1f418ee9&daysBack=20`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
