@@ -8,6 +8,8 @@ const MenuTemplateWrapper = styled.div`
   ${({ theme }) => theme.mq.hdReady} {
     display: flex;
     flex-direction: row;
+    margin-left: 300px; 
+    //this is required because menu has 300px and is position fixed
   }
 `;
 

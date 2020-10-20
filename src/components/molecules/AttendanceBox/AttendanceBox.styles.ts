@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.backgroundHover};
+    background-color: ${({ theme }) => theme.colors.black};
   }
 `;
 

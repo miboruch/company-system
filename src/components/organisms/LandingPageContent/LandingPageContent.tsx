@@ -51,7 +51,7 @@ const LandingPageContent: React.FC<LinkStateProps> = ({ token }) => {
         </TileWrapper>
         <BarChart xAxisDataKey={'createdDate'} barDataKey={'incomeValue'} barDataName={'Dochód'} data={data} />
         <AttendanceList />
-        <Test>wdqwdqw</Test>
+        <ListBox name={'Roman Boruch'} date={'09-10-1987'} bottomDescription={'roman.boruch@gmail.com'} callback={() => console.log('roman')} isChecked={true}/>
         <Input onChange={handleChange} name={'name'} labelText={'Imię'} type={'string'} value={text} required={true} />
       </Content>
     </GridWrapper>

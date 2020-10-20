@@ -1,5 +1,5 @@
 import React from 'react';
-import { ColorTheme, ContentWrapper, Name, Subparagraph, Wrapper } from './ListBox.styles';
+import { ContentWrapper, Name, Subparagraph, Wrapper } from './ListBox.styles';
 import ArrowButton from '../../atoms/ArrowButton/ArrowButton';
 import { CheckedIcon, EmptyIcon, NotCheckedIcon } from '../../../styles/iconStyles';
 
@@ -8,7 +8,6 @@ interface Props {
   date: string | Date;
   bottomDescription: string;
   callback: () => void;
-  hours?: number | string;
 }
 
 interface EmptyIconInterface extends Props {
@@ -23,19 +22,18 @@ interface CheckedIconInterface extends Props {
 
 export type ListBoxProps = EmptyIconInterface | CheckedIconInterface;
 
-const ListBox: React.FC<ListBoxProps> = ({ name, date, bottomDescription, callback, hours, isEmpty, isChecked }) => {
-  const colorTheme: ColorTheme = !!hours || hours === 0 ? ColorTheme.Light : ColorTheme.Dark;
+const ListBox: React.FC<ListBoxProps> = ({ name, date, bottomDescription, callback, isEmpty, isChecked }) => {
   return (
-    <Wrapper colorTheme={colorTheme}>
+    <Wrapper>
       <ContentWrapper>
         {isEmpty ? <EmptyIcon /> : isChecked ? <CheckedIcon /> : <NotCheckedIcon />}
         <div>
-          <Subparagraph colorTheme={colorTheme}>{date}</Subparagraph>
-          <Name colorTheme={colorTheme}>{name}</Name>
-          <Subparagraph colorTheme={colorTheme}>{bottomDescription}</Subparagraph>
+          <Subparagraph>{date}</Subparagraph>
+          <Name>{name}</Name>
+          <Subparagraph>{bottomDescription}</Subparagraph>
         </div>
       </ContentWrapper>
-      {hours || hours === 0 ? <Name colorTheme={colorTheme}>{hours}h</Name> : <ArrowButton onClick={() => callback()} />}
+      <ArrowButton onClick={() => callback()} />
     </Wrapper>
   );
 };

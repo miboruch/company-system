@@ -1,6 +1,6 @@
 import React from 'react';
 import { Wrapper, ContentWrapper, Name, Subparagraph } from './AttendanceBox.styles';
-import { CheckedIcon, EmptyIcon, NotCheckedIcon } from '../../../styles/iconStyles';
+import { CheckedIcon, NotCheckedIcon } from '../../../styles/iconStyles';
 
 export interface AttendanceBoxProps {
   name: string;

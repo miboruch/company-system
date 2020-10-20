@@ -20,7 +20,9 @@ const MenuWrapper = styled.div<IMenu>`
 
   ${({ theme }) => theme.mq.hdReady} {
     width: 300px;
-    position: static;
+    position: fixed;
+    top: 0;
+    left: 0;
     transform: translateX(0);
   }
 `;
