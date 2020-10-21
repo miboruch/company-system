@@ -44,7 +44,6 @@ const LandingPageContent: React.FC<LinkStateProps> = ({ token }) => {
     <GridWrapper onlyHeader={true}>
       <Title>Home</Title>
       <Header />
-      {/*<List />*/}
       <Content>
         {/*TODO: make another grid in this component - only hdReady resolutions */}
         <ContentGridWrapper ref={contentRef}>
