@@ -53,7 +53,7 @@ const setAddNewEmployeeOpen = (isOpen: boolean): SetAddNewEmployeeOpen => {
   };
 };
 
-const setEmployeeInfoOpen = (isOpen: boolean): SetEmployeeInfoOpen => {
+export const setEmployeeInfoOpen = (isOpen: boolean): SetEmployeeInfoOpen => {
   return {
     type: SET_EMPLOYEE_INFO_OPEN,
     payload: isOpen
@@ -70,11 +70,16 @@ export const getAllCompanyEmployees = (token: string, companyId: string) => asyn
       }
     });
 
-    data.length > 0 && dispatch(setSelectedEmployee(data[0]));
+    // data.length > 0 && dispatch(setSelectedEmployee(data[0]));
 
     dispatch(setCompanyEmployees(data));
   } catch (error) {
     dispatch(setEmployeeError(error));
   }
+};
+
+export const selectEmployee = (employee: EmployeeDataInterface | null) => (dispatch: Dispatch<AppTypes>) => {
+  dispatch(setSelectedEmployee(employee));
+  dispatch(setEmployeeInfoOpen(true));
 };
 //TODO: on click set current employee

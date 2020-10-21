@@ -11,7 +11,7 @@ import { AppState } from '../../../reducers/rootReducer';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/appActionTypes';
 import { bindActionCreators } from 'redux';
-import { getAllCompanyEmployees } from '../../../actions/employeeActions';
+import { getAllCompanyEmployees, selectEmployee } from '../../../actions/employeeActions';
 import { EmployeeDataInterface } from '../../../types/modelsTypes';
 import { DEFAULT_COMPANY_ID } from '../../../utils/config';
 import Spinner from '../../atoms/Spinner/Spinner';
@@ -28,20 +28,9 @@ const List = styled.div`
   }
 `;
 
-const Content = styled.section`
-  width: 100%;
-  height: 100%;
-  background-color: #ccc;
-  display: none;
-
-  ${({ theme }) => theme.mq.hdReady} {
-    display: block;
-  }
-`;
-
 type ConnectedProps = LinkStateProps & LinkDispatchProps;
 
-const EmployeesPageContent: React.FC<ConnectedProps> = ({ token, getAllCompanyEmployees, isLoading, isEmployeeInfoOpen, allCompanyEmployees }) => {
+const EmployeesPageContent: React.FC<ConnectedProps> = ({ token, getAllCompanyEmployees, isLoading, allCompanyEmployees, selectEmployee }) => {
   const listRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
 
@@ -74,13 +63,13 @@ const EmployeesPageContent: React.FC<ConnectedProps> = ({ token, getAllCompanyEm
             name={`${employee.userId.name} ${employee.userId.lastName}`}
             topDescription={new Date(employee.userId.dateOfBirth).toLocaleDateString()}
             bottomDescription={employee.userId.email}
-            callback={() => console.log('roman')}
+            callback={() => selectEmployee(employee)}
             isEmpty={true}
             isCompanyBox={false}
           />
         ))}
       </List>
-      <ContentTemplate isOpen={isEmployeeInfoOpen} setOpen={(isOpen: boolean) => console.log(isOpen)}>
+      <ContentTemplate>
         <EmployeeInfo />
       </ContentTemplate>
     </GridWrapper>
@@ -90,21 +79,22 @@ const EmployeesPageContent: React.FC<ConnectedProps> = ({ token, getAllCompanyEm
 interface LinkStateProps {
   token: string | null;
   isLoading: boolean;
-  isEmployeeInfoOpen: boolean;
   allCompanyEmployees: EmployeeDataInterface[];
 }
 
 interface LinkDispatchProps {
   getAllCompanyEmployees: (token: string, companyId: string) => void;
+  selectEmployee: (employee: EmployeeDataInterface) => void;
 }
 
-const mapStateToProps = ({ authenticationReducer: { token }, employeeReducer: { isLoading, allCompanyEmployees, isEmployeeInfoOpen } }: AppState): LinkStateProps => {
-  return { token, isLoading, allCompanyEmployees, isEmployeeInfoOpen };
+const mapStateToProps = ({ authenticationReducer: { token }, employeeReducer: { isLoading, allCompanyEmployees } }: AppState): LinkStateProps => {
+  return { token, isLoading, allCompanyEmployees };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
   return {
-    getAllCompanyEmployees: bindActionCreators(getAllCompanyEmployees, dispatch)
+    getAllCompanyEmployees: bindActionCreators(getAllCompanyEmployees, dispatch),
+    selectEmployee: bindActionCreators(selectEmployee, dispatch)
   };
 };
 

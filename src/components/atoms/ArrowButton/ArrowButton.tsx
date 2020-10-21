@@ -9,7 +9,7 @@ interface Props {
 }
 
 const ArrowButton: React.FC<Props> = ({ onClick, direction, isHidden }) => {
-  return <StyledArrowButton onClick={onClick} isHidden={!!isHidden} direction={direction ? direction : Direction.Right} />;
+  return <StyledArrowButton className={'arrow'} onClick={onClick} isHidden={!!isHidden} direction={direction ? direction : Direction.Right} />;
 };
 
 export default ArrowButton;

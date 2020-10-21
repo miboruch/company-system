@@ -1,10 +1,6 @@
 import styled from 'styled-components';
 
-interface ContentProps {
-  isOpen: boolean;
-}
-
-const ContentWrapper = styled.div<ContentProps>`
+const ContentWrapper = styled.div`
   width: 100%;
   height: 100%;
   overflow-y: scroll;
@@ -12,15 +8,24 @@ const ContentWrapper = styled.div<ContentProps>`
   top: 0;
   left: 0;
   background-color: ${({ theme }) => theme.colors.white};
-  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
-  visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
+  z-index: 1001;
 
   ${({ theme }) => theme.mq.hdReady} {
     position: static;
     background-color: ${({ theme }) => theme.colors.contentBackground};
-    opacity: 1;
-    visibility: visible;
+    z-index: auto;
   }
 `;
 
-export { ContentWrapper };
+const ArrowAbsoluteWrapper = styled.div`
+  position: fixed;
+  top: 3rem;
+  left: 2rem;
+  z-index: 100;
+
+  ${({ theme }) => theme.mq.hdReady} {
+    display: none;
+  }
+`;
+
+export { ContentWrapper, ArrowAbsoluteWrapper };

@@ -4,6 +4,15 @@ import { connect } from 'react-redux';
 import { EmployeeDataInterface } from '../../../types/modelsTypes';
 import { AppState } from '../../../reducers/rootReducer';
 import { StyledInput, StyledForm } from '../../../styles/compoundStyles';
+import styled from 'styled-components';
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: grid;
+  place-items: center;
+`;
 
 interface InitialValues {
   hourSalary?: number;
@@ -26,7 +35,7 @@ const EmployeeInfo: React.FC<ConnectedProps> = ({ token, selectedEmployee }) => 
   };
 
   return (
-    <>
+    <Wrapper>
       {!!selectedEmployee && (
         <Formik initialValues={initialValues} onSubmit={handleSubmit}>
           {({ handleChange, values }) => (
@@ -38,7 +47,7 @@ const EmployeeInfo: React.FC<ConnectedProps> = ({ token, selectedEmployee }) => 
           )}
         </Formik>
       )}
-    </>
+    </Wrapper>
   );
 };
 
