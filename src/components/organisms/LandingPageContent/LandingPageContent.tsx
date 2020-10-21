@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import gsap from 'gsap';
 import Input from '../../atoms/Input/Input';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
 import { Content, List, Header, Test, TileWrapper } from './LandingPageContent.styles';
@@ -13,7 +14,6 @@ import BarChart from '../../molecules/BarChart/BarChart';
 import ListBox from '../../molecules/ListBox/ListBox';
 import AttendanceList from '../AttendanceList/AttendanceList';
 import { ContentGridWrapper } from '../../../styles/HomePageContentGridStyles';
-import gsap from 'gsap';
 
 const LandingPageContent: React.FC<LinkStateProps> = ({ token }) => {
   const [text, setText] = useState<string>('');
