@@ -1,19 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import gsap from 'gsap';
-import Input from '../../atoms/Input/Input';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
-import { Content, List, Header, Test, TileWrapper } from './LandingPageContent.styles';
+import { Content, Header, TileWrapper, InfoBoxWrapper } from './LandingPageContent.styles';
 import { Title } from '../../../styles/sharedStyles';
 import TaskTile from '../../molecules/TaskTile/TaskTile';
 import { AppState } from '../../../reducers/rootReducer';
-import { API_URL } from '../../../utils/config';
 import { IncomeDataInterface } from '../../../types/modelsTypes';
 import BarChart from '../../molecules/BarChart/BarChart';
-import ListBox from '../../molecules/ListBox/ListBox';
 import AttendanceList from '../AttendanceList/AttendanceList';
 import { ContentGridWrapper } from '../../../styles/HomePageContentGridStyles';
+import InformationBox from '../../molecules/InformationBox/InformationBox';
+import { getIncomeExpenseInTimePeriod } from '../../../utils/incomeExpenseAPI';
 
 const LandingPageContent: React.FC<LinkStateProps> = ({ token }) => {
   const [text, setText] = useState<string>('');
@@ -38,17 +36,7 @@ const LandingPageContent: React.FC<LinkStateProps> = ({ token }) => {
 
   useEffect(() => {
     (async () => {
-      try {
-        const { data } = await axios.get(`${API_URL}/income/get-last-incomes?company_id=5f79a8e665bf093c1f418ee9&daysBack=${daysBack}`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-
-        setData(data.map((income: IncomeDataInterface) => ({ ...income, createdDate: new Date(income.createdDate).toLocaleDateString() })));
-      } catch (error) {
-        console.log(error);
-      }
+      await getIncomeExpenseInTimePeriod(token, daysBack, setData);
     })();
   }, [daysBack]);
 
@@ -65,17 +53,28 @@ const LandingPageContent: React.FC<LinkStateProps> = ({ token }) => {
             <TaskTile isCompleted={false} name={'Wykonanie usługi przycięcia drzew'} />
             <TaskTile isCompleted={false} name={'Wykonanie usługi przycięcia drzew'} />
           </TileWrapper>
-          <BarChart xAxisDataKey={'createdDate'} barDataKey={'incomeValue'} barDataName={'Dochód'} data={data} setDaysBack={setDaysBackTo} />
-          <AttendanceList />
-          <ListBox
-            name={'Roman Boruch'}
-            topDescription={'09-10-1987'}
-            bottomDescription={'roman.boruch@gmail.com'}
-            callback={() => console.log('roman')}
-            isChecked={true}
-            isCompanyBox={true}
+          <BarChart
+            xAxisDataKey={'createdDate'}
+            secondBarDataKey={'expenseValue'}
+            secondBarDataName={'Wydatek'}
+            barDataKey={'incomeValue'}
+            barDataName={'Dochód'}
+            data={data}
+            setDaysBack={setDaysBackTo}
           />
-          <Input onChange={handleChange} name={'name'} labelText={'Imię'} type={'string'} value={text} required={true} />
+          <AttendanceList />
+          {/*<ListBox*/}
+          {/*  name={'Roman Boruch'}*/}
+          {/*  topDescription={'09-10-1987'}*/}
+          {/*  bottomDescription={'roman.boruch@gmail.com'}*/}
+          {/*  callback={() => console.log('roman')}*/}
+          {/*  isChecked={true}*/}
+          {/*  isCompanyBox={true}*/}
+          {/*/>*/}
+          <InfoBoxWrapper>
+            <InformationBox title={'Pracownicy'} value={8} areaName={'employees'} />
+            <InformationBox title={'Wykonane zadania'} value={12} areaName={'attendance'} />
+          </InfoBoxWrapper>
         </ContentGridWrapper>
       </Content>
     </GridWrapper>

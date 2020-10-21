@@ -9,6 +9,7 @@ interface IMenu {
 const MenuWrapper = styled.div<IMenu>`
   width: 100%;
   height: 100vh;
+  //background-color: ${({ theme }) => theme.colors.white};
   background-color: ${({ theme }) => theme.colors.menuBackground};
   position: fixed;
   top: 0;

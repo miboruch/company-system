@@ -5,6 +5,7 @@ const ChartWrapper = styled.div`
   width: 100%;
   overflow-x: scroll;
   margin-top: 3rem;
+  //background-color: #fff;
 
   ${({ theme }) => theme.mq.hdReady} {
     grid-area: chart;

@@ -6,11 +6,13 @@ interface Props {
   data: Array<any> | null;
   xAxisDataKey: string;
   barDataKey: string;
+  secondBarDataKey?: string;
+  secondBarDataName?: string;
   barDataName: string;
   setDaysBack: (days: number) => void;
 }
 
-const BarChart: React.FC<Props> = ({ data, xAxisDataKey, barDataKey, barDataName, setDaysBack }) => {
+const BarChart: React.FC<Props> = ({ data, xAxisDataKey, barDataKey, secondBarDataKey, secondBarDataName, barDataName, setDaysBack }) => {
   return (
     <ChartWrapper>
       <p onClick={() => setDaysBack(1)}>1 day</p>
@@ -38,6 +40,7 @@ const BarChart: React.FC<Props> = ({ data, xAxisDataKey, barDataKey, barDataName
           />
           <Legend iconSize={16} />
           <Bar dataKey={barDataKey} name={barDataName} fill={'url(#chartColor)'} radius={[30, 30, 30, 30]} />
+          {secondBarDataKey && secondBarDataName && <Bar dataKey={secondBarDataKey} name={secondBarDataName} fill={'yellow'} radius={[30, 30, 30, 30]} />}
           {/*#2d2d2d*/}
         </Chart>
       </StyledResponsiveContainer>

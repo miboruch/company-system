@@ -49,4 +49,15 @@ const TileWrapper = styled.section`
   }
 `;
 
-export { Content, List, Header, Test, TileWrapper };
+const InfoBoxWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  ${({ theme }) => theme.mq.hdReady} {
+    display: contents;
+  }
+`;
+
+export { Content, List, Header, Test, TileWrapper, InfoBoxWrapper };
