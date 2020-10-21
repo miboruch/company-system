@@ -11,6 +11,7 @@ import { SpinnerWrapper, EmptyParagraph, AddIcon, Title } from '../../styles/sha
 import { Table, AddCompanyWrapper, AddCompanyParagraph } from './CompaniesPage.styles';
 import AddCompanyController from '../../components/compound/AddCompany/AddCompanyController';
 import ListBox from '../../components/molecules/ListBox/ListBox';
+import { Header } from '../../components/organisms/LandingPageContent/LandingPageContent.styles';
 
 type ConnectedProps = Props & LinkStateProps;
 
@@ -34,8 +35,9 @@ const CompaniesPage: React.FC<ConnectedProps> = ({ token }) => {
           <Spinner />
         </SpinnerWrapper>
       ) : (
-        <GridWrapper onlyHeader={true}>
+        <GridWrapper mobilePadding={true} onlyHeader={true}>
           <Title>Twoje firmy</Title>
+          <Header />
           <Table isEmpty={companies.length === 0}>
             {companies.length === 0 ? (
               <EmptyParagraph>Brak firm</EmptyParagraph>

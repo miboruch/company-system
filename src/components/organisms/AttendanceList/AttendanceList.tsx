@@ -48,8 +48,9 @@ const AttendanceList: React.FC<Props> = () => {
   ];
   return (
     <StyledWrapper>
-      {attendanceArray.map((attendance) => (
+      {attendanceArray.map((attendance: AttendanceBoxProps, index: number) => (
         <AttendanceBox
+          key={index}
           name={attendance.name}
           date={attendance.date}
           bottomDescription={attendance.bottomDescription}

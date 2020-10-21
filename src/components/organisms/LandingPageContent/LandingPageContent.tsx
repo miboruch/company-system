@@ -41,7 +41,7 @@ const LandingPageContent: React.FC<LinkStateProps> = ({ token }) => {
   }, [daysBack]);
 
   return (
-    <GridWrapper onlyHeader={true}>
+    <GridWrapper mobilePadding={true} onlyHeader={true}>
       <Title>Home</Title>
       <Header />
       <Content>
@@ -62,14 +62,6 @@ const LandingPageContent: React.FC<LinkStateProps> = ({ token }) => {
             setDaysBack={setDaysBackTo}
           />
           <AttendanceList />
-          {/*<ListBox*/}
-          {/*  name={'Roman Boruch'}*/}
-          {/*  topDescription={'09-10-1987'}*/}
-          {/*  bottomDescription={'roman.boruch@gmail.com'}*/}
-          {/*  callback={() => console.log('roman')}*/}
-          {/*  isChecked={true}*/}
-          {/*  isCompanyBox={true}*/}
-          {/*/>*/}
           <InfoBoxWrapper>
             <InformationBox title={'Pracownicy'} value={8} areaName={'employees'} />
             <InformationBox title={'Wykonane zadania'} value={12} areaName={'attendance'} />

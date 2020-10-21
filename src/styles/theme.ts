@@ -42,6 +42,7 @@ export const theme = {
     darkGreen: '#4C522A',
     lightGray: '#BCBCBC',
     dark: '#212121',
+    contentBackground: '#F9FBFC',
     inputColorStandard: '#1d1d1d',
     textGray: '#c8c8c9',
     backgroundHover: '#F3F3F5',
