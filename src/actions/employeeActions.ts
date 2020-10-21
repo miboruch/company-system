@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {
   SET_ADD_NEW_EMPLOYEE_OPEN,
   SET_COMPANY_EMPLOYEES,
@@ -13,6 +14,9 @@ import {
   SetSelectedEmployee
 } from '../types/employeesTypes';
 import { EmployeeDataInterface } from '../types/modelsTypes';
+import { Dispatch } from 'redux';
+import { AppTypes } from '../types/appActionTypes';
+import { API_URL } from '../utils/config';
 
 const setLoading = (isLoading: boolean): SetLoading => {
   return {
@@ -28,7 +32,7 @@ const setCompanyEmployees = (employees: EmployeeDataInterface[]): SetCompanyEmpl
   };
 };
 
-const setSelectedEmployee = (employee: EmployeeDataInterface | null): SetSelectedEmployee => {
+export const setSelectedEmployee = (employee: EmployeeDataInterface | null): SetSelectedEmployee => {
   return {
     type: SET_SELECTED_EMPLOYEE,
     payload: employee
@@ -55,3 +59,22 @@ const setEmployeeInfoOpen = (isOpen: boolean): SetEmployeeInfoOpen => {
     payload: isOpen
   };
 };
+
+export const getAllCompanyEmployees = (token: string, companyId: string) => async (dispatch: Dispatch<AppTypes>) => {
+  try {
+    dispatch(setLoading(true));
+
+    const { data } = await axios.get(`${API_URL}/employee/get-company-employees?company_id=${companyId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    data.length > 0 && dispatch(setSelectedEmployee(data[0]));
+
+    dispatch(setCompanyEmployees(data));
+  } catch (error) {
+    dispatch(setEmployeeError(error));
+  }
+};
+//TODO: on click set current employee

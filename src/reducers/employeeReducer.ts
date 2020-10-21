@@ -32,12 +32,14 @@ export const employeeReducer = (state = initialState, action: EmployeesActionTyp
     case SET_LOADING:
       return {
         ...state,
-        isLoading: action.payload
+        isLoading: action.payload,
+        selectedEmployee: null
       };
     case SET_COMPANY_EMPLOYEES:
       return {
         ...state,
-        allCompanyEmployees: action.payload
+        allCompanyEmployees: action.payload,
+        isLoading: false
       };
     case SET_SELECTED_EMPLOYEE:
       return {
@@ -47,7 +49,8 @@ export const employeeReducer = (state = initialState, action: EmployeesActionTyp
     case SET_EMPLOYEE_ERROR:
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
+        isLoading: false
       };
     case SET_EMPLOYEE_INFO_OPEN:
       return {
