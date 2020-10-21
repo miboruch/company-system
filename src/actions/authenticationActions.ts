@@ -1,16 +1,27 @@
 import axios from 'axios';
-import { AuthenticationActionTypes, AUTH_FAILURE, AUTH_LOGOUT, AUTH_START, AUTH_SUCCESS, SET_USER_DATA } from '../types/authenticationTypes';
+import {
+  AUTH_FAILURE,
+  AUTH_LOGOUT,
+  AUTH_START,
+  AUTH_SUCCESS,
+  SET_USER_DATA,
+  AuthStart,
+  AuthSuccess,
+  SetUserData,
+  AuthLogout,
+  AuthFailure
+} from '../types/authenticationTypes';
 import { Dispatch } from 'redux';
 import { AppTypes } from '../types/appActionTypes';
 import { API_URL } from '../utils/config';
 
-const authStart = (): AuthenticationActionTypes => {
+const authStart = (): AuthStart => {
   return {
     type: AUTH_START
   };
 };
 
-const authSuccess = (token: string, refreshToken: string, expireIn: number): AuthenticationActionTypes => {
+const authSuccess = (token: string, refreshToken: string, expireIn: number): AuthSuccess => {
   localStorage.setItem('token', token);
   localStorage.setItem('refreshToken', refreshToken);
   localStorage.setItem('expireDate', new Date(expireIn).toLocaleString());
@@ -24,7 +35,7 @@ const authSuccess = (token: string, refreshToken: string, expireIn: number): Aut
   };
 };
 
-const authFailure = (): AuthenticationActionTypes => {
+const authFailure = (): AuthFailure => {
   localStorage.removeItem('token');
   localStorage.removeItem('refreshToken');
   localStorage.removeItem('expireDate');
@@ -35,7 +46,7 @@ const authFailure = (): AuthenticationActionTypes => {
   };
 };
 
-const authLogout = (): AuthenticationActionTypes => {
+const authLogout = (): AuthLogout => {
   localStorage.removeItem('token');
   localStorage.removeItem('refreshToken');
   localStorage.removeItem('expireDate');
@@ -54,7 +65,7 @@ const setUserData = (
   country: string,
   city: string,
   address: string
-): AuthenticationActionTypes => {
+): SetUserData => {
   return {
     type: SET_USER_DATA,
     payload: {
