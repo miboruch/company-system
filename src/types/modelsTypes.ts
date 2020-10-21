@@ -34,3 +34,10 @@ export interface UserDataInterface {
   city: string;
   address: string;
 }
+
+export interface EmployeeDataInterface {
+  _id: string;
+  userId: UserDataInterface;
+  pricePerHour?: number;
+  companyId: string;
+}
