@@ -21,7 +21,7 @@ const StyledWrapper = styled.div<GridProps>`
     justify-content: flex-start;
     display: grid;
     padding: 0;
-    grid-template-columns: 25% 75%;
+    grid-template-columns: 35% 65%;
     grid-template-rows: 100px auto;
     grid-template-areas: ${({ onlyHeader }) => (onlyHeader ? `'name header' 'content content'` : `'name header' 'list content'`)};
   }

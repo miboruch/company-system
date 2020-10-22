@@ -62,7 +62,7 @@ const Title = styled.h1`
   margin: 3rem 0;
 
   ${({ theme }) => theme.mq.hdReady} {
-    font-weight: ${({ theme }) => theme.font.weight.bold};
+    font-weight: ${({ theme }) => theme.font.weight.demi};
     align-self: center;
     justify-self: flex-start;
     padding: 0 1rem;

@@ -28,7 +28,7 @@ const StyledInput = styled.input`
   background: transparent !important;
   border: none;
   border-bottom: 1px solid #ccc;
-  transition: border-bottom-color 1s ease, text-decoration 1s ease;
+  transition: border-bottom-color 1s ease, text-decoration 1s ease, opacity 0.5s ease;
 
   &:focus {
     outline: none;
@@ -50,6 +50,14 @@ const StyledInput = styled.input`
   &:invalid {
     text-decoration: line-through;
     border-bottom-color: rgba(255, 70, 92, 0.5);
+  }
+
+  &:disabled ~ ${StyledLabel} {
+    transform: scale(0.8) translateY(-25px);
+  }
+
+  &:disabled {
+    opacity: 0.5;
   }
 
   ${({ theme }) => theme.mq.standard} {
