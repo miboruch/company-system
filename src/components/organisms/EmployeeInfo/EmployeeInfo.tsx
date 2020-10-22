@@ -3,74 +3,9 @@ import { Formik, Form } from 'formik';
 import { connect } from 'react-redux';
 import { EmployeeDataInterface } from '../../../types/modelsTypes';
 import { AppState } from '../../../reducers/rootReducer';
-import { StyledInput } from '../../../styles/compoundStyles';
-import styled from 'styled-components';
 import Button from '../../atoms/Button/Button';
-
-const Wrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  padding: 3rem;
-  flex-direction: column;
-
-  ${({ theme }) => theme.mq.hdReady} {
-    padding: 5rem;
-  }
-`;
-
-const StyledForm = styled(Form)`
-  width: 100%;
-  height: 100%;
-  position: relative;
-`;
-
-const HeaderWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const Paragraph = styled.p`
-  font-size: 12px;
-  color: #D3D3D4;
-  //color: ${({ theme }) => theme.colors.textGray};
-  font-weight: ${({ theme }) => theme.font.weight.medium};
-  margin-bottom: 1rem;
-  line-height: 2.2;
-`;
-
-const EmployeeInfoBox = styled.div`
-  margin-bottom: 3rem;
-`;
-
-const SubParagraph = styled(Paragraph)`
-  color: #78787f;
-  margin: 0;
-`;
-
-const TextParagraph = styled(SubParagraph)`
-  color: #454545;
-`;
-
-const Title = styled.h1`
-  font-size: 36px;
-  color: ${({ theme }) => theme.colors.dark};
-  font-weight: ${({ theme }) => theme.font.weight.medium};
-  letter-spacing: -1px;
-`;
-
-const InputWrapper = styled.div`
-  width: 50%;
-  margin-top: 4rem;
-`;
-
-const StyledButton = styled(Button)`
-  position: absolute;
-  bottom: 5rem;
-  right: 5rem;
-`;
+import { StyledInput } from '../../../styles/compoundStyles';
+import { Wrapper, StyledForm, HeaderWrapper, Paragraph, EmployeeInfoBox, SubParagraph, TextParagraph, Title, InputWrapper } from './EmployeeInfo.styles';
 
 interface InitialValues {
   hourSalary?: number;
@@ -135,7 +70,7 @@ const EmployeeInfo: React.FC<ConnectedProps> = ({ token, selectedEmployee }) => 
                   disabled={!!values.hourSalary}
                 />
               </InputWrapper>
-              <StyledButton type={'submit'} text={'Zapisz'} disabled={true} />
+              <Button type={'submit'} text={'Zapisz'} disabled={true} />
             </StyledForm>
           )}
         </Formik>
