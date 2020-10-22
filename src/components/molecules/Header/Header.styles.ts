@@ -16,7 +16,15 @@ const StyledHeader = styled.header`
   align-items: center;
 
   ${({ theme }) => theme.mq.hdReady} {
-    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: blue;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    grid-area: header;
+    margin: 0;
   }
 `;
 

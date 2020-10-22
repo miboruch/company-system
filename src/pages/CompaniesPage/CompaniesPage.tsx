@@ -35,9 +35,9 @@ const CompaniesPage: React.FC<ConnectedProps> = ({ token }) => {
           <Spinner />
         </SpinnerWrapper>
       ) : (
-        <GridWrapper mobilePadding={true} onlyHeader={true}>
-          <Title>Twoje firmy</Title>
-          <Header />
+        <GridWrapper mobilePadding={true} onlyHeader={true} pageName={'Twoje firmy'}>
+          {/*<Title>Twoje firmy</Title>*/}
+          {/*<Header />*/}
           <Table isEmpty={companies.length === 0}>
             {companies.length === 0 ? (
               <EmptyParagraph>Brak firm</EmptyParagraph>

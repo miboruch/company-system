@@ -70,7 +70,7 @@ const EmployeeInfo: React.FC<ConnectedProps> = ({ token, selectedEmployee }) => 
                   disabled={!!values.hourSalary}
                 />
               </InputWrapper>
-              <Button type={'submit'} text={'Zapisz'} disabled={true} />
+              <Button type={'submit'} text={'Zapisz'} disabled={!values.hourSalary && !values.monthlySalary} />
             </StyledForm>
           )}
         </Formik>

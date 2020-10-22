@@ -41,9 +41,9 @@ const LandingPageContent: React.FC<LinkStateProps> = ({ token }) => {
   }, [daysBack]);
 
   return (
-    <GridWrapper mobilePadding={true} onlyHeader={true}>
-      <Title>Home</Title>
-      <Header />
+    <GridWrapper mobilePadding={true} onlyHeader={true} pageName={'Home'}>
+      {/*<Title>Home</Title>*/}
+      {/*<Header />*/}
       <Content>
         {/*TODO: make another grid in this component - only hdReady resolutions */}
         <ContentGridWrapper ref={contentRef}>

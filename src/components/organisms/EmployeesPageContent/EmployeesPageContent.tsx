@@ -53,9 +53,9 @@ const EmployeesPageContent: React.FC<ConnectedProps> = ({ token, getAllCompanyEm
       <Spinner />
     </SpinnerWrapper>
   ) : (
-    <GridWrapper mobilePadding={false}>
-      <Title>Pracownicy</Title>
-      <Header />
+    <GridWrapper mobilePadding={false} pageName={'Pracownicy'}>
+      {/*<Title>Pracownicy</Title>*/}
+      {/*<Header />*/}
       <List ref={listRef}>
         {allCompanyEmployees.map((employee) => (
           <ListBox
