@@ -7,8 +7,10 @@ interface TableProps {
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  
-    ${({ theme }) => theme.mq.hdReady} {
+
+  ${({ theme }) => theme.mq.hdReady} {
+    display: flex;
+    justify-content: center;
     grid-area: content;
     background-color: #fff;
   }

@@ -7,12 +7,14 @@ const ContentWrapper = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.contentBackground};
   z-index: 1001;
 
   ${({ theme }) => theme.mq.hdReady} {
     position: static;
-    background-color: ${({ theme }) => theme.colors.contentBackground};
+    //background-color: #fff;
+    background-color: #F8F9FA;
+    //background-color: ${({ theme }) => theme.colors.contentBackground};
     z-index: auto;
   }
 `;

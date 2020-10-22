@@ -16,6 +16,7 @@ import { EmployeeDataInterface } from '../../../types/modelsTypes';
 import { DEFAULT_COMPANY_ID } from '../../../utils/config';
 import Spinner from '../../atoms/Spinner/Spinner';
 import EmployeeInfo from '../EmployeeInfo/EmployeeInfo';
+import { Content } from './EmployeesPageContent.styles';
 
 const List = styled.div`
   width: 100%;
@@ -25,6 +26,7 @@ const List = styled.div`
   ${({ theme }) => theme.mq.hdReady} {
     grid-area: list;
     border-right: 1px solid ${({ theme }) => theme.colors.impactGray};
+    background-color: #fff;
   }
 `;
 
