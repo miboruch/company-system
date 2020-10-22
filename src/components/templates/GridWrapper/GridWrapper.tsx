@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyledWrapper } from './GridWrapper.styles';
+import { StyledWrapper, TitleWrapper } from './GridWrapper.styles';
 import { Title } from '../../../styles/sharedStyles';
 import Header from '../../molecules/Header/Header';
 
@@ -15,8 +15,10 @@ interface Props {
 const GridWrapper: React.FC<Props> = ({ children, onlyHeader, mobilePadding, pageName }) => {
   return (
     <StyledWrapper mobilePadding={mobilePadding} onlyHeader={onlyHeader}>
-      <Header isMenuOpen={false} toggleMenu={() => {}} />
-      <Title>{pageName}</Title>
+      <Header />
+      <TitleWrapper>
+        <Title>{pageName}</Title>
+      </TitleWrapper>
       {children}
     </StyledWrapper>
   );

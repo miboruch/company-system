@@ -46,10 +46,19 @@ const AddIcon = styled(Add)`
 `;
 
 const SpinnerWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100vh;
   display: grid;
   place-items: center;
+
+  ${({ theme }) => theme.mq.hdReady} {
+    height: 100%;
+    grid-area: content;
+    position: static;
+  }
 `;
 
 const Title = styled.h1`

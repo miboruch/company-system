@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const StyledHeader = styled.header`
   width: 100%;
   height: 60px;
-  background-color: white;
+  background-color: transparent;
   position: relative;
   //position: fixed;
   //top: 0;
@@ -18,8 +18,10 @@ const StyledHeader = styled.header`
   ${({ theme }) => theme.mq.hdReady} {
     width: 100%;
     height: 100%;
-    background-color: blue;
+    // border-bottom: 1px solid ${({ theme }) => theme.colors.impactGray};
     display: flex;
+    padding-right: 5rem;
+    background-color: #fff;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
@@ -28,11 +30,22 @@ const StyledHeader = styled.header`
   }
 `;
 
+const UserWrapper = styled.div`
+  display: none;
+
+  ${({ theme }) => theme.mq.hdReady} {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+  }
+`;
+
 const Circle = styled.div`
   width: 33px;
   height: 33px;
   background-color: #c4c4c4;
   border-radius: 50%;
+  margin-left: 2rem;
 `;
 
-export { StyledHeader, Circle };
+export { StyledHeader, UserWrapper, Circle };

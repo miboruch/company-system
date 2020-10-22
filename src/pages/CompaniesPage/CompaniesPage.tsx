@@ -8,7 +8,7 @@ import CompanyBox from '../../components/molecules/CompanyBox/CompanyBox';
 import { CompanyInterface } from '../../types/modelsTypes';
 import { AppState } from '../../reducers/rootReducer';
 import { SpinnerWrapper, EmptyParagraph, AddIcon, Title } from '../../styles/sharedStyles';
-import { Table, AddCompanyWrapper, AddCompanyParagraph } from './CompaniesPage.styles';
+import { Table, AddCompanyWrapper, AddCompanyParagraph, Wrapper } from './CompaniesPage.styles';
 import AddCompanyController from '../../components/compound/AddCompany/AddCompanyController';
 import ListBox from '../../components/molecules/ListBox/ListBox';
 import { Header } from '../../components/organisms/LandingPageContent/LandingPageContent.styles';
@@ -38,27 +38,29 @@ const CompaniesPage: React.FC<ConnectedProps> = ({ token }) => {
         <GridWrapper mobilePadding={true} onlyHeader={true} pageName={'Twoje firmy'}>
           {/*<Title>Twoje firmy</Title>*/}
           {/*<Header />*/}
-          <Table isEmpty={companies.length === 0}>
-            {companies.length === 0 ? (
-              <EmptyParagraph>Brak firm</EmptyParagraph>
-            ) : (
-              companies.map((company) => (
-                <ListBox
-                  key={company._id}
-                  name={company.name}
-                  topDescription={company.nip}
-                  bottomDescription={`${company.address}, ${company.city}`}
-                  callback={() => console.log('set currentCompany and redirect')}
-                  isCompanyBox={true}
-                  isChecked={false}
-                />
-              ))
-            )}
-          </Table>
-          <AddCompanyWrapper onClick={() => setAddCompanyOpen(true)}>
-            <AddIcon />
-            <AddCompanyParagraph>Dodaj firme</AddCompanyParagraph>
-          </AddCompanyWrapper>
+          <Wrapper>
+            <Table isEmpty={companies.length === 0}>
+              {companies.length === 0 ? (
+                <EmptyParagraph>Brak firm</EmptyParagraph>
+              ) : (
+                companies.map((company) => (
+                  <ListBox
+                    key={company._id}
+                    name={company.name}
+                    topDescription={company.nip}
+                    bottomDescription={`${company.address}, ${company.city}`}
+                    callback={() => console.log('set currentCompany and redirect')}
+                    isCompanyBox={true}
+                    isChecked={false}
+                  />
+                ))
+              )}
+            </Table>
+            <AddCompanyWrapper onClick={() => setAddCompanyOpen(true)}>
+              <AddIcon />
+              <AddCompanyParagraph>Dodaj firme</AddCompanyParagraph>
+            </AddCompanyWrapper>
+          </Wrapper>
         </GridWrapper>
       )}
       <AddCompanyController isOpen={isAddCompanyOpen} setOpen={setAddCompanyOpen} />

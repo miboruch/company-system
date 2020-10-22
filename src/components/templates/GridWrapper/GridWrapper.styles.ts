@@ -20,11 +20,21 @@ const StyledWrapper = styled.div<GridProps>`
     place-items: center;
     justify-content: flex-start;
     display: grid;
+    background-color: #ccc;
     padding: 0;
     grid-template-columns: 35% 65%;
+    grid-gap: ${({ onlyHeader }) => onlyHeader && '1px'};
     grid-template-rows: 100px auto;
     grid-template-areas: ${({ onlyHeader }) => (onlyHeader ? `'name header' 'content content'` : `'name header' 'list content'`)};
   }
 `;
 
-export { StyledWrapper };
+const TitleWrapper = styled.div`
+  ${({ theme }) => theme.mq.hdReady} {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+  }
+`;
+
+export { TitleWrapper, StyledWrapper };

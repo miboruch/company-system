@@ -3,6 +3,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import { theme } from '../styles/theme';
 import GlobalStyle from '../styles/GlobalStyle';
 import SEO from './SEO';
+import MenuContextProvider from '../providers/MenuContext/MenuContext';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -23,7 +24,9 @@ const Layout: React.FC<Props> = ({ children }) => {
       <SEO />
       <GlobalStyle />
       <ThemeProvider theme={theme}>
-        <Wrapper>{children}</Wrapper>
+        <MenuContextProvider>
+          <Wrapper>{children}</Wrapper>
+        </MenuContextProvider>
       </ThemeProvider>
     </>
   );

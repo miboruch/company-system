@@ -1,17 +1,20 @@
 import React from 'react';
 import Hamburger from '../../atoms/Hamburger/Hamburger';
-import { StyledHeader, Circle } from './Header.styles';
+import { StyledHeader, Circle, UserWrapper } from './Header.styles';
+import Input from '../../atoms/Input/Input';
+import SearchInput from '../../atoms/SearchInput/SearchInput';
 
-interface Props {
-  isMenuOpen: boolean;
-  toggleMenu: () => void;
-}
+interface Props {}
 
-const Header: React.FC<Props> = ({ isMenuOpen, toggleMenu }) => {
+const Header: React.FC<Props> = () => {
   return (
     <StyledHeader>
-      <Hamburger isOpen={isMenuOpen} toggleMenu={toggleMenu} />
-      <Circle />
+      <Hamburger />
+      <SearchInput />
+      <UserWrapper>
+        <p>Michał Boruch</p>
+        <Circle />
+      </UserWrapper>
     </StyledHeader>
   );
 };

@@ -23,6 +23,8 @@ const MainWrapper = styled.div`
   top: 0;
   left: 0;
   z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
 
   ${({ theme }) => theme.mq.hdReady} {
     background-color: ${({ theme }) => theme.colors.blurBackground};

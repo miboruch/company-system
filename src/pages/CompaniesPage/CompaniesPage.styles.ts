@@ -4,6 +4,16 @@ interface TableProps {
   isEmpty: boolean;
 }
 
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  
+    ${({ theme }) => theme.mq.hdReady} {
+    grid-area: content;
+    background-color: #fff;
+  }
+`;
+
 const Table = styled.section<TableProps>`
   width: 98%;
   height: 80vh;
@@ -51,4 +61,4 @@ const AddCompanyParagraph = styled.p`
   margin-left: 1.5rem;
 `;
 
-export { Table, AddCompanyWrapper, AddCompanyParagraph };
+export { Wrapper, Table, AddCompanyWrapper, AddCompanyParagraph };

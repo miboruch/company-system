@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { menuItems } from '../../../utils/menuItems';
@@ -9,21 +9,21 @@ import { AppTypes } from '../../../types/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { userLogout } from '../../../actions/authenticationActions';
 import { AppState } from '../../../reducers/rootReducer';
+import { MenuContext } from '../../../providers/MenuContext/MenuContext';
 
-type ConnectedProps = Props & LinkDispatchProps & LinkStateProps;
+type ConnectedProps = LinkDispatchProps & LinkStateProps & RouteComponentProps;
 
-interface Props extends RouteComponentProps {
-  isOpen: boolean;
-}
-
-const Menu: React.FC<ConnectedProps> = ({ history, location, isOpen, userLogout, refreshToken }) => {
+const Menu: React.FC<ConnectedProps> = ({ history, location, userLogout, refreshToken }) => {
+  const { isMenuOpen, setMenuOpen } = useContext(MenuContext);
   return (
-    <MenuWrapper isOpen={isOpen}>
+    <MenuWrapper isOpen={isMenuOpen}>
       <MenuItemsWrapper>
         {menuItems.map(({ name, link, icon }) => (
           <LinkWrapper isActive={link.includes(location.pathname)} key={link}>
             {icon}
-            <StyledLink to={link}>{name}</StyledLink>
+            <StyledLink to={link} onClick={() => setMenuOpen(false)}>
+              {name}
+            </StyledLink>
           </LinkWrapper>
         ))}
       </MenuItemsWrapper>

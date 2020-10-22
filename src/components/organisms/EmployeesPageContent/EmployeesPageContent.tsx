@@ -48,30 +48,32 @@ const EmployeesPageContent: React.FC<ConnectedProps> = ({ token, getAllCompanyEm
     token && allCompanyEmployees.length === 0 && getAllCompanyEmployees(token, DEFAULT_COMPANY_ID);
   }, []);
 
-  return isLoading ? (
-    <SpinnerWrapper>
-      <Spinner />
-    </SpinnerWrapper>
-  ) : (
+  return (
     <GridWrapper mobilePadding={false} pageName={'Pracownicy'}>
-      {/*<Title>Pracownicy</Title>*/}
-      {/*<Header />*/}
-      <List ref={listRef}>
-        {allCompanyEmployees.map((employee) => (
-          <ListBox
-            key={employee._id}
-            name={`${employee.userId.name} ${employee.userId.lastName}`}
-            topDescription={new Date(employee.userId.dateOfBirth).toLocaleDateString()}
-            bottomDescription={employee.userId.email}
-            callback={() => selectEmployee(employee)}
-            isEmpty={true}
-            isCompanyBox={false}
-          />
-        ))}
-      </List>
-      <ContentTemplate>
-        <EmployeeInfo />
-      </ContentTemplate>
+      {isLoading ? (
+        <SpinnerWrapper>
+          <Spinner />
+        </SpinnerWrapper>
+      ) : (
+        <>
+          <List ref={listRef}>
+            {allCompanyEmployees.map((employee) => (
+              <ListBox
+                key={employee._id}
+                name={`${employee.userId.name} ${employee.userId.lastName}`}
+                topDescription={new Date(employee.userId.dateOfBirth).toLocaleDateString()}
+                bottomDescription={employee.userId.email}
+                callback={() => selectEmployee(employee)}
+                isEmpty={true}
+                isCompanyBox={false}
+              />
+            ))}
+          </List>
+          <ContentTemplate>
+            <EmployeeInfo />
+          </ContentTemplate>
+        </>
+      )}
     </GridWrapper>
   );
 };

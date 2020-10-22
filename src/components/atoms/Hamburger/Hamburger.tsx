@@ -1,15 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyledHamburger, InnerHamburger } from './Hamburger.styles';
+import { MenuContext } from '../../../providers/MenuContext/MenuContext';
 
-interface Props {
-  isOpen: boolean;
-  toggleMenu: () => void;
-}
+interface Props {}
 
-const Hamburger: React.FC<Props> = ({ isOpen, toggleMenu }) => {
+const Hamburger: React.FC<Props> = () => {
+  const { isMenuOpen, toggleMenu } = useContext(MenuContext);
   return (
     <StyledHamburger onClick={() => toggleMenu()}>
-      <InnerHamburger isOpen={isOpen} />
+      <InnerHamburger isOpen={isMenuOpen} />
     </StyledHamburger>
   );
 };

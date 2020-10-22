@@ -21,7 +21,7 @@ const MenuTemplate: React.FC<Props> = ({ children }) => {
   return (
     <MenuTemplateWrapper>
       {/*<Header isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />*/}
-      <Menu isOpen={isMenuOpen} />
+      <Menu />
       {children}
     </MenuTemplateWrapper>
   );
