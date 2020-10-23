@@ -1,15 +1,16 @@
 import axios from 'axios';
 import { CompanyInterface } from '../types/modelsTypes';
 import {
-  SET_LOADING,
+  SET_ADD_COMPANY_OPEN,
+  SET_ALL_USER_COMPANIES,
   SET_COMPANIES_ERROR,
   SET_CURRENT_COMPANY,
-  CompanyActionTypes,
-  SetLoading,
-  SET_ALL_USER_COMPANIES,
+  SET_LOADING,
+  SetAddCompanyOpen,
   SetAllUserCompanies,
   SetCompaniesError,
-  SetCurrentCompany
+  SetCurrentCompany,
+  SetLoading
 } from '../types/companyActionTypes';
 import { Dispatch } from 'redux';
 import { AppTypes } from '../types/appActionTypes';
@@ -29,17 +30,24 @@ export const setAllUserCompanies = (userCompanies: CompanyInterface[]): SetAllUs
   };
 };
 
-export const setCurrentCompany = (currentCompany: CompanyInterface | null): SetCurrentCompany => {
+const setCurrentCompany = (currentCompany: CompanyInterface | null): SetCurrentCompany => {
   return {
     type: SET_CURRENT_COMPANY,
     payload: currentCompany
   };
 };
 
-export const setCompaniesError = (error: string | null): SetCompaniesError => {
+const setCompaniesError = (error: string | null): SetCompaniesError => {
   return {
     type: SET_COMPANIES_ERROR,
     payload: error
+  };
+};
+
+export const setAddCompanyOpen = (isOpen: boolean): SetAddCompanyOpen => {
+  return {
+    type: SET_ADD_COMPANY_OPEN,
+    payload: isOpen
   };
 };
 
@@ -73,4 +81,9 @@ export const getUserEmployeeCompanies = (token: string) => async (dispatch: Disp
   } catch (error) {
     dispatch(setCompaniesError(error));
   }
+};
+
+export const setCompany = (currentCompany: CompanyInterface | null, successCallback: () => void) => (dispatch: Dispatch<AppTypes>) => {
+  dispatch(setCurrentCompany(currentCompany));
+  successCallback();
 };

@@ -68,7 +68,7 @@ const setEditTaskOpen = (isOpen: boolean): SetEditTask => {
   };
 };
 
-const getCompanyTasks = (companyId: string, token: string) => async (dispatch: Dispatch<AppTypes>) => {
+export const getCompanyTasks = (token: string, companyId: string) => async (dispatch: Dispatch<AppTypes>) => {
   try {
     dispatch(setLoading(true));
 

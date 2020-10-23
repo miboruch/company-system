@@ -1,10 +1,11 @@
-import { CompanyActionTypes, SET_ALL_USER_COMPANIES, SET_COMPANIES_ERROR, SET_CURRENT_COMPANY, SET_LOADING } from '../types/companyActionTypes';
+import { CompanyActionTypes, SET_ADD_COMPANY_OPEN, SET_ALL_USER_COMPANIES, SET_COMPANIES_ERROR, SET_CURRENT_COMPANY, SET_LOADING } from '../types/companyActionTypes';
 import { CompanyInterface } from '../types/modelsTypes';
 
 interface DefaultState {
   isLoading: boolean;
   userCompanies: CompanyInterface[];
   currentCompany: CompanyInterface | null;
+  isAddCompanyOpen: boolean;
   error: string | null;
 }
 
@@ -12,6 +13,7 @@ const initialState: DefaultState = {
   isLoading: false,
   userCompanies: [],
   currentCompany: null,
+  isAddCompanyOpen: false,
   error: null
 };
 
@@ -40,6 +42,11 @@ export const companyReducer = (state = initialState, action: CompanyActionTypes)
         ...state,
         error: action.payload,
         isLoading: false
+      };
+    case SET_ADD_COMPANY_OPEN:
+      return {
+        ...state,
+        isAddCompanyOpen: action.payload
       };
     default:
       return state;

@@ -2,29 +2,26 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import GridWrapper from '../../components/templates/GridWrapper/GridWrapper';
 import MenuTemplate from '../../components/templates/MenuTemplate/MenuTemplate';
-import { getAdminCompanies } from '../../utils/companyAPI';
 import Spinner from '../../components/atoms/Spinner/Spinner';
-import CompanyBox from '../../components/molecules/CompanyBox/CompanyBox';
 import { CompanyInterface } from '../../types/modelsTypes';
 import { AppState } from '../../reducers/rootReducer';
 import { SpinnerWrapper, EmptyParagraph, AddIcon, Title } from '../../styles/sharedStyles';
 import { Table, AddCompanyWrapper, AddCompanyParagraph, Wrapper } from './CompaniesPage.styles';
 import AddCompanyController from '../../components/compound/AddCompany/AddCompanyController';
 import ListBox from '../../components/molecules/ListBox/ListBox';
-import { Header } from '../../components/organisms/LandingPageContent/LandingPageContent.styles';
-
-type ConnectedProps = Props & LinkStateProps;
+import { ThunkDispatch } from 'redux-thunk';
+import { AppTypes } from '../../types/appActionTypes';
+import { bindActionCreators } from 'redux';
+import { getUserAdminCompanies, setAddCompanyOpen } from '../../actions/companyActions';
 
 interface Props {}
 
-const CompaniesPage: React.FC<ConnectedProps> = ({ token }) => {
-  const [isLoading, setLoading] = useState<boolean>(true);
-  const [isAddCompanyOpen, setAddCompanyOpen] = useState<boolean>(false);
-  const [companies, setCompanies] = useState<Array<CompanyInterface>>([]);
+type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
+const CompaniesPage: React.FC<ConnectedProps> = ({ token, userCompanies, getUserAdminCompanies, isLoading, setAddCompanyOpen }) => {
   useEffect(() => {
     (async () => {
-      token && (await getAdminCompanies(setLoading, setCompanies, token));
+      token && getUserAdminCompanies(token);
     })();
   }, [token]);
 
@@ -36,14 +33,12 @@ const CompaniesPage: React.FC<ConnectedProps> = ({ token }) => {
         </SpinnerWrapper>
       ) : (
         <GridWrapper mobilePadding={true} onlyHeader={true} pageName={'Twoje firmy'}>
-          {/*<Title>Twoje firmy</Title>*/}
-          {/*<Header />*/}
           <Wrapper>
-            <Table isEmpty={companies.length === 0}>
-              {companies.length === 0 ? (
+            <Table isEmpty={userCompanies.length === 0}>
+              {userCompanies.length === 0 ? (
                 <EmptyParagraph>Brak firm</EmptyParagraph>
               ) : (
-                companies.map((company) => (
+                userCompanies.map((company) => (
                   <ListBox
                     key={company._id}
                     name={company.name}
@@ -63,17 +58,31 @@ const CompaniesPage: React.FC<ConnectedProps> = ({ token }) => {
           </Wrapper>
         </GridWrapper>
       )}
-      <AddCompanyController isOpen={isAddCompanyOpen} setOpen={setAddCompanyOpen} />
+      <AddCompanyController />
     </MenuTemplate>
   );
 };
 
 interface LinkStateProps {
   token: string | null;
+  isLoading: boolean;
+  userCompanies: CompanyInterface[];
 }
 
-const mapStateToProps = ({ authenticationReducer: { token } }: AppState): LinkStateProps => {
-  return { token };
+interface LinkDispatchProps {
+  getUserAdminCompanies: (token: string) => void;
+  setAddCompanyOpen: (isOpen: boolean) => void;
+}
+
+const mapStateToProps = ({ authenticationReducer: { token }, companyReducer: { userCompanies, isLoading } }: AppState): LinkStateProps => {
+  return { token, userCompanies, isLoading };
 };
 
-export default connect(mapStateToProps)(CompaniesPage);
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
+  return {
+    getUserAdminCompanies: bindActionCreators(getUserAdminCompanies, dispatch),
+    setAddCompanyOpen: bindActionCreators(setAddCompanyOpen, dispatch)
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CompaniesPage);

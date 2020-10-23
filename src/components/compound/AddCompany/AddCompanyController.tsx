@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 import gsap from 'gsap';
 import PageContextProvider, { PageSettingEnum } from './context/PageContext';
 import AddCompanyTemplate from './templates/AddCompanyTemplate/AddCompanyTemplate';
@@ -14,6 +15,12 @@ import { StandardCompoundTitle } from '../../../styles/compoundStyles';
 import StepList from './components/StepList/StepList';
 import { useOutsideClick } from '../../../utils/customHooks';
 import CloseButton from '../../atoms/CloseButton/CloseButton';
+import { CompanyInterface } from '../../../types/modelsTypes';
+import { AppState } from '../../../reducers/rootReducer';
+import { ThunkDispatch } from 'redux-thunk';
+import { AppTypes } from '../../../types/appActionTypes';
+import { bindActionCreators } from 'redux';
+import { getUserAdminCompanies, setAddCompanyOpen } from '../../../actions/companyActions';
 
 const MainWrapper = styled.div`
   width: 100%;
@@ -88,12 +95,11 @@ const ContentWrapper = styled.div`
   height: 100%;
 `;
 
-interface Props {
-  isOpen: boolean;
-  setOpen: (isOpen: boolean) => void;
-}
+interface Props {}
 
-const AddCompanyController: React.FC<Props> = ({ isOpen, setOpen }) => {
+type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
+
+const AddCompanyController: React.FC<ConnectedProps> = ({ isAddCompanyOpen, setAddCompanyOpen }) => {
   const mainWrapperRef = useRef<HTMLDivElement | null>(null);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
@@ -114,8 +120,8 @@ const AddCompanyController: React.FC<Props> = ({ isOpen, setOpen }) => {
   }, []);
 
   useEffect(() => {
-    isOpen ? tl.play() : tl.reverse();
-  }, [isOpen]);
+    isAddCompanyOpen ? tl.play() : tl.reverse();
+  }, [isAddCompanyOpen]);
 
   return (
     <CompanyDataContextProvider>
@@ -123,9 +129,9 @@ const AddCompanyController: React.FC<Props> = ({ isOpen, setOpen }) => {
         <MainWrapper ref={mainWrapperRef}>
           <Wrapper ref={wrapperRef}>
             <CloseButtonWrapper>
-              <CloseButton setBoxState={() => setOpen(false)} />
+              <CloseButton setBoxState={() => setAddCompanyOpen(false)} />
             </CloseButtonWrapper>
-            <AddCompanyHeader setBoxState={setOpen} />
+            <AddCompanyHeader setBoxState={setAddCompanyOpen} />
             <CompoundTitle>Dodaj firme</CompoundTitle>
             <StandardCompoundTitle>Uzupełnij informacje o swojej firmie</StandardCompoundTitle>
             <StepList />
@@ -147,4 +153,22 @@ const AddCompanyController: React.FC<Props> = ({ isOpen, setOpen }) => {
   );
 };
 
-export default AddCompanyController;
+interface LinkStateProps {
+  isAddCompanyOpen: boolean;
+}
+
+interface LinkDispatchProps {
+  setAddCompanyOpen: (isOpen: boolean) => void;
+}
+
+const mapStateToProps = ({ companyReducer: { isAddCompanyOpen } }: AppState): LinkStateProps => {
+  return { isAddCompanyOpen };
+};
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
+  return {
+    setAddCompanyOpen: bindActionCreators(setAddCompanyOpen, dispatch)
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddCompanyController);
