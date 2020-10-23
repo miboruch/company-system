@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 import { ReactComponent as Home } from '../assets/icons/home.svg';
 import { ReactComponent as Payment } from '../assets/icons/payment.svg';
-import { ReactComponent as List } from '../assets/icons/list.svg';
+import { ReactComponent as ImportedListIcon } from '../assets/icons/list.svg';
 import { ReactComponent as Support } from '../assets/icons/support.svg';
 import { ReactComponent as User } from '../assets/icons/user.svg';
 import { ReactComponent as Add } from '../assets/icons/add.svg';
@@ -28,7 +28,7 @@ const PaymentIcon = styled(Payment)`
   ${iconStyles}
 `;
 
-const ListIcon = styled(List)`
+const ListIcon = styled(ImportedListIcon)`
   ${iconStyles}
 `;
 
