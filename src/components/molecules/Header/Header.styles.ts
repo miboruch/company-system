@@ -52,4 +52,8 @@ const Circle = styled.div`
   margin-left: 2rem;
 `;
 
-export { StyledHeader, UserWrapper, Circle };
+const NameParagraph = styled.p`
+  font-size: 13px;
+`;
+
+export { StyledHeader, UserWrapper, Circle, NameParagraph };

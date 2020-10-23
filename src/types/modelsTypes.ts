@@ -35,6 +35,17 @@ export interface UserDataInterface {
   address: string;
 }
 
+export interface UserAuthData {
+  userId: string;
+  email: string;
+  name: string;
+  lastName: string;
+  dateOfBirth: Date | string;
+  country: string;
+  city: string;
+  address: string;
+}
+
 export interface EmployeeDataInterface {
   _id: string;
   userId: UserDataInterface;

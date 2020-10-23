@@ -2,12 +2,14 @@ import axios from 'axios';
 import {
   SET_ADD_NEW_EMPLOYEE_OPEN,
   SET_COMPANY_EMPLOYEES,
+  SET_EDIT_EMPLOYEE,
   SET_EMPLOYEE_ERROR,
   SET_EMPLOYEE_INFO_OPEN,
   SET_LOADING,
   SET_SELECTED_EMPLOYEE,
   SetAddNewEmployeeOpen,
   SetCompanyEmployees,
+  SetEditEmployee,
   SetEmployeeError,
   SetEmployeeInfoOpen,
   SetLoading,
@@ -53,6 +55,13 @@ const setAddNewEmployeeOpen = (isOpen: boolean): SetAddNewEmployeeOpen => {
   };
 };
 
+export const setEditEmployee = (isOpen: boolean): SetEditEmployee => {
+  return {
+    type: SET_EDIT_EMPLOYEE,
+    payload: isOpen
+  };
+};
+
 export const setEmployeeInfoOpen = (isOpen: boolean): SetEmployeeInfoOpen => {
   return {
     type: SET_EMPLOYEE_INFO_OPEN,
@@ -82,4 +91,3 @@ export const selectEmployee = (employee: EmployeeDataInterface | null) => (dispa
   dispatch(setSelectedEmployee(employee));
   dispatch(setEmployeeInfoOpen(true));
 };
-//TODO: on click set current employee

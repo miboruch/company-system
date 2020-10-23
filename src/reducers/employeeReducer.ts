@@ -2,6 +2,7 @@ import {
   EmployeesActionTypes,
   SET_ADD_NEW_EMPLOYEE_OPEN,
   SET_COMPANY_EMPLOYEES,
+  SET_EDIT_EMPLOYEE,
   SET_EMPLOYEE_ERROR,
   SET_EMPLOYEE_INFO_OPEN,
   SET_LOADING,
@@ -16,6 +17,7 @@ interface DefaultState {
   error: string | null;
   isEmployeeInfoOpen: boolean;
   isAddNewOpen: boolean;
+  isEditEmployeeOpen: boolean;
 }
 
 const initialState: DefaultState = {
@@ -24,7 +26,8 @@ const initialState: DefaultState = {
   isLoading: false,
   error: null,
   isEmployeeInfoOpen: false,
-  isAddNewOpen: false
+  isAddNewOpen: false,
+  isEditEmployeeOpen: false
 };
 
 export const employeeReducer = (state = initialState, action: EmployeesActionTypes): DefaultState => {
@@ -61,6 +64,11 @@ export const employeeReducer = (state = initialState, action: EmployeesActionTyp
       return {
         ...state,
         isAddNewOpen: action.payload
+      };
+    case SET_EDIT_EMPLOYEE:
+      return {
+        ...state,
+        isEditEmployeeOpen: action.payload
       };
     default:
       return state;

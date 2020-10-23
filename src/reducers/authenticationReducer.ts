@@ -1,4 +1,5 @@
 import { AuthenticationActionTypes, AUTH_START, AUTH_SUCCESS, AUTH_FAILURE, AUTH_LOGOUT, SET_USER_DATA } from '../types/authenticationTypes';
+import { UserAuthData } from '../types/modelsTypes';
 
 interface DefaultState {
   isLoading: boolean;
@@ -6,16 +7,7 @@ interface DefaultState {
   token: string | null;
   refreshToken: string | null;
   error: string | null;
-  userData: null | {
-    userId: string | null;
-    email: string;
-    name: string;
-    lastName: string;
-    dateOfBirth: string | Date;
-    country: string;
-    city: string;
-    address: string;
-  };
+  userData: null | UserAuthData;
 }
 
 const initialState: DefaultState = {

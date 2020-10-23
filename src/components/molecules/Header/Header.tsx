@@ -1,13 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Hamburger from '../../atoms/Hamburger/Hamburger';
-import { StyledHeader, Circle, UserWrapper } from './Header.styles';
+import { StyledHeader, Circle, UserWrapper, NameParagraph } from './Header.styles';
 import SearchInput from '../../atoms/SearchInput/SearchInput';
+import { AppState } from '../../../reducers/rootReducer';
+import { UserAuthData } from '../../../types/modelsTypes';
 
 interface Props {
   setFilterText?: (filterText: string) => void;
 }
 
-const Header: React.FC<Props> = ({ setFilterText }) => {
+type ConnectedProps = Props & LinkStateProps;
+
+const Header: React.FC<ConnectedProps> = ({ setFilterText, userData }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setFilterText && setFilterText(e.target.value);
   };
@@ -17,11 +22,23 @@ const Header: React.FC<Props> = ({ setFilterText }) => {
       <Hamburger />
       <SearchInput onChange={setFilterText && handleChange} />
       <UserWrapper>
-        <p>Michał Boruch</p>
+        {userData?.name && userData.lastName && (
+          <NameParagraph>
+            {userData.name} {userData.lastName}
+          </NameParagraph>
+        )}
         <Circle />
       </UserWrapper>
     </StyledHeader>
   );
 };
 
-export default Header;
+interface LinkStateProps {
+  userData: UserAuthData | null;
+}
+
+const mapStateToProps = ({ authenticationReducer: { userData } }: AppState): LinkStateProps => {
+  return { userData };
+};
+
+export default connect(mapStateToProps)(Header);

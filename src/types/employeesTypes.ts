@@ -6,6 +6,7 @@ export const SET_SELECTED_EMPLOYEE = 'SET_SELECTED_EMPLOYEE';
 export const SET_EMPLOYEE_ERROR = 'SET_EMPLOYEE_ERROR';
 export const SET_EMPLOYEE_INFO_OPEN = 'SET_EMPLOYEE_INFO_OPEN';
 export const SET_ADD_NEW_EMPLOYEE_OPEN = 'SET_ADD_NEW_EMPLOYEE_OPEN';
+export const SET_EDIT_EMPLOYEE = 'SET_EDIT_EMPLOYEE';
 
 export interface SetLoading {
   type: typeof SET_LOADING;
@@ -37,4 +38,9 @@ export interface SetAddNewEmployeeOpen {
   payload: boolean;
 }
 
-export type EmployeesActionTypes = SetLoading | SetCompanyEmployees | SetSelectedEmployee | SetEmployeeError | SetEmployeeInfoOpen | SetAddNewEmployeeOpen;
+export interface SetEditEmployee {
+  type: typeof SET_EDIT_EMPLOYEE;
+  payload: boolean;
+}
+
+export type EmployeesActionTypes = SetLoading | SetCompanyEmployees | SetSelectedEmployee | SetEmployeeError | SetEmployeeInfoOpen | SetAddNewEmployeeOpen | SetEditEmployee;
