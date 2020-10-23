@@ -24,3 +24,5 @@ export interface SetCompaniesError {
   type: typeof SET_COMPANIES_ERROR;
   payload: string | null;
 }
+
+export type CompanyActionTypes = SetLoading | SetAllUserCompanies | SetCurrentCompany | SetCompaniesError;
