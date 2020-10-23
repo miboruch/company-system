@@ -152,6 +152,17 @@ const CompoundListWrapper = styled.div`
   }
 `;
 
+const List = styled.div`
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+
+  ${({ theme }) => theme.mq.hdReady} {
+    grid-area: list;
+    background-color: #fff;
+  }
+`;
+
 export {
   HomeIcon,
   PaymentIcon,
@@ -168,5 +179,6 @@ export {
   DoubleFlexWrapper,
   ErrorParagraph,
   EmptyParagraph,
-  CompoundListWrapper
+  CompoundListWrapper,
+  List
 };

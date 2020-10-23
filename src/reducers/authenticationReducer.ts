@@ -1,4 +1,4 @@
-import { AuthenticationActionTypes, AUTH_START, AUTH_SUCCESS, AUTH_FAILURE, AUTH_LOGOUT, SET_USER_DATA } from '../types/authenticationTypes';
+import { AuthenticationActionTypes, AUTH_START, AUTH_SUCCESS, AUTH_FAILURE, AUTH_LOGOUT, SET_USER_DATA } from '../types/authenticationActionTypes';
 import { UserAuthData } from '../types/modelsTypes';
 
 interface DefaultState {

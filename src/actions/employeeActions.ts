@@ -14,7 +14,7 @@ import {
   SetEmployeeInfoOpen,
   SetLoading,
   SetSelectedEmployee
-} from '../types/employeesTypes';
+} from '../types/employeesActionTypes';
 import { EmployeeDataInterface } from '../types/modelsTypes';
 import { Dispatch } from 'redux';
 import { AppTypes } from '../types/appActionTypes';

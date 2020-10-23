@@ -10,7 +10,7 @@ import {
   SetAllUserCompanies,
   SetCompaniesError,
   SetCurrentCompany
-} from '../types/companyTypes';
+} from '../types/companyActionTypes';
 import { Dispatch } from 'redux';
 import { AppTypes } from '../types/appActionTypes';
 import { API_URL } from '../utils/config';

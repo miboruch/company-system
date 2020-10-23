@@ -7,7 +7,7 @@ import {
   SET_EMPLOYEE_INFO_OPEN,
   SET_LOADING,
   SET_SELECTED_EMPLOYEE
-} from '../types/employeesTypes';
+} from '../types/employeesActionTypes';
 import { EmployeeDataInterface } from '../types/modelsTypes';
 
 interface DefaultState {

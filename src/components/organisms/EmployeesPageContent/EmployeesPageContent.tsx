@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
-import { Title, SpinnerWrapper } from '../../../styles/sharedStyles';
+import { Title, SpinnerWrapper, List } from '../../../styles/sharedStyles';
 import { Header } from '../LandingPageContent/LandingPageContent.styles';
 import ListBox from '../../molecules/ListBox/ListBox';
 import gsap from 'gsap';
@@ -16,19 +16,6 @@ import { EmployeeDataInterface } from '../../../types/modelsTypes';
 import { DEFAULT_COMPANY_ID } from '../../../utils/config';
 import Spinner from '../../atoms/Spinner/Spinner';
 import EmployeeInfo from '../EmployeeInfo/EmployeeInfo';
-import { Content } from './EmployeesPageContent.styles';
-
-const List = styled.div`
-  width: 100%;
-  height: 100%;
-  overflow-y: scroll;
-
-  ${({ theme }) => theme.mq.hdReady} {
-    grid-area: list;
-    border-right: 1px solid ${({ theme }) => theme.colors.impactGray};
-    background-color: #fff;
-  }
-`;
 
 type ConnectedProps = LinkStateProps & LinkDispatchProps;
 
@@ -37,9 +24,9 @@ const EmployeesPageContent: React.FC<ConnectedProps> = ({ token, getAllCompanyEm
   const [filterText, setFilterText] = useState<string>('');
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
 
-  const filterByEmployeeName = (filterText: string, allEmployees: EmployeeDataInterface[]):EmployeeDataInterface[] => {
-    return allEmployees.filter(employee => `${employee.userId.name} ${employee.userId.lastName}`.toLowerCase().includes(filterText.toLowerCase()))
-  }
+  const filterByEmployeeName = (filterText: string, allEmployees: EmployeeDataInterface[]): EmployeeDataInterface[] => {
+    return allEmployees.filter((employee) => `${employee.userId.name} ${employee.userId.lastName}`.toLowerCase().includes(filterText.toLowerCase()));
+  };
 
   useEffect(() => {
     const list: HTMLDivElement | null = listRef.current;

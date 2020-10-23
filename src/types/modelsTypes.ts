@@ -52,3 +52,17 @@ export interface EmployeeDataInterface {
   pricePerHour?: number;
   companyId: string;
 }
+
+export interface TaskInterface {
+  isCompleted: boolean;
+  addedDate: Date | string;
+  _id: string;
+  date: Date | string;
+  timeEstimate: number;
+  name: string;
+  description: string;
+  clientId?: null | string;
+  companyId: string;
+  taskIncome?: number;
+  taskExpense?: number;
+}
