@@ -1,16 +1,21 @@
 import React from 'react';
 import Hamburger from '../../atoms/Hamburger/Hamburger';
 import { StyledHeader, Circle, UserWrapper } from './Header.styles';
-import Input from '../../atoms/Input/Input';
 import SearchInput from '../../atoms/SearchInput/SearchInput';
 
-interface Props {}
+interface Props {
+  setFilterText?: (filterText: string) => void;
+}
 
-const Header: React.FC<Props> = () => {
+const Header: React.FC<Props> = ({ setFilterText }) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setFilterText && setFilterText(e.target.value);
+  };
+
   return (
-    <StyledHeader>
+    <StyledHeader isInput={!!setFilterText}>
       <Hamburger />
-      <SearchInput />
+      <SearchInput onChange={setFilterText && handleChange} />
       <UserWrapper>
         <p>Michał Boruch</p>
         <Circle />

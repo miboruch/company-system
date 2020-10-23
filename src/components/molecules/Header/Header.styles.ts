@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
-const StyledHeader = styled.header`
+interface HeaderProps {
+  isInput: boolean;
+}
+
+const StyledHeader = styled.header<HeaderProps>`
   width: 100%;
   height: 60px;
   background-color: transparent;
@@ -23,7 +27,7 @@ const StyledHeader = styled.header`
     padding-right: 5rem;
     background-color: #fff;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: ${({ isInput }) => (isInput ? 'space-between' : 'flex-end')};
     align-items: center;
     grid-area: header;
     margin: 0;

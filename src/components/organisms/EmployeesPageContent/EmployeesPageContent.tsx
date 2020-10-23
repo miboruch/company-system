@@ -34,7 +34,12 @@ type ConnectedProps = LinkStateProps & LinkDispatchProps;
 
 const EmployeesPageContent: React.FC<ConnectedProps> = ({ token, getAllCompanyEmployees, isLoading, allCompanyEmployees, selectEmployee }) => {
   const listRef = useRef<HTMLDivElement | null>(null);
+  const [filterText, setFilterText] = useState<string>('');
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
+
+  const filterByEmployeeName = (filterText: string, allEmployees: EmployeeDataInterface[]):EmployeeDataInterface[] => {
+    return allEmployees.filter(employee => `${employee.userId.name} ${employee.userId.lastName}`.toLowerCase().includes(filterText.toLowerCase()))
+  }
 
   useEffect(() => {
     const list: HTMLDivElement | null = listRef.current;
@@ -51,7 +56,7 @@ const EmployeesPageContent: React.FC<ConnectedProps> = ({ token, getAllCompanyEm
   }, []);
 
   return (
-    <GridWrapper mobilePadding={false} pageName={'Pracownicy'}>
+    <GridWrapper mobilePadding={false} pageName={'Pracownicy'} setFilterText={setFilterText}>
       {isLoading ? (
         <SpinnerWrapper>
           <Spinner />
@@ -59,7 +64,7 @@ const EmployeesPageContent: React.FC<ConnectedProps> = ({ token, getAllCompanyEm
       ) : (
         <>
           <List ref={listRef}>
-            {allCompanyEmployees.map((employee) => (
+            {filterByEmployeeName(filterText, allCompanyEmployees).map((employee) => (
               <ListBox
                 key={employee._id}
                 name={`${employee.userId.name} ${employee.userId.lastName}`}

@@ -8,14 +8,15 @@ interface Props {
   onlyHeader?: boolean;
   mobilePadding: boolean;
   pageName: string;
+  setFilterText?: (filterText: string) => void;
 }
 
 //* This component will have grid declaration on hdReady resolutions
 
-const GridWrapper: React.FC<Props> = ({ children, onlyHeader, mobilePadding, pageName }) => {
+const GridWrapper: React.FC<Props> = ({ children, onlyHeader, mobilePadding, pageName, setFilterText }) => {
   return (
     <StyledWrapper mobilePadding={mobilePadding} onlyHeader={onlyHeader}>
-      <Header />
+      <Header setFilterText={setFilterText} />
       <TitleWrapper>
         <Title>{pageName}</Title>
       </TitleWrapper>
