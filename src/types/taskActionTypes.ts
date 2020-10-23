@@ -43,4 +43,4 @@ export interface SetEditTask {
   payload: boolean;
 }
 
-export type EmployeesActionTypes = SetLoading | SetCompanyTasks | SetSelectedTask | SetTaskError | SetTaskInfoOpen | SetAddNewTaskOpen | SetEditTask;
+export type TaskActionTypes = SetLoading | SetCompanyTasks | SetSelectedTask | SetTaskError | SetTaskInfoOpen | SetAddNewTaskOpen | SetEditTask;
