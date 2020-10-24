@@ -11,7 +11,7 @@ import { AppState } from '../../../reducers/rootReducer';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/appActionTypes';
 import { bindActionCreators } from 'redux';
-import { getAllCompanyEmployees, selectEmployee } from '../../../actions/employeeActions';
+import { getAllCompanyEmployees, selectEmployee, setEmployeeInfoOpen } from '../../../actions/employeeActions';
 import { EmployeeDataInterface } from '../../../types/modelsTypes';
 import { DEFAULT_COMPANY_ID } from '../../../utils/config';
 import Spinner from '../../atoms/Spinner/Spinner';
@@ -19,7 +19,15 @@ import EmployeeInfo from '../EmployeeInfo/EmployeeInfo';
 
 type ConnectedProps = LinkStateProps & LinkDispatchProps;
 
-const EmployeesPageContent: React.FC<ConnectedProps> = ({ token, getAllCompanyEmployees, isLoading, allCompanyEmployees, selectEmployee }) => {
+const EmployeesPageContent: React.FC<ConnectedProps> = ({
+  token,
+  getAllCompanyEmployees,
+  isLoading,
+  allCompanyEmployees,
+  selectEmployee,
+  isEmployeeInfoOpen,
+  setEmployeeInfoOpen
+}) => {
   const listRef = useRef<HTMLDivElement | null>(null);
   const [filterText, setFilterText] = useState<string>('');
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
@@ -63,7 +71,7 @@ const EmployeesPageContent: React.FC<ConnectedProps> = ({ token, getAllCompanyEm
               />
             ))}
           </List>
-          <ContentTemplate>
+          <ContentTemplate isOpen={isEmployeeInfoOpen} setOpen={setEmployeeInfoOpen}>
             <EmployeeInfo />
           </ContentTemplate>
         </>
@@ -76,21 +84,24 @@ interface LinkStateProps {
   token: string | null;
   isLoading: boolean;
   allCompanyEmployees: EmployeeDataInterface[];
+  isEmployeeInfoOpen: boolean;
 }
 
 interface LinkDispatchProps {
   getAllCompanyEmployees: (token: string, companyId: string) => void;
   selectEmployee: (employee: EmployeeDataInterface) => void;
+  setEmployeeInfoOpen: (isOpen: boolean) => void;
 }
 
-const mapStateToProps = ({ authenticationReducer: { token }, employeeReducer: { isLoading, allCompanyEmployees } }: AppState): LinkStateProps => {
-  return { token, isLoading, allCompanyEmployees };
+const mapStateToProps = ({ authenticationReducer: { token }, employeeReducer: { isLoading, allCompanyEmployees, isEmployeeInfoOpen } }: AppState): LinkStateProps => {
+  return { token, isLoading, allCompanyEmployees, isEmployeeInfoOpen };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
   return {
     getAllCompanyEmployees: bindActionCreators(getAllCompanyEmployees, dispatch),
-    selectEmployee: bindActionCreators(selectEmployee, dispatch)
+    selectEmployee: bindActionCreators(selectEmployee, dispatch),
+    setEmployeeInfoOpen: bindActionCreators(setEmployeeInfoOpen, dispatch)
   };
 };
 

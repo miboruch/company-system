@@ -1,22 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { ThunkDispatch } from 'redux-thunk';
 import ArrowButton from '../../atoms/ArrowButton/ArrowButton';
 import { ContentWrapper, ArrowAbsoluteWrapper } from './ContentTemplate.styles';
-import { setEmployeeInfoOpen } from '../../../actions/employeeActions';
-import { AppTypes } from '../../../types/appActionTypes';
-import { AppState } from '../../../reducers/rootReducer';
 import { Direction } from '../../../types/globalTypes';
 
 interface Props {
   children: React.ReactNode;
+  isOpen: boolean;
+  setOpen: (isOpen: boolean) => void;
 }
 
-type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
+type ConnectedProps = Props;
 
-const ContentTemplate: React.FC<ConnectedProps> = ({ children, isEmployeeInfoOpen, setEmployeeInfoOpen }) => {
+const ContentTemplate: React.FC<ConnectedProps> = ({ children, isOpen, setOpen }) => {
   const contentWrapperRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
 
@@ -32,35 +28,17 @@ const ContentTemplate: React.FC<ConnectedProps> = ({ children, isEmployeeInfoOpe
   }, []);
 
   useEffect(() => {
-    isEmployeeInfoOpen ? tl.play() : tl.reverse();
-  }, [isEmployeeInfoOpen]);
+    isOpen ? tl.play() : tl.reverse();
+  }, [isOpen]);
 
   return (
     <ContentWrapper ref={contentWrapperRef}>
       <ArrowAbsoluteWrapper>
-        <ArrowButton onClick={() => setEmployeeInfoOpen(false)} direction={Direction.Left} />
+        <ArrowButton onClick={() => setOpen(false)} direction={Direction.Left} />
       </ArrowAbsoluteWrapper>
       {children}
     </ContentWrapper>
   );
 };
 
-interface LinkStateProps {
-  isEmployeeInfoOpen: boolean;
-}
-
-interface LinkDispatchProps {
-  setEmployeeInfoOpen: (isOpen: boolean) => void;
-}
-
-const mapStateToProps = ({ employeeReducer: { isEmployeeInfoOpen } }: AppState): LinkStateProps => {
-  return { isEmployeeInfoOpen };
-};
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
-  return {
-    setEmployeeInfoOpen: bindActionCreators(setEmployeeInfoOpen, dispatch)
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContentTemplate);
+export default ContentTemplate;

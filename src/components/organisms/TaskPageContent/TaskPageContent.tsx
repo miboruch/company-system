@@ -6,7 +6,7 @@ import { AppState } from '../../../reducers/rootReducer';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/appActionTypes';
 import { bindActionCreators } from 'redux';
-import { getCompanyTasks, selectTask } from '../../../actions/taskActions';
+import { getCompanyTasks, selectTask, setTaskInfoOpen } from '../../../actions/taskActions';
 import { DEFAULT_COMPANY_ID } from '../../../utils/config';
 import Spinner from '../../atoms/Spinner/Spinner';
 import { SpinnerWrapper, List } from '../../../styles/sharedStyles';
@@ -18,7 +18,7 @@ interface Props {}
 
 type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
-const TaskPageContent: React.FC<ConnectedProps> = ({ token, isLoading, allCompanyTasks, getCompanyTasks, selectTask }) => {
+const TaskPageContent: React.FC<ConnectedProps> = ({ token, isLoading, allCompanyTasks, getCompanyTasks, selectTask, isTaskInfoOpen, setTaskInfoOpen }) => {
   const listRef = useRef<HTMLDivElement | null>(null);
   const [filterText, setFilterText] = useState<string>('');
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
@@ -61,7 +61,7 @@ const TaskPageContent: React.FC<ConnectedProps> = ({ token, isLoading, allCompan
               />
             ))}
           </List>
-          <ContentTemplate>
+          <ContentTemplate isOpen={isTaskInfoOpen} setOpen={setTaskInfoOpen}>
             <p>Hello</p>
           </ContentTemplate>
         </>
@@ -74,21 +74,24 @@ interface LinkStateProps {
   token: string | null;
   isLoading: boolean;
   allCompanyTasks: TaskInterface[];
+  isTaskInfoOpen: boolean;
 }
 
 interface LinkDispatchProps {
   getCompanyTasks: (token: string, companyId: string) => void;
   selectTask: (task: TaskInterface) => void;
+  setTaskInfoOpen: (isOpen: boolean) => void;
 }
 
-const mapStateToProps = ({ authenticationReducer: { token }, taskReducer: { isLoading, allCompanyTasks } }: AppState): LinkStateProps => {
-  return { token, isLoading, allCompanyTasks };
+const mapStateToProps = ({ authenticationReducer: { token }, taskReducer: { isLoading, allCompanyTasks, isTaskInfoOpen } }: AppState): LinkStateProps => {
+  return { token, isLoading, allCompanyTasks, isTaskInfoOpen };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
   return {
     getCompanyTasks: bindActionCreators(getCompanyTasks, dispatch),
-    selectTask: bindActionCreators(selectTask, dispatch)
+    selectTask: bindActionCreators(selectTask, dispatch),
+    setTaskInfoOpen: bindActionCreators(setTaskInfoOpen, dispatch)
   };
 };
 

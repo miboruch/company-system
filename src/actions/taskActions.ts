@@ -47,7 +47,7 @@ const setTaskError = (error: string | null): SetTaskError => {
   };
 };
 
-const setTaskInfoOpen = (isOpen: boolean): SetTaskInfoOpen => {
+export const setTaskInfoOpen = (isOpen: boolean): SetTaskInfoOpen => {
   return {
     type: SET_TASK_INFO_OPEN,
     payload: isOpen
