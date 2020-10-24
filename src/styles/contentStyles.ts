@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Form } from 'formik';
-import Button from '../../atoms/Button/Button';
+import Button from '../components/atoms/Button/Button';
 
 const Wrapper = styled.div`
   width: 100%;

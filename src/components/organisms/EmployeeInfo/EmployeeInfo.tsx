@@ -5,7 +5,7 @@ import { EmployeeDataInterface } from '../../../types/modelsTypes';
 import { AppState } from '../../../reducers/rootReducer';
 import Button from '../../atoms/Button/Button';
 import { StyledInput } from '../../../styles/compoundStyles';
-import { Wrapper, StyledForm, HeaderWrapper, Paragraph, EmployeeInfoBox, SubParagraph, TextParagraph, Title, InputWrapper } from './EmployeeInfo.styles';
+import { Wrapper, StyledForm, HeaderWrapper, Paragraph, EmployeeInfoBox, SubParagraph, TextParagraph, Title, InputWrapper } from '../../../styles/contentStyles';
 
 interface InitialValues {
   hourSalary?: number;

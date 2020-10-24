@@ -13,6 +13,7 @@ import { SpinnerWrapper, List } from '../../../styles/sharedStyles';
 import ListBox from '../../molecules/ListBox/ListBox';
 import ContentTemplate from '../../templates/ContentTemplate/ContentTemplate';
 import gsap from 'gsap';
+import TaskInfo from '../TaskInfo/TaskInfo';
 
 interface Props {}
 
@@ -62,7 +63,7 @@ const TaskPageContent: React.FC<ConnectedProps> = ({ token, isLoading, allCompan
             ))}
           </List>
           <ContentTemplate isOpen={isTaskInfoOpen} setOpen={setTaskInfoOpen}>
-            <p>Hello</p>
+            <TaskInfo />
           </ContentTemplate>
         </>
       )}

@@ -57,7 +57,7 @@ export interface TaskInterface {
   isCompleted: boolean;
   addedDate: Date | string;
   _id: string;
-  date: Date | string;
+  date: Date;
   timeEstimate: number;
   name: string;
   description: string;
