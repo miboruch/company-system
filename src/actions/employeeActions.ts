@@ -5,14 +5,14 @@ import {
   SET_EDIT_EMPLOYEE,
   SET_EMPLOYEE_ERROR,
   SET_EMPLOYEE_INFO_OPEN,
-  SET_LOADING,
+  SET_EMPLOYEE_LOADING,
   SET_SELECTED_EMPLOYEE,
   SetAddNewEmployeeOpen,
   SetCompanyEmployees,
   SetEditEmployee,
   SetEmployeeError,
   SetEmployeeInfoOpen,
-  SetLoading,
+  SetEmployeeLoading,
   SetSelectedEmployee
 } from '../types/employeesActionTypes';
 import { EmployeeDataInterface } from '../types/modelsTypes';
@@ -20,9 +20,9 @@ import { Dispatch } from 'redux';
 import { AppTypes } from '../types/appActionTypes';
 import { API_URL } from '../utils/config';
 
-const setLoading = (isLoading: boolean): SetLoading => {
+const setEmployeeLoading = (isLoading: boolean): SetEmployeeLoading => {
   return {
-    type: SET_LOADING,
+    type: SET_EMPLOYEE_LOADING,
     payload: isLoading
   };
 };
@@ -71,7 +71,7 @@ export const setEmployeeInfoOpen = (isOpen: boolean): SetEmployeeInfoOpen => {
 
 export const getAllCompanyEmployees = (token: string, companyId: string) => async (dispatch: Dispatch<AppTypes>) => {
   try {
-    dispatch(setLoading(true));
+    dispatch(setEmployeeLoading(true));
 
     const { data } = await axios.get(`${API_URL}/employee/get-company-employees?company_id=${companyId}`, {
       headers: {

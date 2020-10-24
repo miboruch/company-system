@@ -1,13 +1,13 @@
 import axios from 'axios';
 import {
-  SetLoading,
+  SetTaskLoading,
   SetCompanyTasks,
   SetSelectedTask,
   SetTaskError,
   SetTaskInfoOpen,
   SetAddNewTaskOpen,
   SetEditTask,
-  SET_LOADING,
+  SET_TASK_LOADING,
   SET_COMPANY_TASKS,
   SET_SELECTED_TASK,
   SET_TASK_ERROR,
@@ -20,9 +20,9 @@ import { Dispatch } from 'redux';
 import { AppTypes } from '../types/appActionTypes';
 import { API_URL } from '../utils/config';
 
-const setLoading = (isLoading: boolean): SetLoading => {
+const setTaskLoading = (isLoading: boolean): SetTaskLoading => {
   return {
-    type: SET_LOADING,
+    type: SET_TASK_LOADING,
     payload: isLoading
   };
 };
@@ -70,7 +70,7 @@ const setEditTaskOpen = (isOpen: boolean): SetEditTask => {
 
 export const getCompanyTasks = (token: string, companyId: string) => async (dispatch: Dispatch<AppTypes>) => {
   try {
-    dispatch(setLoading(true));
+    dispatch(setTaskLoading(true));
 
     const { data } = await axios.get(`${API_URL}/task/get-company-tasks?company_id=${companyId}`, {
       headers: {

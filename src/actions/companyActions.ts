@@ -5,20 +5,20 @@ import {
   SET_ALL_USER_COMPANIES,
   SET_COMPANIES_ERROR,
   SET_CURRENT_COMPANY,
-  SET_LOADING,
+  SET_COMPANY_LOADING,
   SetAddCompanyOpen,
   SetAllUserCompanies,
   SetCompaniesError,
   SetCurrentCompany,
-  SetLoading
+  SetCompanyLoading
 } from '../types/companyActionTypes';
 import { Dispatch } from 'redux';
 import { AppTypes } from '../types/appActionTypes';
 import { API_URL } from '../utils/config';
 
-const setLoading = (isLoading: boolean): SetLoading => {
+const setCompanyLoading = (isLoading: boolean): SetCompanyLoading => {
   return {
-    type: SET_LOADING,
+    type: SET_COMPANY_LOADING,
     payload: isLoading
   };
 };
@@ -53,7 +53,7 @@ export const setAddCompanyOpen = (isOpen: boolean): SetAddCompanyOpen => {
 
 export const getUserAdminCompanies = (token: string) => async (dispatch: Dispatch<AppTypes>) => {
   try {
-    dispatch(setLoading(true));
+    dispatch(setCompanyLoading(true));
 
     const { data } = await axios.get(`${API_URL}/user/get-user-companies`, {
       headers: {
@@ -69,7 +69,7 @@ export const getUserAdminCompanies = (token: string) => async (dispatch: Dispatc
 
 export const getUserEmployeeCompanies = (token: string) => async (dispatch: Dispatch<AppTypes>) => {
   try {
-    dispatch(setLoading(true));
+    dispatch(setCompanyLoading(true));
 
     const { data } = await axios.get(`${API_URL}/employee/get-employee-companies`, {
       headers: {

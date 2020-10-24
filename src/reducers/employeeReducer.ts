@@ -5,7 +5,7 @@ import {
   SET_EDIT_EMPLOYEE,
   SET_EMPLOYEE_ERROR,
   SET_EMPLOYEE_INFO_OPEN,
-  SET_LOADING,
+  SET_EMPLOYEE_LOADING,
   SET_SELECTED_EMPLOYEE
 } from '../types/employeesActionTypes';
 import { EmployeeDataInterface } from '../types/modelsTypes';
@@ -32,7 +32,7 @@ const initialState: DefaultState = {
 
 export const employeeReducer = (state = initialState, action: EmployeesActionTypes): DefaultState => {
   switch (action.type) {
-    case SET_LOADING:
+    case SET_EMPLOYEE_LOADING:
       return {
         ...state,
         isLoading: action.payload,

@@ -2,7 +2,7 @@ import {
   SET_ADD_NEW_TASK_OPEN,
   SET_COMPANY_TASKS,
   SET_EDIT_TASK,
-  SET_LOADING,
+  SET_TASK_LOADING,
   SET_SELECTED_TASK,
   SET_TASK_ERROR,
   SET_TASK_INFO_OPEN,
@@ -32,7 +32,7 @@ const initialState: DefaultState = {
 
 export const taskReducer = (state = initialState, action: TaskActionTypes): DefaultState => {
   switch (action.type) {
-    case SET_LOADING:
+    case SET_TASK_LOADING:
       return {
         ...state,
         isLoading: true,

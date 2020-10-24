@@ -12,13 +12,13 @@ import ListBox from '../../components/molecules/ListBox/ListBox';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../types/appActionTypes';
 import { bindActionCreators } from 'redux';
-import { getUserAdminCompanies, setAddCompanyOpen } from '../../actions/companyActions';
+import { getUserAdminCompanies, setAddCompanyOpen, setCompany } from '../../actions/companyActions';
 
 interface Props {}
 
 type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
-const CompaniesPage: React.FC<ConnectedProps> = ({ token, userCompanies, getUserAdminCompanies, isLoading, setAddCompanyOpen }) => {
+const CompaniesPage: React.FC<ConnectedProps> = ({ token, userCompanies, getUserAdminCompanies, isLoading, setAddCompanyOpen, setCompany }) => {
   useEffect(() => {
     (async () => {
       token && getUserAdminCompanies(token);
@@ -44,7 +44,7 @@ const CompaniesPage: React.FC<ConnectedProps> = ({ token, userCompanies, getUser
                     name={company.name}
                     topDescription={company.nip}
                     bottomDescription={`${company.address}, ${company.city}`}
-                    callback={() => console.log('set currentCompany and redirect')}
+                    callback={() => setCompany(company, () => console.log('company set'))}
                     isCompanyBox={true}
                     isChecked={false}
                   />
@@ -72,6 +72,7 @@ interface LinkStateProps {
 interface LinkDispatchProps {
   getUserAdminCompanies: (token: string) => void;
   setAddCompanyOpen: (isOpen: boolean) => void;
+  setCompany: (currentCompany: CompanyInterface | null, successCallback: () => void) => void;
 }
 
 const mapStateToProps = ({ authenticationReducer: { token }, companyReducer: { userCompanies, isLoading } }: AppState): LinkStateProps => {
@@ -81,7 +82,8 @@ const mapStateToProps = ({ authenticationReducer: { token }, companyReducer: { u
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
   return {
     getUserAdminCompanies: bindActionCreators(getUserAdminCompanies, dispatch),
-    setAddCompanyOpen: bindActionCreators(setAddCompanyOpen, dispatch)
+    setAddCompanyOpen: bindActionCreators(setAddCompanyOpen, dispatch),
+    setCompany: bindActionCreators(setCompany, dispatch)
   };
 };
 
