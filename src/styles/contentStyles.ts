@@ -1,14 +1,11 @@
 import styled from 'styled-components';
 import { Form } from 'formik';
-import Button from '../components/atoms/Button/Button';
 
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   padding: 3rem;
   flex-direction: column;
-  margin-top: 4rem;
-  //overflow-y: scroll;
 
   ${({ theme }) => theme.mq.hdReady} {
     padding: 5rem;

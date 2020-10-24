@@ -21,7 +21,7 @@ const StyledLabel = styled.label`
 
 const StyledInput = styled.input`
   width: 100%;
-  font-size: 16px;
+  font-size: 13px;
   font-family: ${({ theme }) => theme.font.family.avantGarde};
   color: rgba(0, 0, 0, 0.6);
   height: 36px;
