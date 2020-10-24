@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
 import { TaskInterface } from '../../../types/modelsTypes';
@@ -8,13 +8,34 @@ import { AppTypes } from '../../../types/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { getCompanyTasks, selectTask } from '../../../actions/taskActions';
 import { DEFAULT_COMPANY_ID } from '../../../utils/config';
+import Spinner from '../../atoms/Spinner/Spinner';
+import { SpinnerWrapper, List } from '../../../styles/sharedStyles';
+import ListBox from '../../molecules/ListBox/ListBox';
+import ContentTemplate from '../../templates/ContentTemplate/ContentTemplate';
+import gsap from 'gsap';
 
 interface Props {}
 
 type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
 const TaskPageContent: React.FC<ConnectedProps> = ({ token, isLoading, allCompanyTasks, getCompanyTasks, selectTask }) => {
+  const listRef = useRef<HTMLDivElement | null>(null);
   const [filterText, setFilterText] = useState<string>('');
+  const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
+
+  const filterByTaskName = (filterText: string, allTasks: TaskInterface[]): TaskInterface[] => {
+    return allTasks.filter((task) => task.name.toLowerCase().includes(filterText.toLowerCase()));
+  };
+
+  useEffect(() => {
+    const list: HTMLDivElement | null = listRef.current;
+
+    if (list && !isLoading) {
+      gsap.set([...list.children], { autoAlpha: 0 });
+
+      tl.fromTo(list.children, { autoAlpha: 0, y: '+=30' }, { autoAlpha: 1, y: 0, stagger: 0.2 });
+    }
+  }, [isLoading]);
 
   useEffect(() => {
     token && getCompanyTasks(token, DEFAULT_COMPANY_ID);
@@ -22,7 +43,29 @@ const TaskPageContent: React.FC<ConnectedProps> = ({ token, isLoading, allCompan
 
   return (
     <GridWrapper mobilePadding={false} pageName={'Zadania'} setFilterText={setFilterText}>
-      <p>Hello</p>
+      {isLoading ? (
+        <SpinnerWrapper>
+          <Spinner />
+        </SpinnerWrapper>
+      ) : (
+        <>
+          <List ref={listRef}>
+            {filterByTaskName(filterText, allCompanyTasks).map((task) => (
+              <ListBox
+                name={task.name}
+                topDescription={new Date(task.date).toLocaleDateString()}
+                bottomDescription={task.description}
+                isCompanyBox={false}
+                isChecked={task.isCompleted}
+                callback={() => selectTask(task)}
+              />
+            ))}
+          </List>
+          <ContentTemplate>
+            <p>Hello</p>
+          </ContentTemplate>
+        </>
+      )}
     </GridWrapper>
   );
 };
