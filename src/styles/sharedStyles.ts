@@ -155,7 +155,7 @@ const CompoundListWrapper = styled.div`
 const List = styled.div`
   width: 100%;
   height: 100%;
-  overflow-y: scroll;
+  //overflow-y: scroll;
 
   ${({ theme }) => theme.mq.hdReady} {
     grid-area: list;

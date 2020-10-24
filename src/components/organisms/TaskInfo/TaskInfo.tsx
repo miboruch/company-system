@@ -8,6 +8,7 @@ import { TaskInterface } from '../../../types/modelsTypes';
 import { AppState } from '../../../reducers/rootReducer';
 import { StyledLabel } from '../../../styles/sharedStyles';
 import DatePicker from 'react-datepicker';
+import Input from '../../atoms/Input/Input';
 
 interface InitialValues {
   name?: string;
@@ -56,15 +57,23 @@ const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask }) => {
                 <SubParagraph>{selectedTask.description}</SubParagraph>
                 {/*<SubParagraph>{selectedEmployee.userId.phoneNumber}</SubParagraph>*/}
               </EmployeeInfoBox>
-              <div>
-                <StyledLabel>Data wykonania zadania</StyledLabel>
-                <DatePicker selected={values.date && new Date(values.date)} onChange={(date) => setFieldValue('date', date)} disabled={true}/>
-              </div>
+              <InputWrapper>
+                <div>
+                  <StyledLabel>Data wykonania zadania</StyledLabel>
+                  <DatePicker selected={values.date && new Date(values.date)} onChange={(date) => setFieldValue('date', date)} disabled={true} />
+                </div>
+              </InputWrapper>
               <TextParagraph>
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aperiam architecto beatae cum distinctio doloribus expedita magni nobis officiis,
-                provident quisquam repellat temporibus voluptates. Aliquam, eum, quasi. Eos nisi, sit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid,
-                animi culpa eum in ipsum maxime molestiae mollitia nemo perspiciatis, porro quam, quasi quos vitae. Blanditiis deleniti et illum inventore ipsum?
+                provident quisquam repellat temporibus voluptates.
               </TextParagraph>
+              <InputWrapper>
+                <StyledInput onChange={handleChange} name={'name'} required={true} type={'text'} labelText={'Nazwa'} value={values.name} />
+                <StyledInput onChange={handleChange} name={'description'} required={true} type={'text'} labelText={'Opis'} value={values.description} />
+                <StyledInput onChange={handleChange} name={'timeEstimate'} required={true} type={'number'} labelText={'Szacowany czas'} value={values.timeEstimate} />
+                <StyledInput onChange={handleChange} name={'taskIncome'} type={'number'} required={false} labelText={'Przychód z zadania'} value={values.taskIncome} />
+                <StyledInput onChange={handleChange} name={'taskExpense'} type={'number'} required={false} labelText={'Wydatek z zadania'} value={values.taskExpense} />
+              </InputWrapper>
             </StyledForm>
           )}
         </Formik>

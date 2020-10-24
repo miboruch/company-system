@@ -39,7 +39,7 @@ const TaskPageContent: React.FC<ConnectedProps> = ({ token, isLoading, allCompan
   }, [isLoading]);
 
   useEffect(() => {
-    token && getCompanyTasks(token, DEFAULT_COMPANY_ID);
+    token && allCompanyTasks.length === 0 && getCompanyTasks(token, DEFAULT_COMPANY_ID);
   }, []);
 
   return (
@@ -53,6 +53,7 @@ const TaskPageContent: React.FC<ConnectedProps> = ({ token, isLoading, allCompan
           <List ref={listRef}>
             {filterByTaskName(filterText, allCompanyTasks).map((task) => (
               <ListBox
+                key={task._id}
                 name={task.name}
                 topDescription={new Date(task.date).toLocaleDateString()}
                 bottomDescription={task.description}

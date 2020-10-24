@@ -8,6 +8,7 @@ const Wrapper = styled.div`
   padding: 3rem;
   flex-direction: column;
   margin-top: 4rem;
+  //overflow-y: scroll;
 
   ${({ theme }) => theme.mq.hdReady} {
     padding: 5rem;

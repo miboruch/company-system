@@ -17,6 +17,7 @@ const StyledWrapper = styled.div<GridProps>`
   //background: linear-gradient(60deg, rgba(247,247,249,1) 0%, rgba(255,255,255,1) 100%);
 
   ${({ theme }) => theme.mq.hdReady} {
+    height: 100vh;
     place-items: center;
     justify-content: flex-start;
     display: grid;

@@ -25,6 +25,14 @@
   transition: all 0.5s ease;
 }
 
+.react-datepicker__input-container{
+  opacity: 0.5;
+}
+
+.react-datepicker__input-container input:disabled{
+  background-color: transparent !important;
+}
+
 .react-datepicker-wrapper {
   margin-bottom: 3rem;
   width: 100% !important;
@@ -32,7 +40,7 @@
 
 .react-datepicker__input-container {
   border: none;
-  border-bottom: 1px solid rgba(255, 70, 92, 0.5);
+  border-bottom: 1px solid #ccc;
   color: rgba(0, 0, 0, 0.6);
   font-size: 16px;
   font-family: Avant Garde, sans-serif;
