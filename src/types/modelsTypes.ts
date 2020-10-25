@@ -80,3 +80,20 @@ export interface ClientInterface {
   country: string;
   city: string;
 }
+
+interface UserDataInAttendance {
+  _id: string;
+  email: string;
+  name: string;
+  lastName: string;
+  dateOfBirth: Date;
+}
+
+export interface AttendanceInterface {
+  _id: string;
+  userId: UserDataInAttendance;
+  date: Date;
+  companyId: string;
+  wasPresent: boolean;
+  hours: number;
+}
