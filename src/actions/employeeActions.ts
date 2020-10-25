@@ -71,12 +71,12 @@ export const setEmployeeInfoOpen = (isOpen: boolean): SetEmployeeInfoOpen => {
 };
 
 export const getAllCompanyEmployees = () => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
+  dispatch(setEmployeeLoading(true));
+
+  const { token } = getState().authenticationReducer;
+  const { currentCompany } = getState().companyReducer;
+
   try {
-    dispatch(setEmployeeLoading(true));
-
-    const { token } = getState().authenticationReducer;
-    const { currentCompany } = getState().companyReducer;
-
     if (currentCompany?._id && token) {
       const { data } = await axios.get(`${API_URL}/employee/get-company-employees?company_id=${currentCompany._id}`, {
         headers: {

@@ -68,7 +68,6 @@ const TaskPageContent: React.FC<ConnectedProps> = ({ isLoading, allCompanyTasks,
 };
 
 interface LinkStateProps {
-  token: string | null;
   isLoading: boolean;
   allCompanyTasks: TaskInterface[];
   isTaskInfoOpen: boolean;
@@ -80,8 +79,8 @@ interface LinkDispatchProps {
   setTaskInfoOpen: (isOpen: boolean) => void;
 }
 
-const mapStateToProps = ({ authenticationReducer: { token }, taskReducer: { isLoading, allCompanyTasks, isTaskInfoOpen } }: AppState): LinkStateProps => {
-  return { token, isLoading, allCompanyTasks, isTaskInfoOpen };
+const mapStateToProps = ({ taskReducer: { isLoading, allCompanyTasks, isTaskInfoOpen } }: AppState): LinkStateProps => {
+  return { isLoading, allCompanyTasks, isTaskInfoOpen };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {

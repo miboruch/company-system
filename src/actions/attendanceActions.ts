@@ -19,6 +19,7 @@ import { Dispatch } from 'redux';
 import { AppTypes } from '../types/actionTypes/appActionTypes';
 import { API_URL } from '../utils/config';
 import { AttendanceInterface } from '../types/modelsTypes';
+import { AppState } from '../reducers/rootReducer';
 
 const setAttendanceLoading = (isLoading: boolean): SetAttendanceLoading => {
   return {
@@ -69,17 +70,24 @@ const setAddNewAttendanceOpen = (isOpen: boolean): SetAddNewAttendanceOpen => {
   };
 };
 
-export const getSingleDayAttendance = (token: string, companyId: string, date: Date) => async (dispatch: Dispatch<AppTypes>) => {
+export const getSingleDayAttendance = (token: string, companyId: string, date: Date) => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
   dispatch(setAttendanceLoading(true));
 
-  try {
-    const { data } = await axios.get(`${API_URL}/attendance/single-day-attendance?company_id=${companyId}&date=${date.toISOString()}`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
+  const { token } = getState().authenticationReducer;
+  const { currentCompany } = getState().companyReducer;
 
-    dispatch(setDayAttendance(data));
+  try {
+    if (currentCompany?._id && token) {
+      const { data } = await axios.get(`${API_URL}/attendance/single-day-attendance?company_id=${companyId}&date=${date.toISOString()}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      dispatch(setDayAttendance(data));
+    } else {
+      dispatch(setAttendanceError('Problem z uwierzytelnieniem'));
+    }
   } catch (error) {
     console.log(error);
     dispatch(setAttendanceError(error));

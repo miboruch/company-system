@@ -18,12 +18,10 @@ interface Props {}
 
 type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
-const CompaniesPage: React.FC<ConnectedProps> = ({ token, userCompanies, getUserAdminCompanies, isLoading, setAddCompanyOpen, setCompany }) => {
+const CompaniesPage: React.FC<ConnectedProps> = ({ userCompanies, getUserAdminCompanies, isLoading, setAddCompanyOpen, setCompany }) => {
   useEffect(() => {
-    (async () => {
-      token && getUserAdminCompanies(token);
-    })();
-  }, [token]);
+    getUserAdminCompanies();
+  }, []);
 
   return (
     <MenuTemplate>
@@ -64,19 +62,18 @@ const CompaniesPage: React.FC<ConnectedProps> = ({ token, userCompanies, getUser
 };
 
 interface LinkStateProps {
-  token: string | null;
   isLoading: boolean;
   userCompanies: CompanyInterface[];
 }
 
 interface LinkDispatchProps {
-  getUserAdminCompanies: (token: string) => void;
+  getUserAdminCompanies: () => void;
   setAddCompanyOpen: (isOpen: boolean) => void;
   setCompany: (currentCompany: CompanyInterface | null, successCallback: () => void) => void;
 }
 
-const mapStateToProps = ({ authenticationReducer: { token }, companyReducer: { userCompanies, isLoading } }: AppState): LinkStateProps => {
-  return { token, userCompanies, isLoading };
+const mapStateToProps = ({ companyReducer: { userCompanies, isLoading } }: AppState): LinkStateProps => {
+  return { userCompanies, isLoading };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {

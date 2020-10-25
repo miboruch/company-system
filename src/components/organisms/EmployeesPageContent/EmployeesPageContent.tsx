@@ -66,7 +66,6 @@ const EmployeesPageContent: React.FC<ConnectedProps> = ({ getAllCompanyEmployees
 };
 
 interface LinkStateProps {
-  token: string | null;
   isLoading: boolean;
   allCompanyEmployees: EmployeeDataInterface[];
   isEmployeeInfoOpen: boolean;
@@ -78,8 +77,8 @@ interface LinkDispatchProps {
   setEmployeeInfoOpen: (isOpen: boolean) => void;
 }
 
-const mapStateToProps = ({ authenticationReducer: { token }, employeeReducer: { isLoading, allCompanyEmployees, isEmployeeInfoOpen } }: AppState): LinkStateProps => {
-  return { token, isLoading, allCompanyEmployees, isEmployeeInfoOpen };
+const mapStateToProps = ({ employeeReducer: { isLoading, allCompanyEmployees, isEmployeeInfoOpen } }: AppState): LinkStateProps => {
+  return { isLoading, allCompanyEmployees, isEmployeeInfoOpen };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {

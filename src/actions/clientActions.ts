@@ -17,6 +17,7 @@ import {
 import { Dispatch } from 'redux';
 import { AppTypes } from '../types/actionTypes/appActionTypes';
 import { API_URL } from '../utils/config';
+import { AppState } from '../reducers/rootReducer';
 
 const setClientsLoading = (isLoading: boolean): SetClientsLoading => {
   return {
@@ -60,17 +61,24 @@ const setAddNewClientOpen = (isOpen: boolean): SetAddNewClientOpen => {
   };
 };
 
-export const getCompanyClients = (token: string, companyId: string) => async (dispatch: Dispatch<AppTypes>) => {
+export const getCompanyClients = (token: string, companyId: string) => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
   dispatch(setClientsLoading(true));
 
-  try {
-    const { data } = await axios.get(`${API_URL}/client/get-company-clients?company_id=${companyId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
+  const {token} = getState().authenticationReducer;
+  const {currentCompany} = getState().companyReducer;
 
-    dispatch(setCompanyClients(data));
+  try {
+    if(currentCompany?._id && token){
+      const { data } = await axios.get(`${API_URL}/client/get-company-clients?company_id=${companyId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      dispatch(setCompanyClients(data));
+    }else{
+      dispatch(setClientError('Problem z uwierzytelnieniem'));
+    }
   } catch (error) {
     console.log(error);
     dispatch(setClientError(error));

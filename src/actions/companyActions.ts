@@ -15,6 +15,7 @@ import {
 import { Dispatch } from 'redux';
 import { AppTypes } from '../types/actionTypes/appActionTypes';
 import { API_URL } from '../utils/config';
+import { AppState } from '../reducers/rootReducer';
 
 const setCompanyLoading = (isLoading: boolean): SetCompanyLoading => {
   return {
@@ -51,33 +52,45 @@ export const setAddCompanyOpen = (isOpen: boolean): SetAddCompanyOpen => {
   };
 };
 
-export const getUserAdminCompanies = (token: string) => async (dispatch: Dispatch<AppTypes>) => {
+export const getUserAdminCompanies = () => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
+  dispatch(setCompanyLoading(true));
+
+  const { token } = getState().authenticationReducer;
+
   try {
-    dispatch(setCompanyLoading(true));
+    if (token) {
+      const { data } = await axios.get(`${API_URL}/user/get-user-companies`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
 
-    const { data } = await axios.get(`${API_URL}/user/get-user-companies`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-
-    dispatch(setAllUserCompanies(data));
+      dispatch(setAllUserCompanies(data));
+    } else {
+      dispatch(setCompaniesError('Problem z uwierzytelnieniem'));
+    }
   } catch (error) {
     dispatch(setCompaniesError(error));
   }
 };
 
-export const getUserEmployeeCompanies = (token: string) => async (dispatch: Dispatch<AppTypes>) => {
+export const getUserEmployeeCompanies = () => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
+  dispatch(setCompanyLoading(true));
+
+  const { token } = getState().authenticationReducer;
+
   try {
-    dispatch(setCompanyLoading(true));
+    if (token) {
+      const { data } = await axios.get(`${API_URL}/employee/get-employee-companies`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
 
-    const { data } = await axios.get(`${API_URL}/employee/get-employee-companies`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-
-    dispatch(setAllUserCompanies(data));
+      dispatch(setAllUserCompanies(data));
+    } else {
+      dispatch(setCompaniesError('Problem z uwierzytelnieniem'));
+    }
   } catch (error) {
     dispatch(setCompaniesError(error));
   }

@@ -70,11 +70,12 @@ const setEditTaskOpen = (isOpen: boolean): SetEditTask => {
 };
 
 export const getCompanyTasks = () => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
-  try {
-    dispatch(setTaskLoading(true));
-    const { token } = getState().authenticationReducer;
-    const { currentCompany } = getState().companyReducer;
+  dispatch(setTaskLoading(true));
 
+  const { token } = getState().authenticationReducer;
+  const { currentCompany } = getState().companyReducer;
+
+  try {
     if (currentCompany?._id && token) {
       const { data } = await axios.get(`${API_URL}/task/get-company-tasks?company_id=${currentCompany._id}`, {
         headers: {
