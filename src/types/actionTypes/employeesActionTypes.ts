@@ -1,4 +1,4 @@
-import { EmployeeDataInterface } from './modelsTypes';
+import { EmployeeDataInterface } from '../modelsTypes';
 
 export const SET_EMPLOYEE_LOADING = 'SET_EMPLOYEE_LOADING';
 export const SET_COMPANY_EMPLOYEES = 'SET_COMPANY_EMPLOYEES';

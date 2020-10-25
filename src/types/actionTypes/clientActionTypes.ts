@@ -1,0 +1,8 @@
+import { ClientInterface } from '../modelsTypes';
+
+export const SET_CLIENTS_LOADING = 'SET_CLIENTS_LOADING';
+export const SET_COMPANY_CLIENTS = 'SET_COMPANY_CLIENTS';
+export const SET_SELECTED_CLIENT = 'SET_SELECTED_CLIENT';
+export const SET_CLIENT_ERROR = 'SET_CLIENT_ERROR';
+export const SET_CLIENT_INFO_OPEN = 'SET_CLIENT_INFO_OPEN';
+export const SET_ADD_NEW_CLIENT_OPEN = 'SET_ADD_NEW_CLIENT_OPEN';

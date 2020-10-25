@@ -14,10 +14,10 @@ import {
   SetEmployeeInfoOpen,
   SetEmployeeLoading,
   SetSelectedEmployee
-} from '../types/employeesActionTypes';
+} from '../types/actionTypes/employeesActionTypes';
 import { EmployeeDataInterface } from '../types/modelsTypes';
 import { Dispatch } from 'redux';
-import { AppTypes } from '../types/appActionTypes';
+import { AppTypes } from '../types/actionTypes/appActionTypes';
 import { API_URL } from '../utils/config';
 
 const setEmployeeLoading = (isLoading: boolean): SetEmployeeLoading => {

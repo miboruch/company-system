@@ -11,9 +11,9 @@ import {
   SetCompaniesError,
   SetCurrentCompany,
   SetCompanyLoading
-} from '../types/companyActionTypes';
+} from '../types/actionTypes/companyActionTypes';
 import { Dispatch } from 'redux';
-import { AppTypes } from '../types/appActionTypes';
+import { AppTypes } from '../types/actionTypes/appActionTypes';
 import { API_URL } from '../utils/config';
 
 const setCompanyLoading = (isLoading: boolean): SetCompanyLoading => {

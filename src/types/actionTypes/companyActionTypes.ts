@@ -1,4 +1,4 @@
-import { CompanyInterface } from './modelsTypes';
+import { CompanyInterface } from '../modelsTypes';
 
 export const SET_COMPANY_LOADING = 'SET_COMPANY_LOADING';
 export const SET_ALL_USER_COMPANIES = 'SET_ALL_USER_COMPANIES';

@@ -14,10 +14,10 @@ import {
   SET_TASK_INFO_OPEN,
   SET_ADD_NEW_TASK_OPEN,
   SET_EDIT_TASK
-} from '../types/taskActionTypes';
+} from '../types/actionTypes/taskActionTypes';
 import { TaskInterface } from '../types/modelsTypes';
 import { Dispatch } from 'redux';
-import { AppTypes } from '../types/appActionTypes';
+import { AppTypes } from '../types/actionTypes/appActionTypes';
 import { API_URL } from '../utils/config';
 
 const setTaskLoading = (isLoading: boolean): SetTaskLoading => {

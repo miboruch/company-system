@@ -10,7 +10,7 @@ import { Table, AddCompanyWrapper, AddCompanyParagraph, Wrapper } from './Compan
 import AddCompanyController from '../../components/compound/AddCompany/AddCompanyController';
 import ListBox from '../../components/molecules/ListBox/ListBox';
 import { ThunkDispatch } from 'redux-thunk';
-import { AppTypes } from '../../types/appActionTypes';
+import { AppTypes } from '../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { getUserAdminCompanies, setAddCompanyOpen, setCompany } from '../../actions/companyActions';
 

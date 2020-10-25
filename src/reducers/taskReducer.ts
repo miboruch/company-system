@@ -7,7 +7,7 @@ import {
   SET_TASK_ERROR,
   SET_TASK_INFO_OPEN,
   TaskActionTypes
-} from '../types/taskActionTypes';
+} from '../types/actionTypes/taskActionTypes';
 import { TaskInterface } from '../types/modelsTypes';
 
 interface DefaultState {

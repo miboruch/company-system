@@ -18,7 +18,7 @@ import CloseButton from '../../atoms/CloseButton/CloseButton';
 import { CompanyInterface } from '../../../types/modelsTypes';
 import { AppState } from '../../../reducers/rootReducer';
 import { ThunkDispatch } from 'redux-thunk';
-import { AppTypes } from '../../../types/appActionTypes';
+import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { getUserAdminCompanies, setAddCompanyOpen } from '../../../actions/companyActions';
 

@@ -7,7 +7,7 @@ import Layout from './components/Layout';
 import LandingPage from './pages/LandingPage/LandingPage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import { ThunkDispatch } from 'redux-thunk';
-import { AppTypes } from './types/appActionTypes';
+import { AppTypes } from './types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { authenticateCheck } from './actions/authenticationActions';
 import PrivateRoute from './hoc/PrivateRoute';

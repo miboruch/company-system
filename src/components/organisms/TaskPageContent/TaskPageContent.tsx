@@ -4,7 +4,7 @@ import GridWrapper from '../../templates/GridWrapper/GridWrapper';
 import { TaskInterface } from '../../../types/modelsTypes';
 import { AppState } from '../../../reducers/rootReducer';
 import { ThunkDispatch } from 'redux-thunk';
-import { AppTypes } from '../../../types/appActionTypes';
+import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { getCompanyTasks, selectTask, setTaskInfoOpen } from '../../../actions/taskActions';
 import { DEFAULT_COMPANY_ID } from '../../../utils/config';

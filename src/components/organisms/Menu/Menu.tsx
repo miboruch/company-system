@@ -5,7 +5,7 @@ import { menuItems } from '../../../utils/menuItems';
 import { MenuWrapper, LinkWrapper, StyledLink, MenuItemsWrapper, ButtonWrapper } from './Menu.styles';
 import Button from '../../atoms/Button/Button';
 import { ThunkDispatch } from 'redux-thunk';
-import { AppTypes } from '../../../types/appActionTypes';
+import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { userLogout } from '../../../actions/authenticationActions';
 import { AppState } from '../../../reducers/rootReducer';

@@ -1,4 +1,4 @@
-import { TaskInterface } from './modelsTypes';
+import { TaskInterface } from '../modelsTypes';
 
 export const SET_TASK_LOADING = 'SET_TASK_LOADING';
 export const SET_COMPANY_TASKS = 'SET_COMPANY_TASKS';

@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { Formik } from 'formik';
 import Input from '../../components/atoms/Input/Input';
 import Button from '../../components/atoms/Button/Button';
-import { AppTypes } from '../../types/appActionTypes';
+import { AppTypes } from '../../types/actionTypes/appActionTypes';
 import { userLogin } from '../../actions/authenticationActions';
 import { AccountParagraph, AuthWrapper, FlexWrapper, FlexWrapperDefault, Heading, StyledForm, StyledInput, StyledLink } from './LoginPage.styles';
 import { AppState } from '../../reducers/rootReducer';

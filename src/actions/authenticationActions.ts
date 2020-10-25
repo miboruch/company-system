@@ -1,18 +1,7 @@
 import axios from 'axios';
-import {
-  AUTH_FAILURE,
-  AUTH_LOGOUT,
-  AUTH_START,
-  AUTH_SUCCESS,
-  SET_USER_DATA,
-  AuthStart,
-  AuthSuccess,
-  SetUserData,
-  AuthLogout,
-  AuthFailure
-} from '../types/authenticationActionTypes';
+import { AUTH_FAILURE, AUTH_LOGOUT, AUTH_START, AUTH_SUCCESS, SET_USER_DATA, AuthStart, AuthSuccess, SetUserData, AuthLogout, AuthFailure } from '../types/actionTypes/authenticationActionTypes';
 import { Dispatch } from 'redux';
-import { AppTypes } from '../types/appActionTypes';
+import { AppTypes } from '../types/actionTypes/appActionTypes';
 import { API_URL } from '../utils/config';
 
 const authStart = (): AuthStart => {
@@ -56,16 +45,7 @@ const authLogout = (): AuthLogout => {
   };
 };
 
-const setUserData = (
-  userId: string,
-  email: string,
-  name: string,
-  lastName: string,
-  dateOfBirth: string | Date,
-  country: string,
-  city: string,
-  address: string
-): SetUserData => {
+const setUserData = (userId: string, email: string, name: string, lastName: string, dateOfBirth: string | Date, country: string, city: string, address: string): SetUserData => {
   return {
     type: SET_USER_DATA,
     payload: {
