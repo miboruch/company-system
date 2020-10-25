@@ -16,6 +16,7 @@ import RegisterPage from './pages/RegisterPage/RegisterPage';
 import EmployeePage from './pages/EmployeePage/EmployeePage';
 import TaskPage from './pages/TaskPage/TaskPage';
 import ClientsPage from './pages/ClientsPage/ClientsPage';
+import AttendancePage from './pages/AttendancePage/AttendancePage';
 
 interface Props {}
 
@@ -40,6 +41,7 @@ const App: React.FC<ConnectedProps> = ({ history, authenticationCheck }) => {
         <PrivateRoute path={'/employees'} component={EmployeePage} />
         <PrivateRoute path={'/tasks'} component={TaskPage} />
         <PrivateRoute path={'/clients'} component={ClientsPage} />
+        <PrivateRoute path={'/attendance'} component={AttendancePage} />
       </Switch>
     </Layout>
   );

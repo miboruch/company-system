@@ -55,7 +55,7 @@ const setAttendanceError = (error: string | null): SetAttendanceError => {
   };
 };
 
-const setAttendanceInfoOpen = (isOpen: boolean): SetAttendanceInfoOpen => {
+export const setAttendanceInfoOpen = (isOpen: boolean): SetAttendanceInfoOpen => {
   return {
     type: SET_ATTENDANCE_INFO_OPEN,
     payload: isOpen
@@ -91,4 +91,4 @@ export const selectAttendance = (attendance: AttendanceInterface[] | AttendanceI
   dispatch(setAttendanceInfoOpen(true));
 };
 
-//TODO: get attendance of single employee with date, 3 days ahead and back
+//TODO: get attendance of a single employee with date, 3 days ahead and back
