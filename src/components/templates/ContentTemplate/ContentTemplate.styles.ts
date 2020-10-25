@@ -12,8 +12,8 @@ const ContentWrapper = styled.div`
 
   ${({ theme }) => theme.mq.hdReady} {
     position: static;
-    //background-color: #fff;
     background-color: #fff;
+    // background-color: ${({ theme }) => theme.colors.backgroundHover};
     //background-color: #F8F9FA;
     //background-color: ${({ theme }) => theme.colors.contentBackground};
     z-index: auto;

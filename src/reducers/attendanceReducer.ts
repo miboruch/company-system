@@ -69,5 +69,7 @@ export const attendanceReducer = (state = initialState, action: AttendanceAction
         ...state,
         isAddNewAttendanceOpen: action.payload
       };
+    default:
+      return state;
   }
 };
