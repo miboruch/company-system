@@ -49,7 +49,7 @@ const MainRegisterDataPage: React.FC = () => {
           {/*<DoubleFlexWrapper style={{ marginBottom: '3rem' }}>*/}
           <div>
             <StyledLabel>Data urodzenia</StyledLabel>
-            <DatePicker selected={values.dateOfBirth} onChange={(date) => setFieldValue('dateOfBirth', date)} />
+            <DatePicker selected={values.dateOfBirth} onChange={(date) => setFieldValue('dateOfBirth', date)} dateFormat={'dd/MM/yyyy'} />
           </div>
           {/*</DoubleFlexWrapper>*/}
           <FlexWrapper>

@@ -10,7 +10,24 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { getSingleDayAttendance, selectAttendance, setAttendanceInfoOpen, setDate } from '../../../actions/attendanceActions';
-import { List, StyledLabel } from '../../../styles/sharedStyles';
+import { StyledLabel } from '../../../styles/sharedStyles';
+import ListBox from '../../molecules/ListBox/ListBox';
+import styled from 'styled-components';
+
+const ListWrapper = styled.section`
+  width: 100%;
+  height: 100%;
+
+  ${({ theme }) => theme.mq.hdReady} {
+    background-color: #fff;
+    grid-area: list;
+  }
+`;
+
+const List = styled.div`
+  width: 100%;
+  height: 100%;
+`;
 
 interface Props {}
 
@@ -39,16 +56,32 @@ const AttendancePageContent: React.FC<ConnectedProps> = ({
     listAnimation(tl, listRef, isLoading);
   }, [isLoading]);
 
+  useEffect(() => {
+    getSingleDayAttendance();
+  }, [attendanceDate]);
+
   return (
-    <GridWrapper mobilePadding={false} pageName={'Lista obecności'}>
-      <p>Content</p>
+    <GridWrapper mobilePadding={false} pageName={'Lista obecności'} setFilterText={setFilterText}>
       <>
-        <List ref={listRef}>
+        <ListWrapper>
           <div>
-            <StyledLabel>Data urodzenia</StyledLabel>
+            <StyledLabel>Data</StyledLabel>
             <DatePicker selected={attendanceDate} onChange={(date) => date && date instanceof Date && setDate(date)} dateFormat={'dd/MM/yyyy'} />
           </div>
-        </List>
+          <List ref={listRef}>
+            {filterByUserName(filterText, singleDayAttendance).map((attendance) => (
+              <ListBox
+                key={attendance._id}
+                name={`${attendance.userId.name} ${attendance.userId.lastName}`}
+                topDescription={new Date(attendance.date).toLocaleDateString()}
+                bottomDescription={attendance.userId.email}
+                isCompanyBox={false}
+                isChecked={attendance.wasPresent}
+                callback={() => selectAttendance(attendance)}
+              />
+            ))}
+          </List>
+        </ListWrapper>
       </>
     </GridWrapper>
   );
@@ -63,7 +96,7 @@ interface LinkStateProps {
 }
 
 interface LinkDispatchProps {
-  getSingleDayAttendance: (token: string, companyId: string, date: Date) => void;
+  getSingleDayAttendance: () => void;
   selectAttendance: (attendance: AttendanceInterface[] | AttendanceInterface) => void;
   setAttendanceInfoOpen: (isOpen: boolean) => void;
   setDate: (date: Date) => void;
