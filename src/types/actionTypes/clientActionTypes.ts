@@ -36,3 +36,5 @@ export interface SetAddNewClientOpen {
   type: typeof SET_ADD_NEW_CLIENT_OPEN;
   payload: boolean;
 }
+
+export type ClientActionTypes = SetClientsLoading | SetCompanyClients | SetSelectedClient | SetClientError | SetClientInfoOpen | SetAddNewClientOpen;
