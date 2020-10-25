@@ -14,6 +14,7 @@ import { EmployeeDataInterface } from '../../../types/modelsTypes';
 import { DEFAULT_COMPANY_ID } from '../../../utils/config';
 import Spinner from '../../atoms/Spinner/Spinner';
 import EmployeeInfo from '../EmployeeInfo/EmployeeInfo';
+import { listAnimation } from '../../../animations/animations';
 
 type ConnectedProps = LinkStateProps & LinkDispatchProps;
 
@@ -27,13 +28,7 @@ const EmployeesPageContent: React.FC<ConnectedProps> = ({ token, getAllCompanyEm
   };
 
   useEffect(() => {
-    const list: HTMLDivElement | null = listRef.current;
-
-    if (list && !isLoading) {
-      gsap.set([...list.children], { autoAlpha: 0 });
-
-      tl.fromTo(list.children, { autoAlpha: 0, y: '+=30' }, { autoAlpha: 1, y: 0, stagger: 0.2 });
-    }
+    listAnimation(tl, listRef, isLoading);
   }, [isLoading]);
 
   useEffect(() => {

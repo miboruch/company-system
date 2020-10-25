@@ -14,6 +14,7 @@ import ListBox from '../../molecules/ListBox/ListBox';
 import ContentTemplate from '../../templates/ContentTemplate/ContentTemplate';
 import gsap from 'gsap';
 import TaskInfo from '../TaskInfo/TaskInfo';
+import { listAnimation } from '../../../animations/animations';
 
 interface Props {}
 
@@ -29,13 +30,7 @@ const TaskPageContent: React.FC<ConnectedProps> = ({ token, isLoading, allCompan
   };
 
   useEffect(() => {
-    const list: HTMLDivElement | null = listRef.current;
-
-    if (list && !isLoading) {
-      gsap.set([...list.children], { autoAlpha: 0 });
-
-      tl.fromTo(list.children, { autoAlpha: 0, y: '+=30' }, { autoAlpha: 1, y: 0, stagger: 0.2 });
-    }
+    listAnimation(tl, listRef, isLoading);
   }, [isLoading]);
 
   useEffect(() => {
