@@ -11,14 +11,13 @@ import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { getAllCompanyEmployees, selectEmployee, setEmployeeInfoOpen } from '../../../actions/employeeActions';
 import { EmployeeDataInterface } from '../../../types/modelsTypes';
-import { DEFAULT_COMPANY_ID } from '../../../utils/config';
 import Spinner from '../../atoms/Spinner/Spinner';
 import EmployeeInfo from '../EmployeeInfo/EmployeeInfo';
 import { listAnimation } from '../../../animations/animations';
 
 type ConnectedProps = LinkStateProps & LinkDispatchProps;
 
-const EmployeesPageContent: React.FC<ConnectedProps> = ({ token, getAllCompanyEmployees, isLoading, allCompanyEmployees, selectEmployee, isEmployeeInfoOpen, setEmployeeInfoOpen }) => {
+const EmployeesPageContent: React.FC<ConnectedProps> = ({ getAllCompanyEmployees, isLoading, allCompanyEmployees, selectEmployee, isEmployeeInfoOpen, setEmployeeInfoOpen }) => {
   const listRef = useRef<HTMLDivElement | null>(null);
   const [filterText, setFilterText] = useState<string>('');
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
@@ -32,7 +31,8 @@ const EmployeesPageContent: React.FC<ConnectedProps> = ({ token, getAllCompanyEm
   }, [isLoading]);
 
   useEffect(() => {
-    token && allCompanyEmployees.length === 0 && getAllCompanyEmployees(token, DEFAULT_COMPANY_ID);
+    getAllCompanyEmployees();
+    // allCompanyEmployees.length === 0 && getAllCompanyEmployees();
   }, []);
 
   return (
@@ -73,7 +73,7 @@ interface LinkStateProps {
 }
 
 interface LinkDispatchProps {
-  getAllCompanyEmployees: (token: string, companyId: string) => void;
+  getAllCompanyEmployees: () => void;
   selectEmployee: (employee: EmployeeDataInterface) => void;
   setEmployeeInfoOpen: (isOpen: boolean) => void;
 }

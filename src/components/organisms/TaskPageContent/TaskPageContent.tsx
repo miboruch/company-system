@@ -7,7 +7,6 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { getCompanyTasks, selectTask, setTaskInfoOpen } from '../../../actions/taskActions';
-import { DEFAULT_COMPANY_ID } from '../../../utils/config';
 import Spinner from '../../atoms/Spinner/Spinner';
 import { SpinnerWrapper, List } from '../../../styles/sharedStyles';
 import ListBox from '../../molecules/ListBox/ListBox';
@@ -20,7 +19,7 @@ interface Props {}
 
 type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
-const TaskPageContent: React.FC<ConnectedProps> = ({ token, isLoading, allCompanyTasks, getCompanyTasks, selectTask, isTaskInfoOpen, setTaskInfoOpen }) => {
+const TaskPageContent: React.FC<ConnectedProps> = ({ isLoading, allCompanyTasks, getCompanyTasks, selectTask, isTaskInfoOpen, setTaskInfoOpen }) => {
   const listRef = useRef<HTMLDivElement | null>(null);
   const [filterText, setFilterText] = useState<string>('');
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
@@ -34,7 +33,8 @@ const TaskPageContent: React.FC<ConnectedProps> = ({ token, isLoading, allCompan
   }, [isLoading]);
 
   useEffect(() => {
-    token && allCompanyTasks.length === 0 && getCompanyTasks(token, DEFAULT_COMPANY_ID);
+    getCompanyTasks();
+    // allCompanyTasks.length === 0 && getCompanyTasks();
   }, []);
 
   return (
@@ -75,7 +75,7 @@ interface LinkStateProps {
 }
 
 interface LinkDispatchProps {
-  getCompanyTasks: (token: string, companyId: string) => void;
+  getCompanyTasks: () => void;
   selectTask: (task: TaskInterface) => void;
   setTaskInfoOpen: (isOpen: boolean) => void;
 }

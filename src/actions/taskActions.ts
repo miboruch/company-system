@@ -19,6 +19,7 @@ import { TaskInterface } from '../types/modelsTypes';
 import { Dispatch } from 'redux';
 import { AppTypes } from '../types/actionTypes/appActionTypes';
 import { API_URL } from '../utils/config';
+import { AppState } from '../reducers/rootReducer';
 
 const setTaskLoading = (isLoading: boolean): SetTaskLoading => {
   return {
@@ -68,17 +69,23 @@ const setEditTaskOpen = (isOpen: boolean): SetEditTask => {
   };
 };
 
-export const getCompanyTasks = (token: string, companyId: string) => async (dispatch: Dispatch<AppTypes>) => {
+export const getCompanyTasks = () => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
   try {
     dispatch(setTaskLoading(true));
+    const { token } = getState().authenticationReducer;
+    const { currentCompany } = getState().companyReducer;
 
-    const { data } = await axios.get(`${API_URL}/task/get-company-tasks?company_id=${companyId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
+    if (currentCompany?._id && token) {
+      const { data } = await axios.get(`${API_URL}/task/get-company-tasks?company_id=${currentCompany._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
 
-    dispatch(setCompanyTasks(data));
+      dispatch(setCompanyTasks(data));
+    } else {
+      dispatch(setTaskError('Brak danych'));
+    }
   } catch (error) {
     dispatch(setTaskError(error));
   }

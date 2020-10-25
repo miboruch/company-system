@@ -19,6 +19,7 @@ import { EmployeeDataInterface } from '../types/modelsTypes';
 import { Dispatch } from 'redux';
 import { AppTypes } from '../types/actionTypes/appActionTypes';
 import { API_URL } from '../utils/config';
+import { AppState } from '../reducers/rootReducer';
 
 const setEmployeeLoading = (isLoading: boolean): SetEmployeeLoading => {
   return {
@@ -69,19 +70,26 @@ export const setEmployeeInfoOpen = (isOpen: boolean): SetEmployeeInfoOpen => {
   };
 };
 
-export const getAllCompanyEmployees = (token: string, companyId: string) => async (dispatch: Dispatch<AppTypes>) => {
+export const getAllCompanyEmployees = () => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
   try {
     dispatch(setEmployeeLoading(true));
 
-    const { data } = await axios.get(`${API_URL}/employee/get-company-employees?company_id=${companyId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
+    const { token } = getState().authenticationReducer;
+    const { currentCompany } = getState().companyReducer;
 
-    // data.length > 0 && dispatch(setSelectedEmployee(data[0]));
+    if (currentCompany?._id && token) {
+      const { data } = await axios.get(`${API_URL}/employee/get-company-employees?company_id=${currentCompany._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
 
-    dispatch(setCompanyEmployees(data));
+      // data.length > 0 && dispatch(setSelectedEmployee(data[0]));
+
+      dispatch(setCompanyEmployees(data));
+    } else {
+      dispatch(setEmployeeError('Brak danych'));
+    }
   } catch (error) {
     dispatch(setEmployeeError(error));
   }

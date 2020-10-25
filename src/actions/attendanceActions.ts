@@ -41,7 +41,7 @@ const setSelectedAttendance = (selectedAttendance: AttendanceInterface[] | Atten
   };
 };
 
-const setDate = (date: Date): SetDate => {
+export const setDate = (date: Date): SetDate => {
   return {
     type: SET_DATE,
     payload: date
