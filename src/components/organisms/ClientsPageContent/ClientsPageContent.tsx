@@ -13,6 +13,8 @@ import { SpinnerWrapper, List } from '../../../styles/sharedStyles';
 import Spinner from '../../atoms/Spinner/Spinner';
 import ListBox from '../../molecules/ListBox/ListBox';
 import { DEFAULT_COMPANY_ID } from '../../../utils/config';
+import ContentTemplate from '../../templates/ContentTemplate/ContentTemplate';
+import ClientInfo from '../ClientInfo/ClientInfo';
 
 interface Props {}
 
@@ -47,17 +49,19 @@ const ClientsPageContent: React.FC<ConnectedProps> = ({ isLoading, token, allCom
             {filterByClientName(filterText, allCompanyClients).map((client) => (
               <ListBox
                 name={client.name}
-                topDescription={client.phoneNumber}
-                bottomDescription={`${client.address}, ${client.city}`}
+                topDescription={`${client.address}, ${client.city}`}
+                bottomDescription={client.email}
                 callback={() => selectClient(client)}
                 isCompanyBox={false}
                 isEmpty={true}
               />
             ))}
           </List>
+          <ContentTemplate isOpen={isClientInfoOpen} setOpen={setClientInfoOpen}>
+            <ClientInfo />
+          </ContentTemplate>
         </>
       )}
-      <p>Content</p>
     </GridWrapper>
   );
 };
