@@ -46,7 +46,7 @@ const setClientError = (error: string | null): SetClientError => {
   };
 };
 
-const setClientInfoOpen = (isOpen: boolean): SetClientInfoOpen => {
+export const setClientInfoOpen = (isOpen: boolean): SetClientInfoOpen => {
   return {
     type: SET_CLIENT_INFO_OPEN,
     payload: isOpen
