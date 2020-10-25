@@ -25,7 +25,7 @@ export interface SetDayAttendance {
 
 export interface SetSelectedAttendance {
   type: typeof SET_SELECTED_ATTENDANCE;
-  payload: AttendanceInterface | null;
+  payload: AttendanceInterface | AttendanceInterface[] | null;
 }
 
 export interface SetAttendanceError {
