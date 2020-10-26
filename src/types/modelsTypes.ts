@@ -89,11 +89,27 @@ interface UserDataInAttendance {
   dateOfBirth: Date;
 }
 
-export interface AttendanceInterface {
+interface Attendance {
   _id: string;
-  userId: UserDataInAttendance;
+  userId: string;
   date: Date;
   companyId: string;
   wasPresent: boolean;
   hours: number;
+}
+
+interface AttendanceUserInterface {
+  email: string;
+  name: string;
+  lastName: string;
+  dateOfBirth: Date;
+  phoneNumber: string;
+}
+
+export interface AttendanceInterface {
+  _id: string;
+  pricePerHour: number;
+  companyId: string;
+  attendance?: Attendance;
+  user: AttendanceUserInterface;
 }

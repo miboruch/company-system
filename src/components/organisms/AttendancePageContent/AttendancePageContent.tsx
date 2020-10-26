@@ -49,7 +49,7 @@ const AttendancePageContent: React.FC<ConnectedProps> = ({
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
 
   const filterByUserName = (filterText: string, dayAttendance: AttendanceInterface[]): AttendanceInterface[] => {
-    return dayAttendance.filter((attendance) => `${attendance.userId.name} ${attendance.userId.lastName}`.toLowerCase().includes(filterText.toLowerCase()));
+    return dayAttendance.filter((attendance) => `${attendance.user.name} ${attendance.user.lastName}`.toLowerCase().includes(filterText.toLowerCase()));
   };
 
   useEffect(() => {
@@ -72,11 +72,13 @@ const AttendancePageContent: React.FC<ConnectedProps> = ({
             {filterByUserName(filterText, singleDayAttendance).map((attendance) => (
               <ListBox
                 key={attendance._id}
-                name={`${attendance.userId.name} ${attendance.userId.lastName}`}
-                topDescription={new Date(attendance.date).toLocaleDateString()}
-                bottomDescription={attendance.userId.email}
+                name={`${attendance.user.name} ${attendance.user.lastName}`}
+                topDescription={new Date(attendanceDate).toLocaleDateString()}
+                bottomDescription={attendance.user.email}
                 isCompanyBox={false}
-                isChecked={attendance.wasPresent}
+                // isEmpty={attendance.attendance?.wasPresent === undefined}
+                // isEmpty={!attendance.attendance}
+                isChecked={attendance.attendance?.wasPresent === true}
                 callback={() => selectAttendance(attendance)}
               />
             ))}
