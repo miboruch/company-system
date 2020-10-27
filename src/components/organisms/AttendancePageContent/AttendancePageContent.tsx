@@ -13,6 +13,7 @@ import { getSingleDayAttendance, selectAttendance, setAttendanceInfoOpen, setDat
 import { StyledLabel } from '../../../styles/sharedStyles';
 import ListBox from '../../molecules/ListBox/ListBox';
 import styled from 'styled-components';
+import { isEmpty } from '../../../utils/functions';
 
 const ListWrapper = styled.section`
   width: 100%;
@@ -76,9 +77,8 @@ const AttendancePageContent: React.FC<ConnectedProps> = ({
                 topDescription={new Date(attendanceDate).toLocaleDateString()}
                 bottomDescription={attendance.user.email}
                 isCompanyBox={false}
-                // isEmpty={attendance.attendance?.wasPresent === undefined}
-                // isEmpty={!attendance.attendance}
-                isChecked={attendance.attendance?.wasPresent === true}
+                isEmpty={isEmpty(attendance.attendance)}
+                isChecked={!isEmpty(attendance.attendance) && attendance.attendance?.wasPresent}
                 callback={() => selectAttendance(attendance)}
               />
             ))}

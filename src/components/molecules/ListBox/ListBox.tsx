@@ -9,19 +9,22 @@ interface Props {
   bottomDescription: string;
   callback: () => void;
   isCompanyBox: boolean;
+  isEmpty?: boolean;
+  isChecked?: boolean
 }
 
-interface EmptyIconInterface extends Props {
-  isEmpty: boolean;
-  isChecked?: never;
-}
+// interface EmptyIconInterface extends Props {
+//   isEmpty: boolean;
+//   isChecked?: never;
+// }
+//
+// interface CheckedIconInterface extends Props {
+//   isChecked: boolean;
+//   isEmpty?: never;
+// }
 
-interface CheckedIconInterface extends Props {
-  isChecked: boolean;
-  isEmpty?: never;
-}
-
-export type ListBoxProps = EmptyIconInterface | CheckedIconInterface;
+export type ListBoxProps = Props;
+// export type ListBoxProps = EmptyIconInterface | CheckedIconInterface;
 
 const ListBox: React.FC<ListBoxProps> = ({ name, topDescription, bottomDescription, callback, isEmpty, isChecked, isCompanyBox }) => {
   return (
