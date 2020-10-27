@@ -81,14 +81,6 @@ export interface ClientInterface {
   city: string;
 }
 
-interface UserDataInAttendance {
-  _id: string;
-  email: string;
-  name: string;
-  lastName: string;
-  dateOfBirth: Date;
-}
-
 interface Attendance {
   _id: string;
   userId: string;
@@ -98,7 +90,15 @@ interface Attendance {
   hours: number;
 }
 
+export interface WeekAttendance {
+  userId: string | null;
+  date: Date;
+  wasPresent: boolean | null;
+  hours: number | null;
+}
+
 interface AttendanceUserInterface {
+  _id: string;
   email: string;
   name: string;
   lastName: string;
@@ -113,3 +113,4 @@ export interface AttendanceInterface {
   attendance?: Attendance;
   user: AttendanceUserInterface;
 }
+

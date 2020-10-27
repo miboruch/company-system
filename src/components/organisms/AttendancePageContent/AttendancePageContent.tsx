@@ -14,6 +14,7 @@ import { StyledLabel } from '../../../styles/sharedStyles';
 import ListBox from '../../molecules/ListBox/ListBox';
 import styled from 'styled-components';
 import { isEmpty } from '../../../utils/functions';
+import ContentTemplate from '../../templates/ContentTemplate/ContentTemplate';
 
 const ListWrapper = styled.section`
   width: 100%;
@@ -84,6 +85,9 @@ const AttendancePageContent: React.FC<ConnectedProps> = ({
             ))}
           </List>
         </ListWrapper>
+        <ContentTemplate isOpen={isAttendanceInfoOpen} setOpen={setAttendanceInfoOpen}>
+          <p>Test</p>
+        </ContentTemplate>
       </>
     </GridWrapper>
   );
@@ -99,7 +103,7 @@ interface LinkStateProps {
 
 interface LinkDispatchProps {
   getSingleDayAttendance: () => void;
-  selectAttendance: (attendance: AttendanceInterface[] | AttendanceInterface) => void;
+  selectAttendance: (attendance: AttendanceInterface) => void;
   setAttendanceInfoOpen: (isOpen: boolean) => void;
   setDate: (date: Date) => void;
 }

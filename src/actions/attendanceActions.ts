@@ -1,29 +1,40 @@
 import axios from 'axios';
 import {
-  SetAttendanceLoading,
-  SetDayAttendance,
-  SetSelectedAttendance,
-  SetDate,
-  SetAttendanceError,
-  SetAttendanceInfoOpen,
-  SetAddNewAttendanceOpen,
-  SET_ATTENDANCE_LOADING,
-  SET_DAY_ATTENDANCE,
-  SET_SELECTED_ATTENDANCE,
-  SET_DATE,
+  SET_ADD_NEW_ATTENDANCE_OPEN,
+  SET_ATTENDANCE_CONTENT_LOADING,
   SET_ATTENDANCE_ERROR,
   SET_ATTENDANCE_INFO_OPEN,
-  SET_ADD_NEW_ATTENDANCE_OPEN
+  SET_ATTENDANCE_LOADING,
+  SET_DATE,
+  SET_DAY_ATTENDANCE,
+  SET_SELECTED_ATTENDANCE,
+  SET_WEEK_ATTENDANCE,
+  SetAddNewAttendanceOpen,
+  SetAttendanceContentLoading,
+  SetAttendanceError,
+  SetAttendanceInfoOpen,
+  SetAttendanceLoading,
+  SetDate,
+  SetDayAttendance,
+  SetSelectedAttendance,
+  SetWeekAttendance
 } from '../types/actionTypes/attendanceActionTypes';
 import { Dispatch } from 'redux';
 import { AppTypes } from '../types/actionTypes/appActionTypes';
 import { API_URL } from '../utils/config';
-import { AttendanceInterface } from '../types/modelsTypes';
+import { AttendanceInterface, WeekAttendance } from '../types/modelsTypes';
 import { AppState } from '../reducers/rootReducer';
 
 const setAttendanceLoading = (isLoading: boolean): SetAttendanceLoading => {
   return {
     type: SET_ATTENDANCE_LOADING,
+    payload: isLoading
+  };
+};
+
+const setAttendanceContentLoading = (isLoading: boolean): SetAttendanceContentLoading => {
+  return {
+    type: SET_ATTENDANCE_CONTENT_LOADING,
     payload: isLoading
   };
 };
@@ -35,10 +46,17 @@ const setDayAttendance = (dayAttendance: AttendanceInterface[]): SetDayAttendanc
   };
 };
 
-const setSelectedAttendance = (selectedAttendance: AttendanceInterface[] | AttendanceInterface | null): SetSelectedAttendance => {
+const setSelectedAttendance = (selectedAttendance: AttendanceInterface | null): SetSelectedAttendance => {
   return {
     type: SET_SELECTED_ATTENDANCE,
     payload: selectedAttendance
+  };
+};
+
+const setWeekAttendance = (weekAttendance: WeekAttendance[] | null): SetWeekAttendance => {
+  return {
+    type: SET_WEEK_ATTENDANCE,
+    payload: weekAttendance
   };
 };
 
@@ -95,9 +113,33 @@ export const getSingleDayAttendance = () => async (dispatch: Dispatch<AppTypes>,
   }
 };
 
-export const selectAttendance = (attendance: AttendanceInterface[] | AttendanceInterface | null) => (dispatch: Dispatch<AppTypes>) => {
-  dispatch(setSelectedAttendance(attendance));
-  dispatch(setAttendanceInfoOpen(true));
+export const getWeekAttendance = (weekCounter: number) => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
+  dispatch(setAttendanceContentLoading(true));
+
+  const { token } = getState().authenticationReducer;
+  const { currentCompany } = getState().companyReducer;
+  const { selectedAttendance } = getState().attendanceReducer;
+
+  try {
+    if (currentCompany && selectedAttendance && token) {
+      const { _id: companyId } = currentCompany;
+      const { user } = selectedAttendance;
+
+      const { data } = await axios.get(`${API_URL}/attendance/user-week-attendance?company_id=${companyId}&user_id=${user._id}&week=${weekCounter}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      dispatch(setWeekAttendance(data));
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-//TODO: get attendance of a single employee with date, 3 days ahead and back
+export const selectAttendance = (attendance: AttendanceInterface | null) => (dispatch: Dispatch<any>) => {
+  dispatch(setSelectedAttendance(attendance));
+  dispatch(setAttendanceInfoOpen(true));
+  dispatch(getWeekAttendance(-3));
+};
