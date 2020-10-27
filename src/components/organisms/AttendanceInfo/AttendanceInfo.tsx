@@ -31,7 +31,7 @@ const AttendanceInfo: React.FC<ConnectedProps> = ({ selectedAttendance, weekAtte
               </Title>
               <p>icon</p>
             </HeaderWrapper>
-            {weekAttendance && <WeekAttendanceComponent />}
+            {weekAttendance && <WeekAttendanceComponent weekAttendance={weekAttendance} />}
           </>
         )
       )}

@@ -61,7 +61,7 @@ const setAddNewClientOpen = (isOpen: boolean): SetAddNewClientOpen => {
   };
 };
 
-export const getCompanyClients = (token: string, companyId: string) => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
+export const getCompanyClients = () => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
   dispatch(setClientsLoading(true));
 
   const {token} = getState().authenticationReducer;
@@ -69,7 +69,7 @@ export const getCompanyClients = (token: string, companyId: string) => async (di
 
   try {
     if(currentCompany?._id && token){
-      const { data } = await axios.get(`${API_URL}/client/get-company-clients?company_id=${companyId}`, {
+      const { data } = await axios.get(`${API_URL}/client/get-company-clients?company_id=${currentCompany._id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

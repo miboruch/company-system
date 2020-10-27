@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { connect } from 'react-redux';
-import { ClientInterface } from '../../../types/modelsTypes';
+import { ClientInterface, CompanyInterface } from '../../../types/modelsTypes';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
 import { listAnimation } from '../../../animations/animations';
 import { AppState } from '../../../reducers/rootReducer';
@@ -20,7 +20,7 @@ interface Props {}
 
 type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
-const ClientsPageContent: React.FC<ConnectedProps> = ({ isLoading, token, allCompanyClients, isClientInfoOpen, setClientInfoOpen, selectClient, getCompanyClients }) => {
+const ClientsPageContent: React.FC<ConnectedProps> = ({ isLoading, allCompanyClients, isClientInfoOpen, setClientInfoOpen, selectClient, getCompanyClients }) => {
   const listRef = useRef<HTMLDivElement | null>(null);
   const [filterText, setFilterText] = useState<string>('');
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
@@ -34,7 +34,7 @@ const ClientsPageContent: React.FC<ConnectedProps> = ({ isLoading, token, allCom
   }, []);
 
   useEffect(() => {
-    token && allCompanyClients.length === 0 && getCompanyClients(token, DEFAULT_COMPANY_ID);
+    allCompanyClients.length === 0 && getCompanyClients();
   }, []);
 
   return (
@@ -74,7 +74,7 @@ interface LinkStateProps {
 }
 
 interface LinkDispatchProps {
-  getCompanyClients: (token: string, companyId: string) => void;
+  getCompanyClients: () => void;
   selectClient: (client: ClientInterface) => void;
   setClientInfoOpen: (isOpen: boolean) => void;
 }
