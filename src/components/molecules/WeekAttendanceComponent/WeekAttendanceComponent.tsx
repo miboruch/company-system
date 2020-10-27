@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import styled, { css } from 'styled-components';
-import { WeekAttendance } from '../../../types/modelsTypes';
+import { ClientInterface, WeekAttendance } from '../../../types/modelsTypes';
 import { EmptyIcon, NotCheckedIcon, CheckedIcon } from '../../../styles/iconStyles';
+import { AppState } from '../../../reducers/rootReducer';
+import { ThunkDispatch } from 'redux-thunk';
+import { AppTypes } from '../../../types/actionTypes/appActionTypes';
+import { bindActionCreators } from 'redux';
+import { getCompanyClients, selectClient, setClientInfoOpen } from '../../../actions/clientActions';
+import { getWeekAttendance } from '../../../actions/attendanceActions';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -46,17 +53,47 @@ interface Props {
   weekAttendance: WeekAttendance[];
 }
 
-const WeekAttendanceComponent: React.FC<Props> = ({ weekAttendance }) => {
+type ConnectedProps = Props & LinkDispatchProps;
+
+const WeekAttendanceComponent: React.FC<ConnectedProps> = ({ weekAttendance, getWeekAttendance }) => {
+  const [weekCounter, setWeekCounter] = useState<number>(0);
+
+  const increaseWeek = (): void => {
+    setWeekCounter((prevCounter) => prevCounter + 1);
+  };
+
+  const decreaseWeek = (): void => {
+    setWeekCounter((prevCounter) => prevCounter - 1);
+  };
+
+  useEffect(() => {
+    getWeekAttendance(weekCounter);
+  }, [weekCounter]);
+
   return (
-    <StyledWrapper>
-      {weekAttendance.map((attendance) => (
-        <SingleAttendanceWrapper>
-          <DateParagraph>{new Date(attendance.date).toLocaleDateString()}</DateParagraph>
-          {attendance.wasPresent === null ? <StyledEmptyIcon /> : attendance.wasPresent ? <StyledCheckedIcon /> : <StyledNotCheckedIcon />}
-        </SingleAttendanceWrapper>
-      ))}
-    </StyledWrapper>
+    <>
+      <p onClick={() => decreaseWeek()}>left</p>
+      <p onClick={() => increaseWeek()}>right</p>
+      <StyledWrapper>
+        {weekAttendance.map((attendance) => (
+          <SingleAttendanceWrapper>
+            <DateParagraph>{new Date(attendance.date).toLocaleDateString()}</DateParagraph>
+            {attendance.wasPresent === null ? <StyledEmptyIcon /> : attendance.wasPresent ? <StyledCheckedIcon /> : <StyledNotCheckedIcon />}
+          </SingleAttendanceWrapper>
+        ))}
+      </StyledWrapper>
+    </>
   );
 };
 
-export default WeekAttendanceComponent;
+interface LinkDispatchProps {
+  getWeekAttendance: (week: number) => void;
+}
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
+  return {
+    getWeekAttendance: bindActionCreators(getWeekAttendance, dispatch)
+  };
+};
+
+export default connect(null, mapDispatchToProps)(WeekAttendanceComponent);
