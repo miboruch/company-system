@@ -9,16 +9,16 @@ interface Props {
   secondBarDataKey?: string;
   secondBarDataName?: string;
   barDataName: string;
-  setDaysBack: (days: number) => void;
+  setDaysBack?: (days: number) => void;
 }
 
 const BarChart: React.FC<Props> = ({ data, xAxisDataKey, barDataKey, secondBarDataKey, secondBarDataName, barDataName, setDaysBack }) => {
   return (
     <ChartWrapper>
-      <p onClick={() => setDaysBack(1)}>1 day</p>
-      <p onClick={() => setDaysBack(7)}>7 days</p>
-      <p onClick={() => setDaysBack(30)}>30 days</p>
-      <p onClick={() => setDaysBack(365)}>365 days</p>
+      <p onClick={() => setDaysBack && setDaysBack(1)}>1 day</p>
+      <p onClick={() => setDaysBack && setDaysBack(7)}>7 days</p>
+      <p onClick={() => setDaysBack && setDaysBack(30)}>30 days</p>
+      <p onClick={() => setDaysBack && setDaysBack(365)}>365 days</p>
       <StyledResponsiveContainer width={'100%'} height={250}>
         <Chart data={!!data ? data : []} barSize={30}>
           <defs>

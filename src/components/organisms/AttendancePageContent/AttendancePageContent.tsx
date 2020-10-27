@@ -15,6 +15,7 @@ import ListBox from '../../molecules/ListBox/ListBox';
 import styled from 'styled-components';
 import { isEmpty } from '../../../utils/functions';
 import ContentTemplate from '../../templates/ContentTemplate/ContentTemplate';
+import AttendanceInfo from '../AttendanceInfo/AttendanceInfo';
 
 const ListWrapper = styled.section`
   width: 100%;
@@ -86,7 +87,7 @@ const AttendancePageContent: React.FC<ConnectedProps> = ({
           </List>
         </ListWrapper>
         <ContentTemplate isOpen={isAttendanceInfoOpen} setOpen={setAttendanceInfoOpen}>
-          <p>Test</p>
+          <AttendanceInfo />
         </ContentTemplate>
       </>
     </GridWrapper>
