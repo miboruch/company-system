@@ -31,6 +31,11 @@ const AttendanceInfo: React.FC<ConnectedProps> = ({ selectedAttendance, weekAtte
               </Title>
               <p>icon</p>
             </HeaderWrapper>
+            <EmployeeInfoBox>
+              <SubParagraph>Email: {selectedAttendance.user.email}</SubParagraph>
+              <SubParagraph>{selectedAttendance.user.phoneNumber}</SubParagraph>
+              {/*<SubParagraph>{selectedEmployee.userId.phoneNumber}</SubParagraph>*/}
+            </EmployeeInfoBox>
             {weekAttendance && <WeekAttendanceComponent weekAttendance={weekAttendance} />}
           </>
         )
