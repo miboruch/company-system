@@ -10,7 +10,7 @@ interface MenuItem {
 export const adminMenuItems: MenuItem[] = [
   {
     name: 'Twoje firmy',
-    link: '/companies',
+    link: '/admin/companies',
     icon: <HomeIcon />
   },
   {

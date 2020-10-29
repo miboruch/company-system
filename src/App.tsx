@@ -10,7 +10,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from './types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { authenticateCheck } from './actions/authenticationActions';
-import PrivateRoute from './hoc/PrivateRoute';
+import PrivateRoute from './hoc/UserRoute';
 import CompaniesPage from './pages/CompaniesPage/CompaniesPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import EmployeePage from './pages/EmployeePage/EmployeePage';
@@ -18,6 +18,7 @@ import TaskPage from './pages/TaskPage/TaskPage';
 import ClientsPage from './pages/ClientsPage/ClientsPage';
 import AttendancePage from './pages/AttendancePage/AttendancePage';
 import Routes from './routes/Routes';
+import SelectPage from './pages/SelectPage/SelectPage';
 
 interface Props {}
 
@@ -26,7 +27,7 @@ type ConnectedProps = Props & LinkDispatchProps & RouteComponentProps<any>;
 const App: React.FC<ConnectedProps> = ({ history, authenticationCheck }) => {
   useEffect(() => {
     authenticationCheck(
-      () => history.push('/admin/companies'),
+      () => history.push('/select'),
       () => history.push('/login')
     );
   }, []);
@@ -36,7 +37,8 @@ const App: React.FC<ConnectedProps> = ({ history, authenticationCheck }) => {
       <Switch>
         <Route path={'/login'} component={LoginPage} />
         <Route path={'/register'} component={RegisterPage} />
-        <PrivateRoute path={'/admin/companies'} component={CompaniesPage} />
+        <Route path={'/select'} component={SelectPage} />
+        {/*<PrivateRoute path={'/admin/companies'} component={CompaniesPage} />*/}
         <Routes />
         {/*<PrivateRoute path={'/'} exact component={LandingPage} />*/}
         {/*<PrivateRoute path={'/home'} component={LandingPage} />*/}

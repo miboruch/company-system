@@ -23,11 +23,11 @@ export const adminRoutes: Routes[] = [
     exact: false,
     component: LandingPage
   },
-  // {
-  //   path: '/admin/companies',
-  //   exact: false,
-  //   component: CompaniesPage
-  // },
+  {
+    path: '/admin/companies',
+    exact: false,
+    component: CompaniesPage
+  },
   {
     path: '/admin/employees',
     exact: false,
@@ -50,11 +50,16 @@ export const adminRoutes: Routes[] = [
   }
 ];
 
-export const userRoutes:Routes[] = [
+export const userRoutes: Routes[] = [
   {
     path: '/',
     exact: true,
     component: LandingPage
+  },
+  {
+    path: '/user/companies',
+    exact: false,
+    component: CompaniesPage
   },
   {
     path: '/user/home',
