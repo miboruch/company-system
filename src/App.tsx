@@ -17,6 +17,7 @@ import EmployeePage from './pages/EmployeePage/EmployeePage';
 import TaskPage from './pages/TaskPage/TaskPage';
 import ClientsPage from './pages/ClientsPage/ClientsPage';
 import AttendancePage from './pages/AttendancePage/AttendancePage';
+import Routes from './routes/Routes';
 
 interface Props {}
 
@@ -25,7 +26,7 @@ type ConnectedProps = Props & LinkDispatchProps & RouteComponentProps<any>;
 const App: React.FC<ConnectedProps> = ({ history, authenticationCheck }) => {
   useEffect(() => {
     authenticationCheck(
-      () => history.push('/companies'),
+      () => history.push('/admin/companies'),
       () => history.push('/login')
     );
   }, []);
@@ -35,13 +36,14 @@ const App: React.FC<ConnectedProps> = ({ history, authenticationCheck }) => {
       <Switch>
         <Route path={'/login'} component={LoginPage} />
         <Route path={'/register'} component={RegisterPage} />
-        <PrivateRoute path={'/'} exact component={LandingPage} />
-        <PrivateRoute path={'/home'} component={LandingPage} />
-        <PrivateRoute path={'/companies'} component={CompaniesPage} />
-        <PrivateRoute path={'/employees'} component={EmployeePage} />
-        <PrivateRoute path={'/tasks'} component={TaskPage} />
-        <PrivateRoute path={'/clients'} component={ClientsPage} />
-        <PrivateRoute path={'/attendance'} component={AttendancePage} />
+        <PrivateRoute path={'/admin/companies'} component={CompaniesPage} />
+        <Routes />
+        {/*<PrivateRoute path={'/'} exact component={LandingPage} />*/}
+        {/*<PrivateRoute path={'/home'} component={LandingPage} />*/}
+        {/*<PrivateRoute path={'/employees'} component={EmployeePage} />*/}
+        {/*<PrivateRoute path={'/tasks'} component={TaskPage} />*/}
+        {/*<PrivateRoute path={'/clients'} component={ClientsPage} />*/}
+        {/*<PrivateRoute path={'/attendance'} component={AttendancePage} />*/}
       </Switch>
     </Layout>
   );

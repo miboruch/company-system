@@ -200,8 +200,8 @@ export const authenticateCheck = (successCallback: () => void, errorCallback: ()
     } else {
       dispatch(authSuccess(token, refreshToken, new Date(expireDate).getTime()));
       dispatch(getUserData(token));
-      successCallback();
       dispatch(authTimeout(refreshToken, expDate.getTime() - new Date().getTime()));
+      successCallback();
     }
   } else {
     refreshToken ? dispatch(userLogout(refreshToken, errorCallback)) : dispatch(authLogout());
