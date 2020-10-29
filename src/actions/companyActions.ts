@@ -4,18 +4,20 @@ import {
   SET_ADD_COMPANY_OPEN,
   SET_ALL_USER_COMPANIES,
   SET_COMPANIES_ERROR,
-  SET_CURRENT_COMPANY,
   SET_COMPANY_LOADING,
+  SET_CURRENT_COMPANY,
   SetAddCompanyOpen,
   SetAllUserCompanies,
   SetCompaniesError,
-  SetCurrentCompany,
-  SetCompanyLoading
+  SetCompanyLoading,
+  SetCurrentCompany
 } from '../types/actionTypes/companyActionTypes';
 import { Dispatch } from 'redux';
 import { AppTypes } from '../types/actionTypes/appActionTypes';
 import { API_URL } from '../utils/config';
 import { AppState } from '../reducers/rootReducer';
+import { setUserRole } from './authenticationActions';
+import { UserRole } from '../types/actionTypes/authenticationActionTypes';
 
 const setCompanyLoading = (isLoading: boolean): SetCompanyLoading => {
   return {
@@ -98,5 +100,6 @@ export const getUserEmployeeCompanies = () => async (dispatch: Dispatch<AppTypes
 
 export const setCompany = (currentCompany: CompanyInterface | null, successCallback: () => void) => (dispatch: Dispatch<AppTypes>) => {
   dispatch(setCurrentCompany(currentCompany));
+  dispatch(setUserRole(UserRole.Admin));
   successCallback();
 };
