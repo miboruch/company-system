@@ -19,32 +19,55 @@ export const adminRoutes: Routes[] = [
     component: LandingPage
   },
   {
-    path: '/home',
+    path: '/admin/home',
     exact: false,
     component: LandingPage
   },
   // {
-  //   path: '/companies',
+  //   path: '/admin/companies',
   //   exact: false,
   //   component: CompaniesPage
   // },
   {
-    path: '/employees',
+    path: '/admin/employees',
     exact: false,
     component: EmployeePage
   },
   {
-    path: '/tasks',
+    path: '/admin/tasks',
     exact: false,
     component: TaskPage
   },
   {
-    path: '/clients',
+    path: '/admin/clients',
     exact: false,
     component: ClientsPage
   },
   {
-    path: '/attendance',
+    path: '/admin/attendance',
+    exact: false,
+    component: AttendancePage
+  }
+];
+
+export const userRoutes:Routes[] = [
+  {
+    path: '/',
+    exact: true,
+    component: LandingPage
+  },
+  {
+    path: '/user/home',
+    exact: false,
+    component: LandingPage
+  },
+  {
+    path: '/user/tasks',
+    exact: false,
+    component: TaskPage
+  },
+  {
+    path: '/user/attendance',
     exact: false,
     component: AttendancePage
   }

@@ -7,7 +7,7 @@ interface MenuItem {
   icon: React.ReactNode;
 }
 
-export const menuItems: MenuItem[] = [
+export const adminMenuItems: MenuItem[] = [
   {
     name: 'Twoje firmy',
     link: '/companies',
@@ -15,32 +15,55 @@ export const menuItems: MenuItem[] = [
   },
   {
     name: 'Strona główna',
-    link: '/home',
+    link: '/admin/home',
     icon: <HomeIcon />
   },
   {
     name: 'Pracownicy',
-    link: '/employees',
+    link: '/admin/employees',
     icon: <UserIcon />
   },
   {
     name: 'Zadania',
-    link: '/tasks',
+    link: '/admin/tasks',
     icon: <ListIcon />
   },
   {
     name: 'Finanse',
-    link: '/finances',
+    link: '/admin/finances',
     icon: <PaymentIcon />
   },
   {
     name: 'Klienci',
-    link: '/clients',
+    link: '/admin/clients',
     icon: <SupportIcon />
   },
   {
     name: 'Lista obecności',
-    link: '/attendance',
+    link: '/admin/attendance',
+    icon: <ListIcon />
+  }
+];
+
+export const userMenuItems: MenuItem[] = [
+  {
+    name: 'Twoje firmy',
+    link: '/user/companies',
+    icon: <HomeIcon />
+  },
+  {
+    name: 'Strona główna',
+    link: '/user/home',
+    icon: <HomeIcon />
+  },
+  {
+    name: 'Zadania',
+    link: '/user/tasks',
+    icon: <ListIcon />
+  },
+  {
+    name: 'Lista obecności',
+    link: '/user/attendance',
     icon: <ListIcon />
   }
 ];
