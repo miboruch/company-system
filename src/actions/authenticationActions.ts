@@ -1,5 +1,19 @@
 import axios from 'axios';
-import { AUTH_FAILURE, AUTH_LOGOUT, AUTH_START, AUTH_SUCCESS, SET_USER_DATA, AuthStart, AuthSuccess, SetUserData, AuthLogout, AuthFailure } from '../types/actionTypes/authenticationActionTypes';
+import {
+  AUTH_FAILURE,
+  AUTH_LOGOUT,
+  AUTH_START,
+  AUTH_SUCCESS,
+  SET_USER_DATA,
+  SET_USER_ROLE,
+  AuthFailure,
+  AuthLogout,
+  AuthStart,
+  AuthSuccess,
+  SetUserData,
+  SetUserRole,
+  UserRole
+} from '../types/actionTypes/authenticationActionTypes';
 import { Dispatch } from 'redux';
 import { AppTypes } from '../types/actionTypes/appActionTypes';
 import { API_URL } from '../utils/config';
@@ -82,6 +96,13 @@ const authTimeout = (refreshToken: string, expireMilliseconds: number) => (dispa
   return setTimeout(async () => {
     dispatch(getNewAccessToken(refreshToken));
   }, expireMilliseconds);
+};
+
+export const setUserRole = (role: UserRole): SetUserRole => {
+  return {
+    type: SET_USER_ROLE,
+    payload: role
+  };
 };
 
 export const getUserData = (token: string) => async (dispatch: Dispatch<AppTypes>) => {

@@ -64,6 +64,10 @@ const DateParagraph = styled.p`
   font-size: 13px;
 `;
 
+const WeekDayParagraph = styled(DateParagraph)`
+  font-size: 11px;
+`;
+
 const iconStyles = css`
   margin-right: 0;
   margin-top: 2rem;
@@ -81,4 +85,4 @@ const StyledNotCheckedIcon = styled(NotCheckedIcon)`
   ${iconStyles};
 `;
 
-export { MainWrapper, Header, StyledWrapper, SingleAttendanceWrapper, DateParagraph, StyledCheckedIcon, StyledEmptyIcon, StyledNotCheckedIcon };
+export { MainWrapper, Header, StyledWrapper, SingleAttendanceWrapper, DateParagraph, WeekDayParagraph, StyledCheckedIcon, StyledEmptyIcon, StyledNotCheckedIcon };

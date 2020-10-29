@@ -8,8 +8,18 @@ import ArrowButton from '../../atoms/ArrowButton/ArrowButton';
 import { Direction } from '../../../types/globalTypes';
 import { getWeekAttendance } from '../../../actions/attendanceActions';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
-import { MainWrapper, Header, StyledWrapper, SingleAttendanceWrapper, DateParagraph, StyledCheckedIcon, StyledEmptyIcon, StyledNotCheckedIcon } from './WeekAttendanceComponent.styles';
-import { months } from '../../../utils/config';
+import {
+  MainWrapper,
+  Header,
+  StyledWrapper,
+  SingleAttendanceWrapper,
+  WeekDayParagraph,
+  DateParagraph,
+  StyledCheckedIcon,
+  StyledEmptyIcon,
+  StyledNotCheckedIcon
+} from './WeekAttendanceComponent.styles';
+import { months, weekDays } from '../../../utils/config';
 
 interface Props {
   weekAttendance: WeekAttendance[];
@@ -40,13 +50,16 @@ const WeekAttendanceComponent: React.FC<ConnectedProps> = ({ weekAttendance, get
         <ArrowButton direction={Direction.Right} onClick={() => increaseWeek()} />
       </Header>
       <StyledWrapper>
-        {weekAttendance.map((attendance, index) => (
-          <SingleAttendanceWrapper isCurrentDay={compareDates(new Date(attendance.date), new Date())} key={index} onClick={() => console.log(attendance)}>
-            <DateParagraph>{new Date(attendance.date).toLocaleDateString()}</DateParagraph>
-            {attendance.wasPresent === null ? <StyledEmptyIcon /> : attendance.wasPresent ? <StyledCheckedIcon /> : <StyledNotCheckedIcon />}
-            {attendance.wasPresent && <p>{attendance.hours}</p>}
-          </SingleAttendanceWrapper>
-        ))}
+        {weekAttendance.map((attendance, index) => {
+          return (
+            <SingleAttendanceWrapper isCurrentDay={compareDates(new Date(attendance.date), new Date())} key={index} onClick={() => console.log(attendance)}>
+              <DateParagraph>{new Date(attendance.date).toLocaleDateString()}</DateParagraph>
+              <WeekDayParagraph>{weekDays[new Date(attendance.date).getDay()]}</WeekDayParagraph>
+              {attendance.wasPresent === null ? <StyledEmptyIcon /> : attendance.wasPresent ? <StyledCheckedIcon /> : <StyledNotCheckedIcon />}
+              {attendance.wasPresent && <p>{attendance.hours}</p>}
+            </SingleAttendanceWrapper>
+          );
+        })}
       </StyledWrapper>
     </MainWrapper>
   );

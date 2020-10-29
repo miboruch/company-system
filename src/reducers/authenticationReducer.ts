@@ -1,4 +1,4 @@
-import { AuthenticationActionTypes, AUTH_START, AUTH_SUCCESS, AUTH_FAILURE, AUTH_LOGOUT, SET_USER_DATA } from '../types/actionTypes/authenticationActionTypes';
+import { AUTH_FAILURE, AUTH_LOGOUT, AUTH_START, AUTH_SUCCESS, AuthenticationActionTypes, SET_USER_DATA, SET_USER_ROLE, UserRole } from '../types/actionTypes/authenticationActionTypes';
 import { UserAuthData } from '../types/modelsTypes';
 
 interface DefaultState {
@@ -8,6 +8,7 @@ interface DefaultState {
   refreshToken: string | null;
   error: string | null;
   userData: null | UserAuthData;
+  role: UserRole;
 }
 
 const initialState: DefaultState = {
@@ -16,18 +17,19 @@ const initialState: DefaultState = {
   token: null,
   refreshToken: null,
   error: null,
-  userData: null
+  userData: null,
+  role: UserRole.User
 };
 
 export const authenticationReducer = (state = initialState, action: AuthenticationActionTypes): DefaultState => {
   switch (action.type) {
-    case 'AUTH_START':
+    case AUTH_START:
       return {
         ...state,
         isLoading: true,
         error: null
       };
-    case 'AUTH_SUCCESS':
+    case AUTH_SUCCESS:
       return {
         ...state,
         isLoading: false,
@@ -36,7 +38,7 @@ export const authenticationReducer = (state = initialState, action: Authenticati
         token: action.payload.token,
         refreshToken: action.payload.refreshToken
       };
-    case 'AUTH_FAILURE':
+    case AUTH_FAILURE:
       return {
         ...state,
         isLoading: false,
@@ -45,7 +47,7 @@ export const authenticationReducer = (state = initialState, action: Authenticati
         refreshToken: null,
         error: action.payload
       };
-    case 'AUTH_LOGOUT':
+    case AUTH_LOGOUT:
       return {
         ...state,
         isLoading: false,
@@ -55,7 +57,12 @@ export const authenticationReducer = (state = initialState, action: Authenticati
         refreshToken: null,
         userData: null
       };
-    case 'SET_USER_DATA':
+    case SET_USER_ROLE:
+      return {
+        ...state,
+        role: action.payload
+      };
+    case SET_USER_DATA:
       return {
         ...state,
         userData: {

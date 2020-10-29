@@ -5,6 +5,12 @@ export const AUTH_SUCCESS = 'AUTH_SUCCESS';
 export const AUTH_FAILURE = 'AUTH_FAILURE';
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 export const SET_USER_DATA = 'SET_USER_DATA';
+export const SET_USER_ROLE = 'SET_USER_ROLE';
+
+export enum UserRole {
+  Admin = 'admin',
+  User = 'user'
+}
 
 export interface AuthStart {
   type: typeof AUTH_START;
@@ -32,4 +38,9 @@ export interface SetUserData {
   payload: UserAuthData;
 }
 
-export type AuthenticationActionTypes = AuthStart | AuthSuccess | AuthFailure | AuthLogout | SetUserData;
+export interface SetUserRole {
+  type: typeof SET_USER_ROLE;
+  payload: UserRole;
+}
+
+export type AuthenticationActionTypes = AuthStart | AuthSuccess | AuthFailure | AuthLogout | SetUserData | SetUserRole;
