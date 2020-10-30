@@ -5,7 +5,7 @@ import { SpinnerWrapper } from '../../../styles/sharedStyles';
 import { AttendanceInterface, WeekAttendance } from '../../../types/modelsTypes';
 import { AppState } from '../../../reducers/rootReducer';
 import Spinner from '../../atoms/Spinner/Spinner';
-import BarChart from '../../molecules/BarChart/BarChart';
+import Chart from '../../molecules/Chart/Chart';
 import WeekAttendanceComponent from '../../molecules/WeekAttendanceComponent/WeekAttendanceComponent';
 
 interface Props {}

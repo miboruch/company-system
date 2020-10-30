@@ -1,6 +1,6 @@
 import React from 'react';
-import { BarChart as Chart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar, ResponsiveContainer } from 'recharts';
-import { ChartWrapper, StyledResponsiveContainer } from './BarChart.styles';
+import { CartesianGrid, XAxis, YAxis, Tooltip, Legend, AreaChart, Area } from 'recharts';
+import { ChartWrapper, StyledResponsiveContainer } from './Chart.styles';
 
 interface Props {
   data: Array<any> | null;
@@ -12,7 +12,7 @@ interface Props {
   setDaysBack?: (days: number) => void;
 }
 
-const BarChart: React.FC<Props> = ({ data, xAxisDataKey, barDataKey, secondBarDataKey, secondBarDataName, barDataName, setDaysBack }) => {
+const Chart: React.FC<Props> = ({ data, xAxisDataKey, barDataKey, secondBarDataKey, secondBarDataName, barDataName, setDaysBack }) => {
   return (
     <ChartWrapper>
       <p onClick={() => setDaysBack && setDaysBack(1)}>1 day</p>
@@ -20,7 +20,7 @@ const BarChart: React.FC<Props> = ({ data, xAxisDataKey, barDataKey, secondBarDa
       <p onClick={() => setDaysBack && setDaysBack(30)}>30 days</p>
       <p onClick={() => setDaysBack && setDaysBack(365)}>365 days</p>
       <StyledResponsiveContainer width={'100%'} height={250}>
-        <Chart data={!!data ? data : []} barSize={30}>
+        <AreaChart data={!!data ? data : []}>
           <defs>
             <linearGradient id='chartColor' x1='0' y1='0' x2='0' y2='1'>
               <stop offset='5%' stopColor={'#2d2d2d'} stopOpacity={1} />
@@ -39,13 +39,12 @@ const BarChart: React.FC<Props> = ({ data, xAxisDataKey, barDataKey, secondBarDa
             }}
           />
           <Legend iconSize={16} />
-          <Bar dataKey={barDataKey} name={barDataName} fill={'url(#chartColor)'} radius={[30, 30, 30, 30]} />
-          {secondBarDataKey && secondBarDataName && <Bar dataKey={secondBarDataKey} name={secondBarDataName} fill={'yellow'} radius={[30, 30, 30, 30]} />}
-          {/*#2d2d2d*/}
-        </Chart>
+          <Area type={'monotone'} dataKey={barDataKey} name={barDataName} fill={'url(#chartColor)'} />
+          {secondBarDataKey && secondBarDataName && <Area type={'monotone'} dataKey={secondBarDataKey} name={secondBarDataName} fill={'url(#chartColor)'} />}
+        </AreaChart>
       </StyledResponsiveContainer>
     </ChartWrapper>
   );
 };
 
-export default BarChart;
+export default Chart;

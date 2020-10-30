@@ -18,6 +18,15 @@ export interface IncomeDataInterface {
   _id: string;
   companyId: string;
   incomeValue: number;
+  description: string;
+}
+
+export interface ExpenseDataInterface {
+  createdDate: string | Date;
+  _id: string;
+  companyId: string;
+  incomeValue: number;
+  description: string;
 }
 
 export interface UserDataInterface {
@@ -113,4 +122,3 @@ export interface AttendanceInterface {
   attendance?: Attendance;
   user: AttendanceUserInterface;
 }
-

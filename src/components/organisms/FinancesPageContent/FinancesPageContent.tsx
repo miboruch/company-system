@@ -5,7 +5,7 @@ import GridWrapper from '../../templates/GridWrapper/GridWrapper';
 import { ContentGridWrapper } from '../../../styles/HomePageContentGridStyles';
 import { InfoBoxWrapper, TileWrapper } from '../LandingPageContent/LandingPageContent.styles';
 import TaskTile from '../../molecules/TaskTile/TaskTile';
-import BarChart from '../../molecules/BarChart/BarChart';
+import Chart from '../../molecules/Chart/Chart';
 import AttendanceList from '../AttendanceList/AttendanceList';
 import InformationBox from '../../molecules/InformationBox/InformationBox';
 import { AttendanceInterface } from '../../../types/modelsTypes';
@@ -32,7 +32,7 @@ const FinancesPageContent: React.FC<ConnectedProps> = ({ singleDayAttendance }) 
             <TaskTile isCompleted={false} name={'Wykonanie usługi przycięcia drzew'} />
             <TaskTile isCompleted={false} name={'Wykonanie usługi przycięcia drzew'} />
           </TileWrapper>
-          <BarChart xAxisDataKey={'createdDate'} secondBarDataKey={'expenseValue'} secondBarDataName={'Wydatek'} barDataKey={'incomeValue'} barDataName={'Dochód'} data={[]} setDaysBack={() => {}} />
+          <Chart xAxisDataKey={'createdDate'} secondBarDataKey={'expenseValue'} secondBarDataName={'Wydatek'} barDataKey={'incomeValue'} barDataName={'Dochód'} data={[]} setDaysBack={() => {}} />
           <AttendanceList singleDayAttendance={singleDayAttendance} />
           <InfoBoxWrapper>
             <p>PLN</p>

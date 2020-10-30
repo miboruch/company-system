@@ -10,6 +10,8 @@ const Wrapper = styled.div`
   display: grid;
   place-items: center;
   z-index: 1001;
+  opacity: 0;
+  visibility: hidden;
 `;
 
 const Box = styled.div`

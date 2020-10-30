@@ -6,7 +6,7 @@ import { Content, Header, TileWrapper, InfoBoxWrapper } from './LandingPageConte
 import TaskTile from '../../molecules/TaskTile/TaskTile';
 import { AppState } from '../../../reducers/rootReducer';
 import { AttendanceInterface, IncomeDataInterface } from '../../../types/modelsTypes';
-import BarChart from '../../molecules/BarChart/BarChart';
+import Chart from '../../molecules/Chart/Chart';
 import AttendanceList from '../AttendanceList/AttendanceList';
 import { ContentGridWrapper } from '../../../styles/HomePageContentGridStyles';
 import InformationBox from '../../molecules/InformationBox/InformationBox';
@@ -54,7 +54,7 @@ const LandingPageContent: React.FC<ConnectedProps> = ({ token, singleDayAttendan
             <TaskTile isCompleted={false} name={'Wykonanie usługi przycięcia drzew'} />
             <TaskTile isCompleted={false} name={'Wykonanie usługi przycięcia drzew'} />
           </TileWrapper>
-          <BarChart
+          <Chart
             xAxisDataKey={'createdDate'}
             secondBarDataKey={'expenseValue'}
             secondBarDataName={'Wydatek'}

@@ -27,8 +27,8 @@ const DeletePopup: React.FC<Props> = ({ isOpen, setOpen, headerText, text }) => 
   }, [isOpen]);
 
   return (
-    <Wrapper>
-      <Box>
+    <Wrapper ref={backgroundRef}>
+      <Box ref={boxRef}>
         <Header>
           <HeaderText>{headerText}</HeaderText>
         </Header>
