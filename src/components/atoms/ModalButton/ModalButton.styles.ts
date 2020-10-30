@@ -12,6 +12,12 @@ const Button = styled.button<ButtonTypeInterface>`
   font-size: 13px;
   font-weight: ${({ theme }) => theme.font.weight.demi};
   border-radius: 8px;
+  margin: 0 1rem;
+  cursor: pointer;
+  
+  &:focus{
+    outline: none;
+  }
 
   ${({ buttonType }) =>
     buttonType === ButtonType.Cancel &&

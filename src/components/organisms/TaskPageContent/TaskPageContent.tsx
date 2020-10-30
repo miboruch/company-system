@@ -14,6 +14,7 @@ import ContentTemplate from '../../templates/ContentTemplate/ContentTemplate';
 import gsap from 'gsap';
 import TaskInfo from '../TaskInfo/TaskInfo';
 import { listAnimation } from '../../../animations/animations';
+import DeletePopup from '../../molecules/DeletePopup/DeletePopup';
 
 interface Props {}
 
@@ -63,6 +64,7 @@ const TaskPageContent: React.FC<ConnectedProps> = ({ isLoading, allCompanyTasks,
           </ContentTemplate>
         </>
       )}
+      <DeletePopup isOpen={true} setOpen={() => {}} headerText={'Usuń klienta'} text={'Antoni Krzemiński, Planta'} />
     </GridWrapper>
   );
 };
