@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { AppState } from '../reducers/rootReducer';
 import { Redirect, Route } from 'react-router-dom';
 import { UserRole } from '../types/actionTypes/authenticationActionTypes';
+import { CompanyInterface } from '../types/modelsTypes';
 
 type ConnectedProps = Props & LinkStateProps;
 
@@ -19,6 +20,7 @@ const AdminRoute: React.FC<ConnectedProps> = ({ component: Component, path, exac
 interface LinkStateProps {
   isLoggedIn: boolean;
   role: UserRole;
+  // currentCompany: CompanyInterface | null;
 }
 
 const mapStateToProps = ({ authenticationReducer: { isLoggedIn, role } }: AppState): LinkStateProps => {

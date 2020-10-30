@@ -10,3 +10,13 @@ export const listAnimation = (tl: GSAPTimeline, listRef: React.RefObject<HTMLDiv
     tl.fromTo(list.children, { autoAlpha: 0, y: '+=30' }, { autoAlpha: 1, y: 0, stagger: 0.2 });
   }
 };
+
+export const contentAnimation = (tl: GSAPTimeline, contentRef: React.RefObject<HTMLDivElement | null>) => {
+  const content: HTMLDivElement | null = contentRef.current;
+
+  if (content) {
+    gsap.set([...content.children], { autoAlpha: 0 });
+
+    tl.fromTo(content.children, { autoAlpha: 0, y: '+=30' }, { autoAlpha: 1, y: 0, stagger: 0.2 });
+  }
+};

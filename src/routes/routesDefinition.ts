@@ -5,6 +5,7 @@ import EmployeePage from '../pages/EmployeePage/EmployeePage';
 import TaskPage from '../pages/TaskPage/TaskPage';
 import ClientsPage from '../pages/ClientsPage/ClientsPage';
 import AttendancePage from '../pages/AttendancePage/AttendancePage';
+import FinancesPage from '../pages/FinancesPage/FinancesPage';
 
 interface Routes {
   path: string;
@@ -42,6 +43,11 @@ export const adminRoutes: Routes[] = [
     path: '/admin/clients',
     exact: false,
     component: ClientsPage
+  },
+  {
+    path: '/admin/finances',
+    exact: false,
+    component: FinancesPage
   },
   {
     path: '/admin/attendance',

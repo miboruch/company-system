@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import gsap from 'gsap';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
 import { Content, Header, TileWrapper, InfoBoxWrapper } from './LandingPageContent.styles';
-import { Title } from '../../../styles/sharedStyles';
 import TaskTile from '../../molecules/TaskTile/TaskTile';
 import { AppState } from '../../../reducers/rootReducer';
 import { IncomeDataInterface } from '../../../types/modelsTypes';
@@ -12,6 +11,7 @@ import AttendanceList from '../AttendanceList/AttendanceList';
 import { ContentGridWrapper } from '../../../styles/HomePageContentGridStyles';
 import InformationBox from '../../molecules/InformationBox/InformationBox';
 import { getIncomeExpenseInTimePeriod } from '../../../utils/incomeExpenseAPI';
+import { contentAnimation } from '../../../animations/animations';
 
 const LandingPageContent: React.FC<LinkStateProps> = ({ token }) => {
   const [text, setText] = useState<string>('');
@@ -21,13 +21,7 @@ const LandingPageContent: React.FC<LinkStateProps> = ({ token }) => {
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
 
   useEffect(() => {
-    const content: HTMLDivElement | null = contentRef.current;
-
-    if (content) {
-      gsap.set([...content.children], { autoAlpha: 0 });
-
-      tl.fromTo(content.children, { autoAlpha: 0, y: '+=30' }, { autoAlpha: 1, y: 0, stagger: 0.2 });
-    }
+    contentAnimation(tl, contentRef);
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -42,8 +36,6 @@ const LandingPageContent: React.FC<LinkStateProps> = ({ token }) => {
 
   return (
     <GridWrapper mobilePadding={true} onlyHeader={true} pageName={'Home'}>
-      {/*<Title>Home</Title>*/}
-      {/*<Header />*/}
       <Content>
         {/*TODO: make another grid in this component - only hdReady resolutions */}
         <ContentGridWrapper ref={contentRef}>

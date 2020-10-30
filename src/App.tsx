@@ -4,19 +4,12 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import Layout from './components/Layout';
-import LandingPage from './pages/LandingPage/LandingPage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from './types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { authenticateCheck } from './actions/authenticationActions';
-import PrivateRoute from './hoc/UserRoute';
-import CompaniesPage from './pages/CompaniesPage/CompaniesPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
-import EmployeePage from './pages/EmployeePage/EmployeePage';
-import TaskPage from './pages/TaskPage/TaskPage';
-import ClientsPage from './pages/ClientsPage/ClientsPage';
-import AttendancePage from './pages/AttendancePage/AttendancePage';
 import Routes from './routes/Routes';
 import SelectPage from './pages/SelectPage/SelectPage';
 
@@ -38,14 +31,7 @@ const App: React.FC<ConnectedProps> = ({ history, authenticationCheck }) => {
         <Route path={'/login'} component={LoginPage} />
         <Route path={'/register'} component={RegisterPage} />
         <Route path={'/select'} component={SelectPage} />
-        {/*<PrivateRoute path={'/admin/companies'} component={CompaniesPage} />*/}
         <Routes />
-        {/*<PrivateRoute path={'/'} exact component={LandingPage} />*/}
-        {/*<PrivateRoute path={'/home'} component={LandingPage} />*/}
-        {/*<PrivateRoute path={'/employees'} component={EmployeePage} />*/}
-        {/*<PrivateRoute path={'/tasks'} component={TaskPage} />*/}
-        {/*<PrivateRoute path={'/clients'} component={ClientsPage} />*/}
-        {/*<PrivateRoute path={'/attendance'} component={AttendancePage} />*/}
       </Switch>
     </Layout>
   );
