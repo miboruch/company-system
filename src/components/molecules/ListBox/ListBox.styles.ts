@@ -36,4 +36,12 @@ const ContentWrapper = styled.section`
   align-items: center;
 `;
 
-export { Wrapper, ContentWrapper, Name, Subparagraph };
+const ValueParagraph = styled.h3`
+  font-size: 22px;
+  font-weight: ${({theme}) => theme.font.weight.demi};
+  letter-spacing: -2px;
+  color: ${({theme}) => theme.colors.dark};
+  padding-right: 1rem;
+`;
+
+export { Wrapper, ContentWrapper, Name, Subparagraph, ValueParagraph };
