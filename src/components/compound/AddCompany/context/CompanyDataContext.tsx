@@ -12,12 +12,12 @@ export interface CompanyDataInterface {
   phoneNumber?: string;
 }
 
-type RegisterDataContextType = {
+type CompanyDataContextType = {
   data: CompanyDataInterface;
   setData: (data: object) => void;
 };
 
-export const CompanyDataContext = React.createContext<RegisterDataContextType>({
+export const CompanyDataContext = React.createContext<CompanyDataContextType>({
   data: {},
   setData: (data: object) => {}
 });

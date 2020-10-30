@@ -54,7 +54,7 @@ export const setClientInfoOpen = (isOpen: boolean): SetClientInfoOpen => {
   };
 };
 
-const setAddNewClientOpen = (isOpen: boolean): SetAddNewClientOpen => {
+export const setAddNewClientOpen = (isOpen: boolean): SetAddNewClientOpen => {
   return {
     type: SET_ADD_NEW_CLIENT_OPEN,
     payload: isOpen

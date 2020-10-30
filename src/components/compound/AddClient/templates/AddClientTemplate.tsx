@@ -1,15 +1,15 @@
 import React, { useContext } from 'react';
-import { PageContext, PageSettingEnum } from '../../context/PageContext';
+import { PageContext, PageSettingEnum } from '../context/PageContext';
 
 interface Props {
   pageIndex: PageSettingEnum;
   children: React.ReactNode;
 }
 
-const AddCompanyTemplate: React.FC<Props> = ({ pageIndex, children }) => {
+const AddClientTemplate: React.FC<Props> = ({ pageIndex, children }) => {
   const { currentPage } = useContext(PageContext);
 
   return <>{currentPage === pageIndex && children}</>;
 };
 
-export default AddCompanyTemplate;
+export default AddClientTemplate;
