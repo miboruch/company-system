@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import ClientDataContextProvider from './context/ClientDataContext';
-import PageContextProvider from './context/PageContext';
+import PageContextProvider, { PageSettingEnum } from './context/PageContext';
 import gsap from 'gsap';
 import { modalOpenAnimation } from '../../../animations/animations';
 import { AppState } from '../../../reducers/rootReducer';
@@ -9,7 +9,12 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { setAddNewClientOpen } from '../../../actions/clientActions';
-import { MainWrapper, Wrapper, CompoundTitle, ContentWrapper, CloseButtonWrapper } from '../../../styles/compoundControllerStyles';
+import { CloseButtonWrapper, CompoundTitle, ContentWrapper, MainWrapper, Wrapper } from '../../../styles/compoundControllerStyles';
+import CloseButton from '../../atoms/CloseButton/CloseButton';
+import AddCompanyHeader from '../AddCompany/components/AddCompanyHeader/AddCompanyHeader';
+import { StandardCompoundTitle } from '../../../styles/compoundStyles';
+import AddClientTemplate from './templates/AddClientTemplate';
+import StepList from './components/StepList/StepList';
 
 interface Props {}
 
@@ -35,7 +40,21 @@ const AddClientController: React.FC<ConnectedProps> = ({ isAddNewClientOpen, set
       <PageContextProvider>
         <MainWrapper ref={mainWrapperRef}>
           <Wrapper ref={wrapperRef}>
-            <p>Test</p>
+            <CloseButtonWrapper>
+              <CloseButton setBoxState={() => setAddNewClientOpen(false)} />
+            </CloseButtonWrapper>
+            <AddCompanyHeader setBoxState={setAddNewClientOpen} />
+            <CompoundTitle>Dodaj klienta</CompoundTitle>
+            <StandardCompoundTitle>Uzupełnij informacje o nowym kliencie</StandardCompoundTitle>
+            <StepList />
+            <ContentWrapper>
+              <AddClientTemplate pageIndex={PageSettingEnum.First}>
+                <p>first</p>
+              </AddClientTemplate>
+              <AddClientTemplate pageIndex={PageSettingEnum.Second}>
+                <p>second</p>
+              </AddClientTemplate>
+            </ContentWrapper>
           </Wrapper>
         </MainWrapper>
       </PageContextProvider>

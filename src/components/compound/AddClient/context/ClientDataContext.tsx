@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 export interface ClientDataInterface {
   email?: string;
   name?: string;
-  nip?: string;
   address?: string;
   city?: string;
   country?: string;
