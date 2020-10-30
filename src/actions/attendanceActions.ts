@@ -88,7 +88,7 @@ const setAddNewAttendanceOpen = (isOpen: boolean): SetAddNewAttendanceOpen => {
   };
 };
 
-export const getSingleDayAttendance = () => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
+export const getSingleDayAttendance = (date?: Date) => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
   dispatch(setAttendanceLoading(true));
 
   const { token } = getState().authenticationReducer;
@@ -97,7 +97,7 @@ export const getSingleDayAttendance = () => async (dispatch: Dispatch<AppTypes>,
 
   try {
     if (currentCompany?._id && token && attendanceDate) {
-      const { data } = await axios.get(`${API_URL}/attendance/single-day-attendance?company_id=${currentCompany._id}&date=${attendanceDate.toISOString()}`, {
+      const { data } = await axios.get(`${API_URL}/attendance/single-day-attendance?company_id=${currentCompany._id}&date=${date ? date.toISOString() : attendanceDate.toISOString()}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

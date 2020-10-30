@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import AttendanceBox, { AttendanceBoxProps } from '../../molecules/AttendanceBox/AttendanceBox';
+import { AttendanceInterface } from '../../../types/modelsTypes';
+import { isEmpty } from '../../../utils/functions';
+import ListBox from '../../molecules/ListBox/ListBox';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -17,46 +20,24 @@ const StyledWrapper = styled.div`
   }
 `;
 
-interface Props {}
+interface Props {
+  singleDayAttendance: AttendanceInterface[];
+}
 
-const AttendanceList: React.FC<Props> = () => {
-  const attendanceArray: AttendanceBoxProps[] = [
-    {
-      name: 'Mariusz Pawelski',
-      date: '08/06/1998',
-      bottomDescription: 'mariusz.pawelski@gmail.com',
-      callback: () => console.log('clicked'),
-      wasPresent: true,
-      hours: 8
-    },
-    {
-      name: 'Michał Boruch',
-      date: '08/06/1998',
-      bottomDescription: 'michal.boruch@gmail.com',
-      callback: () => console.log('clicked'),
-      wasPresent: true,
-      hours: 0
-    },
-    {
-      name: 'Jacek Kowalski',
-      date: '08/06/1998',
-      bottomDescription: 'jacek.kowalski@gmail.com',
-      callback: () => console.log('clicked'),
-      wasPresent: true,
-      hours: 7
-    }
-  ];
+const AttendanceList: React.FC<Props> = ({ singleDayAttendance }) => {
   return (
     <StyledWrapper>
-      {attendanceArray.map((attendance: AttendanceBoxProps, index: number) => (
+      <p>{new Date().toLocaleDateString()}</p>
+      {singleDayAttendance.map((attendance, index: number) => (
         <AttendanceBox
           key={index}
-          name={attendance.name}
-          date={attendance.date}
-          bottomDescription={attendance.bottomDescription}
+          name={`${attendance.user.name} ${attendance.user.lastName}`}
+          date={attendance.attendance?.date && new Date(attendance.attendance?.date)}
+          bottomDescription={attendance.user.email}
           callback={() => console.log('attendance clicked')}
-          wasPresent={attendance.wasPresent}
-          hours={attendance.hours && attendance.hours}
+          isEmpty={isEmpty(attendance.attendance)}
+          isChecked={!isEmpty(attendance.attendance) && attendance.attendance?.wasPresent}
+          hours={attendance.attendance?.hours}
         />
       ))}
     </StyledWrapper>

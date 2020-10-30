@@ -46,6 +46,13 @@ const LinkWrapper = styled.div<LinkWrapperInterface>`
   }
 `;
 
+const CompanyName = styled.h3`
+  font-size: 18px;
+  font-weight: ${({theme}) => theme.font.weight.bold};
+  color: ${({theme}) => theme.colors.dark};
+  letter-spacing: -1px;
+`;
+
 const StyledLink = styled(Link)`
   color: inherit;
   font-size: 14px;
@@ -67,4 +74,4 @@ const ButtonWrapper = styled.div`
   left: 2rem;
 `;
 
-export { MenuWrapper, LinkWrapper, StyledLink, MenuItemsWrapper, ButtonWrapper };
+export { MenuWrapper, LinkWrapper, StyledLink, CompanyName, MenuItemsWrapper, ButtonWrapper };

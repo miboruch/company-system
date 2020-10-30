@@ -33,7 +33,7 @@ export const clientReducer = (state = initialState, action: ClientActionTypes): 
       return {
         ...state,
         isLoading: action.payload,
-        selectedClient: null
+        // selectedClient: null
       };
     case SET_COMPANY_CLIENTS:
       return {

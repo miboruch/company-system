@@ -36,7 +36,7 @@ export const employeeReducer = (state = initialState, action: EmployeesActionTyp
       return {
         ...state,
         isLoading: action.payload,
-        selectedEmployee: null
+        // selectedEmployee: null
       };
     case SET_COMPANY_EMPLOYEES:
       return {

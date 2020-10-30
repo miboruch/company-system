@@ -35,8 +35,8 @@ export const taskReducer = (state = initialState, action: TaskActionTypes): Defa
     case SET_TASK_LOADING:
       return {
         ...state,
-        isLoading: true,
-        selectedTask: null
+        isLoading: true
+        // selectedTask: null
       };
     case SET_COMPANY_TASKS:
       return {

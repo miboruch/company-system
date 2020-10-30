@@ -5,15 +5,21 @@ import GridWrapper from '../../templates/GridWrapper/GridWrapper';
 import { Content, Header, TileWrapper, InfoBoxWrapper } from './LandingPageContent.styles';
 import TaskTile from '../../molecules/TaskTile/TaskTile';
 import { AppState } from '../../../reducers/rootReducer';
-import { IncomeDataInterface } from '../../../types/modelsTypes';
+import { AttendanceInterface, IncomeDataInterface } from '../../../types/modelsTypes';
 import BarChart from '../../molecules/BarChart/BarChart';
 import AttendanceList from '../AttendanceList/AttendanceList';
 import { ContentGridWrapper } from '../../../styles/HomePageContentGridStyles';
 import InformationBox from '../../molecules/InformationBox/InformationBox';
 import { getIncomeExpenseInTimePeriod } from '../../../utils/incomeExpenseAPI';
 import { contentAnimation } from '../../../animations/animations';
+import { ThunkDispatch } from 'redux-thunk';
+import { AppTypes } from '../../../types/actionTypes/appActionTypes';
+import { bindActionCreators } from 'redux';
+import { getSingleDayAttendance } from '../../../actions/attendanceActions';
 
-const LandingPageContent: React.FC<LinkStateProps> = ({ token }) => {
+type ConnectedProps = LinkStateProps & LinkDispatchProps;
+
+const LandingPageContent: React.FC<ConnectedProps> = ({ token, singleDayAttendance, getSingleDayAttendance }) => {
   const [text, setText] = useState<string>('');
   const [data, setData] = useState<Array<IncomeDataInterface> | null>(null);
   const [daysBack, setDaysBackTo] = useState<number>(20);
@@ -34,6 +40,10 @@ const LandingPageContent: React.FC<LinkStateProps> = ({ token }) => {
     })();
   }, [daysBack]);
 
+  useEffect(() => {
+    getSingleDayAttendance(new Date());
+  }, []);
+
   return (
     <GridWrapper mobilePadding={true} onlyHeader={true} pageName={'Home'}>
       <Content>
@@ -53,7 +63,7 @@ const LandingPageContent: React.FC<LinkStateProps> = ({ token }) => {
             data={data}
             setDaysBack={setDaysBackTo}
           />
-          <AttendanceList />
+          <AttendanceList singleDayAttendance={singleDayAttendance} />
           <InfoBoxWrapper>
             <InformationBox title={'Pracownicy'} value={8} areaName={'employees'} />
             <InformationBox title={'Wykonane zadania'} value={12} areaName={'attendance'} />
@@ -66,10 +76,21 @@ const LandingPageContent: React.FC<LinkStateProps> = ({ token }) => {
 
 interface LinkStateProps {
   token: string | null;
+  singleDayAttendance: AttendanceInterface[];
 }
 
-const mapStateToProps = ({ authenticationReducer: { token } }: AppState): LinkStateProps => {
-  return { token };
+interface LinkDispatchProps {
+  getSingleDayAttendance: (date?: Date) => void;
+}
+
+const mapStateToProps = ({ authenticationReducer: { token }, attendanceReducer: { singleDayAttendance } }: AppState): LinkStateProps => {
+  return { token, singleDayAttendance };
 };
 
-export default connect(mapStateToProps)(LandingPageContent);
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
+  return {
+    getSingleDayAttendance: bindActionCreators(getSingleDayAttendance, dispatch)
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LandingPageContent);
