@@ -1,20 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
 import ClientDataContextProvider from './context/ClientDataContext';
 import PageContextProvider, { PageSettingEnum } from './context/PageContext';
-import gsap from 'gsap';
 import { modalOpenAnimation } from '../../../animations/animations';
 import { AppState } from '../../../reducers/rootReducer';
-import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
-import { bindActionCreators } from 'redux';
 import { setAddNewClientOpen } from '../../../actions/clientActions';
 import { CloseButtonWrapper, CompoundTitle, ContentWrapper, MainWrapper, Wrapper } from '../../../styles/compoundControllerStyles';
 import CloseButton from '../../atoms/CloseButton/CloseButton';
-import AddCompanyHeader from '../AddCompany/components/AddCompanyHeader/AddCompanyHeader';
+import AddClientHeader from './components/AddClientHeader/AddClientHeader';
 import { StandardCompoundTitle } from '../../../styles/compoundStyles';
 import AddClientTemplate from './templates/AddClientTemplate';
 import StepList from './components/StepList/StepList';
+import MainClientPage from './pages/MainClientPage/MainClientPage';
+import MapPage from './pages/MapPage/MapPage';
 
 interface Props {}
 
@@ -43,16 +45,16 @@ const AddClientController: React.FC<ConnectedProps> = ({ isAddNewClientOpen, set
             <CloseButtonWrapper>
               <CloseButton setBoxState={() => setAddNewClientOpen(false)} />
             </CloseButtonWrapper>
-            <AddCompanyHeader setBoxState={setAddNewClientOpen} />
+            <AddClientHeader setBoxState={setAddNewClientOpen} />
             <CompoundTitle>Dodaj klienta</CompoundTitle>
             <StandardCompoundTitle>Uzupełnij informacje o nowym kliencie</StandardCompoundTitle>
             <StepList />
             <ContentWrapper>
               <AddClientTemplate pageIndex={PageSettingEnum.First}>
-                <p>first</p>
+                <MainClientPage />
               </AddClientTemplate>
               <AddClientTemplate pageIndex={PageSettingEnum.Second}>
-                <p>second</p>
+                <MapPage />
               </AddClientTemplate>
             </ContentWrapper>
           </Wrapper>

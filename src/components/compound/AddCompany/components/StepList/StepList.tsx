@@ -20,7 +20,7 @@ const StepList: React.FC<Props> = () => {
         return !!(data.address && data.city && data.country);
     }
   };
-  
+
   return (
     <ListWrapper>
       {addCompanySteps.map(({ stepName, description, pageIndex }) => (

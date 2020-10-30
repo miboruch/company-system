@@ -1,25 +1,23 @@
 import React, { useContext, useEffect, useState } from 'react';
 import * as Leaflet from 'leaflet';
 import { Map, Marker, TileLayer } from 'react-leaflet';
+import { ButtonWrapper, CenterBox, MapHeadingWrapper, MapWrapper, MobileCompoundTitle, StyledBackParagraph } from '../../../../../styles/compoundStyles';
+import { SpinnerWrapper } from '../../../../../styles/sharedStyles';
 import Spinner from '../../../../atoms/Spinner/Spinner';
 import Button from '../../../../atoms/Button/Button';
-import { SpinnerWrapper } from '../../../../../styles/sharedStyles';
-import { markerCustomIcon } from '../../utils/customMapIcons';
-import { CompanyDataContext } from '../../context/CompanyDataContext';
-import { PageContext, PageSettingEnum } from '../../context/PageContext';
-import { StyledBackParagraph } from '../../../../../styles/compoundStyles';
-import { MobileCompoundTitle } from '../../../../../styles/compoundStyles';
-import { MapHeadingWrapper, MapWrapper, CenterBox, ButtonWrapper } from '../../../../../styles/compoundStyles';
+import { markerCustomIcon } from '../../../AddCompany/utils/customMapIcons';
+import { PageSettingEnum } from '../../context/PageContext';
+import { ClientDataContext } from '../../context/ClientDataContext';
+import { PageContext } from '../../context/PageContext';
 import { Coords } from '../../../../../types/globalTypes';
-
-import 'leaflet/dist/leaflet.css';
 import { getLocation } from '../../../../../utils/mapFunctions';
 
 interface Props {}
 
 const MapPage: React.FC<Props> = () => {
-  const { data, setData } = useContext(CompanyDataContext);
+  const { data, setData } = useContext(ClientDataContext);
   const { setCurrentPage } = useContext(PageContext);
+
   const [isLoading, setLoading] = useState<boolean>(false);
   const [coords, setCoords] = useState<Coords>({ lat: data.lat || null, long: data.long || null });
   const [mapPositionLat, setMapPositionLat] = useState<number | null | undefined>(null);
@@ -33,6 +31,11 @@ const MapPage: React.FC<Props> = () => {
   const handleCenterMap = () => {
     setMapPositionLat(data.lat);
     setMapPositionLong(data.long);
+  };
+
+  const handleSubmit = () => {
+    console.log(data);
+    console.log('add client request');
   };
 
   return (
@@ -63,7 +66,7 @@ const MapPage: React.FC<Props> = () => {
             </Map>
             <ButtonWrapper>
               <StyledBackParagraph onClick={() => setCurrentPage(PageSettingEnum.First)}>Wstecz</StyledBackParagraph>
-              <Button onClick={() => setCurrentPage(PageSettingEnum.Third)} type={'button'} text={'Dalej'} disabled={!coords.lat || !coords.long} />
+              <Button onClick={() => handleSubmit()} type={'button'} text={'Dodaj'} disabled={!coords.lat || !coords.long} />
             </ButtonWrapper>
           </>
         )}
