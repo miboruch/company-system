@@ -20,15 +20,13 @@ interface Props {}
 
 type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
-const EmployeeInfo: React.FC<ConnectedProps> = ({ token, selectedEmployee, updateEmployeeSalary }) => {
+const EmployeeInfo: React.FC<ConnectedProps> = ({ selectedEmployee, updateEmployeeSalary }) => {
   const initialValues: InitialValues = {
     hourSalary: selectedEmployee?.pricePerHour,
     monthlySalary: 0
   };
 
   const handleSubmit = (values: InitialValues): void => {
-    console.log('UPDATE EMPLOYEE');
-    console.log(values);
     updateEmployeeSalary(values.hourSalary, values.monthlySalary);
   };
 
@@ -77,7 +75,6 @@ const EmployeeInfo: React.FC<ConnectedProps> = ({ token, selectedEmployee, updat
 };
 
 interface LinkStateProps {
-  token: string | null;
   selectedEmployee: EmployeeDataInterface | null;
 }
 
@@ -85,8 +82,8 @@ interface LinkDispatchProps {
   updateEmployeeSalary: (pricePerHour?: number, monthlyPrice?: number) => void;
 }
 
-const mapStateToProps = ({ authenticationReducer: { token }, employeeReducer: { selectedEmployee } }: AppState): LinkStateProps => {
-  return { token, selectedEmployee };
+const mapStateToProps = ({ employeeReducer: { selectedEmployee } }: AppState): LinkStateProps => {
+  return { selectedEmployee };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
