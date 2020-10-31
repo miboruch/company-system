@@ -17,6 +17,7 @@ import AddClientTemplate from './templates/AddClientTemplate';
 import StepList from './components/StepList/StepList';
 import MainClientPage from './pages/MainClientPage/MainClientPage';
 import MapPage from './pages/MapPage/MapPage';
+import AddressPage from './pages/AddressPage/AddressPage';
 
 interface Props {}
 
@@ -57,7 +58,7 @@ const AddClientController: React.FC<ConnectedProps> = ({ isAddNewClientOpen, set
                 <MapPage />
               </AddClientTemplate>
               <AddClientTemplate pageIndex={PageSettingEnum.Third}>
-                <p>Third page</p>
+                <AddressPage />
               </AddClientTemplate>
             </ContentWrapper>
           </Wrapper>

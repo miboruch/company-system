@@ -50,6 +50,7 @@ const ClientsPageContent: React.FC<ConnectedProps> = ({ isLoading, allCompanyCli
           <List ref={listRef}>
             {filterByClientName(filterText, allCompanyClients).map((client) => (
               <ListBox
+                key={client._id}
                 name={client.name}
                 topDescription={`${client.address}, ${client.city}`}
                 bottomDescription={client.email}

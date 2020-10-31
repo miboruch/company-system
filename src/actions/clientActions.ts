@@ -90,7 +90,7 @@ export const selectClient = (client: ClientInterface | null) => (dispatch: Dispa
   dispatch(setClientInfoOpen(true));
 };
 
-export const addNewUser = (name: string, address: string, email: string, phoneNumber: string, city: string, country: string, lat: number, long: number) => async (
+export const addNewClient = (name: string, address: string, email: string, phoneNumber: string, city: string, country: string, lat: number, long: number) => async (
   dispatch: Dispatch<any>,
   getState: () => AppState
 ) => {

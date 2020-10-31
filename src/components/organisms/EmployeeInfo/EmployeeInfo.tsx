@@ -6,6 +6,10 @@ import { AppState } from '../../../reducers/rootReducer';
 import Button from '../../atoms/Button/Button';
 import { StyledInput } from '../../../styles/compoundStyles';
 import { Wrapper, StyledForm, HeaderWrapper, Paragraph, EmployeeInfoBox, SubParagraph, TextParagraph, Title, InputWrapper } from '../../../styles/contentStyles';
+import { ThunkDispatch } from 'redux-thunk';
+import { AppTypes } from '../../../types/actionTypes/appActionTypes';
+import { bindActionCreators } from 'redux';
+import { updateEmployeeSalary } from '../../../actions/employeeActions';
 
 interface InitialValues {
   hourSalary?: number;
@@ -14,9 +18,9 @@ interface InitialValues {
 
 interface Props {}
 
-type ConnectedProps = Props & LinkStateProps;
+type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
-const EmployeeInfo: React.FC<ConnectedProps> = ({ token, selectedEmployee }) => {
+const EmployeeInfo: React.FC<ConnectedProps> = ({ token, selectedEmployee, updateEmployeeSalary }) => {
   const initialValues: InitialValues = {
     hourSalary: selectedEmployee?.pricePerHour,
     monthlySalary: 0
@@ -25,6 +29,7 @@ const EmployeeInfo: React.FC<ConnectedProps> = ({ token, selectedEmployee }) => 
   const handleSubmit = (values: InitialValues): void => {
     console.log('UPDATE EMPLOYEE');
     console.log(values);
+    updateEmployeeSalary(values.hourSalary, values.monthlySalary);
   };
 
   return (
@@ -46,20 +51,12 @@ const EmployeeInfo: React.FC<ConnectedProps> = ({ token, selectedEmployee }) => 
                 <SubParagraph>{selectedEmployee.userId.phoneNumber}</SubParagraph>
               </EmployeeInfoBox>
               <TextParagraph>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aperiam architecto beatae cum distinctio doloribus expedita magni nobis officiis,
-                provident quisquam repellat temporibus voluptates. Aliquam, eum, quasi. Eos nisi, sit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid,
-                animi culpa eum in ipsum maxime molestiae mollitia nemo perspiciatis, porro quam, quasi quos vitae. Blanditiis deleniti et illum inventore ipsum?
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aperiam architecto beatae cum distinctio doloribus expedita magni nobis officiis, provident quisquam repellat
+                temporibus voluptates. Aliquam, eum, quasi. Eos nisi, sit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, animi culpa eum in ipsum maxime molestiae mollitia nemo
+                perspiciatis, porro quam, quasi quos vitae. Blanditiis deleniti et illum inventore ipsum?
               </TextParagraph>
               <InputWrapper>
-                <StyledInput
-                  name={'hourSalary'}
-                  type={'number'}
-                  value={values.hourSalary}
-                  onChange={handleChange}
-                  required={false}
-                  labelText={'Stawka godzinowa'}
-                  disabled={!!values.monthlySalary}
-                />
+                <StyledInput name={'hourSalary'} type={'number'} value={values.hourSalary} onChange={handleChange} required={false} labelText={'Stawka godzinowa'} disabled={!!values.monthlySalary} />
                 <StyledInput
                   name={'monthlySalary'}
                   type={'number'}
@@ -84,8 +81,18 @@ interface LinkStateProps {
   selectedEmployee: EmployeeDataInterface | null;
 }
 
+interface LinkDispatchProps {
+  updateEmployeeSalary: (pricePerHour?: number, monthlyPrice?: number) => void;
+}
+
 const mapStateToProps = ({ authenticationReducer: { token }, employeeReducer: { selectedEmployee } }: AppState): LinkStateProps => {
   return { token, selectedEmployee };
 };
 
-export default connect(mapStateToProps)(EmployeeInfo);
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
+  return {
+    updateEmployeeSalary: bindActionCreators(updateEmployeeSalary, dispatch)
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EmployeeInfo);

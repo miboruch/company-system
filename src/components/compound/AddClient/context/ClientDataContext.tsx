@@ -1,4 +1,23 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+
+type MainPageData = {
+  name: string;
+  email: string;
+  phoneNumber: string;
+};
+
+type MapData = {
+  lat: number;
+  long: number;
+};
+
+type AddressPageData = {
+  address: string;
+  city: string;
+  country: string;
+};
+type ConnectedPagesData = MainPageData | MapData | AddressPageData;
+type ClientData = MainPageData & MapData & AddressPageData;
 
 export interface ClientDataInterface {
   email?: string;

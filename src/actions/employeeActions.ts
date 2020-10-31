@@ -99,3 +99,53 @@ export const selectEmployee = (employee: EmployeeDataInterface | null) => (dispa
   dispatch(setSelectedEmployee(employee));
   dispatch(setEmployeeInfoOpen(true));
 };
+
+export const updateEmployeeSalary = (pricePerHour?: number, monthlyPrice?: number) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
+  if (!pricePerHour && !monthlyPrice) {
+    return dispatch(setEmployeeError('Brak danych'));
+  }
+
+  interface MainDataInterface {
+    employeeId: string;
+  }
+
+  interface DataHourInterface extends MainDataInterface {
+    pricePerHour?: number;
+  }
+
+  interface DataMonthlyInterface extends MainDataInterface {
+    monthlyPrice?: number;
+  }
+
+  const { selectedEmployee } = getState().employeeReducer;
+  const { token } = getState().authenticationReducer;
+  const { currentCompany } = getState().companyReducer;
+
+  try {
+    if (selectedEmployee && token && currentCompany) {
+      const data: DataHourInterface | DataMonthlyInterface = !!pricePerHour
+        ? {
+            employeeId: selectedEmployee._id,
+            pricePerHour: pricePerHour
+          }
+        : {
+            employeeId: selectedEmployee._id,
+            monthlyPrice: monthlyPrice
+          };
+
+      await axios.put(`${API_URL}/employee/update-employee?company_id=${currentCompany._id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      dispatch(getAllCompanyEmployees());
+      dispatch(setSelectedEmployee(null));
+      dispatch(setEmployeeInfoOpen(false));
+    } else {
+      dispatch(setEmployeeError('Brak danych'));
+    }
+  } catch (error) {
+    console.log(error.response);
+  }
+};

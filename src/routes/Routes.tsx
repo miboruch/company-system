@@ -15,8 +15,8 @@ const Routes: React.FC<ConnectedProps> = ({ role }) => {
   return (
     <Switch>
       {role === UserRole.Admin
-        ? adminRoutes.map((route) => <AdminRoute path={route.path} exact={route.exact} component={route.component} />)
-        : userRoutes.map((route) => <UserRoute path={route.path} exact={route.exact} component={route.component} />)}
+        ? adminRoutes.map((route) => <AdminRoute key={route.path} path={route.path} exact={route.exact} component={route.component} />)
+        : userRoutes.map((route) => <UserRoute key={route.path} path={route.path} exact={route.exact} component={route.component} />)}
     </Switch>
   );
 };

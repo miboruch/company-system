@@ -1,14 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react';
 import * as Leaflet from 'leaflet';
 import { Map, Marker, TileLayer } from 'react-leaflet';
-import { ButtonWrapper, CenterBox, MapHeadingWrapper, MapWrapper, MobileCompoundTitle, StyledBackParagraph } from '../../../../../styles/compoundStyles';
+import {
+  ButtonWrapper,
+  CenterBox,
+  MapHeadingWrapper,
+  MapWrapper,
+  MobileCompoundTitle,
+  StyledBackParagraph
+} from '../../../../../styles/compoundStyles';
 import { SpinnerWrapper } from '../../../../../styles/shared';
 import Spinner from '../../../../atoms/Spinner/Spinner';
 import Button from '../../../../atoms/Button/Button';
 import { markerCustomIcon } from '../../../AddCompany/utils/customMapIcons';
-import { PageSettingEnum } from '../../context/PageContext';
+import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { ClientDataContext } from '../../context/ClientDataContext';
-import { PageContext } from '../../context/PageContext';
 import { Coords } from '../../../../../types/globalTypes';
 import { getLocation } from '../../../../../utils/mapFunctions';
 
@@ -34,8 +40,9 @@ const MapPage: React.FC<Props> = () => {
   };
 
   const handleSubmit = () => {
+    setData({ ...data, ...coords });
     console.log(data);
-    console.log('add client request');
+    setCurrentPage(PageSettingEnum.Third);
   };
 
   return (

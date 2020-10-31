@@ -169,11 +169,12 @@ const AddWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed;
+  position: absolute;
   background-color: #fff;
   bottom: 0;
   left: 0;
   cursor: pointer;
+  border-top: 1px solid ${({ theme }) => theme.colors.contentBackground};
 `;
 
 const AddParagraph = styled.p`
