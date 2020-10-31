@@ -20,6 +20,8 @@ import { Dispatch } from 'redux';
 import { AppTypes } from '../types/actionTypes/appActionTypes';
 import { API_URL } from '../utils/config';
 import { AppState } from '../reducers/rootReducer';
+import { setNotificationMessage } from './toggleActions';
+import { NotificationTypes } from '../types/actionTypes/toggleAcitonTypes';
 
 const setEmployeeLoading = (isLoading: boolean): SetEmployeeLoading => {
   return {
@@ -139,13 +141,16 @@ export const updateEmployeeSalary = (pricePerHour?: number, monthlyPrice?: numbe
         }
       });
 
+      dispatch(setNotificationMessage('Zaktualizowano wypłatę pracownika'));
       dispatch(getAllCompanyEmployees());
       dispatch(setSelectedEmployee(null));
       dispatch(setEmployeeInfoOpen(false));
     } else {
       dispatch(setEmployeeError('Brak danych'));
+      dispatch(setNotificationMessage('Problem z aktualizacją', NotificationTypes.Error));
     }
   } catch (error) {
+    dispatch(setNotificationMessage('Problem z aktualizacją', NotificationTypes.Error));
     console.log(error.response);
   }
 };

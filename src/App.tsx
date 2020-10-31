@@ -12,6 +12,7 @@ import { authenticateCheck } from './actions/authenticationActions';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import Routes from './routes/Routes';
 import SelectPage from './pages/SelectPage/SelectPage';
+import NotificationPopup from './components/molecules/NotificationPopup/NotificationPopup';
 
 interface Props {}
 
@@ -33,6 +34,7 @@ const App: React.FC<ConnectedProps> = ({ history, authenticationCheck }) => {
         <Route path={'/select'} component={SelectPage} />
         <Routes />
       </Switch>
+      <NotificationPopup />
     </Layout>
   );
 };

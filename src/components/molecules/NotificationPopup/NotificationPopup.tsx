@@ -1,15 +1,92 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { connect } from 'react-redux';
+import { AppState } from '../../../reducers/rootReducer';
+import { ThunkDispatch } from 'redux-thunk';
+import { AppTypes } from '../../../types/actionTypes/appActionTypes';
+import { bindActionCreators } from 'redux';
+import { NotificationMessage, NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
+import { setNotificationMessage } from '../../../actions/toggleActions';
+import { NOTIFICATION_VISIBILITY_TIME } from '../../../utils/config';
+import { CheckedIcon, NotCheckedIcon } from '../../../styles/iconStyles';
+import { NotificationWrapper, NotificationParagraph } from './NotificationPopup.styles';
 
-interface Props{
+interface Props {}
 
-}
+type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
-const NotificationPopup: React.FC<Props> = () => {
- return (
-  <div>
+const NotificationPopup: React.FC<ConnectedProps> = ({ isNotificationOpen, notificationMessage, setNotificationMessage }) => {
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
+  const [shouldPopupBeOpen, setPopupOpen] = useState<boolean>(false);
 
-  </div>
- );
+  /*
+   * This animation has 3 steps:
+   * - when notification message and isNotificationOpen boolean changes in redux, we now that we need to start this animation
+   * - after the data changes, we set shouldPopupBeOpen to true, and animation starts
+   * - after 3 seconds (NOTIFICATION_VISIBILITY_TIME) animations ends, and the finish fade takes like 0.5 second
+   * - to prevent background color change on animation end (red, green) we set redux state 1 second after main animation ends,
+   *   then we are sure, that colors will not switch*/
+
+  useEffect(() => {
+    // * set variable, which controls our animation
+    setPopupOpen(!!(notificationMessage && isNotificationOpen));
+  }, [notificationMessage, isNotificationOpen]);
+
+  useEffect(() => {
+    // * if variable is true, we wait 3 seconds and then animation ends (variable changes to false)
+    if (shouldPopupBeOpen) {
+      setTimeout(() => {
+        setPopupOpen(false);
+      }, NOTIFICATION_VISIBILITY_TIME);
+    }
+  }, [shouldPopupBeOpen]);
+
+  useEffect(() => {
+    // * one second after animation end, we set redux state to null
+    if (!shouldPopupBeOpen) {
+      setTimeout(() => {
+        setNotificationMessage(null, null);
+      }, 1000);
+    }
+  }, [shouldPopupBeOpen]);
+
+  useEffect(() => {
+    const wrapper = wrapperRef.current;
+    gsap.set(wrapper, { autoAlpha: 0 });
+
+    tl.fromTo(wrapper, { autoAlpha: 0, y: '+=20' }, { autoAlpha: 1, y: '0', duration: 0.4 });
+  }, []);
+
+  useEffect(() => {
+    shouldPopupBeOpen ? tl.play() : tl.reverse();
+  }, [shouldPopupBeOpen]);
+
+  return (
+    <NotificationWrapper ref={wrapperRef}>
+      <NotificationParagraph>{notificationMessage && notificationMessage.message}</NotificationParagraph>
+      {notificationMessage && notificationMessage.notificationType === NotificationTypes.Success ? <CheckedIcon /> : <NotCheckedIcon />}
+    </NotificationWrapper>
+  );
 };
 
-export default NotificationPopup;
+interface LinkStateProps {
+  isNotificationOpen: boolean;
+  notificationMessage: NotificationMessage | null;
+}
+
+interface LinkDispatchProps {
+  setNotificationMessage: (message: string | null, notificationType: NotificationTypes | null) => void;
+}
+
+const mapStateToProps = ({ toggleReducer: { isNotificationOpen, notificationMessage } }: AppState): LinkStateProps => {
+  return { isNotificationOpen, notificationMessage };
+};
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
+  return {
+    setNotificationMessage: bindActionCreators(setNotificationMessage, dispatch)
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NotificationPopup);

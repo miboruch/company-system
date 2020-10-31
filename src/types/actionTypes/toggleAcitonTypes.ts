@@ -5,10 +5,15 @@ export enum NotificationTypes {
   Error = 'error'
 }
 
+export interface NotificationMessage {
+  notificationType: NotificationTypes;
+  message: string;
+}
+
 export interface SetNotificationMessage {
   type: typeof SET_NOTIFICATION_MESSAGE;
-  message: string;
-  notificationType: NotificationTypes;
+  message: string | null;
+  notificationType: NotificationTypes | null;
 }
 
 export type ToggleActionTypes = SetNotificationMessage;

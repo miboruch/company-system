@@ -1,9 +1,4 @@
-import { NotificationTypes, SET_NOTIFICATION_MESSAGE, ToggleActionTypes } from '../types/actionTypes/toggleAcitonTypes';
-
-interface NotificationMessage {
-  notificationType: NotificationTypes;
-  message: string;
-}
+import { SET_NOTIFICATION_MESSAGE, ToggleActionTypes, NotificationMessage } from '../types/actionTypes/toggleAcitonTypes';
 
 interface DefaultState {
   isNotificationOpen: boolean;
