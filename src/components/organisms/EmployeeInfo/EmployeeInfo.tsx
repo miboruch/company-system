@@ -10,6 +10,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { updateEmployeeSalary } from '../../../actions/employeeActions';
+import { EditIcon, DeleteIcon } from '../../../styles/iconStyles';
 
 interface InitialValues {
   hourSalary?: number;
@@ -41,7 +42,7 @@ const EmployeeInfo: React.FC<ConnectedProps> = ({ selectedEmployee, updateEmploy
                 <Title>
                   {selectedEmployee.userId.name} {selectedEmployee.userId.lastName}
                 </Title>
-                <p>icon</p>
+                <EditIcon />
               </HeaderWrapper>
               <EmployeeInfoBox>
                 <SubParagraph>Data urodzenia: {new Date(selectedEmployee.userId.dateOfBirth).toLocaleDateString()}</SubParagraph>

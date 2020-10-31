@@ -76,4 +76,15 @@ const InputWrapper = styled.div`
   }
 `;
 
-export { Wrapper, StyledForm, HeaderWrapper, Paragraph, EmployeeInfoBox, SubParagraph, TextParagraph, Title, InputWrapper };
+const ButtonWrapper = styled.div`
+  width: 100%;
+  margin-bottom: 3rem;
+`;
+
+const RowIconWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  row-gap: 2rem;
+`;
+
+export { Wrapper, StyledForm, HeaderWrapper, Paragraph, EmployeeInfoBox, SubParagraph, TextParagraph, Title, InputWrapper, ButtonWrapper, RowIconWrapper };

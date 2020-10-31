@@ -64,7 +64,7 @@ const TaskPageContent: React.FC<ConnectedProps> = ({ isLoading, allCompanyTasks,
           </ContentTemplate>
         </>
       )}
-      <DeletePopup isOpen={false} setOpen={() => {}} headerText={'Usuń klienta'} text={'Antoni Krzemiński, Planta'} />
+      <DeletePopup isOpen={false} setOpen={() => {}} headerText={'Usuń klienta'} text={'Antoni Krzemiński, Planta'} callback={() => console.log('delete task')} />
     </GridWrapper>
   );
 };

@@ -154,10 +154,11 @@ const CompoundListWrapper = styled.div`
 
 const List = styled.div`
   width: 100%;
-  height: 100%;
   position: relative;
+  overflow-y: scroll;
 
   ${({ theme }) => theme.mq.hdReady} {
+    height: 100%;
     grid-area: list;
     background-color: #fff;
   }
@@ -169,12 +170,16 @@ const AddWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
+  position: fixed;
   background-color: #fff;
   bottom: 0;
   left: 0;
   cursor: pointer;
   border-top: 1px solid ${({ theme }) => theme.colors.contentBackground};
+
+  ${({ theme }) => theme.mq.hdReady} {
+    position: absolute;
+  }
 `;
 
 const AddParagraph = styled.p`

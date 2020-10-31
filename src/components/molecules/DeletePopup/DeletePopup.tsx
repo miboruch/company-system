@@ -9,9 +9,10 @@ interface Props {
   setOpen: (isOpen: boolean) => void;
   headerText: string;
   text: string;
+  callback: () => void;
 }
 
-const DeletePopup: React.FC<Props> = ({ isOpen, setOpen, headerText, text }) => {
+const DeletePopup: React.FC<Props> = ({ isOpen, setOpen, headerText, text, callback }) => {
   const backgroundRef = useRef<HTMLDivElement | null>(null);
   const boxRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
@@ -39,10 +40,9 @@ const DeletePopup: React.FC<Props> = ({ isOpen, setOpen, headerText, text }) => 
           <InfoParagraph>W razie pomyłki nie będzie możliwości cofnięcia tej akcji</InfoParagraph>
         </ContentWrapper>
         <ButtonWrapper>
-          <ModalButton onClick={() => console.log('close modal')} buttonType={ButtonType.Cancel} text={'Anuluj'} />
-          <ModalButton onClick={() => console.log('delete task')} buttonType={ButtonType.Delete} text={'Usuń'} />
+          <ModalButton onClick={() => setOpen(false)} buttonType={ButtonType.Cancel} text={'Anuluj'} />
+          <ModalButton onClick={() => callback()} buttonType={ButtonType.Delete} text={'Usuń'} />
         </ButtonWrapper>
-        <p>Test</p>
       </Box>
     </Wrapper>
   );
