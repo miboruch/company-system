@@ -25,20 +25,10 @@ type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 const ClientsPageContent: React.FC<ConnectedProps> = ({ isLoading, allCompanyClients, isClientInfoOpen, setClientInfoOpen, selectClient, getCompanyClients, setAddNewClientOpen, selectedClient }) => {
   const listRef = useRef<HTMLDivElement | null>(null);
   const [filterText, setFilterText] = useState<string>('');
-  const [isEditToggled, setEditToggled] = useState<boolean>(false);
-  const [isDeleteOpen, setDeleteOpen] = useState<boolean>(false);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
 
   const filterByClientName = (filterText: string, allClients: ClientInterface[]): ClientInterface[] => {
     return allClients.filter((client) => client.name.toLowerCase().includes(filterText.toLowerCase()));
-  };
-
-  const toggleEdit = (): void => {
-    setEditToggled(!isEditToggled);
-  };
-
-  const toggleDelete = (): void => {
-    setDeleteOpen(!isDeleteOpen);
   };
 
   useEffect(() => {
@@ -50,9 +40,12 @@ const ClientsPageContent: React.FC<ConnectedProps> = ({ isLoading, allCompanyCli
   }, []);
 
   return (
-    <>
-      <GridWrapper mobilePadding={false} pageName={'Klienci'} setFilterText={setFilterText}>
-        {isLoading ? (
+    <GridWrapper
+      mobilePadding={false}
+      pageName={'Klienci'}
+      setFilterText={setFilterText}
+      render={(isEditToggled, setEditToggled, isDeleteOpen, setDeleteOpen) =>
+        isLoading ? (
           <SpinnerWrapper>
             <Spinner />
           </SpinnerWrapper>
@@ -76,14 +69,14 @@ const ClientsPageContent: React.FC<ConnectedProps> = ({ isLoading, allCompanyCli
               </AddWrapper>
             </List>
             <ContentTemplate isOpen={isClientInfoOpen} setOpen={setClientInfoOpen}>
-              <ClientInfo isEditToggled={isEditToggled} toggleEdit={toggleEdit} toggleDelete={toggleDelete} />
+              <ClientInfo isEditToggled={isEditToggled} setEditToggled={setEditToggled} setDeleteOpen={setDeleteOpen} />
             </ContentTemplate>
+            <AddClientController />
+            <DeletePopup isOpen={isDeleteOpen} setOpen={setDeleteOpen} headerText={'Usuń klienta'} text={`${selectedClient?.name}`} callback={() => console.log('delete client')} />
           </>
-        )}
-        <AddClientController />
-      </GridWrapper>
-      <DeletePopup isOpen={isDeleteOpen} setOpen={setDeleteOpen} headerText={'Usuń klienta'} text={`${selectedClient?.name}`} callback={() => console.log('delete client')} />
-    </>
+        )
+      }
+    />
   );
 };
 

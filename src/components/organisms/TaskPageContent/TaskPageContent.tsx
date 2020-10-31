@@ -39,33 +39,38 @@ const TaskPageContent: React.FC<ConnectedProps> = ({ isLoading, allCompanyTasks,
   }, []);
 
   return (
-    <GridWrapper mobilePadding={false} pageName={'Zadania'} setFilterText={setFilterText}>
-      {isLoading ? (
-        <SpinnerWrapper>
-          <Spinner />
-        </SpinnerWrapper>
-      ) : (
-        <>
-          <List ref={listRef}>
-            {filterByTaskName(filterText, allCompanyTasks).map((task) => (
-              <ListBox
-                key={task._id}
-                name={task.name}
-                topDescription={new Date(task.date).toLocaleDateString()}
-                bottomDescription={task.description}
-                isCompanyBox={false}
-                isChecked={task.isCompleted}
-                callback={() => selectTask(task)}
-              />
-            ))}
-          </List>
-          <ContentTemplate isOpen={isTaskInfoOpen} setOpen={setTaskInfoOpen}>
-            <TaskInfo />
-          </ContentTemplate>
-        </>
-      )}
-      <DeletePopup isOpen={false} setOpen={() => {}} headerText={'Usuń klienta'} text={'Antoni Krzemiński, Planta'} callback={() => console.log('delete task')} />
-    </GridWrapper>
+    <GridWrapper
+      mobilePadding={false}
+      pageName={'Zadania'}
+      setFilterText={setFilterText}
+      render={(isEditToggled, setEditToggled, isDeleteOpen, setDeleteOpen) =>
+        isLoading ? (
+          <SpinnerWrapper>
+            <Spinner />
+          </SpinnerWrapper>
+        ) : (
+          <>
+            <List ref={listRef}>
+              {filterByTaskName(filterText, allCompanyTasks).map((task) => (
+                <ListBox
+                  key={task._id}
+                  name={task.name}
+                  topDescription={new Date(task.date).toLocaleDateString()}
+                  bottomDescription={task.description}
+                  isCompanyBox={false}
+                  isChecked={task.isCompleted}
+                  callback={() => selectTask(task)}
+                />
+              ))}
+            </List>
+            <ContentTemplate isOpen={isTaskInfoOpen} setOpen={setTaskInfoOpen}>
+              <TaskInfo />
+            </ContentTemplate>
+            <DeletePopup isOpen={isDeleteOpen} setOpen={setDeleteOpen} headerText={'Usuń zadanie'} text={'Antoni Krzemiński, Planta'} callback={() => console.log('delete task')} />
+          </>
+        )
+      }
+    />
   );
 };
 

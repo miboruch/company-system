@@ -17,7 +17,7 @@ interface DefaultState {
   error: string | null;
   isTaskInfoOpen: boolean;
   isAddNewTaskOpen: boolean;
-  isEditTaskOpen: boolean;
+  // isEditTaskOpen: boolean;
 }
 
 const initialState: DefaultState = {
@@ -26,8 +26,8 @@ const initialState: DefaultState = {
   isLoading: false,
   error: null,
   isTaskInfoOpen: false,
-  isAddNewTaskOpen: false,
-  isEditTaskOpen: false
+  isAddNewTaskOpen: false
+  // isEditTaskOpen: false
 };
 
 export const taskReducer = (state = initialState, action: TaskActionTypes): DefaultState => {
@@ -65,11 +65,11 @@ export const taskReducer = (state = initialState, action: TaskActionTypes): Defa
         ...state,
         isAddNewTaskOpen: action.payload
       };
-    case SET_EDIT_TASK:
-      return {
-        ...state,
-        isEditTaskOpen: action.payload
-      };
+    // case SET_EDIT_TASK:
+    //   return {
+    //     ...state,
+    //     isEditTaskOpen: action.payload
+    //   };
     default:
       return state;
   }
