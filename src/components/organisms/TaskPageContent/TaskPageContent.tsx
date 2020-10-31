@@ -6,9 +6,9 @@ import { AppState } from '../../../reducers/rootReducer';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
-import { getCompanyTasks, selectTask, setTaskInfoOpen } from '../../../actions/taskActions';
+import { getCompanyTasks, selectTask, setAddNewTaskOpen, setTaskInfoOpen } from '../../../actions/taskActions';
 import Spinner from '../../atoms/Spinner/Spinner';
-import { SpinnerWrapper, List } from '../../../styles/shared';
+import { SpinnerWrapper, List, AddIcon, AddParagraph, AddWrapper } from '../../../styles/shared';
 import ListBox from '../../molecules/ListBox/ListBox';
 import ContentTemplate from '../../templates/ContentTemplate/ContentTemplate';
 import gsap from 'gsap';
@@ -20,7 +20,7 @@ interface Props {}
 
 type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
-const TaskPageContent: React.FC<ConnectedProps> = ({ isLoading, allCompanyTasks, getCompanyTasks, selectTask, isTaskInfoOpen, setTaskInfoOpen }) => {
+const TaskPageContent: React.FC<ConnectedProps> = ({ isLoading, allCompanyTasks, getCompanyTasks, selectTask, isTaskInfoOpen, setTaskInfoOpen, setAddNewTaskOpen, selectedTask }) => {
   const listRef = useRef<HTMLDivElement | null>(null);
   const [filterText, setFilterText] = useState<string>('');
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
@@ -62,11 +62,15 @@ const TaskPageContent: React.FC<ConnectedProps> = ({ isLoading, allCompanyTasks,
                   callback={() => selectTask(task)}
                 />
               ))}
+              <AddWrapper onClick={() => setAddNewTaskOpen(true)}>
+                <AddIcon />
+                <AddParagraph>Dodaj zadanie</AddParagraph>
+              </AddWrapper>
             </List>
             <ContentTemplate isOpen={isTaskInfoOpen} setOpen={setTaskInfoOpen}>
-              <TaskInfo />
+              <TaskInfo isEditToggled={isEditToggled} setDeleteOpen={setDeleteOpen} setEditToggled={setEditToggled} />
             </ContentTemplate>
-            <DeletePopup isOpen={isDeleteOpen} setOpen={setDeleteOpen} headerText={'Usuń zadanie'} text={'Antoni Krzemiński, Planta'} callback={() => console.log('delete task')} />
+            <DeletePopup isOpen={isDeleteOpen} setOpen={setDeleteOpen} headerText={'Usuń zadanie'} text={`${selectedTask?.name}`} callback={() => console.log('delete task')} />
           </>
         )
       }
@@ -78,23 +82,26 @@ interface LinkStateProps {
   isLoading: boolean;
   allCompanyTasks: TaskInterface[];
   isTaskInfoOpen: boolean;
+  selectedTask: TaskInterface | null;
 }
 
 interface LinkDispatchProps {
   getCompanyTasks: () => void;
   selectTask: (task: TaskInterface) => void;
   setTaskInfoOpen: (isOpen: boolean) => void;
+  setAddNewTaskOpen: (isOpen: boolean) => void;
 }
 
-const mapStateToProps = ({ taskReducer: { isLoading, allCompanyTasks, isTaskInfoOpen } }: AppState): LinkStateProps => {
-  return { isLoading, allCompanyTasks, isTaskInfoOpen };
+const mapStateToProps = ({ taskReducer: { isLoading, allCompanyTasks, isTaskInfoOpen, selectedTask } }: AppState): LinkStateProps => {
+  return { isLoading, allCompanyTasks, isTaskInfoOpen, selectedTask };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
   return {
     getCompanyTasks: bindActionCreators(getCompanyTasks, dispatch),
     selectTask: bindActionCreators(selectTask, dispatch),
-    setTaskInfoOpen: bindActionCreators(setTaskInfoOpen, dispatch)
+    setTaskInfoOpen: bindActionCreators(setTaskInfoOpen, dispatch),
+    setAddNewTaskOpen: bindActionCreators(setAddNewTaskOpen, dispatch)
   };
 };
 

@@ -51,7 +51,7 @@ const setEmployeeError = (error: string | null): SetEmployeeError => {
   };
 };
 
-const setAddNewEmployeeOpen = (isOpen: boolean): SetAddNewEmployeeOpen => {
+export const setAddNewEmployeeOpen = (isOpen: boolean): SetAddNewEmployeeOpen => {
   return {
     type: SET_ADD_NEW_EMPLOYEE_OPEN,
     payload: isOpen

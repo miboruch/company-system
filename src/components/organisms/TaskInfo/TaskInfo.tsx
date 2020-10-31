@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Formik, Form } from 'formik';
 import { StyledInput } from '../../../styles/compoundStyles';
-import { Wrapper, StyledForm, HeaderWrapper, Paragraph, EmployeeInfoBox, SubParagraph, TextParagraph, Title, InputWrapper } from '../../../styles/contentStyles';
+import { Wrapper, StyledForm, HeaderWrapper, Paragraph, EmployeeInfoBox, SubParagraph, TextParagraph, Title, InputWrapper, ButtonWrapper, RowIconWrapper } from '../../../styles/contentStyles';
 import { TaskInterface } from '../../../types/modelsTypes';
 import { AppState } from '../../../reducers/rootReducer';
 import { StyledLabel } from '../../../styles/shared';
 import DatePicker from 'react-datepicker';
+import Button from '../../atoms/Button/Button';
+import { DeleteIcon, EditIcon } from '../../../styles/iconStyles';
 
 interface InitialValues {
   name?: string;
@@ -19,13 +21,15 @@ interface InitialValues {
   date?: Date;
 }
 
-interface Props {}
+interface Props {
+  isEditToggled: boolean;
+  setEditToggled: (toBeOpen: boolean) => void;
+  setDeleteOpen: (toBeOpen: boolean) => void;
+}
 
 type ConnectedProps = Props & LinkStateProps;
 
-const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask }) => {
-  const [isEditToggled, setEditToggled] = useState<boolean>(false);
-
+const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, isEditToggled, setEditToggled, setDeleteOpen }) => {
   const initialValues: InitialValues = {
     name: selectedTask?.name,
     description: selectedTask?.description,
@@ -39,6 +43,7 @@ const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask }) => {
 
   const handleSubmit = (values: InitialValues) => {
     console.log(values);
+    console.log('add task');
   };
 
   return (
@@ -50,7 +55,10 @@ const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask }) => {
               <Paragraph>Data dodania: {new Date(selectedTask.addedDate).toLocaleDateString()}</Paragraph>
               <HeaderWrapper>
                 <Title>{selectedTask.name}</Title>
-                <p>icon</p>
+                <RowIconWrapper>
+                  <EditIcon onClick={() => setEditToggled(!isEditToggled)} />
+                  <DeleteIcon onClick={() => setDeleteOpen(true)} />
+                </RowIconWrapper>
               </HeaderWrapper>
               <EmployeeInfoBox>
                 <SubParagraph>Data zadania do wykonania: {new Date(selectedTask.date).toLocaleDateString()}</SubParagraph>
@@ -71,6 +79,9 @@ const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask }) => {
                 <StyledInput onChange={handleChange} name={'taskIncome'} type={'number'} required={false} labelText={'Przychód z zadania'} value={values.taskIncome} disabled={!isEditToggled} />
                 <StyledInput onChange={handleChange} name={'taskExpense'} type={'number'} required={false} labelText={'Wydatek z zadania'} value={values.taskExpense} disabled={!isEditToggled} />
               </InputWrapper>
+              <ButtonWrapper>
+                <Button type={'submit'} text={'Zapisz'} />
+              </ButtonWrapper>
             </StyledForm>
           )}
         </Formik>

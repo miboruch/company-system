@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import { ClientInterface } from '../../../types/modelsTypes';
@@ -7,7 +7,6 @@ import { Wrapper, StyledForm, HeaderWrapper, Paragraph, EmployeeInfoBox, SubPara
 import { StyledInput } from '../../../styles/compoundStyles';
 import { EditIcon, DeleteIcon } from '../../../styles/iconStyles';
 import Button from '../../atoms/Button/Button';
-import DeletePopup from '../../molecules/DeletePopup/DeletePopup';
 
 interface InitialValues {
   name?: string;

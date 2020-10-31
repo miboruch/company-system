@@ -24,7 +24,7 @@ type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 const EmployeeInfo: React.FC<ConnectedProps> = ({ selectedEmployee, updateEmployeeSalary }) => {
   const initialValues: InitialValues = {
     hourSalary: selectedEmployee?.pricePerHour,
-    monthlySalary: 0
+    monthlySalary: selectedEmployee?.monthlyPrice
   };
 
   const handleSubmit = (values: InitialValues): void => {

@@ -55,7 +55,7 @@ export const setTaskInfoOpen = (isOpen: boolean): SetTaskInfoOpen => {
   };
 };
 
-const setAddNewTaskOpen = (isOpen: boolean): SetAddNewTaskOpen => {
+export const setAddNewTaskOpen = (isOpen: boolean): SetAddNewTaskOpen => {
   return {
     type: SET_ADD_NEW_TASK_OPEN,
     payload: isOpen

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
-import { SpinnerWrapper, List } from '../../../styles/shared';
+import { SpinnerWrapper, List, AddIcon, AddParagraph, AddWrapper } from '../../../styles/shared';
 import ListBox from '../../molecules/ListBox/ListBox';
 import gsap from 'gsap';
 import ContentTemplate from '../../templates/ContentTemplate/ContentTemplate';
@@ -9,7 +9,7 @@ import { AppState } from '../../../reducers/rootReducer';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
-import { getAllCompanyEmployees, selectEmployee, setEmployeeInfoOpen } from '../../../actions/employeeActions';
+import { getAllCompanyEmployees, selectEmployee, setAddNewEmployeeOpen, setEmployeeInfoOpen } from '../../../actions/employeeActions';
 import { EmployeeDataInterface } from '../../../types/modelsTypes';
 import Spinner from '../../atoms/Spinner/Spinner';
 import EmployeeInfo from '../EmployeeInfo/EmployeeInfo';
@@ -17,7 +17,7 @@ import { listAnimation } from '../../../animations/animations';
 
 type ConnectedProps = LinkStateProps & LinkDispatchProps;
 
-const EmployeesPageContent: React.FC<ConnectedProps> = ({ getAllCompanyEmployees, isLoading, allCompanyEmployees, selectEmployee, isEmployeeInfoOpen, setEmployeeInfoOpen }) => {
+const EmployeesPageContent: React.FC<ConnectedProps> = ({ getAllCompanyEmployees, isLoading, allCompanyEmployees, selectEmployee, isEmployeeInfoOpen, setEmployeeInfoOpen, setAddNewEmployeeOpen }) => {
   const listRef = useRef<HTMLDivElement | null>(null);
   const [filterText, setFilterText] = useState<string>('');
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
@@ -55,6 +55,10 @@ const EmployeesPageContent: React.FC<ConnectedProps> = ({ getAllCompanyEmployees
                 isCompanyBox={false}
               />
             ))}
+            <AddWrapper onClick={() => setAddNewEmployeeOpen(true)}>
+              <AddIcon />
+              <AddParagraph>Dodaj pracownika</AddParagraph>
+            </AddWrapper>
           </List>
           <ContentTemplate isOpen={isEmployeeInfoOpen} setOpen={setEmployeeInfoOpen}>
             <EmployeeInfo />
@@ -75,6 +79,7 @@ interface LinkDispatchProps {
   getAllCompanyEmployees: () => void;
   selectEmployee: (employee: EmployeeDataInterface) => void;
   setEmployeeInfoOpen: (isOpen: boolean) => void;
+  setAddNewEmployeeOpen: (isOpen: boolean) => void;
 }
 
 const mapStateToProps = ({ employeeReducer: { isLoading, allCompanyEmployees, isEmployeeInfoOpen } }: AppState): LinkStateProps => {
@@ -85,7 +90,8 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDi
   return {
     getAllCompanyEmployees: bindActionCreators(getAllCompanyEmployees, dispatch),
     selectEmployee: bindActionCreators(selectEmployee, dispatch),
-    setEmployeeInfoOpen: bindActionCreators(setEmployeeInfoOpen, dispatch)
+    setEmployeeInfoOpen: bindActionCreators(setEmployeeInfoOpen, dispatch),
+    setAddNewEmployeeOpen: bindActionCreators(setAddNewEmployeeOpen, dispatch)
   };
 };
 
