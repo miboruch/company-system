@@ -70,6 +70,7 @@ const CloseButtonWrapper = styled.div`
 const ContentWrapper = styled.div`
   width: 100%;
   height: 100%;
+  overflow-y: scroll;
 `;
 
 export { MainWrapper, Wrapper, CompoundTitle, CloseButtonWrapper, ContentWrapper };

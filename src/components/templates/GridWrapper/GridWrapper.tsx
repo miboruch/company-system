@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyledWrapper, TitleWrapper } from './GridWrapper.styles';
-import { Title } from '../../../styles/sharedStyles';
+import { Title } from '../../../styles/shared';
 import Header from '../../molecules/Header/Header';
 
 interface Props {

@@ -6,10 +6,11 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { getUserAdminCompanies, setAddCompanyOpen, setCompany } from '../../../actions/companyActions';
-import { AddIcon, EmptyParagraph, SpinnerWrapper } from '../../../styles/sharedStyles';
+import { AddIcon, EmptyParagraph, SpinnerWrapper } from '../../../styles/shared';
 import Spinner from '../../atoms/Spinner/Spinner';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
-import { AddCompanyParagraph, AddCompanyWrapper, Table, Wrapper } from '../../../pages/CompaniesPage/CompaniesPage.styles';
+import { Table, Wrapper } from '../../../pages/CompaniesPage/CompaniesPage.styles';
+import { AddWrapper, AddParagraph } from '../../../styles/shared';
 import ListBox from '../../molecules/ListBox/ListBox';
 import AddCompanyController from '../../compound/AddCompany/AddCompanyController';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
@@ -47,10 +48,10 @@ const CompaniesPageContent: React.FC<ConnectedProps> = ({ history, userCompanies
               ))
             )}
           </Table>
-          <AddCompanyWrapper onClick={() => setAddCompanyOpen(true)}>
+          <AddWrapper onClick={() => setAddCompanyOpen(true)}>
             <AddIcon />
-            <AddCompanyParagraph>Dodaj firme</AddCompanyParagraph>
-          </AddCompanyWrapper>
+            <AddParagraph>Dodaj firme</AddParagraph>
+          </AddWrapper>
         </Wrapper>
       )}
       <AddCompanyController />

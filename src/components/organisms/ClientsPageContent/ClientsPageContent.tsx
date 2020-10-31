@@ -8,19 +8,21 @@ import { AppState } from '../../../reducers/rootReducer';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
-import { getCompanyClients, selectClient, setClientInfoOpen } from '../../../actions/clientActions';
-import { SpinnerWrapper, List } from '../../../styles/sharedStyles';
+import { getCompanyClients, selectClient, setAddNewClientOpen, setClientInfoOpen } from '../../../actions/clientActions';
+import { SpinnerWrapper, List, AddIcon } from '../../../styles/shared';
 import Spinner from '../../atoms/Spinner/Spinner';
 import ListBox from '../../molecules/ListBox/ListBox';
 import { DEFAULT_COMPANY_ID } from '../../../utils/config';
 import ContentTemplate from '../../templates/ContentTemplate/ContentTemplate';
 import ClientInfo from '../ClientInfo/ClientInfo';
+import { AddWrapper, AddParagraph } from '../../../styles/shared';
+import AddClientController from '../../compound/AddClient/AddClientController';
 
 interface Props {}
 
 type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
-const ClientsPageContent: React.FC<ConnectedProps> = ({ isLoading, allCompanyClients, isClientInfoOpen, setClientInfoOpen, selectClient, getCompanyClients }) => {
+const ClientsPageContent: React.FC<ConnectedProps> = ({ isLoading, allCompanyClients, isClientInfoOpen, setClientInfoOpen, selectClient, getCompanyClients, setAddNewClientOpen }) => {
   const listRef = useRef<HTMLDivElement | null>(null);
   const [filterText, setFilterText] = useState<string>('');
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
@@ -56,12 +58,17 @@ const ClientsPageContent: React.FC<ConnectedProps> = ({ isLoading, allCompanyCli
                 isEmpty={true}
               />
             ))}
+            <AddWrapper onClick={() => setAddNewClientOpen(true)}>
+              <AddIcon />
+              <AddParagraph>Dodaj klienta</AddParagraph>
+            </AddWrapper>
           </List>
           <ContentTemplate isOpen={isClientInfoOpen} setOpen={setClientInfoOpen}>
             <ClientInfo />
           </ContentTemplate>
         </>
       )}
+      <AddClientController />
     </GridWrapper>
   );
 };
@@ -77,6 +84,7 @@ interface LinkDispatchProps {
   getCompanyClients: () => void;
   selectClient: (client: ClientInterface) => void;
   setClientInfoOpen: (isOpen: boolean) => void;
+  setAddNewClientOpen: (isOpen: boolean) => void;
 }
 
 const mapStateToProps = ({ authenticationReducer: { token }, clientReducer: { isLoading, allCompanyClients, isClientInfoOpen } }: AppState): LinkStateProps => {
@@ -87,7 +95,8 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDi
   return {
     getCompanyClients: bindActionCreators(getCompanyClients, dispatch),
     selectClient: bindActionCreators(selectClient, dispatch),
-    setClientInfoOpen: bindActionCreators(setClientInfoOpen, dispatch)
+    setClientInfoOpen: bindActionCreators(setClientInfoOpen, dispatch),
+    setAddNewClientOpen: bindActionCreators(setAddNewClientOpen, dispatch)
   };
 };
 

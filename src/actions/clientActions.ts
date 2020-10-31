@@ -64,11 +64,11 @@ export const setAddNewClientOpen = (isOpen: boolean): SetAddNewClientOpen => {
 export const getCompanyClients = () => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
   dispatch(setClientsLoading(true));
 
-  const {token} = getState().authenticationReducer;
-  const {currentCompany} = getState().companyReducer;
+  const { token } = getState().authenticationReducer;
+  const { currentCompany } = getState().companyReducer;
 
   try {
-    if(currentCompany?._id && token){
+    if (currentCompany?._id && token) {
       const { data } = await axios.get(`${API_URL}/client/get-company-clients?company_id=${currentCompany._id}`, {
         headers: {
           Authorization: `Bearer ${token}`
@@ -76,7 +76,7 @@ export const getCompanyClients = () => async (dispatch: Dispatch<AppTypes>, getS
       });
 
       dispatch(setCompanyClients(data));
-    }else{
+    } else {
       dispatch(setClientError('Problem z uwierzytelnieniem'));
     }
   } catch (error) {
@@ -88,4 +88,34 @@ export const getCompanyClients = () => async (dispatch: Dispatch<AppTypes>, getS
 export const selectClient = (client: ClientInterface | null) => (dispatch: Dispatch<AppTypes>) => {
   dispatch(setSelectedClient(client));
   dispatch(setClientInfoOpen(true));
+};
+
+export const addNewUser = (name: string, address: string, email: string, phoneNumber: string, city: string, country: string, lat: number, long: number) => async (
+  dispatch: Dispatch<any>,
+  getState: () => AppState
+) => {
+  dispatch(setClientsLoading(true));
+
+  const { token } = getState().authenticationReducer;
+  const { currentCompany } = getState().companyReducer;
+
+  try {
+    if (currentCompany?._id && token) {
+      await axios.post(`${API_URL}/client/create-client?company_id=${currentCompany._id}`,{
+        name, address, email, phoneNumber, city, country, lat, long
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      dispatch(getCompanyClients());
+      dispatch(setAddNewClientOpen(false));
+    } else {
+      dispatch(setClientError('Problem z uwierzytelnieniem'));
+    }
+  } catch (error) {
+    console.log(error);
+    dispatch(setClientError(error));
+  }
 };

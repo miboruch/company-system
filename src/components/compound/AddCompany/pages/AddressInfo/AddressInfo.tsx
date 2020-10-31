@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Formik } from 'formik';
 import Button from '../../../../atoms/Button/Button';
-import { DoubleFlexWrapper } from '../../../../../styles/sharedStyles';
+import { DoubleFlexWrapper } from '../../../../../styles/shared';
 import { CompanyDataContext } from '../../context/CompanyDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { HeadingWrapper, MobileCompoundTitle, StyledForm, StyledInput, Subheading, Wrapper, StyledBackParagraph } from '../../../../../styles/compoundStyles';

@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
-import { PageContext } from '../../context/PageContext';
+import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { ClientDataContext } from '../../context/ClientDataContext';
-import { PageSettingEnum } from '../../context/PageContext';
 import { ListWrapper } from '../../../../../styles/compoundStyles';
 import CompoundStepBox from '../../../../molecules/CompoundStepBox/CompoundStepBox';
 import { addClientSteps } from '../../utils/AddClientSteps';
@@ -14,9 +13,11 @@ const StepList: React.FC<Props> = () => {
   const isStepCompleted = (page: PageSettingEnum): boolean => {
     switch (page) {
       case PageSettingEnum.First:
-        return !!(data.name && data.address && data.email && data.phoneNumber && data.city && data.country);
+        return !!(data.name && data.email && data.phoneNumber);
       case PageSettingEnum.Second:
         return !!(data.lat && data.long);
+      case PageSettingEnum.Third:
+        return !!(data.address && data.city && data.country);
     }
   };
   return (

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import * as Leaflet from 'leaflet';
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import { ButtonWrapper, CenterBox, MapHeadingWrapper, MapWrapper, MobileCompoundTitle, StyledBackParagraph } from '../../../../../styles/compoundStyles';
-import { SpinnerWrapper } from '../../../../../styles/sharedStyles';
+import { SpinnerWrapper } from '../../../../../styles/shared';
 import Spinner from '../../../../atoms/Spinner/Spinner';
 import Button from '../../../../atoms/Button/Button';
 import { markerCustomIcon } from '../../../AddCompany/utils/customMapIcons';

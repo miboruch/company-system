@@ -14,6 +14,7 @@ interface Props {
 }
 
 const AdminRoute: React.FC<ConnectedProps> = ({ component: Component, path, exact, isLoggedIn, role }) => {
+  //TODO: add another condition -
   return isLoggedIn && role === UserRole.Admin ? <Route path={path} exact={exact} component={Component} /> : <Redirect to='/login' />;
 };
 

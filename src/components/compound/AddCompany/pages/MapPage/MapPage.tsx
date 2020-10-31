@@ -3,7 +3,7 @@ import * as Leaflet from 'leaflet';
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import Spinner from '../../../../atoms/Spinner/Spinner';
 import Button from '../../../../atoms/Button/Button';
-import { SpinnerWrapper } from '../../../../../styles/sharedStyles';
+import { SpinnerWrapper } from '../../../../../styles/shared';
 import { markerCustomIcon } from '../../utils/customMapIcons';
 import { CompanyDataContext } from '../../context/CompanyDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';

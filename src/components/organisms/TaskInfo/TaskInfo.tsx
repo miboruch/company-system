@@ -5,7 +5,7 @@ import { StyledInput } from '../../../styles/compoundStyles';
 import { Wrapper, StyledForm, HeaderWrapper, Paragraph, EmployeeInfoBox, SubParagraph, TextParagraph, Title, InputWrapper } from '../../../styles/contentStyles';
 import { TaskInterface } from '../../../types/modelsTypes';
 import { AppState } from '../../../reducers/rootReducer';
-import { StyledLabel } from '../../../styles/sharedStyles';
+import { StyledLabel } from '../../../styles/shared';
 import DatePicker from 'react-datepicker';
 
 interface InitialValues {

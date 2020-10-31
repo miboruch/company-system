@@ -9,12 +9,17 @@ export interface StepObjectInterface {
 export const addClientSteps: StepObjectInterface[] = [
   {
     stepName: 'Główne informacje o kliencie',
-    description: 'Nazwa, adres, email, numer telefonu',
+    description: 'Nazwa, email, numer telefonu',
     pageIndex: PageSettingEnum.First
   },
   {
     stepName: 'Lokalizacja klienta',
     description: 'Pozycja na mapie',
     pageIndex: PageSettingEnum.Second
+  },
+  {
+    stepName: 'Dane o lokalizacji',
+    description: 'Adres, Miasto, Kraj',
+    pageIndex: PageSettingEnum.Third
   }
 ];

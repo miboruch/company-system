@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 
 export enum PageSettingEnum {
   First = 0,
-  Second = 1
+  Second = 1,
+  Third = 2
 }
 
 type PageContextType = {

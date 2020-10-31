@@ -10,7 +10,7 @@ import { AppTypes } from '../../types/actionTypes/appActionTypes';
 import { userLogin } from '../../actions/authenticationActions';
 import { AccountParagraph, AuthWrapper, FlexWrapper, FlexWrapperDefault, Heading, StyledForm, StyledInput, StyledLink } from './LoginPage.styles';
 import { AppState } from '../../reducers/rootReducer';
-import { SpinnerWrapper, ErrorParagraph } from '../../styles/sharedStyles';
+import { SpinnerWrapper, ErrorParagraph } from '../../styles/shared';
 import Spinner from '../../components/atoms/Spinner/Spinner';
 import LoginTemplate, { TemplatePage } from '../../components/templates/LoginTemplate/LoginTemplate';
 

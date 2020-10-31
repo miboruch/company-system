@@ -6,7 +6,7 @@ import { RegisterDataContext } from '../context/RegisterDataContext';
 import { PageContext } from '../context/PageContext';
 import { Formik } from 'formik';
 import { Heading, StyledForm } from '../../../../pages/LoginPage/LoginPage.styles';
-import { BackParagraph, DoubleFlexWrapper, StyledLabel } from '../../../../styles/sharedStyles';
+import { BackParagraph, DoubleFlexWrapper, StyledLabel } from '../../../../styles/shared';
 import Button from '../../../atoms/Button/Button';
 
 const StyledInput = styled(Input)`

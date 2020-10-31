@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Wrapper, StyledForm, HeaderWrapper, Paragraph, EmployeeInfoBox, SubParagraph, TextParagraph, Title, InputWrapper } from '../../../styles/contentStyles';
-import { SpinnerWrapper } from '../../../styles/sharedStyles';
+import { SpinnerWrapper } from '../../../styles/shared';
 import { AttendanceInterface, WeekAttendance } from '../../../types/modelsTypes';
 import { AppState } from '../../../reducers/rootReducer';
 import Spinner from '../../atoms/Spinner/Spinner';

@@ -4,7 +4,7 @@ import DatePicker from 'react-datepicker';
 import { RegisterDataContext } from '../context/RegisterDataContext';
 import Input from '../../../atoms/Input/Input';
 import { StyledForm, Heading } from '../../../../pages/LoginPage/LoginPage.styles';
-import { FlexWrapper, Title, StyledLabel, DoubleFlexWrapper } from '../../../../styles/sharedStyles';
+import { FlexWrapper, Title, StyledLabel, DoubleFlexWrapper } from '../../../../styles/shared';
 import styled from 'styled-components';
 import Button from '../../../atoms/Button/Button';
 

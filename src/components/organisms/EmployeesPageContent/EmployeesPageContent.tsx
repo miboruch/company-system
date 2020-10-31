@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
-import { SpinnerWrapper, List } from '../../../styles/sharedStyles';
+import { SpinnerWrapper, List } from '../../../styles/shared';
 import ListBox from '../../molecules/ListBox/ListBox';
 import gsap from 'gsap';
 import ContentTemplate from '../../templates/ContentTemplate/ContentTemplate';

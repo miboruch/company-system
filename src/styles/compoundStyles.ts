@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Input from '../components/atoms/Input/Input';
 import { Form } from 'formik';
-import { BackParagraph } from './sharedStyles';
+import { BackParagraph } from './shared';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -104,6 +104,8 @@ const MapWrapper = styled.div`
     width: 100%;
     grid-area: content;
     height: 100%;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
     border-bottom-right-radius: 30px;
   }
 `;
@@ -155,4 +157,18 @@ const ButtonWrapper = styled.div`
   }
 `;
 
-export { Wrapper, StyledForm, StyledInput, MobileCompoundTitle, StandardCompoundTitle, HeadingWrapper, Subheading, StyledBackParagraph, ListWrapper, MapWrapper, MapHeadingWrapper, CenterBox, ButtonWrapper };
+export {
+  Wrapper,
+  StyledForm,
+  StyledInput,
+  MobileCompoundTitle,
+  StandardCompoundTitle,
+  HeadingWrapper,
+  Subheading,
+  StyledBackParagraph,
+  ListWrapper,
+  MapWrapper,
+  MapHeadingWrapper,
+  CenterBox,
+  ButtonWrapper
+};

@@ -8,7 +8,7 @@ import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { getCompanyTasks, selectTask, setTaskInfoOpen } from '../../../actions/taskActions';
 import Spinner from '../../atoms/Spinner/Spinner';
-import { SpinnerWrapper, List } from '../../../styles/sharedStyles';
+import { SpinnerWrapper, List } from '../../../styles/shared';
 import ListBox from '../../molecules/ListBox/ListBox';
 import ContentTemplate from '../../templates/ContentTemplate/ContentTemplate';
 import gsap from 'gsap';

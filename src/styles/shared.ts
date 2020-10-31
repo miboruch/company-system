@@ -155,11 +155,33 @@ const CompoundListWrapper = styled.div`
 const List = styled.div`
   width: 100%;
   height: 100%;
+  position: relative;
 
   ${({ theme }) => theme.mq.hdReady} {
     grid-area: list;
     background-color: #fff;
   }
+`;
+
+const AddWrapper = styled.div`
+  width: 100%;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  background-color: #fff;
+  bottom: 0;
+  left: 0;
+  cursor: pointer;
+`;
+
+const AddParagraph = styled.p`
+  color: ${({ theme }) => theme.colors.black};
+  font-size: 12px;
+  font-weight: ${({ theme }) => theme.font.weight.medium};
+  margin-top: 0.2rem;
+  margin-left: 1.5rem;
 `;
 
 export {
@@ -179,5 +201,7 @@ export {
   ErrorParagraph,
   EmptyParagraph,
   CompoundListWrapper,
-  List
+  List,
+  AddWrapper,
+  AddParagraph
 };

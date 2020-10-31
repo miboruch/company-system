@@ -10,7 +10,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { getSingleDayAttendance, selectAttendance, setAttendanceInfoOpen, setDate } from '../../../actions/attendanceActions';
-import { StyledLabel } from '../../../styles/sharedStyles';
+import { StyledLabel } from '../../../styles/shared';
 import ListBox from '../../molecules/ListBox/ListBox';
 import styled from 'styled-components';
 import { isEmpty } from '../../../utils/functions';

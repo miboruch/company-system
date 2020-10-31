@@ -56,6 +56,9 @@ const AddClientController: React.FC<ConnectedProps> = ({ isAddNewClientOpen, set
               <AddClientTemplate pageIndex={PageSettingEnum.Second}>
                 <MapPage />
               </AddClientTemplate>
+              <AddClientTemplate pageIndex={PageSettingEnum.Third}>
+                <p>Third page</p>
+              </AddClientTemplate>
             </ContentWrapper>
           </Wrapper>
         </MainWrapper>

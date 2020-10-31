@@ -6,7 +6,7 @@ import { Formik } from 'formik';
 import { PageContext } from '../context/PageContext';
 import { Heading, StyledForm } from '../../../../pages/LoginPage/LoginPage.styles';
 import Button from '../../../atoms/Button/Button';
-import { DoubleFlexWrapper, BackParagraph, ErrorParagraph } from '../../../../styles/sharedStyles';
+import { DoubleFlexWrapper, BackParagraph, ErrorParagraph } from '../../../../styles/shared';
 
 const StyledInput = styled(Input)`
   margin-bottom: 5rem;
