@@ -5,6 +5,7 @@ export interface EmployeeDataInterface {
   pricePerHour?: number,
   monthlyPrice?: number,
   registerWithMail?: boolean;
+  email?: string
 }
 
 type EmployeeDataContextType = {

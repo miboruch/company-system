@@ -1,9 +1,14 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { HeadingWrapper, MobileCompoundTitle, StyledForm, Subheading, Wrapper } from '../../../../../styles/compoundStyles';
+import {
+  HeadingWrapper,
+  MobileCompoundTitle,
+  StyledForm,
+  Subheading,
+  Wrapper
+} from '../../../../../styles/compoundStyles';
 import { DoubleFlexWrapper } from '../../../../../styles/shared';
-import {ButtonWrapper} from '../../../../../styles/contentStyles';
 import Button from '../../../../atoms/Button/Button';
 import { Formik } from 'formik';
 import { EmployeeDataContext } from '../../context/EmployeeDataContext';
@@ -38,8 +43,6 @@ const SelectEmployee: React.FC<ConnectedProps> = ({ allAppUsers }) => {
   const { data, setData } = useContext(EmployeeDataContext);
   const { setCurrentPage } = useContext(PageContext);
 
-  const [allUsers, setAllUsers] = useState<UserDataInterface[]>([]);
-
   const initialValues: DefaultValues = {
     userId: '',
     registerWithMail: undefined
@@ -47,7 +50,7 @@ const SelectEmployee: React.FC<ConnectedProps> = ({ allAppUsers }) => {
 
   const handleSubmit = (values: DefaultValues) => {
     console.log(values);
-    setData({...data, ...values});
+    setData({ ...data, ...values });
     setCurrentPage(PageSettingEnum.Second);
   };
 
@@ -68,7 +71,7 @@ const SelectEmployee: React.FC<ConnectedProps> = ({ allAppUsers }) => {
                   bottomDescription={user.email}
                   callback={() => {
                     setFieldValue('userId', user._id);
-                    setData({...data, userId: user._id});
+                    setData({ ...data, userId: user._id });
                     setFieldValue('registerWithMail', undefined);
                   }}
                   isActive={data.userId === user._id}
@@ -80,6 +83,8 @@ const SelectEmployee: React.FC<ConnectedProps> = ({ allAppUsers }) => {
                 onClick={() => {
                   setFieldValue('userId', undefined);
                   setFieldValue('registerWithMail', true);
+                  setData({ ...data, userId: undefined, registerWithMail: true });
+                  setCurrentPage(PageSettingEnum.Second);
                 }}
               >
                 Wyślij zaproszenie na maila

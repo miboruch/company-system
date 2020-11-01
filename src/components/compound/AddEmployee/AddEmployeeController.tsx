@@ -17,6 +17,7 @@ import { setAddNewEmployeeOpen } from '../../../actions/employeeActions';
 import { modalOpenAnimation } from '../../../animations/animations';
 import AddEmployeeHeader from './components/AddEmployeeHeader/AddEmployeeHeader';
 import SelectEmployee from './pages/SelectEmployee/SelectEmployee';
+import SalaryPage from './pages/SalaryPage/SalaryPage';
 
 interface Props {}
 
@@ -54,7 +55,7 @@ const AddEmployeeController: React.FC<ConnectedProps> = ({ setAddNewEmployeeOpen
                 <SelectEmployee />
               </AddEmployeeTemplate>
               <AddEmployeeTemplate pageIndex={PageSettingEnum.Second}>
-                <p>second</p>
+                <SalaryPage />
               </AddEmployeeTemplate>
             </ContentWrapper>
           </Wrapper>
