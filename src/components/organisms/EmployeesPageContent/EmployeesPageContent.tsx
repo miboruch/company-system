@@ -15,6 +15,7 @@ import Spinner from '../../atoms/Spinner/Spinner';
 import EmployeeInfo from '../EmployeeInfo/EmployeeInfo';
 import { listAnimation } from '../../../animations/animations';
 import DeletePopup from '../../molecules/DeletePopup/DeletePopup';
+import AddEmployeeController from '../../compound/AddEmployee/AddEmployeeController';
 
 type ConnectedProps = LinkStateProps & LinkDispatchProps;
 
@@ -84,6 +85,7 @@ const EmployeesPageContent: React.FC<ConnectedProps> = ({
               text={`${selectedEmployee?.userId.name} ${selectedEmployee?.userId.lastName}`}
               callback={() => console.log('delete employee')}
             />
+            <AddEmployeeController />
           </>
         )
       }
