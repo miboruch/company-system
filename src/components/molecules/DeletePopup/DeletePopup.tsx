@@ -41,7 +41,10 @@ const DeletePopup: React.FC<Props> = ({ isOpen, setOpen, headerText, text, callb
         </ContentWrapper>
         <ButtonWrapper>
           <ModalButton onClick={() => setOpen(false)} buttonType={ButtonType.Cancel} text={'Anuluj'} />
-          <ModalButton onClick={() => callback()} buttonType={ButtonType.Delete} text={'Usuń'} />
+          <ModalButton onClick={() => {
+            setOpen(false);
+            callback();
+          }} buttonType={ButtonType.Delete} text={'Usuń'} />
         </ButtonWrapper>
       </Box>
     </Wrapper>

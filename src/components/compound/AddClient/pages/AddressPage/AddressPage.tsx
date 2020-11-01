@@ -33,7 +33,9 @@ const AddressPage: React.FC<ConnectedProps> = ({ addNewClient }) => {
 
   const handleSubmit = (values: defaultValues): void => {
     setData({ ...data, ...values });
-    // addNewClient(data?.name, values.address, data.email, data.phoneNumber, values.city, values.country, data.lat, data.long);
+    if(data.name && data.email && data.phoneNumber && data.lat && data.long){
+      addNewClient(data.name, values.address, data.email, data.phoneNumber, values.city, values.country, data.lat, data.long);
+    }
     console.log(data);
     console.log('add client request');
   };

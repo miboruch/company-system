@@ -103,13 +103,24 @@ export const addNewClient = (name: string, address: string, email: string, phone
 
   try {
     if (currentCompany?._id && token) {
-      await axios.post(`${API_URL}/client/create-client?company_id=${currentCompany._id}`,{
-        name, address, email, phoneNumber, city, country, lat, long
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`
+      await axios.post(
+        `${API_URL}/client/create-client?company_id=${currentCompany._id}`,
+        {
+          name,
+          address,
+          email,
+          phoneNumber,
+          city,
+          country,
+          lat,
+          long
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
         }
-      });
+      );
 
       dispatch(getCompanyClients());
       dispatch(setAddNewClientOpen(false));
@@ -122,5 +133,31 @@ export const addNewClient = (name: string, address: string, email: string, phone
     console.log(error);
     dispatch(setNotificationMessage('Problem z dodaniem klienta', NotificationTypes.Error));
     dispatch(setClientError(error));
+  }
+};
+
+export const deleteClient = (clientId: string) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
+  const { token } = getState().authenticationReducer;
+  const { currentCompany } = getState().companyReducer;
+
+  try {
+    if (currentCompany?._id && token) {
+      await axios.delete(`${API_URL}/client/delete-client/${clientId}?company_id=${currentCompany._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      dispatch(getCompanyClients());
+      dispatch(setSelectedClient(null));
+      dispatch(setClientInfoOpen(false));
+      dispatch(setNotificationMessage('Usunięto klienta'));
+    } else {
+      dispatch(setClientError('Problem z uwierzytelnieniem'));
+      dispatch(setNotificationMessage('Problem z usunięciem klienta', NotificationTypes.Error));
+    }
+  } catch (error) {
+    console.log(error);
+    dispatch(setNotificationMessage('Problem z usunięciem klienta', NotificationTypes.Error));
   }
 };
