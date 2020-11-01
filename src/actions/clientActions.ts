@@ -18,6 +18,8 @@ import { Dispatch } from 'redux';
 import { AppTypes } from '../types/actionTypes/appActionTypes';
 import { API_URL } from '../utils/config';
 import { AppState } from '../reducers/rootReducer';
+import { setNotificationMessage } from './toggleActions';
+import { NotificationTypes } from '../types/actionTypes/toggleAcitonTypes';
 
 const setClientsLoading = (isLoading: boolean): SetClientsLoading => {
   return {
@@ -111,11 +113,14 @@ export const addNewClient = (name: string, address: string, email: string, phone
 
       dispatch(getCompanyClients());
       dispatch(setAddNewClientOpen(false));
+      dispatch(setNotificationMessage('Dodano nowego klienta'));
     } else {
       dispatch(setClientError('Problem z uwierzytelnieniem'));
+      dispatch(setNotificationMessage('Problem z dodaniem klienta', NotificationTypes.Error));
     }
   } catch (error) {
     console.log(error);
+    dispatch(setNotificationMessage('Problem z dodaniem klienta', NotificationTypes.Error));
     dispatch(setClientError(error));
   }
 };

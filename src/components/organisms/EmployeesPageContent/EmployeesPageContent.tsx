@@ -14,10 +14,20 @@ import { EmployeeDataInterface } from '../../../types/modelsTypes';
 import Spinner from '../../atoms/Spinner/Spinner';
 import EmployeeInfo from '../EmployeeInfo/EmployeeInfo';
 import { listAnimation } from '../../../animations/animations';
+import DeletePopup from '../../molecules/DeletePopup/DeletePopup';
 
 type ConnectedProps = LinkStateProps & LinkDispatchProps;
 
-const EmployeesPageContent: React.FC<ConnectedProps> = ({ getAllCompanyEmployees, isLoading, allCompanyEmployees, selectEmployee, isEmployeeInfoOpen, setEmployeeInfoOpen, setAddNewEmployeeOpen }) => {
+const EmployeesPageContent: React.FC<ConnectedProps> = ({
+  getAllCompanyEmployees,
+  isLoading,
+  allCompanyEmployees,
+  selectEmployee,
+  isEmployeeInfoOpen,
+  setEmployeeInfoOpen,
+  selectedEmployee,
+  setAddNewEmployeeOpen
+}) => {
   const listRef = useRef<HTMLDivElement | null>(null);
   const [filterText, setFilterText] = useState<string>('');
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
@@ -36,36 +46,48 @@ const EmployeesPageContent: React.FC<ConnectedProps> = ({ getAllCompanyEmployees
   }, []);
 
   return (
-    <GridWrapper mobilePadding={false} pageName={'Pracownicy'} setFilterText={setFilterText}>
-      {isLoading ? (
-        <SpinnerWrapper>
-          <Spinner />
-        </SpinnerWrapper>
-      ) : (
-        <>
-          <List ref={listRef}>
-            {filterByEmployeeName(filterText, allCompanyEmployees).map((employee) => (
-              <ListBox
-                key={employee._id}
-                name={`${employee.userId.name} ${employee.userId.lastName}`}
-                topDescription={new Date(employee.userId.dateOfBirth).toLocaleDateString()}
-                bottomDescription={employee.userId.email}
-                callback={() => selectEmployee(employee)}
-                isEmpty={true}
-                isCompanyBox={false}
-              />
-            ))}
-            <AddWrapper onClick={() => setAddNewEmployeeOpen(true)}>
-              <AddIcon />
-              <AddParagraph>Dodaj pracownika</AddParagraph>
-            </AddWrapper>
-          </List>
-          <ContentTemplate isOpen={isEmployeeInfoOpen} setOpen={setEmployeeInfoOpen}>
-            <EmployeeInfo />
-          </ContentTemplate>
-        </>
-      )}
-    </GridWrapper>
+    <GridWrapper
+      mobilePadding={false}
+      pageName={'Pracownicy'}
+      setFilterText={setFilterText}
+      render={(isDeleteOpen, setDeleteOpen) =>
+        isLoading ? (
+          <SpinnerWrapper>
+            <Spinner />
+          </SpinnerWrapper>
+        ) : (
+          <>
+            <List ref={listRef}>
+              {filterByEmployeeName(filterText, allCompanyEmployees).map((employee) => (
+                <ListBox
+                  key={employee._id}
+                  name={`${employee.userId.name} ${employee.userId.lastName}`}
+                  topDescription={new Date(employee.userId.dateOfBirth).toLocaleDateString()}
+                  bottomDescription={employee.userId.email}
+                  callback={() => selectEmployee(employee)}
+                  isEmpty={true}
+                  isCompanyBox={false}
+                />
+              ))}
+              <AddWrapper onClick={() => setAddNewEmployeeOpen(true)}>
+                <AddIcon />
+                <AddParagraph>Dodaj pracownika</AddParagraph>
+              </AddWrapper>
+            </List>
+            <ContentTemplate isOpen={isEmployeeInfoOpen} setOpen={setEmployeeInfoOpen}>
+              <EmployeeInfo setDeleteOpen={setDeleteOpen} />
+            </ContentTemplate>
+            <DeletePopup
+              isOpen={isDeleteOpen}
+              setOpen={setDeleteOpen}
+              headerText={'Usuń pracownika'}
+              text={`${selectedEmployee?.userId.name} ${selectedEmployee?.userId.lastName}`}
+              callback={() => console.log('delete employee')}
+            />
+          </>
+        )
+      }
+    />
   );
 };
 
@@ -73,6 +95,7 @@ interface LinkStateProps {
   isLoading: boolean;
   allCompanyEmployees: EmployeeDataInterface[];
   isEmployeeInfoOpen: boolean;
+  selectedEmployee: EmployeeDataInterface | null;
 }
 
 interface LinkDispatchProps {
@@ -82,8 +105,8 @@ interface LinkDispatchProps {
   setAddNewEmployeeOpen: (isOpen: boolean) => void;
 }
 
-const mapStateToProps = ({ employeeReducer: { isLoading, allCompanyEmployees, isEmployeeInfoOpen } }: AppState): LinkStateProps => {
-  return { isLoading, allCompanyEmployees, isEmployeeInfoOpen };
+const mapStateToProps = ({ employeeReducer: { isLoading, allCompanyEmployees, isEmployeeInfoOpen, selectedEmployee } }: AppState): LinkStateProps => {
+  return { isLoading, allCompanyEmployees, isEmployeeInfoOpen, selectedEmployee };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {

@@ -10,18 +10,20 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { updateEmployeeSalary } from '../../../actions/employeeActions';
-import { EditIcon, DeleteIcon } from '../../../styles/iconStyles';
+import { DeleteIcon } from '../../../styles/iconStyles';
 
 interface InitialValues {
   hourSalary?: number;
   monthlySalary?: number;
 }
 
-interface Props {}
+interface Props {
+  setDeleteOpen: (isOpen: boolean) => void
+}
 
 type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
-const EmployeeInfo: React.FC<ConnectedProps> = ({ selectedEmployee, updateEmployeeSalary }) => {
+const EmployeeInfo: React.FC<ConnectedProps> = ({ selectedEmployee, updateEmployeeSalary, setDeleteOpen }) => {
   const initialValues: InitialValues = {
     hourSalary: selectedEmployee?.pricePerHour,
     monthlySalary: selectedEmployee?.monthlyPrice
@@ -42,7 +44,7 @@ const EmployeeInfo: React.FC<ConnectedProps> = ({ selectedEmployee, updateEmploy
                 <Title>
                   {selectedEmployee.userId.name} {selectedEmployee.userId.lastName}
                 </Title>
-                <EditIcon />
+                <DeleteIcon onClick={() => setDeleteOpen(true)} />
               </HeaderWrapper>
               <EmployeeInfoBox>
                 <SubParagraph>Data urodzenia: {new Date(selectedEmployee.userId.dateOfBirth).toLocaleDateString()}</SubParagraph>
