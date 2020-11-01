@@ -17,6 +17,7 @@ import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { setAddNewTaskOpen } from '../../../actions/taskActions';
 import TaskInfoPage from './pages/TaskInfoPage/TaskInfoPage';
+import SpecificInfoPage from './pages/SpecificInfoPage/SpecificInfoPage';
 
 interface Props {}
 
@@ -52,7 +53,7 @@ const AddTaskController: React.FC<ConnectedProps> = ({ isAddNewTaskOpen, setAddN
                 <TaskInfoPage />
               </AddTaskTemplate>
               <AddTaskTemplate pageIndex={PageSettingEnum.Second}>
-                <p>Second</p>
+                <SpecificInfoPage />
               </AddTaskTemplate>
             </ContentWrapper>
           </Wrapper>
