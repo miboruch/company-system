@@ -16,6 +16,7 @@ import { bindActionCreators } from 'redux';
 import { setAddNewEmployeeOpen } from '../../../actions/employeeActions';
 import { modalOpenAnimation } from '../../../animations/animations';
 import AddEmployeeHeader from './components/AddEmployeeHeader/AddEmployeeHeader';
+import SelectEmployee from './pages/SelectEmployee/SelectEmployee';
 
 interface Props {}
 
@@ -50,7 +51,7 @@ const AddEmployeeController: React.FC<ConnectedProps> = ({ setAddNewEmployeeOpen
             <StepList />
             <ContentWrapper>
               <AddEmployeeTemplate pageIndex={PageSettingEnum.First}>
-                <p>first</p>
+                <SelectEmployee />
               </AddEmployeeTemplate>
               <AddEmployeeTemplate pageIndex={PageSettingEnum.Second}>
                 <p>second</p>

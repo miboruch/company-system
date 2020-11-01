@@ -4,12 +4,14 @@ import {
   AUTH_LOGOUT,
   AUTH_START,
   AUTH_SUCCESS,
-  SET_USER_DATA,
-  SET_USER_ROLE,
   AuthFailure,
   AuthLogout,
   AuthStart,
   AuthSuccess,
+  SET_ALL_APP_USERS,
+  SET_USER_DATA,
+  SET_USER_ROLE,
+  SetAllAppUsers,
   SetUserData,
   SetUserRole,
   UserRole
@@ -17,6 +19,8 @@ import {
 import { Dispatch } from 'redux';
 import { AppTypes } from '../types/actionTypes/appActionTypes';
 import { API_URL } from '../utils/config';
+import { UserDataInterface } from '../types/modelsTypes';
+import { AppState } from '../reducers/rootReducer';
 
 const authStart = (): AuthStart => {
   return {
@@ -96,6 +100,13 @@ const authTimeout = (refreshToken: string, expireMilliseconds: number) => (dispa
   return setTimeout(async () => {
     dispatch(getNewAccessToken(refreshToken));
   }, expireMilliseconds);
+};
+
+const setAllAppUsers = (users: UserDataInterface[]): SetAllAppUsers => {
+  return {
+    type: SET_ALL_APP_USERS,
+    payload: users
+  };
 };
 
 export const setUserRole = (role: UserRole): SetUserRole => {
@@ -205,5 +216,22 @@ export const authenticateCheck = (successCallback: () => void, errorCallback: ()
     }
   } else {
     refreshToken ? dispatch(userLogout(refreshToken, errorCallback)) : dispatch(authLogout());
+  }
+};
+
+export const getAllAppUsers = () => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
+  const { token } = getState().authenticationReducer;
+  try {
+    if (token) {
+      const { data } = await axios.get(`${API_URL}/user/all-users`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      dispatch(setAllAppUsers(data));
+    }
+  } catch (error) {
+    console.log(error);
   }
 };

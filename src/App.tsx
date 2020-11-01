@@ -8,7 +8,7 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from './types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
-import { authenticateCheck } from './actions/authenticationActions';
+import { authenticateCheck, getAllAppUsers } from './actions/authenticationActions';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import Routes from './routes/Routes';
 import SelectPage from './pages/SelectPage/SelectPage';
@@ -18,10 +18,13 @@ interface Props {}
 
 type ConnectedProps = Props & LinkDispatchProps & RouteComponentProps<any>;
 
-const App: React.FC<ConnectedProps> = ({ history, authenticationCheck }) => {
+const App: React.FC<ConnectedProps> = ({ history, authenticationCheck, getAllAppUsers }) => {
   useEffect(() => {
     authenticationCheck(
-      () => history.push('/select'),
+      () => {
+        getAllAppUsers();
+        history.push('/select');
+      },
       () => history.push('/login')
     );
   }, []);
@@ -41,11 +44,13 @@ const App: React.FC<ConnectedProps> = ({ history, authenticationCheck }) => {
 
 interface LinkDispatchProps {
   authenticationCheck: (successCallback: () => void, errorCallback: () => void) => void;
+  getAllAppUsers: () => void;
 }
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
   return {
-    authenticationCheck: bindActionCreators(authenticateCheck, dispatch)
+    authenticationCheck: bindActionCreators(authenticateCheck, dispatch),
+    getAllAppUsers: bindActionCreators(getAllAppUsers, dispatch)
   };
 };
 

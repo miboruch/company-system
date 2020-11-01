@@ -1,5 +1,15 @@
-import { AUTH_FAILURE, AUTH_LOGOUT, AUTH_START, AUTH_SUCCESS, AuthenticationActionTypes, SET_USER_DATA, SET_USER_ROLE, UserRole } from '../types/actionTypes/authenticationActionTypes';
-import { UserAuthData } from '../types/modelsTypes';
+import {
+  AUTH_FAILURE,
+  AUTH_LOGOUT,
+  AUTH_START,
+  AUTH_SUCCESS,
+  AuthenticationActionTypes,
+  SET_ALL_APP_USERS,
+  SET_USER_DATA,
+  SET_USER_ROLE,
+  UserRole
+} from '../types/actionTypes/authenticationActionTypes';
+import { UserAuthData, UserDataInterface } from '../types/modelsTypes';
 
 interface DefaultState {
   isLoading: boolean;
@@ -9,6 +19,7 @@ interface DefaultState {
   error: string | null;
   userData: null | UserAuthData;
   role: UserRole;
+  allAppUsers: UserDataInterface[];
 }
 
 const initialState: DefaultState = {
@@ -18,7 +29,8 @@ const initialState: DefaultState = {
   refreshToken: null,
   error: null,
   userData: null,
-  role: UserRole.User
+  role: UserRole.User,
+  allAppUsers: []
 };
 
 export const authenticationReducer = (state = initialState, action: AuthenticationActionTypes): DefaultState => {
@@ -75,6 +87,11 @@ export const authenticationReducer = (state = initialState, action: Authenticati
           city: action.payload.city,
           address: action.payload.address
         }
+      };
+    case SET_ALL_APP_USERS:
+      return {
+        ...state,
+        allAppUsers: action.payload
       };
     default:
       return state;
