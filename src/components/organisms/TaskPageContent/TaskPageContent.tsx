@@ -15,6 +15,7 @@ import gsap from 'gsap';
 import TaskInfo from '../TaskInfo/TaskInfo';
 import { listAnimation } from '../../../animations/animations';
 import DeletePopup from '../../molecules/DeletePopup/DeletePopup';
+import AddTaskController from '../../compound/AddTask/AddTaskController';
 
 interface Props {}
 
@@ -71,6 +72,7 @@ const TaskPageContent: React.FC<ConnectedProps> = ({ isLoading, allCompanyTasks,
               <TaskInfo isEditToggled={isEditToggled} setDeleteOpen={setDeleteOpen} setEditToggled={setEditToggled} />
             </ContentTemplate>
             <DeletePopup isOpen={isDeleteOpen} setOpen={setDeleteOpen} headerText={'Usuń zadanie'} text={`${selectedTask?.name}`} callback={() => console.log('delete task')} />
+            <AddTaskController />
           </>
         )
       }
