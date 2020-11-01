@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { addCompanySteps } from '../../utils/AddCompanySteps';
+import { addCompanySteps } from '../../utils/addCompanySteps';
 import CompoundStepBox from '../../../../molecules/CompoundStepBox/CompoundStepBox';
 import { ListWrapper } from '../../../../../styles/compoundStyles';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
