@@ -141,3 +141,30 @@ export const addNewTask = (date: Date, timeEstimate: number, name: string, descr
     dispatch(setNotificationMessage('Problem z dodaniem zadania', NotificationTypes.Error));
   }
 };
+
+export const deleteTask = (taskId: string) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
+  const { token } = getState().authenticationReducer;
+  const { currentCompany } = getState().companyReducer;
+
+  try {
+    if (currentCompany?._id && token) {
+      await axios.delete(`${API_URL}/task/delete-task/${taskId}?company_id=${currentCompany._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      dispatch(getCompanyTasks());
+      dispatch(setSelectedTask(null));
+      dispatch(setTaskInfoOpen(false));
+      dispatch(setNotificationMessage('Usunięto zadanie'));
+    } else {
+      dispatch(setTaskError('Problem z uwierzytelnieniem'));
+      dispatch(setNotificationMessage('Problem z usunięciem zadania', NotificationTypes.Error));
+    }
+  } catch (error) {
+    console.log(error);
+    dispatch(setTaskError(error));
+    dispatch(setNotificationMessage('Problem z usunięciem zadania', NotificationTypes.Error));
+  }
+};
