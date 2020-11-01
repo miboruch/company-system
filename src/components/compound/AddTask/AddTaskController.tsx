@@ -16,6 +16,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { setAddNewTaskOpen } from '../../../actions/taskActions';
+import TaskInfoPage from './pages/TaskInfoPage/TaskInfoPage';
 
 interface Props {}
 
@@ -48,7 +49,7 @@ const AddTaskController: React.FC<ConnectedProps> = ({ isAddNewTaskOpen, setAddN
             <StepList />
             <ContentWrapper>
               <AddTaskTemplate pageIndex={PageSettingEnum.First}>
-                <p>First</p>
+                <TaskInfoPage />
               </AddTaskTemplate>
               <AddTaskTemplate pageIndex={PageSettingEnum.Second}>
                 <p>Second</p>

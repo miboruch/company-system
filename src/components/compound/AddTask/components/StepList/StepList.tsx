@@ -13,7 +13,7 @@ const StepList: React.FC<Props> = () => {
   const isStepCompleted = (page: PageSettingEnum): boolean => {
     switch (page) {
       case PageSettingEnum.First:
-        return !!(data.name && data.description && data.date && data.isCompleted);
+        return !!(data.name && data.description && data.date);
       case PageSettingEnum.Second:
         return !!(data.timeEstimate);
     }
