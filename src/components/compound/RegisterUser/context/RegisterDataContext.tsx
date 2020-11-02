@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 interface RegisterDataInterface {
+  isRegistrationLink?: boolean;
   email?: string;
   name?: string;
   lastName?: string;
@@ -25,10 +26,12 @@ export const RegisterDataContext = React.createContext<RegisterDataContextType>(
 
 interface Props {
   children: React.ReactNode;
+  isRegistrationLink: boolean;
+  email?: string;
 }
 
-const RegisterDataContextProvider: React.FC<Props> = ({ children }) => {
-  const [data, setData] = useState<RegisterDataInterface>({});
+const RegisterDataContextProvider: React.FC<Props> = ({ children, isRegistrationLink, email }) => {
+  const [data, setData] = useState<RegisterDataInterface>(isRegistrationLink ? {email: email} : {});
   return <RegisterDataContext.Provider value={{ data, setData }}>{children}</RegisterDataContext.Provider>;
 };
 

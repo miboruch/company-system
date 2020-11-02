@@ -13,6 +13,7 @@ import RegisterPage from './pages/RegisterPage/RegisterPage';
 import Routes from './routes/Routes';
 import SelectPage from './pages/SelectPage/SelectPage';
 import NotificationPopup from './components/molecules/NotificationPopup/NotificationPopup';
+import RegisterFromLink from './pages/RegisterFromLink/RegisterFromLink';
 
 interface Props {}
 
@@ -35,6 +36,7 @@ const App: React.FC<ConnectedProps> = ({ history, authenticationCheck, getAllApp
         <Route path={'/login'} component={LoginPage} />
         <Route path={'/register'} component={RegisterPage} />
         <Route path={'/select'} component={SelectPage} />
+        <Route path={'/link-register/:token'} component={RegisterFromLink} />
         <Routes />
       </Switch>
       <NotificationPopup />

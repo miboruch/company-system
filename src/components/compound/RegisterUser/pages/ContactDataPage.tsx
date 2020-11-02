@@ -20,7 +20,11 @@ type defaultValues = {
   country: string;
 };
 
-const ContactDataPage: React.FC = () => {
+interface Props {
+  isRegistrationLink: boolean;
+}
+
+const ContactDataPage: React.FC<Props> = ({ isRegistrationLink }) => {
   const { data, setData } = useContext(RegisterDataContext);
   const { currentPage, setCurrentPage } = useContext(PageContext);
   const [formattedPhoneNumber, setFormattedPhoneNumber] = useState<string | null>(null);
@@ -37,7 +41,13 @@ const ContactDataPage: React.FC = () => {
   };
 
   const handleSubmit = (values: defaultValues): void => {
-    console.log('handle submit - register user');
+    if (isRegistrationLink) {
+      console.log('register user from link');
+      console.log(values);
+    } else {
+      console.log('register user');
+      console.log(values);
+    }
     // setData({ ...data, ...values });
     // setCurrentPage(currentPage + 1);
   };

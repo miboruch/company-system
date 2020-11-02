@@ -22,7 +22,11 @@ type defaultValues = {
   dateOfBirth: Date | undefined | null;
 };
 
-const MainRegisterDataPage: React.FC = () => {
+interface Props {
+  isRegistrationLink: boolean;
+}
+
+const MainRegisterDataPage: React.FC<Props> = ({ isRegistrationLink }) => {
   const { data, setData } = useContext(RegisterDataContext);
   const { currentPage, setCurrentPage } = useContext(PageContext);
 
@@ -43,7 +47,7 @@ const MainRegisterDataPage: React.FC = () => {
       {({ handleChange, values, setFieldValue }) => (
         <StyledForm>
           <Heading>Wypełnij dane</Heading>
-          <StyledInput onChange={handleChange} name={'email'} value={values.email} required={true} type={'email'} labelText={'Email'} />
+          <StyledInput onChange={handleChange} name={'email'} value={values.email} required={true} type={'email'} labelText={'Email'} disabled={isRegistrationLink} />
           <StyledInput onChange={handleChange} name={'name'} value={values.name} required={true} type={'string'} labelText={'Imię'} />
           <StyledInput onChange={handleChange} name={'lastName'} value={values.lastName} required={true} type={'string'} labelText={'Nazwisko'} />
           {/*<DoubleFlexWrapper style={{ marginBottom: '3rem' }}>*/}
