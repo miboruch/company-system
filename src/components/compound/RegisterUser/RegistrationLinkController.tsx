@@ -5,12 +5,16 @@ import MainRegisterDataPage from './pages/MainRegisterDataPage';
 import PasswordPage from './pages/PasswordPage';
 import ContactDataPage from './pages/ContactDataPage';
 import RegisterDataContextProvider from './context/RegisterDataContext';
+import { RegistrationVerifyTokenResponse } from '../../../pages/RegisterFromLink/RegisterFromLink';
 
-interface Props {}
+interface Props {
+  response: RegistrationVerifyTokenResponse;
+  token: string;
+}
 
-const RegistrationLinkController: React.FC<Props> = () => {
+const RegistrationLinkController: React.FC<Props> = ({ response }) => {
   return (
-    <RegisterDataContextProvider isRegistrationLink={true}>
+    <RegisterDataContextProvider isRegistrationLink={true} email={response.email}>
       <PageContextProvider>
         <RegisterTemplate pageIndex={0}>
           <MainRegisterDataPage isRegistrationLink={true} />
@@ -19,7 +23,7 @@ const RegistrationLinkController: React.FC<Props> = () => {
           <PasswordPage />
         </RegisterTemplate>
         <RegisterTemplate pageIndex={2}>
-          <ContactDataPage isRegistrationLink={true} />
+          <ContactDataPage isRegistrationLink={true} token={token} />
         </RegisterTemplate>
       </PageContextProvider>
     </RegisterDataContextProvider>

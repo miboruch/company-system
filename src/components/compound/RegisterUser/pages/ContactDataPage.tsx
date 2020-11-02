@@ -1,4 +1,6 @@
 import React, { useContext, useState } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
 import Input from '../../../atoms/Input/Input';
@@ -8,6 +10,10 @@ import { Formik } from 'formik';
 import { Heading, StyledForm } from '../../../../pages/LoginPage/LoginPage.styles';
 import { BackParagraph, DoubleFlexWrapper, StyledLabel } from '../../../../styles/shared';
 import Button from '../../../atoms/Button/Button';
+import { ThunkDispatch } from 'redux-thunk';
+import { AppTypes } from '../../../../types/actionTypes/appActionTypes';
+import { bindActionCreators } from 'redux';
+import { registerFromLink, userRegister } from '../../../../actions/authenticationActions';
 
 const StyledInput = styled(Input)`
   margin-bottom: 5rem;
@@ -22,9 +28,12 @@ type defaultValues = {
 
 interface Props {
   isRegistrationLink: boolean;
+  token?: string;
 }
 
-const ContactDataPage: React.FC<Props> = ({ isRegistrationLink }) => {
+type ConnectedProps = Props & LinkDispatchProps;
+
+const ContactDataPage: React.FC<ConnectedProps> = ({ isRegistrationLink, token, registerFromLink, userRegister }) => {
   const { data, setData } = useContext(RegisterDataContext);
   const { currentPage, setCurrentPage } = useContext(PageContext);
   const [formattedPhoneNumber, setFormattedPhoneNumber] = useState<string | null>(null);
@@ -40,13 +49,14 @@ const ContactDataPage: React.FC<Props> = ({ isRegistrationLink }) => {
     phoneNumber: data.phoneNumber || ''
   };
 
-  const handleSubmit = (values: defaultValues): void => {
+  const handleSubmit = ({ address, city, country, phoneNumber }: defaultValues): void => {
     if (isRegistrationLink) {
       console.log('register user from link');
-      console.log(values);
+      if (token && data.password && data.repeatedPassword && data.name && data.lastName && data.dateOfBirth) {
+        registerFromLink(token, data.password, data.repeatedPassword, data.name, data.lastName, data.dateOfBirth, phoneNumber, country, city, address, () => console.log('created'));
+      }
     } else {
       console.log('register user');
-      console.log(values);
     }
     // setData({ ...data, ...values });
     // setCurrentPage(currentPage + 1);
@@ -83,4 +93,40 @@ const ContactDataPage: React.FC<Props> = ({ isRegistrationLink }) => {
   );
 };
 
-export default ContactDataPage;
+interface LinkDispatchProps {
+  userRegister: (
+    email: string,
+    password: string,
+    repeatedPassword: string,
+    name: string,
+    lastName: string,
+    dateOfBirth: Date,
+    phoneNumber: string,
+    country: string,
+    city: string,
+    address: string,
+    callback: () => void
+  ) => void;
+  registerFromLink: (
+    token: string,
+    password: string,
+    repeatedPassword: string,
+    name: string,
+    lastName: string,
+    dateOfBirth: Date,
+    phoneNumber: string,
+    country: string,
+    city: string,
+    address: string,
+    callback: () => void
+  ) => void;
+}
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
+  return {
+    userRegister: bindActionCreators(userRegister, dispatch),
+    registerFromLink: bindActionCreators(registerFromLink, dispatch)
+  };
+};
+
+export default connect(null, mapDispatchToProps)(ContactDataPage);

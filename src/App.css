@@ -41,7 +41,7 @@
 .react-datepicker__input-container {
   border: none;
   border-bottom: 1px solid #ccc;
-  color: rgba(0, 0, 0, 0.6);
+  /*color: rgba(0, 0, 0, 0.6);*/
   font-size: 16px;
   font-family: Avant Garde, sans-serif;
 }
@@ -50,6 +50,7 @@
   width: 100%;
   border: none;
   height: 36px;
+  color: #1d1d1d !important;
 }
 
 .react-datepicker__input-container input:focus {

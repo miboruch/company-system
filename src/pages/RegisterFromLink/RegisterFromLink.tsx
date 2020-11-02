@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import LoginTemplate, { TemplatePage } from '../../components/templates/LoginTemplate/LoginTemplate';
 import RegistrationLinkController from '../../components/compound/RegisterUser/RegistrationLinkController';
 import Spinner from '../../components/atoms/Spinner/Spinner';
+import { ThunkDispatch } from 'redux-thunk';
+import { AppTypes } from '../../types/actionTypes/appActionTypes';
+import { bindActionCreators } from 'redux';
+import { validateRegistrationToken } from '../../actions/authenticationActions';
 
 interface RegistrationTokenResponse {
   companyId: string;
@@ -22,15 +27,39 @@ interface RegistrationTokenMonthlyPrice extends RegistrationTokenResponse {
   monthlyPrice: number;
 }
 
-type RegistrationVerifyTokenResponse = RegistrationTokenHourPrice | RegistrationTokenMonthlyPrice;
+export type RegistrationVerifyTokenResponse = RegistrationTokenHourPrice | RegistrationTokenMonthlyPrice;
 
 interface Props {}
 
-const RegisterFromLink: React.FC<Props & RouteComponentProps> = ({ match }) => {
+interface MatchProps {
+  token: string;
+}
+
+type ConnectedProps = Props & LinkDispatchProps & RouteComponentProps<MatchProps>;
+
+const RegisterFromLink: React.FC<ConnectedProps> = ({ match, validateRegistrationToken }) => {
   const [isLoading, setLoading] = useState<boolean>(true);
   const [response, setResponse] = useState<RegistrationVerifyTokenResponse | null>(null);
-  console.log(match.params);
-  return <LoginTemplate page={TemplatePage.Register}>{isLoading ? <Spinner /> : <RegistrationLinkController />}</LoginTemplate>;
+
+  useEffect(() => {
+    validateRegistrationToken(match.params.token, setLoading, setResponse);
+  }, [match.params]);
+
+  return (
+    <LoginTemplate page={TemplatePage.Register} companyName={response?.companyName}>
+      {isLoading ? <Spinner /> : !!response && <RegistrationLinkController response={response} token={match.params.token} />}
+    </LoginTemplate>
+  );
 };
 
-export default RegisterFromLink;
+interface LinkDispatchProps {
+  validateRegistrationToken: (token: string, setLoading: (isLoading: boolean) => void, setResponse: (response: RegistrationVerifyTokenResponse) => void) => void;
+}
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
+  return {
+    validateRegistrationToken: bindActionCreators(validateRegistrationToken, dispatch)
+  };
+};
+
+export default connect(null, mapDispatchToProps)(RegisterFromLink);

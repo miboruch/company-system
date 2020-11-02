@@ -21,6 +21,9 @@ import { AppTypes } from '../types/actionTypes/appActionTypes';
 import { API_URL } from '../utils/config';
 import { UserDataInterface } from '../types/modelsTypes';
 import { AppState } from '../reducers/rootReducer';
+import { setNotificationMessage } from './toggleActions';
+import { NotificationTypes } from '../types/actionTypes/toggleAcitonTypes';
+import { RegistrationVerifyTokenResponse } from '../pages/RegisterFromLink/RegisterFromLink';
 
 const authStart = (): AuthStart => {
   return {
@@ -139,8 +142,6 @@ export const userLogin = (email: string, password: string, successCallback: () =
       password
     });
 
-    console.log(data);
-
     dispatch(authSuccess(data.token, data.refreshToken, data.expireIn));
     successCallback();
 
@@ -170,12 +171,13 @@ export const userRegister = (
   repeatedPassword: string,
   name: string,
   lastName: string,
-  dateOfBirth: string | Date,
+  dateOfBirth: Date,
   phoneNumber: string,
   country: string,
   city: string,
-  address: string
-) => async (dispatch: Dispatch<AppTypes>) => {
+  address: string,
+  callback: () => void
+) => async (dispatch: Dispatch<any>) => {
   try {
     dispatch(authStart());
 
@@ -193,8 +195,14 @@ export const userRegister = (
     });
 
     dispatch(authSuccess(data.token, data.refreshToken, data.expireIn));
+    dispatch(setNotificationMessage('Utworzono nowe konto'));
+    callback();
+
+    const milliseconds = data.expireIn - new Date().getTime();
+    dispatch(authTimeout(data.refreshToken, milliseconds));
   } catch (error) {
     dispatch(authFailure());
+    dispatch(setNotificationMessage('Problem z rejestracją', NotificationTypes.Error));
   }
 };
 
@@ -259,5 +267,63 @@ export const sendRegistrationMail = (email: string, pricePerHour?: number, month
     }
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const validateRegistrationToken = (token: string, setLoading: (isLoading: boolean) => void, setResponse: (response: RegistrationVerifyTokenResponse) => void) => async (
+  dispatch: Dispatch<any>
+) => {
+  try {
+    const { data } = await axios.post(`${API_URL}/auth/verify-registration-token`, {
+      token
+    });
+    console.log(data);
+    setResponse(data);
+    setLoading(false);
+    dispatch(setNotificationMessage('Token prawidłowy'));
+  } catch (error) {
+    setLoading(false);
+    dispatch(setNotificationMessage('Token nie jest prawidłowy', NotificationTypes.Error));
+  }
+};
+
+export const registerFromLink = (
+  token: string,
+  password: string,
+  repeatedPassword: string,
+  name: string,
+  lastName: string,
+  dateOfBirth: Date,
+  phoneNumber: string,
+  country: string,
+  city: string,
+  address: string,
+  callback: () => void
+) => async (dispatch: Dispatch<any>) => {
+  dispatch(authStart());
+
+  try {
+    const { data } = await axios.post(`${API_URL}/auth/register-from-link`, {
+      token,
+      password,
+      repeatedPassword,
+      name,
+      lastName,
+      dateOfBirth,
+      phoneNumber,
+      country,
+      city,
+      address
+    });
+
+    dispatch(authSuccess(data.token, data.refreshToken, data.expireIn));
+    dispatch(setNotificationMessage('Utworzono nowe konto'));
+    callback();
+
+    const milliseconds = data.expireIn - new Date().getTime();
+    dispatch(authTimeout(data.refreshToken, milliseconds));
+  } catch (error) {
+    dispatch(authFailure());
+    dispatch(setNotificationMessage('Problem z utworzeniem nowego konta'));
   }
 };
