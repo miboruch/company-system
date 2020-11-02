@@ -8,6 +8,7 @@ const AuthWrapper = styled.div`
   height: 100%;
   display: grid;
   place-items: center;
+  position: relative;
 
   ${({ theme }) => theme.mq.tablet} {
     width: 80%;

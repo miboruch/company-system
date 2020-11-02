@@ -45,7 +45,7 @@ const AddTaskController: React.FC<ConnectedProps> = ({ isAddNewTaskOpen, setAddN
               <CloseButton setBoxState={() => setAddNewTaskOpen(false)} />
             </CloseButtonWrapper>
             <AddTaskHeader setBoxState={setAddNewTaskOpen} />
-            <CompoundTitle>Dodaj zadanie</CompoundTitle>
+            <CompoundTitle>Nowe zadanie</CompoundTitle>
             <StandardCompoundTitle>Uzupełnij informacje o zadaniu</StandardCompoundTitle>
             <StepList />
             <ContentWrapper>

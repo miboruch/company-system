@@ -8,7 +8,7 @@ import { AppState } from '../../../reducers/rootReducer';
 import { StyledLabel } from '../../../styles/shared';
 import DatePicker from 'react-datepicker';
 import Button from '../../atoms/Button/Button';
-import { DeleteIcon, EditIcon } from '../../../styles/iconStyles';
+import { DeleteIcon, EditIcon, CheckedIcon, NotCheckedIcon } from '../../../styles/iconStyles';
 
 interface InitialValues {
   name?: string;
@@ -35,8 +35,8 @@ const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, isEditToggled, setEd
     description: selectedTask?.description,
     timeEstimate: selectedTask?.timeEstimate,
     clientId: selectedTask?.clientId,
-    taskIncome: selectedTask?.taskIncome,
-    taskExpense: selectedTask?.taskExpense,
+    taskIncome: selectedTask?.taskIncome ? selectedTask.taskIncome : 0,
+    taskExpense: selectedTask?.taskExpense ? selectedTask.taskExpense : 0,
     isCompleted: selectedTask?.isCompleted,
     date: selectedTask?.date
   };
@@ -56,6 +56,7 @@ const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, isEditToggled, setEd
               <HeaderWrapper>
                 <Title>{selectedTask.name}</Title>
                 <RowIconWrapper>
+                  {selectedTask?.isCompleted ? <CheckedIcon /> : <NotCheckedIcon />}
                   <EditIcon onClick={() => setEditToggled(!isEditToggled)} />
                   <DeleteIcon onClick={() => setDeleteOpen(true)} />
                 </RowIconWrapper>

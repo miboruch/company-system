@@ -28,35 +28,37 @@ const LoginPage: React.FC<ConnectedProps> = ({ history, userLogin, error, isLoad
   };
 
   const handleSubmit = (values: InitialValues): void => {
-    userLogin(values.email, values.password, () => history.push('/companies'));
+    userLogin(values.email, values.password, () => history.push('/select'));
   };
 
   return (
     <LoginTemplate page={TemplatePage.Login}>
       <AuthWrapper>
         <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-          {({ handleChange, values }) =>
-            isLoading ? (
-              <SpinnerWrapper>
-                <Spinner />
-              </SpinnerWrapper>
-            ) : (
-              <StyledForm>
-                <Heading>Zaloguj się do panelu</Heading>
-                <StyledInput onChange={handleChange} type={'email'} name={'email'} value={values.email} required={true} labelText={'Email'} />
-                <Input onChange={handleChange} type={'password'} name={'password'} value={values.password} required={true} labelText={'Hasło'} />
-                <FlexWrapper>
-                  <Button type={'submit'} text={'Zaloguj'} />
-                </FlexWrapper>
-                <FlexWrapperDefault>
-                  <AccountParagraph>
-                    Nie masz konta? <StyledLink to={'/register'}>zarejestruj się</StyledLink>
-                  </AccountParagraph>
-                </FlexWrapperDefault>
-                <ErrorParagraph isVisible={!!error}>Niepoprawny email lub hasło</ErrorParagraph>
-              </StyledForm>
-            )
-          }
+          {({ handleChange, values }) => (
+            <StyledForm>
+              {isLoading ? (
+                <SpinnerWrapper>
+                  <Spinner />
+                </SpinnerWrapper>
+              ) : (
+                <>
+                  <Heading>Zaloguj się do panelu</Heading>
+                  <StyledInput onChange={handleChange} type={'email'} name={'email'} value={values.email} required={true} labelText={'Email'} />
+                  <Input onChange={handleChange} type={'password'} name={'password'} value={values.password} required={true} labelText={'Hasło'} />
+                  <FlexWrapper>
+                    <Button type={'submit'} text={'Zaloguj'} />
+                  </FlexWrapper>
+                  <FlexWrapperDefault>
+                    <AccountParagraph>
+                      Nie masz konta? <StyledLink to={'/register'}>zarejestruj się</StyledLink>
+                    </AccountParagraph>
+                  </FlexWrapperDefault>
+                  <ErrorParagraph isVisible={!!error}>Niepoprawny email lub hasło</ErrorParagraph>
+                </>
+              )}
+            </StyledForm>
+          )}
         </Formik>
       </AuthWrapper>
     </LoginTemplate>

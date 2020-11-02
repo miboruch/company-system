@@ -31,7 +31,7 @@ const authStart = (): AuthStart => {
 const authSuccess = (token: string, refreshToken: string, expireIn: number): AuthSuccess => {
   localStorage.setItem('token', token);
   localStorage.setItem('refreshToken', refreshToken);
-  localStorage.setItem('expireDate', new Date(expireIn).toLocaleString());
+  localStorage.setItem('expireDate', new Date(expireIn).toString());
 
   return {
     type: AUTH_SUCCESS,
@@ -139,6 +139,8 @@ export const userLogin = (email: string, password: string, successCallback: () =
       password
     });
 
+    console.log(data);
+
     dispatch(authSuccess(data.token, data.refreshToken, data.expireIn));
     successCallback();
 
@@ -230,6 +232,30 @@ export const getAllAppUsers = () => async (dispatch: Dispatch<AppTypes>, getStat
       });
 
       dispatch(setAllAppUsers(data));
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const sendRegistrationMail = (email: string, pricePerHour?: number, monthlyPrice?: number) => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
+  const { token } = getState().authenticationReducer;
+  const { currentCompany } = getState().companyReducer;
+
+  try {
+    if (token && currentCompany) {
+      const data = {
+        email,
+        pricePerHour,
+        monthlyPrice,
+        companyName: currentCompany.name
+      };
+
+      await axios.post(`${API_URL}/auth/send-registration-link?company_id=${currentCompany._id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
     }
   } catch (error) {
     console.log(error);

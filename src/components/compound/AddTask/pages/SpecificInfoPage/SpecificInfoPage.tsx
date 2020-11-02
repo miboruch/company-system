@@ -1,21 +1,27 @@
 import React, { useContext } from 'react';
+import { connect } from 'react-redux';
 import { HeadingWrapper, MobileCompoundTitle, StyledBackParagraph, StyledForm, StyledInput, Subheading, Wrapper } from '../../../../../styles/compoundStyles';
-import { DoubleFlexWrapper, StyledLabel } from '../../../../../styles/shared';
-import DatePicker from 'react-datepicker';
+import { DoubleFlexWrapper } from '../../../../../styles/shared';
 import Button from '../../../../atoms/Button/Button';
 import { Formik } from 'formik';
 import { TaskDataContext } from '../../context/TaskDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
+import { ThunkDispatch } from 'redux-thunk';
+import { AppTypes } from '../../../../../types/actionTypes/appActionTypes';
+import { bindActionCreators } from 'redux';
+import { addNewTask } from '../../../../../actions/taskActions';
 
 interface DefaultValues {
-  timeEstimate?: number;
+  timeEstimate: number;
   taskIncome?: number;
   taskExpense?: number;
 }
 
 interface Props {}
 
-const SpecificInfoPage: React.FC<Props> = () => {
+type ConnectedProps = Props & LinkDispatchProps;
+
+const SpecificInfoPage: React.FC<ConnectedProps> = ({ addNewTask }) => {
   const { data, setData } = useContext(TaskDataContext);
   const { setCurrentPage } = useContext(PageContext);
 
@@ -26,9 +32,10 @@ const SpecificInfoPage: React.FC<Props> = () => {
   };
 
   const handleSubmit = (values: DefaultValues): void => {
-    console.log('add new task');
-    console.log(values);
     setData({ ...data, ...values });
+    if (data.date && data.name && data.description && data.isCompleted !== undefined) {
+      addNewTask(data.date, values.timeEstimate, data.name, data.description, data.isCompleted, values.taskIncome, values.taskExpense);
+    }
   };
 
   return (
@@ -54,4 +61,14 @@ const SpecificInfoPage: React.FC<Props> = () => {
   );
 };
 
-export default SpecificInfoPage;
+interface LinkDispatchProps {
+  addNewTask: (date: Date, timeEstimate: number, name: string, description: string, isCompleted: boolean, taskIncome?: number, taskExpense?: number) => void;
+}
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
+  return {
+    addNewTask: bindActionCreators(addNewTask, dispatch)
+  };
+};
+
+export default connect(null, mapDispatchToProps)(SpecificInfoPage);

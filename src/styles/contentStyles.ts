@@ -84,6 +84,7 @@ const ButtonWrapper = styled.div`
 const RowIconWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
   row-gap: 2rem;
 `;
 
