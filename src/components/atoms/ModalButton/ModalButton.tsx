@@ -14,7 +14,7 @@ enum Types {
 }
 
 interface Props {
-  onClick: () => void;
+  onClick?: () => void;
   buttonType: ButtonType;
   text: string;
   submit?: boolean;
@@ -22,7 +22,7 @@ interface Props {
 
 const ModalButton: React.FC<Props> = ({ onClick, submit, buttonType, text }) => {
   return (
-    <Button type={submit ? 'submit' : 'button'} onClick={() => onClick()} buttonType={buttonType}>
+    <Button type={submit ? 'submit' : 'button'} onClick={() => !!onClick && onClick()} buttonType={buttonType}>
       {text}
     </Button>
   );

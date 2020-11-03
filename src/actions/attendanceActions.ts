@@ -104,6 +104,7 @@ export const getSingleDayAttendance = (date?: Date) => async (dispatch: Dispatch
           Authorization: `Bearer ${token}`
         }
       });
+      console.log(data);
 
       dispatch(setDayAttendance(data));
     } else {
@@ -146,16 +147,17 @@ export const selectAttendance = (attendance: AttendanceInterface | null) => (dis
   dispatch(getWeekAttendance(-3));
 };
 
-export const updateAttendance = () => (attendanceId: string, wasPresent: boolean, hours?: number) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
+export const addAttendance = (userId: string, date: Date, wasPresent: boolean, hours: number) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   const { token } = getState().authenticationReducer;
   const { currentCompany } = getState().companyReducer;
 
   try {
     if (token && currentCompany) {
-      await axios.put(
-        `${API_URL}/attendance/edit-attendance?company_id=${currentCompany._id}`,
+      await axios.post(
+        `${API_URL}/attendance/add-new?company_id=${currentCompany._id}`,
         {
-          attendanceId,
+          userId,
+          date,
           wasPresent,
           hours: hours ? hours : 0
         },
@@ -166,7 +168,35 @@ export const updateAttendance = () => (attendanceId: string, wasPresent: boolean
         }
       );
 
-      dispatch(setNotificationMessage('Problem z aktualizacją obecności', NotificationTypes.Error));
+      dispatch(setNotificationMessage('Dodano obecność'));
+      dispatch(getSingleDayAttendance());
+    }
+  } catch (error) {
+    dispatch(setNotificationMessage('Problem z dodaniem obecności', NotificationTypes.Error));
+  }
+};
+
+export const updateAttendance = (attendanceId: string, wasPresent: boolean, hours: number) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
+  const { token } = getState().authenticationReducer;
+  const { currentCompany } = getState().companyReducer;
+
+  try {
+    if (token && currentCompany) {
+      await axios.put(
+        `${API_URL}/attendance/edit-attendance?company_id=${currentCompany._id}`,
+        {
+          attendanceId,
+          wasPresent,
+          hours: hours
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      dispatch(setNotificationMessage('Zaktualizowano obecność'));
       dispatch(getSingleDayAttendance());
     }
   } catch (error) {
