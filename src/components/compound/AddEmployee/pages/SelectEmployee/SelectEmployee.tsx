@@ -1,21 +1,16 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import {
-  HeadingWrapper,
-  MobileCompoundTitle,
-  StyledForm,
-  Subheading,
-  Wrapper
-} from '../../../../../styles/compoundStyles';
+import { HeadingWrapper, MobileCompoundTitle, StyledForm, Subheading, Wrapper } from '../../../../../styles/compoundStyles';
 import { DoubleFlexWrapper } from '../../../../../styles/shared';
 import Button from '../../../../atoms/Button/Button';
 import { Formik } from 'formik';
 import { EmployeeDataContext } from '../../context/EmployeeDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
-import { UserDataInterface } from '../../../../../types/modelsTypes';
+import { EmployeeDataInterface, UserDataInterface } from '../../../../../types/modelsTypes';
 import { AppState } from '../../../../../reducers/rootReducer';
 import UserBox from '../../../../molecules/UserBox/UserBox';
+import { removeDuplicates } from '../../../../../utils/functions';
 
 const UsersWrapper = styled.div`
   width: 100%;
@@ -39,7 +34,7 @@ type DefaultValues = SelectUserDefaultValues | SetMailDefaultValues;
 
 type ConnectedProps = Props & LinkStateProps;
 
-const SelectEmployee: React.FC<ConnectedProps> = ({ allAppUsers }) => {
+const SelectEmployee: React.FC<ConnectedProps> = ({ allAppUsers, allCompanyEmployees }) => {
   const { data, setData } = useContext(EmployeeDataContext);
   const { setCurrentPage } = useContext(PageContext);
 
@@ -47,6 +42,11 @@ const SelectEmployee: React.FC<ConnectedProps> = ({ allAppUsers }) => {
     userId: '',
     registerWithMail: undefined
   };
+
+  if(allCompanyEmployees.length > 0 && allAppUsers.length > 0){
+    const result = removeDuplicates(allAppUsers, allCompanyEmployees);
+    console.log(result);
+  }
 
   const handleSubmit = (values: DefaultValues) => {
     console.log(values);
@@ -64,8 +64,9 @@ const SelectEmployee: React.FC<ConnectedProps> = ({ allAppUsers }) => {
               <Subheading>Wybierz jednego użytkownika lub wyślij zaproszenie jeżeli twój pracownik nie posiada jeszcze konta</Subheading>
             </HeadingWrapper>
             <UsersWrapper>
-              {allAppUsers.map((user) => (
+              {removeDuplicates(allAppUsers, allCompanyEmployees).map((user) => (
                 <UserBox
+                  key={user._id}
                   name={`${user.name} ${user.lastName}`}
                   topDescription={new Date(user.dateOfBirth).toLocaleDateString()}
                   bottomDescription={user.email}
@@ -100,10 +101,11 @@ const SelectEmployee: React.FC<ConnectedProps> = ({ allAppUsers }) => {
 
 interface LinkStateProps {
   allAppUsers: UserDataInterface[];
+  allCompanyEmployees: EmployeeDataInterface[];
 }
 
-const mapStateToProps = ({ authenticationReducer: { allAppUsers } }: AppState): LinkStateProps => {
-  return { allAppUsers };
+const mapStateToProps = ({ authenticationReducer: { allAppUsers }, employeeReducer: { allCompanyEmployees } }: AppState): LinkStateProps => {
+  return { allAppUsers, allCompanyEmployees };
 };
 
 export default connect(mapStateToProps)(SelectEmployee);

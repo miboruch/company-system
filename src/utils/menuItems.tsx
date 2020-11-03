@@ -9,11 +9,6 @@ interface MenuItem {
 
 export const adminMenuItems: MenuItem[] = [
   {
-    name: 'Twoje firmy',
-    link: '/admin/companies',
-    icon: <HomeIcon />
-  },
-  {
     name: 'Strona główna',
     link: '/admin/home',
     icon: <HomeIcon />
@@ -42,15 +37,15 @@ export const adminMenuItems: MenuItem[] = [
     name: 'Lista obecności',
     link: '/admin/attendance',
     icon: <ListIcon />
+  },
+  {
+    name: 'Twoje firmy',
+    link: '/admin/companies',
+    icon: <HomeIcon />
   }
 ];
 
 export const userMenuItems: MenuItem[] = [
-  {
-    name: 'Twoje firmy',
-    link: '/user/companies',
-    icon: <HomeIcon />
-  },
   {
     name: 'Strona główna',
     link: '/user/home',
@@ -65,5 +60,10 @@ export const userMenuItems: MenuItem[] = [
     name: 'Lista obecności',
     link: '/user/attendance',
     icon: <ListIcon />
+  },
+  {
+    name: 'Twoje firmy',
+    link: '/user/companies',
+    icon: <HomeIcon />
   }
 ];

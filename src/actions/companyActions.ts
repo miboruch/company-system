@@ -57,33 +57,11 @@ export const setAddCompanyOpen = (isOpen: boolean): SetAddCompanyOpen => {
 export const getUserAdminCompanies = () => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
   dispatch(setCompanyLoading(true));
 
-  const { token } = getState().authenticationReducer;
+  const { token, role } = getState().authenticationReducer;
 
   try {
-    if (token) {
-      const { data } = await axios.get(`${API_URL}/user/get-user-companies`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-
-      dispatch(setAllUserCompanies(data));
-    } else {
-      dispatch(setCompaniesError('Problem z uwierzytelnieniem'));
-    }
-  } catch (error) {
-    dispatch(setCompaniesError(error));
-  }
-};
-
-export const getUserEmployeeCompanies = () => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
-  dispatch(setCompanyLoading(true));
-
-  const { token } = getState().authenticationReducer;
-
-  try {
-    if (token) {
-      const { data } = await axios.get(`${API_URL}/employee/get-employee-companies`, {
+    if (token && role) {
+      const { data } = await axios.get(role === UserRole.Admin ? `${API_URL}/user/get-user-companies` : `${API_URL}/employee/get-employee-companies`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
