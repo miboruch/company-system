@@ -42,6 +42,14 @@ const Button = styled.button<ButtonTypeInterface>`
       border: none;
       color: ${({ theme }) => theme.colors.white};
     `}
+  
+  ${({ buttonType }) =>
+    buttonType === ButtonType.Submit &&
+    css`
+      background-color: ${({ theme }) => theme.colors.white};
+      border: 1px solid ${({ theme }) => theme.colors.green};
+      color: ${({ theme }) => theme.colors.white};
+    `}
 `;
 
 export { Button };

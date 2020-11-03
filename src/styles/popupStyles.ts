@@ -56,6 +56,7 @@ const ButtonWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  border-top: 1px solid #f7f8fc;
 `;
 
 const Paragraph = styled.p`

@@ -19,12 +19,17 @@ import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { getSingleDayAttendance } from '../../../actions/attendanceActions';
 import { getCompanyTasks, redirectToTask } from '../../../actions/taskActions';
+import DeletePopup from '../../molecules/DeletePopup/DeletePopup';
+import AttendancePopup from '../../molecules/AttendancePopup/AttendancePopup';
 
 type ConnectedProps = LinkStateProps & LinkDispatchProps & RouteComponentProps<any>;
 
 const LandingPageContent: React.FC<ConnectedProps> = ({ history, token, singleDayAttendance, getSingleDayAttendance, allCompanyTasks, getCompanyTasks, redirectToTask }) => {
   const [text, setText] = useState<string>('');
   const [data, setData] = useState<Array<IncomeDataInterface> | null>(null);
+  const [selectedAttendance, setSelectedAttendance] = useState<AttendanceInterface | null>(null);
+  const [isAttendanceOpen, setAttendanceOpen] = useState<boolean>(false);
+
   const [daysBack, setDaysBackTo] = useState<number>(20);
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
@@ -67,13 +72,15 @@ const LandingPageContent: React.FC<ConnectedProps> = ({ history, token, singleDa
             data={data}
             setDaysBack={setDaysBackTo}
           />
-          <AttendanceList singleDayAttendance={singleDayAttendance} />
+          <AttendanceList singleDayAttendance={singleDayAttendance} setSelectedAttendance={setSelectedAttendance} setAttendanceOpen={setAttendanceOpen} />
           <InfoBoxWrapper>
             <InformationBox title={'Pracownicy'} value={8} areaName={'employees'} />
             <InformationBox title={'Wykonane zadania'} value={12} areaName={'attendance'} />
           </InfoBoxWrapper>
         </ContentGridWrapper>
       </Content>
+      {/*<DeletePopup isOpen={!!selectedAttendance} setOpen={(is:boolean)=> {}} headerText={'test'} text={'test'} callback={() => {}}/>*/}
+      <AttendancePopup attendance={selectedAttendance} isOpen={isAttendanceOpen} setOpen={setAttendanceOpen} />
     </GridWrapper>
   );
 };

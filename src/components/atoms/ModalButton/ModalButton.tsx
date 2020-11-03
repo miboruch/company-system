@@ -4,7 +4,8 @@ import { Button } from './ModalButton.styles';
 export enum ButtonType {
   Cancel = 'cancel',
   Delete = 'delete',
-  Add = 'add'
+  Add = 'add',
+  Submit = 'submit'
 }
 
 interface Props {

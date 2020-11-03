@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import AttendanceBox, { AttendanceBoxProps } from '../../molecules/AttendanceBox/AttendanceBox';
 import { AttendanceInterface } from '../../../types/modelsTypes';
 import { isEmpty } from '../../../utils/functions';
 import ListBox from '../../molecules/ListBox/ListBox';
+import DeletePopup from '../../molecules/DeletePopup/DeletePopup';
+import { setSelectedEmployee } from '../../../actions/employeeActions';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -32,9 +34,11 @@ const DateParagraph = styled.h3`
 
 interface Props {
   singleDayAttendance: AttendanceInterface[];
+  setSelectedAttendance?: React.Dispatch<React.SetStateAction<AttendanceInterface | null>>
+  setAttendanceOpen?:   React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const AttendanceList: React.FC<Props> = ({ singleDayAttendance }) => {
+const AttendanceList: React.FC<Props> = ({ singleDayAttendance, setSelectedAttendance, setAttendanceOpen }) => {
   return (
     <StyledWrapper>
       <DateParagraph>{new Date().toLocaleDateString()}</DateParagraph>
@@ -57,7 +61,10 @@ const AttendanceList: React.FC<Props> = ({ singleDayAttendance }) => {
           isCompanyBox={false}
           isEmpty={isEmpty(attendance.attendance)}
           isChecked={!isEmpty(attendance.attendance) && attendance.attendance?.wasPresent}
-          callback={() => console.log(attendance)}
+          callback={() => {
+            !!setSelectedAttendance && setSelectedAttendance(attendance);
+            !!setAttendanceOpen && setAttendanceOpen(true);
+          }}
           value={attendance.attendance?.wasPresent ? `${attendance.attendance.hours} h` : undefined}
         />
       ))}
