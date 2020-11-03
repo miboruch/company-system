@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
 import Input from '../../../atoms/Input/Input';
@@ -31,9 +31,9 @@ interface Props {
   token?: string;
 }
 
-type ConnectedProps = Props & LinkDispatchProps;
+type ConnectedProps = Props & LinkDispatchProps & RouteComponentProps;
 
-const ContactDataPage: React.FC<ConnectedProps> = ({ isRegistrationLink, token, registerFromLink, userRegister }) => {
+const ContactDataPage: React.FC<ConnectedProps> = ({ history, isRegistrationLink, token, registerFromLink, userRegister }) => {
   const { data, setData } = useContext(RegisterDataContext);
   const { currentPage, setCurrentPage } = useContext(PageContext);
   const [formattedPhoneNumber, setFormattedPhoneNumber] = useState<string | null>(null);
@@ -51,15 +51,20 @@ const ContactDataPage: React.FC<ConnectedProps> = ({ isRegistrationLink, token, 
 
   const handleSubmit = ({ address, city, country, phoneNumber }: defaultValues): void => {
     if (isRegistrationLink) {
-      console.log('register user from link');
       if (token && data.password && data.repeatedPassword && data.name && data.lastName && data.dateOfBirth) {
-        registerFromLink(token, data.password, data.repeatedPassword, data.name, data.lastName, data.dateOfBirth, phoneNumber, country, city, address, () => console.log('created'));
+        registerFromLink(token, data.password, data.repeatedPassword, data.name, data.lastName, data.dateOfBirth, phoneNumber, country, city, address, () => {
+          history.push('/select');
+          setData({});
+        });
       }
     } else {
-      console.log('register user');
+      if (data.email && data.password && data.repeatedPassword && data.name && data.lastName && data.dateOfBirth) {
+        userRegister(data.email, data.password, data.repeatedPassword, data.name, data.lastName, data.dateOfBirth, phoneNumber, country, city, address, () => {
+          history.push('/select');
+          setData({});
+        });
+      }
     }
-    // setData({ ...data, ...values });
-    // setCurrentPage(currentPage + 1);
   };
 
   return (
@@ -129,4 +134,6 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDi
   };
 };
 
-export default connect(null, mapDispatchToProps)(ContactDataPage);
+const ContactDataPageWithRouter = withRouter(ContactDataPage);
+
+export default connect(null, mapDispatchToProps)(ContactDataPageWithRouter);

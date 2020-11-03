@@ -12,7 +12,7 @@ interface Props {
   token: string;
 }
 
-const RegistrationLinkController: React.FC<Props> = ({ response }) => {
+const RegistrationLinkController: React.FC<Props> = ({ response, token }) => {
   return (
     <RegisterDataContextProvider isRegistrationLink={true} email={response.email}>
       <PageContextProvider>

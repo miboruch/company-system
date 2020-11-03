@@ -23,7 +23,7 @@ const Chart: React.FC<Props> = ({ data, xAxisDataKey, barDataKey, secondBarDataK
         <AreaChart data={!!data ? data : []}>
           <defs>
             <linearGradient id='chartColor' x1='0' y1='0' x2='0' y2='1'>
-              <stop offset='5%' stopColor={'#2d2d2d'} stopOpacity={1} />
+              <stop offset='25%' stopColor={'#54C172'} stopOpacity={1} />
               <stop offset='50%' stopColor={'#85BE9B'} stopOpacity={1} />
             </linearGradient>
           </defs>

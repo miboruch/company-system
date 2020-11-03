@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { History } from 'history';
 import gsap from 'gsap';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
 import { Content, Header, TileWrapper, InfoBoxWrapper } from './LandingPageContent.styles';
 import TaskTile from '../../molecules/TaskTile/TaskTile';
 import { AppState } from '../../../reducers/rootReducer';
-import { AttendanceInterface, IncomeDataInterface } from '../../../types/modelsTypes';
+import { AttendanceInterface, IncomeDataInterface, TaskInterface } from '../../../types/modelsTypes';
 import Chart from '../../molecules/Chart/Chart';
 import AttendanceList from '../AttendanceList/AttendanceList';
 import { ContentGridWrapper } from '../../../styles/HomePageContentGridStyles';
@@ -16,10 +18,11 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { getSingleDayAttendance } from '../../../actions/attendanceActions';
+import { getCompanyTasks, redirectToTask } from '../../../actions/taskActions';
 
-type ConnectedProps = LinkStateProps & LinkDispatchProps;
+type ConnectedProps = LinkStateProps & LinkDispatchProps & RouteComponentProps<any>;
 
-const LandingPageContent: React.FC<ConnectedProps> = ({ token, singleDayAttendance, getSingleDayAttendance }) => {
+const LandingPageContent: React.FC<ConnectedProps> = ({ history, token, singleDayAttendance, getSingleDayAttendance, allCompanyTasks, getCompanyTasks, redirectToTask }) => {
   const [text, setText] = useState<string>('');
   const [data, setData] = useState<Array<IncomeDataInterface> | null>(null);
   const [daysBack, setDaysBackTo] = useState<number>(20);
@@ -28,6 +31,7 @@ const LandingPageContent: React.FC<ConnectedProps> = ({ token, singleDayAttendan
 
   useEffect(() => {
     contentAnimation(tl, contentRef);
+    allCompanyTasks.length === 0 && getCompanyTasks();
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -50,9 +54,9 @@ const LandingPageContent: React.FC<ConnectedProps> = ({ token, singleDayAttendan
         {/*TODO: make another grid in this component - only hdReady resolutions */}
         <ContentGridWrapper ref={contentRef}>
           <TileWrapper>
-            <TaskTile isCompleted={false} name={'Wykonanie usługi przycięcia drzew'} />
-            <TaskTile isCompleted={false} name={'Wykonanie usługi przycięcia drzew'} />
-            <TaskTile isCompleted={false} name={'Wykonanie usługi przycięcia drzew'} />
+            {allCompanyTasks.slice(0, 3).map((task) => (
+              <TaskTile key={task._id} isCompleted={task.isCompleted} name={task.name} onClick={() => redirectToTask(history, task)} />
+            ))}
           </TileWrapper>
           <Chart
             xAxisDataKey={'createdDate'}
@@ -77,20 +81,27 @@ const LandingPageContent: React.FC<ConnectedProps> = ({ token, singleDayAttendan
 interface LinkStateProps {
   token: string | null;
   singleDayAttendance: AttendanceInterface[];
+  allCompanyTasks: TaskInterface[];
 }
 
 interface LinkDispatchProps {
   getSingleDayAttendance: (date?: Date) => void;
+  getCompanyTasks: () => void;
+  redirectToTask: (history: History, task: TaskInterface) => void;
 }
 
-const mapStateToProps = ({ authenticationReducer: { token }, attendanceReducer: { singleDayAttendance } }: AppState): LinkStateProps => {
-  return { token, singleDayAttendance };
+const mapStateToProps = ({ authenticationReducer: { token }, attendanceReducer: { singleDayAttendance }, taskReducer: { allCompanyTasks } }: AppState): LinkStateProps => {
+  return { token, singleDayAttendance, allCompanyTasks };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
   return {
-    getSingleDayAttendance: bindActionCreators(getSingleDayAttendance, dispatch)
+    getSingleDayAttendance: bindActionCreators(getSingleDayAttendance, dispatch),
+    getCompanyTasks: bindActionCreators(getCompanyTasks, dispatch),
+    redirectToTask: bindActionCreators(redirectToTask, dispatch)
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LandingPageContent);
+const LandingPageContentWithRouter = withRouter(LandingPageContent);
+
+export default connect(mapStateToProps, mapDispatchToProps)(LandingPageContentWithRouter);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const Tile = styled.div`
@@ -10,6 +10,7 @@ const Tile = styled.div`
   border-radius: 30px;
   white-space: normal;
   margin-right: 2rem;
+  cursor: pointer;
 
   ${({ theme }) => theme.mq.hdReady} {
     width: 278px;
@@ -35,11 +36,12 @@ const Name = styled.p`
 interface Props {
   isCompleted: boolean;
   name: string;
+  onClick?: () => void;
 }
 
-const TaskTile: React.FC<Props> = ({ isCompleted, name }) => {
+const TaskTile: React.FC<Props> = ({ isCompleted, name, onClick }) => {
   return (
-    <Tile>
+    <Tile onClick={() => !!onClick && onClick()}>
       <Description>{isCompleted ? 'Ukończone zadanie' : 'Aktywne zadanie'}</Description>
       <Name>{name}</Name>
     </Tile>

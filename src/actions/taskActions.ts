@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { History } from 'history';
 import {
   SET_ADD_NEW_TASK_OPEN,
   SET_COMPANY_TASKS,
@@ -22,6 +23,7 @@ import { API_URL } from '../utils/config';
 import { AppState } from '../reducers/rootReducer';
 import { setNotificationMessage } from './toggleActions';
 import { NotificationTypes } from '../types/actionTypes/toggleAcitonTypes';
+import { UserRole } from '../types/actionTypes/authenticationActionTypes';
 
 const setTaskLoading = (isLoading: boolean): SetTaskLoading => {
   return {
@@ -167,4 +169,12 @@ export const deleteTask = (taskId: string) => async (dispatch: Dispatch<any>, ge
     dispatch(setTaskError(error));
     dispatch(setNotificationMessage('Problem z usunięciem zadania', NotificationTypes.Error));
   }
+};
+
+export const redirectToTask = (history: History, task: TaskInterface) => (dispatch: Dispatch<any>, getState: () => AppState) => {
+  const { role } = getState().authenticationReducer;
+
+  role === UserRole.User ? history.push('/user/tasks') : history.push('/admin/tasks');
+  dispatch(setTaskInfoOpen(true));
+  dispatch(setSelectedTask(task));
 };
