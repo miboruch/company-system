@@ -99,7 +99,7 @@ export const getAllCompanyEmployees = () => async (dispatch: Dispatch<AppTypes>,
 
 export const selectEmployee = (employee: EmployeeDataInterface | null) => (dispatch: Dispatch<AppTypes>) => {
   dispatch(setSelectedEmployee(employee));
-  dispatch(setEmployeeInfoOpen(true));
+  dispatch(setEmployeeInfoOpen(!!employee));
 };
 
 export const updateEmployeeSalary = (pricePerHour?: number, monthlyPrice?: number) => async (dispatch: Dispatch<any>, getState: () => AppState) => {

@@ -16,7 +16,7 @@ import { AppState } from '../../../reducers/rootReducer';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
-import { getUserAdminCompanies, setAddCompanyOpen } from '../../../actions/companyActions';
+import { setAddCompanyOpen } from '../../../actions/companyActions';
 import { modalOpenAnimation } from '../../../animations/animations';
 import { MainWrapper, CloseButtonWrapper, Wrapper, ContentWrapper, CompoundTitle } from '../../../styles/compoundControllerStyles';
 

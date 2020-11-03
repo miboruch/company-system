@@ -5,7 +5,7 @@ import { AppState } from '../../../reducers/rootReducer';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
-import { getUserAdminCompanies, setAddCompanyOpen, setCompany } from '../../../actions/companyActions';
+import { getUserCompanies, setAddCompanyOpen, setCompany } from '../../../actions/companyActions';
 import { AddIcon, EmptyParagraph, SpinnerWrapper } from '../../../styles/shared';
 import Spinner from '../../atoms/Spinner/Spinner';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
@@ -17,9 +17,9 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 type ConnectedProps = LinkStateProps & LinkDispatchProps & RouteComponentProps<any>;
 
-const CompaniesPageContent: React.FC<ConnectedProps> = ({ history, userCompanies, getUserAdminCompanies, isLoading, setAddCompanyOpen, setCompany }) => {
+const CompaniesPageContent: React.FC<ConnectedProps> = ({ history, userCompanies, getUserCompanies, isLoading, setAddCompanyOpen, setCompany }) => {
   useEffect(() => {
-    getUserAdminCompanies();
+    getUserCompanies();
   }, []);
 
   return (
@@ -65,7 +65,7 @@ interface LinkStateProps {
 }
 
 interface LinkDispatchProps {
-  getUserAdminCompanies: () => void;
+  getUserCompanies: () => void;
   setAddCompanyOpen: (isOpen: boolean) => void;
   setCompany: (currentCompany: CompanyInterface | null, successCallback: () => void) => void;
 }
@@ -76,7 +76,7 @@ const mapStateToProps = ({ companyReducer: { userCompanies, isLoading } }: AppSt
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
   return {
-    getUserAdminCompanies: bindActionCreators(getUserAdminCompanies, dispatch),
+    getUserCompanies: bindActionCreators(getUserCompanies, dispatch),
     setAddCompanyOpen: bindActionCreators(setAddCompanyOpen, dispatch),
     setCompany: bindActionCreators(setCompany, dispatch)
   };

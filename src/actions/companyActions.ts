@@ -18,6 +18,7 @@ import { API_URL } from '../utils/config';
 import { AppState } from '../reducers/rootReducer';
 import { setUserRole } from './authenticationActions';
 import { UserRole } from '../types/actionTypes/authenticationActionTypes';
+import { resetAllSelected } from './toggleActions';
 
 const setCompanyLoading = (isLoading: boolean): SetCompanyLoading => {
   return {
@@ -54,7 +55,7 @@ export const setAddCompanyOpen = (isOpen: boolean): SetAddCompanyOpen => {
   };
 };
 
-export const getUserAdminCompanies = () => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
+export const getUserCompanies = () => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   dispatch(setCompanyLoading(true));
 
   const { token, role } = getState().authenticationReducer;
@@ -68,6 +69,7 @@ export const getUserAdminCompanies = () => async (dispatch: Dispatch<AppTypes>, 
       });
 
       dispatch(setAllUserCompanies(data));
+      dispatch(resetAllSelected());
     } else {
       dispatch(setCompaniesError('Problem z uwierzytelnieniem'));
     }

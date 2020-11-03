@@ -140,6 +140,6 @@ export const getWeekAttendance = (weekCounter: number) => async (dispatch: Dispa
 
 export const selectAttendance = (attendance: AttendanceInterface | null) => (dispatch: Dispatch<any>) => {
   dispatch(setSelectedAttendance(attendance));
-  dispatch(setAttendanceInfoOpen(true));
+  dispatch(setAttendanceInfoOpen(!!attendance));
   dispatch(getWeekAttendance(-3));
 };

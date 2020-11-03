@@ -98,7 +98,7 @@ export const getCompanyTasks = () => async (dispatch: Dispatch<AppTypes>, getSta
 
 export const selectTask = (task: TaskInterface | null) => (dispatch: Dispatch<AppTypes>) => {
   dispatch(setSelectedTask(task));
-  dispatch(setTaskInfoOpen(true));
+  dispatch(setTaskInfoOpen(!!task));
 };
 
 export const addNewTask = (date: Date, timeEstimate: number, name: string, description: string, isCompleted: boolean, taskIncome?: number, taskExpense?: number) => async (

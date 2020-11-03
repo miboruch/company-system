@@ -89,7 +89,7 @@ export const getCompanyClients = () => async (dispatch: Dispatch<AppTypes>, getS
 
 export const selectClient = (client: ClientInterface | null) => (dispatch: Dispatch<AppTypes>) => {
   dispatch(setSelectedClient(client));
-  dispatch(setClientInfoOpen(true));
+  dispatch(setClientInfoOpen(!!client));
 };
 
 export const addNewClient = (name: string, address: string, email: string, phoneNumber: string, city: string, country: string, lat: number, long: number) => async (
