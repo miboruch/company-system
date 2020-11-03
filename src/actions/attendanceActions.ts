@@ -24,6 +24,8 @@ import { AppTypes } from '../types/actionTypes/appActionTypes';
 import { API_URL } from '../utils/config';
 import { AttendanceInterface, WeekAttendance } from '../types/modelsTypes';
 import { AppState } from '../reducers/rootReducer';
+import { setNotificationMessage } from './toggleActions';
+import { NotificationTypes } from '../types/actionTypes/toggleAcitonTypes';
 
 const setAttendanceLoading = (isLoading: boolean): SetAttendanceLoading => {
   return {
@@ -142,4 +144,32 @@ export const selectAttendance = (attendance: AttendanceInterface | null) => (dis
   dispatch(setSelectedAttendance(attendance));
   dispatch(setAttendanceInfoOpen(!!attendance));
   dispatch(getWeekAttendance(-3));
+};
+
+export const updateAttendance = () => (attendanceId: string, wasPresent: boolean, hours?: number) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
+  const { token } = getState().authenticationReducer;
+  const { currentCompany } = getState().companyReducer;
+
+  try {
+    if (token && currentCompany) {
+      await axios.put(
+        `${API_URL}/attendance/edit-attendance?company_id=${currentCompany._id}`,
+        {
+          attendanceId,
+          wasPresent,
+          hours: hours ? hours : 0
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      dispatch(setNotificationMessage('Problem z aktualizacją obecności', NotificationTypes.Error));
+      dispatch(getSingleDayAttendance());
+    }
+  } catch (error) {
+    dispatch(setNotificationMessage('Problem z aktualizacją obecności', NotificationTypes.Error));
+  }
 };

@@ -50,7 +50,8 @@ const LandingPageContent: React.FC<ConnectedProps> = ({ history, token, singleDa
   }, [daysBack]);
 
   useEffect(() => {
-    getSingleDayAttendance(new Date('2020-10-07T18:39:30.001Z'));
+    getSingleDayAttendance();
+    // getSingleDayAttendance(new Date('2020-10-07T18:39:30.001Z'));
   }, []);
 
   return (

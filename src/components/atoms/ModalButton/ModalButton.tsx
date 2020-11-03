@@ -8,15 +8,21 @@ export enum ButtonType {
   Submit = 'submit'
 }
 
+enum Types {
+  Button = 'button',
+  Submit = 'submit'
+}
+
 interface Props {
   onClick: () => void;
   buttonType: ButtonType;
   text: string;
+  submit?: boolean;
 }
 
-const ModalButton: React.FC<Props> = ({ onClick, buttonType, text }) => {
+const ModalButton: React.FC<Props> = ({ onClick, submit, buttonType, text }) => {
   return (
-    <Button type={'button'} onClick={() => onClick()} buttonType={buttonType}>
+    <Button type={submit ? 'submit' : 'button'} onClick={() => onClick()} buttonType={buttonType}>
       {text}
     </Button>
   );
