@@ -32,7 +32,7 @@ const FinancesPageContent: React.FC<ConnectedProps> = ({ singleDayAttendance }) 
             <TaskTile isCompleted={false} name={'Wykonanie usługi przycięcia drzew'} />
             <TaskTile isCompleted={false} name={'Wykonanie usługi przycięcia drzew'} />
           </TileWrapper>
-          <Chart xAxisDataKey={'createdDate'} secondBarDataKey={'expenseValue'} secondBarDataName={'Wydatek'} barDataKey={'incomeValue'} barDataName={'Dochód'} data={[]} setDaysBack={() => {}} />
+          <Chart xAxisDataKey={'createdDate'} secondBarDataKey={'expenseValue'} secondBarDataName={'Wydatek'} barDataKey={'incomeValue'} barDataName={'Dochód'} data={[]} setDaysBack={() => {}} daysBack={1} />
           <AttendanceList singleDayAttendance={singleDayAttendance} />
           <InfoBoxWrapper>
             <p>PLN</p>

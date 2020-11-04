@@ -7,6 +7,7 @@ export const SET_TASK_ERROR = 'SET_TASK_ERROR';
 export const SET_TASK_INFO_OPEN = 'SET_TASK_INFO_OPEN';
 export const SET_ADD_NEW_TASK_OPEN = 'SET_ADD_NEW_TASK_OPEN';
 export const SET_EDIT_TASK = 'SET_EDIT_TASK';
+export const SET_COMPLETED_TASKS = 'SET_COMPLETED_TASKS';
 
 export interface SetTaskLoading {
   type: typeof SET_TASK_LOADING;

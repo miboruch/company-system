@@ -1,6 +1,6 @@
 import React from 'react';
 import { CartesianGrid, XAxis, YAxis, Tooltip, Legend, AreaChart, Area } from 'recharts';
-import { ChartWrapper, StyledResponsiveContainer } from './Chart.styles';
+import { ChartWrapper, StyledResponsiveContainer, RowWrapper, FlexRowWrapper, Paragraph } from './Chart.styles';
 
 interface Props {
   data: Array<any> | null;
@@ -10,15 +10,35 @@ interface Props {
   secondBarDataName?: string;
   barDataName: string;
   setDaysBack?: (days: number) => void;
+  daysBack: number;
 }
 
-const Chart: React.FC<Props> = ({ data, xAxisDataKey, barDataKey, secondBarDataKey, secondBarDataName, barDataName, setDaysBack }) => {
+interface ChartButtonInterface {
+  value: number;
+  text: string;
+}
+
+const Chart: React.FC<Props> = ({ data, xAxisDataKey, barDataKey, secondBarDataKey, secondBarDataName, barDataName, setDaysBack, daysBack }) => {
+  const buttons: ChartButtonInterface[] = [
+    { value: 1, text: '1d' },
+    { value: 7, text: '7d' },
+    { value: 30, text: '1m' },
+    { value: 90, text: '3m' }
+  ];
   return (
     <ChartWrapper>
-      <p onClick={() => setDaysBack && setDaysBack(1)}>1 day</p>
-      <p onClick={() => setDaysBack && setDaysBack(7)}>7 days</p>
-      <p onClick={() => setDaysBack && setDaysBack(30)}>30 days</p>
-      <p onClick={() => setDaysBack && setDaysBack(365)}>365 days</p>
+      <RowWrapper>
+        <h4>Finanse</h4>
+        {!!setDaysBack && (
+          <FlexRowWrapper>
+            {buttons.map(({ value, text }) => (
+              <Paragraph isActive={daysBack === value} onClick={() => setDaysBack(value)}>
+                {text}
+              </Paragraph>
+            ))}
+          </FlexRowWrapper>
+        )}
+      </RowWrapper>
       <StyledResponsiveContainer width={'100%'} height={250}>
         <AreaChart data={!!data ? data : []}>
           <defs>

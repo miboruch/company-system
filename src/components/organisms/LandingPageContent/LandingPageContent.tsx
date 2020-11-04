@@ -19,7 +19,6 @@ import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { getSingleDayAttendance } from '../../../actions/attendanceActions';
 import { getCompanyTasks, redirectToTask } from '../../../actions/taskActions';
-import DeletePopup from '../../molecules/DeletePopup/DeletePopup';
 import AttendancePopup from '../../molecules/AttendancePopup/AttendancePopup';
 
 type ConnectedProps = LinkStateProps & LinkDispatchProps & RouteComponentProps<any>;
@@ -30,7 +29,7 @@ const LandingPageContent: React.FC<ConnectedProps> = ({ history, token, singleDa
   const [selectedAttendance, setSelectedAttendance] = useState<AttendanceInterface | null>(null);
   const [isAttendanceOpen, setAttendanceOpen] = useState<boolean>(false);
 
-  const [daysBack, setDaysBackTo] = useState<number>(20);
+  const [daysBack, setDaysBackTo] = useState<number>(7);
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
 
@@ -51,7 +50,6 @@ const LandingPageContent: React.FC<ConnectedProps> = ({ history, token, singleDa
 
   useEffect(() => {
     getSingleDayAttendance();
-    // getSingleDayAttendance(new Date('2020-10-07T18:39:30.001Z'));
   }, []);
 
   return (
@@ -71,6 +69,7 @@ const LandingPageContent: React.FC<ConnectedProps> = ({ history, token, singleDa
             barDataKey={'incomeValue'}
             barDataName={'Dochód'}
             data={data}
+            daysBack={daysBack}
             setDaysBack={setDaysBackTo}
           />
           <AttendanceList singleDayAttendance={singleDayAttendance} setSelectedAttendance={setSelectedAttendance} setAttendanceOpen={setAttendanceOpen} />
@@ -80,7 +79,6 @@ const LandingPageContent: React.FC<ConnectedProps> = ({ history, token, singleDa
           </InfoBoxWrapper>
         </ContentGridWrapper>
       </Content>
-      {/*<DeletePopup isOpen={!!selectedAttendance} setOpen={(is:boolean)=> {}} headerText={'test'} text={'test'} callback={() => {}}/>*/}
       <AttendancePopup attendance={selectedAttendance} isOpen={isAttendanceOpen} setOpen={setAttendanceOpen} />
     </GridWrapper>
   );

@@ -178,3 +178,7 @@ export const redirectToTask = (history: History, task: TaskInterface) => (dispat
   dispatch(setTaskInfoOpen(true));
   dispatch(setSelectedTask(task));
 };
+
+export const getCompletedTasks = () => {
+
+}
