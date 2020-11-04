@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { TaskInterface } from '../../../types/modelsTypes';
 
 const Tile = styled.div`
   width: 225px;
@@ -21,7 +22,6 @@ const Tile = styled.div`
 const Description = styled.p`
   color: ${({ theme }) => theme.colors.descriptionGray};
   font-weight: ${({ theme }) => theme.font.weight.medium};
-  letter-spacing: 1px;
   font-size: 12px;
   margin-bottom: 2rem;
 `;
@@ -33,17 +33,36 @@ const Name = styled.p`
   font-weight: ${({ theme }) => theme.font.weight.medium};
 `;
 
+const IncomeWrapper = styled.div`
+  position: absolute;
+  bottom: 2rem;
+  right: 3rem;
+`;
+
+const TaskIncome = styled.p`
+  font-size: 12px;
+  font-weight: ${({ theme }) => theme.font.weight.demi};
+  color: ${({ theme }) => theme.colors.green};
+`;
+
+const TaskExpense = styled(TaskIncome)`
+  color: ${({ theme }) => theme.colors.red};
+`;
+
 interface Props {
-  isCompleted: boolean;
-  name: string;
+  task: TaskInterface;
   onClick?: () => void;
 }
 
-const TaskTile: React.FC<Props> = ({ isCompleted, name, onClick }) => {
+const TaskTile: React.FC<Props> = ({ task, onClick }) => {
   return (
     <Tile onClick={() => !!onClick && onClick()}>
-      <Description>{isCompleted ? 'Ukończone zadanie' : 'Aktywne zadanie'}</Description>
-      <Name>{name}</Name>
+      <Description>{task.isCompleted ? 'Ukończone zadanie' : 'Aktywne zadanie'}</Description>
+      <Name>{task.name}</Name>
+      <IncomeWrapper>
+        <TaskIncome>+ {task.taskIncome} PLN</TaskIncome>
+        <TaskExpense>- {task.taskExpense ? task.taskExpense : 0} PLN</TaskExpense>
+      </IncomeWrapper>
     </Tile>
   );
 };

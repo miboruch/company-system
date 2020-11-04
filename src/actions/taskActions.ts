@@ -3,6 +3,7 @@ import { History } from 'history';
 import {
   SET_ADD_NEW_TASK_OPEN,
   SET_COMPANY_TASKS,
+  SET_COMPLETED_TASKS,
   SET_EDIT_TASK,
   SET_SELECTED_TASK,
   SET_TASK_ERROR,
@@ -10,6 +11,7 @@ import {
   SET_TASK_LOADING,
   SetAddNewTaskOpen,
   SetCompanyTasks,
+  SetCompletedTasks,
   SetEditTask,
   SetSelectedTask,
   SetTaskError,
@@ -49,6 +51,13 @@ const setTaskError = (error: string | null): SetTaskError => {
   return {
     type: SET_TASK_ERROR,
     payload: error
+  };
+};
+
+const setCompletedTasks = (completedTasks: number): SetCompletedTasks => {
+  return {
+    type: SET_COMPLETED_TASKS,
+    payload: completedTasks
   };
 };
 
@@ -179,6 +188,18 @@ export const redirectToTask = (history: History, task: TaskInterface) => (dispat
   dispatch(setSelectedTask(task));
 };
 
-export const getCompletedTasks = () => {
+export const getCompletedTasks = () => async (dispatch: Dispatch<any>, getState: () => AppState) => {
+  const DAYS_BACK = 30;
+  const { token } = getState().authenticationReducer;
+  const { currentCompany } = getState().companyReducer;
 
-}
+  try {
+    if (currentCompany && token) {
+      const { data } = await axios.get(`${API_URL}/task/count-last-completed-tasks?company_id=${currentCompany._id}&daysBack=${DAYS_BACK}`);
+      console.log(data);
+      // setCompletedTasks(data.completedTasks);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

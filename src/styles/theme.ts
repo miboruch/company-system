@@ -41,7 +41,7 @@ export const theme = {
     green: '#85BE9B',
     darkGreen: '#4C522A',
     lightGray: '#BCBCBC',
-    deleteButton: '#FE7070',
+    red: '#FE7070',
     dark: '#212121',
     contentBackground: '#F9FBFC',
     inputColorStandard: '#1d1d1d',

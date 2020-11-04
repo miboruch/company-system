@@ -8,7 +8,7 @@ import TaskTile from '../../molecules/TaskTile/TaskTile';
 import Chart from '../../molecules/Chart/Chart';
 import AttendanceList from '../AttendanceList/AttendanceList';
 import InformationBox from '../../molecules/InformationBox/InformationBox';
-import { AttendanceInterface } from '../../../types/modelsTypes';
+import { AttendanceInterface, TaskInterface } from '../../../types/modelsTypes';
 import { AppState } from '../../../reducers/rootReducer';
 
 const Content = styled.div`
@@ -22,17 +22,26 @@ interface Props {}
 
 type ConnectedProps = Props & LinkStateProps;
 
-const FinancesPageContent: React.FC<ConnectedProps> = ({ singleDayAttendance }) => {
+const FinancesPageContent: React.FC<ConnectedProps> = ({ singleDayAttendance, allCompanyTasks }) => {
   return (
     <GridWrapper mobilePadding={true} onlyHeader={true} pageName={'Finanse'}>
       <Content>
         <ContentGridWrapper>
           <TileWrapper>
-            <TaskTile isCompleted={false} name={'Wykonanie usługi przycięcia drzew'} />
-            <TaskTile isCompleted={false} name={'Wykonanie usługi przycięcia drzew'} />
-            <TaskTile isCompleted={false} name={'Wykonanie usługi przycięcia drzew'} />
+            {allCompanyTasks.slice(0, 3).map((task) => (
+              <TaskTile task={task} />
+            ))}
           </TileWrapper>
-          <Chart xAxisDataKey={'createdDate'} secondBarDataKey={'expenseValue'} secondBarDataName={'Wydatek'} barDataKey={'incomeValue'} barDataName={'Dochód'} data={[]} setDaysBack={() => {}} daysBack={1} />
+          <Chart
+            xAxisDataKey={'createdDate'}
+            secondBarDataKey={'expenseValue'}
+            secondBarDataName={'Wydatek'}
+            barDataKey={'incomeValue'}
+            barDataName={'Dochód'}
+            data={[]}
+            setDaysBack={() => {}}
+            daysBack={1}
+          />
           <AttendanceList singleDayAttendance={singleDayAttendance} />
           <InfoBoxWrapper>
             <p>PLN</p>
@@ -49,10 +58,11 @@ const FinancesPageContent: React.FC<ConnectedProps> = ({ singleDayAttendance }) 
 
 interface LinkStateProps {
   singleDayAttendance: AttendanceInterface[];
+  allCompanyTasks: TaskInterface[];
 }
 
-const mapStateToProps = ({ attendanceReducer: { singleDayAttendance } }: AppState): LinkStateProps => {
-  return { singleDayAttendance };
+const mapStateToProps = ({ attendanceReducer: { singleDayAttendance }, taskReducer: { allCompanyTasks } }: AppState): LinkStateProps => {
+  return { singleDayAttendance, allCompanyTasks };
 };
 
 export default connect(mapStateToProps)(FinancesPageContent);

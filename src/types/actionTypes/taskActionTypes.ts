@@ -44,4 +44,9 @@ export interface SetEditTask {
   payload: boolean;
 }
 
-export type TaskActionTypes = SetTaskLoading | SetCompanyTasks | SetSelectedTask | SetTaskError | SetTaskInfoOpen | SetAddNewTaskOpen | SetEditTask;
+export interface SetCompletedTasks {
+  type: typeof SET_COMPLETED_TASKS,
+  payload: number;
+}
+
+export type TaskActionTypes = SetTaskLoading | SetCompanyTasks | SetSelectedTask | SetTaskError | SetTaskInfoOpen | SetAddNewTaskOpen | SetEditTask | SetCompletedTasks;

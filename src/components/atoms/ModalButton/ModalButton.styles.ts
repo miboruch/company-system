@@ -30,7 +30,7 @@ const Button = styled.button<ButtonTypeInterface>`
   ${({ buttonType }) =>
     buttonType === ButtonType.Delete &&
     css`
-      background-color: ${({ theme }) => theme.colors.deleteButton};
+      background-color: ${({ theme }) => theme.colors.red};
       border: none;
       color: ${({ theme }) => theme.colors.white};
     `}

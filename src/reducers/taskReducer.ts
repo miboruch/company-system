@@ -1,11 +1,11 @@
 import {
   SET_ADD_NEW_TASK_OPEN,
   SET_COMPANY_TASKS,
-  SET_EDIT_TASK,
-  SET_TASK_LOADING,
+  SET_COMPLETED_TASKS,
   SET_SELECTED_TASK,
   SET_TASK_ERROR,
   SET_TASK_INFO_OPEN,
+  SET_TASK_LOADING,
   TaskActionTypes
 } from '../types/actionTypes/taskActionTypes';
 import { TaskInterface } from '../types/modelsTypes';
@@ -17,6 +17,7 @@ interface DefaultState {
   error: string | null;
   isTaskInfoOpen: boolean;
   isAddNewTaskOpen: boolean;
+  completedTasks: number;
   // isEditTaskOpen: boolean;
 }
 
@@ -26,7 +27,8 @@ const initialState: DefaultState = {
   isLoading: false,
   error: null,
   isTaskInfoOpen: false,
-  isAddNewTaskOpen: false
+  isAddNewTaskOpen: false,
+  completedTasks: 0
   // isEditTaskOpen: false
 };
 
@@ -64,6 +66,11 @@ export const taskReducer = (state = initialState, action: TaskActionTypes): Defa
       return {
         ...state,
         isAddNewTaskOpen: action.payload
+      };
+    case SET_COMPLETED_TASKS:
+      return {
+        ...state,
+        completedTasks: action.payload
       };
     // case SET_EDIT_TASK:
     //   return {
