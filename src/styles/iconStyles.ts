@@ -4,6 +4,8 @@ import { ReactComponent as NotChecked } from '../assets/icons/not-checked.svg';
 import { ReactComponent as Empty } from '../assets/icons/empty.svg';
 import { ReactComponent as Delete } from '../assets/icons/delete.svg';
 import { ReactComponent as Edit } from '../assets/icons/edit.svg';
+import { ReactComponent as User } from '../assets/icons/user.svg';
+import { ReactComponent as Task } from '../assets/icons/list.svg'
 
 const iconStyles = css`
   width: 32px;
@@ -40,4 +42,13 @@ const EditIcon = styled(Edit)`
   ${contentIconStyles}
 `;
 
-export { CheckedIcon, NotCheckedIcon, EmptyIcon, DeleteIcon, EditIcon };
+const UserIcon = styled(User)`
+  ${contentIconStyles};
+`;
+
+const TaskIcon = styled(Task)`
+  ${contentIconStyles};
+`;
+
+
+export { CheckedIcon, NotCheckedIcon, EmptyIcon, DeleteIcon, EditIcon, UserIcon, TaskIcon };
