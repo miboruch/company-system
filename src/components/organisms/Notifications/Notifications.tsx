@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import gsap from 'gsap';
 import { useOutsideClick } from '../../../utils/customHooks';
+import NotificationBox from '../../molecules/NotificationBox/NotificationBox';
 
 const StyledWrapper = styled.div`
   width: 90%;
@@ -34,12 +35,11 @@ const Content = styled.div`
   width: 100%;
   height: calc(100% - 80px);
   overflow-y: scroll;
-  padding: 2rem;
 `;
 
 interface Props {
   isOpen: boolean;
-  setOpen:  React.Dispatch<React.SetStateAction<boolean>>
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Notifications: React.FC<Props> = ({ isOpen, setOpen }) => {
@@ -68,7 +68,9 @@ const Notifications: React.FC<Props> = ({ isOpen, setOpen }) => {
         <h4>Powiadomienia</h4>
       </Header>
       <Content>
-        <p>test</p>
+        <NotificationBox title={'test'} description={'test again'} wasOpened={true} />
+        <NotificationBox title={'test'} description={'test again'} wasOpened={true} />
+        <NotificationBox title={'test'} description={'test again'} wasOpened={true} />
       </Content>
     </StyledWrapper>
   );

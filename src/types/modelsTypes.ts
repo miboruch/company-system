@@ -123,3 +123,11 @@ export interface AttendanceInterface {
   attendance?: Attendance;
   user: AttendanceUserInterface;
 }
+
+export interface NotificationInterface {
+  userId: string;
+  title: string;
+  description: string;
+  wasOpened: boolean;
+  createdDate: Date;
+}
