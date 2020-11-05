@@ -33,3 +33,13 @@ export const modalOpenAnimation = (tl: GSAPTimeline, mainWrapperRef: React.RefOb
       .fromTo(wrapper.children, { y: '+=10' }, { autoAlpha: 1, y: 0, stagger: 0.1 });
   }
 };
+
+export const notificationsAnimation = (tl: GSAPTimeline, wrapperRef: React.RefObject<HTMLDivElement | null>) => {
+  const wrapper: HTMLDivElement | null = wrapperRef.current;
+
+  if (wrapper) {
+    gsap.set([wrapper, ...wrapper.children], { autoAlpha: 0 });
+
+    tl.fromTo(wrapper, { autoAlpha: 0, y: '-=40' }, { autoAlpha: 1, y: '0', duration: 0.4 }).fromTo(wrapper.children, { y: '+=20' }, { autoAlpha: 1, y: 0, stagger: 0.1 });
+  }
+};
