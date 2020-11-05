@@ -16,6 +16,8 @@ import styled from 'styled-components';
 import { isEmpty } from '../../../utils/functions';
 import ContentTemplate from '../../templates/ContentTemplate/ContentTemplate';
 import AttendanceInfo from '../AttendanceInfo/AttendanceInfo';
+import AttendancePopup from '../../molecules/AttendancePopup/AttendancePopup';
+import AttendanceList from '../AttendanceList/AttendanceList';
 
 const ListWrapper = styled.section`
   width: 100%;
@@ -51,6 +53,9 @@ const AttendancePageContent: React.FC<ConnectedProps> = ({
   const [filterText, setFilterText] = useState<string>('');
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
 
+  const [selectedAttendance, setSelectedAttendance] = useState<AttendanceInterface | null>(null);
+  const [isAttendanceOpen, setAttendanceOpen] = useState<boolean>(false);
+
   const filterByUserName = (filterText: string, dayAttendance: AttendanceInterface[]): AttendanceInterface[] => {
     return dayAttendance.filter((attendance) => `${attendance.user.name} ${attendance.user.lastName}`.toLowerCase().includes(filterText.toLowerCase()));
   };
@@ -81,6 +86,10 @@ const AttendancePageContent: React.FC<ConnectedProps> = ({
                 isCompanyBox={false}
                 isEmpty={isEmpty(attendance.attendance)}
                 isChecked={!isEmpty(attendance.attendance) && attendance.attendance?.wasPresent}
+                editCallback={() => {
+                  setSelectedAttendance(attendance);
+                  setAttendanceOpen(true);
+                }}
                 callback={() => selectAttendance(attendance)}
               />
             ))}
@@ -90,6 +99,7 @@ const AttendancePageContent: React.FC<ConnectedProps> = ({
           <AttendanceInfo />
         </ContentTemplate>
       </>
+      <AttendancePopup attendance={selectedAttendance} isOpen={isAttendanceOpen} setOpen={setAttendanceOpen} />
     </GridWrapper>
   );
 };

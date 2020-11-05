@@ -195,7 +195,11 @@ export const getCompletedTasks = () => async (dispatch: Dispatch<any>, getState:
 
   try {
     if (currentCompany && token) {
-      const { data } = await axios.get(`${API_URL}/task/count-last-completed-tasks?company_id=${currentCompany._id}&daysBack=${DAYS_BACK}`);
+      const { data } = await axios.get(`${API_URL}/task/count-last-completed-tasks?company_id=${currentCompany._id}&daysBack=${DAYS_BACK}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       console.log(data);
       // setCompletedTasks(data.completedTasks);
     }

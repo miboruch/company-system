@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const NotificationWrapper = styled.div`
   width: 100%;
-  height: 60px;
+  height: 80px;
   border-bottom: 1px solid #f7f8fc;
   display: flex;
   flex-direction: row;
@@ -22,14 +22,14 @@ const TextWrapper = styled.div`
 `;
 
 const Title = styled.p`
-  font-size: 14px;
+  font-size: 15px;
   color: ${({ theme }) => theme.colors.dark};
   font-weight: ${({ theme }) => theme.font.weight.medium};
   margin: 0.2rem 0;
 `;
 
 const Description = styled.p`
-  color: ${({ theme }) => theme.colors.textGray};
+  color: ${({ theme }) => theme.colors.borderBottomDark};
   font-weight: ${({ theme }) => theme.font.weight.medium};
   font-size: 11px;
   margin: 0;
@@ -42,4 +42,11 @@ const NewNotificationDot = styled.div`
   background-color: ${({ theme }) => theme.colors.red};
 `;
 
-export { NotificationWrapper, TextWrapper, Title, Description, NewNotificationDot };
+const Date = styled.p`
+  margin-top: 0.5rem;
+  font-size: 12px;
+  font-weight: ${({ theme }) => theme.font.weight.medium};
+  color: ${({ theme }) => theme.colors.textGray};
+`;
+
+export { NotificationWrapper, TextWrapper, Title, Description, NewNotificationDot, Date };

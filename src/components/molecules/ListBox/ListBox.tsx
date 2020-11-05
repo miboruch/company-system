@@ -1,7 +1,7 @@
 import React from 'react';
 import { ContentWrapper, Name, Subparagraph, Wrapper, ValueParagraph } from './ListBox.styles';
 import ArrowButton from '../../atoms/ArrowButton/ArrowButton';
-import { CheckedIcon, EmptyIcon, NotCheckedIcon } from '../../../styles/iconStyles';
+import { CheckedIcon, EmptyIcon, NotCheckedIcon, EditIcon } from '../../../styles/iconStyles';
 
 interface Props {
   name: string;
@@ -12,6 +12,7 @@ interface Props {
   isEmpty?: boolean;
   isChecked?: boolean;
   value?: number | string;
+  editCallback?: () => void;
 }
 
 // interface EmptyIconInterface extends Props {
@@ -27,7 +28,7 @@ interface Props {
 export type ListBoxProps = Props;
 // export type ListBoxProps = EmptyIconInterface | CheckedIconInterface;
 
-const ListBox: React.FC<ListBoxProps> = ({ name, topDescription, bottomDescription, callback, isEmpty, isChecked, isCompanyBox, value }) => {
+const ListBox: React.FC<ListBoxProps> = ({ name, topDescription, bottomDescription, callback, isEmpty, isChecked, isCompanyBox, value, editCallback }) => {
   return (
     <Wrapper onClick={() => callback()}>
       <ContentWrapper>
@@ -38,7 +39,7 @@ const ListBox: React.FC<ListBoxProps> = ({ name, topDescription, bottomDescripti
           <Subparagraph>{bottomDescription}</Subparagraph>
         </div>
       </ContentWrapper>
-      {value ? <ValueParagraph>{value}</ValueParagraph> : <ArrowButton />}
+      {value ? <ValueParagraph>{value}</ValueParagraph> : !!editCallback ? <EditIcon onClick={() => editCallback()} /> : <ArrowButton />}
     </Wrapper>
   );
 };

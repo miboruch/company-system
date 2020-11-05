@@ -1,10 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
-import { Formik, Form } from 'formik';
+import { Formik } from 'formik';
 import PopupTemplate from '../../templates/PopupTemplate/PopupTemplate';
 import { AttendanceInterface } from '../../../types/modelsTypes';
-import { ButtonWrapper, ContentWrapper, InfoParagraph, Paragraph } from '../../../styles/popupStyles';
+import { ButtonWrapper, ContentWrapper, InfoParagraph } from '../../../styles/popupStyles';
 import { CheckedIcon, NotCheckedIcon, EmptyIcon } from '../../../styles/iconStyles';
 import ModalButton, { ButtonType } from '../../atoms/ModalButton/ModalButton';
 import Input from '../../atoms/Input/Input';
@@ -13,26 +12,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { addAttendance, updateAttendance } from '../../../actions/attendanceActions';
-
-const FlexWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-`;
-
-const StyledParagraph = styled(Paragraph)`
-  margin-right: 2rem;
-`;
-
-const StyledForm = styled(Form)`
-  width: 100%;
-  min-height: calc(400px - 80px);
-`;
-
-const StyledFlexWrapper = styled(FlexWrapper)`
-  margin-top: 2rem;
-`;
+import { FlexWrapper, StyledForm, StyledParagraph, StyledFlexWrapper } from './AttendancePopup.styles';
 
 interface Props {
   attendance: AttendanceInterface | null;
@@ -65,7 +45,7 @@ const AttendancePopup: React.FC<ConnectedProps> = ({ attendance, isOpen, setOpen
   };
 
   return (
-    <PopupTemplate isOpen={isOpen} headerText={`Obecność z dnia ${new Date().toLocaleDateString()}`}>
+    <PopupTemplate isOpen={isOpen} headerText={`Obecność z dnia ${new Date().toLocaleDateString()}`} isHigher={false}>
       <div>
         <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize={true}>
           {({ handleChange, values, setFieldValue }) =>

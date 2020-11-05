@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
-import { WeekAttendance } from '../../../types/modelsTypes';
+import { AttendanceInterface, WeekAttendance } from '../../../types/modelsTypes';
 import { compareDates } from '../../../utils/functions';
 import ArrowButton from '../../atoms/ArrowButton/ArrowButton';
 import { Direction } from '../../../types/globalTypes';
-import { getWeekAttendance } from '../../../actions/attendanceActions';
+import { getWeekAttendance, setAttendanceInfoOpen } from '../../../actions/attendanceActions';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import {
   MainWrapper,
@@ -51,6 +51,7 @@ const WeekAttendanceComponent: React.FC<ConnectedProps> = ({ weekAttendance, get
       </Header>
       <StyledWrapper>
         {weekAttendance.map((attendance, index) => {
+          console.log(attendance);
           return (
             <SingleAttendanceWrapper isCurrentDay={compareDates(new Date(attendance.date), new Date())} key={index} onClick={() => console.log(attendance)}>
               <DateParagraph>{new Date(attendance.date).toLocaleDateString()}</DateParagraph>

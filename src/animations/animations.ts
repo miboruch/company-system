@@ -34,10 +34,11 @@ export const modalOpenAnimation = (tl: GSAPTimeline, mainWrapperRef: React.RefOb
   }
 };
 
-export const notificationsAnimation = (tl: GSAPTimeline, wrapperRef: React.RefObject<HTMLDivElement | null>) => {
+export const notificationsAnimation = (tl: GSAPTimeline, wrapperRef: React.RefObject<HTMLDivElement | null>, contentRef:React.RefObject<HTMLDivElement | null>) => {
   const wrapper: HTMLDivElement | null = wrapperRef.current;
+  const content: HTMLDivElement | null = contentRef.current;
 
-  if (wrapper) {
+  if (wrapper && content) {
     gsap.set([wrapper, ...wrapper.children], { autoAlpha: 0 });
 
     tl.fromTo(wrapper, { autoAlpha: 0, y: '-=40' }, { autoAlpha: 1, y: '0', duration: 0.4 }).fromTo(wrapper.children, { y: '+=20' }, { autoAlpha: 1, y: 0, stagger: 0.1 });

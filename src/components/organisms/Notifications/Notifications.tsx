@@ -12,12 +12,13 @@ interface Props {
 
 const Notifications: React.FC<Props> = ({ isOpen, setOpen }) => {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const contentRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
 
   useOutsideClick(wrapperRef, isOpen, () => setOpen(false));
 
   useEffect(() => {
-    notificationsAnimation(tl, wrapperRef);
+    notificationsAnimation(tl, wrapperRef, contentRef);
   }, []);
 
   useEffect(() => {
@@ -29,10 +30,10 @@ const Notifications: React.FC<Props> = ({ isOpen, setOpen }) => {
       <Header>
         <h4>Powiadomienia</h4>
       </Header>
-      <Content>
-        <NotificationBox title={'test'} description={'test again'} wasOpened={false} />
-        <NotificationBox title={'test'} description={'test again'} wasOpened={true} />
-        <NotificationBox title={'test'} description={'test again'} wasOpened={true} />
+      <Content ref={contentRef}>
+        <NotificationBox title={'test'} description={'test again'} createdDate={new Date()} wasOpened={false} />
+        <NotificationBox title={'test'} description={'test again'} createdDate={new Date()} wasOpened={true} />
+        <NotificationBox title={'test'} description={'test again'} createdDate={new Date()} wasOpened={true} />
       </Content>
     </StyledWrapper>
   );

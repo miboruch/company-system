@@ -5,11 +5,12 @@ import { Wrapper, Box, HeaderText, Header } from '../../../styles/popupStyles';
 
 interface Props {
   isOpen: boolean;
+  isHigher?: boolean;
   children: React.ReactNode;
   headerText: string;
 }
 
-const PopupTemplate: React.FC<Props> = ({ isOpen, children, headerText }) => {
+const PopupTemplate: React.FC<Props> = ({ isOpen, children, headerText, isHigher }) => {
   const backgroundRef = useRef<HTMLDivElement | null>(null);
   const boxRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
@@ -24,7 +25,7 @@ const PopupTemplate: React.FC<Props> = ({ isOpen, children, headerText }) => {
 
   return (
     <Wrapper ref={backgroundRef}>
-      <Box ref={boxRef}>
+      <Box ref={boxRef} isHigher={!!isHigher}>
         <Header>
           <HeaderText>{headerText}</HeaderText>
         </Header>

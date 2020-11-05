@@ -13,8 +13,6 @@ interface Props {}
 type ConnectedProps = Props & LinkStateProps;
 
 const AttendanceInfo: React.FC<ConnectedProps> = ({ selectedAttendance, weekAttendance, isContentLoading }) => {
-  console.log(selectedAttendance);
-  console.log(weekAttendance);
   return (
     <Wrapper>
       {isContentLoading ? (
