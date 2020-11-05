@@ -54,7 +54,32 @@ const Circle = styled.div`
 `;
 
 const NameParagraph = styled.p`
-  font-size: 13px;
+  font-size: 12px;
+  font-weight: ${({ theme }) => theme.font.weight.medium};
 `;
 
-export { StyledHeader, UserWrapper, Circle, NameParagraph };
+interface NewNotificationInterface {
+  isNewNotification?: boolean;
+}
+
+const IconWrapper = styled.div<NewNotificationInterface>`
+  width: 25px;
+  height: 25px;
+  margin-left: 2rem;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: 10;
+    right: 2px;
+    left: auto;
+    border-radius: 50%;
+    bottom: 2px;
+    width: 10px;
+    height: 10px;
+    background-color: ${({ theme }) => theme.colors.red};
+  }
+`;
+
+export { StyledHeader, UserWrapper, Circle, NameParagraph, IconWrapper };

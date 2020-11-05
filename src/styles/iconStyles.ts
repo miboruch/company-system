@@ -56,7 +56,8 @@ const NotificationIcon = styled(Notification)`
   height: 25px;
   fill: ${({ theme }) => theme.colors.textGray};
   cursor: pointer;
-  margin-left: 2rem;
+  position: relative;
+
 `;
 
 export { CheckedIcon, NotCheckedIcon, EmptyIcon, DeleteIcon, EditIcon, UserIcon, TaskIcon, NotificationIcon };

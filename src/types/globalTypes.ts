@@ -1,6 +1,7 @@
 export enum Direction {
   Left = 'left',
-  Right = 'right'
+  Right = 'right',
+  Bottom = 'bottom'
 }
 
 export interface Coords {

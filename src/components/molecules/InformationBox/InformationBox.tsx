@@ -8,9 +8,10 @@ interface Props {
   title: string;
   value: string | number;
   areaName: string;
+  chartAnimationDelay?: number;
 }
 
-const InformationBox: React.FC<Props> = ({ title, value, areaName }) => {
+const InformationBox: React.FC<Props> = ({ title, value, areaName, chartAnimationDelay }) => {
   return (
     <Wrapper areaName={areaName}>
       <RowWrapper>
@@ -18,7 +19,7 @@ const InformationBox: React.FC<Props> = ({ title, value, areaName }) => {
         <TitleParagraph>{title}</TitleParagraph>
       </RowWrapper>
       <Value>{value}</Value>
-      <TinyLineChart data={tinyChartData} />
+      <TinyLineChart data={tinyChartData} animationDelay={!!chartAnimationDelay ? chartAnimationDelay : 0} />
     </Wrapper>
   );
 };

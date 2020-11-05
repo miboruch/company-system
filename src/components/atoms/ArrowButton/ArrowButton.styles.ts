@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Direction } from '../../../types/globalTypes';
 
 interface ArrowButtonInterface {
@@ -14,9 +14,28 @@ const StyledArrowButton = styled.div<ArrowButtonInterface>`
   position: relative;
   cursor: pointer;
   padding: 2rem;
-  transform: rotate(${({ direction }) => (direction === Direction.Right ? '180deg' : '0')});
   opacity: ${({ isHidden }) => (isHidden ? 0 : 1)};
   //visibility: ${({ isHidden }) => (isHidden ? 'hidden' : 'visible')};
+  
+  ${({ direction }) =>
+    direction === Direction.Right &&
+    css`
+      transform: rotate(180deg);
+    `}
+  
+  ${({ direction }) =>
+    direction === Direction.Left &&
+    css`
+      transform: rotate(0);
+    `}
+   
+  ${({ direction }) =>
+    direction === Direction.Bottom &&
+    css`
+      transform: rotate(-90deg);
+    `}
+   
+   
 
   &:focus {
     outline: none;

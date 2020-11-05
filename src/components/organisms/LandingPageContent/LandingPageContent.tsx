@@ -85,8 +85,8 @@ const LandingPageContent: React.FC<ConnectedProps> = ({
           />
           <AttendanceList singleDayAttendance={singleDayAttendance} setSelectedAttendance={setSelectedAttendance} setAttendanceOpen={setAttendanceOpen} />
           <InfoBoxWrapper>
-            <InformationBox title={'Pracownicy'} value={8} areaName={'employees'} />
-            <InformationBox title={'Wykonane zadania (30d)'} value={completedTasks} areaName={'attendance'} />
+            <InformationBox title={'Pracownicy'} value={8} areaName={'employees'} chartAnimationDelay={0} />
+            <InformationBox title={'Wykonane zadania (30d)'} value={completedTasks} areaName={'attendance'} chartAnimationDelay={800} />
           </InfoBoxWrapper>
         </ContentGridWrapper>
       </Content>

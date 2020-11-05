@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Hamburger from '../../atoms/Hamburger/Hamburger';
-import { StyledHeader, Circle, UserWrapper, NameParagraph } from './Header.styles';
+import { Circle, IconWrapper, NameParagraph, StyledHeader, UserWrapper } from './Header.styles';
 import SearchInput from '../../atoms/SearchInput/SearchInput';
 import { AppState } from '../../../reducers/rootReducer';
 import { UserAuthData } from '../../../types/modelsTypes';
 import Notifications from '../../organisms/Notifications/Notifications';
 import { NotificationIcon } from '../../../styles/iconStyles';
+import ArrowButton from '../../atoms/ArrowButton/ArrowButton';
+import { Direction } from '../../../types/globalTypes';
 
 interface Props {
   setFilterText?: (filterText: string) => void;
@@ -31,8 +33,11 @@ const Header: React.FC<ConnectedProps> = ({ setFilterText, userData }) => {
           </NameParagraph>
         )}
         <Circle />
-        <NotificationIcon onClick={() => setNotificationsOpen(!areNotificationsOpen)} />
+        <IconWrapper>
+          <NotificationIcon onClick={() => setNotificationsOpen(!areNotificationsOpen)} />
+        </IconWrapper>
         <Notifications isOpen={areNotificationsOpen} setOpen={setNotificationsOpen} />
+        <ArrowButton direction={Direction.Bottom} />
       </UserWrapper>
     </StyledHeader>
   );
