@@ -36,6 +36,7 @@ const StyledHeader = styled.header<HeaderProps>`
 
 const UserWrapper = styled.div`
   display: none;
+  position: relative;
 
   ${({ theme }) => theme.mq.hdReady} {
     display: flex;

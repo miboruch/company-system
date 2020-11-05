@@ -5,7 +5,8 @@ import { ReactComponent as Empty } from '../assets/icons/empty.svg';
 import { ReactComponent as Delete } from '../assets/icons/delete.svg';
 import { ReactComponent as Edit } from '../assets/icons/edit.svg';
 import { ReactComponent as User } from '../assets/icons/user.svg';
-import { ReactComponent as Task } from '../assets/icons/list.svg'
+import { ReactComponent as Task } from '../assets/icons/list.svg';
+import { ReactComponent as Notification } from '../assets/icons/notification.svg';
 
 const iconStyles = css`
   width: 32px;
@@ -50,5 +51,12 @@ const TaskIcon = styled(Task)`
   ${contentIconStyles};
 `;
 
+const NotificationIcon = styled(Notification)`
+  width: 25px;
+  height: 25px;
+  fill: ${({ theme }) => theme.colors.textGray};
+  cursor: pointer;
+  margin-left: 2rem;
+`;
 
-export { CheckedIcon, NotCheckedIcon, EmptyIcon, DeleteIcon, EditIcon, UserIcon, TaskIcon };
+export { CheckedIcon, NotCheckedIcon, EmptyIcon, DeleteIcon, EditIcon, UserIcon, TaskIcon, NotificationIcon };
