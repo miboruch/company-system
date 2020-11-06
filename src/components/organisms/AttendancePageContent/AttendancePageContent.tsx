@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import gsap from 'gsap';
 import DatePicker from 'react-datepicker';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
-import { AttendanceInterface } from '../../../types/modelsTypes';
+import { AttendanceInterface, IncomeDataInterface } from '../../../types/modelsTypes';
 import { listAnimation } from '../../../animations/animations';
 import { AppState } from '../../../reducers/rootReducer';
 import { ThunkDispatch } from 'redux-thunk';
@@ -18,6 +18,7 @@ import ContentTemplate from '../../templates/ContentTemplate/ContentTemplate';
 import AttendanceInfo from '../AttendanceInfo/AttendanceInfo';
 import AttendancePopup from '../../molecules/AttendancePopup/AttendancePopup';
 import AttendanceList from '../AttendanceList/AttendanceList';
+import { getIncomeExpenseInTimePeriod } from '../../../utils/incomeExpenseAPI';
 
 const ListWrapper = styled.section`
   width: 100%;
