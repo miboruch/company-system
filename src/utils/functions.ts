@@ -1,4 +1,4 @@
-import { EmployeeDataInterface, UserDataInterface } from '../types/modelsTypes';
+import { EmployeeDataInterface, ExpenseInterface, IncomeInterface, UserDataInterface } from '../types/modelsTypes';
 
 export const isEmpty = (obj: object | undefined): boolean => {
   return obj !== undefined ? Object.keys(obj).length === 0 && obj.constructor === Object : true;
@@ -9,8 +9,22 @@ export const compareDates = (firstDate: Date, secondDate: Date): boolean => {
 };
 
 export const removeDuplicates = (allAppUsers: UserDataInterface[], employeeInCompany: EmployeeDataInterface[]): UserDataInterface[] => {
-  const employeeIdArray = employeeInCompany.map(employee => employee.userId._id);
+  const employeeIdArray = employeeInCompany.map((employee) => employee.userId._id);
 
-  return allAppUsers.filter(user => !employeeIdArray.includes(user._id))
-}
+  return allAppUsers.filter((user) => !employeeIdArray.includes(user._id));
+};
 
+// export const sortByCreatedDate = (array: (IncomeInterface | ExpenseInterface)[]) => {
+//   return array.sort((first, second) => first.createdDate - second.createdDate);
+// }
+
+export const extractNumberFromString = (text: string | number): number => {
+  const matches = `${text}`.match(/(\d+)/);
+
+  if (matches) {
+    console.log(parseInt(matches[0]));
+    return parseInt(matches[0]);
+  }else{
+    return 0;
+  }
+};

@@ -3,11 +3,8 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
 import { ContentGridWrapper } from '../../../styles/HomePageContentGridStyles';
-import { TileWrapper } from '../LandingPageContent/LandingPageContent.styles';
-import TaskTile from '../../molecules/TaskTile/TaskTile';
 import Chart from '../../molecules/Chart/Chart';
-import AttendanceList from '../AttendanceList/AttendanceList';
-import { AttendanceInterface, IncomeDataInterface, TaskInterface } from '../../../types/modelsTypes';
+import { ExpenseInterface, IncomeDataInterface, IncomeInterface } from '../../../types/modelsTypes';
 import { AppState } from '../../../reducers/rootReducer';
 import gsap from 'gsap';
 import { contentAnimation } from '../../../animations/animations';
@@ -16,6 +13,7 @@ import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { getIncomeExpenseInTimePeriod } from '../../../actions/financeActions';
 import BudgetHistoryList from '../BudgetHistoryList/BudgetHistoryList';
+import BudgetTile from '../../molecules/BudgetTile/BudgetTile';
 
 const Content = styled.div`
   width: 100%;
@@ -72,9 +70,14 @@ interface Props {}
 
 type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
-const FinancesPageContent: React.FC<ConnectedProps> = ({ singleDayAttendance, allCompanyTasks, getIncomeExpenseInTimePeriod }) => {
-  const [data, setData] = useState<Array<IncomeDataInterface> | null>(null);
+const FinancesPageContent: React.FC<ConnectedProps> = ({ getIncomeExpenseInTimePeriod, lastIncomes, lastExpenses }) => {
+  const [chartData, setChartData] = useState<Array<IncomeDataInterface> | null>(null);
   const [daysBack, setDaysBackTo] = useState<number>(7);
+  const [budgetHistoryData, setBudgetHistoryData] = useState<(IncomeInterface | ExpenseInterface)[]>([]);
+
+  useEffect(() => {
+    setBudgetHistoryData([...lastExpenses, ...lastIncomes]);
+  }, [lastIncomes, lastExpenses]);
 
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
@@ -84,7 +87,7 @@ const FinancesPageContent: React.FC<ConnectedProps> = ({ singleDayAttendance, al
   }, []);
 
   useEffect(() => {
-    getIncomeExpenseInTimePeriod(daysBack, setData);
+    getIncomeExpenseInTimePeriod(daysBack, setChartData);
   }, [daysBack]);
 
   return (
@@ -92,8 +95,9 @@ const FinancesPageContent: React.FC<ConnectedProps> = ({ singleDayAttendance, al
       <Content>
         <ContentGridWrapper ref={contentRef} isFinancesPage={true}>
           <BudgetWrapper>
-            {allCompanyTasks.slice(0, 3).map((task) => (
-              <TaskTile task={task} />
+            <BudgetTile description={'Budżet firmy'} name={'Aktualny budżet firmy'} value={120027} />
+            {budgetHistoryData.slice(0, 2).map((history) => (
+              <BudgetTile description={'Finanse'} value={history.expenseValue ? -1 * history.expenseValue : history.incomeValue ? history.incomeValue : 0} name={history.description} />
             ))}
           </BudgetWrapper>
           <Chart
@@ -102,17 +106,15 @@ const FinancesPageContent: React.FC<ConnectedProps> = ({ singleDayAttendance, al
             secondBarDataName={'Wydatek'}
             barDataKey={'incomeValue'}
             barDataName={'Dochód'}
-            data={data}
+            data={chartData}
             setDaysBack={setDaysBackTo}
             daysBack={daysBack}
           />
-          <BudgetHistoryList />
+          <BudgetHistoryList budgetHistory={budgetHistoryData} />
           <InfoBoxWrapper>
             <p>PLN</p>
             <p>EUR</p>
             <p>USD</p>
-            {/*<InformationBox title={'Pracownicy'} value={8} areaName={'employees'} />*/}
-            {/*<InformationBox title={'Wykonane zadania'} value={12} areaName={'attendance'} />*/}
           </InfoBoxWrapper>
           <ButtonWrapper>
             <p>Test</p>
@@ -127,16 +129,16 @@ const FinancesPageContent: React.FC<ConnectedProps> = ({ singleDayAttendance, al
 };
 
 interface LinkStateProps {
-  singleDayAttendance: AttendanceInterface[];
-  allCompanyTasks: TaskInterface[];
+  lastIncomes: IncomeInterface[];
+  lastExpenses: ExpenseInterface[];
 }
 
 interface LinkDispatchProps {
   getIncomeExpenseInTimePeriod: (daysBack: number, setData: (data: any[]) => void) => void;
 }
 
-const mapStateToProps = ({ attendanceReducer: { singleDayAttendance }, taskReducer: { allCompanyTasks } }: AppState): LinkStateProps => {
-  return { singleDayAttendance, allCompanyTasks };
+const mapStateToProps = ({ financeReducer: { lastIncomes, lastExpenses } }: AppState): LinkStateProps => {
+  return { lastIncomes, lastExpenses };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {

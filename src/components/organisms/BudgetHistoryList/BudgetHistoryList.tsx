@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 import styled from 'styled-components';
 import { ExpenseInterface, IncomeInterface } from '../../../types/modelsTypes';
-import { AppState } from '../../../reducers/rootReducer';
 import ListBox from '../../molecules/ListBox/ListBox';
 
 const StyledWrapper = styled.div`
@@ -31,41 +29,28 @@ const Title = styled.h3`
   padding: 3rem 2rem;
 `;
 
-interface Props {}
+interface Props {
+  budgetHistory: (IncomeInterface | ExpenseInterface)[];
+}
 
-type ConnectedProps = Props & LinkStateProps;
-
-const BudgetHistoryList: React.FC<ConnectedProps> = ({ lastIncomes, lastExpenses }) => {
-  const [data, setData] = useState<(IncomeInterface | ExpenseInterface)[]>([]);
-  useEffect(() => {
-    setData([...lastExpenses, ...lastIncomes]);
-  }, [lastIncomes, lastExpenses]);
-
+const BudgetHistoryList: React.FC<Props> = ({ budgetHistory }) => {
   return (
     <StyledWrapper>
       <Title>Historia</Title>
-      {data.map((budgetHistory, index: number) => (
+      {budgetHistory.map((history, index: number) => (
         <ListBox
-          key={budgetHistory._id}
-          name={budgetHistory.description}
-          topDescription={budgetHistory.createdDate.toLocaleString()}
-          bottomDescription={budgetHistory.companyId}
+          key={history._id}
+          name={history.description}
+          topDescription={history.createdDate.toLocaleString()}
+          bottomDescription={history.companyId}
           isCompanyBox={false}
+          isEmpty={true}
           callback={() => console.log('test')}
-          value={`${budgetHistory.incomeValue ? budgetHistory.incomeValue : budgetHistory.expenseValue} PLN`}
+          value={`${history.expenseValue ? -1 * history.expenseValue : history.incomeValue ? history.incomeValue : 0} PLN`}
         />
       ))}
     </StyledWrapper>
   );
 };
 
-interface LinkStateProps {
-  lastIncomes: IncomeInterface[];
-  lastExpenses: ExpenseInterface[];
-}
-
-const mapStateToProps = ({ financeReducer: { lastIncomes, lastExpenses } }: AppState): LinkStateProps => {
-  return { lastIncomes, lastExpenses };
-};
-
-export default connect(mapStateToProps)(BudgetHistoryList);
+export default BudgetHistoryList;

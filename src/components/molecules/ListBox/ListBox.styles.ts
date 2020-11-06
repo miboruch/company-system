@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -38,9 +38,9 @@ const ContentWrapper = styled.section`
 
 const ValueParagraph = styled.h3`
   font-size: 22px;
-  font-weight: ${({theme}) => theme.font.weight.demi};
+  font-weight: ${({ theme }) => theme.font.weight.demi};
   letter-spacing: -2px;
-  color: ${({theme}) => theme.colors.dark};
+  color: ${({ theme }) => theme.colors.dark};
   padding-right: 1rem;
 `;
 

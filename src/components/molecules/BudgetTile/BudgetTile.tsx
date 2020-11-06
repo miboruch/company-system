@@ -1,17 +1,19 @@
 import React from 'react';
 import {Tile, Description, Name} from './BudgetTile.styles';
-import { ExpenseInterface, IncomeInterface } from '../../../types/modelsTypes';
 
 interface Props{
-    data: IncomeInterface | ExpenseInterface,
+  description: string;
+  value: number;
+  name: string;
   onClick?: () => void;
 }
 
-const BudgetTile: React.FC<Props> = ({data, onClick}) => {
+const BudgetTile: React.FC<Props> = ({description, value, name, onClick}) => {
  return (
   <Tile onClick={() => !!onClick && onClick()}>
-    <Description>{data.description}</Description>
-    <Name>{data.incomeValue ? data.incomeValue : data.expenseValue}</Name>
+    <Description>{description}</Description>
+    <Name>{name}</Name>
+    <p>{value} PLN</p>
   </Tile>
  );
 };
