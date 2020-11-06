@@ -1,12 +1,6 @@
 import { CompanyBudgetInterface, IncomeInterface, ExpenseInterface } from '../modelsTypes';
 
-interface IncomeExpense {
-  income: number;
-  expense: number;
-}
-//get-income-expense
-
-interface IncomeExpenseInterface {
+export interface IncomeExpenseInterface {
   incomes: IncomeInterface[];
   expenses: ExpenseInterface[];
 }
@@ -14,7 +8,8 @@ interface IncomeExpenseInterface {
 export const SET_BUDGET_LOADING = 'SET_BUDGET_LOADING';
 export const SET_BUDGET_INCOME = 'SET_BUDGET_INCOME';
 export const SET_BUDGET_EXPENSE = 'SET_BUDGET_EXPENSE';
-export const SET_LAST_INCOME_EXPENSE = 'SET_LAST_INCOME_EXPENSE';
+export const SET_LAST_INCOMES = 'SET_LAST_INCOMES';
+export const SET_LAST_EXPENSES = 'SET_LAST_EXPENSES';
 export const SET_COMPANY_BUDGET = 'SET_COMPANY_BUDGET';
 export const SET_BUDGET_ERROR = 'SET_BUDGET_ERROR';
 
@@ -38,12 +33,19 @@ export interface SetCompanyBudget {
   payload: number;
 }
 
-export interface SetLastIncomeExpense {
-  type: typeof SET_LAST_INCOME_EXPENSE;
-  payload: IncomeExpenseInterface;
+export interface SetLastIncomes {
+  type: typeof SET_LAST_INCOMES;
+  payload: IncomeInterface[];
+}
+
+export interface SetLastExpenses{
+  type: typeof SET_LAST_EXPENSES;
+  payload:ExpenseInterface[];
 }
 
 export interface SetBudgetError {
   type: typeof SET_BUDGET_ERROR;
   payload: any;
 }
+
+export type FinanceActionTypes = SetBudgetLoading | SetBudgetIncome | SetBudgetExpense | SetCompanyBudget | SetLastIncomes | SetLastExpenses | SetBudgetError;
