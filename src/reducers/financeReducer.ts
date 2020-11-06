@@ -50,7 +50,8 @@ export const financeReducer = (state = initialState, action: FinanceActionTypes)
     case SET_COMPANY_BUDGET:
       return {
         ...state,
-        budget: action.payload
+        budget: action.payload,
+        isBudgetLoading: false,
       };
     case SET_LAST_INCOMES:
       return {
@@ -65,7 +66,8 @@ export const financeReducer = (state = initialState, action: FinanceActionTypes)
     case SET_BUDGET_ERROR:
       return {
         ...state,
-        budgetError: action.payload
+        budgetError: action.payload,
+        isBudgetLoading: false,
       };
     default:
       return state;
