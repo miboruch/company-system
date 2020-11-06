@@ -14,7 +14,7 @@ import { contentAnimation } from '../../../animations/animations';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
-import {getIncomeExpenseInTimePeriod} from '../../../actions/financeActions';
+import { getIncomeExpenseInTimePeriod } from '../../../actions/financeActions';
 import BudgetHistoryList from '../BudgetHistoryList/BudgetHistoryList';
 
 const Content = styled.div`
@@ -45,6 +45,26 @@ const InfoBoxWrapper = styled.div`
   ${({ theme }) => theme.mq.hdReady} {
     //display: contents;
     grid-area: currency;
+  }
+`;
+
+const ButtonWrapper = styled.div`
+  width: 100%;
+
+  ${({ theme }) => theme.mq.hdReady} {
+    height: 100%;
+    grid-area: buttons;
+  }
+`;
+
+const InfoWrapper = styled.section`
+  width: 100%;
+
+  ${({ theme }) => theme.mq.hdReady} {
+    grid-area: info;
+    height: 100%;
+    background-color: ${({ theme }) => theme.colors.dark};
+    border-radius: 30px;
   }
 `;
 
@@ -94,6 +114,12 @@ const FinancesPageContent: React.FC<ConnectedProps> = ({ singleDayAttendance, al
             {/*<InformationBox title={'Pracownicy'} value={8} areaName={'employees'} />*/}
             {/*<InformationBox title={'Wykonane zadania'} value={12} areaName={'attendance'} />*/}
           </InfoBoxWrapper>
+          <ButtonWrapper>
+            <p>Test</p>
+          </ButtonWrapper>
+          <InfoWrapper>
+            <p>Info</p>
+          </InfoWrapper>
         </ContentGridWrapper>
       </Content>
     </GridWrapper>

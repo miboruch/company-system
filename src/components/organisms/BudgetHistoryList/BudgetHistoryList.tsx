@@ -52,7 +52,7 @@ const BudgetHistoryList: React.FC<ConnectedProps> = ({ lastIncomes, lastExpenses
           bottomDescription={budgetHistory.companyId}
           isCompanyBox={false}
           callback={() => console.log('test')}
-          value={`1000 zł`}
+          value={`${budgetHistory.incomeValue ? budgetHistory.incomeValue : budgetHistory.expenseValue} PLN`}
         />
       ))}
     </StyledWrapper>

@@ -145,10 +145,12 @@ interface IncomeExpenseInterface {
   description: string;
 }
 
-export interface IncomeInterface extends IncomeExpenseInterface{
+export interface IncomeInterface extends IncomeExpenseInterface {
   incomeValue: number;
+  expenseValue?: never;
 }
 
 export interface ExpenseInterface extends IncomeExpenseInterface {
   expenseValue: number;
+  incomeValue?: never;
 }
