@@ -6,6 +6,7 @@ import { taskReducer } from './taskReducer';
 import { clientReducer } from './clientReducer';
 import { attendanceReducer } from './attendanceReducer';
 import { toggleReducer } from './toggleReducer';
+import { financeReducer } from './financeReducer';
 
 export const rootReducer = combineReducers({
   authenticationReducer,
@@ -14,7 +15,8 @@ export const rootReducer = combineReducers({
   taskReducer,
   clientReducer,
   attendanceReducer,
-  toggleReducer
+  toggleReducer,
+  financeReducer
 });
 
 export type AppState = ReturnType<typeof rootReducer>;

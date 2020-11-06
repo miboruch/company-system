@@ -1,6 +1,10 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-const ContentGridWrapper = styled.section`
+interface ContentGridWrapperInterface {
+  isFinancesPage?: boolean;
+}
+
+const ContentGridWrapper = styled.section<ContentGridWrapperInterface>`
   width: 100%;
   height: 100%;
 
@@ -14,9 +18,15 @@ const ContentGridWrapper = styled.section`
     //margin: 2rem 3rem;
     padding: 2rem 3rem;
     grid-gap: 2rem;
+
+    ${({ isFinancesPage }) =>
+      isFinancesPage &&
+      css`
+        grid-template-areas: 'budget budget history' 'chart chart history' 'currency buttons info';
+      `}
   }
-  
-  ${({theme}) => theme.mq.quadHd}{
+
+  ${({ theme }) => theme.mq.quadHd} {
     grid-template-columns: 33% 33% 34%;
   }
 `;

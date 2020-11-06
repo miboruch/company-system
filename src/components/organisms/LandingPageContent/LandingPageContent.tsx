@@ -12,7 +12,6 @@ import Chart from '../../molecules/Chart/Chart';
 import AttendanceList from '../AttendanceList/AttendanceList';
 import { ContentGridWrapper } from '../../../styles/HomePageContentGridStyles';
 import InformationBox from '../../molecules/InformationBox/InformationBox';
-import { getIncomeExpenseInTimePeriod } from '../../../utils/incomeExpenseAPI';
 import { contentAnimation } from '../../../animations/animations';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
@@ -20,19 +19,20 @@ import { bindActionCreators } from 'redux';
 import { getSingleDayAttendance } from '../../../actions/attendanceActions';
 import { getCompanyTasks, getCompletedTasks, redirectToTask } from '../../../actions/taskActions';
 import AttendancePopup from '../../molecules/AttendancePopup/AttendancePopup';
+import { getIncomeExpenseInTimePeriod } from '../../../actions/financeActions';
 
 type ConnectedProps = LinkStateProps & LinkDispatchProps & RouteComponentProps<any>;
 
 const LandingPageContent: React.FC<ConnectedProps> = ({
   history,
-  token,
   singleDayAttendance,
   getSingleDayAttendance,
   allCompanyTasks,
   getCompanyTasks,
   redirectToTask,
   getCompletedTasks,
-  completedTasks
+  completedTasks,
+  getIncomeExpenseInTimePeriod
 }) => {
   const [text, setText] = useState<string>('');
   const [data, setData] = useState<Array<IncomeDataInterface> | null>(null);
@@ -53,9 +53,7 @@ const LandingPageContent: React.FC<ConnectedProps> = ({
   };
 
   useEffect(() => {
-    (async () => {
-      await getIncomeExpenseInTimePeriod(token, daysBack, setData);
-    })();
+    getIncomeExpenseInTimePeriod(daysBack, setData);
   }, [daysBack]);
 
   useEffect(() => {
@@ -107,6 +105,7 @@ interface LinkDispatchProps {
   getCompanyTasks: () => void;
   redirectToTask: (history: History, task: TaskInterface) => void;
   getCompletedTasks: () => void;
+  getIncomeExpenseInTimePeriod: (daysBack: number, setData: (data: any[]) => void) => void;
 }
 
 const mapStateToProps = ({ authenticationReducer: { token }, attendanceReducer: { singleDayAttendance }, taskReducer: { allCompanyTasks, completedTasks } }: AppState): LinkStateProps => {
@@ -118,7 +117,8 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDi
     getSingleDayAttendance: bindActionCreators(getSingleDayAttendance, dispatch),
     getCompanyTasks: bindActionCreators(getCompanyTasks, dispatch),
     redirectToTask: bindActionCreators(redirectToTask, dispatch),
-    getCompletedTasks: bindActionCreators(getCompletedTasks, dispatch)
+    getCompletedTasks: bindActionCreators(getCompletedTasks, dispatch),
+    getIncomeExpenseInTimePeriod: bindActionCreators(getIncomeExpenseInTimePeriod, dispatch)
   };
 };
 

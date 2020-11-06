@@ -19,6 +19,7 @@ const StyledWrapper = styled.div`
   ${({ theme }) => theme.mq.hdReady} {
     width: 100%;
     height: 100%;
+    min-height: auto;
     grid-area: attendance;
     align-self: center;
   }
@@ -34,8 +35,8 @@ const DateParagraph = styled.h3`
 
 interface Props {
   singleDayAttendance: AttendanceInterface[];
-  setSelectedAttendance?: React.Dispatch<React.SetStateAction<AttendanceInterface | null>>
-  setAttendanceOpen?:   React.Dispatch<React.SetStateAction<boolean>>
+  setSelectedAttendance?: React.Dispatch<React.SetStateAction<AttendanceInterface | null>>;
+  setAttendanceOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const AttendanceList: React.FC<Props> = ({ singleDayAttendance, setSelectedAttendance, setAttendanceOpen }) => {
@@ -43,16 +44,6 @@ const AttendanceList: React.FC<Props> = ({ singleDayAttendance, setSelectedAtten
     <StyledWrapper>
       <DateParagraph>{new Date().toLocaleDateString()}</DateParagraph>
       {singleDayAttendance.map((attendance, index: number) => (
-        // <AttendanceBox
-        //   key={index}
-        //   name={`${attendance.user.name} ${attendance.user.lastName}`}
-        //   date={attendance.attendance?.date && new Date(attendance.attendance?.date)}
-        //   bottomDescription={attendance.user.email}
-        //   callback={() => console.log('attendance clicked')}
-        //   isEmpty={isEmpty(attendance.attendance)}
-        //   isChecked={!isEmpty(attendance.attendance) && attendance.attendance?.wasPresent}
-        //   hours={attendance.attendance?.hours}
-        // />
         <ListBox
           key={attendance._id}
           name={`${attendance.user.name} ${attendance.user.lastName}`}

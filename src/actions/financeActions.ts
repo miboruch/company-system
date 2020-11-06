@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ExpenseInterface, IncomeInterface } from '../types/modelsTypes';
+import { ExpenseInterface, IncomeDataInterface, IncomeInterface } from '../types/modelsTypes';
 import {
   SET_BUDGET_ERROR,
   SET_BUDGET_EXPENSE,
@@ -19,7 +19,7 @@ import {
 import { Dispatch } from 'redux';
 import { AppTypes } from '../types/actionTypes/appActionTypes';
 import { AppState } from '../reducers/rootReducer';
-import { API_URL, FINANCES_DATA_DAYS_BACK } from '../utils/config';
+import { API_URL, DEFAULT_COMPANY_ID, FINANCES_DATA_DAYS_BACK } from '../utils/config';
 
 const setBudgetLoading = (isLoading: boolean): SetBudgetLoading => {
   return {
@@ -93,7 +93,7 @@ const getCompanyIncomeAndExpense = (daysBack: number) => async (dispatch: Dispat
   }
 };
 
-const getLastIncomesAndExpenses = (limit: number) => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
+const getLastIncomesAndExpenses = (limit?: number) => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
   dispatch(setBudgetLoading(true));
 
   const { token } = getState().authenticationReducer;
@@ -101,7 +101,7 @@ const getLastIncomesAndExpenses = (limit: number) => async (dispatch: Dispatch<A
 
   try {
     if (token && currentCompany) {
-      const { data } = await axios.get(`${API_URL}/budget/get-last-income-expense?company_id=${currentCompany._id}&limit=${limit}`, {
+      const { data } = await axios.get(`${API_URL}/budget/get-last-income-expense?company_id=${currentCompany._id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -142,6 +142,37 @@ export const fetchAllFinancesData = () => async (dispatch: Dispatch<any>) => {
   dispatch(getCompanyIncomeAndExpense(FINANCES_DATA_DAYS_BACK));
   dispatch(getLastIncomesAndExpenses(3));
   dispatch(getCompanyBudget());
+};
+
+export const getIncomeExpenseInTimePeriod = (daysBack: number, setData: (data: Array<any>) => void) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
+  const { token } = getState().authenticationReducer;
+
+  try {
+    if (token) {
+      const { data } = await axios.get(`${API_URL}/income/get-last-incomes?company_id=${DEFAULT_COMPANY_ID}&daysBack=${daysBack}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      const { data: expenseData } = await axios.get(`${API_URL}/expense/get-last-expenses?company_id=${DEFAULT_COMPANY_ID}&daysBack=${daysBack}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      setData(
+        data.map((income: IncomeDataInterface, index: number) => ({
+          ...income,
+          expenseValue: expenseData[index].expenseValue,
+          createdDate: new Date(income.createdDate).toLocaleDateString()
+        }))
+      );
+    }
+  } catch (error) {
+    console.log(error);
+    dispatch(setBudgetLoading(true));
+  }
 };
 
 export const addIncome = (incomeValue: number, description: string) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
