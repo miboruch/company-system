@@ -5,6 +5,7 @@ import { AppState } from '../../../reducers/rootReducer';
 import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
 import { adminSettings, userSettings, AdminSettingsSubcategories, UserSettingsSubcategories } from './settingsPageData';
 import { StyledList, ListItems, Paragraph, ContentWrapper } from './SettingsPageContent.styles';
+import AccountSettings from '../../molecules/AccountSettings/AccountSettings';
 
 interface Props {}
 
@@ -29,7 +30,7 @@ const SettingsPageContent: React.FC<ConnectedProps> = ({ role }) => {
             ))}
       </StyledList>
       <ContentWrapper>
-        <p>Test</p>
+        <AccountSettings />
       </ContentWrapper>
     </GridWrapper>
   );

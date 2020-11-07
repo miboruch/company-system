@@ -1,11 +1,13 @@
 export enum AdminSettingsSubcategories {
   AccountSettings = 'accountSettings',
   CompanySettings = 'companySettings',
+  ChangePassword = 'changePassword',
   AddAdmin = 'addAdmin'
 }
 
 export enum UserSettingsSubcategories {
-  AccountSettings = 'accountSettings'
+  AccountSettings = 'accountSettings',
+  ChangePassword = 'changePassword'
 }
 
 interface SettingsInterface {
@@ -25,6 +27,10 @@ export const adminSettings: SettingsInterface[] = [
   {
     name: 'Dodaj administratorów',
     roleEnum: AdminSettingsSubcategories.AddAdmin
+  },
+  {
+    name: 'Zmiana hasła',
+    roleEnum: AdminSettingsSubcategories.ChangePassword
   }
 ];
 
@@ -32,5 +38,9 @@ export const userSettings: SettingsInterface[] = [
   {
     name: 'Ustawienia konta',
     roleEnum: UserSettingsSubcategories.AccountSettings
+  },
+  {
+    name: 'Zmiana hasła',
+    roleEnum: UserSettingsSubcategories.ChangePassword
   }
 ];

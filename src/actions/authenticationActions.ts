@@ -66,7 +66,7 @@ const authLogout = (): AuthLogout => {
   };
 };
 
-const setUserData = (userId: string, email: string, name: string, lastName: string, dateOfBirth: string | Date, country: string, city: string, address: string): SetUserData => {
+const setUserData = (userId: string, email: string, name: string, lastName: string, dateOfBirth: Date, phoneNumber: string, country: string, city: string, address: string): SetUserData => {
   return {
     type: SET_USER_DATA,
     payload: {
@@ -75,6 +75,7 @@ const setUserData = (userId: string, email: string, name: string, lastName: stri
       name,
       lastName,
       dateOfBirth,
+      phoneNumber,
       country,
       city,
       address
@@ -127,7 +128,7 @@ export const getUserData = (token: string) => async (dispatch: Dispatch<AppTypes
       }
     });
 
-    dispatch(setUserData(data._id, data.email, data.name, data.lastName, data.dateOfBirth, data.country, data.city, data.address));
+    dispatch(setUserData(data._id, data.email, data.name, data.lastName, data.dateOfBirth, data.phoneNumber, data.country, data.city, data.address));
   } catch (error) {
     console.log(error);
   }

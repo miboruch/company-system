@@ -83,6 +83,7 @@ export const authenticationReducer = (state = initialState, action: Authenticati
           name: action.payload.name,
           lastName: action.payload.lastName,
           dateOfBirth: action.payload.dateOfBirth,
+          phoneNumber: action.payload.phoneNumber,
           country: action.payload.country,
           city: action.payload.city,
           address: action.payload.address

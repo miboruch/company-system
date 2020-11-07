@@ -43,6 +43,8 @@ const ContentWrapper = styled.div`
 
   ${({ theme }) => theme.mq.hdReady} {
     height: 100%;
+    padding: 2rem 4rem;
+    overflow-y: scroll;
     grid-area: content;
   }
 `;

@@ -49,7 +49,8 @@ export interface UserAuthData {
   email: string;
   name: string;
   lastName: string;
-  dateOfBirth: Date | string;
+  dateOfBirth: Date;
+  phoneNumber: string;
   country: string;
   city: string;
   address: string;
