@@ -36,9 +36,13 @@ const Notifications: React.FC<ConnectedProps> = ({ isOpen, setOpen, notification
         <h4>Powiadomienia</h4>
       </Header>
       <Content ref={contentRef}>
-        <NotificationBox title={'test'} description={'test again'} createdDate={new Date()} wasOpened={false} />
-        <NotificationBox title={'test'} description={'test again'} createdDate={new Date()} wasOpened={true} />
-        <NotificationBox title={'test'} description={'test again'} createdDate={new Date()} wasOpened={true} />
+        {notifications.length > 0 ? (
+          notifications.map((notification) => (
+            <NotificationBox title={notification.title} description={notification.description} createdDate={new Date(notification.createdDate)} wasOpened={notification.wasOpened} />
+          ))
+        ) : (
+          <p>Brak powiadomień</p>
+        )}
       </Content>
     </StyledWrapper>
   );

@@ -6,6 +6,7 @@ import TaskPage from '../pages/TaskPage/TaskPage';
 import ClientsPage from '../pages/ClientsPage/ClientsPage';
 import AttendancePage from '../pages/AttendancePage/AttendancePage';
 import FinancesPage from '../pages/FinancesPage/FinancesPage';
+import SettingsPage from '../pages/SettingsPage/SettingsPage';
 
 interface Routes {
   path: string;
@@ -53,6 +54,11 @@ export const adminRoutes: Routes[] = [
     path: '/admin/attendance',
     exact: false,
     component: AttendancePage
+  },
+  {
+    path: '/admin/settings',
+    exact: false,
+    component: SettingsPage
   }
 ];
 

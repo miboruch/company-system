@@ -17,6 +17,9 @@ const SelectPage: React.FC<ConnectedProps> = ({ setUserRole }) => {
       <Link to={'/admin/companies'} onClick={() => setUserRole(UserRole.Admin)}>
         Admin
       </Link>
+      <Link to={'/admin/settings'} onClick={() => setUserRole(UserRole.Admin)}>
+        Admin settings
+      </Link>
       <Link to={'/user/companies'} onClick={() => setUserRole(UserRole.User)}>
         Użytkownik
       </Link>
