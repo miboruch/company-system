@@ -42,9 +42,13 @@ const Chart: React.FC<Props> = ({ data, xAxisDataKey, barDataKey, secondBarDataK
       <StyledResponsiveContainer width={'100%'} height={250}>
         <AreaChart data={!!data ? data : []}>
           <defs>
-            <linearGradient id='chartColor' x1='0' y1='0' x2='0' y2='1'>
-              <stop offset='25%' stopColor={'#54C172'} stopOpacity={1} />
-              <stop offset='50%' stopColor={'#85BE9B'} stopOpacity={1} />
+            <linearGradient id='incomeColor' x1='0' y1='0' x2='0' y2='1'>
+              <stop offset='65%' stopColor={'#85BE9B'} stopOpacity={1} />
+              <stop offset='90%' stopColor={'#fff'} stopOpacity={1} />
+            </linearGradient>
+            <linearGradient id='expenseColor' x1='0' y1='0' x2='0' y2='1'>
+              <stop offset='65%' stopColor={'#FE7070'} stopOpacity={1} />
+              <stop offset='90%' stopColor={'#fff'} stopOpacity={1} />
             </linearGradient>
           </defs>
           <CartesianGrid strokeDasharray='2 2' />
@@ -59,8 +63,8 @@ const Chart: React.FC<Props> = ({ data, xAxisDataKey, barDataKey, secondBarDataK
             }}
           />
           <Legend iconSize={16} />
-          <Area type={'monotone'} dataKey={barDataKey} name={barDataName} fill={'url(#chartColor)'} />
-          {secondBarDataKey && secondBarDataName && <Area type={'monotone'} dataKey={secondBarDataKey} name={secondBarDataName} fill={'url(#chartColor)'} />}
+          <Area type={'monotone'} dataKey={barDataKey} name={barDataName} fill={'url(#incomeColor)'} />
+          {secondBarDataKey && secondBarDataName && <Area type={'monotone'} dataKey={secondBarDataKey} name={secondBarDataName} fill={'url(#expenseColor)'} />}
         </AreaChart>
       </StyledResponsiveContainer>
     </ChartWrapper>

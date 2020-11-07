@@ -14,6 +14,8 @@ import { bindActionCreators } from 'redux';
 import { getIncomeExpenseInTimePeriod } from '../../../actions/financeActions';
 import BudgetHistoryList from '../BudgetHistoryList/BudgetHistoryList';
 import BudgetTile from '../../molecules/BudgetTile/BudgetTile';
+import Button from '../../atoms/Button/Button';
+import IncomeExpensePopup, { FinancePopupInterface } from '../../molecules/IncomeExpensePopup/IncomeExpensePopup';
 
 const Content = styled.div`
   width: 100%;
@@ -71,6 +73,8 @@ interface Props {}
 type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
 const FinancesPageContent: React.FC<ConnectedProps> = ({ getIncomeExpenseInTimePeriod, lastIncomes, lastExpenses, budget }) => {
+  const [isPopupOpen, setPopupOpen] = useState<boolean>(false);
+  const [popupType, setPopupType] = useState<FinancePopupInterface>(FinancePopupInterface.Income);
   const [chartData, setChartData] = useState<Array<IncomeDataInterface> | null>(null);
   const [daysBack, setDaysBackTo] = useState<number>(7);
   const [budgetHistoryData, setBudgetHistoryData] = useState<(IncomeInterface | ExpenseInterface)[]>([]);
@@ -117,13 +121,29 @@ const FinancesPageContent: React.FC<ConnectedProps> = ({ getIncomeExpenseInTimeP
             <p>USD</p>
           </InfoBoxWrapper>
           <ButtonWrapper>
-            <p>Test</p>
+            <Button
+              type={'button'}
+              text={'Dodaj dochód'}
+              onClick={() => {
+                setPopupOpen(true);
+                setPopupType(FinancePopupInterface.Income);
+              }}
+            />
+            <Button
+              type={'button'}
+              text={'Dodaj wydatek'}
+              onClick={() => {
+                setPopupOpen(true);
+                setPopupType(FinancePopupInterface.Expense);
+              }}
+            />
           </ButtonWrapper>
           <InfoWrapper>
             <p>Info</p>
           </InfoWrapper>
         </ContentGridWrapper>
       </Content>
+      <IncomeExpensePopup type={popupType} isOpen={isPopupOpen} setOpen={setPopupOpen} />
     </GridWrapper>
   );
 };

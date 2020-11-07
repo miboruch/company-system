@@ -21,6 +21,12 @@ const StyledWrapper = styled.div`
   }
 `;
 
+const ContentWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+`;
+
 const Title = styled.h3`
   font-size: 18px;
   letter-spacing: -2px;
@@ -37,18 +43,20 @@ const BudgetHistoryList: React.FC<Props> = ({ budgetHistory }) => {
   return (
     <StyledWrapper>
       <Title>Historia</Title>
-      {budgetHistory.map((history, index: number) => (
-        <ListBox
-          key={history._id}
-          name={history.description}
-          topDescription={history.createdDate.toLocaleString()}
-          bottomDescription={history.companyId}
-          isCompanyBox={false}
-          isEmpty={true}
-          callback={() => console.log('test')}
-          value={`${history.expenseValue ? -1 * history.expenseValue : history.incomeValue ? history.incomeValue : 0} PLN`}
-        />
-      ))}
+      <ContentWrapper>
+        {budgetHistory.map((history, index: number) => (
+          <ListBox
+            key={history._id}
+            name={history.description}
+            topDescription={history.createdDate.toLocaleString()}
+            bottomDescription={history.companyId}
+            isCompanyBox={false}
+            isEmpty={true}
+            callback={() => console.log('test')}
+            value={`${history.expenseValue ? -1 * history.expenseValue : history.incomeValue ? history.incomeValue : 0} PLN`}
+          />
+        ))}
+      </ContentWrapper>
     </StyledWrapper>
   );
 };

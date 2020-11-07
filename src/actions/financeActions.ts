@@ -20,6 +20,8 @@ import { Dispatch } from 'redux';
 import { AppTypes } from '../types/actionTypes/appActionTypes';
 import { AppState } from '../reducers/rootReducer';
 import { API_URL, DEFAULT_COMPANY_ID, FINANCES_DATA_DAYS_BACK } from '../utils/config';
+import { setNotificationMessage } from './toggleActions';
+import { NotificationTypes } from '../types/actionTypes/toggleAcitonTypes';
 
 const setBudgetLoading = (isLoading: boolean): SetBudgetLoading => {
   return {
@@ -146,16 +148,17 @@ export const fetchAllFinancesData = () => async (dispatch: Dispatch<any>) => {
 
 export const getIncomeExpenseInTimePeriod = (daysBack: number, setData: (data: Array<any>) => void) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   const { token } = getState().authenticationReducer;
+  const { currentCompany } = getState().companyReducer;
 
   try {
-    if (token) {
-      const { data } = await axios.get(`${API_URL}/income/get-last-incomes?company_id=${DEFAULT_COMPANY_ID}&daysBack=${daysBack}`, {
+    if (token && currentCompany) {
+      const { data } = await axios.get(`${API_URL}/income/get-last-incomes?company_id=${currentCompany._id}&daysBack=${daysBack}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
 
-      const { data: expenseData } = await axios.get(`${API_URL}/expense/get-last-expenses?company_id=${DEFAULT_COMPANY_ID}&daysBack=${daysBack}`, {
+      const { data: expenseData } = await axios.get(`${API_URL}/expense/get-last-expenses?company_id=${currentCompany._id}&daysBack=${daysBack}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -175,7 +178,7 @@ export const getIncomeExpenseInTimePeriod = (daysBack: number, setData: (data: A
   }
 };
 
-export const addIncome = (incomeValue: number, description: string) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
+export const addIncome = (incomeValue: number, description: string, callback: () => void) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   dispatch(setBudgetLoading(true));
 
   const { token } = getState().authenticationReducer;
@@ -198,13 +201,16 @@ export const addIncome = (incomeValue: number, description: string) => async (di
 
       dispatch(fetchAllFinancesData());
       dispatch(setBudgetLoading(false));
+      callback();
+      dispatch(setNotificationMessage('Dodano nowy przychód'));
     }
   } catch (error) {
     dispatch(setBudgetError(error));
+    dispatch(setNotificationMessage('Problem z dodaniem przychodu', NotificationTypes.Error));
   }
 };
 
-export const addExpense = (expenseValue: number, description: string) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
+export const addExpense = (expenseValue: number, description: string, callback: () => void) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   dispatch(setBudgetLoading(true));
 
   const { token } = getState().authenticationReducer;
@@ -227,9 +233,12 @@ export const addExpense = (expenseValue: number, description: string) => async (
 
       dispatch(fetchAllFinancesData());
       dispatch(setBudgetLoading(false));
+      callback();
+      dispatch(setNotificationMessage('Dodano nowy wydatek'));
     }
   } catch (error) {
     dispatch(setBudgetError(error));
+    dispatch(setNotificationMessage('Problem z dodaniem wydatku', NotificationTypes.Error));
   }
 };
 
