@@ -1,6 +1,7 @@
 import React from 'react';
 import AccountSettings from '../../molecules/AccountSettings/AccountSettings';
 import CompanySettings from '../../molecules/CompanySettings/CompanySettings';
+import PasswordChangeSettings from '../../molecules/PasswordChangeSettings/PasswordChangeSettings';
 
 export enum AdminSettingsSubcategories {
   AccountSettings = 'accountSettings',
@@ -53,6 +54,8 @@ export const renderSettings = (subcategory: AdminSettingsSubcategories | UserSet
   switch (subcategory) {
     case AdminSettingsSubcategories.AccountSettings || UserSettingsSubcategories.AccountSettings:
       return <AccountSettings />;
+    case AdminSettingsSubcategories.ChangePassword || UserSettingsSubcategories.ChangePassword:
+      return <PasswordChangeSettings />;
     case AdminSettingsSubcategories.CompanySettings:
       return <CompanySettings />;
   }
