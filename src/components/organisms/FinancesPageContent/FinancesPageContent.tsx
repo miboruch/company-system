@@ -70,7 +70,7 @@ interface Props {}
 
 type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
-const FinancesPageContent: React.FC<ConnectedProps> = ({ getIncomeExpenseInTimePeriod, lastIncomes, lastExpenses }) => {
+const FinancesPageContent: React.FC<ConnectedProps> = ({ getIncomeExpenseInTimePeriod, lastIncomes, lastExpenses, budget }) => {
   const [chartData, setChartData] = useState<Array<IncomeDataInterface> | null>(null);
   const [daysBack, setDaysBackTo] = useState<number>(7);
   const [budgetHistoryData, setBudgetHistoryData] = useState<(IncomeInterface | ExpenseInterface)[]>([]);
@@ -95,7 +95,7 @@ const FinancesPageContent: React.FC<ConnectedProps> = ({ getIncomeExpenseInTimeP
       <Content>
         <ContentGridWrapper ref={contentRef} isFinancesPage={true}>
           <BudgetWrapper>
-            <BudgetTile description={'Budżet firmy'} name={'Aktualny budżet firmy'} value={120027} />
+            <BudgetTile description={'Budżet firmy'} name={'Aktualny budżet firmy'} value={budget} />
             {budgetHistoryData.slice(0, 2).map((history) => (
               <BudgetTile description={'Finanse'} value={history.expenseValue ? -1 * history.expenseValue : history.incomeValue ? history.incomeValue : 0} name={history.description} />
             ))}
@@ -131,14 +131,15 @@ const FinancesPageContent: React.FC<ConnectedProps> = ({ getIncomeExpenseInTimeP
 interface LinkStateProps {
   lastIncomes: IncomeInterface[];
   lastExpenses: ExpenseInterface[];
+  budget: number;
 }
 
 interface LinkDispatchProps {
   getIncomeExpenseInTimePeriod: (daysBack: number, setData: (data: any[]) => void) => void;
 }
 
-const mapStateToProps = ({ financeReducer: { lastIncomes, lastExpenses } }: AppState): LinkStateProps => {
-  return { lastIncomes, lastExpenses };
+const mapStateToProps = ({ financeReducer: { lastIncomes, lastExpenses, budget } }: AppState): LinkStateProps => {
+  return { lastIncomes, lastExpenses, budget };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {

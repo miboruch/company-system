@@ -98,7 +98,7 @@ const AttendancePageContent: React.FC<ConnectedProps> = ({
           <AttendanceInfo />
         </ContentTemplate>
       </>
-      <AttendancePopup attendance={selectedAttendance} isOpen={isAttendanceOpen} setOpen={setAttendanceOpen} />
+      <AttendancePopup attendance={selectedAttendance} isOpen={isAttendanceOpen} setOpen={setAttendanceOpen} date={attendanceDate} />
     </GridWrapper>
   );
 };

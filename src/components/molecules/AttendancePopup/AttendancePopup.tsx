@@ -18,6 +18,7 @@ interface Props {
   attendance: AttendanceInterface | null;
   isOpen: boolean;
   setOpen: (isOpen: boolean) => void;
+  date: Date;
 }
 
 interface DefaultValues {
@@ -27,7 +28,7 @@ interface DefaultValues {
 
 type ConnectedProps = Props & LinkDispatchProps;
 
-const AttendancePopup: React.FC<ConnectedProps> = ({ attendance, isOpen, setOpen, updateAttendance, addAttendance }) => {
+const AttendancePopup: React.FC<ConnectedProps> = ({ attendance, isOpen, setOpen, updateAttendance, addAttendance, date }) => {
   const initialValues: DefaultValues = {
     wasPresent: !attendance?.attendance ? null : attendance.attendance.wasPresent,
     hours: !attendance?.attendance ? 0 : attendance.attendance.hours
@@ -39,13 +40,13 @@ const AttendancePopup: React.FC<ConnectedProps> = ({ attendance, isOpen, setOpen
       if (attendance?.attendance) {
         values.wasPresent !== null && updateAttendance(attendance.attendance._id, values.wasPresent, values.hours);
       } else {
-        values.wasPresent !== null && addAttendance(attendance.user._id, new Date(), values.wasPresent, values.hours);
+        values.wasPresent !== null && addAttendance(attendance.user._id, date, values.wasPresent, values.hours);
       }
     }
   };
 
   return (
-    <PopupTemplate isOpen={isOpen} headerText={`Obecność z dnia ${new Date().toLocaleDateString()}`} isHigher={false}>
+    <PopupTemplate isOpen={isOpen} headerText={`Obecność z dnia ${date.toLocaleString()}`} isHigher={false}>
       <div>
         <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize={true}>
           {({ handleChange, values, setFieldValue }) =>

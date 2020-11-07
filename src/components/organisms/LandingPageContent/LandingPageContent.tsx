@@ -88,7 +88,7 @@ const LandingPageContent: React.FC<ConnectedProps> = ({
           </InfoBoxWrapper>
         </ContentGridWrapper>
       </Content>
-      <AttendancePopup attendance={selectedAttendance} isOpen={isAttendanceOpen} setOpen={setAttendanceOpen} />
+      <AttendancePopup attendance={selectedAttendance} isOpen={isAttendanceOpen} setOpen={setAttendanceOpen} date={new Date()} />
     </GridWrapper>
   );
 };
