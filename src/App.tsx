@@ -14,17 +14,19 @@ import Routes from './routes/Routes';
 import SelectPage from './pages/SelectPage/SelectPage';
 import NotificationPopup from './components/molecules/NotificationPopup/NotificationPopup';
 import RegisterFromLink from './pages/RegisterFromLink/RegisterFromLink';
+import { getUserNotifications } from './actions/notificationActions';
 
 interface Props {}
 
 type ConnectedProps = Props & LinkDispatchProps & RouteComponentProps<any>;
 
-const App: React.FC<ConnectedProps> = ({ history, authenticationCheck, getAllAppUsers }) => {
+const App: React.FC<ConnectedProps> = ({ history, authenticationCheck, getAllAppUsers, getUserNotifications }) => {
   useEffect(() => {
     authenticationCheck(
       () => {
         getAllAppUsers();
         history.push('/select');
+        getUserNotifications(1);
       },
       () => history.push('/login')
     );
@@ -47,12 +49,14 @@ const App: React.FC<ConnectedProps> = ({ history, authenticationCheck, getAllApp
 interface LinkDispatchProps {
   authenticationCheck: (successCallback: () => void, errorCallback: () => void) => void;
   getAllAppUsers: () => void;
+  getUserNotifications: (page: number) => void;
 }
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
   return {
     authenticationCheck: bindActionCreators(authenticateCheck, dispatch),
-    getAllAppUsers: bindActionCreators(getAllAppUsers, dispatch)
+    getAllAppUsers: bindActionCreators(getAllAppUsers, dispatch),
+    getUserNotifications: bindActionCreators(getUserNotifications, dispatch)
   };
 };
 

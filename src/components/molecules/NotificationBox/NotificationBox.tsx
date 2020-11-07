@@ -8,10 +8,10 @@ interface Props {
   description: string;
   wasOpened: boolean;
   createdDate: Date;
-  onClick?: () => void;
+  deleteCallback?: () => void;
 }
 
-const NotificationBox: React.FC<Props> = ({ title, description, wasOpened, createdDate, onClick }) => {
+const NotificationBox: React.FC<Props> = ({ title, description, wasOpened, createdDate, deleteCallback }) => {
   return (
     <NotificationWrapper>
       <TextWrapper>
@@ -21,7 +21,7 @@ const NotificationBox: React.FC<Props> = ({ title, description, wasOpened, creat
       </TextWrapper>
       <FlexWrapper>
         {!wasOpened && <NewNotificationDot />}
-        <DeleteIcon onClick={() => !!onClick && onClick()} />
+        <DeleteIcon onClick={() => !!deleteCallback && deleteCallback()} />
       </FlexWrapper>
     </NotificationWrapper>
   );

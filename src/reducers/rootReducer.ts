@@ -7,6 +7,7 @@ import { clientReducer } from './clientReducer';
 import { attendanceReducer } from './attendanceReducer';
 import { toggleReducer } from './toggleReducer';
 import { financeReducer } from './financeReducer';
+import { notificationReducer } from './notificationReducer';
 
 export const rootReducer = combineReducers({
   authenticationReducer,
@@ -16,7 +17,8 @@ export const rootReducer = combineReducers({
   clientReducer,
   attendanceReducer,
   toggleReducer,
-  financeReducer
+  financeReducer,
+  notificationReducer
 });
 
 export type AppState = ReturnType<typeof rootReducer>;

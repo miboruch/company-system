@@ -154,3 +154,11 @@ export interface ExpenseInterface extends IncomeExpenseInterface {
   expenseValue: number;
   incomeValue?: never;
 }
+
+export interface NotificationInterface {
+  userId: string;
+  title: string;
+  description: string;
+  wasOpened: boolean;
+  createdDate: Date;
+}
