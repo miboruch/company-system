@@ -1,3 +1,7 @@
+import React from 'react';
+import AccountSettings from '../../molecules/AccountSettings/AccountSettings';
+import CompanySettings from '../../molecules/CompanySettings/CompanySettings';
+
 export enum AdminSettingsSubcategories {
   AccountSettings = 'accountSettings',
   CompanySettings = 'companySettings',
@@ -44,3 +48,12 @@ export const userSettings: SettingsInterface[] = [
     roleEnum: UserSettingsSubcategories.ChangePassword
   }
 ];
+
+export const renderSettings = (subcategory: AdminSettingsSubcategories | UserSettingsSubcategories): React.ReactNode => {
+  switch (subcategory) {
+    case AdminSettingsSubcategories.AccountSettings || UserSettingsSubcategories.AccountSettings:
+      return <AccountSettings />;
+    case AdminSettingsSubcategories.CompanySettings:
+      return <CompanySettings />;
+  }
+};

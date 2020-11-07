@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { Formik } from 'formik';
+import { Heading, StyledForm } from '../AccountSettings/AccountSettings.styles';
 import { StyledInput } from '../../../styles/compoundStyles';
-import NumberFormat from 'react-number-format';
 import { DoubleFlexWrapper, StyledLabel } from '../../../styles/shared';
-import DatePicker from 'react-datepicker';
+import NumberFormat from 'react-number-format';
 import Button from '../../atoms/Button/Button';
+import { Formik } from 'formik';
+import { CompanyInterface } from '../../../types/modelsTypes';
 import { AppState } from '../../../reducers/rootReducer';
-import { UserAuthData } from '../../../types/modelsTypes';
-import {StyledForm, Heading} from './AccountSettings.styles';
 
 interface DefaultValues {
-  email: string;
   name: string;
-  lastName: string;
-  dateOfBirth: Date;
+  email: string;
+  nip: string;
   phoneNumber: string;
   address: string;
   city: string;
@@ -25,18 +23,17 @@ interface Props {}
 
 type ConnectedProps = Props & LinkStateProps;
 
-const AccountSettings: React.FC<ConnectedProps> = ({ userData }) => {
+const CompanySettings: React.FC<ConnectedProps> = ({ currentCompany }) => {
   const [formattedPhoneNumber, setFormattedPhoneNumber] = useState<string>('');
 
   const initialValues: DefaultValues = {
-    email: userData!.email,
-    name: userData!.name,
-    lastName: userData!.lastName,
-    dateOfBirth: new Date(userData!.dateOfBirth),
-    phoneNumber: userData!.phoneNumber,
-    address: userData!.address,
-    city: userData!.city,
-    country: userData!.country
+    name: currentCompany!.name,
+    email: currentCompany!.email,
+    nip: currentCompany!.nip,
+    phoneNumber: currentCompany!.phoneNumber,
+    address: currentCompany!.address,
+    city: currentCompany!.city,
+    country: currentCompany!.country
   };
 
   const handleSubmit = (values: DefaultValues) => {
@@ -47,14 +44,10 @@ const AccountSettings: React.FC<ConnectedProps> = ({ userData }) => {
     <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize={true}>
       {({ handleChange, handleBlur, values, setFieldValue }) => (
         <StyledForm>
-          <Heading>Ustawienia konta</Heading>
-          <StyledInput type={'email'} name={'email'} onChange={handleChange} value={values.email} required={true} labelText={'Email'} />
+          <Heading>Ustawienia firmy</Heading>
           <StyledInput type={'text'} name={'name'} onChange={handleChange} value={values.name} required={true} labelText={'Imię'} />
-          <StyledInput type={'text'} name={'lastName'} onChange={handleChange} value={values.lastName} required={true} labelText={'Nazwisko'} />
-          <div>
-            <StyledLabel>Data urodzenia</StyledLabel>
-            <DatePicker selected={values.dateOfBirth} onChange={(date) => setFieldValue('dateOfBirth', date)} dateFormat={'dd/MM/yyyy'} />
-          </div>
+          <StyledInput type={'email'} name={'email'} onChange={handleChange} value={values.email} required={true} labelText={'Email'} />
+          <StyledInput type={'text'} name={'nip'} onChange={handleChange} value={values.nip} required={true} labelText={'NIP'} />
           <div>
             <StyledLabel>Numer telefonu</StyledLabel>
             <NumberFormat
@@ -81,11 +74,11 @@ const AccountSettings: React.FC<ConnectedProps> = ({ userData }) => {
 };
 
 interface LinkStateProps {
-  userData: UserAuthData | null;
+  currentCompany: CompanyInterface | null;
 }
 
-const mapStateToProps = ({ authenticationReducer: { userData } }: AppState): LinkStateProps => {
-  return { userData };
+const mapStateToProps = ({ companyReducer: { currentCompany } }: AppState): LinkStateProps => {
+  return { currentCompany };
 };
 
-export default connect(mapStateToProps)(AccountSettings);
+export default connect(mapStateToProps)(CompanySettings);

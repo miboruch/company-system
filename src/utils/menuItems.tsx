@@ -42,6 +42,11 @@ export const adminMenuItems: MenuItem[] = [
     name: 'Twoje firmy',
     link: '/admin/companies',
     icon: <HomeIcon />
+  },
+  {
+    name: 'Ustawienia',
+    link: '/admin/settings',
+    icon: <HomeIcon />
   }
 ];
 

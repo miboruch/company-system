@@ -3,9 +3,8 @@ import { connect } from 'react-redux';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
 import { AppState } from '../../../reducers/rootReducer';
 import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
-import { adminSettings, userSettings, AdminSettingsSubcategories, UserSettingsSubcategories } from './settingsPageData';
+import { adminSettings, userSettings, AdminSettingsSubcategories, UserSettingsSubcategories, renderSettings } from './settingsPageData';
 import { StyledList, ListItems, Paragraph, ContentWrapper } from './SettingsPageContent.styles';
-import AccountSettings from '../../molecules/AccountSettings/AccountSettings';
 
 interface Props {}
 
@@ -29,9 +28,7 @@ const SettingsPageContent: React.FC<ConnectedProps> = ({ role }) => {
               </ListItems>
             ))}
       </StyledList>
-      <ContentWrapper>
-        <AccountSettings />
-      </ContentWrapper>
+      <ContentWrapper>{renderSettings(subcategory)}</ContentWrapper>
     </GridWrapper>
   );
 };
