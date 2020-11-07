@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
 import { List } from '../../../styles/shared';
 import styled from 'styled-components';
-
-interface Props {}
+import { AppState } from '../../../reducers/rootReducer';
+import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
 
 const StyledList = styled(List)`
   display: flex;
@@ -51,19 +52,64 @@ const ContentWrapper = styled.div`
   }
 `;
 
-const SettingsPageContent: React.FC<Props> = () => {
+export enum AdminSettingsSubcategories {
+  AccountSettings = 'accountSettings',
+  CompanySettings = 'companySettings',
+  AddAdmin = 'addAdmin'
+}
+
+export enum UserSettingsSubcategories {
+  AccountSettings = 'accountSettings'
+}
+
+interface SettingsInterface {
+  name: string;
+  roleEnum: AdminSettingsSubcategories | UserSettingsSubcategories;
+}
+
+interface Props {}
+
+type ConnectedProps = Props & LinkStateProps;
+
+const SettingsPageContent: React.FC<ConnectedProps> = ({ role }) => {
+  const [subcategory, setSubcategory] = useState<AdminSettingsSubcategories | UserSettingsSubcategories>(UserSettingsSubcategories.AccountSettings);
+
+  const adminSettings: SettingsInterface[] = [
+    {
+      name: 'Ustawienia konta',
+      roleEnum: AdminSettingsSubcategories.AccountSettings
+    },
+    {
+      name: 'Edycja firmy',
+      roleEnum: AdminSettingsSubcategories.CompanySettings
+    },
+    {
+      name: 'Dodaj administratorów',
+      roleEnum: AdminSettingsSubcategories.AddAdmin
+    }
+  ];
+
+  const userSettings: SettingsInterface[] = [
+    {
+      name: 'Ustawienia konta',
+      roleEnum: UserSettingsSubcategories.AccountSettings
+    }
+  ];
+
   return (
     <GridWrapper pageName={'Ustawienia'} mobilePadding={true}>
       <StyledList>
-        <ListItems listLength={2} isActive={false}>
-          <Paragraph>Ustawienia konta</Paragraph>
-        </ListItems>
-        <ListItems listLength={2} isActive={true}>
-          <Paragraph>Edycja firmy</Paragraph>
-        </ListItems>
-        <ListItems listLength={3} isActive={false}>
-          <Paragraph>Dodaj administratorów</Paragraph>
-        </ListItems>
+        {role === UserRole.Admin
+          ? adminSettings.map((adminSetting) => (
+              <ListItems listLength={adminSettings.length} isActive={adminSetting.roleEnum === subcategory} onClick={() => setSubcategory(adminSetting.roleEnum)}>
+                <Paragraph>{adminSetting.name}</Paragraph>
+              </ListItems>
+            ))
+          : userSettings.map((userSetting) => (
+              <ListItems listLength={userSettings.length} isActive={userSetting.roleEnum === subcategory} onClick={() => setSubcategory(userSetting.roleEnum)}>
+                <Paragraph>{userSetting.name}</Paragraph>
+              </ListItems>
+            ))}
       </StyledList>
       <ContentWrapper>
         <p>Test</p>
@@ -72,4 +118,12 @@ const SettingsPageContent: React.FC<Props> = () => {
   );
 };
 
-export default SettingsPageContent;
+interface LinkStateProps {
+  role: UserRole;
+}
+
+const mapStateToProps = ({ authenticationReducer: { role } }: AppState): LinkStateProps => {
+  return { role };
+};
+
+export default connect(mapStateToProps)(SettingsPageContent);
