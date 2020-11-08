@@ -1,14 +1,15 @@
 import { NotificationTypes, SET_NOTIFICATION_MESSAGE, SetNotificationMessage } from '../types/actionTypes/toggleAcitonTypes';
 import { Dispatch } from 'redux';
-import { selectEmployee, setCompanyEmployees } from './employeeActions';
-import { selectClient, setCompanyClients } from './clientActions';
-import { selectTask, setCompanyTasks } from './taskActions';
-import { selectAttendance } from './attendanceActions';
+import { resetEmployees, selectEmployee, setCompanyEmployees } from './employeeActions';
+import { resetClients, selectClient, setCompanyClients } from './clientActions';
+import { resetTasks, selectTask, setCompanyTasks } from './taskActions';
+import { resetAttendance, selectAttendance } from './attendanceActions';
 import { UserRole } from '../types/actionTypes/authenticationActionTypes';
 import { AppTypes } from '../types/actionTypes/appActionTypes';
 import { AppState } from '../reducers/rootReducer';
 import { setUserRole } from './authenticationActions';
-import { setAllUserCompanies, setCompany } from './companyActions';
+import { resetCompany, setAllUserCompanies, setCompany } from './companyActions';
+import { resetFinances } from './financeActions';
 
 export const setNotificationMessage = (message: string | null, notificationType: NotificationTypes | null = NotificationTypes.Success): SetNotificationMessage => {
   return {
@@ -25,9 +26,12 @@ export const resetAllSelected = () => async (dispatch: Dispatch<any>) => {
   dispatch(selectAttendance(null));
 };
 
-export const changeUserRole = (role: UserRole, callback: () => void) =>async (dispatch: Dispatch<any>, getState: () => AppState) => {
-  dispatch(setAllUserCompanies([]));
-  dispatch(resetAllSelected());
-  dispatch(setCompany(null));
+export const changeUserRole = (role: UserRole, callback: () => void) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
+  dispatch(resetAttendance());
+  dispatch(resetClients());
+  dispatch(resetCompany());
+  dispatch(resetEmployees());
+  dispatch(resetFinances());
+  dispatch(resetTasks());
   callback();
-}
+};

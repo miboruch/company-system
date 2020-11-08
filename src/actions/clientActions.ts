@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { ClientInterface } from '../types/modelsTypes';
 import {
+  RESET_CLIENTS,
+  ResetClients,
   SET_ADD_NEW_CLIENT_OPEN,
   SET_CLIENT_ERROR,
   SET_CLIENT_INFO_OPEN,
@@ -160,4 +162,10 @@ export const deleteClient = (clientId: string) => async (dispatch: Dispatch<any>
     console.log(error);
     dispatch(setNotificationMessage('Problem z usunięciem klienta', NotificationTypes.Error));
   }
+};
+
+export const resetClients = (): ResetClients => {
+  return {
+    type: RESET_CLIENTS
+  };
 };

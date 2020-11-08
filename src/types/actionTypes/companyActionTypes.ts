@@ -5,6 +5,7 @@ export const SET_ALL_USER_COMPANIES = 'SET_ALL_USER_COMPANIES';
 export const SET_CURRENT_COMPANY = 'SET_CURRENT_COMPANY';
 export const SET_COMPANIES_ERROR = 'GET_COMPANIES_ERROR';
 export const SET_ADD_COMPANY_OPEN = 'SET_ADD_COMPANY_OPEN';
+export const RESET_COMPANY = 'RESET_COMPANY';
 
 export interface SetCompanyLoading {
   type: typeof SET_COMPANY_LOADING;
@@ -31,4 +32,8 @@ export interface SetAddCompanyOpen {
   payload: boolean;
 }
 
-export type CompanyActionTypes = SetCompanyLoading | SetAllUserCompanies | SetCurrentCompany | SetCompaniesError | SetAddCompanyOpen;
+export interface ResetCompany {
+  type: typeof RESET_COMPANY;
+}
+
+export type CompanyActionTypes = SetCompanyLoading | SetAllUserCompanies | SetCurrentCompany | SetCompaniesError | SetAddCompanyOpen | ResetCompany;

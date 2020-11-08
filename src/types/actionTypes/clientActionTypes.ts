@@ -6,6 +6,7 @@ export const SET_SELECTED_CLIENT = 'SET_SELECTED_CLIENT';
 export const SET_CLIENT_ERROR = 'SET_CLIENT_ERROR';
 export const SET_CLIENT_INFO_OPEN = 'SET_CLIENT_INFO_OPEN';
 export const SET_ADD_NEW_CLIENT_OPEN = 'SET_ADD_NEW_CLIENT_OPEN';
+export const RESET_CLIENTS = 'RESET_CLIENTS';
 
 export interface SetClientsLoading {
   type: typeof SET_CLIENTS_LOADING;
@@ -37,4 +38,8 @@ export interface SetAddNewClientOpen {
   payload: boolean;
 }
 
-export type ClientActionTypes = SetClientsLoading | SetCompanyClients | SetSelectedClient | SetClientError | SetClientInfoOpen | SetAddNewClientOpen;
+export interface ResetClients {
+  type: typeof RESET_CLIENTS;
+}
+
+export type ClientActionTypes = SetClientsLoading | SetCompanyClients | SetSelectedClient | SetClientError | SetClientInfoOpen | SetAddNewClientOpen | ResetClients;

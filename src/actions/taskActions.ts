@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { History } from 'history';
 import {
+  RESET_TASKS,
+  ResetTasks,
   SET_ADD_NEW_TASK_OPEN,
   SET_COMPANY_TASKS,
   SET_COMPLETED_TASKS,
@@ -207,4 +209,10 @@ export const getCompletedTasks = () => async (dispatch: Dispatch<any>, getState:
   } catch (error) {
     console.log(error);
   }
+};
+
+export const resetTasks = (): ResetTasks => {
+  return {
+    type: RESET_TASKS
+  };
 };

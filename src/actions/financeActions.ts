@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { ExpenseInterface, IncomeDataInterface, IncomeInterface } from '../types/modelsTypes';
 import {
+  RESET_FINANCES,
+  ResetFinances,
   SET_BUDGET_ERROR,
   SET_BUDGET_EXPENSE,
   SET_BUDGET_INCOME,
@@ -19,7 +21,7 @@ import {
 import { Dispatch } from 'redux';
 import { AppTypes } from '../types/actionTypes/appActionTypes';
 import { AppState } from '../reducers/rootReducer';
-import { API_URL, DEFAULT_COMPANY_ID, FINANCES_DATA_DAYS_BACK } from '../utils/config';
+import { API_URL, FINANCES_DATA_DAYS_BACK } from '../utils/config';
 import { setNotificationMessage } from './toggleActions';
 import { NotificationTypes } from '../types/actionTypes/toggleAcitonTypes';
 
@@ -284,4 +286,10 @@ export const deleteExpense = (expenseId: number) => async (dispatch: Dispatch<an
   } catch (error) {
     dispatch(setBudgetError(error));
   }
+};
+
+export const resetFinances = (): ResetFinances => {
+  return {
+    type: RESET_FINANCES
+  };
 };

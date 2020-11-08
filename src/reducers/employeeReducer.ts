@@ -1,5 +1,6 @@
 import {
   EmployeesActionTypes,
+  RESET_EMPLOYEES,
   SET_ADD_NEW_EMPLOYEE_OPEN,
   SET_COMPANY_EMPLOYEES,
   SET_EDIT_EMPLOYEE,
@@ -35,7 +36,7 @@ export const employeeReducer = (state = initialState, action: EmployeesActionTyp
     case SET_EMPLOYEE_LOADING:
       return {
         ...state,
-        isLoading: action.payload,
+        isLoading: action.payload
         // selectedEmployee: null
       };
     case SET_COMPANY_EMPLOYEES:
@@ -70,6 +71,8 @@ export const employeeReducer = (state = initialState, action: EmployeesActionTyp
         ...state,
         isEditEmployeeOpen: action.payload
       };
+    case RESET_EMPLOYEES:
+      return initialState;
     default:
       return state;
   }

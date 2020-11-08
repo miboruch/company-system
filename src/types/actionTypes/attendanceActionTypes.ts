@@ -9,6 +9,7 @@ export const SET_ATTENDANCE_ERROR = 'SET_ATTENDANCE_ERROR';
 export const SET_ATTENDANCE_INFO_OPEN = 'SET_ATTENDANCE_INFO_OPEN';
 export const SET_ADD_NEW_ATTENDANCE_OPEN = 'SET_ADD_NEW_ATTENDANCE_OPEN';
 export const SET_WEEK_ATTENDANCE = 'SET_WEEK_ATTENDANCE';
+export const RESET_ATTENDANCE = 'RESET_ATTENDANCE';
 
 export interface SetAttendanceLoading {
   type: typeof SET_ATTENDANCE_LOADING;
@@ -55,6 +56,10 @@ export interface SetAddNewAttendanceOpen {
   payload: boolean;
 }
 
+export interface ResetAttendance {
+  type: typeof RESET_ATTENDANCE;
+}
+
 export type AttendanceActionTypes =
   | SetAttendanceLoading
   | SetAttendanceContentLoading
@@ -64,4 +69,5 @@ export type AttendanceActionTypes =
   | SetSelectedAttendance
   | SetAttendanceError
   | SetAttendanceInfoOpen
-  | SetAddNewAttendanceOpen;
+  | SetAddNewAttendanceOpen
+  | ResetAttendance;

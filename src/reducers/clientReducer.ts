@@ -1,6 +1,7 @@
 import { ClientInterface } from '../types/modelsTypes';
 import {
   ClientActionTypes,
+  RESET_CLIENTS,
   SET_ADD_NEW_CLIENT_OPEN,
   SET_CLIENT_ERROR,
   SET_CLIENT_INFO_OPEN,
@@ -32,7 +33,7 @@ export const clientReducer = (state = initialState, action: ClientActionTypes): 
     case SET_CLIENTS_LOADING:
       return {
         ...state,
-        isLoading: action.payload,
+        isLoading: action.payload
         // selectedClient: null
       };
     case SET_COMPANY_CLIENTS:
@@ -62,6 +63,8 @@ export const clientReducer = (state = initialState, action: ClientActionTypes): 
         ...state,
         isAddNewClientOpen: action.payload
       };
+    case RESET_CLIENTS:
+      return initialState;
     default:
       return state;
   }

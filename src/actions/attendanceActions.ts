@@ -1,5 +1,7 @@
 import axios from 'axios';
 import {
+  RESET_ATTENDANCE,
+  ResetAttendance,
   SET_ADD_NEW_ATTENDANCE_OPEN,
   SET_ATTENDANCE_CONTENT_LOADING,
   SET_ATTENDANCE_ERROR,
@@ -202,4 +204,10 @@ export const updateAttendance = (attendanceId: string, wasPresent: boolean, hour
   } catch (error) {
     dispatch(setNotificationMessage('Problem z aktualizacją obecności', NotificationTypes.Error));
   }
+};
+
+export const resetAttendance = (): ResetAttendance => {
+  return {
+    type: RESET_ATTENDANCE
+  };
 };

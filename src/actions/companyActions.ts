@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { CompanyInterface } from '../types/modelsTypes';
 import {
+  RESET_COMPANY,
+  ResetCompany,
   SET_ADD_COMPANY_OPEN,
   SET_ALL_USER_COMPANIES,
   SET_COMPANIES_ERROR,
@@ -82,4 +84,10 @@ export const setCompany = (currentCompany: CompanyInterface | null, successCallb
   dispatch(setCurrentCompany(currentCompany));
   !!currentCompany && dispatch(setUserRole(UserRole.Admin));
   !!successCallback && successCallback();
+};
+
+export const resetCompany = (): ResetCompany => {
+  return {
+    type: RESET_COMPANY
+  };
 };

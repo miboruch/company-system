@@ -1,4 +1,5 @@
 import {
+  RESET_TASKS,
   SET_ADD_NEW_TASK_OPEN,
   SET_COMPANY_TASKS,
   SET_COMPLETED_TASKS,
@@ -72,6 +73,8 @@ export const taskReducer = (state = initialState, action: TaskActionTypes): Defa
         ...state,
         completedTasks: action.payload
       };
+    case RESET_TASKS:
+      return initialState;
     // case SET_EDIT_TASK:
     //   return {
     //     ...state,

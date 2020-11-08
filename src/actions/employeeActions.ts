@@ -1,5 +1,7 @@
 import axios from 'axios';
 import {
+  RESET_EMPLOYEES,
+  ResetEmployees,
   SET_ADD_NEW_EMPLOYEE_OPEN,
   SET_COMPANY_EMPLOYEES,
   SET_EDIT_EMPLOYEE,
@@ -153,4 +155,10 @@ export const updateEmployeeSalary = (pricePerHour?: number, monthlyPrice?: numbe
     dispatch(setNotificationMessage('Problem z aktualizacją', NotificationTypes.Error));
     console.log(error.response);
   }
+};
+
+export const resetEmployees = (): ResetEmployees => {
+  return {
+    type: RESET_EMPLOYEES
+  };
 };

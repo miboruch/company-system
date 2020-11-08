@@ -1,4 +1,12 @@
-import { CompanyActionTypes, SET_ADD_COMPANY_OPEN, SET_ALL_USER_COMPANIES, SET_COMPANIES_ERROR, SET_CURRENT_COMPANY, SET_COMPANY_LOADING } from '../types/actionTypes/companyActionTypes';
+import {
+  CompanyActionTypes,
+  RESET_COMPANY,
+  SET_ADD_COMPANY_OPEN,
+  SET_ALL_USER_COMPANIES,
+  SET_COMPANIES_ERROR,
+  SET_COMPANY_LOADING,
+  SET_CURRENT_COMPANY
+} from '../types/actionTypes/companyActionTypes';
 import { CompanyInterface } from '../types/modelsTypes';
 
 interface DefaultState {
@@ -48,6 +56,8 @@ export const companyReducer = (state = initialState, action: CompanyActionTypes)
         ...state,
         isAddCompanyOpen: action.payload
       };
+    case RESET_COMPANY:
+      return initialState;
     default:
       return state;
   }

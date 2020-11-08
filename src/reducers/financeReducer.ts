@@ -1,5 +1,6 @@
 import {
   FinanceActionTypes,
+  RESET_FINANCES,
   SET_BUDGET_ERROR,
   SET_BUDGET_EXPENSE,
   SET_BUDGET_INCOME,
@@ -51,7 +52,7 @@ export const financeReducer = (state = initialState, action: FinanceActionTypes)
       return {
         ...state,
         budget: action.payload,
-        isBudgetLoading: false,
+        isBudgetLoading: false
       };
     case SET_LAST_INCOMES:
       return {
@@ -67,8 +68,10 @@ export const financeReducer = (state = initialState, action: FinanceActionTypes)
       return {
         ...state,
         budgetError: action.payload,
-        isBudgetLoading: false,
+        isBudgetLoading: false
       };
+    case RESET_FINANCES:
+      return initialState;
     default:
       return state;
   }

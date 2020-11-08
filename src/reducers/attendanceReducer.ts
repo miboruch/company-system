@@ -1,5 +1,6 @@
 import {
   AttendanceActionTypes,
+  RESET_ATTENDANCE,
   SET_ADD_NEW_ATTENDANCE_OPEN,
   SET_ATTENDANCE_CONTENT_LOADING,
   SET_ATTENDANCE_ERROR,
@@ -86,6 +87,8 @@ export const attendanceReducer = (state = initialState, action: AttendanceAction
         ...state,
         isAddNewAttendanceOpen: action.payload
       };
+    case RESET_ATTENDANCE:
+      return initialState;
     default:
       return state;
   }

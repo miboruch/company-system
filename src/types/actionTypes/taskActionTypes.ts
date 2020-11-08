@@ -8,6 +8,7 @@ export const SET_TASK_INFO_OPEN = 'SET_TASK_INFO_OPEN';
 export const SET_ADD_NEW_TASK_OPEN = 'SET_ADD_NEW_TASK_OPEN';
 export const SET_EDIT_TASK = 'SET_EDIT_TASK';
 export const SET_COMPLETED_TASKS = 'SET_COMPLETED_TASKS';
+export const RESET_TASKS = 'RESET_TASKS';
 
 export interface SetTaskLoading {
   type: typeof SET_TASK_LOADING;
@@ -45,8 +46,12 @@ export interface SetEditTask {
 }
 
 export interface SetCompletedTasks {
-  type: typeof SET_COMPLETED_TASKS,
+  type: typeof SET_COMPLETED_TASKS;
   payload: number;
 }
 
-export type TaskActionTypes = SetTaskLoading | SetCompanyTasks | SetSelectedTask | SetTaskError | SetTaskInfoOpen | SetAddNewTaskOpen | SetEditTask | SetCompletedTasks;
+export interface ResetTasks {
+  type: typeof RESET_TASKS;
+}
+
+export type TaskActionTypes = SetTaskLoading | SetCompanyTasks | SetSelectedTask | SetTaskError | SetTaskInfoOpen | SetAddNewTaskOpen | SetEditTask | SetCompletedTasks | ResetTasks;
