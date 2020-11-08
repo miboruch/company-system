@@ -1,8 +1,8 @@
 import { NotificationTypes, SET_NOTIFICATION_MESSAGE, SetNotificationMessage } from '../types/actionTypes/toggleAcitonTypes';
 import { Dispatch } from 'redux';
-import { selectEmployee } from './employeeActions';
-import { selectClient } from './clientActions';
-import { selectTask } from './taskActions';
+import { selectEmployee, setCompanyEmployees } from './employeeActions';
+import { selectClient, setCompanyClients } from './clientActions';
+import { selectTask, setCompanyTasks } from './taskActions';
 import { selectAttendance } from './attendanceActions';
 import { UserRole } from '../types/actionTypes/authenticationActionTypes';
 import { AppTypes } from '../types/actionTypes/appActionTypes';
@@ -26,7 +26,6 @@ export const resetAllSelected = () => async (dispatch: Dispatch<any>) => {
 };
 
 export const changeUserRole = (role: UserRole, callback: () => void) =>async (dispatch: Dispatch<any>, getState: () => AppState) => {
-  // dispatch(setUserRole(role));
   dispatch(setAllUserCompanies([]));
   dispatch(resetAllSelected());
   dispatch(setCompany(null));

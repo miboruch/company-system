@@ -30,7 +30,7 @@ const setEmployeeLoading = (isLoading: boolean): SetEmployeeLoading => {
   };
 };
 
-const setCompanyEmployees = (employees: EmployeeDataInterface[]): SetCompanyEmployees => {
+export const setCompanyEmployees = (employees: EmployeeDataInterface[]): SetCompanyEmployees => {
   return {
     type: SET_COMPANY_EMPLOYEES,
     payload: employees

@@ -33,7 +33,8 @@ const setTaskLoading = (isLoading: boolean): SetTaskLoading => {
     payload: isLoading
   };
 };
-const setCompanyTasks = (companyTasks: TaskInterface[]): SetCompanyTasks => {
+
+export const setCompanyTasks = (companyTasks: TaskInterface[]): SetCompanyTasks => {
   return {
     type: SET_COMPANY_TASKS,
     payload: companyTasks

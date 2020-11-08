@@ -28,7 +28,7 @@ const setClientsLoading = (isLoading: boolean): SetClientsLoading => {
   };
 };
 
-const setCompanyClients = (clients: ClientInterface[]): SetCompanyClients => {
+export const setCompanyClients = (clients: ClientInterface[]): SetCompanyClients => {
   return {
     type: SET_COMPANY_CLIENTS,
     payload: clients

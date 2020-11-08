@@ -14,9 +14,11 @@ import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
 import { CompanyInterface } from '../../../types/modelsTypes';
 import { ReactComponent as MenuSvg } from '../../../assets/icons/menuDraw.svg';
 import { ReactComponent as Arrow } from '../../../assets/icons/arrow.svg';
+import { adminRoutes, userRoutes } from '../../../routes/routesDefinition';
 
 import styled from 'styled-components';
 import { changeUserRole } from '../../../actions/toggleActions';
+import MenuItemsRenderer from './MenuItemsRenderer';
 
 const RedirectPanel = styled.section`
   width: 100%;
@@ -24,6 +26,10 @@ const RedirectPanel = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
 `;
 
 const StyledMenuSvg = styled(MenuSvg)`
@@ -61,8 +67,8 @@ const RedirectText = styled.p`
 
 type ConnectedProps = LinkDispatchProps & LinkStateProps & RouteComponentProps;
 
-const Menu: React.FC<ConnectedProps> = ({ history, location, match, setUserRole, changeUserRole, role, currentCompany }) => {
-  const { isMenuOpen, setMenuOpen } = useContext(MenuContext);
+const Menu: React.FC<ConnectedProps> = ({ history, setUserRole, changeUserRole, role, currentCompany }) => {
+  const { isMenuOpen } = useContext(MenuContext);
 
   const changeRole = () => {
     if (role === UserRole.Admin) {
@@ -78,28 +84,16 @@ const Menu: React.FC<ConnectedProps> = ({ history, location, match, setUserRole,
     <MenuWrapper isOpen={isMenuOpen}>
       {currentCompany && <CompanyName>{currentCompany.name}</CompanyName>}
       <MenuItemsWrapper>
-        {role === UserRole.Admin
-          ? adminMenuItems.map(({ name, link, icon }) => (
-              <LinkWrapper isActive={link.includes(location.pathname)} key={link}>
-                {icon}
-                <StyledLink to={link} onClick={() => setMenuOpen(false)}>
-                  {name}
-                </StyledLink>
-              </LinkWrapper>
-            ))
-          : userMenuItems.map(({ name, link, icon }) => (
-              <LinkWrapper isActive={link.includes(location.pathname)} key={link}>
-                {icon}
-                <StyledLink to={link} onClick={() => setMenuOpen(false)}>
-                  {name}
-                </StyledLink>
-              </LinkWrapper>
-            ))}
+        <MenuItemsRenderer />
       </MenuItemsWrapper>
       <RedirectPanel>
         <StyledMenuSvg />
         <RedirectText>Przejdź do panelu {role === UserRole.Admin ? 'użytkownika' : 'administratora'}</RedirectText>
-        <ArrowWrapper onClick={() => changeRole()}>
+        <ArrowWrapper
+          onClick={() => {
+            changeRole();
+          }}
+        >
           <ArrowIcon />
         </ArrowWrapper>
       </RedirectPanel>
