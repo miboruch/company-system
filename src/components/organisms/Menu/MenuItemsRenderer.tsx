@@ -17,45 +17,27 @@ const MenuItemsRenderer: React.FC<ConnectedProps> = ({ location, role, userData,
 
   const condition: boolean = !!(userData && token && currentCompany);
 
-  const renderAdminRoutes = condition
-    ? adminRoutes.map(({ name, path, icon }) => (
-        <LinkWrapper isActive={path.includes(location.pathname)} key={path}>
-          {icon}
-          <StyledLink to={path} onClick={() => setMenuOpen(false)}>
-            {name}
-          </StyledLink>
-        </LinkWrapper>
-      ))
-    : adminRoutes
-        .filter((route) => !route.isGuarded)
-        .map(({ name, path, icon }) => (
-          <LinkWrapper isActive={path.includes(location.pathname)} key={path}>
-            {icon}
-            <StyledLink to={path} onClick={() => setMenuOpen(false)}>
-              {name}
-            </StyledLink>
-          </LinkWrapper>
-        ));
+  const renderAdminRoutes = adminRoutes
+    .filter((route) => (condition ? route : !route.isGuarded))
+    .map(({ name, path, icon }) => (
+      <LinkWrapper isActive={path.includes(location.pathname)} key={path}>
+        {icon}
+        <StyledLink to={path} onClick={() => setMenuOpen(false)}>
+          {name}
+        </StyledLink>
+      </LinkWrapper>
+    ));
 
-  const renderUserRoutes = condition
-    ? userRoutes.map(({ name, path, icon }) => (
-        <LinkWrapper isActive={path.includes(location.pathname)} key={path}>
-          {icon}
-          <StyledLink to={path} onClick={() => setMenuOpen(false)}>
-            {name}
-          </StyledLink>
-        </LinkWrapper>
-      ))
-    : userRoutes
-        .filter((route) => !route.isGuarded)
-        .map(({ name, path, icon }) => (
-          <LinkWrapper isActive={path.includes(location.pathname)} key={path}>
-            {icon}
-            <StyledLink to={path} onClick={() => setMenuOpen(false)}>
-              {name}
-            </StyledLink>
-          </LinkWrapper>
-        ));
+  const renderUserRoutes = userRoutes
+    .filter((route) => (condition ? route : !route.isGuarded))
+    .map(({ name, path, icon }) => (
+      <LinkWrapper isActive={path.includes(location.pathname)} key={path}>
+        {icon}
+        <StyledLink to={path} onClick={() => setMenuOpen(false)}>
+          {name}
+        </StyledLink>
+      </LinkWrapper>
+    ));
 
   return <>{role === UserRole.Admin ? renderAdminRoutes : renderUserRoutes}</>;
 };
