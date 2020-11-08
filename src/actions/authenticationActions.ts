@@ -96,7 +96,7 @@ const getNewAccessToken = (refreshToken: string, successCallback?: () => void, e
   } catch (error) {
     console.log(error);
     !!errorCallback && errorCallback();
-    dispatch(userLogout(refreshToken));
+    dispatch(userLogout());
   }
 };
 
@@ -153,13 +153,17 @@ export const userLogin = (email: string, password: string, successCallback: () =
   }
 };
 
-export const userLogout = (refreshToken: string, successCallback?: () => void, errorCallback?: () => void) => async (dispatch: Dispatch<AppTypes>) => {
+export const userLogout = (successCallback?: () => void, errorCallback?: () => void) => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
   try {
     dispatch(authStart());
-    await axios.post(`${API_URL}/auth/logout`, { refreshToken: refreshToken });
 
-    dispatch(authLogout());
-    !!successCallback && successCallback();
+    const { refreshToken } = getState().authenticationReducer;
+    if (refreshToken) {
+      await axios.post(`${API_URL}/auth/logout`, { refreshToken: refreshToken });
+
+      dispatch(authLogout());
+      !!successCallback && successCallback();
+    }
   } catch (error) {
     !!errorCallback && errorCallback();
     console.log(error);
@@ -226,7 +230,7 @@ export const authenticateCheck = (successCallback: () => void, errorCallback: ()
       successCallback();
     }
   } else {
-    refreshToken ? dispatch(userLogout(refreshToken, errorCallback)) : dispatch(authLogout());
+    refreshToken ? dispatch(userLogout(errorCallback)) : dispatch(authLogout());
   }
 };
 

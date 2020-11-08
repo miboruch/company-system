@@ -4,6 +4,7 @@ import { Direction } from '../../../types/globalTypes';
 interface ArrowButtonInterface {
   direction: Direction;
   isHidden: boolean;
+  isSmaller: boolean;
 }
 
 const StyledArrowButton = styled.div<ArrowButtonInterface>`
@@ -45,7 +46,7 @@ const StyledArrowButton = styled.div<ArrowButtonInterface>`
   &::after {
     content: '';
     position: absolute;
-    width: 14px;
+    width: ${({isSmaller}) => isSmaller ? '7px' : '14px'};
     height: 1px;
     background-color: ${({ theme }) => theme.colors.black};
     transition: all 0.5s ease;

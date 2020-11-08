@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const StyledWrapper = styled.div`
   width: 90%;
   height: 80vh;
-  border: 1px solid #ccc;
+  border: 1px solid ${({ theme }) => theme.colors.impactGray};
   border-radius: 30px;
   background-color: ${({ theme }) => theme.colors.white};
   position: absolute;

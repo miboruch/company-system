@@ -53,6 +53,14 @@ const Circle = styled.div`
   margin-left: 2rem;
 `;
 
+const MobileCircle = styled(Circle)`
+  display: block;
+
+  ${({ theme }) => theme.mq.hdReady} {
+    display: none;
+  }
+`;
+
 const NameParagraph = styled.p`
   font-size: 12px;
   font-weight: ${({ theme }) => theme.font.weight.medium};
@@ -82,4 +90,4 @@ const IconWrapper = styled.div<NewNotificationInterface>`
   }
 `;
 
-export { StyledHeader, UserWrapper, Circle, NameParagraph, IconWrapper };
+export { StyledHeader, UserWrapper, Circle, NameParagraph, IconWrapper, MobileCircle };

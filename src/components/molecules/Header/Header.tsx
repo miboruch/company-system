@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Hamburger from '../../atoms/Hamburger/Hamburger';
-import { Circle, IconWrapper, NameParagraph, StyledHeader, UserWrapper } from './Header.styles';
+import { Circle, IconWrapper, NameParagraph, StyledHeader, UserWrapper, MobileCircle } from './Header.styles';
 import SearchInput from '../../atoms/SearchInput/SearchInput';
 import { AppState } from '../../../reducers/rootReducer';
 import { UserAuthData } from '../../../types/modelsTypes';
@@ -9,6 +9,7 @@ import Notifications from '../../organisms/Notifications/Notifications';
 import { NotificationIcon } from '../../../styles/iconStyles';
 import ArrowButton from '../../atoms/ArrowButton/ArrowButton';
 import { Direction } from '../../../types/globalTypes';
+import HeaderSlider from '../HeaderSlider/HeaderSlider';
 
 interface Props {
   setFilterText?: (filterText: string) => void;
@@ -18,6 +19,16 @@ type ConnectedProps = Props & LinkStateProps;
 
 const Header: React.FC<ConnectedProps> = ({ setFilterText, userData }) => {
   const [areNotificationsOpen, setNotificationsOpen] = useState<boolean>(false);
+  const [isSliderOpen, setSliderOpen] = useState<boolean>(false);
+
+  const toggleHeaderSlider = () => {
+    setSliderOpen(!isSliderOpen);
+  };
+
+  const toggleNotifications = () => {
+    setNotificationsOpen(!areNotificationsOpen);
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setFilterText && setFilterText(e.target.value);
   };
@@ -33,12 +44,15 @@ const Header: React.FC<ConnectedProps> = ({ setFilterText, userData }) => {
           </NameParagraph>
         )}
         <Circle />
+        <ArrowButton direction={Direction.Bottom} isSmaller={true} onClick={() => toggleHeaderSlider()} />
         <IconWrapper>
-          <NotificationIcon onClick={() => setNotificationsOpen(!areNotificationsOpen)} />
+          <NotificationIcon onClick={() => toggleNotifications()} />
         </IconWrapper>
         <Notifications isOpen={areNotificationsOpen} setOpen={setNotificationsOpen} />
-        <ArrowButton direction={Direction.Bottom} />
+        <HeaderSlider isOpen={isSliderOpen} setOpen={setSliderOpen} />
       </UserWrapper>
+      <MobileCircle onClick={() => toggleHeaderSlider()} />
+      <HeaderSlider isOpen={isSliderOpen} setOpen={setSliderOpen} isMobile={true} />
     </StyledHeader>
   );
 };

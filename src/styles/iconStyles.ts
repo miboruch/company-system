@@ -7,6 +7,8 @@ import { ReactComponent as Edit } from '../assets/icons/edit.svg';
 import { ReactComponent as User } from '../assets/icons/user.svg';
 import { ReactComponent as Task } from '../assets/icons/list.svg';
 import { ReactComponent as Notification } from '../assets/icons/notification.svg';
+import { ReactComponent as Logout } from '../assets/icons/logout.svg';
+import { ReactComponent as Settings } from '../assets/icons/settings.svg';
 
 const iconStyles = css`
   width: 32px;
@@ -51,13 +53,28 @@ const TaskIcon = styled(Task)`
   ${contentIconStyles};
 `;
 
+const headingStyles = css`
+  width: 13px;
+  height: 13px;
+  fill: ${({ theme }) => theme.colors.textGray};
+  cursor: pointer;
+  margin-left: 2rem;
+`;
+
+const LogoutIcon = styled(Logout)`
+  ${headingStyles}
+`;
+
+const SettingsIcon = styled(Settings)`
+  ${headingStyles}
+`;
+
 const NotificationIcon = styled(Notification)`
   width: 25px;
   height: 25px;
   fill: ${({ theme }) => theme.colors.textGray};
   cursor: pointer;
   position: relative;
-
 `;
 
-export { CheckedIcon, NotCheckedIcon, EmptyIcon, DeleteIcon, EditIcon, UserIcon, TaskIcon, NotificationIcon };
+export { CheckedIcon, NotCheckedIcon, EmptyIcon, DeleteIcon, EditIcon, UserIcon, TaskIcon, NotificationIcon, LogoutIcon, SettingsIcon };

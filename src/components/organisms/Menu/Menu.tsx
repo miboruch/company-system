@@ -61,7 +61,7 @@ const RedirectText = styled.p`
 
 type ConnectedProps = LinkDispatchProps & LinkStateProps & RouteComponentProps;
 
-const Menu: React.FC<ConnectedProps> = ({ history, location, match, userLogout, setUserRole, changeUserRole, refreshToken, role, currentCompany }) => {
+const Menu: React.FC<ConnectedProps> = ({ history, location, match, setUserRole, changeUserRole, role, currentCompany }) => {
   const { isMenuOpen, setMenuOpen } = useContext(MenuContext);
 
   const changeRole = () => {
@@ -103,30 +103,26 @@ const Menu: React.FC<ConnectedProps> = ({ history, location, match, userLogout, 
           <ArrowIcon />
         </ArrowWrapper>
       </RedirectPanel>
-      <ButtonWrapper>{refreshToken && <Button type={'button'} text={'Wyloguj'} onClick={() => userLogout(refreshToken, () => history.push('/login'))} />}</ButtonWrapper>
     </MenuWrapper>
   );
 };
 
 interface LinkStateProps {
-  refreshToken: string | null;
   role: UserRole;
   currentCompany: CompanyInterface | null;
 }
 
 interface LinkDispatchProps {
-  userLogout: (refreshToken: string, successCallback: () => void) => void;
   changeUserRole: (role: UserRole, callback: () => void) => void;
   setUserRole: (role: UserRole) => void;
 }
 
-const mapStateToProps = ({ authenticationReducer: { refreshToken, role }, companyReducer: { currentCompany } }: AppState): LinkStateProps => {
-  return { refreshToken, role, currentCompany };
+const mapStateToProps = ({ authenticationReducer: { role }, companyReducer: { currentCompany } }: AppState): LinkStateProps => {
+  return { role, currentCompany };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
   return {
-    userLogout: bindActionCreators(userLogout, dispatch),
     changeUserRole: bindActionCreators(changeUserRole, dispatch),
     setUserRole: bindActionCreators(setUserRole, dispatch)
   };
