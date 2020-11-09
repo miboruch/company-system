@@ -22,6 +22,7 @@ import { API_URL } from '../utils/config';
 import { AppState } from '../reducers/rootReducer';
 import { setNotificationMessage } from './toggleActions';
 import { NotificationTypes } from '../types/actionTypes/toggleAcitonTypes';
+import { getCompanyTasks, selectTask } from './taskActions';
 
 const setClientsLoading = (isLoading: boolean): SetClientsLoading => {
   return {
@@ -161,6 +162,42 @@ export const deleteClient = (clientId: string) => async (dispatch: Dispatch<any>
   } catch (error) {
     console.log(error);
     dispatch(setNotificationMessage('Problem z usunięciem klienta', NotificationTypes.Error));
+  }
+};
+
+export const editClient = (clientId: string, name: string, email: string, phoneNumber: string, address: string, city: string, country: string) => async (
+  dispatch: Dispatch<any>,
+  getState: () => AppState
+) => {
+  const { token } = getState().authenticationReducer;
+  const { currentCompany } = getState().companyReducer;
+
+  try {
+    if (currentCompany && token) {
+      await axios.put(
+        `${API_URL}/client/edit-client?company_id=${currentCompany._id}`,
+        {
+          clientId,
+          name,
+          email,
+          phoneNumber,
+          address,
+          city,
+          country
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      dispatch(selectClient(null));
+      dispatch(getCompanyClients());
+      dispatch(setNotificationMessage('Edytowano klienta'));
+    }
+  } catch (error) {
+    dispatch(setNotificationMessage('Problem z edycją klienta', NotificationTypes.Error));
   }
 };
 

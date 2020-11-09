@@ -7,16 +7,20 @@ import { Wrapper, StyledForm, HeaderWrapper, Paragraph, EmployeeInfoBox, SubPara
 import { StyledInput } from '../../../styles/compoundStyles';
 import { EditIcon, DeleteIcon } from '../../../styles/iconStyles';
 import Button from '../../atoms/Button/Button';
+import { ThunkDispatch } from 'redux-thunk';
+import { AppTypes } from '../../../types/actionTypes/appActionTypes';
+import { bindActionCreators } from 'redux';
+import { editClient } from '../../../actions/clientActions';
 
 interface InitialValues {
-  name?: string;
-  email?: string;
+  name: string;
+  email: string;
   lat?: number;
   long?: number;
-  phoneNumber?: string;
-  address?: string;
-  city?: string;
-  country?: string;
+  phoneNumber: string;
+  address: string;
+  city: string;
+  country: string;
 }
 
 interface Props {
@@ -25,22 +29,25 @@ interface Props {
   setDeleteOpen: (toBeOpen: boolean) => void;
 }
 
-type ConnectedProps = Props & LinkStateProps;
+type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
-const ClientInfo: React.FC<ConnectedProps> = ({ selectedClient, isEditToggled, setEditToggled, setDeleteOpen }) => {
+const ClientInfo: React.FC<ConnectedProps> = ({ selectedClient, isEditToggled, setEditToggled, setDeleteOpen, editClient }) => {
   const initialValues: InitialValues = {
-    name: selectedClient?.name,
-    email: selectedClient?.email,
+    name: selectedClient?.name || '',
+    email: selectedClient?.email || '',
     lat: selectedClient?.lat,
     long: selectedClient?.long,
-    phoneNumber: selectedClient?.phoneNumber,
-    address: selectedClient?.address,
-    city: selectedClient?.city,
-    country: selectedClient?.country
+    phoneNumber: selectedClient?.phoneNumber || '',
+    address: selectedClient?.address || '',
+    city: selectedClient?.city || '',
+    country: selectedClient?.country || ''
   };
 
-  const handleSubmit = (values: InitialValues) => {
-    console.log(values);
+  const handleSubmit = ({ name, email, phoneNumber, address, city, country }: InitialValues) => {
+    if (selectedClient) {
+      const { _id } = selectedClient;
+      editClient(_id, name, email, phoneNumber, address, city, country);
+    }
   };
 
   return (
@@ -87,8 +94,18 @@ interface LinkStateProps {
   selectedClient: ClientInterface | null;
 }
 
+interface LinkDispatchProps {
+  editClient: (clientId: string, name: string, email: string, phoneNumber: string, address: string, city: string, country: string) => void;
+}
+
 const mapStateToProps = ({ clientReducer: { selectedClient } }: AppState): LinkStateProps => {
   return { selectedClient };
 };
 
-export default connect(mapStateToProps)(ClientInfo);
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
+  return {
+    editClient: bindActionCreators(editClient, dispatch)
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ClientInfo);
