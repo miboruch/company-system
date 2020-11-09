@@ -105,7 +105,6 @@ interface LinkDispatchProps {
   editTask: (taskId: string, date: Date, name: string, description: string, timeEstimate: number, taskIncome: number, taskExpense: number) => void;
 }
 
-
 const mapStateToProps = ({ taskReducer: { selectedTask } }: AppState): LinkStateProps => {
   return { selectedTask };
 };

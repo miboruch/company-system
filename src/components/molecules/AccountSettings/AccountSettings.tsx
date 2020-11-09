@@ -8,7 +8,12 @@ import DatePicker from 'react-datepicker';
 import Button from '../../atoms/Button/Button';
 import { AppState } from '../../../reducers/rootReducer';
 import { UserAuthData } from '../../../types/modelsTypes';
-import {StyledForm, Heading} from './AccountSettings.styles';
+import { StyledForm, Heading } from './AccountSettings.styles';
+import { ThunkDispatch } from 'redux-thunk';
+import { AppTypes } from '../../../types/actionTypes/appActionTypes';
+import { bindActionCreators } from 'redux';
+import { editTask } from '../../../actions/taskActions';
+import { editAccount } from '../../../actions/authenticationActions';
 
 interface DefaultValues {
   email: string;
@@ -23,9 +28,9 @@ interface DefaultValues {
 
 interface Props {}
 
-type ConnectedProps = Props & LinkStateProps;
+type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
-const AccountSettings: React.FC<ConnectedProps> = ({ userData }) => {
+const AccountSettings: React.FC<ConnectedProps> = ({ userData, editAccount }) => {
   const [formattedPhoneNumber, setFormattedPhoneNumber] = useState<string>('');
 
   const initialValues: DefaultValues = {
@@ -39,8 +44,8 @@ const AccountSettings: React.FC<ConnectedProps> = ({ userData }) => {
     country: userData!.country
   };
 
-  const handleSubmit = (values: DefaultValues) => {
-    console.log(values);
+  const handleSubmit = ({ email, name, lastName, dateOfBirth, phoneNumber, address, city, country }: DefaultValues) => {
+    editAccount(email, name, lastName, dateOfBirth, phoneNumber, address, city, country);
   };
 
   return (
@@ -84,8 +89,18 @@ interface LinkStateProps {
   userData: UserAuthData | null;
 }
 
+interface LinkDispatchProps {
+  editAccount: (email: string, name: string, lastName: string, dateOfBirth: Date, phoneNumber: string, address: string, city: string, country: string) => void;
+}
+
 const mapStateToProps = ({ authenticationReducer: { userData } }: AppState): LinkStateProps => {
   return { userData };
 };
 
-export default connect(mapStateToProps)(AccountSettings);
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
+  return {
+    editAccount: bindActionCreators(editAccount, dispatch)
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AccountSettings);

@@ -201,6 +201,33 @@ export const editClient = (clientId: string, name: string, email: string, phoneN
   }
 };
 
+export const editClientCoords = (clientId: string, lat: number, long: number) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
+  const { token } = getState().authenticationReducer;
+  const { currentCompany } = getState().companyReducer;
+
+  try {
+    if (currentCompany && token) {
+      await axios.put(
+        `${API_URL}/client/edit-client-coords?company_id=${currentCompany._id}`,
+        {
+          clientId,
+          lat,
+          long
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      dispatch(setNotificationMessage('Zapisano koordynacje'));
+    }
+  } catch (error) {
+    dispatch(setNotificationMessage('Problem z edycją koordynacji', NotificationTypes.Error));
+  }
+};
+
 export const resetClients = (): ResetClients => {
   return {
     type: RESET_CLIENTS

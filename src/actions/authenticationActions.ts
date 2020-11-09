@@ -24,6 +24,7 @@ import { AppState } from '../reducers/rootReducer';
 import { setNotificationMessage } from './toggleActions';
 import { NotificationTypes } from '../types/actionTypes/toggleAcitonTypes';
 import { RegistrationVerifyTokenResponse } from '../pages/RegisterFromLink/RegisterFromLink';
+import { getCompanyClients, selectClient } from './clientActions';
 
 const authStart = (): AuthStart => {
   return {
@@ -330,5 +331,40 @@ export const registerFromLink = (
   } catch (error) {
     dispatch(authFailure());
     dispatch(setNotificationMessage('Problem z utworzeniem nowego konta'));
+  }
+};
+
+export const editAccount = (email: string, name: string, lastName: string, dateOfBirth: Date, phoneNumber: string, address: string, city: string, country: string) => async (
+  dispatch: Dispatch<any>,
+  getState: () => AppState
+) => {
+  const { token } = getState().authenticationReducer;
+
+  try {
+    if (token) {
+      await axios.put(
+        `${API_URL}/user/edit-user`,
+        {
+          email,
+          name,
+          lastName,
+          dateOfBirth,
+          phoneNumber,
+          address,
+          city,
+          country
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      dispatch(getUserData(token));
+      dispatch(setNotificationMessage('Edytowano dane'));
+    }
+  } catch (error) {
+    dispatch(setNotificationMessage('Problem z edycją danych', NotificationTypes.Error));
   }
 };
