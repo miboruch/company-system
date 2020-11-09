@@ -8,6 +8,10 @@ import Button from '../../atoms/Button/Button';
 import { Formik } from 'formik';
 import { CompanyInterface } from '../../../types/modelsTypes';
 import { AppState } from '../../../reducers/rootReducer';
+import { ThunkDispatch } from 'redux-thunk';
+import { AppTypes } from '../../../types/actionTypes/appActionTypes';
+import { bindActionCreators } from 'redux';
+import { editCompany } from '../../../actions/companyActions';
 
 interface DefaultValues {
   name: string;
@@ -21,9 +25,9 @@ interface DefaultValues {
 
 interface Props {}
 
-type ConnectedProps = Props & LinkStateProps;
+type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
-const CompanySettings: React.FC<ConnectedProps> = ({ currentCompany }) => {
+const CompanySettings: React.FC<ConnectedProps> = ({ currentCompany, editCompany }) => {
   const [formattedPhoneNumber, setFormattedPhoneNumber] = useState<string>('');
 
   const initialValues: DefaultValues = {
@@ -36,8 +40,8 @@ const CompanySettings: React.FC<ConnectedProps> = ({ currentCompany }) => {
     country: currentCompany!.country
   };
 
-  const handleSubmit = (values: DefaultValues) => {
-    console.log(values);
+  const handleSubmit = ({ name, email, nip, phoneNumber, address, city, country }: DefaultValues) => {
+    editCompany(name, email, nip, phoneNumber, address, city, country);
   };
 
   return (
@@ -81,4 +85,14 @@ const mapStateToProps = ({ companyReducer: { currentCompany } }: AppState): Link
   return { currentCompany };
 };
 
-export default connect(mapStateToProps)(CompanySettings);
+interface LinkDispatchProps {
+  editCompany: (name: string, email: string, nip: string, phoneNumber: string, address: string, city: string, country: string) => void;
+}
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
+  return {
+    editCompany: bindActionCreators(editCompany, dispatch)
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CompanySettings);
