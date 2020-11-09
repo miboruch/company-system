@@ -368,3 +368,28 @@ export const editAccount = (email: string, name: string, lastName: string, dateO
     dispatch(setNotificationMessage('Problem z edycją danych', NotificationTypes.Error));
   }
 };
+
+export const editPassword = (password: string, repeatedPassword: string) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
+  const { token } = getState().authenticationReducer;
+
+  try {
+    if (token) {
+      await axios.put(
+        `${API_URL}/user/password-edit`,
+        {
+          password,
+          repeatedPassword
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      dispatch(setNotificationMessage('Hasło zostało zmienione'));
+    }
+  } catch (error) {
+    dispatch(setNotificationMessage('Problem ze zmianą hasła', NotificationTypes.Error));
+  }
+};

@@ -141,6 +141,32 @@ export const editCompany = (name: string, email: string, nip: string, phoneNumbe
   }
 };
 
+export const editCompanyCoords = (lat: number, long: number) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
+  const { token } = getState().authenticationReducer;
+  const { currentCompany } = getState().companyReducer;
+
+  try {
+    if (currentCompany && token) {
+      await axios.put(
+        `${API_URL}/company/edit-company-coords?company_id=${currentCompany._id}`,
+        {
+          lat,
+          long
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      dispatch(setNotificationMessage('Zapisano koordynacje'));
+    }
+  } catch (error) {
+    dispatch(setNotificationMessage('Problem z edycją koordynacji', NotificationTypes.Error));
+  }
+};
+
 export const resetCompany = (): ResetCompany => {
   return {
     type: RESET_COMPANY
