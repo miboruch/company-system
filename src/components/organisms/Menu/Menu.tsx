@@ -17,7 +17,7 @@ import { ReactComponent as Arrow } from '../../../assets/icons/arrow.svg';
 import { adminRoutes, userRoutes } from '../../../routes/routesDefinition';
 
 import styled from 'styled-components';
-import { changeUserRole } from '../../../actions/toggleActions';
+import { changeUserRoleTo } from '../../../actions/toggleActions';
 import MenuItemsRenderer from './MenuItemsRenderer';
 
 const RedirectPanel = styled.section`
@@ -67,16 +67,14 @@ const RedirectText = styled.p`
 
 type ConnectedProps = LinkDispatchProps & LinkStateProps & RouteComponentProps;
 
-const Menu: React.FC<ConnectedProps> = ({ history, setUserRole, changeUserRole, role, currentCompany }) => {
+const Menu: React.FC<ConnectedProps> = ({ history, setUserRole, changeUserRoleTo, role, currentCompany }) => {
   const { isMenuOpen } = useContext(MenuContext);
 
   const changeRole = () => {
     if (role === UserRole.Admin) {
-      setUserRole(UserRole.User);
-      changeUserRole(UserRole.User, () => history.push('/user/companies'));
+      changeUserRoleTo(UserRole.User, () => history.push('/user/companies'));
     } else {
-      setUserRole(UserRole.Admin);
-      changeUserRole(UserRole.Admin, () => history.push('/admin/companies'));
+      changeUserRoleTo(UserRole.Admin, () => history.push('/admin/companies'));
     }
   };
 
@@ -107,7 +105,7 @@ interface LinkStateProps {
 }
 
 interface LinkDispatchProps {
-  changeUserRole: (role: UserRole, callback: () => void) => void;
+  changeUserRoleTo: (role: UserRole, callback: () => void) => void;
   setUserRole: (role: UserRole) => void;
 }
 
@@ -117,7 +115,7 @@ const mapStateToProps = ({ authenticationReducer: { role }, companyReducer: { cu
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
   return {
-    changeUserRole: bindActionCreators(changeUserRole, dispatch),
+    changeUserRoleTo: bindActionCreators(changeUserRoleTo, dispatch),
     setUserRole: bindActionCreators(setUserRole, dispatch)
   };
 };

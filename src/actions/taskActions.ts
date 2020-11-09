@@ -156,6 +156,28 @@ export const addNewTask = (date: Date, timeEstimate: number, name: string, descr
   }
 };
 
+export const getSingleTask = (taskId: string) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
+  const { token } = getState().authenticationReducer;
+  const { currentCompany } = getState().companyReducer;
+
+  try {
+    if (currentCompany?._id && token) {
+      const { data } = await axios.get(`${API_URL}/task/get-single-company-task/${taskId}?company_id=${currentCompany._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      dispatch(setSelectedTask(data));
+      dispatch(setNotificationMessage('Usunięto zadanie'));
+    } else {
+      dispatch(setTaskError('Problem z uwierzytelnieniem'));
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const deleteTask = (taskId: string) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   const { token } = getState().authenticationReducer;
   const { currentCompany } = getState().companyReducer;
@@ -208,6 +230,69 @@ export const getCompletedTasks = () => async (dispatch: Dispatch<any>, getState:
     }
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const editTask = (taskId: string, date: Date, name: string, description: string, timeEstimate: number, taskIncome: number, taskExpense: number) => async (
+  dispatch: Dispatch<any>,
+  getState: () => AppState
+) => {
+  const { token } = getState().authenticationReducer;
+  const { currentCompany } = getState().companyReducer;
+
+  try {
+    if (currentCompany && token) {
+      await axios.put(
+        `${API_URL}/task/edit-task?company_id=${currentCompany._id}`,
+        {
+          taskId,
+          date,
+          name,
+          description,
+          timeEstimate,
+          taskIncome,
+          taskExpense
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      dispatch(selectTask(null));
+      dispatch(getCompanyTasks());
+      dispatch(setNotificationMessage('Edytowano zadanie'));
+    }
+  } catch (error) {
+    dispatch(setNotificationMessage('Problem z edycją zadania', NotificationTypes.Error));
+  }
+};
+
+export const changeTaskState = (taskId: string, isCompleted: boolean) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
+  const { token } = getState().authenticationReducer;
+  const { currentCompany } = getState().companyReducer;
+
+  try {
+    if (currentCompany && token) {
+      await axios.put(
+        `${API_URL}/task/set-task-completed?company_id=${currentCompany._id}`,
+        {
+          taskId,
+          isCompleted
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      dispatch(getSingleTask(taskId));
+      dispatch(setNotificationMessage('Zaktualizowano zadanie'));
+    }
+  } catch (error) {
+    dispatch(setNotificationMessage('Problem z aktualizacją zadania', NotificationTypes.Error));
   }
 };
 
