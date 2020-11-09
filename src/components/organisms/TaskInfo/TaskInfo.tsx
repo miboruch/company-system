@@ -9,16 +9,20 @@ import { StyledLabel } from '../../../styles/shared';
 import DatePicker from 'react-datepicker';
 import Button from '../../atoms/Button/Button';
 import { DeleteIcon, EditIcon, CheckedIcon, NotCheckedIcon } from '../../../styles/iconStyles';
+import { ThunkDispatch } from 'redux-thunk';
+import { AppTypes } from '../../../types/actionTypes/appActionTypes';
+import { bindActionCreators } from 'redux';
+import { editTask } from '../../../actions/taskActions';
 
 interface InitialValues {
-  name?: string;
-  description?: string;
-  timeEstimate?: number;
+  name: string;
+  description: string;
+  timeEstimate: number;
   clientId?: string | null;
-  taskIncome?: number;
-  taskExpense?: number;
-  isCompleted?: boolean;
-  date?: Date;
+  taskIncome: number;
+  taskExpense: number;
+  isCompleted: boolean;
+  date: Date;
 }
 
 interface Props {
@@ -27,23 +31,25 @@ interface Props {
   setDeleteOpen: (toBeOpen: boolean) => void;
 }
 
-type ConnectedProps = Props & LinkStateProps;
+type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
-const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, isEditToggled, setEditToggled, setDeleteOpen }) => {
+const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, isEditToggled, setEditToggled, setDeleteOpen, editTask }) => {
   const initialValues: InitialValues = {
-    name: selectedTask?.name,
-    description: selectedTask?.description,
-    timeEstimate: selectedTask?.timeEstimate,
+    name: selectedTask?.name || '',
+    description: selectedTask?.description || '',
+    timeEstimate: selectedTask?.timeEstimate || 0,
     clientId: selectedTask?.clientId,
     taskIncome: selectedTask?.taskIncome ? selectedTask.taskIncome : 0,
     taskExpense: selectedTask?.taskExpense ? selectedTask.taskExpense : 0,
-    isCompleted: selectedTask?.isCompleted,
-    date: selectedTask?.date
+    isCompleted: selectedTask?.isCompleted || false,
+    date: selectedTask?.date || new Date()
   };
 
-  const handleSubmit = (values: InitialValues) => {
-    console.log(values);
-    console.log('add task');
+  const handleSubmit = ({ date, name, description, timeEstimate, taskIncome, taskExpense }: InitialValues) => {
+    if (selectedTask) {
+      const { _id } = selectedTask;
+      editTask(_id, date, name, description, timeEstimate, taskIncome ? taskIncome : 0, taskExpense ? taskExpense : 0);
+    }
   };
 
   return (
@@ -99,4 +105,14 @@ const mapStateToProps = ({ taskReducer: { selectedTask } }: AppState): LinkState
   return { selectedTask };
 };
 
-export default connect(mapStateToProps)(TaskInfo);
+interface LinkDispatchProps {
+  editTask: (taskId: string, date: Date, name: string, description: string, timeEstimate: number, taskIncome: number, taskExpense: number) => void;
+}
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
+  return {
+    editTask: bindActionCreators(editTask, dispatch)
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskInfo);
