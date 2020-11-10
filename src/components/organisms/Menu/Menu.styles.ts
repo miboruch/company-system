@@ -18,12 +18,14 @@ const MenuWrapper = styled.div<IMenu>`
   padding: 7rem 2.5rem 3rem;
   transform: translateX(${({ isOpen }) => (isOpen ? '0' : '-100%')});
   transition: transform 0.6s ease;
+  
+  ${({ theme }) => theme.mq.tablet} {
+    width: 400px;
+  }
 
   ${({ theme }) => theme.mq.hdReady} {
-    width: 300px;
-    position: fixed;
-    top: 0;
-    left: 0;
+    width: 360px;
+    position: static;
     transform: translateX(0);
   }
 `;

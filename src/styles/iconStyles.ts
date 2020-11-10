@@ -9,6 +9,7 @@ import { ReactComponent as Task } from '../assets/icons/list.svg';
 import { ReactComponent as Notification } from '../assets/icons/notification.svg';
 import { ReactComponent as Logout } from '../assets/icons/logout.svg';
 import { ReactComponent as Settings } from '../assets/icons/settings.svg';
+import { ReactComponent as ShowPassword } from '../assets/icons/show.svg';
 
 const iconStyles = css`
   width: 32px;
@@ -77,4 +78,13 @@ const NotificationIcon = styled(Notification)`
   position: relative;
 `;
 
-export { CheckedIcon, NotCheckedIcon, EmptyIcon, DeleteIcon, EditIcon, UserIcon, TaskIcon, NotificationIcon, LogoutIcon, SettingsIcon };
+const ShowPasswordIcon = styled(ShowPassword)`
+  width: 16px;
+  height: 12px;
+  position: absolute;
+  top: 6px;
+  right: 2rem;
+  cursor: pointer;
+`;
+
+export { CheckedIcon, NotCheckedIcon, EmptyIcon, DeleteIcon, EditIcon, UserIcon, TaskIcon, NotificationIcon, LogoutIcon, SettingsIcon, ShowPasswordIcon };
