@@ -57,17 +57,6 @@ const ButtonWrapper = styled.div`
   }
 `;
 
-const InfoWrapper = styled.section`
-  width: 100%;
-
-  ${({ theme }) => theme.mq.hdReady} {
-    grid-area: info;
-    height: 100%;
-    background-color: ${({ theme }) => theme.colors.dark};
-    border-radius: 30px;
-  }
-`;
-
 interface Props {}
 
 type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
@@ -138,9 +127,6 @@ const FinancesPageContent: React.FC<ConnectedProps> = ({ getIncomeExpenseInTimeP
               }}
             />
           </ButtonWrapper>
-          <InfoWrapper>
-            <p>Info</p>
-          </InfoWrapper>
         </ContentGridWrapper>
       </Content>
       <IncomeExpensePopup type={popupType} isOpen={isPopupOpen} setOpen={setPopupOpen} />

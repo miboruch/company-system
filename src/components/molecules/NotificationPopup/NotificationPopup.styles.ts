@@ -5,7 +5,7 @@ const NotificationWrapper = styled.div`
   position: fixed;
   bottom: 1rem;
   right: 1rem;
-  z-index: 1000;
+  z-index: 3000;
   height: 80px;
   width: 400px;
   justify-content: space-between;

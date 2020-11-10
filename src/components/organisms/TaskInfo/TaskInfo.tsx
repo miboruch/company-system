@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 import { Formik, Form } from 'formik';
 import { StyledInput } from '../../../styles/compoundStyles';
 import { Wrapper, StyledForm, HeaderWrapper, Paragraph, EmployeeInfoBox, SubParagraph, TextParagraph, Title, InputWrapper, ButtonWrapper, RowIconWrapper } from '../../../styles/contentStyles';
@@ -12,7 +13,20 @@ import { DeleteIcon, EditIcon, CheckedIcon, NotCheckedIcon } from '../../../styl
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
-import { editTask } from '../../../actions/taskActions';
+import { changeTaskState, editTask } from '../../../actions/taskActions';
+
+interface ParagraphInterface {
+  isCompleted: boolean;
+}
+
+const ColoredParagraph = styled.p<ParagraphInterface>`
+  font-size: 12px;
+  color: ${({ theme, isCompleted }) => (isCompleted ? theme.colors.red : theme.colors.green)};
+  font-weight: ${({ theme }) => theme.font.weight.medium};
+  margin-bottom: 1rem;
+  line-height: 2.2;
+  cursor: pointer;
+`;
 
 interface InitialValues {
   name: string;
@@ -33,7 +47,7 @@ interface Props {
 
 type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
-const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, isEditToggled, setEditToggled, setDeleteOpen, editTask }) => {
+const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, isEditToggled, setEditToggled, setDeleteOpen, editTask, changeTaskState }) => {
   const initialValues: InitialValues = {
     name: selectedTask?.name || '',
     description: selectedTask?.description || '',
@@ -70,7 +84,9 @@ const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, isEditToggled, setEd
               <EmployeeInfoBox>
                 <SubParagraph>Data zadania do wykonania: {new Date(selectedTask.date).toLocaleDateString()}</SubParagraph>
                 <SubParagraph>{selectedTask.description}</SubParagraph>
-                {/*<SubParagraph>{selectedEmployee.userId.phoneNumber}</SubParagraph>*/}
+                <ColoredParagraph isCompleted={selectedTask?.isCompleted} onClick={() => changeTaskState(selectedTask?._id, !selectedTask?.isCompleted)}>
+                  Oznacz jako {selectedTask?.isCompleted ? 'niewykonane' : 'wykonane'}
+                </ColoredParagraph>
               </EmployeeInfoBox>
               <InputWrapper>
                 <div>
@@ -103,6 +119,7 @@ interface LinkStateProps {
 
 interface LinkDispatchProps {
   editTask: (taskId: string, date: Date, name: string, description: string, timeEstimate: number, taskIncome: number, taskExpense: number) => void;
+  changeTaskState: (taskId: string, isCompleted: boolean) => void;
 }
 
 const mapStateToProps = ({ taskReducer: { selectedTask } }: AppState): LinkStateProps => {
@@ -111,7 +128,8 @@ const mapStateToProps = ({ taskReducer: { selectedTask } }: AppState): LinkState
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
   return {
-    editTask: bindActionCreators(editTask, dispatch)
+    editTask: bindActionCreators(editTask, dispatch),
+    changeTaskState: bindActionCreators(changeTaskState, dispatch)
   };
 };
 

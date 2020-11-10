@@ -14,7 +14,7 @@ const ContentGridWrapper = styled.section<ContentGridWrapperInterface>`
     display: grid;
     grid-template-columns: 29% 29% 42%;
     grid-template-rows: 28% 43% 29%;
-    grid-template-areas: 'task task attendance' 'chart chart attendance' 'employees completedTasks attendance';
+    grid-template-areas: 'task task attendance' 'chart chart attendance' 'employees completedTasks info';
     //margin: 2rem 3rem;
     padding: 2rem 3rem;
     grid-gap: 2rem;
@@ -22,7 +22,7 @@ const ContentGridWrapper = styled.section<ContentGridWrapperInterface>`
     ${({ isFinancesPage }) =>
       isFinancesPage &&
       css`
-        grid-template-areas: 'budget budget history' 'chart chart history' 'currency buttons info';
+        grid-template-areas: 'budget budget history' 'chart chart history' 'currency buttons history';
       `}
   }
 

@@ -4,7 +4,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { History } from 'history';
 import gsap from 'gsap';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
-import { Content, Header, TileWrapper, InfoBoxWrapper } from './LandingPageContent.styles';
+import { Content, Header, TileWrapper, InfoBoxWrapper, InfoWrapper, InfoText } from './LandingPageContent.styles';
 import TaskTile from '../../molecules/TaskTile/TaskTile';
 import { AppState } from '../../../reducers/rootReducer';
 import { AttendanceInterface, IncomeDataInterface, TaskInterface } from '../../../types/modelsTypes';
@@ -20,6 +20,7 @@ import { getSingleDayAttendance } from '../../../actions/attendanceActions';
 import { getCompanyTasks, getCompletedTasks, redirectToTask } from '../../../actions/taskActions';
 import AttendancePopup from '../../molecules/AttendancePopup/AttendancePopup';
 import { getIncomeExpenseInTimePeriod } from '../../../actions/financeActions';
+import { ArrowIcon } from '../../../styles/iconStyles';
 
 type ConnectedProps = LinkStateProps & LinkDispatchProps & RouteComponentProps<any>;
 
@@ -86,6 +87,10 @@ const LandingPageContent: React.FC<ConnectedProps> = ({
             <InformationBox title={'Pracownicy'} value={8} areaName={'employees'} chartAnimationDelay={0} />
             <InformationBox title={'Wykonane zadania (30d)'} value={completedTasks} areaName={'attendance'} chartAnimationDelay={800} />
           </InfoBoxWrapper>
+          <InfoWrapper>
+            <InfoText>Zobacz statystyki pracowników</InfoText>
+            <ArrowIcon />
+          </InfoWrapper>
         </ContentGridWrapper>
       </Content>
       <AttendancePopup attendance={selectedAttendance} isOpen={isAttendanceOpen} setOpen={setAttendanceOpen} date={new Date()} />

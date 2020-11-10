@@ -61,4 +61,24 @@ const InfoBoxWrapper = styled.div`
   }
 `;
 
-export { Content, List, Header, Test, TileWrapper, InfoBoxWrapper };
+const InfoWrapper = styled.section`
+  width: 100%;
+
+  ${({ theme }) => theme.mq.hdReady} {
+    grid-area: info;
+    padding: 5rem;
+    height: 100%;
+    background-color: ${({ theme }) => theme.colors.menuBackground};
+    border-radius: 30px;
+  }
+`;
+
+const InfoText = styled.p`
+  font-size: 22px;
+  font-weight: ${({theme}) => theme.font.weight.demi};
+  text-overflow: ellipsis;
+  max-width: 110px;
+  margin-bottom: 1.5rem;
+`;
+
+export { Content, List, Header, Test, TileWrapper, InfoBoxWrapper, InfoWrapper, InfoText };

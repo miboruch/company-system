@@ -10,6 +10,7 @@ import { ReactComponent as Notification } from '../assets/icons/notification.svg
 import { ReactComponent as Logout } from '../assets/icons/logout.svg';
 import { ReactComponent as Settings } from '../assets/icons/settings.svg';
 import { ReactComponent as ShowPassword } from '../assets/icons/show.svg';
+import { ReactComponent as Arrow } from '../assets/icons/arrow.svg';
 
 const iconStyles = css`
   width: 32px;
@@ -87,4 +88,11 @@ const ShowPasswordIcon = styled(ShowPassword)`
   cursor: pointer;
 `;
 
-export { CheckedIcon, NotCheckedIcon, EmptyIcon, DeleteIcon, EditIcon, UserIcon, TaskIcon, NotificationIcon, LogoutIcon, SettingsIcon, ShowPasswordIcon };
+const ArrowIcon = styled(Arrow)`
+  width: 20px;
+  height: 20px;
+  fill: ${({ theme }) => theme.colors.black};
+  cursor: pointer;
+`;
+
+export { CheckedIcon, NotCheckedIcon, EmptyIcon, DeleteIcon, EditIcon, UserIcon, TaskIcon, NotificationIcon, LogoutIcon, SettingsIcon, ShowPasswordIcon, ArrowIcon };

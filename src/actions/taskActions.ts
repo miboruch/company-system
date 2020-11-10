@@ -289,6 +289,7 @@ export const changeTaskState = (taskId: string, isCompleted: boolean) => async (
       );
 
       dispatch(getSingleTask(taskId));
+      dispatch(getCompanyTasks());
       dispatch(setNotificationMessage('Zaktualizowano zadanie'));
     }
   } catch (error) {
