@@ -11,6 +11,7 @@ import { AppTypes } from '../../../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { addNewTask } from '../../../../../actions/taskActions';
 import { sendRegistrationMail } from '../../../../../actions/authenticationActions';
+import { addNewEmployee } from '../../../../../actions/employeeActions';
 
 interface Props {}
 
@@ -22,7 +23,7 @@ type DefaultValues = {
   monthlyPrice: number;
 };
 
-const SalaryPage: React.FC<ConnectedProps> = ({ sendRegistrationMail }) => {
+const SalaryPage: React.FC<ConnectedProps> = ({ sendRegistrationMail, addNewEmployee }) => {
   const { data, setData } = useContext(EmployeeDataContext);
   const { setCurrentPage } = useContext(PageContext);
 
@@ -33,15 +34,13 @@ const SalaryPage: React.FC<ConnectedProps> = ({ sendRegistrationMail }) => {
   };
 
   const handleSubmit = (values: DefaultValues) => {
-    console.log(values);
     setData({ ...data, ...values });
     if (data.registerWithMail) {
-      console.log('send request to register with mail');
       if (values.email) {
         sendRegistrationMail(values.email, values.pricePerHour, values.monthlyPrice);
       }
     } else {
-      console.log('add user');
+      data.userId && addNewEmployee(data.userId, values.pricePerHour, values.monthlyPrice);
     }
   };
 
@@ -74,11 +73,13 @@ const SalaryPage: React.FC<ConnectedProps> = ({ sendRegistrationMail }) => {
 
 interface LinkDispatchProps {
   sendRegistrationMail: (email: string, pricePerHour?: number, monthlyPrice?: number) => void;
+  addNewEmployee: (userId: string, pricePerHour: number, monthlyPrice: number) => void;
 }
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
   return {
-    sendRegistrationMail: bindActionCreators(sendRegistrationMail, dispatch)
+    sendRegistrationMail: bindActionCreators(sendRegistrationMail, dispatch),
+    addNewEmployee: bindActionCreators(addNewEmployee, dispatch)
   };
 };
 

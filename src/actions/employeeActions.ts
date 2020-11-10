@@ -157,6 +157,40 @@ export const updateEmployeeSalary = (pricePerHour?: number, monthlyPrice?: numbe
   }
 };
 
+export const addNewEmployee = (userId: string, pricePerHour: number, monthlyPrice: number) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
+  dispatch(setEmployeeLoading(true));
+
+  const { token } = getState().authenticationReducer;
+  const { currentCompany } = getState().companyReducer;
+
+  try {
+    if (currentCompany?._id && token) {
+      await axios.post(
+        `${API_URL}/employee/add-employee?company_id=${currentCompany._id}`,
+        {
+          userId,
+          pricePerHour,
+          monthlyPrice
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      dispatch(getAllCompanyEmployees());
+      dispatch(setNotificationMessage('Dodano nowego pracownika'));
+    } else {
+      dispatch(setEmployeeError('Brak danych'));
+      dispatch(setNotificationMessage('Problem z dodaniem nowego pracownika', NotificationTypes.Error));
+    }
+  } catch (error) {
+    dispatch(setNotificationMessage('Problem z dodaniem nowego pracownika', NotificationTypes.Error));
+    dispatch(setEmployeeError(error));
+  }
+};
+
 export const resetEmployees = (): ResetEmployees => {
   return {
     type: RESET_EMPLOYEES
