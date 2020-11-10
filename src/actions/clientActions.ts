@@ -23,6 +23,7 @@ import { AppState } from '../reducers/rootReducer';
 import { setNotificationMessage } from './toggleActions';
 import { NotificationTypes } from '../types/actionTypes/toggleAcitonTypes';
 import { getCompanyTasks, selectTask } from './taskActions';
+import { setCompany } from './companyActions';
 
 const setClientsLoading = (isLoading: boolean): SetClientsLoading => {
   return {
@@ -165,6 +166,26 @@ export const deleteClient = (clientId: string) => async (dispatch: Dispatch<any>
   }
 };
 
+export const getSingleClient = (clientId: string) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
+  const { token } = getState().authenticationReducer;
+  const { currentCompany } = getState().companyReducer;
+
+  try {
+    if (token && currentCompany) {
+      const { data } = await axios.get(`${API_URL}/client/get-client-data/${clientId}?company_id=${currentCompany._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      console.log(data);
+
+      dispatch(setSelectedClient(data));
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const editClient = (clientId: string, name: string, email: string, phoneNumber: string, address: string, city: string, country: string) => async (
   dispatch: Dispatch<any>,
   getState: () => AppState
@@ -221,6 +242,7 @@ export const editClientCoords = (clientId: string, lat: number, long: number) =>
         }
       );
 
+      dispatch(getSingleClient(clientId));
       dispatch(setNotificationMessage('Zapisano koordynacje'));
     }
   } catch (error) {

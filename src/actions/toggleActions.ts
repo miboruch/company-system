@@ -1,4 +1,12 @@
-import { NotificationTypes, SET_NOTIFICATION_MESSAGE, SetNotificationMessage } from '../types/actionTypes/toggleAcitonTypes';
+import {
+  NotificationTypes,
+  SET_NOTIFICATION_MESSAGE,
+  SET_EDIT_CLIENT_COORDS_OPEN,
+  SET_EDIT_COMPANY_COORDS_OPEN,
+  SetNotificationMessage,
+  SetEditClientCoordsOpen,
+  SetEditCompanyCoordsOpen
+} from '../types/actionTypes/toggleAcitonTypes';
 import { Dispatch } from 'redux';
 import { resetEmployees, selectEmployee } from './employeeActions';
 import { resetClients, selectClient } from './clientActions';
@@ -14,6 +22,20 @@ export const setNotificationMessage = (message: string | null, notificationType:
     type: SET_NOTIFICATION_MESSAGE,
     message,
     notificationType
+  };
+};
+
+export const setEditClientCoordsOpen = (isOpen: boolean): SetEditClientCoordsOpen => {
+  return {
+    type: SET_EDIT_CLIENT_COORDS_OPEN,
+    payload: isOpen
+  };
+};
+
+export const setEditCompanyCoordsOpen = (isOpen: boolean): SetEditCompanyCoordsOpen => {
+  return {
+    type: SET_EDIT_COMPANY_COORDS_OPEN,
+    payload: isOpen
   };
 };
 

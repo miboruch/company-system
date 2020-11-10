@@ -1,4 +1,6 @@
 export const SET_NOTIFICATION_MESSAGE = 'SET_NOTIFICATION_MESSAGE';
+export const SET_EDIT_CLIENT_COORDS_OPEN = 'SET_EDIT_CLIENT_COORDS_OPEN';
+export const SET_EDIT_COMPANY_COORDS_OPEN = 'SET_EDIT_COMPANY_COORDS_OPEN';
 
 export enum NotificationTypes {
   Success = 'success',
@@ -16,4 +18,14 @@ export interface SetNotificationMessage {
   notificationType: NotificationTypes | null;
 }
 
-export type ToggleActionTypes = SetNotificationMessage;
+export interface SetEditClientCoordsOpen {
+  type: typeof SET_EDIT_CLIENT_COORDS_OPEN;
+  payload: boolean;
+}
+
+export interface SetEditCompanyCoordsOpen {
+  type: typeof SET_EDIT_COMPANY_COORDS_OPEN;
+  payload: boolean;
+}
+
+export type ToggleActionTypes = SetNotificationMessage | SetEditClientCoordsOpen | SetEditCompanyCoordsOpen;

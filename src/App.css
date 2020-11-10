@@ -51,6 +51,7 @@
   border: none;
   height: 36px;
   color: #1d1d1d !important;
+  background-color: transparent !important;
 }
 
 .react-datepicker__input-container input:focus {

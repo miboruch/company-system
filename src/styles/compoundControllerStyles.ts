@@ -64,6 +64,7 @@ const CloseButtonWrapper = styled.div`
     position: absolute;
     top: 2rem;
     right: 2rem;
+    z-index: 2000;
   }
 `;
 

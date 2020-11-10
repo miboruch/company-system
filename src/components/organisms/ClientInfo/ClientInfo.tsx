@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import { ClientInterface } from '../../../types/modelsTypes';
@@ -11,6 +11,8 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { editClient } from '../../../actions/clientActions';
+import MapCoordsEdit from '../MapCoordsEdit/MapCoordsEdit';
+import { setEditClientCoordsOpen } from '../../../actions/toggleActions';
 
 interface InitialValues {
   name: string;
@@ -31,7 +33,8 @@ interface Props {
 
 type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
-const ClientInfo: React.FC<ConnectedProps> = ({ selectedClient, isEditToggled, setEditToggled, setDeleteOpen, editClient }) => {
+const ClientInfo: React.FC<ConnectedProps> = ({ selectedClient, isEditToggled, setEditToggled, setDeleteOpen, editClient, setEditClientCoordsOpen }) => {
+  const [isCoordsEditOpen, setEditCoordsOpen] = useState<boolean>(false);
   const initialValues: InitialValues = {
     name: selectedClient?.name || '',
     email: selectedClient?.email || '',
@@ -79,6 +82,7 @@ const ClientInfo: React.FC<ConnectedProps> = ({ selectedClient, isEditToggled, s
                 <StyledInput onChange={handleChange} name={'city'} type={'text'} required={true} labelText={'Miasto'} value={values.city} disabled={!isEditToggled} />
                 <StyledInput onChange={handleChange} name={'country'} type={'text'} required={true} labelText={'Państwo'} value={values.country} disabled={!isEditToggled} />
               </InputWrapper>
+              <p onClick={() => setEditClientCoordsOpen(true)}>Edytuj miejsce na mapie</p>
               <ButtonWrapper>
                 <Button type={'submit'} text={'Zapisz'} />
               </ButtonWrapper>
@@ -96,6 +100,7 @@ interface LinkStateProps {
 
 interface LinkDispatchProps {
   editClient: (clientId: string, name: string, email: string, phoneNumber: string, address: string, city: string, country: string) => void;
+  setEditClientCoordsOpen: (isOpen: boolean) => void;
 }
 
 const mapStateToProps = ({ clientReducer: { selectedClient } }: AppState): LinkStateProps => {
@@ -104,7 +109,8 @@ const mapStateToProps = ({ clientReducer: { selectedClient } }: AppState): LinkS
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
   return {
-    editClient: bindActionCreators(editClient, dispatch)
+    editClient: bindActionCreators(editClient, dispatch),
+    setEditClientCoordsOpen: bindActionCreators(setEditClientCoordsOpen, dispatch)
   };
 };
 

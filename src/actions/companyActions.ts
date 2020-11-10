@@ -160,6 +160,7 @@ export const editCompanyCoords = (lat: number, long: number) => async (dispatch:
         }
       );
 
+      dispatch(getSingleCompany(currentCompany._id));
       dispatch(setNotificationMessage('Zapisano koordynacje'));
     }
   } catch (error) {
