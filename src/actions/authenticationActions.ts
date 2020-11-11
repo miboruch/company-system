@@ -21,7 +21,7 @@ import { AppTypes } from '../types/actionTypes/appActionTypes';
 import { API_URL } from '../utils/config';
 import { UserDataInterface } from '../types/modelsTypes';
 import { AppState } from '../reducers/rootReducer';
-import { setNotificationMessage } from './toggleActions';
+import { resetState, setNotificationMessage } from './toggleActions';
 import { NotificationTypes } from '../types/actionTypes/toggleAcitonTypes';
 import { RegistrationVerifyTokenResponse } from '../pages/RegisterFromLink/RegisterFromLink';
 import { getCompanyClients, selectClient } from './clientActions';
@@ -145,6 +145,7 @@ export const userLogin = (email: string, password: string, successCallback: () =
     });
 
     dispatch(authSuccess(data.token, data.refreshToken, data.expireIn));
+    dispatch(getUserData(data.token));
     successCallback();
 
     const milliseconds = data.expireIn - new Date().getTime();
@@ -154,7 +155,7 @@ export const userLogin = (email: string, password: string, successCallback: () =
   }
 };
 
-export const userLogout = (successCallback?: () => void, errorCallback?: () => void) => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
+export const userLogout = (successCallback?: () => void, errorCallback?: () => void) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   try {
     dispatch(authStart());
 
@@ -163,6 +164,7 @@ export const userLogout = (successCallback?: () => void, errorCallback?: () => v
       await axios.post(`${API_URL}/auth/logout`, { refreshToken: refreshToken });
 
       dispatch(authLogout());
+      dispatch(resetState());
       !!successCallback && successCallback();
     }
   } catch (error) {
@@ -201,6 +203,7 @@ export const userRegister = (
     });
 
     dispatch(authSuccess(data.token, data.refreshToken, data.expireIn));
+    dispatch(getUserData(data.token));
     dispatch(setNotificationMessage('Utworzono nowe konto'));
     callback();
 
@@ -235,6 +238,7 @@ export const authenticateCheck = (successCallback: () => void, errorCallback: ()
       dispatch(userLogout(errorCallback));
     } else {
       dispatch(authLogout());
+      dispatch(resetState());
       errorCallback();
     }
   }

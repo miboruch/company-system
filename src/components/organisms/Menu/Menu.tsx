@@ -88,9 +88,7 @@ const Menu: React.FC<ConnectedProps> = ({ history, setUserRole, changeUserRoleTo
         <StyledMenuSvg />
         <RedirectText>Przejdź do panelu {role === UserRole.Admin ? 'użytkownika' : 'administratora'}</RedirectText>
         <ArrowWrapper
-          onClick={() => {
-            changeRole();
-          }}
+          onClick={() => changeRole()}
         >
           <ArrowIcon />
         </ArrowWrapper>

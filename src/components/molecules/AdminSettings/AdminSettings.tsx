@@ -8,9 +8,10 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { getAllCompanyEmployees } from '../../../actions/employeeActions';
-import { getCompanyOwners } from '../../../actions/companyActions';
+import { addNewCompanyOwner, getCompanyOwners } from '../../../actions/companyActions';
 import Spinner from '../../atoms/Spinner/Spinner';
 import ListBox from '../ListBox/ListBox';
+import { SpinnerWrapper } from '../../../styles/shared';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -42,7 +43,7 @@ interface Props {}
 
 type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
-const AdminSettings: React.FC<ConnectedProps> = ({ allCompanyEmployees, getAllCompanyEmployees, getCompanyOwners }) => {
+const AdminSettings: React.FC<ConnectedProps> = ({ allCompanyEmployees, getAllCompanyEmployees, getCompanyOwners, addNewCompanyOwner }) => {
   const [isLoading, setLoading] = useState<boolean>(false);
   const [isAddNewToggled, setAddNewToggled] = useState<boolean>(false);
   const [companyOwners, setCompanyOwners] = useState<CompanyOwnersInterface[]>([]);
@@ -51,10 +52,16 @@ const AdminSettings: React.FC<ConnectedProps> = ({ allCompanyEmployees, getAllCo
     getCompanyOwners(setCompanyOwners, setLoading);
   }, []);
 
+  const addCompanyOwner = (userId: string) => {
+    addNewCompanyOwner(userId, async () => getCompanyOwners(setCompanyOwners, setLoading));
+  };
+
   return (
     <Wrapper>
       {isLoading ? (
-        <Spinner />
+        <SpinnerWrapper>
+          <Spinner />
+        </SpinnerWrapper>
       ) : (
         <>
           <ColumnWrapper>
@@ -71,7 +78,7 @@ const AdminSettings: React.FC<ConnectedProps> = ({ allCompanyEmployees, getAllCo
                 name={`${employee.userId.name} ${employee.userId.name}`}
                 topDescription={new Date(employee.userId.dateOfBirth).toLocaleDateString()}
                 bottomDescription={employee.userId.email}
-                callback={() => console.log('clicked')}
+                callback={() => addCompanyOwner(employee.userId._id)}
                 isCompanyBox={false}
                 isEmpty={true}
               />
@@ -90,6 +97,7 @@ interface LinkStateProps {
 interface LinkDispatchProps {
   getAllCompanyEmployees: () => void;
   getCompanyOwners: (setCompanyOwners: (owners: CompanyOwnersInterface[]) => void, setLoading: (isLoading: boolean) => void) => void;
+  addNewCompanyOwner: (userId: string, callback: () => void) => void;
 }
 
 const mapStateToProps = ({ employeeReducer: { allCompanyEmployees } }: AppState): LinkStateProps => {
@@ -99,7 +107,8 @@ const mapStateToProps = ({ employeeReducer: { allCompanyEmployees } }: AppState)
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
   return {
     getAllCompanyEmployees: bindActionCreators(getAllCompanyEmployees, dispatch),
-    getCompanyOwners: bindActionCreators(getCompanyOwners, dispatch)
+    getCompanyOwners: bindActionCreators(getCompanyOwners, dispatch),
+    addNewCompanyOwner: bindActionCreators(addNewCompanyOwner, dispatch)
   };
 };
 

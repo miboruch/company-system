@@ -22,7 +22,6 @@ import { setUserRole } from './authenticationActions';
 import { UserRole } from '../types/actionTypes/authenticationActionTypes';
 import { resetAllSelected, setNotificationMessage } from './toggleActions';
 import { NotificationTypes } from '../types/actionTypes/toggleAcitonTypes';
-import { getCompanyClients, selectClient } from './clientActions';
 
 const setCompanyLoading = (isLoading: boolean): SetCompanyLoading => {
   return {
@@ -183,13 +182,38 @@ export const getCompanyOwners = (setCompanyOwners: (owners: CompanyOwnersInterfa
           Authorization: `Bearer ${token}`
         }
       });
-      
+
       setCompanyOwners(data.owners);
       setLoading(false);
     }
   } catch (error) {
     setLoading(false);
     dispatch(setNotificationMessage('Problem z pobraniem danych', NotificationTypes.Error));
+  }
+};
+
+export const addNewCompanyOwner = (userId: string, callback: () => void) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
+  const { token } = getState().authenticationReducer;
+  const { currentCompany } = getState().companyReducer;
+  try {
+    if (token && currentCompany) {
+      await axios.post(
+        `${API_URL}/company/add-company-owner?company_id=${currentCompany._id}`,
+        {
+          toBeOwnerId: userId
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      callback();
+      dispatch(setNotificationMessage('Dodano administratora'));
+    }
+  } catch (error) {
+    dispatch(setNotificationMessage('Problem z dodaniem administratora', NotificationTypes.Error));
   }
 };
 
