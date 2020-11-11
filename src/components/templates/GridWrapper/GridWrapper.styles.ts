@@ -14,6 +14,7 @@ const StyledWrapper = styled.div<GridProps>`
   display: flex;
   align-items: center;
   flex-direction: column;
+  overflow: hidden;
   //background: rgb(247,247,249);
   //background: linear-gradient(60deg, rgba(247,247,249,1) 0%, rgba(255,255,255,1) 100%);
 

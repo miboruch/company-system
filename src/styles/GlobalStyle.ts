@@ -8,6 +8,16 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
   }
   
+  *::-webkit-scrollbar {
+    -webkit-appearance: none !important;
+    width: 0;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    -webkit-appearance: none !important;
+    
+  }
+  
   html {
     font-size: 62.5%;
   }
