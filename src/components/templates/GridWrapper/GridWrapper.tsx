@@ -6,6 +6,7 @@ import Header from '../../molecules/Header/Header';
 interface Props {
   onlyHeader?: boolean;
   mobilePadding: boolean;
+  isSettingsPage?: boolean;
   pageName: string;
   setFilterText?: (filterText: string) => void;
 }
@@ -23,12 +24,12 @@ interface RenderPropsInterface extends Props{
 type ConnectedProps = ChildrenPropsInterface | RenderPropsInterface;
 
 //* This component will have grid declaration on hdReady resolutions
-const GridWrapper: React.FC<ConnectedProps> = ({ children, render, onlyHeader, mobilePadding, pageName, setFilterText }) => {
+const GridWrapper: React.FC<ConnectedProps> = ({ children, render, onlyHeader, mobilePadding, isSettingsPage, pageName, setFilterText }) => {
   const [isEditToggled, setEditToggled] = useState<boolean>(false);
   const [isDeleteOpen, setDeleteOpen] = useState<boolean>(false);
 
   return (
-    <StyledWrapper mobilePadding={mobilePadding} onlyHeader={onlyHeader}>
+    <StyledWrapper mobilePadding={mobilePadding} onlyHeader={onlyHeader} isSettingsPage={!!isSettingsPage}>
       <Header setFilterText={setFilterText} />
       <TitleWrapper>
         <Title>{pageName}</Title>

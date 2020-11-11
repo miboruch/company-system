@@ -13,6 +13,13 @@ export interface CompanyInterface {
   _id: string;
 }
 
+export interface CompanyOwnersInterface {
+  _id: string;
+  email: string;
+  name: string;
+  lastName: string;
+}
+
 export interface IncomeDataInterface {
   createdDate: string | Date;
   _id: string;

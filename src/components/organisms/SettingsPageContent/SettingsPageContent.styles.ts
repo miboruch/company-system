@@ -34,7 +34,7 @@ const Paragraph = styled.p`
   color: inherit;
 
   ${({ theme }) => theme.mq.hdReady} {
-    font-size: 28px;
+    font-size: 22px;
   }
 `;
 

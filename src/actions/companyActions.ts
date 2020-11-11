@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CompanyInterface } from '../types/modelsTypes';
+import { CompanyInterface, CompanyOwnersInterface } from '../types/modelsTypes';
 import {
   RESET_COMPANY,
   ResetCompany,
@@ -165,6 +165,31 @@ export const editCompanyCoords = (lat: number, long: number) => async (dispatch:
     }
   } catch (error) {
     dispatch(setNotificationMessage('Problem z edycją koordynacji', NotificationTypes.Error));
+  }
+};
+
+export const getCompanyOwners = (setCompanyOwners: (owners: CompanyOwnersInterface[]) => void, setLoading: (isLoading: boolean) => void) => async (
+  dispatch: Dispatch<any>,
+  getState: () => AppState
+) => {
+  const { token } = getState().authenticationReducer;
+  const { currentCompany } = getState().companyReducer;
+
+  try {
+    if (currentCompany && token) {
+      setLoading(true);
+      const { data } = await axios.get(`${API_URL}/company/get-company-owners?company_id=${currentCompany._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      
+      setCompanyOwners(data.owners);
+      setLoading(false);
+    }
+  } catch (error) {
+    setLoading(false);
+    dispatch(setNotificationMessage('Problem z pobraniem danych', NotificationTypes.Error));
   }
 };
 

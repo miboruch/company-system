@@ -14,7 +14,7 @@ const SettingsPageContent: React.FC<ConnectedProps> = ({ role }) => {
   const [subcategory, setSubcategory] = useState<AdminSettingsSubcategories | UserSettingsSubcategories>(UserSettingsSubcategories.AccountSettings);
 
   return (
-    <GridWrapper pageName={'Ustawienia'} mobilePadding={true}>
+    <GridWrapper pageName={'Ustawienia'} mobilePadding={true} isSettingsPage={true}>
       <StyledList>
         {role === UserRole.Admin
           ? adminSettings.map((adminSetting) => (
