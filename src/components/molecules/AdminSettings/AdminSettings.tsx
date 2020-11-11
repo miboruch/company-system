@@ -12,6 +12,7 @@ import { addNewCompanyOwner, getCompanyOwners } from '../../../actions/companyAc
 import Spinner from '../../atoms/Spinner/Spinner';
 import ListBox from '../ListBox/ListBox';
 import { SpinnerWrapper } from '../../../styles/shared';
+import RemoveAdminPopup from '../RemoveAdminPopup/RemoveAdminPopup';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -46,6 +47,7 @@ type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 const AdminSettings: React.FC<ConnectedProps> = ({ allCompanyEmployees, getAllCompanyEmployees, getCompanyOwners, addNewCompanyOwner }) => {
   const [isLoading, setLoading] = useState<boolean>(false);
   const [isAddNewToggled, setAddNewToggled] = useState<boolean>(false);
+  const [isRemoveOpen, setRemoveOpen] = useState<boolean>(false);
   const [companyOwners, setCompanyOwners] = useState<CompanyOwnersInterface[]>([]);
   useEffect(() => {
     allCompanyEmployees.length === 0 && getAllCompanyEmployees();
@@ -68,7 +70,7 @@ const AdminSettings: React.FC<ConnectedProps> = ({ allCompanyEmployees, getAllCo
             <Heading>Administratorzy</Heading>
             <AddNewButton text={'Dodaj nowego administratora'} callback={() => setAddNewToggled(!isAddNewToggled)} />
             {companyOwners.map((owner) => (
-              <ListBox name={`${owner.name} ${owner.lastName}`} topDescription={''} bottomDescription={owner.email} callback={() => console.log('clicked')} isCompanyBox={false} isEmpty={true} />
+              <ListBox name={`${owner.name} ${owner.lastName}`} topDescription={''} bottomDescription={owner.email} callback={() => setRemoveOpen(true)} isCompanyBox={false} isEmpty={true} />
             ))}
           </ColumnWrapper>
           <ColumnWrapper disabled={!isAddNewToggled}>
@@ -86,6 +88,7 @@ const AdminSettings: React.FC<ConnectedProps> = ({ allCompanyEmployees, getAllCo
           </ColumnWrapper>
         </>
       )}
+      <RemoveAdminPopup isOpen={isRemoveOpen} setOpen={setRemoveOpen} />
     </Wrapper>
   );
 };

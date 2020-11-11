@@ -20,13 +20,14 @@ interface BoxInterface {
 
 const Box = styled.div<BoxInterface>`
   width: 90%;
-  height: 400px;
+  //height: 400px;
   border-radius: 30px;
   background-color: ${({ theme }) => theme.colors.white};
+  overflow: hidden;
 
   ${({ theme }) => theme.mq.hdReady} {
     width: 700px;
-    height: ${({ isHigher }) => (isHigher ? '380px' : '300px')};
+    // height: ${({ isHigher }) => (isHigher ? '380px' : '300px')};
   }
 `;
 

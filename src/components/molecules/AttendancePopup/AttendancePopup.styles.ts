@@ -15,7 +15,6 @@ const StyledParagraph = styled(Paragraph)`
 
 const StyledForm = styled(Form)`
   width: 100%;
-  min-height: calc(400px - 80px);
 `;
 
 const StyledFlexWrapper = styled(FlexWrapper)`
