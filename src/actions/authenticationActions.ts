@@ -231,7 +231,12 @@ export const authenticateCheck = (successCallback: () => void, errorCallback: ()
       successCallback();
     }
   } else {
-    refreshToken ? dispatch(userLogout(errorCallback)) : dispatch(authLogout());
+    if (refreshToken) {
+      dispatch(userLogout(errorCallback));
+    } else {
+      dispatch(authLogout());
+      errorCallback();
+    }
   }
 };
 

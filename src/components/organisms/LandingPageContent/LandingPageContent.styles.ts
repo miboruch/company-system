@@ -65,8 +65,12 @@ const InfoWrapper = styled.section`
   width: 100%;
 
   ${({ theme }) => theme.mq.hdReady} {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 5rem;
     grid-area: info;
-    padding: 5rem;
+    //padding: 5rem;
     height: 100%;
     background-color: ${({ theme }) => theme.colors.menuBackground};
     border-radius: 30px;

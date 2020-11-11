@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { Heading, StyledForm } from '../AccountSettings/AccountSettings.styles';
 import { StyledInput } from '../../../styles/compoundStyles';
 import { DoubleFlexWrapper } from '../../../styles/shared';
 import Button from '../../atoms/Button/Button';
 import { Formik } from 'formik';
+import { ThunkDispatch } from 'redux-thunk';
+import { AppTypes } from '../../../types/actionTypes/appActionTypes';
+import { bindActionCreators } from 'redux';
+import { editPassword } from '../../../actions/authenticationActions';
 
 interface DefaultValues {
   password: string;
@@ -12,7 +17,9 @@ interface DefaultValues {
 
 interface Props {}
 
-const PasswordChangeSettings: React.FC<Props> = () => {
+type ConnectedProps = Props & LinkDispatchProps;
+
+const PasswordChangeSettings: React.FC<ConnectedProps> = ({ editPassword }) => {
   const [isPasswordShown, setPasswordShown] = useState<boolean>(false);
   const [isRepeatedPasswordShown, setRepeatedPasswordShown] = useState<boolean>(false);
 
@@ -21,8 +28,8 @@ const PasswordChangeSettings: React.FC<Props> = () => {
     repeatedPassword: ''
   };
 
-  const handleSubmit = (values: DefaultValues) => {
-    console.log(values);
+  const handleSubmit = ({ password, repeatedPassword }: DefaultValues) => {
+    editPassword(password, repeatedPassword);
   };
 
   return (
@@ -59,4 +66,14 @@ const PasswordChangeSettings: React.FC<Props> = () => {
   );
 };
 
-export default PasswordChangeSettings;
+interface LinkDispatchProps {
+  editPassword: (password: string, repeatedPassword: string) => void;
+}
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
+  return {
+    editPassword: bindActionCreators(editPassword, dispatch)
+  };
+};
+
+export default connect(null, mapDispatchToProps)(PasswordChangeSettings);
