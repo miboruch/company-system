@@ -242,9 +242,11 @@ export const authenticateCheck = (successCallback: () => void, errorCallback: ()
 
 export const getAllAppUsers = () => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
   const { token } = getState().authenticationReducer;
+  const { currentCompany } = getState().companyReducer;
+
   try {
-    if (token) {
-      const { data } = await axios.get(`${API_URL}/user/all-users`, {
+    if (token && currentCompany) {
+      const { data } = await axios.get(`${API_URL}/user/get-all-users-except-company-owners?company_id${currentCompany._id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
