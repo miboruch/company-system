@@ -22,6 +22,7 @@ import { setUserRole } from './authenticationActions';
 import { UserRole } from '../types/actionTypes/authenticationActionTypes';
 import { resetAllSelected, setNotificationMessage } from './toggleActions';
 import { NotificationTypes } from '../types/actionTypes/toggleAcitonTypes';
+import { getAllCompanyEmployees } from './employeeActions';
 
 const setCompanyLoading = (isLoading: boolean): SetCompanyLoading => {
   return {
@@ -214,6 +215,38 @@ export const addNewCompanyOwner = (userId: string, callback: () => void) => asyn
     }
   } catch (error) {
     dispatch(setNotificationMessage('Problem z dodaniem administratora', NotificationTypes.Error));
+  }
+};
+
+export const removeCompanyOwner = (userId: string, addEmployee: boolean, callback: () => void, pricePerHour?: number, monthlyPrice?: number) => async (
+  dispatch: Dispatch<any>,
+  getState: () => AppState
+) => {
+  const { token } = getState().authenticationReducer;
+  const { currentCompany } = getState().companyReducer;
+  try {
+    if (token && currentCompany) {
+      await axios.post(
+        `${API_URL}/company/remove-company-owner?company_id=${currentCompany._id}`,
+        {
+          toBeRemovedId: userId,
+          addEmployee,
+          pricePerHour,
+          monthlyPrice
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      callback();
+      addEmployee && dispatch(getAllCompanyEmployees());
+      dispatch(setNotificationMessage('Usunięto administratora'));
+    }
+  } catch (error) {
+    dispatch(setNotificationMessage('Problem z usunięciem administratora', NotificationTypes.Error));
   }
 };
 

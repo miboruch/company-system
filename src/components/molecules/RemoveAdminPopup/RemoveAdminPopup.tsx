@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Formik, Form } from 'formik';
 import PopupTemplate from '../../templates/PopupTemplate/PopupTemplate';
@@ -6,6 +7,13 @@ import ModalButton, { ButtonType } from '../../atoms/ModalButton/ModalButton';
 import { ButtonWrapper, Paragraph, InfoParagraph } from '../../../styles/popupStyles';
 import Input from '../../atoms/Input/Input';
 import Checkbox from '../../atoms/Checkbox/Checkbox';
+import { CompanyOwnersInterface } from '../../../types/modelsTypes';
+import { AppState } from '../../../reducers/rootReducer';
+import { ThunkDispatch } from 'redux-thunk';
+import { AppTypes } from '../../../types/actionTypes/appActionTypes';
+import { bindActionCreators } from 'redux';
+import { getAllCompanyEmployees } from '../../../actions/employeeActions';
+import { addNewCompanyOwner, getCompanyOwners, removeCompanyOwner } from '../../../actions/companyActions';
 
 const ContentWrapper = styled.div`
   display: grid;
@@ -39,26 +47,31 @@ const StyledInfoParagraph = styled(InfoParagraph)`
   margin-top: 2rem;
 `;
 
-interface Props {
-  isOpen: boolean;
-  setOpen: (isOpen: boolean) => void;
-}
-
 interface DefaultState {
   addEmployee: boolean;
   pricePerHour: number;
   monthlyPrice: number;
 }
 
-const RemoveAdminPopup: React.FC<Props> = ({ isOpen, setOpen }) => {
+interface Props {
+  isOpen: boolean;
+  setOpen: (isOpen: boolean) => void;
+  companyOwnerToDelete: CompanyOwnersInterface | null;
+  callback: () => void;
+}
+
+type ConnectedProps = Props & LinkDispatchProps;
+
+const RemoveAdminPopup: React.FC<ConnectedProps> = ({ isOpen, setOpen, companyOwnerToDelete, removeCompanyOwner, callback }) => {
   const initialValues: DefaultState = {
     addEmployee: false,
     pricePerHour: 0,
     monthlyPrice: 0
   };
 
-  const handleSubmit = (values: DefaultState) => {
-    console.log(values);
+  const handleSubmit = ({ addEmployee, pricePerHour, monthlyPrice }: DefaultState) => {
+    companyOwnerToDelete && removeCompanyOwner(companyOwnerToDelete._id, addEmployee, callback, pricePerHour, monthlyPrice);
+    //TODO: deleteOwner(companyOwnerToDelete._id, addEmployee, pricePerHour, monthlyPrice);
   };
 
   return (
@@ -89,4 +102,14 @@ const RemoveAdminPopup: React.FC<Props> = ({ isOpen, setOpen }) => {
   );
 };
 
-export default RemoveAdminPopup;
+interface LinkDispatchProps {
+  removeCompanyOwner: (userId: string, addEmployee: boolean, callback: () => void, pricePerHour?: number, monthlyPrice?: number) => void;
+}
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
+  return {
+    removeCompanyOwner: bindActionCreators(removeCompanyOwner, dispatch)
+  };
+};
+
+export default connect(null, mapDispatchToProps)(RemoveAdminPopup);

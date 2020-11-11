@@ -5,7 +5,7 @@ const SEO: React.FC = () => {
   return (
     <Helmet>
       <meta charSet={'utf-8'} />
-      <title>Wallpapers</title>
+      <title>Company management</title>
       <html lang='pl' />
     </Helmet>
   );

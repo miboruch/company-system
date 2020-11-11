@@ -49,6 +49,7 @@ const AdminSettings: React.FC<ConnectedProps> = ({ allCompanyEmployees, getAllCo
   const [isAddNewToggled, setAddNewToggled] = useState<boolean>(false);
   const [isRemoveOpen, setRemoveOpen] = useState<boolean>(false);
   const [companyOwners, setCompanyOwners] = useState<CompanyOwnersInterface[]>([]);
+  const [companyOwnerToDelete, setCompanyOwnerToDelete] = useState<CompanyOwnersInterface | null>(null);
   useEffect(() => {
     allCompanyEmployees.length === 0 && getAllCompanyEmployees();
     getCompanyOwners(setCompanyOwners, setLoading);
@@ -70,7 +71,17 @@ const AdminSettings: React.FC<ConnectedProps> = ({ allCompanyEmployees, getAllCo
             <Heading>Administratorzy</Heading>
             <AddNewButton text={'Dodaj nowego administratora'} callback={() => setAddNewToggled(!isAddNewToggled)} />
             {companyOwners.map((owner) => (
-              <ListBox name={`${owner.name} ${owner.lastName}`} topDescription={''} bottomDescription={owner.email} callback={() => setRemoveOpen(true)} isCompanyBox={false} isEmpty={true} />
+              <ListBox
+                name={`${owner.name} ${owner.lastName}`}
+                topDescription={''}
+                bottomDescription={owner.email}
+                callback={() => {
+                  setRemoveOpen(true);
+                  setCompanyOwnerToDelete(owner);
+                }}
+                isCompanyBox={false}
+                isEmpty={true}
+              />
             ))}
           </ColumnWrapper>
           <ColumnWrapper disabled={!isAddNewToggled}>
@@ -88,7 +99,7 @@ const AdminSettings: React.FC<ConnectedProps> = ({ allCompanyEmployees, getAllCo
           </ColumnWrapper>
         </>
       )}
-      <RemoveAdminPopup isOpen={isRemoveOpen} setOpen={setRemoveOpen} />
+      <RemoveAdminPopup isOpen={isRemoveOpen} setOpen={setRemoveOpen} companyOwnerToDelete={companyOwnerToDelete} callback={() => getCompanyOwners(setCompanyOwners, setLoading)} />
     </Wrapper>
   );
 };
