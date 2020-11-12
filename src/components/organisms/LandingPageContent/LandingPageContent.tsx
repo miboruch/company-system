@@ -7,7 +7,7 @@ import GridWrapper from '../../templates/GridWrapper/GridWrapper';
 import { Content, Header, TileWrapper, InfoBoxWrapper, InfoWrapper, InfoText } from './LandingPageContent.styles';
 import TaskTile from '../../molecules/TaskTile/TaskTile';
 import { AppState } from '../../../reducers/rootReducer';
-import { AttendanceInterface, IncomeDataInterface, TaskInterface } from '../../../types/modelsTypes';
+import { AttendanceInterface, EmployeeDataInterface, IncomeDataInterface, TaskInterface } from '../../../types/modelsTypes';
 import Chart from '../../molecules/Chart/Chart';
 import AttendanceList from '../AttendanceList/AttendanceList';
 import { ContentGridWrapper } from '../../../styles/HomePageContentGridStyles';
@@ -21,6 +21,8 @@ import { getCompanyTasks, getCompletedTasks, redirectToTask } from '../../../act
 import AttendancePopup from '../../molecules/AttendancePopup/AttendancePopup';
 import { getIncomeExpenseInTimePeriod } from '../../../actions/financeActions';
 import { ArrowIcon } from '../../../styles/iconStyles';
+import { getAllCompanyEmployees } from '../../../actions/employeeActions';
+import AdminStatistics from '../AdminStatistics/AdminStatistics';
 
 type ConnectedProps = LinkStateProps & LinkDispatchProps & RouteComponentProps<any>;
 
@@ -33,12 +35,15 @@ const LandingPageContent: React.FC<ConnectedProps> = ({
   redirectToTask,
   getCompletedTasks,
   completedTasks,
-  getIncomeExpenseInTimePeriod
+  getIncomeExpenseInTimePeriod,
+  allCompanyEmployees,
+  getAllCompanyEmployees
 }) => {
   const [text, setText] = useState<string>('');
   const [data, setData] = useState<Array<IncomeDataInterface> | null>(null);
   const [selectedAttendance, setSelectedAttendance] = useState<AttendanceInterface | null>(null);
   const [isAttendanceOpen, setAttendanceOpen] = useState<boolean>(false);
+  const [areStatisticsOpen, setStatisticsOpen] = useState<boolean>(false);
 
   const [daysBack, setDaysBackTo] = useState<number>(7);
   const contentRef = useRef<HTMLDivElement | null>(null);
@@ -60,6 +65,7 @@ const LandingPageContent: React.FC<ConnectedProps> = ({
   useEffect(() => {
     getSingleDayAttendance();
     getCompletedTasks();
+    allCompanyEmployees.length === 0 && getAllCompanyEmployees();
   }, []);
 
   return (
@@ -87,13 +93,14 @@ const LandingPageContent: React.FC<ConnectedProps> = ({
             <InformationBox title={'Pracownicy'} value={8} areaName={'employees'} chartAnimationDelay={0} />
             <InformationBox title={'Wykonane zadania (30d)'} value={completedTasks} areaName={'attendance'} chartAnimationDelay={800} />
           </InfoBoxWrapper>
-          <InfoWrapper>
+          <InfoWrapper onClick={() => setStatisticsOpen(true)}>
             <InfoText>Zobacz statystyki pracowników</InfoText>
             <ArrowIcon />
           </InfoWrapper>
         </ContentGridWrapper>
       </Content>
       <AttendancePopup attendance={selectedAttendance} isOpen={isAttendanceOpen} setOpen={setAttendanceOpen} date={new Date()} />
+      <AdminStatistics isOpen={areStatisticsOpen} setOpen={setStatisticsOpen} />
     </GridWrapper>
   );
 };
@@ -103,6 +110,7 @@ interface LinkStateProps {
   singleDayAttendance: AttendanceInterface[];
   allCompanyTasks: TaskInterface[];
   completedTasks: number;
+  allCompanyEmployees: EmployeeDataInterface[];
 }
 
 interface LinkDispatchProps {
@@ -111,10 +119,16 @@ interface LinkDispatchProps {
   redirectToTask: (history: History, task: TaskInterface) => void;
   getCompletedTasks: () => void;
   getIncomeExpenseInTimePeriod: (daysBack: number, setData: (data: any[]) => void) => void;
+  getAllCompanyEmployees: () => void;
 }
 
-const mapStateToProps = ({ authenticationReducer: { token }, attendanceReducer: { singleDayAttendance }, taskReducer: { allCompanyTasks, completedTasks } }: AppState): LinkStateProps => {
-  return { token, singleDayAttendance, allCompanyTasks, completedTasks };
+const mapStateToProps = ({
+  authenticationReducer: { token },
+  attendanceReducer: { singleDayAttendance },
+  taskReducer: { allCompanyTasks, completedTasks },
+  employeeReducer: { allCompanyEmployees }
+}: AppState): LinkStateProps => {
+  return { token, singleDayAttendance, allCompanyTasks, completedTasks, allCompanyEmployees };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
@@ -123,7 +137,8 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDi
     getCompanyTasks: bindActionCreators(getCompanyTasks, dispatch),
     redirectToTask: bindActionCreators(redirectToTask, dispatch),
     getCompletedTasks: bindActionCreators(getCompletedTasks, dispatch),
-    getIncomeExpenseInTimePeriod: bindActionCreators(getIncomeExpenseInTimePeriod, dispatch)
+    getIncomeExpenseInTimePeriod: bindActionCreators(getIncomeExpenseInTimePeriod, dispatch),
+    getAllCompanyEmployees: bindActionCreators(getAllCompanyEmployees, dispatch)
   };
 };
 

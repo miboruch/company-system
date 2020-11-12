@@ -20,7 +20,7 @@ interface Props {}
 
 type ConnectedProps = Props & LinkDispatchProps & RouteComponentProps<any>;
 
-const App: React.FC<ConnectedProps> = ({ history, authenticationCheck, getAllAppUsers, getUserNotifications }) => {
+const App: React.FC<ConnectedProps> = ({ history, location, authenticationCheck, getAllAppUsers, getUserNotifications }) => {
   useEffect(() => {
     authenticationCheck(
       () => {
@@ -30,6 +30,10 @@ const App: React.FC<ConnectedProps> = ({ history, authenticationCheck, getAllApp
       },
       () => history.push('/login')
     );
+  }, []);
+
+  useEffect(() => {
+
   }, []);
 
   return (

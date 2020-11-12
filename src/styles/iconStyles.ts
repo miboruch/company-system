@@ -38,6 +38,10 @@ const EmptyIcon = styled(Empty)`
   ${iconStyles}
 `;
 
+const SettingsIcon = styled(Settings)`
+  ${iconStyles}
+`;
+
 const DeleteIcon = styled(Delete)`
   ${contentIconStyles};
   margin-left: 2rem;
@@ -64,10 +68,6 @@ const headingStyles = css`
 `;
 
 const LogoutIcon = styled(Logout)`
-  ${headingStyles}
-`;
-
-const SettingsIcon = styled(Settings)`
   ${headingStyles}
 `;
 

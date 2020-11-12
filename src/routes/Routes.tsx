@@ -12,13 +12,6 @@ interface Props {}
 type ConnectedProps = Props & LinkStateProps;
 
 const Routes: React.FC<ConnectedProps> = ({ role }) => {
-  useEffect(() => {
-    if (role === UserRole.Admin) {
-      console.log(adminRoutes);
-    } else {
-      console.log(userRoutes);
-    }
-  }, [role]);
   return (
     <Switch>
       {role === UserRole.Admin

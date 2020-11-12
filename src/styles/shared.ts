@@ -5,6 +5,7 @@ import { ReactComponent as ImportedListIcon } from '../assets/icons/list.svg';
 import { ReactComponent as Support } from '../assets/icons/support.svg';
 import { ReactComponent as User } from '../assets/icons/user.svg';
 import { ReactComponent as Add } from '../assets/icons/add.svg';
+import { ReactComponent as Settings } from '../assets/icons/settings.svg';
 
 const iconStyles = css`
   fill: #212121;
@@ -43,6 +44,10 @@ const UserIcon = styled(User)`
 const AddIcon = styled(Add)`
   width: 28px;
   height: 28px;
+`;
+
+const SettingsIcon = styled(Settings)`
+  ${iconStyles};
 `;
 
 const SpinnerWrapper = styled.div`
@@ -197,6 +202,7 @@ export {
   SupportIcon,
   UserIcon,
   AddIcon,
+  SettingsIcon,
   SpinnerWrapper,
   Title,
   Paragraph,
