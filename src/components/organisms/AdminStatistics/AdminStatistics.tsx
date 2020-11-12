@@ -1,10 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { AttendanceInterface, EmployeeDataInterface, TaskInterface } from '../../../types/modelsTypes';
-import { History } from 'history';
+import { EmployeeDataInterface } from '../../../types/modelsTypes';
 import { AppState } from '../../../reducers/rootReducer';
 import ListBox from '../../molecules/ListBox/ListBox';
+import { ThunkDispatch } from 'redux-thunk';
+import { AppTypes } from '../../../types/actionTypes/appActionTypes';
+import { bindActionCreators } from 'redux';
+import { SpinnerWrapper } from '../../../styles/shared';
+import { getEmployeeHours, getEmployeeSalary } from '../../../actions/employeeActions';
+import Spinner from '../../atoms/Spinner/Spinner';
+import { Paragraph } from '../../../styles/shared';
+import CloseButton from '../../atoms/CloseButton/CloseButton';
+import gsap from 'gsap';
+import { modalOpenAnimation } from '../../../animations/animations';
+import { CloseButtonWrapper } from '../../../styles/compoundControllerStyles';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -46,9 +56,40 @@ const ContentWrapper = styled.div`
   padding: 3rem;
 `;
 
+interface TextWrapperInterface {
+  isVisible: boolean;
+}
+
+const TextWrapper = styled.div<TextWrapperInterface>`
+  margin-top: 4rem;
+  opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
+  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
+`;
+
 const Heading = styled.h2`
-  font-weight: ${({theme}) => theme.mq.demi};
+  font-weight: ${({ theme }) => theme.mq.demi};
   padding: 3rem;
+`;
+
+const MainHeading = styled.h1`
+  font-weight: ${({ theme }) => theme.mq.demi};
+  margin-bottom: 3rem;
+`;
+
+const StyledParagraph = styled(Paragraph)`
+  font-weight: ${({ theme }) => theme.font.weight.book};
+  margin-bottom: 1rem;
+  color: ${({ theme }) => theme.colors.dark};
+`;
+
+const Text = styled.p`
+  font-size: 14px;
+  color: ${({ theme }) => theme.colors.dark};
+  margin-bottom: 2rem;
+`;
+
+const Span = styled.span`
+  font-weight: ${({ theme }) => theme.font.weight.medium};
 `;
 
 interface Props {
@@ -56,28 +97,70 @@ interface Props {
   setOpen: (isOpen: boolean) => void;
 }
 
-type ConnectedProps = Props & LinkStateProps;
+type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
-const AdminStatistics: React.FC<ConnectedProps> = ({ allCompanyEmployees }) => {
+const AdminStatistics: React.FC<ConnectedProps> = ({ allCompanyEmployees, getEmployeeSalary, getEmployeeHours, isLoading, isOpen, setOpen }) => {
   const [selectedEmployee, setSelectedEmployee] = useState<EmployeeDataInterface | null>(null);
+  const [userSalary, setUserSalary] = useState<number>(0);
+  const [userHours, setUserHours] = useState<number>(0);
+  const mainWrapperRef = useRef<HTMLDivElement | null>(null);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
+
+  useEffect(() => {
+    if (selectedEmployee) {
+      getEmployeeSalary(selectedEmployee.userId._id, 10, setUserSalary);
+      getEmployeeHours(selectedEmployee.userId._id, 10, setUserHours);
+    }
+  }, [selectedEmployee?.userId]);
+
+  useEffect(() => {
+    modalOpenAnimation(tl, mainWrapperRef, wrapperRef);
+  }, []);
+
+  useEffect(() => {
+    isOpen ? tl.play() : tl.reverse();
+  }, [isOpen]);
+
   return (
-    <StyledWrapper>
-      <Box>
+    <StyledWrapper ref={mainWrapperRef}>
+      <Box ref={wrapperRef}>
+        <CloseButtonWrapper>
+          <CloseButton setBoxState={setOpen} />
+        </CloseButtonWrapper>
         <ListWrapper>
           <Heading>Pracownicy</Heading>
           {allCompanyEmployees.map((employee) => (
             <ListBox
-              name={employee.userId.name}
+              name={`${employee.userId.name} ${employee.userId.lastName}`}
               topDescription={new Date(employee.userId.dateOfBirth).toLocaleDateString()}
               bottomDescription={employee.userId.email}
-              callback={() => console.log('set selected')}
+              callback={() => setSelectedEmployee(employee)}
               isCompanyBox={false}
               isEmpty={true}
             />
           ))}
         </ListWrapper>
         <ContentWrapper>
-          <p>Hello friend</p>
+          {isLoading ? (
+            <SpinnerWrapper>
+              <Spinner />
+            </SpinnerWrapper>
+          ) : (
+            <TextWrapper isVisible={!!selectedEmployee}>
+              <MainHeading>
+                {selectedEmployee?.userId.name} {selectedEmployee?.userId.lastName}
+              </MainHeading>
+              <Text>Statystyki użytkownika w miesiącu: Listopad</Text>
+              <Text>Zarobki {selectedEmployee?.pricePerHour ? `${selectedEmployee.pricePerHour} zł/h` : `${selectedEmployee?.monthlyPrice} miesięcznie`}</Text>
+              <StyledParagraph>
+                Ilość przepracowanych godzin: <Span>{userHours}</Span>
+              </StyledParagraph>
+              <StyledParagraph>
+                Wynagrodzenie: <Span>{userSalary} zł</Span>
+              </StyledParagraph>
+            </TextWrapper>
+          )}
         </ContentWrapper>
       </Box>
     </StyledWrapper>
@@ -86,10 +169,23 @@ const AdminStatistics: React.FC<ConnectedProps> = ({ allCompanyEmployees }) => {
 
 interface LinkStateProps {
   allCompanyEmployees: EmployeeDataInterface[];
+  isLoading: boolean;
 }
 
-const mapStateToProps = ({ employeeReducer: { allCompanyEmployees } }: AppState): LinkStateProps => {
-  return { allCompanyEmployees };
+const mapStateToProps = ({ employeeReducer: { allCompanyEmployees, isLoading } }: AppState): LinkStateProps => {
+  return { allCompanyEmployees, isLoading };
 };
 
-export default connect(mapStateToProps)(AdminStatistics);
+interface LinkDispatchProps {
+  getEmployeeSalary: (userId: string, monthIndex: number, setSalary: (hours: number) => void) => void;
+  getEmployeeHours: (userId: string, monthIndex: number, setHours: (hours: number) => void) => void;
+}
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
+  return {
+    getEmployeeSalary: bindActionCreators(getEmployeeSalary, dispatch),
+    getEmployeeHours: bindActionCreators(getEmployeeHours, dispatch)
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminStatistics);

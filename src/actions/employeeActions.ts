@@ -158,12 +158,12 @@ export const updateEmployeeSalary = (pricePerHour?: number, monthlyPrice?: numbe
 };
 
 export const addNewEmployee = (userId: string, pricePerHour: number, monthlyPrice: number) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
-  dispatch(setEmployeeLoading(true));
-
   const { token } = getState().authenticationReducer;
   const { currentCompany } = getState().companyReducer;
 
   try {
+    dispatch(setEmployeeLoading(true));
+
     if (currentCompany?._id && token) {
       await axios.post(
         `${API_URL}/employee/add-employee?company_id=${currentCompany._id}`,
@@ -188,6 +188,52 @@ export const addNewEmployee = (userId: string, pricePerHour: number, monthlyPric
   } catch (error) {
     dispatch(setNotificationMessage('Problem z dodaniem nowego pracownika', NotificationTypes.Error));
     dispatch(setEmployeeError(error));
+  }
+};
+
+export const getEmployeeHours =  (userId: string, monthIndex: number, setHours: (hours: number) => void) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
+  const { token } = getState().authenticationReducer;
+  const { currentCompany } = getState().companyReducer;
+
+  try {
+    dispatch(setEmployeeLoading(true));
+    if (currentCompany?._id && token) {
+      const { data } = await axios.get(`${API_URL}/attendance/get-single-user-hours/${userId}?company_id=${currentCompany._id}&month=${monthIndex}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      setHours(data.totalHours);
+
+      dispatch(setEmployeeLoading(false));
+    }
+  } catch (error) {
+    console.log(error);
+    dispatch(setEmployeeLoading(false));
+  }
+};
+
+export const getEmployeeSalary = (userId: string, monthIndex: number, setSalary: (hours: number) => void) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
+  const { token } = getState().authenticationReducer;
+  const { currentCompany } = getState().companyReducer;
+
+  try {
+    dispatch(setEmployeeLoading(true));
+    if (currentCompany?._id && token) {
+      const { data } = await axios.get(`${API_URL}/attendance/get-single-user-salary/${userId}?company_id=${currentCompany._id}&month=${monthIndex}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      setSalary(data.salary);
+
+      dispatch(setEmployeeLoading(false));
+    }
+  } catch (error) {
+    console.log(error);
+    dispatch(setEmployeeLoading(false));
   }
 };
 
