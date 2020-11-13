@@ -113,7 +113,7 @@ export const selectTask = (task: TaskInterface | null) => (dispatch: Dispatch<Ap
   dispatch(setTaskInfoOpen(!!task));
 };
 
-export const addNewTask = (date: Date, timeEstimate: number, name: string, description: string, isCompleted: boolean, taskIncome?: number, taskExpense?: number) => async (
+export const addNewTask = (date: Date, timeEstimate: number, name: string, description: string, isCompleted: boolean, taskIncome?: number, taskExpense?: number, clientId?: string | null) => async (
   dispatch: Dispatch<any>,
   getState: () => AppState
 ) => {
@@ -130,6 +130,7 @@ export const addNewTask = (date: Date, timeEstimate: number, name: string, descr
           date,
           timeEstimate,
           name,
+          clientId,
           description,
           isCompleted,
           taskIncome: taskIncome ? taskIncome : 0,

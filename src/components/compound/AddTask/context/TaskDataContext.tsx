@@ -8,6 +8,7 @@ export interface TaskDataInterface {
   isCompleted?: boolean;
   taskIncome?: number;
   taskExpense?: number;
+  clientId?: string;
 }
 
 type TaskDataContextType = {

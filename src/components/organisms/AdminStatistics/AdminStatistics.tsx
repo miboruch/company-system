@@ -15,6 +15,8 @@ import CloseButton from '../../atoms/CloseButton/CloseButton';
 import gsap from 'gsap';
 import { modalOpenAnimation } from '../../../animations/animations';
 import { CloseButtonWrapper } from '../../../styles/compoundControllerStyles';
+import Dropdown from '../../atoms/Dropdown/Dropdown';
+import { months } from '../../../utils/staticData';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -25,7 +27,7 @@ const StyledWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.blurBackground};
   display: grid;
   place-items: center;
-  z-index: 2000;
+  z-index: 1000;
 `;
 
 const Box = styled.div`
@@ -122,6 +124,8 @@ const AdminStatistics: React.FC<ConnectedProps> = ({ allCompanyEmployees, getEmp
     isOpen ? tl.play() : tl.reverse();
   }, [isOpen]);
 
+  const handleMonthSelect = (selected: string | null) => console.log(selected);
+
   return (
     <StyledWrapper ref={mainWrapperRef}>
       <Box ref={wrapperRef}>
@@ -151,6 +155,7 @@ const AdminStatistics: React.FC<ConnectedProps> = ({ allCompanyEmployees, getEmp
               <MainHeading>
                 {selectedEmployee?.userId.name} {selectedEmployee?.userId.lastName}
               </MainHeading>
+              {/*<Dropdown options={months} onChange={handleMonthSelect} labelText={'Wybierz miesiąc'} />*/}
               <Text>Statystyki użytkownika w miesiącu: Listopad</Text>
               <Text>Zarobki {selectedEmployee?.pricePerHour ? `${selectedEmployee.pricePerHour} zł/h` : `${selectedEmployee?.monthlyPrice} miesięcznie`}</Text>
               <StyledParagraph>

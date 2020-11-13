@@ -30,7 +30,7 @@ export const modalOpenAnimation = (tl: GSAPTimeline, mainWrapperRef: React.RefOb
 
     tl.fromTo(mainWrapper, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.18 })
       .fromTo(mainWrapper.children, { autoAlpha: 0, y: '+=20' }, { autoAlpha: 1, y: '0', duration: 0.2 })
-      .fromTo(wrapper.children, { y: '+=10' }, { autoAlpha: 1, y: 0, stagger: 0.1 });
+      .fromTo(wrapper.children, { y: '+=10', autoAlpha: 0 }, { autoAlpha: 1, y: 0, stagger: 0.1 });
   }
 };
 

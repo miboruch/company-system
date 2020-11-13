@@ -5,19 +5,10 @@ import { ClientInterface } from '../../../types/modelsTypes';
 import { StyledLabel } from '../../../styles/shared';
 import Input from '../Input/Input';
 
-interface Props {
-  options: ClientInterface[];
-  onChange: (selectedItem: string | null) => void;
-  labelText: string;
-}
-
-interface IDropdownProps {
-  onChange?: (selectedItem: string) => void; // this is for later
-}
-
 const Form = styled.div`
   display: flex;
   flex-direction: column;
+  margin-bottom: 3rem;
   width: 100%;
   position: relative;
 `;
@@ -57,11 +48,18 @@ const Item = styled.li<ItemInterface>`
   background-color: ${({ isActive, theme }) => (isActive ? theme.colors.backgroundHover : theme.colors.white)};
   display: flex;
   align-items: center;
+  font-size: 13px;
 `;
+
+interface Props {
+  options: ClientInterface[];
+  onChange: (selectedItem: string | null) => ClientInterface | void;
+  labelText: string;
+}
 
 const Dropdown: React.FC<Props> = ({ onChange, options, labelText }) => {
   return (
-    <Downshift onChange={onChange} itemToString={(item) => (item ? item : '')}>
+    <Downshift onChange={onChange}>
       {({ getInputProps, getItemProps, getMenuProps, getLabelProps, getRootProps, isOpen, inputValue, highlightedIndex }) => (
         <Form {...getRootProps()}>
           <StyledLabel {...getLabelProps()}>{labelText}</StyledLabel>
@@ -74,7 +72,7 @@ const Dropdown: React.FC<Props> = ({ onChange, options, labelText }) => {
               .map((item, index) => (
                 <Item
                   {...getItemProps({
-                    key: item._id,
+                    key: item.name,
                     index,
                     item: item.name
                   })}

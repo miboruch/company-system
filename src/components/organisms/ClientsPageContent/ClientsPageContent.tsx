@@ -53,8 +53,6 @@ const ClientsPageContent: React.FC<ConnectedProps> = ({
     allCompanyClients.length === 0 && getCompanyClients();
   }, []);
 
-  const handleClientSelect = (selected: string | null) => console.log(selected);
-
   return (
     <>
       <GridWrapper
@@ -69,7 +67,6 @@ const ClientsPageContent: React.FC<ConnectedProps> = ({
           ) : (
             <>
               <List ref={listRef}>
-                <Dropdown options={allCompanyClients} onChange={handleClientSelect} labelText={'Wybierz klienta'} />
                 {filterByClientName(filterText, allCompanyClients).map((client) => (
                   <ListBox
                     key={client._id}

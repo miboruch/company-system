@@ -28,6 +28,13 @@ const ColoredParagraph = styled.p<ParagraphInterface>`
   cursor: pointer;
 `;
 
+const RowWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+`;
+
 interface InitialValues {
   name: string;
   description: string;
@@ -72,7 +79,10 @@ const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, isEditToggled, setEd
         <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize={true}>
           {({ handleChange, values, setFieldValue }) => (
             <StyledForm>
-              <Paragraph>Data dodania: {new Date(selectedTask.addedDate).toLocaleDateString()}</Paragraph>
+              <RowWrapper>
+                <Paragraph>Data dodania: {new Date(selectedTask.addedDate).toLocaleDateString()}</Paragraph>
+                {!!selectedTask.clientId && <Paragraph>Zobacz na mapie</Paragraph>}
+              </RowWrapper>
               <HeaderWrapper>
                 <Title>{selectedTask.name}</Title>
                 <RowIconWrapper>

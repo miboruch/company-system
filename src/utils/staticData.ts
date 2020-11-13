@@ -42,3 +42,11 @@ export const tinyChartData = [
     amt: 2100
   }
 ];
+
+export interface MonthInterface {
+  name: string;
+  index: number;
+}
+
+const monthsNames = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'];
+export const months: MonthInterface[] = monthsNames.map((month, index) => ({ name: month, index }));
