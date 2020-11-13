@@ -13,6 +13,7 @@ import { bindActionCreators } from 'redux';
 import { editClient } from '../../../actions/clientActions';
 import MapCoordsEdit from '../MapCoordsEdit/MapCoordsEdit';
 import { setEditClientCoordsOpen } from '../../../actions/toggleActions';
+import Dropdown from '../../atoms/Dropdown/Dropdown';
 
 interface InitialValues {
   name: string;
