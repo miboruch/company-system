@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Formik, Form } from 'formik';
 import { StyledInput } from '../../../styles/compoundStyles';
 import { Wrapper, StyledForm, HeaderWrapper, Paragraph, EmployeeInfoBox, SubParagraph, TextParagraph, Title, InputWrapper, ButtonWrapper, RowIconWrapper } from '../../../styles/contentStyles';
-import { TaskInterface } from '../../../types/modelsTypes';
+import { ClientInterface, TaskInterface } from '../../../types/modelsTypes';
 import { AppState } from '../../../reducers/rootReducer';
 import { StyledLabel } from '../../../styles/shared';
 import DatePicker from 'react-datepicker';
@@ -14,6 +14,8 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { changeTaskState, editTask } from '../../../actions/taskActions';
+import MapCoordsEdit, { CoordsEditType } from '../MapCoordsEdit/MapCoordsEdit';
+import { setTaskMapPreviewOpen } from '../../../actions/toggleActions';
 
 interface ParagraphInterface {
   isCompleted: boolean;
@@ -35,11 +37,15 @@ const RowWrapper = styled.div`
   justify-content: space-between;
 `;
 
+const StyledParagraph = styled(Paragraph)`
+  cursor: pointer;
+`;
+
 interface InitialValues {
   name: string;
   description: string;
   timeEstimate: number;
-  clientId?: string | null;
+  clientId?: ClientInterface | null;
   taskIncome: number;
   taskExpense: number;
   isCompleted: boolean;
@@ -54,7 +60,9 @@ interface Props {
 
 type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
-const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, isEditToggled, setEditToggled, setDeleteOpen, editTask, changeTaskState }) => {
+const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, isEditToggled, setEditToggled, setDeleteOpen, editTask, changeTaskState, setTaskMapPreviewOpen }) => {
+  const [isMapPreviewOpen, setMapPreviewOpen] = useState<boolean>(false);
+
   const initialValues: InitialValues = {
     name: selectedTask?.name || '',
     description: selectedTask?.description || '',
@@ -79,10 +87,7 @@ const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, isEditToggled, setEd
         <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize={true}>
           {({ handleChange, values, setFieldValue }) => (
             <StyledForm>
-              <RowWrapper>
-                <Paragraph>Data dodania: {new Date(selectedTask.addedDate).toLocaleDateString()}</Paragraph>
-                {!!selectedTask.clientId && <Paragraph>Zobacz na mapie</Paragraph>}
-              </RowWrapper>
+              <Paragraph>Data dodania: {new Date(selectedTask.addedDate).toLocaleDateString()}</Paragraph>
               <HeaderWrapper>
                 <Title>{selectedTask.name}</Title>
                 <RowIconWrapper>
@@ -92,7 +97,10 @@ const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, isEditToggled, setEd
                 </RowIconWrapper>
               </HeaderWrapper>
               <EmployeeInfoBox>
-                <SubParagraph>Data zadania do wykonania: {new Date(selectedTask.date).toLocaleDateString()}</SubParagraph>
+                <RowWrapper>
+                  <SubParagraph>Data zadania do wykonania: {new Date(selectedTask.date).toLocaleDateString()}</SubParagraph>
+                  {!!selectedTask.clientId && <StyledParagraph onClick={() => setTaskMapPreviewOpen(true)}>Zobacz na mapie</StyledParagraph>}
+                </RowWrapper>
                 <SubParagraph>{selectedTask.description}</SubParagraph>
                 <ColoredParagraph isCompleted={selectedTask?.isCompleted} onClick={() => changeTaskState(selectedTask?._id, !selectedTask?.isCompleted)}>
                   Oznacz jako {selectedTask?.isCompleted ? 'niewykonane' : 'wykonane'}
@@ -130,6 +138,7 @@ interface LinkStateProps {
 interface LinkDispatchProps {
   editTask: (taskId: string, date: Date, name: string, description: string, timeEstimate: number, taskIncome: number, taskExpense: number) => void;
   changeTaskState: (taskId: string, isCompleted: boolean) => void;
+  setTaskMapPreviewOpen: (isOpen: boolean) => void;
 }
 
 const mapStateToProps = ({ taskReducer: { selectedTask } }: AppState): LinkStateProps => {
@@ -139,7 +148,8 @@ const mapStateToProps = ({ taskReducer: { selectedTask } }: AppState): LinkState
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
   return {
     editTask: bindActionCreators(editTask, dispatch),
-    changeTaskState: bindActionCreators(changeTaskState, dispatch)
+    changeTaskState: bindActionCreators(changeTaskState, dispatch),
+    setTaskMapPreviewOpen: bindActionCreators(setTaskMapPreviewOpen, dispatch)
   };
 };
 

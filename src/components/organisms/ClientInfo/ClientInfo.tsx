@@ -3,17 +3,16 @@ import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import { ClientInterface } from '../../../types/modelsTypes';
 import { AppState } from '../../../reducers/rootReducer';
-import { Wrapper, StyledForm, HeaderWrapper, Paragraph, EmployeeInfoBox, SubParagraph, TextParagraph, Title, InputWrapper, ButtonWrapper, RowIconWrapper } from '../../../styles/contentStyles';
+import { ButtonWrapper, EmployeeInfoBox, HeaderWrapper, InputWrapper, Paragraph, RowIconWrapper, StyledForm, SubParagraph, TextParagraph, Title, Wrapper } from '../../../styles/contentStyles';
 import { StyledInput } from '../../../styles/compoundStyles';
-import { EditIcon, DeleteIcon } from '../../../styles/iconStyles';
+import { DeleteIcon, EditIcon } from '../../../styles/iconStyles';
 import Button from '../../atoms/Button/Button';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { editClient } from '../../../actions/clientActions';
-import MapCoordsEdit from '../MapCoordsEdit/MapCoordsEdit';
+import MapCoordsEdit, { CoordsEditType } from '../MapCoordsEdit/MapCoordsEdit';
 import { setEditClientCoordsOpen } from '../../../actions/toggleActions';
-import Dropdown from '../../atoms/Dropdown/Dropdown';
 
 interface InitialValues {
   name: string;
@@ -35,7 +34,6 @@ interface Props {
 type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
 const ClientInfo: React.FC<ConnectedProps> = ({ selectedClient, isEditToggled, setEditToggled, setDeleteOpen, editClient, setEditClientCoordsOpen }) => {
-  const [isCoordsEditOpen, setEditCoordsOpen] = useState<boolean>(false);
   const initialValues: InitialValues = {
     name: selectedClient?.name || '',
     email: selectedClient?.email || '',

@@ -1,6 +1,7 @@
 export const SET_NOTIFICATION_MESSAGE = 'SET_NOTIFICATION_MESSAGE';
 export const SET_EDIT_CLIENT_COORDS_OPEN = 'SET_EDIT_CLIENT_COORDS_OPEN';
 export const SET_EDIT_COMPANY_COORDS_OPEN = 'SET_EDIT_COMPANY_COORDS_OPEN';
+export const SET_TASK_MAP_PREVIEW_OPEN = 'SET_TASK_MAP_PREVIEW_OPEN';
 
 export enum NotificationTypes {
   Success = 'success',
@@ -28,4 +29,9 @@ export interface SetEditCompanyCoordsOpen {
   payload: boolean;
 }
 
-export type ToggleActionTypes = SetNotificationMessage | SetEditClientCoordsOpen | SetEditCompanyCoordsOpen;
+export interface SetTaskMapPreviewOpen {
+  type: typeof SET_TASK_MAP_PREVIEW_OPEN;
+  payload: boolean;
+}
+
+export type ToggleActionTypes = SetNotificationMessage | SetEditClientCoordsOpen | SetEditCompanyCoordsOpen | SetTaskMapPreviewOpen;

@@ -52,7 +52,8 @@ const StyledMapWrapper = styled(MapWrapper)`
 
 export enum CoordsEditType {
   Company = 'company',
-  Client = 'client'
+  Client = 'client',
+  View = 'view'
 }
 
 interface Props {
@@ -81,14 +82,16 @@ const MapCoordsEdit: React.FC<ConnectedProps> = ({ isOpen, setOpen, lat, long, t
   };
 
   const handleSubmit = () => {
-    if (type === CoordsEditType.Client) {
-      selectedClient && editClientCoords(selectedClient._id, updatedLat, updatedLong);
-      setOpen(false);
-    }
+    if (type !== CoordsEditType.View) {
+      if (type === CoordsEditType.Client) {
+        selectedClient && editClientCoords(selectedClient._id, updatedLat, updatedLong);
+        setOpen(false);
+      }
 
-    if (type === CoordsEditType.Company) {
-      editCompanyCoords(updatedLat, updatedLong);
-      setOpen(false);
+      if (type === CoordsEditType.Company) {
+        editCompanyCoords(updatedLat, updatedLong);
+        setOpen(false);
+      }
     }
   };
 
@@ -120,16 +123,20 @@ const MapCoordsEdit: React.FC<ConnectedProps> = ({ isOpen, setOpen, lat, long, t
                 zoom={13}
                 zoomControl={false}
                 onClick={(e: Leaflet.LeafletMouseEvent) => {
-                  setUpdatedLat(e.latlng.lat);
-                  setUpdatedLong(e.latlng.lng);
+                  if (type !== CoordsEditType.View) {
+                    setUpdatedLat(e.latlng.lat);
+                    setUpdatedLong(e.latlng.lng);
+                  }
                 }}
               >
                 <TileLayer attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
                 {updatedLat && updatedLong && <Marker icon={markerCustomIcon} position={[updatedLat, updatedLong]} />}
               </Map>
-              <ButtonWrapper>
-                <Button onClick={() => handleSubmit()} type={'button'} text={'Dalej'} />
-              </ButtonWrapper>
+              {type !== CoordsEditType.View && (
+                <ButtonWrapper>
+                  <Button onClick={() => handleSubmit()} type={'button'} text={'Dalej'} />
+                </ButtonWrapper>
+              )}
             </>
           )}
         </StyledMapWrapper>

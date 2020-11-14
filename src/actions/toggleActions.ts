@@ -3,9 +3,11 @@ import {
   SET_NOTIFICATION_MESSAGE,
   SET_EDIT_CLIENT_COORDS_OPEN,
   SET_EDIT_COMPANY_COORDS_OPEN,
+  SET_TASK_MAP_PREVIEW_OPEN,
   SetNotificationMessage,
   SetEditClientCoordsOpen,
-  SetEditCompanyCoordsOpen
+  SetEditCompanyCoordsOpen,
+  SetTaskMapPreviewOpen
 } from '../types/actionTypes/toggleAcitonTypes';
 import { Dispatch } from 'redux';
 import { resetEmployees, selectEmployee } from './employeeActions';
@@ -35,6 +37,13 @@ export const setEditClientCoordsOpen = (isOpen: boolean): SetEditClientCoordsOpe
 export const setEditCompanyCoordsOpen = (isOpen: boolean): SetEditCompanyCoordsOpen => {
   return {
     type: SET_EDIT_COMPANY_COORDS_OPEN,
+    payload: isOpen
+  };
+};
+
+export const setTaskMapPreviewOpen = (isOpen: boolean) => {
+  return {
+    type: SET_TASK_MAP_PREVIEW_OPEN,
     payload: isOpen
   };
 };

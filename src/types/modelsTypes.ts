@@ -71,6 +71,20 @@ export interface EmployeeDataInterface {
   companyId: string;
 }
 
+export interface ClientInterface {
+  createdDate: Date,
+  _id: string;
+  name: string;
+  companyId: string;
+  address: string;
+  lat: number;
+  long: number;
+  phoneNumber: string;
+  email: string;
+  country: string;
+  city: string;
+}
+
 export interface TaskInterface {
   isCompleted: boolean;
   addedDate: Date | string;
@@ -79,7 +93,7 @@ export interface TaskInterface {
   timeEstimate: number;
   name: string;
   description: string;
-  clientId?: null | string;
+  clientId?: ClientInterface | null;
   companyId: string;
   taskIncome?: number;
   taskExpense?: number;
