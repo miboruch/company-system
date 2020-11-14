@@ -127,7 +127,7 @@ export const updateEmployeeSalary = (pricePerHour?: number, monthlyPrice?: numbe
 
   try {
     if (selectedEmployee && token && currentCompany) {
-      const data: DataHourInterface | DataMonthlyInterface = !!pricePerHour
+      const data: DataHourInterface | DataMonthlyInterface = pricePerHour
         ? {
             employeeId: selectedEmployee._id,
             pricePerHour: pricePerHour

@@ -71,6 +71,7 @@ const Dropdown: React.FC<Props> = ({ onChange, options, labelText }) => {
               .filter((item) => !inputValue || item.name.includes(inputValue))
               .map((item, index) => (
                 <Item
+                  key={index}
                   {...getItemProps({
                     key: item.name,
                     index,

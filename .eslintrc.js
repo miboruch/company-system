@@ -14,10 +14,10 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint'],
   rules: {
-    'prettier/prettier': 'warn',
-    'no-unused-vars': 'warn',
-    'react/prop-types': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
-    '@typescript-eslint/no-empty-function': 'off'
+    'no-unused-vars': 1,
+    'react/prop-types': 0,
+    '@typescript-eslint/no-explicit-any': 0,
+    '@typescript-eslint/no-empty-function': 0,
+    '@typescript-eslint/no-empty-interface': 1
   }
 };
