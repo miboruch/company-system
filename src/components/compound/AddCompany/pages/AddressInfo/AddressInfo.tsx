@@ -43,7 +43,7 @@ const AddressInfo: React.FC<Props> = () => {
             <StyledInput onChange={handleChange} name={'city'} value={values.city} required={true} type={'text'} labelText={'Miasto'} />
             <StyledInput onChange={handleChange} name={'country'} value={values.country} required={true} type={'text'} labelText={'Kraj'} />
             <DoubleFlexWrapper>
-              <StyledBackParagraph onClick={() => setCurrentPage(PageSettingEnum.Second)}>Wstecz</StyledBackParagraph>
+              <StyledBackParagraph type={'back'} onClick={() => setCurrentPage(PageSettingEnum.Second)}>Wstecz</StyledBackParagraph>
               <Button type={'submit'} text={'Dalej'} />
             </DoubleFlexWrapper>
           </StyledForm>

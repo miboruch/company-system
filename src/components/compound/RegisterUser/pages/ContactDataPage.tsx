@@ -8,7 +8,8 @@ import { RegisterDataContext } from '../context/RegisterDataContext';
 import { PageContext } from '../context/PageContext';
 import { Formik } from 'formik';
 import { Heading, StyledForm } from '../../../../pages/LoginPage/LoginPage.styles';
-import { BackParagraph, DoubleFlexWrapper, StyledLabel } from '../../../../styles/shared';
+import { Paragraph } from '../../../../styles/typography/typography';
+import { DoubleFlexWrapper, StyledLabel } from '../../../../styles/shared';
 import Button from '../../../atoms/Button/Button';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../../types/actionTypes/appActionTypes';
@@ -89,7 +90,9 @@ const ContactDataPage: React.FC<ConnectedProps> = ({ history, isRegistrationLink
             />
           </div>
           <DoubleFlexWrapper>
-            <BackParagraph onClick={() => handlePageBack()}>Wstecz</BackParagraph>
+            <Paragraph type={'back'} onClick={() => handlePageBack()}>
+              Wstecz
+            </Paragraph>
             <Button type={'submit'} text={'Dalej'} />
           </DoubleFlexWrapper>
         </StyledForm>

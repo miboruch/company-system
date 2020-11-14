@@ -4,7 +4,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { History } from 'history';
 import gsap from 'gsap';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
-import { Content, Header, TileWrapper, InfoBoxWrapper, InfoWrapper, InfoText } from './LandingPageContent.styles';
+import { Content, Header, TileWrapper, InfoBoxWrapper, InfoWrapper, StatisticsHeading } from './LandingPageContent.styles';
 import TaskTile from '../../molecules/TaskTile/TaskTile';
 import { AppState } from '../../../reducers/rootReducer';
 import { AttendanceInterface, EmployeeDataInterface, IncomeDataInterface, TaskInterface } from '../../../types/modelsTypes';
@@ -94,7 +94,7 @@ const LandingPageContent: React.FC<ConnectedProps> = ({
             <InformationBox title={'Wykonane zadania (30d)'} value={completedTasks} areaName={'attendance'} chartAnimationDelay={800} />
           </InfoBoxWrapper>
           <InfoWrapper onClick={() => setStatisticsOpen(true)}>
-            <InfoText>Zobacz statystyki pracowników</InfoText>
+            <StatisticsHeading>Zobacz statystyki pracowników</StatisticsHeading>
             <ArrowIcon />
           </InfoWrapper>
         </ContentGridWrapper>

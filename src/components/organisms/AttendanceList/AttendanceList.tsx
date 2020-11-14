@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import AttendanceBox, { AttendanceBoxProps } from '../../molecules/AttendanceBox/AttendanceBox';
 import { AttendanceInterface } from '../../../types/modelsTypes';
 import { isEmpty } from '../../../utils/functions';
 import ListBox from '../../molecules/ListBox/ListBox';
-import DeletePopup from '../../molecules/DeletePopup/DeletePopup';
-import { setSelectedEmployee } from '../../../actions/employeeActions';
+import { Heading } from '../../../styles/typography/typography';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -25,12 +23,11 @@ const StyledWrapper = styled.div`
   }
 `;
 
-const DateParagraph = styled.h3`
+const DateHeading = styled(Heading)`
   font-size: 18px;
-  letter-spacing: -2px;
-  font-weight: ${({ theme }) => theme.font.weight.bold};
-  color: ${({ theme }) => theme.colors.dark};
   margin: 3rem 2rem;
+  letter-spacing: -1px;
+  color: ${({ theme }) => theme.colors.dark};
 `;
 
 interface Props {
@@ -42,7 +39,8 @@ interface Props {
 const AttendanceList: React.FC<Props> = ({ singleDayAttendance, setSelectedAttendance, setAttendanceOpen }) => {
   return (
     <StyledWrapper>
-      <DateParagraph>{new Date().toLocaleDateString()}</DateParagraph>
+      {/*<DateParagraph>{new Date().toLocaleDateString()}</DateParagraph>*/}
+      <DateHeading>{new Date().toLocaleDateString()}</DateHeading>
       {singleDayAttendance.map((attendance, index: number) => (
         <ListBox
           key={attendance._id}

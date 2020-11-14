@@ -28,7 +28,7 @@ const ListBox: React.FC<ListBoxProps> = ({ name, topDescription, bottomDescripti
           <Subparagraph>{bottomDescription}</Subparagraph>
         </div>
       </ContentWrapper>
-      {value ? <ValueParagraph>{value}</ValueParagraph> : !!editCallback ? <EditIcon onClick={() => editCallback()} /> : <ArrowButton />}
+      {value ? <ValueParagraph>{value}</ValueParagraph> : editCallback ? <EditIcon onClick={() => editCallback()} /> : <ArrowButton />}
     </Wrapper>
   );
 };

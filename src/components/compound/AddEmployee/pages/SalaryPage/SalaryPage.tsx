@@ -9,13 +9,10 @@ import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
-import { addNewTask } from '../../../../../actions/taskActions';
 import { sendRegistrationMail } from '../../../../../actions/authenticationActions';
 import { addNewEmployee } from '../../../../../actions/employeeActions';
 
-interface Props {}
-
-type ConnectedProps = Props & LinkDispatchProps;
+type ConnectedProps = LinkDispatchProps;
 
 type DefaultValues = {
   email?: string;
@@ -57,7 +54,9 @@ const SalaryPage: React.FC<ConnectedProps> = ({ sendRegistrationMail, addNewEmpl
             <StyledInput onChange={handleChange} name={'pricePerHour'} value={values.pricePerHour} type={'number'} required={false} labelText={'Stawka godzinowa'} disabled={!!values.monthlyPrice} />
             <StyledInput onChange={handleChange} name={'monthlyPrice'} value={values.monthlyPrice} type={'number'} required={false} labelText={'Stawka miesięczna'} disabled={!!values.pricePerHour} />
             <DoubleFlexWrapper>
-              <StyledBackParagraph onClick={() => setCurrentPage(PageSettingEnum.First)}>Wstecz</StyledBackParagraph>
+              <StyledBackParagraph type={'back'} onClick={() => setCurrentPage(PageSettingEnum.First)}>
+                Wstecz
+              </StyledBackParagraph>
               <Button
                 type={'submit'}
                 text={'Dodaj'}

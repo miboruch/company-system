@@ -11,9 +11,7 @@ import { NOTIFICATION_VISIBILITY_TIME } from '../../../utils/config';
 import { CheckedIcon, NotCheckedIcon } from '../../../styles/iconStyles';
 import { NotificationWrapper, NotificationParagraph } from './NotificationPopup.styles';
 
-interface Props {}
-
-type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
+type ConnectedProps = LinkStateProps & LinkDispatchProps;
 
 const NotificationPopup: React.FC<ConnectedProps> = ({ isNotificationOpen, notificationMessage, setNotificationMessage }) => {
   const wrapperRef = useRef<HTMLDivElement | null>(null);

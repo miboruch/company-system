@@ -15,9 +15,7 @@ import { Coords } from '../../../../../types/globalTypes';
 import 'leaflet/dist/leaflet.css';
 import { getLocation } from '../../../../../utils/mapFunctions';
 
-interface Props {}
-
-const MapPage: React.FC<Props> = () => {
+const MapPage: React.FC = () => {
   const { data, setData } = useContext(CompanyDataContext);
   const { setCurrentPage } = useContext(PageContext);
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -62,7 +60,7 @@ const MapPage: React.FC<Props> = () => {
               {coords.lat && coords.long && <Marker icon={markerCustomIcon} position={[coords.lat, coords.long]} />}
             </Map>
             <ButtonWrapper>
-              <StyledBackParagraph onClick={() => setCurrentPage(PageSettingEnum.First)}>Wstecz</StyledBackParagraph>
+              <StyledBackParagraph type={'back'} onClick={() => setCurrentPage(PageSettingEnum.First)}>Wstecz</StyledBackParagraph>
               <Button onClick={() => setCurrentPage(PageSettingEnum.Third)} type={'button'} text={'Dalej'} disabled={!coords.lat || !coords.long} />
             </ButtonWrapper>
           </>

@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
-import { SpinnerWrapper, List, AddIcon, AddParagraph, AddWrapper } from '../../../styles/shared';
+import { Paragraph } from '../../../styles/typography/typography';
+import { SpinnerWrapper, List, AddIcon, AddWrapper } from '../../../styles/shared';
 import ListBox from '../../molecules/ListBox/ListBox';
 import gsap from 'gsap';
 import ContentTemplate from '../../templates/ContentTemplate/ContentTemplate';
@@ -72,7 +73,7 @@ const EmployeesPageContent: React.FC<ConnectedProps> = ({
               ))}
               <AddWrapper onClick={() => setAddNewEmployeeOpen(true)}>
                 <AddIcon />
-                <AddParagraph>Dodaj pracownika</AddParagraph>
+                <Paragraph type={'add'}>Dodaj pracownika</Paragraph>
               </AddWrapper>
             </List>
             <ContentTemplate isOpen={isEmployeeInfoOpen} setOpen={setEmployeeInfoOpen}>

@@ -22,9 +22,7 @@ interface DefaultValues {
   clientId: string | null;
 }
 
-interface Props {}
-
-type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
+type ConnectedProps = LinkStateProps & LinkDispatchProps;
 
 const SpecificInfoPage: React.FC<ConnectedProps> = ({ addNewTask, allCompanyClients, getCompanyClients }) => {
   const { data, setData } = useContext(TaskDataContext);
@@ -68,7 +66,9 @@ const SpecificInfoPage: React.FC<ConnectedProps> = ({ addNewTask, allCompanyClie
             <StyledInput onChange={handleChange} name={'taskIncome'} value={values.taskIncome} required={false} type={'number'} labelText={'Przychód z zadania'} />
             <StyledInput onChange={handleChange} name={'taskExpense'} value={values.taskExpense} required={false} type={'number'} labelText={'Wydatek na zadanie'} />
             <DoubleFlexWrapper>
-              <StyledBackParagraph onClick={() => setCurrentPage(PageSettingEnum.First)}>Wstecz</StyledBackParagraph>
+              <StyledBackParagraph type={'back'} onClick={() => setCurrentPage(PageSettingEnum.First)}>
+                Wstecz
+              </StyledBackParagraph>
               <Button type={'submit'} text={'Dodaj'} />
             </DoubleFlexWrapper>
           </StyledForm>

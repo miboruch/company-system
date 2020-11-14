@@ -6,6 +6,7 @@ import { ContentGridWrapper } from '../../../styles/HomePageContentGridStyles';
 import Chart from '../../molecules/Chart/Chart';
 import { ExpenseInterface, IncomeDataInterface, IncomeInterface } from '../../../types/modelsTypes';
 import { AppState } from '../../../reducers/rootReducer';
+import { Heading } from '../../../styles/typography/typography';
 import gsap from 'gsap';
 import { contentAnimation } from '../../../animations/animations';
 import { ThunkDispatch } from 'redux-thunk';
@@ -19,6 +20,7 @@ import IncomeExpensePopup, { FinancePopupInterface } from '../../molecules/Incom
 import { getCurrencyValue } from '../../../actions/toggleActions';
 import { CurrencyInterface } from '../../../types/actionTypes/toggleAcitonTypes';
 import { roundTo2 } from '../../../utils/functions';
+import { appCurrencies } from '../../../utils/config';
 
 const Content = styled.div`
   width: 100%;
@@ -47,7 +49,10 @@ const InfoBoxWrapper = styled.div`
 
   ${({ theme }) => theme.mq.hdReady} {
     //display: contents;
+    border: 1px solid ${({ theme }) => theme.colors.impactGray};
     grid-area: currency;
+    border-radius: 30px;
+    padding: 3rem;
   }
 `;
 
@@ -55,14 +60,27 @@ const ButtonWrapper = styled.div`
   width: 100%;
 
   ${({ theme }) => theme.mq.hdReady} {
+    display: flex;
+    flex-direction: row;
     height: 100%;
     grid-area: buttons;
+    border-radius: 30px;
+    border: 1px solid ${({ theme }) => theme.colors.impactGray};
   }
 `;
 
-interface Props {}
+interface CurrencyBoxInterface {
+  isActive: boolean;
+}
 
-type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
+const CurrencyBox = styled.div`
+  width: calc(100% / 3);
+  height: 100%;
+  display: grid;
+  place-items: center;
+`;
+
+type ConnectedProps = LinkStateProps & LinkDispatchProps;
 
 const FinancesPageContent: React.FC<ConnectedProps> = ({ getIncomeExpenseInTimePeriod, lastIncomes, lastExpenses, budget, currency, getCurrencyValue }) => {
   const [isPopupOpen, setPopupOpen] = useState<boolean>(false);
@@ -94,6 +112,7 @@ const FinancesPageContent: React.FC<ConnectedProps> = ({ getIncomeExpenseInTimeP
             <BudgetTile description={'Budżet firmy'} name={'Aktualny budżet firmy'} value={roundTo2(budget * currency.value)} />
             {budgetHistoryData.slice(0, 2).map((history) => (
               <BudgetTile
+                key={history._id}
                 description={'Finanse'}
                 value={history.expenseValue ? -1 * roundTo2(history.expenseValue * currency.value) : history.incomeValue ? roundTo2(history.incomeValue * currency.value) : 0}
                 name={history.description}
@@ -112,9 +131,12 @@ const FinancesPageContent: React.FC<ConnectedProps> = ({ getIncomeExpenseInTimeP
           />
           <BudgetHistoryList budgetHistory={budgetHistoryData} />
           <InfoBoxWrapper>
-            <p onClick={() => getCurrencyValue('PLN')}>PLN</p>
-            <p onClick={() => getCurrencyValue('EUR')}>EUR</p>
-            <p onClick={() => getCurrencyValue('USD')}>USD</p>
+            <Heading>Waluty</Heading>
+            {appCurrencies.map((currency) => (
+              // <CurrencyBox key={currency}>
+              <Heading key={currency} onClick={() => getCurrencyValue(currency)}>{currency}</Heading>
+              // </CurrencyBox>
+            ))}
           </InfoBoxWrapper>
           <ButtonWrapper>
             <Button

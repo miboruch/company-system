@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import {Heading} from '../../../styles/typography/typography';
 
 const Content = styled.div`
   width: 100%;
@@ -77,7 +78,7 @@ const InfoWrapper = styled.section`
   }
 `;
 
-const InfoText = styled.p`
+const StatisticsHeading = styled(Heading)`
   font-size: 22px;
   font-weight: ${({theme}) => theme.font.weight.demi};
   text-overflow: ellipsis;
@@ -85,4 +86,4 @@ const InfoText = styled.p`
   margin-bottom: 1.5rem;
 `;
 
-export { Content, List, Header, Test, TileWrapper, InfoBoxWrapper, InfoWrapper, InfoText };
+export { Content, List, Header, Test, TileWrapper, InfoBoxWrapper, InfoWrapper, StatisticsHeading };

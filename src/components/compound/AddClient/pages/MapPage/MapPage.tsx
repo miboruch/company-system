@@ -72,7 +72,7 @@ const MapPage: React.FC<Props> = () => {
               {coords.lat && coords.long && <Marker icon={markerCustomIcon} position={[coords.lat, coords.long]} />}
             </Map>
             <ButtonWrapper>
-              <StyledBackParagraph onClick={() => setCurrentPage(PageSettingEnum.First)}>Wstecz</StyledBackParagraph>
+              <StyledBackParagraph type={'back'} onClick={() => setCurrentPage(PageSettingEnum.First)}>Wstecz</StyledBackParagraph>
               <Button onClick={() => handleSubmit()} type={'button'} text={'Dodaj'} disabled={!coords.lat || !coords.long} />
             </ButtonWrapper>
           </>

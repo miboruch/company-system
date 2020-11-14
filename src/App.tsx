@@ -16,11 +16,9 @@ import NotificationPopup from './components/molecules/NotificationPopup/Notifica
 import RegisterFromLink from './pages/RegisterFromLink/RegisterFromLink';
 import { getUserNotifications } from './actions/notificationActions';
 
-interface Props {}
+type ConnectedProps = LinkDispatchProps & RouteComponentProps<any>;
 
-type ConnectedProps = Props & LinkDispatchProps & RouteComponentProps<any>;
-
-const App: React.FC<ConnectedProps> = ({ history, location, authenticationCheck, getAllAppUsers, getUserNotifications }) => {
+const App: React.FC<ConnectedProps> = ({ history, authenticationCheck, getAllAppUsers, getUserNotifications }) => {
   useEffect(() => {
     authenticationCheck(
       () => {
@@ -32,9 +30,7 @@ const App: React.FC<ConnectedProps> = ({ history, location, authenticationCheck,
     );
   }, []);
 
-  useEffect(() => {
-
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <Layout>

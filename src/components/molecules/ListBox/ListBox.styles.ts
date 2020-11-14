@@ -37,9 +37,9 @@ const ContentWrapper = styled.section`
 `;
 
 const ValueParagraph = styled.h3`
-  font-size: 22px;
+  font-size: 20px;
   font-weight: ${({ theme }) => theme.font.weight.demi};
-  letter-spacing: -2px;
+  letter-spacing: -1px;
   color: ${({ theme }) => theme.colors.dark};
   padding-right: 1rem;
 `;

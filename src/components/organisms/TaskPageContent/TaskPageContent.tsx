@@ -8,7 +8,8 @@ import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { deleteTask, getCompanyTasks, selectTask, setAddNewTaskOpen, setTaskInfoOpen } from '../../../actions/taskActions';
 import Spinner from '../../atoms/Spinner/Spinner';
-import { SpinnerWrapper, List, AddIcon, AddParagraph, AddWrapper } from '../../../styles/shared';
+import { Paragraph } from '../../../styles/typography/typography';
+import { SpinnerWrapper, List, AddIcon, AddWrapper } from '../../../styles/shared';
 import ListBox from '../../molecules/ListBox/ListBox';
 import ContentTemplate from '../../templates/ContentTemplate/ContentTemplate';
 import gsap from 'gsap';
@@ -80,7 +81,7 @@ const TaskPageContent: React.FC<ConnectedProps> = ({
                 ))}
                 <AddWrapper onClick={() => setAddNewTaskOpen(true)}>
                   <AddIcon />
-                  <AddParagraph>Dodaj zadanie</AddParagraph>
+                  <Paragraph type={'add'}>Dodaj zadanie</Paragraph>
                 </AddWrapper>
               </List>
               <ContentTemplate isOpen={isTaskInfoOpen} setOpen={setTaskInfoOpen}>

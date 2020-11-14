@@ -5,7 +5,8 @@ const StyledButton = styled.button`
   height: 38px;
   padding-top: 4px;
   background-color: ${({ theme }) => theme.colors.white};
-  border-radius: 100px;
+  border-radius: 10px;
+  //border-radius: 100px;
   border: 1px solid ${({ theme }) => theme.colors.buttonColor};
   font-family: ${({ theme }) => theme.font.family.avantGarde};
   color: ${({ theme }) => theme.colors.buttonColor};

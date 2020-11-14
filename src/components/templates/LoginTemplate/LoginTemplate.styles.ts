@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import background from '../../../assets/images/background.jpg';
 import { LOGIN_IMAGE_BACKGROUND_OPACITY } from '../../../utils/config';
-import { Paragraph } from '../../../styles/shared';
+import { Paragraph } from '../../../styles/typography/typography';
 
 const StyledWrapper = styled.div`
   width: 100%;

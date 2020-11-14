@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { ResponsiveContainer } from 'recharts';
+import { Paragraph } from '../../../styles/typography/typography';
 
 const ChartWrapper = styled.div`
   width: 100%;
@@ -13,7 +14,7 @@ const ChartWrapper = styled.div`
 `;
 
 const StyledResponsiveContainer = styled(ResponsiveContainer)`
-  width: 200%;
+  width: 100%;
 
   ${({ theme }) => theme.mq.standard} {
     padding-left: 0;
@@ -38,13 +39,11 @@ interface SelectParagraph {
   isActive: boolean;
 }
 
-const Paragraph = styled.p<SelectParagraph>`
-  font-size: 12px;
+const StyledParagraph = styled(Paragraph)<SelectParagraph>`
   margin-left: 2rem;
   color: ${({ isActive, theme }) => (isActive ? theme.colors.dark : theme.colors.textGray)};
   font-weight: ${({ theme }) => theme.font.weight.demi};
-  transition: color 0.5s ease;
   cursor: pointer;
 `;
 
-export { ChartWrapper, StyledResponsiveContainer, RowWrapper, FlexRowWrapper, Paragraph };
+export { ChartWrapper, StyledResponsiveContainer, RowWrapper, FlexRowWrapper, StyledParagraph };

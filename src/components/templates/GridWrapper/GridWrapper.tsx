@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyledWrapper, TitleWrapper } from './GridWrapper.styles';
-import { Title } from '../../../styles/shared';
+import {PageNameHeading} from '../../../styles/typography/typography';
 import Header from '../../molecules/Header/Header';
 
 interface Props {
@@ -32,9 +32,9 @@ const GridWrapper: React.FC<ConnectedProps> = ({ children, render, onlyHeader, m
     <StyledWrapper mobilePadding={mobilePadding} onlyHeader={onlyHeader} isSettingsPage={!!isSettingsPage}>
       <Header setFilterText={setFilterText} />
       <TitleWrapper>
-        <Title>{pageName}</Title>
+        <PageNameHeading>{pageName}</PageNameHeading>
       </TitleWrapper>
-      {!!render ? render(isEditToggled, setEditToggled, isDeleteOpen, setDeleteOpen) : children}
+      {render ? render(isEditToggled, setEditToggled, isDeleteOpen, setDeleteOpen) : children}
     </StyledWrapper>
   );
 };

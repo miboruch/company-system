@@ -9,7 +9,8 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { deleteClient, getCompanyClients, selectClient, setAddNewClientOpen, setClientInfoOpen } from '../../../actions/clientActions';
-import { AddIcon, AddParagraph, AddWrapper, List, SpinnerWrapper } from '../../../styles/shared';
+import { Paragraph } from '../../../styles/typography/typography';
+import { AddIcon, AddWrapper, List, SpinnerWrapper } from '../../../styles/shared';
 import Spinner from '../../atoms/Spinner/Spinner';
 import ListBox from '../../molecules/ListBox/ListBox';
 import ContentTemplate from '../../templates/ContentTemplate/ContentTemplate';
@@ -18,7 +19,6 @@ import AddClientController from '../../compound/AddClient/AddClientController';
 import DeletePopup from '../../molecules/DeletePopup/DeletePopup';
 import MapCoordsEdit, { CoordsEditType } from '../MapCoordsEdit/MapCoordsEdit';
 import { setEditClientCoordsOpen } from '../../../actions/toggleActions';
-import Dropdown from '../../atoms/Dropdown/Dropdown';
 
 interface Props {}
 
@@ -80,7 +80,7 @@ const ClientsPageContent: React.FC<ConnectedProps> = ({
                 ))}
                 <AddWrapper onClick={() => setAddNewClientOpen(true)}>
                   <AddIcon />
-                  <AddParagraph>Dodaj klienta</AddParagraph>
+                  <Paragraph type={'add'}>Dodaj klienta</Paragraph>
                 </AddWrapper>
               </List>
               <ContentTemplate isOpen={isClientInfoOpen} setOpen={setClientInfoOpen}>

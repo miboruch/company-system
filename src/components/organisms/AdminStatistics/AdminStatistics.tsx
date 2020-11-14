@@ -10,7 +10,7 @@ import { bindActionCreators } from 'redux';
 import { SpinnerWrapper } from '../../../styles/shared';
 import { getEmployeeHours, getEmployeeSalary } from '../../../actions/employeeActions';
 import Spinner from '../../atoms/Spinner/Spinner';
-import { Paragraph } from '../../../styles/shared';
+import {Paragraph} from '../../../styles/typography/typography';
 import CloseButton from '../../atoms/CloseButton/CloseButton';
 import gsap from 'gsap';
 import { modalOpenAnimation } from '../../../animations/animations';
@@ -136,6 +136,7 @@ const AdminStatistics: React.FC<ConnectedProps> = ({ allCompanyEmployees, getEmp
           <Heading>Pracownicy</Heading>
           {allCompanyEmployees.map((employee) => (
             <ListBox
+              key={employee._id}
               name={`${employee.userId.name} ${employee.userId.lastName}`}
               topDescription={new Date(employee.userId.dateOfBirth).toLocaleDateString()}
               bottomDescription={employee.userId.email}

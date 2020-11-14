@@ -66,36 +66,6 @@ const SpinnerWrapper = styled.div`
   }
 `;
 
-const Title = styled.h1`
-  grid-area: name;
-  font-weight: ${({ theme }) => theme.font.weight.demi};
-  align-self: flex-start;
-  padding: 0 2rem;
-  font-size: 30px;
-  letter-spacing: -1px;
-  margin: 3rem 0;
-
-  ${({ theme }) => theme.mq.hdReady} {
-    font-weight: ${({ theme }) => theme.font.weight.demi};
-    align-self: center;
-    justify-self: flex-start;
-    padding: 0 1rem;
-    margin-left: 3rem;
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-
-  ${({ theme }) => theme.mq.quadHd} {
-    margin-left: 5rem;
-  }
-`;
-
-const Paragraph = styled.p`
-  font-size: 14px;
-  font-weight: ${({ theme }) => theme.font.weight.medium};
-  line-height: 21px;
-`;
-
 const FlexWrapper = styled.div`
   display: flex;
   flex-direction: row;
@@ -118,31 +88,6 @@ const StyledLabel = styled.label`
   ${({ theme }) => theme.mq.standard} {
     color: #1d1d1d;
   }
-`;
-
-const BackParagraph = styled.p`
-  color: ${({ theme }) => theme.colors.landingGray};
-  font-size: 14px;
-  cursor: pointer;
-`;
-
-interface ErrorParagraphInterface {
-  isVisible: boolean;
-}
-
-const ErrorParagraph = styled.p<ErrorParagraphInterface>`
-  margin-top: 2rem;
-  color: tomato;
-  font-size: 12px;
-  opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
-  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
-  transition: opacity 0.2s ease, visibility 0.2s ease;
-`;
-
-const EmptyParagraph = styled.p`
-  font-weight: ${({ theme }) => theme.font.weight.medium};
-  font-size: 14px;
-  color: ${({ theme }) => theme.colors.emptyText};
 `;
 
 const CompoundListWrapper = styled.div`
@@ -187,33 +132,4 @@ const AddWrapper = styled.div`
   }
 `;
 
-const AddParagraph = styled.p`
-  color: ${({ theme }) => theme.colors.black};
-  font-size: 12px;
-  font-weight: ${({ theme }) => theme.font.weight.medium};
-  margin-top: 0.2rem;
-  margin-left: 1.5rem;
-`;
-
-export {
-  HomeIcon,
-  PaymentIcon,
-  ListIcon,
-  SupportIcon,
-  UserIcon,
-  AddIcon,
-  SettingsIcon,
-  SpinnerWrapper,
-  Title,
-  Paragraph,
-  FlexWrapper,
-  StyledLabel,
-  BackParagraph,
-  DoubleFlexWrapper,
-  ErrorParagraph,
-  EmptyParagraph,
-  CompoundListWrapper,
-  List,
-  AddWrapper,
-  AddParagraph
-};
+export { HomeIcon, PaymentIcon, ListIcon, SupportIcon, UserIcon, AddIcon, SettingsIcon, SpinnerWrapper, FlexWrapper, StyledLabel, DoubleFlexWrapper, CompoundListWrapper, List, AddWrapper };

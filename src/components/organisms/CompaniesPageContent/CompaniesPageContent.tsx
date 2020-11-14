@@ -6,11 +6,12 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { getUserCompanies, setAddCompanyOpen, setCompany } from '../../../actions/companyActions';
-import { AddIcon, EmptyParagraph, SpinnerWrapper } from '../../../styles/shared';
+import { AddIcon, SpinnerWrapper } from '../../../styles/shared';
 import Spinner from '../../atoms/Spinner/Spinner';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
 import { Table, Wrapper } from '../../../pages/CompaniesPage/CompaniesPage.styles';
-import { AddWrapper, AddParagraph } from '../../../styles/shared';
+import { Paragraph } from '../../../styles/typography/typography';
+import { AddWrapper } from '../../../styles/shared';
 import ListBox from '../../molecules/ListBox/ListBox';
 import AddCompanyController from '../../compound/AddCompany/AddCompanyController';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
@@ -32,7 +33,7 @@ const CompaniesPageContent: React.FC<ConnectedProps> = ({ history, userCompanies
         <Wrapper>
           <Table isEmpty={userCompanies.length === 0}>
             {userCompanies.length === 0 ? (
-              <EmptyParagraph>Brak firm</EmptyParagraph>
+              <Paragraph type={'empty'}>Brak firm</Paragraph>
             ) : (
               userCompanies.map((company) => (
                 <ListBox
@@ -50,7 +51,7 @@ const CompaniesPageContent: React.FC<ConnectedProps> = ({ history, userCompanies
           </Table>
           <AddWrapper onClick={() => setAddCompanyOpen(true)}>
             <AddIcon />
-            <AddParagraph>Dodaj firme</AddParagraph>
+            <Paragraph type={'add'}>Dodaj firme</Paragraph>
           </AddWrapper>
         </Wrapper>
       )}

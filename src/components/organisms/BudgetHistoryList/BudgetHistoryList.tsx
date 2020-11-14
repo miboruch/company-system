@@ -54,8 +54,8 @@ const BudgetHistoryList: React.FC<ConnectedProps> = ({ budgetHistory, currency }
           <ListBox
             key={history._id}
             name={history.description}
-            topDescription={history.createdDate.toLocaleString()}
-            bottomDescription={history.companyId}
+            topDescription={new Date(history.createdDate).toLocaleDateString()}
+            bottomDescription={history.incomeValue ? 'Przychód' : 'Wydatek'}
             isCompanyBox={false}
             isEmpty={true}
             callback={() => console.log('test')}

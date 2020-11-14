@@ -6,7 +6,9 @@ import { Formik } from 'formik';
 import { PageContext } from '../context/PageContext';
 import { Heading, StyledForm } from '../../../../pages/LoginPage/LoginPage.styles';
 import Button from '../../../atoms/Button/Button';
-import { DoubleFlexWrapper, BackParagraph, ErrorParagraph } from '../../../../styles/shared';
+import { ErrorParagraph } from '../../../../styles/typography/typography';
+import { Paragraph } from '../../../../styles/typography/typography';
+import { DoubleFlexWrapper } from '../../../../styles/shared';
 
 const StyledInput = styled(Input)`
   margin-bottom: 5rem;
@@ -43,7 +45,9 @@ const PasswordPage: React.FC = () => {
           <StyledInput onChange={handleChange} name={'password'} value={values.password} required={true} type={'password'} labelText={'Hasło'} />
           <StyledInput onChange={handleChange} name={'repeatedPassword'} value={values.repeatedPassword} required={true} type={'password'} labelText={'Powtórz hasło'} />
           <DoubleFlexWrapper>
-            <BackParagraph onClick={() => handlePageBack()}>Wstecz</BackParagraph>
+            <Paragraph type={'back'} onClick={() => handlePageBack()}>
+              Wstecz
+            </Paragraph>
             <Button type={'submit'} text={'Dalej'} disabled={values.password !== values.repeatedPassword} />
           </DoubleFlexWrapper>
           <ErrorParagraph isVisible={values.repeatedPassword ? values.password !== values.repeatedPassword : false}>Hasła muszą być takie same</ErrorParagraph>

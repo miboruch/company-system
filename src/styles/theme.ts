@@ -38,7 +38,8 @@ export const theme = {
   },
   colors: {
     // green: '#54C172',
-    green: '#85BE9B',
+    green: '#42D2B1',
+    // green: '#85BE9B',
     darkGreen: '#4C522A',
     lightGray: '#BCBCBC',
     red: '#FE7070',

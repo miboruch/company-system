@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Input from '../components/atoms/Input/Input';
 import { Form } from 'formik';
-import { BackParagraph } from './shared';
+import {Paragraph} from './typography/typography';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -69,7 +69,7 @@ const StyledInput = styled(Input)`
   margin-bottom: 5rem;
 `;
 
-const StyledBackParagraph = styled(BackParagraph)`
+const StyledBackParagraph = styled(Paragraph)`
   display: none;
 
   ${({ theme }) => theme.mq.hdReady} {

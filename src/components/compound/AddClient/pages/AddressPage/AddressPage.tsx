@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import { HeadingWrapper, MobileCompoundTitle, StyledForm, StyledInput, Subheading, Wrapper } from '../../../../../styles/compoundStyles';
-import { BackParagraph, DoubleFlexWrapper } from '../../../../../styles/shared';
+import { Paragraph } from '../../../../../styles/typography/typography';
+import { DoubleFlexWrapper } from '../../../../../styles/shared';
 import Button from '../../../../atoms/Button/Button';
 import { ClientDataContext } from '../../context/ClientDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
@@ -33,7 +34,7 @@ const AddressPage: React.FC<ConnectedProps> = ({ addNewClient }) => {
 
   const handleSubmit = (values: defaultValues): void => {
     setData({ ...data, ...values });
-    if(data.name && data.email && data.phoneNumber && data.lat && data.long){
+    if (data.name && data.email && data.phoneNumber && data.lat && data.long) {
       addNewClient(data.name, values.address, data.email, data.phoneNumber, values.city, values.country, data.lat, data.long);
     }
     console.log(data);
@@ -53,7 +54,9 @@ const AddressPage: React.FC<ConnectedProps> = ({ addNewClient }) => {
             <StyledInput onChange={handleChange} name={'city'} value={values.city} required={true} type={'text'} labelText={'Miasto'} />
             <StyledInput onChange={handleChange} name={'country'} value={values.country} required={true} type={'text'} labelText={'Kraj'} />
             <DoubleFlexWrapper>
-              <BackParagraph onClick={() => setCurrentPage(PageSettingEnum.Second)}>Wstecz</BackParagraph>
+              <Paragraph type={'back'} onClick={() => setCurrentPage(PageSettingEnum.Second)}>
+                Wstecz
+              </Paragraph>
               <Button type={'submit'} text={'Dalej'} />
             </DoubleFlexWrapper>
           </StyledForm>

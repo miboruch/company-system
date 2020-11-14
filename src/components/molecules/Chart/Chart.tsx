@@ -1,6 +1,6 @@
 import React from 'react';
 import { CartesianGrid, XAxis, YAxis, Tooltip, Legend, AreaChart, Area } from 'recharts';
-import { ChartWrapper, StyledResponsiveContainer, RowWrapper, FlexRowWrapper, Paragraph } from './Chart.styles';
+import { ChartWrapper, StyledResponsiveContainer, RowWrapper, FlexRowWrapper, StyledParagraph } from './Chart.styles';
 
 interface Props {
   data: Array<any> | null;
@@ -32,15 +32,15 @@ const Chart: React.FC<Props> = ({ data, xAxisDataKey, barDataKey, secondBarDataK
         {!!setDaysBack && (
           <FlexRowWrapper>
             {buttons.map(({ value, text }) => (
-              <Paragraph isActive={daysBack === value} onClick={() => setDaysBack(value)}>
+              <StyledParagraph key={text} isActive={daysBack === value} onClick={() => setDaysBack(value)}>
                 {text}
-              </Paragraph>
+              </StyledParagraph>
             ))}
           </FlexRowWrapper>
         )}
       </RowWrapper>
       <StyledResponsiveContainer width={'100%'} height={250}>
-        <AreaChart data={!!data ? data : []}>
+        <AreaChart data={data ? data : []}>
           <defs>
             <linearGradient id='incomeColor' x1='0' y1='0' x2='0' y2='1'>
               <stop offset='65%' stopColor={'#85BE9B'} stopOpacity={1} />
