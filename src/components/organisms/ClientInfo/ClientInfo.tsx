@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import { ClientInterface } from '../../../types/modelsTypes';
 import { AppState } from '../../../reducers/rootReducer';
-import { SubParagraph, Paragraph, TextParagraph } from '../../../styles/typography/typography';
+import { Paragraph } from '../../../styles/typography/typography';
 import { ButtonWrapper, EmployeeInfoBox, HeaderWrapper, InputWrapper, RowIconWrapper, StyledForm, Title, Wrapper } from '../../../styles/contentStyles';
 import { StyledInput } from '../../../styles/compoundStyles';
 import { DeleteIcon, EditIcon } from '../../../styles/iconStyles';
@@ -67,12 +67,12 @@ const ClientInfo: React.FC<ConnectedProps> = ({ selectedClient, isEditToggled, s
                 </RowIconWrapper>
               </HeaderWrapper>
               <EmployeeInfoBox>
-                <SubParagraph>Email: {values.email}</SubParagraph>
-                <SubParagraph>
+                <Paragraph type={'subparagraph'}>Email: {values.email}</Paragraph>
+                <Paragraph type={'subparagraph'}>
                   Adres: {values.address}, {values.city}
-                </SubParagraph>
+                </Paragraph>
               </EmployeeInfoBox>
-              <TextParagraph>Jeżeli chcesz edytować dane klienta, naciśnij przycisk edycji obok nazwy zadania. Pozwoli to na odblokwanie wszystkich pól oraz edycję danych.</TextParagraph>
+              <Paragraph type={'text'}>Jeżeli chcesz edytować dane klienta, naciśnij przycisk edycji obok nazwy zadania. Pozwoli to na odblokwanie wszystkich pól oraz edycję danych.</Paragraph>
               <InputWrapper>
                 <StyledInput onChange={handleChange} name={'name'} required={true} type={'text'} labelText={'Nazwa'} value={values.name} disabled={!isEditToggled} />
                 <StyledInput onChange={handleChange} name={'email'} required={true} type={'email'} labelText={'Email'} value={values.email} disabled={!isEditToggled} />

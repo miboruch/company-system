@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Formik, Form } from 'formik';
 import PopupTemplate from '../../templates/PopupTemplate/PopupTemplate';
 import ModalButton, { ButtonType } from '../../atoms/ModalButton/ModalButton';
-import { TextParagraph, InfoParagraph } from '../../../styles/typography/typography';
+import { Paragraph } from '../../../styles/typography/typography';
 import { ButtonWrapper } from '../../../styles/popupStyles';
 import Input from '../../atoms/Input/Input';
 import Checkbox from '../../atoms/Checkbox/Checkbox';
@@ -42,7 +42,7 @@ const InputRowWrapper = styled(RowWrapper)`
   margin-bottom: 1rem;
 `;
 
-const StyledInfoParagraph = styled(InfoParagraph)`
+const StyledInfoParagraph = styled(Paragraph)`
   margin-top: 2rem;
 `;
 
@@ -79,8 +79,8 @@ const RemoveAdminPopup: React.FC<ConnectedProps> = ({ isOpen, setOpen, companyOw
         <Formik initialValues={initialValues} onSubmit={handleSubmit}>
           {({ handleChange, values, setFieldValue }) => (
             <StyledForm>
-              <TextParagraph>Usuwasz administratora, czy chcesz aby pozostał on w twojej firmie jako pracownik?</TextParagraph>
-              <StyledInfoParagraph>Jeżeli tak - uzupełnij dane</StyledInfoParagraph>
+              <Paragraph type={'text'}>Usuwasz administratora, czy chcesz aby pozostał on w twojej firmie jako pracownik?</Paragraph>
+              <StyledInfoParagraph type={'info'}>Jeżeli tak - uzupełnij dane</StyledInfoParagraph>
               <RowWrapper>
                 <Checkbox onChange={() => setFieldValue('addEmployee', true)} name={'addEmployee'} labelText={'TAK'} checked={values.addEmployee} />
                 <Checkbox onChange={() => setFieldValue('addEmployee', false)} name={'addEmployee'} labelText={'NIE'} checked={!values.addEmployee} />

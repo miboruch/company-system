@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import PopupTemplate from '../../templates/PopupTemplate/PopupTemplate';
 import { AttendanceInterface } from '../../../types/modelsTypes';
-import { InfoParagraph } from '../../../styles/typography/typography';
+import { Paragraph } from '../../../styles/typography/typography';
 import { ButtonWrapper, ContentWrapper } from '../../../styles/popupStyles';
 import { CheckedIcon, NotCheckedIcon, EmptyIcon } from '../../../styles/iconStyles';
 import ModalButton, { ButtonType } from '../../atoms/ModalButton/ModalButton';
@@ -61,7 +61,7 @@ const AttendancePopup: React.FC<ConnectedProps> = ({ attendance, isOpen, setOpen
                     {values.wasPresent === null ? <EmptyIcon /> : values.wasPresent ? <CheckedIcon /> : <NotCheckedIcon />}
                   </FlexWrapper>
                   <StyledFlexWrapper>
-                    <InfoParagraph>Obecność</InfoParagraph>
+                    <Paragraph type={'info'}>Obecność</Paragraph>
                     <Checkbox onChange={() => setFieldValue('wasPresent', true)} name={'wasPresent'} labelText={'TAK'} checked={values.wasPresent !== null && values.wasPresent} />
                     <Checkbox onChange={() => setFieldValue('wasPresent', false)} name={'wasPresent'} labelText={'NIE'} checked={!values.wasPresent} />
                     <Input

@@ -1,16 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { SubParagraph, Paragraph } from '../../../styles/typography/typography';
-import { Wrapper, StyledForm, HeaderWrapper, EmployeeInfoBox, Title } from '../../../styles/contentStyles';
+import { Paragraph } from '../../../styles/typography/typography';
+import { Wrapper, HeaderWrapper, EmployeeInfoBox, Title } from '../../../styles/contentStyles';
 import { SpinnerWrapper } from '../../../styles/shared';
 import { AttendanceInterface, WeekAttendance } from '../../../types/modelsTypes';
 import { AppState } from '../../../reducers/rootReducer';
 import Spinner from '../../atoms/Spinner/Spinner';
 import WeekAttendanceComponent from '../../molecules/WeekAttendanceComponent/WeekAttendanceComponent';
 
-interface Props {}
-
-type ConnectedProps = Props & LinkStateProps;
+type ConnectedProps = LinkStateProps;
 
 const AttendanceInfo: React.FC<ConnectedProps> = ({ selectedAttendance, weekAttendance, isContentLoading }) => {
   return (
@@ -30,8 +28,8 @@ const AttendanceInfo: React.FC<ConnectedProps> = ({ selectedAttendance, weekAtte
               <p>icon</p>
             </HeaderWrapper>
             <EmployeeInfoBox>
-              <SubParagraph>Email: {selectedAttendance.user.email}</SubParagraph>
-              <SubParagraph>{selectedAttendance.user.phoneNumber}</SubParagraph>
+              <Paragraph type={'subparagraph'}>Email: {selectedAttendance.user.email}</Paragraph>
+              <Paragraph type={'subparagraph'}>{selectedAttendance.user.phoneNumber}</Paragraph>
               {/*<SubParagraph>{selectedEmployee.userId.phoneNumber}</SubParagraph>*/}
             </EmployeeInfoBox>
             {weekAttendance && <WeekAttendanceComponent weekAttendance={weekAttendance} />}

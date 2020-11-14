@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { Formik, Form } from 'formik';
+import { Formik } from 'formik';
 import { StyledInput } from '../../../styles/compoundStyles';
-import { SubParagraph, Paragraph, TextParagraph } from '../../../styles/typography/typography';
+import { Paragraph } from '../../../styles/typography/typography';
 import { Wrapper, StyledForm, HeaderWrapper, EmployeeInfoBox, Title, InputWrapper, ButtonWrapper, RowIconWrapper } from '../../../styles/contentStyles';
 import { ClientInterface, TaskInterface } from '../../../types/modelsTypes';
 import { AppState } from '../../../reducers/rootReducer';
@@ -94,10 +94,10 @@ const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, isEditToggled, setEd
               </HeaderWrapper>
               <EmployeeInfoBox>
                 <RowWrapper>
-                  <SubParagraph>Data zadania do wykonania: {new Date(selectedTask.date).toLocaleDateString()}</SubParagraph>
+                  <Paragraph type={'subparagraph'}>Data zadania do wykonania: {new Date(selectedTask.date).toLocaleDateString()}</Paragraph>
                   {!!selectedTask.clientId && <StyledParagraph onClick={() => setTaskMapPreviewOpen(true)}>Zobacz na mapieeee</StyledParagraph>}
                 </RowWrapper>
-                <SubParagraph>{selectedTask.description}</SubParagraph>
+                <Paragraph type={'subparagraph'}>{selectedTask.description}</Paragraph>
                 <ColoredParagraph isCompleted={selectedTask?.isCompleted} onClick={() => changeTaskState(selectedTask?._id, !selectedTask?.isCompleted)}>
                   Oznacz jako {selectedTask?.isCompleted ? 'niewykonane' : 'wykonane'}
                 </ColoredParagraph>
@@ -108,7 +108,7 @@ const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, isEditToggled, setEd
                   <DatePicker selected={values.date && new Date(values.date)} onChange={(date) => setFieldValue('date', date)} disabled={true} />
                 </div>
               </InputWrapper>
-              <TextParagraph>Jeżeli chcesz edytować zadanie, naciśnij przycisk edycji obok nazwy zadania. Pozwoli to na odblokwanie wszystkich pól oraz edycję danych.</TextParagraph>
+              <Paragraph type={'text'}>Jeżeli chcesz edytować zadanie, naciśnij przycisk edycji obok nazwy zadania. Pozwoli to na odblokwanie wszystkich pól oraz edycję danych.</Paragraph>
               <InputWrapper>
                 <StyledInput onChange={handleChange} name={'name'} required={true} type={'text'} labelText={'Nazwa'} value={values.name} disabled={!isEditToggled} />
                 <StyledInput onChange={handleChange} name={'description'} required={true} type={'text'} labelText={'Opis'} value={values.description} disabled={!isEditToggled} />

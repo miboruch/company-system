@@ -1,11 +1,11 @@
 import React from 'react';
-import { Formik, Form } from 'formik';
+import { Formik } from 'formik';
 import { connect } from 'react-redux';
 import { EmployeeDataInterface } from '../../../types/modelsTypes';
 import { AppState } from '../../../reducers/rootReducer';
 import Button from '../../atoms/Button/Button';
 import { StyledInput } from '../../../styles/compoundStyles';
-import { SubParagraph, Paragraph, TextParagraph } from '../../../styles/typography/typography';
+import { Paragraph } from '../../../styles/typography/typography';
 import { Wrapper, StyledForm, HeaderWrapper, EmployeeInfoBox, Title, InputWrapper } from '../../../styles/contentStyles';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
@@ -48,15 +48,15 @@ const EmployeeInfo: React.FC<ConnectedProps> = ({ selectedEmployee, updateEmploy
                 <DeleteIcon onClick={() => setDeleteOpen(true)} />
               </HeaderWrapper>
               <EmployeeInfoBox>
-                <SubParagraph>Data urodzenia: {new Date(selectedEmployee.userId.dateOfBirth).toLocaleDateString()}</SubParagraph>
-                <SubParagraph>{selectedEmployee.userId.email}</SubParagraph>
-                <SubParagraph>{selectedEmployee.userId.phoneNumber}</SubParagraph>
+                <Paragraph type={'subparagraph'}>Data urodzenia: {new Date(selectedEmployee.userId.dateOfBirth).toLocaleDateString()}</Paragraph>
+                <Paragraph type={'subparagraph'}>{selectedEmployee.userId.email}</Paragraph>
+                <Paragraph type={'subparagraph'}>{selectedEmployee.userId.phoneNumber}</Paragraph>
               </EmployeeInfoBox>
-              <TextParagraph>
+              <Paragraph type={'text'}>
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aperiam architecto beatae cum distinctio doloribus expedita magni nobis officiis, provident quisquam repellat
                 temporibus voluptates. Aliquam, eum, quasi. Eos nisi, sit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, animi culpa eum in ipsum maxime molestiae mollitia nemo
                 perspiciatis, porro quam, quasi quos vitae. Blanditiis deleniti et illum inventore ipsum?
-              </TextParagraph>
+              </Paragraph>
               <InputWrapper>
                 <StyledInput name={'hourSalary'} type={'number'} value={values.hourSalary} onChange={handleChange} required={false} labelText={'Stawka godzinowa'} disabled={!!values.monthlySalary} />
                 <StyledInput
