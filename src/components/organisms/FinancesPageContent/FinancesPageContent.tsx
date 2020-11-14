@@ -16,6 +16,9 @@ import BudgetHistoryList from '../BudgetHistoryList/BudgetHistoryList';
 import BudgetTile from '../../molecules/BudgetTile/BudgetTile';
 import Button from '../../atoms/Button/Button';
 import IncomeExpensePopup, { FinancePopupInterface } from '../../molecules/IncomeExpensePopup/IncomeExpensePopup';
+import { getCurrencyValue } from '../../../actions/toggleActions';
+import { CurrencyInterface } from '../../../types/actionTypes/toggleAcitonTypes';
+import { roundTo2 } from '../../../utils/functions';
 
 const Content = styled.div`
   width: 100%;
@@ -61,7 +64,7 @@ interface Props {}
 
 type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
-const FinancesPageContent: React.FC<ConnectedProps> = ({ getIncomeExpenseInTimePeriod, lastIncomes, lastExpenses, budget }) => {
+const FinancesPageContent: React.FC<ConnectedProps> = ({ getIncomeExpenseInTimePeriod, lastIncomes, lastExpenses, budget, currency, getCurrencyValue }) => {
   const [isPopupOpen, setPopupOpen] = useState<boolean>(false);
   const [popupType, setPopupType] = useState<FinancePopupInterface>(FinancePopupInterface.Income);
   const [chartData, setChartData] = useState<Array<IncomeDataInterface> | null>(null);
@@ -88,9 +91,13 @@ const FinancesPageContent: React.FC<ConnectedProps> = ({ getIncomeExpenseInTimeP
       <Content>
         <ContentGridWrapper ref={contentRef} isFinancesPage={true}>
           <BudgetWrapper>
-            <BudgetTile description={'Budżet firmy'} name={'Aktualny budżet firmy'} value={budget} />
+            <BudgetTile description={'Budżet firmy'} name={'Aktualny budżet firmy'} value={roundTo2(budget * currency.value)} />
             {budgetHistoryData.slice(0, 2).map((history) => (
-              <BudgetTile description={'Finanse'} value={history.expenseValue ? -1 * history.expenseValue : history.incomeValue ? history.incomeValue : 0} name={history.description} />
+              <BudgetTile
+                description={'Finanse'}
+                value={history.expenseValue ? -1 * roundTo2(history.expenseValue * currency.value) : history.incomeValue ? roundTo2(history.incomeValue * currency.value) : 0}
+                name={history.description}
+              />
             ))}
           </BudgetWrapper>
           <Chart
@@ -105,9 +112,9 @@ const FinancesPageContent: React.FC<ConnectedProps> = ({ getIncomeExpenseInTimeP
           />
           <BudgetHistoryList budgetHistory={budgetHistoryData} />
           <InfoBoxWrapper>
-            <p>PLN</p>
-            <p>EUR</p>
-            <p>USD</p>
+            <p onClick={() => getCurrencyValue('PLN')}>PLN</p>
+            <p onClick={() => getCurrencyValue('EUR')}>EUR</p>
+            <p onClick={() => getCurrencyValue('USD')}>USD</p>
           </InfoBoxWrapper>
           <ButtonWrapper>
             <Button
@@ -138,19 +145,22 @@ interface LinkStateProps {
   lastIncomes: IncomeInterface[];
   lastExpenses: ExpenseInterface[];
   budget: number;
+  currency: CurrencyInterface;
 }
 
 interface LinkDispatchProps {
   getIncomeExpenseInTimePeriod: (daysBack: number, setData: (data: any[]) => void) => void;
+  getCurrencyValue: (currencyName: string) => void;
 }
 
-const mapStateToProps = ({ financeReducer: { lastIncomes, lastExpenses, budget } }: AppState): LinkStateProps => {
-  return { lastIncomes, lastExpenses, budget };
+const mapStateToProps = ({ financeReducer: { lastIncomes, lastExpenses, budget }, toggleReducer: { currency } }: AppState): LinkStateProps => {
+  return { lastIncomes, lastExpenses, budget, currency };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
   return {
-    getIncomeExpenseInTimePeriod: bindActionCreators(getIncomeExpenseInTimePeriod, dispatch)
+    getIncomeExpenseInTimePeriod: bindActionCreators(getIncomeExpenseInTimePeriod, dispatch),
+    getCurrencyValue: bindActionCreators(getCurrencyValue, dispatch)
   };
 };
 

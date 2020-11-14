@@ -1,11 +1,14 @@
 import {
+  CurrencyInterface,
   NotificationMessage,
+  SET_CURRENCY,
   SET_EDIT_CLIENT_COORDS_OPEN,
   SET_EDIT_COMPANY_COORDS_OPEN,
   SET_NOTIFICATION_MESSAGE,
   SET_TASK_MAP_PREVIEW_OPEN,
   ToggleActionTypes
 } from '../types/actionTypes/toggleAcitonTypes';
+import { act } from 'react-dom/test-utils';
 
 interface DefaultState {
   isNotificationOpen: boolean;
@@ -13,6 +16,7 @@ interface DefaultState {
   isEditClientCoordsOpen: boolean;
   isEditCompanyCoordsOpen: boolean;
   isTaskMapPreviewOpen: boolean;
+  currency: CurrencyInterface;
 }
 
 const initialState: DefaultState = {
@@ -20,7 +24,11 @@ const initialState: DefaultState = {
   notificationMessage: null,
   isEditClientCoordsOpen: false,
   isEditCompanyCoordsOpen: false,
-  isTaskMapPreviewOpen: false
+  isTaskMapPreviewOpen: false,
+  currency: {
+    name: 'PLN',
+    value: 1
+  }
 };
 
 export const toggleReducer = (state = initialState, action: ToggleActionTypes) => {
@@ -45,6 +53,14 @@ export const toggleReducer = (state = initialState, action: ToggleActionTypes) =
       return {
         ...state,
         isTaskMapPreviewOpen: action.payload
+      };
+    case SET_CURRENCY:
+      return {
+        ...state,
+        currency: {
+          name: action.payload.name,
+          value: action.payload.value
+        }
       };
     default:
       return state;

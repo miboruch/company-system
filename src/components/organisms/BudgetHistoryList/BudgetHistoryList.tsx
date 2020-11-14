@@ -1,7 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { ExpenseInterface, IncomeInterface } from '../../../types/modelsTypes';
 import ListBox from '../../molecules/ListBox/ListBox';
+import { CurrencyInterface } from '../../../types/actionTypes/toggleAcitonTypes';
+import { AppState } from '../../../reducers/rootReducer';
+import { roundTo2 } from '../../../utils/functions';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -39,7 +43,9 @@ interface Props {
   budgetHistory: (IncomeInterface | ExpenseInterface)[];
 }
 
-const BudgetHistoryList: React.FC<Props> = ({ budgetHistory }) => {
+type ConnectedProps = Props & LinkStateProps;
+
+const BudgetHistoryList: React.FC<ConnectedProps> = ({ budgetHistory, currency }) => {
   return (
     <StyledWrapper>
       <Title>Historia</Title>
@@ -53,7 +59,7 @@ const BudgetHistoryList: React.FC<Props> = ({ budgetHistory }) => {
             isCompanyBox={false}
             isEmpty={true}
             callback={() => console.log('test')}
-            value={`${history.expenseValue ? -1 * history.expenseValue : history.incomeValue ? history.incomeValue : 0} PLN`}
+            value={`${history.expenseValue ? -1 * roundTo2(history.expenseValue * currency.value) : history.incomeValue ? roundTo2(history.incomeValue * currency.value) : 0} ${currency.name}`}
           />
         ))}
       </ContentWrapper>
@@ -61,4 +67,12 @@ const BudgetHistoryList: React.FC<Props> = ({ budgetHistory }) => {
   );
 };
 
-export default BudgetHistoryList;
+interface LinkStateProps {
+  currency: CurrencyInterface;
+}
+
+const mapStateToProps = ({ toggleReducer: { currency } }: AppState): LinkStateProps => {
+  return { currency };
+};
+
+export default connect(mapStateToProps)(BudgetHistoryList);

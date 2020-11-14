@@ -1,13 +1,16 @@
+import axios from 'axios';
 import {
   NotificationTypes,
   SET_NOTIFICATION_MESSAGE,
   SET_EDIT_CLIENT_COORDS_OPEN,
   SET_EDIT_COMPANY_COORDS_OPEN,
   SET_TASK_MAP_PREVIEW_OPEN,
+  SET_CURRENCY,
   SetNotificationMessage,
   SetEditClientCoordsOpen,
   SetEditCompanyCoordsOpen,
-  SetTaskMapPreviewOpen
+  SetTaskMapPreviewOpen,
+  SetCurrency
 } from '../types/actionTypes/toggleAcitonTypes';
 import { Dispatch } from 'redux';
 import { resetEmployees, selectEmployee } from './employeeActions';
@@ -18,6 +21,9 @@ import { UserRole } from '../types/actionTypes/authenticationActionTypes';
 import { setUserRole } from './authenticationActions';
 import { resetCompany } from './companyActions';
 import { resetFinances } from './financeActions';
+import { AppTypes } from '../types/actionTypes/appActionTypes';
+import { AppState } from '../reducers/rootReducer';
+import { CURRENCY_API_URL } from '../utils/config';
 
 export const setNotificationMessage = (message: string | null, notificationType: NotificationTypes | null = NotificationTypes.Success): SetNotificationMessage => {
   return {
@@ -41,11 +47,31 @@ export const setEditCompanyCoordsOpen = (isOpen: boolean): SetEditCompanyCoordsO
   };
 };
 
-export const setTaskMapPreviewOpen = (isOpen: boolean) => {
+export const setTaskMapPreviewOpen = (isOpen: boolean): SetTaskMapPreviewOpen => {
   return {
     type: SET_TASK_MAP_PREVIEW_OPEN,
     payload: isOpen
   };
+};
+
+const setCurrency = (name: string, value: number): SetCurrency => {
+  return {
+    type: SET_CURRENCY,
+    payload: {
+      name,
+      value
+    }
+  };
+};
+
+export const getCurrencyValue = (currencyName: string) => async (dispatch: Dispatch<AppTypes>) => {
+  try {
+    const { data } = await axios.get(`${CURRENCY_API_URL}/latest?base=PLN&symbols=${currencyName}`);
+    const value = data.rates[currencyName];
+    dispatch(setCurrency(currencyName, value));
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const resetAllSelected = () => async (dispatch: Dispatch<any>) => {

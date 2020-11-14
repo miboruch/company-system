@@ -1,4 +1,5 @@
 export const API_URL: string = 'http://localhost:8080';
+export const CURRENCY_API_URL: string = 'https://api.exchangeratesapi.io';
 
 export const LOGIN_IMAGE_BACKGROUND_OPACITY = 0.5;
 export const NOTIFICATION_VISIBILITY_TIME = 5000;

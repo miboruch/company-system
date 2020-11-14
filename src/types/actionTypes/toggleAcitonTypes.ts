@@ -2,10 +2,17 @@ export const SET_NOTIFICATION_MESSAGE = 'SET_NOTIFICATION_MESSAGE';
 export const SET_EDIT_CLIENT_COORDS_OPEN = 'SET_EDIT_CLIENT_COORDS_OPEN';
 export const SET_EDIT_COMPANY_COORDS_OPEN = 'SET_EDIT_COMPANY_COORDS_OPEN';
 export const SET_TASK_MAP_PREVIEW_OPEN = 'SET_TASK_MAP_PREVIEW_OPEN';
+export const SET_CURRENCY = 'SET_CURRENCY';
+export const SET_CURRENT_CURRENCY = 'SET_CURRENT_CURRENCY';
 
 export enum NotificationTypes {
   Success = 'success',
   Error = 'error'
+}
+
+export interface CurrencyInterface {
+  name: string;
+  value: number;
 }
 
 export interface NotificationMessage {
@@ -34,4 +41,9 @@ export interface SetTaskMapPreviewOpen {
   payload: boolean;
 }
 
-export type ToggleActionTypes = SetNotificationMessage | SetEditClientCoordsOpen | SetEditCompanyCoordsOpen | SetTaskMapPreviewOpen;
+export interface SetCurrency {
+  type: typeof SET_CURRENCY;
+  payload: CurrencyInterface;
+}
+
+export type ToggleActionTypes = SetNotificationMessage | SetEditClientCoordsOpen | SetEditCompanyCoordsOpen | SetTaskMapPreviewOpen | SetCurrency;

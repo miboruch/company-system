@@ -14,17 +14,14 @@ export const removeDuplicates = (allAppUsers: UserDataInterface[], employeeInCom
   return allAppUsers.filter((user) => !employeeIdArray.includes(user._id));
 };
 
-// export const sortByCreatedDate = (array: (IncomeInterface | ExpenseInterface)[]) => {
-//   return array.sort((first, second) => first.createdDate - second.createdDate);
-// }
-
 export const extractNumberFromString = (text: string | number): number => {
   const matches = `${text}`.match(/(\d+)/);
 
   if (matches) {
-    console.log(parseInt(matches[0]));
     return parseInt(matches[0]);
-  }else{
+  } else {
     return 0;
   }
 };
+
+export const roundTo2 = (value: number):number => Math.round((value + Number.EPSILON) * 100) / 100;
