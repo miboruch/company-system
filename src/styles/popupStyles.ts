@@ -64,18 +64,4 @@ const ButtonWrapper = styled.div`
   border-top: 1px solid #f7f8fc;
 `;
 
-const Paragraph = styled.p`
-  font-size: 14px;
-  font-weight: ${({ theme }) => theme.font.weight.book};
-  color: ${({ theme }) => theme.colors.black};
-  text-align: center;
-`;
-
-const InfoParagraph = styled.p`
-  font-size: 12px;
-  font-weight: ${({ theme }) => theme.font.weight.medium};
-  color: ${({ theme }) => theme.colors.textGray};
-  text-align: center;
-`;
-
-export { Wrapper, Box, Header, HeaderText, ContentWrapper, ButtonWrapper, Paragraph, InfoParagraph };
+export { Wrapper, Box, Header, HeaderText, ContentWrapper, ButtonWrapper };

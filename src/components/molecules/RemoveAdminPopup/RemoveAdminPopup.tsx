@@ -4,16 +4,15 @@ import styled from 'styled-components';
 import { Formik, Form } from 'formik';
 import PopupTemplate from '../../templates/PopupTemplate/PopupTemplate';
 import ModalButton, { ButtonType } from '../../atoms/ModalButton/ModalButton';
-import { ButtonWrapper, Paragraph, InfoParagraph } from '../../../styles/popupStyles';
+import { TextParagraph, InfoParagraph } from '../../../styles/typography/typography';
+import { ButtonWrapper } from '../../../styles/popupStyles';
 import Input from '../../atoms/Input/Input';
 import Checkbox from '../../atoms/Checkbox/Checkbox';
 import { CompanyOwnersInterface } from '../../../types/modelsTypes';
-import { AppState } from '../../../reducers/rootReducer';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
-import { getAllCompanyEmployees } from '../../../actions/employeeActions';
-import { addNewCompanyOwner, getCompanyOwners, removeCompanyOwner } from '../../../actions/companyActions';
+import { removeCompanyOwner } from '../../../actions/companyActions';
 
 const ContentWrapper = styled.div`
   display: grid;
@@ -80,7 +79,7 @@ const RemoveAdminPopup: React.FC<ConnectedProps> = ({ isOpen, setOpen, companyOw
         <Formik initialValues={initialValues} onSubmit={handleSubmit}>
           {({ handleChange, values, setFieldValue }) => (
             <StyledForm>
-              <Paragraph>Usuwasz administratora, czy chcesz aby pozostał on w twojej firmie jako pracownik?</Paragraph>
+              <TextParagraph>Usuwasz administratora, czy chcesz aby pozostał on w twojej firmie jako pracownik?</TextParagraph>
               <StyledInfoParagraph>Jeżeli tak - uzupełnij dane</StyledInfoParagraph>
               <RowWrapper>
                 <Checkbox onChange={() => setFieldValue('addEmployee', true)} name={'addEmployee'} labelText={'TAK'} checked={values.addEmployee} />

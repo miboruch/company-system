@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Wrapper, StyledForm, HeaderWrapper, Paragraph, EmployeeInfoBox, SubParagraph, TextParagraph, Title, InputWrapper } from '../../../styles/contentStyles';
+import { SubParagraph, Paragraph } from '../../../styles/typography/typography';
+import { Wrapper, StyledForm, HeaderWrapper, EmployeeInfoBox, Title } from '../../../styles/contentStyles';
 import { SpinnerWrapper } from '../../../styles/shared';
 import { AttendanceInterface, WeekAttendance } from '../../../types/modelsTypes';
 import { AppState } from '../../../reducers/rootReducer';
 import Spinner from '../../atoms/Spinner/Spinner';
-import Chart from '../../molecules/Chart/Chart';
 import WeekAttendanceComponent from '../../molecules/WeekAttendanceComponent/WeekAttendanceComponent';
 
 interface Props {}

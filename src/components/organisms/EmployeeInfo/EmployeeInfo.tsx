@@ -5,7 +5,8 @@ import { EmployeeDataInterface } from '../../../types/modelsTypes';
 import { AppState } from '../../../reducers/rootReducer';
 import Button from '../../atoms/Button/Button';
 import { StyledInput } from '../../../styles/compoundStyles';
-import { Wrapper, StyledForm, HeaderWrapper, Paragraph, EmployeeInfoBox, SubParagraph, TextParagraph, Title, InputWrapper } from '../../../styles/contentStyles';
+import { SubParagraph, Paragraph, TextParagraph } from '../../../styles/typography/typography';
+import { Wrapper, StyledForm, HeaderWrapper, EmployeeInfoBox, Title, InputWrapper } from '../../../styles/contentStyles';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
@@ -18,7 +19,7 @@ interface InitialValues {
 }
 
 interface Props {
-  setDeleteOpen: (isOpen: boolean) => void
+  setDeleteOpen: (isOpen: boolean) => void;
 }
 
 type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;

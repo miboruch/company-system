@@ -26,26 +26,8 @@ const HeaderWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const Paragraph = styled.p`
-  font-size: 12px;
-  color: #D3D3D4;
-  //color: ${({ theme }) => theme.colors.textGray};
-  font-weight: ${({ theme }) => theme.font.weight.medium};
-  margin-bottom: 1rem;
-  line-height: 2.2;
-`;
-
 const EmployeeInfoBox = styled.div`
   margin-bottom: 3rem;
-`;
-
-const SubParagraph = styled(Paragraph)`
-  color: #78787f;
-  margin: 0;
-`;
-
-const TextParagraph = styled(SubParagraph)`
-  color: #454545;
 `;
 
 const Title = styled.h1`
@@ -88,4 +70,4 @@ const RowIconWrapper = styled.div`
   row-gap: 2rem;
 `;
 
-export { Wrapper, StyledForm, HeaderWrapper, Paragraph, EmployeeInfoBox, SubParagraph, TextParagraph, Title, InputWrapper, ButtonWrapper, RowIconWrapper };
+export { Wrapper, StyledForm, HeaderWrapper, EmployeeInfoBox, Title, InputWrapper, ButtonWrapper, RowIconWrapper };

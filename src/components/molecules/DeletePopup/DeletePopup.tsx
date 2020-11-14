@@ -1,6 +1,7 @@
 import React from 'react';
 import ModalButton, { ButtonType } from '../../atoms/ModalButton/ModalButton';
-import { ContentWrapper, Paragraph, InfoParagraph, ButtonWrapper } from '../../../styles/popupStyles';
+import { TextParagraph, InfoParagraph } from '../../../styles/typography/typography';
+import { ContentWrapper, ButtonWrapper } from '../../../styles/popupStyles';
 import PopupTemplate from '../../templates/PopupTemplate/PopupTemplate';
 
 interface Props {
@@ -15,9 +16,9 @@ const DeletePopup: React.FC<Props> = ({ isOpen, setOpen, headerText, text, callb
   return (
     <PopupTemplate isOpen={isOpen} headerText={headerText}>
       <ContentWrapper>
-        <Paragraph>
+        <TextParagraph>
           Czy jesteś pewnien, że chcesz usunąć <strong>{text}</strong>?
-        </Paragraph>
+        </TextParagraph>
         <InfoParagraph>W razie pomyłki nie będzie możliwości cofnięcia tej akcji</InfoParagraph>
       </ContentWrapper>
       <ButtonWrapper>

@@ -1,13 +1,12 @@
 import styled from 'styled-components';
 
 const NotificationWrapper = styled.div`
-  display: none;
   position: fixed;
   bottom: 1rem;
   right: 1rem;
   z-index: 3000;
   height: 80px;
-  width: 400px;
+  width: 250px;
   justify-content: space-between;
   border: 1px solid ${({ theme }) => theme.colors.contentBackground};
   align-items: center;
@@ -16,8 +15,10 @@ const NotificationWrapper = styled.div`
   padding: 0 2rem;
   flex-direction: row;
 
-  ${({ theme }) => theme.mq.hdReady} {
+  ${({ theme }) => theme.mq.tablet} {
     display: flex;
+    width: 400px;
+    height: 80px;
   }
 `;
 

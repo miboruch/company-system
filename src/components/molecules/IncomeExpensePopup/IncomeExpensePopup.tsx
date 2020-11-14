@@ -1,16 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Form, Formik } from 'formik';
-import { ButtonWrapper, ContentWrapper, InfoParagraph } from '../../../styles/popupStyles';
+import { ButtonWrapper, ContentWrapper } from '../../../styles/popupStyles';
 import PopupTemplate from '../../templates/PopupTemplate/PopupTemplate';
 import ModalButton, { ButtonType } from '../../atoms/ModalButton/ModalButton';
 import styled from 'styled-components';
 import Input from '../../atoms/Input/Input';
-import { AppState } from '../../../reducers/rootReducer';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
-import { addExpense, addIncome, getIncomeExpenseInTimePeriod } from '../../../actions/financeActions';
+import { addExpense, addIncome } from '../../../actions/financeActions';
 
 const StyledForm = styled(Form)`
   width: 100%;

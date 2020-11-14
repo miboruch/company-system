@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Formik, Form } from 'formik';
 import { StyledInput } from '../../../styles/compoundStyles';
-import { Wrapper, StyledForm, HeaderWrapper, Paragraph, EmployeeInfoBox, SubParagraph, TextParagraph, Title, InputWrapper, ButtonWrapper, RowIconWrapper } from '../../../styles/contentStyles';
+import { SubParagraph, Paragraph, TextParagraph } from '../../../styles/typography/typography';
+import { Wrapper, StyledForm, HeaderWrapper, EmployeeInfoBox, Title, InputWrapper, ButtonWrapper, RowIconWrapper } from '../../../styles/contentStyles';
 import { ClientInterface, TaskInterface } from '../../../types/modelsTypes';
 import { AppState } from '../../../reducers/rootReducer';
 import { StyledLabel } from '../../../styles/shared';
@@ -14,19 +15,14 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { changeTaskState, editTask } from '../../../actions/taskActions';
-import MapCoordsEdit, { CoordsEditType } from '../MapCoordsEdit/MapCoordsEdit';
 import { setTaskMapPreviewOpen } from '../../../actions/toggleActions';
 
 interface ParagraphInterface {
   isCompleted: boolean;
 }
 
-const ColoredParagraph = styled.p<ParagraphInterface>`
-  font-size: 12px;
+const ColoredParagraph = styled(Paragraph)<ParagraphInterface>`
   color: ${({ theme, isCompleted }) => (isCompleted ? theme.colors.red : theme.colors.green)};
-  font-weight: ${({ theme }) => theme.font.weight.medium};
-  margin-bottom: 1rem;
-  line-height: 2.2;
   cursor: pointer;
 `;
 

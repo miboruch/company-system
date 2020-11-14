@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Paragraph } from '../../../styles/popupStyles';
+import { Paragraph } from '../../../styles/typography/typography';
 import { Form } from 'formik';
 
 const FlexWrapper = styled.div`

@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import { ClientInterface } from '../../../types/modelsTypes';
 import { AppState } from '../../../reducers/rootReducer';
-import { ButtonWrapper, EmployeeInfoBox, HeaderWrapper, InputWrapper, Paragraph, RowIconWrapper, StyledForm, SubParagraph, TextParagraph, Title, Wrapper } from '../../../styles/contentStyles';
+import { SubParagraph, Paragraph, TextParagraph } from '../../../styles/typography/typography';
+import { ButtonWrapper, EmployeeInfoBox, HeaderWrapper, InputWrapper, RowIconWrapper, StyledForm, Title, Wrapper } from '../../../styles/contentStyles';
 import { StyledInput } from '../../../styles/compoundStyles';
 import { DeleteIcon, EditIcon } from '../../../styles/iconStyles';
 import Button from '../../atoms/Button/Button';
@@ -11,7 +12,6 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { editClient } from '../../../actions/clientActions';
-import MapCoordsEdit, { CoordsEditType } from '../MapCoordsEdit/MapCoordsEdit';
 import { setEditClientCoordsOpen } from '../../../actions/toggleActions';
 
 interface InitialValues {
