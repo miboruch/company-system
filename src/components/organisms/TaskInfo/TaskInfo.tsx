@@ -99,7 +99,7 @@ const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, isEditToggled, setEd
               <EmployeeInfoBox>
                 <RowWrapper>
                   <SubParagraph>Data zadania do wykonania: {new Date(selectedTask.date).toLocaleDateString()}</SubParagraph>
-                  {!!selectedTask.clientId && <StyledParagraph onClick={() => setTaskMapPreviewOpen(true)}>Zobacz na mapie</StyledParagraph>}
+                  {!!selectedTask.clientId && <StyledParagraph onClick={() => setTaskMapPreviewOpen(true)}>Zobacz na mapieeee</StyledParagraph>}
                 </RowWrapper>
                 <SubParagraph>{selectedTask.description}</SubParagraph>
                 <ColoredParagraph isCompleted={selectedTask?.isCompleted} onClick={() => changeTaskState(selectedTask?._id, !selectedTask?.isCompleted)}>
