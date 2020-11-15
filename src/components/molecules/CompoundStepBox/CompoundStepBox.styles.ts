@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { ReactComponent as Completed } from '../../../assets/icons/completed.svg';
+import {Paragraph} from '../../../styles/typography/typography';
 
 interface WrapperProps {
   allSteps: number;
@@ -30,9 +31,8 @@ const Name = styled.p`
   margin: 0.2rem 0;
 `;
 
-const Subparagraph = styled.p`
+const Subparagraph = styled(Paragraph)`
   color: ${({ theme }) => theme.colors.textGray};
-  font-weight: ${({ theme }) => theme.font.weight.medium};
   font-size: 11px;
   margin: 0;
 `;

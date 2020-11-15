@@ -1,46 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { connect } from 'react-redux';
-import AddNewButton from '../../atoms/AddNewButton/AddNewButton';
-import { CompanyOwnersInterface, EmployeeDataInterface, UserAuthData } from '../../../types/modelsTypes';
-import { AppState } from '../../../reducers/rootReducer';
 import { ThunkDispatch } from 'redux-thunk';
-import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
-import { getAllCompanyEmployees } from '../../../actions/employeeActions';
-import { addNewCompanyOwner, getCompanyOwners } from '../../../actions/companyActions';
+import AddNewButton from '../../atoms/AddNewButton/AddNewButton';
 import Spinner from '../../atoms/Spinner/Spinner';
 import ListBox from '../ListBox/ListBox';
-import { SpinnerWrapper } from '../../../styles/shared';
 import RemoveAdminPopup from '../RemoveAdminPopup/RemoveAdminPopup';
+import { CompanyOwnersInterface, EmployeeDataInterface, UserAuthData } from '../../../types/modelsTypes';
+import { AppState } from '../../../reducers/rootReducer';
+import { AppTypes } from '../../../types/actionTypes/appActionTypes';
+import { getAllCompanyEmployees } from '../../../actions/employeeActions';
+import { addNewCompanyOwner, getCompanyOwners } from '../../../actions/companyActions';
+import { SpinnerWrapper } from '../../../styles/shared';
 import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
 import { setNotificationMessage } from '../../../actions/toggleActions';
-
-const Wrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-`;
-
-interface ColumnWrapperInterface {
-  disabled?: boolean;
-}
-
-const ColumnWrapper = styled.div<ColumnWrapperInterface>`
-  width: 50%;
-  height: 100%;
-  padding: 3rem;
-  opacity: ${({ disabled }) => (disabled ? 0 : 1)};
-  visibility: ${({ disabled }) => (disabled ? 'hidden' : 'visible')};
-  transition: opacity 0.5s ease, visibility 0.5s ease;
-`;
-
-const Heading = styled.h2`
-  font-weight: ${({ theme }) => theme.font.weight.medium};
-  margin-bottom: 2rem;
-  margin-left: 2rem;
-`;
+import { Wrapper, ColumnWrapper, Heading } from './AdminSettings.styles';
 
 type ConnectedProps = LinkStateProps & LinkDispatchProps;
 
@@ -79,7 +53,7 @@ const AdminSettings: React.FC<ConnectedProps> = ({ allCompanyEmployees, setNotif
                 callback={() => {
                   if (owner._id === userData?.userId) {
                     setNotificationMessage('Nie możesz usunąc samego siebie', NotificationTypes.Error);
-                  }else{
+                  } else {
                     setRemoveOpen(true);
                     setCompanyOwnerToDelete(owner);
                   }

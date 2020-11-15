@@ -1,6 +1,6 @@
 import React from 'react';
-import { Line, LineChart, ResponsiveContainer } from 'recharts';
 import styled from 'styled-components';
+import { Line, LineChart, ResponsiveContainer } from 'recharts';
 
 const ResponsiveContainerWrapper = styled(ResponsiveContainer)`
   position: absolute;

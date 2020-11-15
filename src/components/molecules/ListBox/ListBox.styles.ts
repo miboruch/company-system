@@ -1,4 +1,5 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+import { Paragraph } from '../../../styles/typography/typography';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -16,16 +17,13 @@ const Wrapper = styled.div`
   }
 `;
 
-const Name = styled.p`
-  font-size: 14px;
+const Name = styled(Paragraph)`
   color: ${({ theme }) => theme.colors.dark};
-  font-weight: ${({ theme }) => theme.font.weight.medium};
   margin: 0.2rem 0;
 `;
 
-const Subparagraph = styled.p`
+const Subparagraph = styled(Paragraph)`
   color: ${({ theme }) => theme.colors.textGray};
-  font-weight: ${({ theme }) => theme.font.weight.medium};
   font-size: 11px;
   margin: 0;
 `;

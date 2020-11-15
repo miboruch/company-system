@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Tile, Description, Name } from './BudgetTile.styles';
 import { CurrencyInterface } from '../../../types/actionTypes/toggleAcitonTypes';
 import { AppState } from '../../../reducers/rootReducer';
+import { Tile, Name, Description } from '../TaskTile/TaskTile.styles';
+import { Paragraph } from '../../../styles/typography/typography';
 
 interface Props {
   description: string;
@@ -18,9 +19,9 @@ const BudgetTile: React.FC<ConnectedProps> = ({ description, value, name, onClic
     <Tile onClick={() => !!onClick && onClick()}>
       <Description>{description}</Description>
       <Name>{name}</Name>
-      <p>
+      <Paragraph type={'main'}>
         {value} {currency.name}
-      </p>
+      </Paragraph>
     </Tile>
   );
 };

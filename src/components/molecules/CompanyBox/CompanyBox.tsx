@@ -1,6 +1,6 @@
 import React from 'react';
-import { ContentWrapper, Name, Subparagraph, Wrapper } from './CompanyBox.styles';
 import ArrowButton from '../../atoms/ArrowButton/ArrowButton';
+import { ContentWrapper, Name, Subparagraph, Wrapper } from './CompanyBox.styles';
 
 interface Props {
   name: string;

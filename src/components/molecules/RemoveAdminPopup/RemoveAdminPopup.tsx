@@ -1,50 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
-import { Formik, Form } from 'formik';
+import { bindActionCreators } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { Formik } from 'formik';
 import PopupTemplate from '../../templates/PopupTemplate/PopupTemplate';
 import ModalButton, { ButtonType } from '../../atoms/ModalButton/ModalButton';
-import { Paragraph } from '../../../styles/typography/typography';
-import { ButtonWrapper } from '../../../styles/popupStyles';
-import Input from '../../atoms/Input/Input';
 import Checkbox from '../../atoms/Checkbox/Checkbox';
-import { CompanyOwnersInterface } from '../../../types/modelsTypes';
-import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
-import { bindActionCreators } from 'redux';
+import { CompanyOwnersInterface } from '../../../types/modelsTypes';
 import { removeCompanyOwner } from '../../../actions/companyActions';
-
-const ContentWrapper = styled.div`
-  display: grid;
-  place-items: center;
-`;
-
-const StyledForm = styled(Form)`
-  padding: 3rem;
-`;
-
-const StyledButtonWrapper = styled(ButtonWrapper)`
-  padding-top: 0.5rem;
-`;
-
-const StyledInput = styled(Input)`
-  padding: 0 1rem;
-`;
-
-const RowWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-top: 1rem;
-  margin-bottom: 4rem;
-`;
-
-const InputRowWrapper = styled(RowWrapper)`
-  margin-bottom: 1rem;
-`;
-
-const StyledInfoParagraph = styled(Paragraph)`
-  margin-top: 2rem;
-`;
+import { Paragraph } from '../../../styles/typography/typography';
+import { ContentWrapper, StyledForm, StyledButtonWrapper, StyledInput, RowWrapper, InputRowWrapper, StyledInfoParagraph } from './RemoveAdminPopup.styles';
 
 interface DefaultState {
   addEmployee: boolean;
@@ -70,7 +36,6 @@ const RemoveAdminPopup: React.FC<ConnectedProps> = ({ isOpen, setOpen, companyOw
 
   const handleSubmit = ({ addEmployee, pricePerHour, monthlyPrice }: DefaultState) => {
     companyOwnerToDelete && removeCompanyOwner(companyOwnerToDelete._id, addEmployee, callback, pricePerHour, monthlyPrice);
-    //TODO: deleteOwner(companyOwnerToDelete._id, addEmployee, pricePerHour, monthlyPrice);
   };
 
   return (

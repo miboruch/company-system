@@ -2,61 +2,16 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { useOutsideClick } from '../../../utils/customHooks';
-import { notificationsAnimation } from '../../../animations/animations';
-import styled from 'styled-components';
-import { AppState } from '../../../reducers/rootReducer';
-import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
 import { ThunkDispatch } from 'redux-thunk';
-import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
-import { setUserRole, userLogout } from '../../../actions/authenticationActions';
-import { LogoutIcon, SettingsIcon } from '../../../styles/iconStyles';
-import Button from '../../atoms/Button/Button';
-
-interface WrapperInterface {
-  isMobile: boolean;
-}
-
-const StyledWrapper = styled.div<WrapperInterface>`
-  width: 200px;
-  border: 1px solid ${({ theme }) => theme.colors.impactGray};
-  background-color: ${({ theme }) => theme.colors.white};
-  position: absolute;
-  top: ${({ isMobile }) => (isMobile ? '5rem' : '4rem')};
-  right: 0;
-  z-index: 1001;
-
-  ${({ theme }) => theme.mq.hdReady} {
-    display: ${({ isMobile }) => isMobile && 'none'};
-  }
-`;
-
-const SliderItem = styled.div`
-  width: 100%;
-  height: 60px;
-  color: #ccc;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.backgroundHover};
-  }
-`;
-
-const Content = styled.div`
-  width: 100%;
-  height: 100%;
-`;
-
-const Text = styled.p`
-  font-size: 13px;
-  font-weight: ${({ theme }) => theme.font.weight.medium};
-`;
+import { useOutsideClick } from '../../../utils/customHooks';
+import { AppState } from '../../../reducers/rootReducer';
+import { AppTypes } from '../../../types/actionTypes/appActionTypes';
+import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
+import { notificationsAnimation } from '../../../animations/animations';
+import { userLogout } from '../../../actions/authenticationActions';
+import { LogoutIcon } from '../../../styles/iconStyles';
+import { StyledWrapper, SliderItem, Content, Text } from './HeaderSlider.styles';
 
 interface Props {
   isOpen: boolean;

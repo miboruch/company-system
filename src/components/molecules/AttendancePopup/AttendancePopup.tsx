@@ -1,19 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Formik } from 'formik';
+import { ThunkDispatch } from 'redux-thunk';
+import { bindActionCreators } from 'redux';
 import PopupTemplate from '../../templates/PopupTemplate/PopupTemplate';
-import { AttendanceInterface } from '../../../types/modelsTypes';
-import { Paragraph } from '../../../styles/typography/typography';
-import { ButtonWrapper, ContentWrapper } from '../../../styles/popupStyles';
-import { CheckedIcon, NotCheckedIcon, EmptyIcon } from '../../../styles/iconStyles';
 import ModalButton, { ButtonType } from '../../atoms/ModalButton/ModalButton';
 import Input from '../../atoms/Input/Input';
 import Checkbox from '../../atoms/Checkbox/Checkbox';
-import { ThunkDispatch } from 'redux-thunk';
+import { AttendanceInterface } from '../../../types/modelsTypes';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
-import { bindActionCreators } from 'redux';
-import { addAttendance, updateAttendance } from '../../../actions/attendanceActions';
+import { ButtonWrapper, ContentWrapper } from '../../../styles/popupStyles';
+import { CheckedIcon, NotCheckedIcon, EmptyIcon } from '../../../styles/iconStyles';
 import { FlexWrapper, StyledForm, StyledParagraph, StyledFlexWrapper, InputWrapper } from './AttendancePopup.styles';
+import { addAttendance, updateAttendance } from '../../../actions/attendanceActions';
 
 interface Props {
   attendance: AttendanceInterface | null;

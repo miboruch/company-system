@@ -1,23 +1,21 @@
 import React, { useState } from 'react';
+import { Formik } from 'formik';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+import Button from '../../atoms/Button/Button';
+import { AppTypes } from '../../../types/actionTypes/appActionTypes';
+import { editPassword } from '../../../actions/authenticationActions';
 import { Heading, StyledForm } from '../AccountSettings/AccountSettings.styles';
 import { StyledInput } from '../../../styles/compoundStyles';
 import { DoubleFlexWrapper } from '../../../styles/shared';
-import Button from '../../atoms/Button/Button';
-import { Formik } from 'formik';
-import { ThunkDispatch } from 'redux-thunk';
-import { AppTypes } from '../../../types/actionTypes/appActionTypes';
-import { bindActionCreators } from 'redux';
-import { editPassword } from '../../../actions/authenticationActions';
 
 interface DefaultValues {
   password: string;
   repeatedPassword: string;
 }
 
-interface Props {}
-
-type ConnectedProps = Props & LinkDispatchProps;
+type ConnectedProps = LinkDispatchProps;
 
 const PasswordChangeSettings: React.FC<ConnectedProps> = ({ editPassword }) => {
   const [isPasswordShown, setPasswordShown] = useState<boolean>(false);

@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Hamburger from '../../atoms/Hamburger/Hamburger';
-import { Circle, IconWrapper, NameParagraph, StyledHeader, UserWrapper, MobileCircle } from './Header.styles';
+import HeaderSlider from '../HeaderSlider/HeaderSlider';
 import SearchInput from '../../atoms/SearchInput/SearchInput';
+import ArrowButton from '../../atoms/ArrowButton/ArrowButton';
+import Notifications from '../../organisms/Notifications/Notifications';
+import { Direction } from '../../../types/globalTypes';
 import { AppState } from '../../../reducers/rootReducer';
 import { UserAuthData } from '../../../types/modelsTypes';
-import Notifications from '../../organisms/Notifications/Notifications';
+import { Circle, IconWrapper, NameParagraph, StyledHeader, UserWrapper, MobileCircle } from './Header.styles';
 import { NotificationIcon } from '../../../styles/iconStyles';
-import ArrowButton from '../../atoms/ArrowButton/ArrowButton';
-import { Direction } from '../../../types/globalTypes';
-import HeaderSlider from '../HeaderSlider/HeaderSlider';
 
 interface Props {
   setFilterText?: (filterText: string) => void;

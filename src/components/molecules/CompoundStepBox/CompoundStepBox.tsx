@@ -15,9 +15,9 @@ const CompoundStepBox: React.FC<Props> = ({ stepName, description, stepNumber, i
     <Wrapper allSteps={allSteps} onClick={onClick}>
       <CompletedIcon isCompleted={isCompleted} />
       <ContentWrapper>
-        <Subparagraph>Krok {stepNumber}</Subparagraph>
+        <Subparagraph type={'subparagraph'}>Krok {stepNumber}</Subparagraph>
         <Name>{stepName}</Name>
-        <Subparagraph>{description}</Subparagraph>
+        <Subparagraph type={'subparagraph'}>{description}</Subparagraph>
       </ContentWrapper>
     </Wrapper>
   );

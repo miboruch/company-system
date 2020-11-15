@@ -12,7 +12,6 @@ import { StyledForm, Heading } from './AccountSettings.styles';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
-import { editTask } from '../../../actions/taskActions';
 import { editAccount } from '../../../actions/authenticationActions';
 
 interface DefaultValues {
@@ -26,9 +25,7 @@ interface DefaultValues {
   country: string;
 }
 
-interface Props {}
-
-type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
+type ConnectedProps = LinkStateProps & LinkDispatchProps;
 
 const AccountSettings: React.FC<ConnectedProps> = ({ userData, editAccount }) => {
   const [formattedPhoneNumber, setFormattedPhoneNumber] = useState<string>('');

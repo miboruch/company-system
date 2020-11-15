@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { connect } from 'react-redux';
-import { AppState } from '../../../reducers/rootReducer';
 import { ThunkDispatch } from 'redux-thunk';
-import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
+import { AppState } from '../../../reducers/rootReducer';
+import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { NotificationMessage, NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
 import { setNotificationMessage } from '../../../actions/toggleActions';
 import { NOTIFICATION_VISIBILITY_TIME } from '../../../utils/config';

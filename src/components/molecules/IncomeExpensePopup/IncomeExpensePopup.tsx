@@ -1,24 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Form, Formik } from 'formik';
-import { ButtonWrapper, ContentWrapper } from '../../../styles/popupStyles';
+import { Formik } from 'formik';
+import { ThunkDispatch } from 'redux-thunk';
+import { bindActionCreators } from 'redux';
 import PopupTemplate from '../../templates/PopupTemplate/PopupTemplate';
 import ModalButton, { ButtonType } from '../../atoms/ModalButton/ModalButton';
-import styled from 'styled-components';
 import Input from '../../atoms/Input/Input';
-import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
-import { bindActionCreators } from 'redux';
 import { addExpense, addIncome } from '../../../actions/financeActions';
-
-const StyledForm = styled(Form)`
-  width: 100%;
-  min-height: calc(400px - 80px);
-`;
-
-const StyledInput = styled(Input)`
-  margin-bottom: 3rem;
-`;
+import { ButtonWrapper, ContentWrapper } from '../../../styles/popupStyles';
+import { StyledForm, StyledInput } from './IncomeExpensePopup.styles';
 
 export enum FinancePopupInterface {
   Income = 'income',

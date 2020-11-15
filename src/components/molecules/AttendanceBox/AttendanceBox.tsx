@@ -1,5 +1,6 @@
 import React from 'react';
-import { Wrapper, ContentWrapper, Name, Subparagraph } from './AttendanceBox.styles';
+import { StyledWrapper, StyledName } from './AttendanceBox.styles';
+import { ContentWrapper, Subparagraph } from '../ListBox/ListBox.styles';
 import { CheckedIcon, EmptyIcon, NotCheckedIcon } from '../../../styles/iconStyles';
 
 export interface AttendanceBoxProps {
@@ -14,17 +15,17 @@ export interface AttendanceBoxProps {
 
 const AttendanceBox: React.FC<AttendanceBoxProps> = ({ name, date, bottomDescription, isChecked, isEmpty, hours, callback }) => {
   return (
-    <Wrapper onClick={() => callback()}>
+    <StyledWrapper onClick={() => callback()}>
       <ContentWrapper>
         {isEmpty ? <EmptyIcon /> : isChecked ? <CheckedIcon /> : <NotCheckedIcon />}
         <div>
           <Subparagraph>{date && date.toLocaleDateString()}</Subparagraph>
-          <Name>{name}</Name>
+          <StyledName>{name}</StyledName>
           <Subparagraph>{bottomDescription}</Subparagraph>
         </div>
       </ContentWrapper>
-      {hours ? <Name>{hours}h</Name> : <Name>0h</Name>}
-    </Wrapper>
+      {hours ? <StyledName>{hours}h</StyledName> : <StyledName>0h</StyledName>}
+    </StyledWrapper>
   );
 };
 

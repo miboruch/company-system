@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
+import NumberFormat from 'react-number-format';
 import { connect } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { bindActionCreators } from 'redux';
+import { Formik } from 'formik';
+import Button from '../../atoms/Button/Button';
+import MapCoordsEdit, { CoordsEditType } from '../../organisms/MapCoordsEdit/MapCoordsEdit';
+import { AppState } from '../../../reducers/rootReducer';
+import { CompanyInterface } from '../../../types/modelsTypes';
+import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { Heading, StyledForm } from '../AccountSettings/AccountSettings.styles';
 import { StyledInput } from '../../../styles/compoundStyles';
-import { DoubleFlexWrapper, StyledLabel } from '../../../styles/shared';
-import NumberFormat from 'react-number-format';
-import Button from '../../atoms/Button/Button';
-import { Formik } from 'formik';
-import { CompanyInterface } from '../../../types/modelsTypes';
-import { AppState } from '../../../reducers/rootReducer';
-import { ThunkDispatch } from 'redux-thunk';
-import { AppTypes } from '../../../types/actionTypes/appActionTypes';
-import { bindActionCreators } from 'redux';
 import { editCompany } from '../../../actions/companyActions';
-import MapCoordsEdit, { CoordsEditType } from '../../organisms/MapCoordsEdit/MapCoordsEdit';
+import { DoubleFlexWrapper, StyledLabel } from '../../../styles/shared';
 import { setEditCompanyCoordsOpen } from '../../../actions/toggleActions';
 
 interface DefaultValues {
@@ -25,9 +25,7 @@ interface DefaultValues {
   country: string;
 }
 
-interface Props {}
-
-type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
+type ConnectedProps = LinkStateProps & LinkDispatchProps;
 
 const CompanySettings: React.FC<ConnectedProps> = ({ currentCompany, editCompany, isEditCompanyCoordsOpen, setEditCompanyCoordsOpen }) => {
   const [formattedPhoneNumber, setFormattedPhoneNumber] = useState<string>('');
@@ -49,7 +47,7 @@ const CompanySettings: React.FC<ConnectedProps> = ({ currentCompany, editCompany
   return (
     <>
       <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize={true}>
-        {({ handleChange, handleBlur, values, setFieldValue }) => (
+        {({ handleChange, values, setFieldValue }) => (
           <StyledForm>
             <Heading>Ustawienia firmy</Heading>
             <StyledInput type={'text'} name={'name'} onChange={handleChange} value={values.name} required={true} labelText={'Imię'} />

@@ -1,22 +1,11 @@
 import styled, { css } from 'styled-components';
 
-const iconStyles = css`
-  width: 20px;
-  height: 20px;
-  margin-right: 2rem;
-
-  path {
-    fill: ${({ theme }) => theme.colors.dark};
-  }
-`;
-
 interface WrapperProps {
   areaName: string;
 }
 
 const Wrapper = styled.div<WrapperProps>`
   width: 46%;
-  //height: 100%;
   height: 120px;
   align-self: center;
   border-radius: 30px;

@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { TaskInterface } from '../../../types/modelsTypes';
-import { Tile, Description, Name, IncomeWrapper, TaskIncome, TaskExpense } from './TaskTile.styles';
-import { CurrencyInterface } from '../../../types/actionTypes/toggleAcitonTypes';
 import { AppState } from '../../../reducers/rootReducer';
+import { TaskInterface } from '../../../types/modelsTypes';
+import { CurrencyInterface } from '../../../types/actionTypes/toggleAcitonTypes';
 import { roundTo2 } from '../../../utils/functions';
+import { Tile, Description, Name, IncomeWrapper, TaskIncome, TaskExpense } from './TaskTile.styles';
 
 interface Props {
   task: TaskInterface;
