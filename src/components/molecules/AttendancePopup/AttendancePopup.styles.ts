@@ -11,6 +11,7 @@ const FlexWrapper = styled.div`
 
 const StyledParagraph = styled(Paragraph)`
   margin-right: 2rem;
+  margin-bottom: 0;
 `;
 
 const StyledForm = styled(Form)`
@@ -26,4 +27,10 @@ const StyledWrapper = styled.div`
   height: calc(100% - 80px);
 `;
 
-export { FlexWrapper, StyledForm, StyledParagraph, StyledFlexWrapper, StyledWrapper };
+const InputWrapper = styled.div`
+  width: 30%;
+  margin: auto;
+  margin-top: 3rem;
+`;
+
+export { FlexWrapper, StyledForm, StyledParagraph, StyledFlexWrapper, StyledWrapper, InputWrapper };

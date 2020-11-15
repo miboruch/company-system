@@ -18,12 +18,12 @@ const SettingsPageContent: React.FC<ConnectedProps> = ({ role }) => {
       <StyledList>
         {role === UserRole.Admin
           ? adminSettings.map((adminSetting) => (
-              <ListItems listLength={adminSettings.length} isActive={adminSetting.roleEnum === subcategory} onClick={() => setSubcategory(adminSetting.roleEnum)}>
+              <ListItems key={adminSetting.name} listLength={adminSettings.length} isActive={adminSetting.roleEnum === subcategory} onClick={() => setSubcategory(adminSetting.roleEnum)}>
                 <Paragraph>{adminSetting.name}</Paragraph>
               </ListItems>
             ))
           : userSettings.map((userSetting) => (
-              <ListItems listLength={userSettings.length} isActive={userSetting.roleEnum === subcategory} onClick={() => setSubcategory(userSetting.roleEnum)}>
+              <ListItems key={userSetting.name} listLength={userSettings.length} isActive={userSetting.roleEnum === subcategory} onClick={() => setSubcategory(userSetting.roleEnum)}>
                 <Paragraph>{userSetting.name}</Paragraph>
               </ListItems>
             ))}

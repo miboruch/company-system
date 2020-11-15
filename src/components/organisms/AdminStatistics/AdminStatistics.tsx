@@ -10,11 +10,11 @@ import { bindActionCreators } from 'redux';
 import { SpinnerWrapper } from '../../../styles/shared';
 import { getEmployeeHours, getEmployeeSalary } from '../../../actions/employeeActions';
 import Spinner from '../../atoms/Spinner/Spinner';
-import {Paragraph} from '../../../styles/typography/typography';
 import CloseButton from '../../atoms/CloseButton/CloseButton';
 import gsap from 'gsap';
 import { modalOpenAnimation } from '../../../animations/animations';
 import { CloseButtonWrapper } from '../../../styles/compoundControllerStyles';
+import {Heading, Paragraph} from '../../../styles/typography/typography';
 import Dropdown from '../../atoms/Dropdown/Dropdown';
 import { months } from '../../../utils/staticData';
 
@@ -62,20 +62,14 @@ interface TextWrapperInterface {
   isVisible: boolean;
 }
 
+const StyledHeading = styled(Heading)`
+  margin-left: 3rem;
+`;
+
 const TextWrapper = styled.div<TextWrapperInterface>`
   margin-top: 4rem;
   opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
-`;
-
-const Heading = styled.h2`
-  font-weight: ${({ theme }) => theme.mq.demi};
-  padding: 3rem;
-`;
-
-const MainHeading = styled.h1`
-  font-weight: ${({ theme }) => theme.mq.demi};
-  margin-bottom: 3rem;
 `;
 
 const StyledParagraph = styled(Paragraph)`
@@ -133,7 +127,7 @@ const AdminStatistics: React.FC<ConnectedProps> = ({ allCompanyEmployees, getEmp
           <CloseButton setBoxState={setOpen} />
         </CloseButtonWrapper>
         <ListWrapper>
-          <Heading>Pracownicy</Heading>
+          <StyledHeading>Pracownicy</StyledHeading>
           {allCompanyEmployees.map((employee) => (
             <ListBox
               key={employee._id}
@@ -153,18 +147,18 @@ const AdminStatistics: React.FC<ConnectedProps> = ({ allCompanyEmployees, getEmp
             </SpinnerWrapper>
           ) : (
             <TextWrapper isVisible={!!selectedEmployee}>
-              <MainHeading>
+              <Heading>
                 {selectedEmployee?.userId.name} {selectedEmployee?.userId.lastName}
-              </MainHeading>
+              </Heading>
               {/*<Dropdown options={months} onChange={handleMonthSelect} labelText={'Wybierz miesiąc'} />*/}
-              <Text>Statystyki użytkownika w miesiącu: Listopad</Text>
-              <Text>Zarobki {selectedEmployee?.pricePerHour ? `${selectedEmployee.pricePerHour} zł/h` : `${selectedEmployee?.monthlyPrice} miesięcznie`}</Text>
-              <StyledParagraph>
+              <Paragraph type={'subparagraph'}>Statystyki użytkownika w miesiącu: Listopad</Paragraph>
+              <Paragraph type={'text'}>Zarobki {selectedEmployee?.pricePerHour ? `${selectedEmployee.pricePerHour} zł/h` : `${selectedEmployee?.monthlyPrice} miesięcznie`}</Paragraph>
+              <Paragraph type={'text'}>
                 Ilość przepracowanych godzin: <Span>{userHours}</Span>
-              </StyledParagraph>
-              <StyledParagraph>
+              </Paragraph>
+              <Paragraph type={'text'}>
                 Wynagrodzenie: <Span>{userSalary} zł</Span>
-              </StyledParagraph>
+              </Paragraph>
             </TextWrapper>
           )}
         </ContentWrapper>

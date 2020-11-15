@@ -23,8 +23,8 @@ const LoginTemplate: React.FC<ConnectedProps> = ({ history, children, page, comp
       <FormWrapper>{children}</FormWrapper>
       <ImageBackground>
         <ImageContent>
-          {!!companyName ? <Heading>Dołącz do firmy {companyName}</Heading> : <Heading>Przyśpiesz swoją prace</Heading>}
-          <StyledParagraph>{!!companyName ? `Zostałeś zaproszony do firmy ${companyName} przez administratora. Wypełnij dane i stań się częścią zespołu.` : lorem}</StyledParagraph>
+          {companyName ? <Heading>Dołącz do firmy {companyName}</Heading> : <Heading>Przyśpiesz swoją prace</Heading>}
+          <StyledParagraph>{companyName ? `Zostałeś zaproszony do firmy ${companyName} przez administratora. Wypełnij dane i stań się częścią zespołu.` : lorem}</StyledParagraph>
           <Button
             type={'button'}
             text={page === TemplatePage.Login ? 'Zarejestruj się' : 'Zaloguj się'}

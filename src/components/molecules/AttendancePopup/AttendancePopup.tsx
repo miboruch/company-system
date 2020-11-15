@@ -13,7 +13,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { addAttendance, updateAttendance } from '../../../actions/attendanceActions';
-import { FlexWrapper, StyledForm, StyledParagraph, StyledFlexWrapper } from './AttendancePopup.styles';
+import { FlexWrapper, StyledForm, StyledParagraph, StyledFlexWrapper, InputWrapper } from './AttendancePopup.styles';
 
 interface Props {
   attendance: AttendanceInterface | null;
@@ -47,7 +47,7 @@ const AttendancePopup: React.FC<ConnectedProps> = ({ attendance, isOpen, setOpen
   };
 
   return (
-    <PopupTemplate isOpen={isOpen} headerText={`Obecność z dnia ${date.toLocaleString()}`} isHigher={false}>
+    <PopupTemplate isOpen={isOpen} headerText={`Obecność z dnia ${date.toLocaleDateString()}`} isHigher={false}>
       <div>
         <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize={true}>
           {({ handleChange, values, setFieldValue }) =>
@@ -55,15 +55,17 @@ const AttendancePopup: React.FC<ConnectedProps> = ({ attendance, isOpen, setOpen
               <StyledForm>
                 <ContentWrapper>
                   <FlexWrapper>
-                    <StyledParagraph>
+                    {values.wasPresent === null ? <EmptyIcon /> : values.wasPresent ? <CheckedIcon /> : <NotCheckedIcon />}
+                    <StyledParagraph type={'text'}>
                       {attendance.user.name} {attendance.user.lastName}
                     </StyledParagraph>
-                    {values.wasPresent === null ? <EmptyIcon /> : values.wasPresent ? <CheckedIcon /> : <NotCheckedIcon />}
                   </FlexWrapper>
                   <StyledFlexWrapper>
-                    <Paragraph type={'info'}>Obecność</Paragraph>
+                    <StyledParagraph type={'info'}>Obecność</StyledParagraph>
                     <Checkbox onChange={() => setFieldValue('wasPresent', true)} name={'wasPresent'} labelText={'TAK'} checked={values.wasPresent !== null && values.wasPresent} />
                     <Checkbox onChange={() => setFieldValue('wasPresent', false)} name={'wasPresent'} labelText={'NIE'} checked={!values.wasPresent} />
+                  </StyledFlexWrapper>
+                  <InputWrapper>
                     <Input
                       onChange={handleChange}
                       name={'hours'}
@@ -73,7 +75,7 @@ const AttendancePopup: React.FC<ConnectedProps> = ({ attendance, isOpen, setOpen
                       disabled={!values.wasPresent}
                       value={!values.wasPresent ? 0 : values.hours}
                     />
-                  </StyledFlexWrapper>
+                  </InputWrapper>
                 </ContentWrapper>
                 <ButtonWrapper>
                   <ModalButton onClick={() => setOpen(false)} buttonType={ButtonType.Cancel} text={'Zamknij'} />

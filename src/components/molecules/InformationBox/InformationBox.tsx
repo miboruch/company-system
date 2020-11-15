@@ -19,7 +19,7 @@ const InformationBox: React.FC<Props> = ({ title, value, areaName, chartAnimatio
         <TitleParagraph>{title}</TitleParagraph>
       </RowWrapper>
       <Value>{value}</Value>
-      <TinyLineChart data={tinyChartData} animationDelay={!!chartAnimationDelay ? chartAnimationDelay : 0} />
+      <TinyLineChart data={tinyChartData} animationDelay={chartAnimationDelay ? chartAnimationDelay : 0} />
     </Wrapper>
   );
 };
