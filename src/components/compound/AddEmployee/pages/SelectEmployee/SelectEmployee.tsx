@@ -11,10 +11,12 @@ import { EmployeeDataInterface, UserDataInterface } from '../../../../../types/m
 import { AppState } from '../../../../../reducers/rootReducer';
 import UserBox from '../../../../molecules/UserBox/UserBox';
 import { removeDuplicates } from '../../../../../utils/functions';
+import { Paragraph } from '../../../../../styles/typography/typography';
 
 const UsersWrapper = styled.div`
   width: 100%;
-  height: 100%;
+  min-height: 300px;
+  max-height: 100%;
   overflow-y: scroll;
 `;
 
@@ -28,24 +30,22 @@ type SetMailDefaultValues = {
   registerWithMail: boolean;
 };
 
-interface Props {}
-
 type DefaultValues = SelectUserDefaultValues | SetMailDefaultValues;
 
-type ConnectedProps = Props & LinkStateProps;
+type ConnectedProps = LinkStateProps;
 
 const SelectEmployee: React.FC<ConnectedProps> = ({ allAppUsers, allCompanyEmployees }) => {
   const { data, setData } = useContext(EmployeeDataContext);
   const { setCurrentPage } = useContext(PageContext);
+  const [users, setUsers] = useState<UserDataInterface[]>([]);
 
   const initialValues: DefaultValues = {
     userId: '',
     registerWithMail: undefined
   };
 
-  if(allCompanyEmployees.length > 0 && allAppUsers.length > 0){
-    const result = removeDuplicates(allAppUsers, allCompanyEmployees);
-    console.log(result);
+  if (allCompanyEmployees.length > 0 && allAppUsers.length > 0) {
+    setUsers(removeDuplicates(allAppUsers, allCompanyEmployees));
   }
 
   const handleSubmit = (values: DefaultValues) => {
@@ -64,20 +64,24 @@ const SelectEmployee: React.FC<ConnectedProps> = ({ allAppUsers, allCompanyEmplo
               <Subheading>Wybierz jednego użytkownika lub wyślij zaproszenie jeżeli twój pracownik nie posiada jeszcze konta</Subheading>
             </HeadingWrapper>
             <UsersWrapper>
-              {removeDuplicates(allAppUsers, allCompanyEmployees).map((user) => (
-                <UserBox
-                  key={user._id}
-                  name={`${user.name} ${user.lastName}`}
-                  topDescription={new Date(user.dateOfBirth).toLocaleDateString()}
-                  bottomDescription={user.email}
-                  callback={() => {
-                    setFieldValue('userId', user._id);
-                    setData({ ...data, userId: user._id });
-                    setFieldValue('registerWithMail', undefined);
-                  }}
-                  isActive={data.userId === user._id}
-                />
-              ))}
+              {users.length === 0 ? (
+                <Paragraph type={'empty'}>Brak użytkowników</Paragraph>
+              ) : (
+                users.map((user) => (
+                  <UserBox
+                    key={user._id}
+                    name={`${user.name} ${user.lastName}`}
+                    topDescription={new Date(user.dateOfBirth).toLocaleDateString()}
+                    bottomDescription={user.email}
+                    callback={() => {
+                      setFieldValue('userId', user._id);
+                      setData({ ...data, userId: user._id });
+                      setFieldValue('registerWithMail', undefined);
+                    }}
+                    isActive={data.userId === user._id}
+                  />
+                ))
+              )}
             </UsersWrapper>
             <DoubleFlexWrapper>
               <p
@@ -90,7 +94,7 @@ const SelectEmployee: React.FC<ConnectedProps> = ({ allAppUsers, allCompanyEmplo
               >
                 Wyślij zaproszenie na maila
               </p>
-              <Button type={'submit'} text={'Dalej'} />
+              <Button type={'submit'} text={'Dalej'} disabled={!data.userId && !data.registerWithMail} />
             </DoubleFlexWrapper>
           </StyledForm>
         </Wrapper>

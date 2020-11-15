@@ -30,7 +30,7 @@ const SalaryPage: React.FC<ConnectedProps> = ({ sendRegistrationMail, addNewEmpl
     monthlyPrice: data.monthlyPrice || 0
   };
 
-  const handleSubmit = (values: DefaultValues) => {
+  const handleSubmit = (values: DefaultValues): void => {
     setData({ ...data, ...values });
     if (data.registerWithMail) {
       if (values.email) {
@@ -39,6 +39,11 @@ const SalaryPage: React.FC<ConnectedProps> = ({ sendRegistrationMail, addNewEmpl
     } else {
       data.userId && addNewEmployee(data.userId, values.pricePerHour, values.monthlyPrice);
     }
+  };
+
+  const handlePageBack = (): void => {
+    setCurrentPage(PageSettingEnum.First);
+    setData({ ...data, registerWithMail: false });
   };
 
   return (
@@ -54,7 +59,7 @@ const SalaryPage: React.FC<ConnectedProps> = ({ sendRegistrationMail, addNewEmpl
             <StyledInput onChange={handleChange} name={'pricePerHour'} value={values.pricePerHour} type={'number'} required={false} labelText={'Stawka godzinowa'} disabled={!!values.monthlyPrice} />
             <StyledInput onChange={handleChange} name={'monthlyPrice'} value={values.monthlyPrice} type={'number'} required={false} labelText={'Stawka miesięczna'} disabled={!!values.pricePerHour} />
             <DoubleFlexWrapper>
-              <StyledBackParagraph type={'back'} onClick={() => setCurrentPage(PageSettingEnum.First)}>
+              <StyledBackParagraph type={'back'} onClick={() => handlePageBack()}>
                 Wstecz
               </StyledBackParagraph>
               <Button

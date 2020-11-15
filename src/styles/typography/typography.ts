@@ -8,7 +8,7 @@ interface ParagraphInterface {
 
 const Paragraph = styled.p<ParagraphInterface>`
   font-size: 13px;
-  color: #d3d3d4;
+  color: ${({ theme }) => theme.colors.paragraph};
   font-weight: ${({ theme }) => theme.font.weight.medium};
   margin-bottom: 1rem;
   line-height: 2.2;
@@ -17,7 +17,7 @@ const Paragraph = styled.p<ParagraphInterface>`
   ${({ type }) =>
     type === 'subparagraph' &&
     css`
-      color: #78787f;
+      color: ${({ theme }) => theme.colors.textSubparagraph};
       margin-top: 0.3rem;
       margin-bottom: 0.3rem;
     `}
@@ -25,7 +25,7 @@ const Paragraph = styled.p<ParagraphInterface>`
   ${({ type }) =>
     type === 'text' &&
     css`
-      color: #454545;
+      color: ${({ theme }) => theme.colors.textParagraph};
     `}
   
     ${({ type }) =>
