@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-export type ParagraphTypes = 'subparagraph' | 'text' | 'info' | 'add' | 'empty' | 'error' | 'back';
+export type ParagraphTypes = 'main' | 'subparagraph' | 'text' | 'info' | 'add' | 'empty' | 'error' | 'back';
 
 interface ParagraphInterface {
   type?: ParagraphTypes;
@@ -13,6 +13,14 @@ const Paragraph = styled.p<ParagraphInterface>`
   margin-bottom: 1rem;
   line-height: 2.2;
   transition: color 0.3s ease;
+
+  ${({ type }) =>
+    type === 'main' &&
+    css`
+      color: ${({ theme }) => theme.colors.black};
+      font-size: 14px;
+      font-weight: ${({ theme }) => theme.font.weight.demi};
+    `}
 
   ${({ type }) =>
     type === 'subparagraph' &&

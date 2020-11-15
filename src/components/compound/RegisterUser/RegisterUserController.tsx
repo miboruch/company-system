@@ -3,18 +3,13 @@ import RegisterDataContextProvider from './context/RegisterDataContext';
 import PageContextProvider from './context/PageContext';
 import RegisterTemplate from './templates/RegisterTemplate/RegisterTemplate';
 import MainRegisterDataPage from './pages/MainRegisterDataPage';
-import ProgressionBar from './components/ProgressionBar/ProgressionBar';
 import PasswordPage from './pages/PasswordPage';
 import ContactDataPage from './pages/ContactDataPage';
 
-interface Props {
-}
-
-const RegisterUserController: React.FC<Props> = () => {
+const RegisterUserController: React.FC = () => {
   return (
     <RegisterDataContextProvider isRegistrationLink={false}>
       <PageContextProvider>
-        {/*<ProgressionBar allPages={3} />*/}
         <RegisterTemplate pageIndex={0}>
           <MainRegisterDataPage isRegistrationLink={false} />
         </RegisterTemplate>

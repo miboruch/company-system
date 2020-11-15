@@ -9,18 +9,16 @@ import {
   MobileCompoundTitle,
   StyledBackParagraph
 } from '../../../../../styles/compoundStyles';
-import { SpinnerWrapper } from '../../../../../styles/shared';
 import Spinner from '../../../../atoms/Spinner/Spinner';
 import Button from '../../../../atoms/Button/Button';
+import { SpinnerWrapper } from '../../../../../styles/shared';
+import { Coords } from '../../../../../types/globalTypes';
 import { markerCustomIcon } from '../../../AddCompany/utils/customMapIcons';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { ClientDataContext } from '../../context/ClientDataContext';
-import { Coords } from '../../../../../types/globalTypes';
 import { getLocation } from '../../../../../utils/mapFunctions';
 
-interface Props {}
-
-const MapPage: React.FC<Props> = () => {
+const MapPage: React.FC = () => {
   const { data, setData } = useContext(ClientDataContext);
   const { setCurrentPage } = useContext(PageContext);
 

@@ -1,6 +1,4 @@
 import React, { useContext } from 'react';
-import styled from 'styled-components';
-import Input from '../../../atoms/Input/Input';
 import { RegisterDataContext } from '../context/RegisterDataContext';
 import { Formik } from 'formik';
 import { PageContext } from '../context/PageContext';
@@ -9,10 +7,7 @@ import Button from '../../../atoms/Button/Button';
 import { ErrorParagraph } from '../../../../styles/typography/typography';
 import { Paragraph } from '../../../../styles/typography/typography';
 import { DoubleFlexWrapper } from '../../../../styles/shared';
-
-const StyledInput = styled(Input)`
-  margin-bottom: 5rem;
-`;
+import { StyledInput } from '../../../../pages/LoginPage/LoginPage.styles';
 
 type defaultValues = {
   password: string;

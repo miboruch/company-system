@@ -1,19 +1,14 @@
 import React, { useContext } from 'react';
-import { Formik, Form } from 'formik';
+import { Formik } from 'formik';
 import DatePicker from 'react-datepicker';
 import { RegisterDataContext } from '../context/RegisterDataContext';
-import Input from '../../../atoms/Input/Input';
 import { StyledForm, Heading } from '../../../../pages/LoginPage/LoginPage.styles';
-import { FlexWrapper, StyledLabel, DoubleFlexWrapper } from '../../../../styles/shared';
-import styled from 'styled-components';
+import { FlexWrapper, StyledLabel } from '../../../../styles/shared';
 import Button from '../../../atoms/Button/Button';
+import { StyledInput } from '../../../../pages/LoginPage/LoginPage.styles';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import { PageContext } from '../context/PageContext';
-
-const StyledInput = styled(Input)`
-  margin-bottom: 5rem;
-`;
 
 type defaultValues = {
   email: string;
@@ -31,10 +26,10 @@ const MainRegisterDataPage: React.FC<Props> = ({ isRegistrationLink }) => {
   const { currentPage, setCurrentPage } = useContext(PageContext);
 
   const initialValues: defaultValues = {
-    email: data.email ? data.email : '',
-    name: data.name ? data.name : '',
-    lastName: data.lastName ? data.lastName : '',
-    dateOfBirth: data.dateOfBirth ? data.dateOfBirth : null
+    email: data?.email || '',
+    name: data?.name || '',
+    lastName: data?.lastName || '',
+    dateOfBirth: data?.dateOfBirth || null
   };
 
   const handleSubmit = (values: defaultValues): void => {
@@ -50,12 +45,10 @@ const MainRegisterDataPage: React.FC<Props> = ({ isRegistrationLink }) => {
           <StyledInput onChange={handleChange} name={'email'} value={values.email} required={true} type={'email'} labelText={'Email'} disabled={isRegistrationLink} />
           <StyledInput onChange={handleChange} name={'name'} value={values.name} required={true} type={'string'} labelText={'Imię'} />
           <StyledInput onChange={handleChange} name={'lastName'} value={values.lastName} required={true} type={'string'} labelText={'Nazwisko'} />
-          {/*<DoubleFlexWrapper style={{ marginBottom: '3rem' }}>*/}
           <div>
             <StyledLabel>Data urodzenia</StyledLabel>
             <DatePicker selected={values.dateOfBirth} onChange={(date) => setFieldValue('dateOfBirth', date)} dateFormat={'dd/MM/yyyy'} />
           </div>
-          {/*</DoubleFlexWrapper>*/}
           <FlexWrapper>
             <Button type={'submit'} text={'Dalej'} />
           </FlexWrapper>

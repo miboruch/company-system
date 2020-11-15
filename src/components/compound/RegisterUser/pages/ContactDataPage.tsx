@@ -1,24 +1,19 @@
 import React, { useContext, useState } from 'react';
-import { connect } from 'react-redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
-import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
-import Input from '../../../atoms/Input/Input';
+import { Formik } from 'formik';
+import { connect } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { bindActionCreators } from 'redux';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
+import Button from '../../../atoms/Button/Button';
 import { RegisterDataContext } from '../context/RegisterDataContext';
 import { PageContext } from '../context/PageContext';
-import { Formik } from 'formik';
 import { Heading, StyledForm } from '../../../../pages/LoginPage/LoginPage.styles';
 import { Paragraph } from '../../../../styles/typography/typography';
 import { DoubleFlexWrapper, StyledLabel } from '../../../../styles/shared';
-import Button from '../../../atoms/Button/Button';
-import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../../types/actionTypes/appActionTypes';
-import { bindActionCreators } from 'redux';
 import { registerFromLink, userRegister } from '../../../../actions/authenticationActions';
-
-const StyledInput = styled(Input)`
-  margin-bottom: 5rem;
-`;
+import { StyledInput } from '../../../../pages/LoginPage/LoginPage.styles';
 
 type defaultValues = {
   phoneNumber: string;

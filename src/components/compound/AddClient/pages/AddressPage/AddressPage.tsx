@@ -18,18 +18,16 @@ type defaultValues = {
   country: string;
 };
 
-interface Props {}
-
-type ConnectedProps = Props & LinkDispatchProps;
+type ConnectedProps = LinkDispatchProps;
 
 const AddressPage: React.FC<ConnectedProps> = ({ addNewClient }) => {
   const { data, setData } = useContext(ClientDataContext);
   const { setCurrentPage } = useContext(PageContext);
 
   const initialValues: defaultValues = {
-    address: data.address ? data.address : '',
-    city: data.city ? data.city : '',
-    country: data.country ? data.country : ''
+    address: data?.address || '',
+    city: data?.city || '',
+    country: data?.country || ''
   };
 
   const handleSubmit = (values: defaultValues): void => {
@@ -37,8 +35,6 @@ const AddressPage: React.FC<ConnectedProps> = ({ addNewClient }) => {
     if (data.name && data.email && data.phoneNumber && data.lat && data.long) {
       addNewClient(data.name, values.address, data.email, data.phoneNumber, values.city, values.country, data.lat, data.long);
     }
-    console.log(data);
-    console.log('add client request');
   };
 
   return (
