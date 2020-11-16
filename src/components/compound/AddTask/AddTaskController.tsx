@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import TaskDataContextProvider from './context/TaskDataContext';
 import PageContextProvider from './context/PageContext';
 import { CloseButtonWrapper, CompoundTitle, ContentWrapper, MainWrapper, Wrapper } from '../../../styles/compoundControllerStyles';
@@ -12,18 +12,14 @@ import AddTaskTemplate from './templates/AddTaskTemplate';
 import { PageSettingEnum } from './context/PageContext';
 import { modalOpenAnimation } from '../../../animations/animations';
 import { AppState } from '../../../reducers/rootReducer';
-import { ThunkDispatch } from 'redux-thunk';
-import { AppTypes } from '../../../types/actionTypes/appActionTypes';
-import { bindActionCreators } from 'redux';
-import { setAddNewTaskOpen } from '../../../actions/taskActions';
 import TaskInfoPage from './pages/TaskInfoPage/TaskInfoPage';
 import SpecificInfoPage from './pages/SpecificInfoPage/SpecificInfoPage';
+import { setAddNewTaskOpen } from '../../../actions/taskActions';
 
-interface Props {}
+const AddTaskController: React.FC = () => {
+  const dispatch = useDispatch();
+  const { isAddNewTaskOpen } = useSelector((state: AppState) => state.taskReducer);
 
-type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
-
-const AddTaskController: React.FC<ConnectedProps> = ({ isAddNewTaskOpen, setAddNewTaskOpen }) => {
   const mainWrapperRef = useRef<HTMLDivElement | null>(null);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
@@ -42,9 +38,9 @@ const AddTaskController: React.FC<ConnectedProps> = ({ isAddNewTaskOpen, setAddN
         <MainWrapper ref={mainWrapperRef}>
           <Wrapper ref={wrapperRef}>
             <CloseButtonWrapper>
-              <CloseButton setBoxState={() => setAddNewTaskOpen(false)} />
+              <CloseButton setBoxState={() => dispatch(setAddNewTaskOpen(false))} />
             </CloseButtonWrapper>
-            <AddTaskHeader setBoxState={setAddNewTaskOpen} />
+            <AddTaskHeader />
             <CompoundTitle>Nowe zadanie</CompoundTitle>
             <StandardCompoundTitle>Uzupełnij informacje o zadaniu</StandardCompoundTitle>
             <StepList />
@@ -63,22 +59,4 @@ const AddTaskController: React.FC<ConnectedProps> = ({ isAddNewTaskOpen, setAddN
   );
 };
 
-interface LinkStateProps {
-  isAddNewTaskOpen: boolean;
-}
-
-interface LinkDispatchProps {
-  setAddNewTaskOpen: (isOpen: boolean) => void;
-}
-
-const mapStateToProps = ({ taskReducer: { isAddNewTaskOpen } }: AppState): LinkStateProps => {
-  return { isAddNewTaskOpen };
-};
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
-  return {
-    setAddNewTaskOpen: bindActionCreators(setAddNewTaskOpen, dispatch)
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddTaskController);
+export default AddTaskController;

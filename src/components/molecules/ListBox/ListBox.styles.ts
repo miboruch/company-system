@@ -26,6 +26,7 @@ const Subparagraph = styled(Paragraph)`
   color: ${({ theme }) => theme.colors.textGray};
   font-size: 11px;
   margin: 0;
+  line-height: normal;
 `;
 
 const ContentWrapper = styled.section`

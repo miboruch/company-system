@@ -10,7 +10,7 @@ import { AppState } from '../../../reducers/rootReducer';
 import { StyledLabel } from '../../../styles/shared';
 import DatePicker from 'react-datepicker';
 import Button from '../../atoms/Button/Button';
-import { DeleteIcon, EditIcon, CheckedIcon, NotCheckedIcon } from '../../../styles/iconStyles';
+import { DeleteIcon, EditIcon, CheckedIcon, NotCheckedIcon, LocationIcon } from '../../../styles/iconStyles';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
@@ -57,8 +57,6 @@ interface Props {
 type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
 const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, isEditToggled, setEditToggled, setDeleteOpen, editTask, changeTaskState, setTaskMapPreviewOpen }) => {
-  const [isMapPreviewOpen, setMapPreviewOpen] = useState<boolean>(false);
-
   const initialValues: InitialValues = {
     name: selectedTask?.name || '',
     description: selectedTask?.description || '',
@@ -88,15 +86,13 @@ const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, isEditToggled, setEd
                 <Title>{selectedTask.name}</Title>
                 <RowIconWrapper>
                   {selectedTask?.isCompleted ? <CheckedIcon /> : <NotCheckedIcon />}
+                  <LocationIcon onClick={() => setTaskMapPreviewOpen(true)} />
                   <EditIcon onClick={() => setEditToggled(!isEditToggled)} />
                   <DeleteIcon onClick={() => setDeleteOpen(true)} />
                 </RowIconWrapper>
               </HeaderWrapper>
               <EmployeeInfoBox>
-                <RowWrapper>
-                  <Paragraph type={'subparagraph'}>Data zadania do wykonania: {new Date(selectedTask.date).toLocaleDateString()}</Paragraph>
-                  {!!selectedTask.clientId && <StyledParagraph onClick={() => setTaskMapPreviewOpen(true)}>Zobacz na mapieeee</StyledParagraph>}
-                </RowWrapper>
+                <Paragraph type={'subparagraph'}>Data zadania do wykonania: {new Date(selectedTask.date).toLocaleDateString()}</Paragraph>
                 <Paragraph type={'subparagraph'}>{selectedTask.description}</Paragraph>
                 <ColoredParagraph isCompleted={selectedTask?.isCompleted} onClick={() => changeTaskState(selectedTask?._id, !selectedTask?.isCompleted)}>
                   Oznacz jako {selectedTask?.isCompleted ? 'niewykonane' : 'wykonane'}

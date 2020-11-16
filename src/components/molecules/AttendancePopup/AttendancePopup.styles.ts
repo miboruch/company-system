@@ -28,7 +28,7 @@ const StyledWrapper = styled.div`
 `;
 
 const InputWrapper = styled.div`
-  width: 30%;
+  width: 40%;
   margin: auto;
   margin-top: 3rem;
 `;

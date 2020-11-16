@@ -11,6 +11,7 @@ import { ReactComponent as Logout } from '../assets/icons/logout.svg';
 import { ReactComponent as Settings } from '../assets/icons/settings.svg';
 import { ReactComponent as ShowPassword } from '../assets/icons/show.svg';
 import { ReactComponent as Arrow } from '../assets/icons/arrow.svg';
+import { ReactComponent as Location } from '../assets/icons/location.svg';
 
 const iconStyles = css`
   width: 32px;
@@ -48,7 +49,8 @@ const DeleteIcon = styled(Delete)`
 `;
 
 const EditIcon = styled(Edit)`
-  ${contentIconStyles}
+  ${contentIconStyles};
+  margin-left: 2rem;
 `;
 
 const UserIcon = styled(User)`
@@ -57,6 +59,12 @@ const UserIcon = styled(User)`
 
 const TaskIcon = styled(Task)`
   ${contentIconStyles};
+`;
+
+const LocationIcon = styled(Location)`
+  ${contentIconStyles};
+  width: 25px;
+  height: 25px;
 `;
 
 const headingStyles = css`
@@ -95,4 +103,4 @@ const ArrowIcon = styled(Arrow)`
   cursor: pointer;
 `;
 
-export { CheckedIcon, NotCheckedIcon, EmptyIcon, DeleteIcon, EditIcon, UserIcon, TaskIcon, NotificationIcon, LogoutIcon, SettingsIcon, ShowPasswordIcon, ArrowIcon };
+export { CheckedIcon, NotCheckedIcon, EmptyIcon, DeleteIcon, EditIcon, UserIcon, LocationIcon, TaskIcon, NotificationIcon, LogoutIcon, SettingsIcon, ShowPasswordIcon, ArrowIcon };

@@ -1,18 +1,14 @@
 import React, { useContext, useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { HeadingWrapper, MobileCompoundTitle, StyledBackParagraph, StyledForm, StyledInput, Subheading, Wrapper } from '../../../../../styles/compoundStyles';
 import { DoubleFlexWrapper } from '../../../../../styles/shared';
 import Button from '../../../../atoms/Button/Button';
 import { Formik } from 'formik';
 import { TaskDataContext } from '../../context/TaskDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
-import { ThunkDispatch } from 'redux-thunk';
-import { AppTypes } from '../../../../../types/actionTypes/appActionTypes';
-import { bindActionCreators } from 'redux';
 import { addNewTask } from '../../../../../actions/taskActions';
 import Dropdown from '../../../../atoms/Dropdown/Dropdown';
 import { getCompanyClients } from '../../../../../actions/clientActions';
-import { ClientInterface } from '../../../../../types/modelsTypes';
 import { AppState } from '../../../../../reducers/rootReducer';
 
 interface DefaultValues {
@@ -22,9 +18,10 @@ interface DefaultValues {
   clientId: string | null;
 }
 
-type ConnectedProps = LinkStateProps & LinkDispatchProps;
+const SpecificInfoPage: React.FC = () => {
+  const dispatch = useDispatch();
+  const { allCompanyClients } = useSelector((state: AppState) => state.clientReducer);
 
-const SpecificInfoPage: React.FC<ConnectedProps> = ({ addNewTask, allCompanyClients, getCompanyClients }) => {
   const { data, setData } = useContext(TaskDataContext);
   const { setCurrentPage } = useContext(PageContext);
 
@@ -38,12 +35,12 @@ const SpecificInfoPage: React.FC<ConnectedProps> = ({ addNewTask, allCompanyClie
   const handleSubmit = (values: DefaultValues): void => {
     setData({ ...data, ...values });
     if (data.date && data.name && data.description && data.isCompleted !== undefined) {
-      addNewTask(data.date, values.timeEstimate, data.name, data.description, data.isCompleted, values.taskIncome, values.taskExpense, values.clientId);
+      dispatch(addNewTask(data.date, values.timeEstimate, data.name, data.description, data.isCompleted, values.taskIncome, values.taskExpense, values.clientId));
     }
   };
 
   useEffect(() => {
-    allCompanyClients.length === 0 && getCompanyClients();
+    allCompanyClients.length === 0 && dispatch(getCompanyClients());
   }, []);
 
   const handleClientSelect = (selected: string | null) => console.log(allCompanyClients.find((client) => client.name === selected));
@@ -78,24 +75,4 @@ const SpecificInfoPage: React.FC<ConnectedProps> = ({ addNewTask, allCompanyClie
   );
 };
 
-interface LinkStateProps {
-  allCompanyClients: ClientInterface[];
-}
-
-interface LinkDispatchProps {
-  addNewTask: (date: Date, timeEstimate: number, name: string, description: string, isCompleted: boolean, taskIncome?: number, taskExpense?: number, clientId?: string | null) => void;
-  getCompanyClients: () => void;
-}
-
-const mapStateToProps = ({ clientReducer: { allCompanyClients } }: AppState): LinkStateProps => {
-  return { allCompanyClients };
-};
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
-  return {
-    addNewTask: bindActionCreators(addNewTask, dispatch),
-    getCompanyClients: bindActionCreators(getCompanyClients, dispatch)
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SpecificInfoPage);
+export default SpecificInfoPage;

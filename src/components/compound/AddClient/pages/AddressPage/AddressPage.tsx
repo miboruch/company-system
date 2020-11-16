@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import { HeadingWrapper, MobileCompoundTitle, StyledForm, StyledInput, Subheading, Wrapper } from '../../../../../styles/compoundStyles';
 import { Paragraph } from '../../../../../styles/typography/typography';
@@ -7,9 +7,6 @@ import { DoubleFlexWrapper } from '../../../../../styles/shared';
 import Button from '../../../../atoms/Button/Button';
 import { ClientDataContext } from '../../context/ClientDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
-import { ThunkDispatch } from 'redux-thunk';
-import { AppTypes } from '../../../../../types/actionTypes/appActionTypes';
-import { bindActionCreators } from 'redux';
 import { addNewClient } from '../../../../../actions/clientActions';
 
 type defaultValues = {
@@ -18,9 +15,8 @@ type defaultValues = {
   country: string;
 };
 
-type ConnectedProps = LinkDispatchProps;
-
-const AddressPage: React.FC<ConnectedProps> = ({ addNewClient }) => {
+const AddressPage: React.FC = () => {
+  const dispatch = useDispatch();
   const { data, setData } = useContext(ClientDataContext);
   const { setCurrentPage } = useContext(PageContext);
 
@@ -33,7 +29,7 @@ const AddressPage: React.FC<ConnectedProps> = ({ addNewClient }) => {
   const handleSubmit = (values: defaultValues): void => {
     setData({ ...data, ...values });
     if (data.name && data.email && data.phoneNumber && data.lat && data.long) {
-      addNewClient(data.name, values.address, data.email, data.phoneNumber, values.city, values.country, data.lat, data.long);
+      dispatch(addNewClient(data.name, values.address, data.email, data.phoneNumber, values.city, values.country, data.lat, data.long));
     }
   };
 
@@ -62,14 +58,4 @@ const AddressPage: React.FC<ConnectedProps> = ({ addNewClient }) => {
   );
 };
 
-interface LinkDispatchProps {
-  addNewClient: (name: string, address: string, email: string, phoneNumber: string, city: string, country: string, lat: number, long: number) => void;
-}
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
-  return {
-    addNewClient: bindActionCreators(addNewClient, dispatch)
-  };
-};
-
-export default connect(null, mapDispatchToProps)(AddressPage);
+export default AddressPage;

@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { HeadingWrapper, MobileCompoundTitle, StyledForm, Subheading, Wrapper } from '../../../../../styles/compoundStyles';
 import { DoubleFlexWrapper } from '../../../../../styles/shared';
 import Button from '../../../../atoms/Button/Button';
 import { Formik } from 'formik';
 import { EmployeeDataContext } from '../../context/EmployeeDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
-import { EmployeeDataInterface, UserDataInterface } from '../../../../../types/modelsTypes';
+import { UserDataInterface } from '../../../../../types/modelsTypes';
 import { AppState } from '../../../../../reducers/rootReducer';
 import UserBox from '../../../../molecules/UserBox/UserBox';
 import { removeDuplicates } from '../../../../../utils/functions';
@@ -32,9 +32,10 @@ type SetMailDefaultValues = {
 
 type DefaultValues = SelectUserDefaultValues | SetMailDefaultValues;
 
-type ConnectedProps = LinkStateProps;
+const SelectEmployee: React.FC = () => {
+  const { allAppUsers } = useSelector((state: AppState) => state.authenticationReducer);
+  const { allCompanyEmployees } = useSelector((state: AppState) => state.employeeReducer);
 
-const SelectEmployee: React.FC<ConnectedProps> = ({ allAppUsers, allCompanyEmployees }) => {
   const { data, setData } = useContext(EmployeeDataContext);
   const { setCurrentPage } = useContext(PageContext);
   const [users, setUsers] = useState<UserDataInterface[]>([]);
@@ -103,13 +104,4 @@ const SelectEmployee: React.FC<ConnectedProps> = ({ allAppUsers, allCompanyEmplo
   );
 };
 
-interface LinkStateProps {
-  allAppUsers: UserDataInterface[];
-  allCompanyEmployees: EmployeeDataInterface[];
-}
-
-const mapStateToProps = ({ authenticationReducer: { allAppUsers }, employeeReducer: { allCompanyEmployees } }: AppState): LinkStateProps => {
-  return { allAppUsers, allCompanyEmployees };
-};
-
-export default connect(mapStateToProps)(SelectEmployee);
+export default SelectEmployee;

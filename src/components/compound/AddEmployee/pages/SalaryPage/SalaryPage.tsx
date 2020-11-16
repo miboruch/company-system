@@ -1,18 +1,13 @@
 import React, { useContext } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import { HeadingWrapper, MobileCompoundTitle, StyledBackParagraph, StyledForm, StyledInput, Subheading, Wrapper } from '../../../../../styles/compoundStyles';
 import { DoubleFlexWrapper } from '../../../../../styles/shared';
 import Button from '../../../../atoms/Button/Button';
 import { EmployeeDataContext } from '../../context/EmployeeDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
-import { ThunkDispatch } from 'redux-thunk';
-import { AppTypes } from '../../../../../types/actionTypes/appActionTypes';
-import { bindActionCreators } from 'redux';
 import { sendRegistrationMail } from '../../../../../actions/authenticationActions';
 import { addNewEmployee } from '../../../../../actions/employeeActions';
-
-type ConnectedProps = LinkDispatchProps;
 
 type DefaultValues = {
   email?: string;
@@ -20,7 +15,8 @@ type DefaultValues = {
   monthlyPrice: number;
 };
 
-const SalaryPage: React.FC<ConnectedProps> = ({ sendRegistrationMail, addNewEmployee }) => {
+const SalaryPage: React.FC = () => {
+  const dispatch = useDispatch();
   const { data, setData } = useContext(EmployeeDataContext);
   const { setCurrentPage } = useContext(PageContext);
 
@@ -34,10 +30,10 @@ const SalaryPage: React.FC<ConnectedProps> = ({ sendRegistrationMail, addNewEmpl
     setData({ ...data, ...values });
     if (data.registerWithMail) {
       if (values.email) {
-        sendRegistrationMail(values.email, values.pricePerHour, values.monthlyPrice);
+        dispatch(sendRegistrationMail(values.email, values.pricePerHour, values.monthlyPrice));
       }
     } else {
-      data.userId && addNewEmployee(data.userId, values.pricePerHour, values.monthlyPrice);
+      data.userId && dispatch(addNewEmployee(data.userId, values.pricePerHour, values.monthlyPrice));
     }
   };
 
@@ -75,16 +71,4 @@ const SalaryPage: React.FC<ConnectedProps> = ({ sendRegistrationMail, addNewEmpl
   );
 };
 
-interface LinkDispatchProps {
-  sendRegistrationMail: (email: string, pricePerHour?: number, monthlyPrice?: number) => void;
-  addNewEmployee: (userId: string, pricePerHour: number, monthlyPrice: number) => void;
-}
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
-  return {
-    sendRegistrationMail: bindActionCreators(sendRegistrationMail, dispatch),
-    addNewEmployee: bindActionCreators(addNewEmployee, dispatch)
-  };
-};
-
-export default connect(null, mapDispatchToProps)(SalaryPage);
+export default SalaryPage;

@@ -1,12 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { Formik } from 'formik';
 import { ClientInterface } from '../../../types/modelsTypes';
 import { AppState } from '../../../reducers/rootReducer';
 import { Paragraph } from '../../../styles/typography/typography';
 import { ButtonWrapper, EmployeeInfoBox, HeaderWrapper, InputWrapper, RowIconWrapper, StyledForm, Title, Wrapper } from '../../../styles/contentStyles';
 import { StyledInput } from '../../../styles/compoundStyles';
-import { DeleteIcon, EditIcon } from '../../../styles/iconStyles';
+import { DeleteIcon, EditIcon, LocationIcon } from '../../../styles/iconStyles';
 import Button from '../../atoms/Button/Button';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
@@ -33,7 +33,8 @@ interface Props {
 
 type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
-const ClientInfo: React.FC<ConnectedProps> = ({ selectedClient, isEditToggled, setEditToggled, setDeleteOpen, editClient, setEditClientCoordsOpen }) => {
+const ClientInfo: React.FC<ConnectedProps> = ({ selectedClient, isEditToggled, setEditToggled, setDeleteOpen, editClient }) => {
+  const dispatch = useDispatch();
   const initialValues: InitialValues = {
     name: selectedClient?.name || '',
     email: selectedClient?.email || '',
@@ -62,6 +63,7 @@ const ClientInfo: React.FC<ConnectedProps> = ({ selectedClient, isEditToggled, s
               <HeaderWrapper>
                 <Title>{values.name}</Title>
                 <RowIconWrapper>
+                  <LocationIcon onClick={() => dispatch(setEditClientCoordsOpen(true))} />
                   <EditIcon onClick={() => setEditToggled(!isEditToggled)} />
                   <DeleteIcon onClick={() => setDeleteOpen(true)} />
                 </RowIconWrapper>
@@ -81,7 +83,6 @@ const ClientInfo: React.FC<ConnectedProps> = ({ selectedClient, isEditToggled, s
                 <StyledInput onChange={handleChange} name={'city'} type={'text'} required={true} labelText={'Miasto'} value={values.city} disabled={!isEditToggled} />
                 <StyledInput onChange={handleChange} name={'country'} type={'text'} required={true} labelText={'Państwo'} value={values.country} disabled={!isEditToggled} />
               </InputWrapper>
-              <p onClick={() => setEditClientCoordsOpen(true)}>Edytuj miejsce na mapie</p>
               <ButtonWrapper>
                 <Button type={'submit'} text={'Zapisz'} />
               </ButtonWrapper>
