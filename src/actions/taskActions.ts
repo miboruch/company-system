@@ -105,6 +105,7 @@ export const getCompanyTasks = () => async (dispatch: Dispatch<AppTypes>, getSta
     }
   } catch (error) {
     dispatch(setTaskError(error));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
 
@@ -153,7 +154,7 @@ export const addNewTask = (date: Date, timeEstimate: number, name: string, descr
   } catch (error) {
     console.log(error);
     dispatch(setTaskError(error));
-    dispatch(setNotificationMessage('Problem z dodaniem zadania', NotificationTypes.Error));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
 
@@ -176,6 +177,7 @@ export const getSingleTask = (taskId: string) => async (dispatch: Dispatch<any>,
     }
   } catch (error) {
     console.log(error);
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
 
@@ -202,7 +204,7 @@ export const deleteTask = (taskId: string) => async (dispatch: Dispatch<any>, ge
   } catch (error) {
     console.log(error);
     dispatch(setTaskError(error));
-    dispatch(setNotificationMessage('Problem z usunięciem zadania', NotificationTypes.Error));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
 
@@ -266,7 +268,7 @@ export const editTask = (taskId: string, date: Date, name: string, description: 
       dispatch(setNotificationMessage('Edytowano zadanie'));
     }
   } catch (error) {
-    dispatch(setNotificationMessage('Problem z edycją zadania', NotificationTypes.Error));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
 
@@ -294,7 +296,7 @@ export const changeTaskState = (taskId: string, isCompleted: boolean) => async (
       dispatch(setNotificationMessage('Zaktualizowano zadanie'));
     }
   } catch (error) {
-    dispatch(setNotificationMessage('Problem z aktualizacją zadania', NotificationTypes.Error));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
 

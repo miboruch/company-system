@@ -117,6 +117,7 @@ const getLastIncomesAndExpenses = (limit?: number) => async (dispatch: Dispatch<
     }
   } catch (error) {
     dispatch(setBudgetError(error));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
 
@@ -208,7 +209,7 @@ export const addIncome = (incomeValue: number, description: string, callback: ()
     }
   } catch (error) {
     dispatch(setBudgetError(error));
-    dispatch(setNotificationMessage('Problem z dodaniem przychodu', NotificationTypes.Error));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
 
@@ -240,7 +241,7 @@ export const addExpense = (expenseValue: number, description: string, callback: 
     }
   } catch (error) {
     dispatch(setBudgetError(error));
-    dispatch(setNotificationMessage('Problem z dodaniem wydatku', NotificationTypes.Error));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
 
@@ -263,6 +264,7 @@ export const deleteIncome = (incomeId: number) => async (dispatch: Dispatch<any>
     }
   } catch (error) {
     dispatch(setBudgetError(error));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
 
@@ -285,6 +287,7 @@ export const deleteExpense = (expenseId: number) => async (dispatch: Dispatch<an
     }
   } catch (error) {
     dispatch(setBudgetError(error));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
 

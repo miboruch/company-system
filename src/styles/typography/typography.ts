@@ -75,7 +75,8 @@ const ErrorParagraph = styled.p<ErrorParagraphInterface>`
   margin-top: 2rem;
   margin-bottom: 0;
   color: tomato;
-  font-weight: ${({ theme }) => theme.font.weight.medium};
+  font-weight: ${({ theme }) => theme.font.weight.book};
+  font-size: 11px;
   line-height: 2.2;
   opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};

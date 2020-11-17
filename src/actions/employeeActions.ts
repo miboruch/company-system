@@ -96,6 +96,7 @@ export const getAllCompanyEmployees = () => async (dispatch: Dispatch<AppTypes>,
     }
   } catch (error) {
     dispatch(setEmployeeError(error));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
 
@@ -152,7 +153,7 @@ export const updateEmployeeSalary = (pricePerHour?: number, monthlyPrice?: numbe
       dispatch(setNotificationMessage('Problem z aktualizacją', NotificationTypes.Error));
     }
   } catch (error) {
-    dispatch(setNotificationMessage('Problem z aktualizacją', NotificationTypes.Error));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
     console.log(error.response);
   }
 };
@@ -186,7 +187,7 @@ export const addNewEmployee = (userId: string, pricePerHour: number, monthlyPric
       dispatch(setNotificationMessage('Problem z dodaniem nowego pracownika', NotificationTypes.Error));
     }
   } catch (error) {
-    dispatch(setNotificationMessage('Problem z dodaniem nowego pracownika', NotificationTypes.Error));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
     dispatch(setEmployeeError(error));
   }
 };

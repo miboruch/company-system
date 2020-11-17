@@ -71,6 +71,7 @@ export const getCurrencyValue = (currencyName: string) => async (dispatch: Dispa
     dispatch(setCurrency(currencyName, value));
   } catch (error) {
     console.log(error);
+    dispatch(setNotificationMessage('Problem z pobraniem walut', NotificationTypes.Error));
   }
 };
 

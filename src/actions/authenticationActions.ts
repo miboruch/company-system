@@ -24,7 +24,6 @@ import { AppState } from '../reducers/rootReducer';
 import { resetState, setNotificationMessage } from './toggleActions';
 import { NotificationTypes } from '../types/actionTypes/toggleAcitonTypes';
 import { RegistrationVerifyTokenResponse } from '../pages/RegisterFromLink/RegisterFromLink';
-import { getCompanyClients, selectClient } from './clientActions';
 
 const authStart = (): AuthStart => {
   return {
@@ -46,14 +45,14 @@ const authSuccess = (token: string, refreshToken: string, expireIn: number): Aut
   };
 };
 
-const authFailure = (): AuthFailure => {
+const authFailure = (message: string): AuthFailure => {
   localStorage.removeItem('token');
   localStorage.removeItem('refreshToken');
   localStorage.removeItem('expireDate');
 
   return {
     type: AUTH_FAILURE,
-    payload: 'Niepoprawny email lub hasło'
+    payload: message
   };
 };
 
@@ -151,7 +150,9 @@ export const userLogin = (email: string, password: string, successCallback: () =
     const milliseconds = data.expireIn - new Date().getTime();
     dispatch(authTimeout(data.refreshToken, milliseconds));
   } catch (error) {
-    dispatch(authFailure());
+    dispatch(authFailure(error.response.data));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
+    console.log(error.response);
   }
 };
 
@@ -168,6 +169,7 @@ export const userLogout = (successCallback?: () => void, errorCallback?: () => v
       !!successCallback && successCallback();
     }
   } catch (error) {
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
     !!errorCallback && errorCallback();
     console.log(error);
   }
@@ -210,8 +212,8 @@ export const userRegister = (
     const milliseconds = data.expireIn - new Date().getTime();
     dispatch(authTimeout(data.refreshToken, milliseconds));
   } catch (error) {
-    dispatch(authFailure());
-    dispatch(setNotificationMessage('Problem z rejestracją', NotificationTypes.Error));
+    dispatch(authFailure(error.response.data));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
 
@@ -284,6 +286,7 @@ export const sendRegistrationMail = (email: string, pricePerHour?: number, month
     }
   } catch (error) {
     console.log(error);
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
 
@@ -300,7 +303,7 @@ export const validateRegistrationToken = (token: string, setLoading: (isLoading:
     dispatch(setNotificationMessage('Token prawidłowy'));
   } catch (error) {
     setLoading(false);
-    dispatch(setNotificationMessage('Token nie jest prawidłowy', NotificationTypes.Error));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
 
@@ -340,8 +343,8 @@ export const registerFromLink = (
     const milliseconds = data.expireIn - new Date().getTime();
     dispatch(authTimeout(data.refreshToken, milliseconds));
   } catch (error) {
-    dispatch(authFailure());
-    dispatch(setNotificationMessage('Problem z utworzeniem nowego konta'));
+    dispatch(authFailure(error.response.data));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
 
@@ -376,7 +379,7 @@ export const editAccount = (email: string, name: string, lastName: string, dateO
       dispatch(setNotificationMessage('Edytowano dane'));
     }
   } catch (error) {
-    dispatch(setNotificationMessage('Problem z edycją danych', NotificationTypes.Error));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
 
@@ -401,6 +404,6 @@ export const editPassword = (password: string, repeatedPassword: string) => asyn
       dispatch(setNotificationMessage('Hasło zostało zmienione'));
     }
   } catch (error) {
-    dispatch(setNotificationMessage('Problem ze zmianą hasła', NotificationTypes.Error));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };

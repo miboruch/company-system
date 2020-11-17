@@ -79,6 +79,7 @@ export const getUserCompanies = () => async (dispatch: Dispatch<any>, getState: 
     }
   } catch (error) {
     dispatch(setCompaniesError(error));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
 
@@ -137,7 +138,7 @@ export const editCompany = (name: string, email: string, nip: string, phoneNumbe
       dispatch(setNotificationMessage('Edytowano firmę'));
     }
   } catch (error) {
-    dispatch(setNotificationMessage('Problem z edycją firmy', NotificationTypes.Error));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
 
@@ -164,7 +165,7 @@ export const editCompanyCoords = (lat: number, long: number) => async (dispatch:
       dispatch(setNotificationMessage('Zapisano koordynacje'));
     }
   } catch (error) {
-    dispatch(setNotificationMessage('Problem z edycją koordynacji', NotificationTypes.Error));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
 
@@ -189,7 +190,7 @@ export const getCompanyOwners = (setCompanyOwners: (owners: CompanyOwnersInterfa
     }
   } catch (error) {
     setLoading(false);
-    dispatch(setNotificationMessage('Problem z pobraniem danych', NotificationTypes.Error));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
 
@@ -214,7 +215,7 @@ export const addNewCompanyOwner = (userId: string, callback: () => void) => asyn
       dispatch(setNotificationMessage('Dodano administratora'));
     }
   } catch (error) {
-    dispatch(setNotificationMessage('Problem z dodaniem administratora', NotificationTypes.Error));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
 
@@ -246,7 +247,7 @@ export const removeCompanyOwner = (userId: string, addEmployee: boolean, callbac
       dispatch(setNotificationMessage('Usunięto administratora'));
     }
   } catch (error) {
-    dispatch(setNotificationMessage('Problem z usunięciem administratora', NotificationTypes.Error));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
 

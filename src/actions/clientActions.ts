@@ -135,7 +135,7 @@ export const addNewClient = (name: string, address: string, email: string, phone
     }
   } catch (error) {
     console.log(error);
-    dispatch(setNotificationMessage('Problem z dodaniem klienta', NotificationTypes.Error));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
     dispatch(setClientError(error));
   }
 };
@@ -162,7 +162,7 @@ export const deleteClient = (clientId: string) => async (dispatch: Dispatch<any>
     }
   } catch (error) {
     console.log(error);
-    dispatch(setNotificationMessage('Problem z usunięciem klienta', NotificationTypes.Error));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
 
@@ -183,6 +183,7 @@ export const getSingleClient = (clientId: string) => async (dispatch: Dispatch<a
     }
   } catch (error) {
     console.log(error);
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
 
@@ -218,7 +219,7 @@ export const editClient = (clientId: string, name: string, email: string, phoneN
       dispatch(setNotificationMessage('Edytowano klienta'));
     }
   } catch (error) {
-    dispatch(setNotificationMessage('Problem z edycją klienta', NotificationTypes.Error));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
 
@@ -246,7 +247,7 @@ export const editClientCoords = (clientId: string, lat: number, long: number) =>
       dispatch(setNotificationMessage('Zapisano koordynacje'));
     }
   } catch (error) {
-    dispatch(setNotificationMessage('Problem z edycją koordynacji', NotificationTypes.Error));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
 

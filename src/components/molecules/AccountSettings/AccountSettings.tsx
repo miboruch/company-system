@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Formik } from 'formik';
 import { StyledInput } from '../../../styles/compoundStyles';
 import NumberFormat from 'react-number-format';
@@ -7,11 +7,7 @@ import { DoubleFlexWrapper, StyledLabel } from '../../../styles/shared';
 import DatePicker from 'react-datepicker';
 import Button from '../../atoms/Button/Button';
 import { AppState } from '../../../reducers/rootReducer';
-import { UserAuthData } from '../../../types/modelsTypes';
 import { StyledForm, Heading } from './AccountSettings.styles';
-import { ThunkDispatch } from 'redux-thunk';
-import { AppTypes } from '../../../types/actionTypes/appActionTypes';
-import { bindActionCreators } from 'redux';
 import { editAccount } from '../../../actions/authenticationActions';
 
 interface DefaultValues {
@@ -25,24 +21,24 @@ interface DefaultValues {
   country: string;
 }
 
-type ConnectedProps = LinkStateProps & LinkDispatchProps;
-
-const AccountSettings: React.FC<ConnectedProps> = ({ userData, editAccount }) => {
+const AccountSettings: React.FC = () => {
+  const dispatch = useDispatch();
+  const { userData } = useSelector((state: AppState) => state.authenticationReducer);
   const [formattedPhoneNumber, setFormattedPhoneNumber] = useState<string>('');
 
   const initialValues: DefaultValues = {
-    email: userData!.email,
-    name: userData!.name,
-    lastName: userData!.lastName,
-    dateOfBirth: new Date(userData!.dateOfBirth),
-    phoneNumber: userData!.phoneNumber,
-    address: userData!.address,
-    city: userData!.city,
-    country: userData!.country
+    email: userData?.email || '',
+    name: userData?.name || '',
+    lastName: userData?.lastName || '',
+    dateOfBirth: new Date(userData?.dateOfBirth || ''),
+    phoneNumber: userData?.phoneNumber || '',
+    address: userData?.address || '',
+    city: userData?.city || '',
+    country: userData?.country || ''
   };
 
   const handleSubmit = ({ email, name, lastName, dateOfBirth, phoneNumber, address, city, country }: DefaultValues) => {
-    editAccount(email, name, lastName, dateOfBirth, phoneNumber, address, city, country);
+    dispatch(editAccount(email, name, lastName, dateOfBirth, phoneNumber, address, city, country));
   };
 
   return (
@@ -82,22 +78,4 @@ const AccountSettings: React.FC<ConnectedProps> = ({ userData, editAccount }) =>
   );
 };
 
-interface LinkStateProps {
-  userData: UserAuthData | null;
-}
-
-interface LinkDispatchProps {
-  editAccount: (email: string, name: string, lastName: string, dateOfBirth: Date, phoneNumber: string, address: string, city: string, country: string) => void;
-}
-
-const mapStateToProps = ({ authenticationReducer: { userData } }: AppState): LinkStateProps => {
-  return { userData };
-};
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
-  return {
-    editAccount: bindActionCreators(editAccount, dispatch)
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AccountSettings);
+export default AccountSettings;

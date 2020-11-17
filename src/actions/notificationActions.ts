@@ -54,6 +54,7 @@ export const checkAsOpen = (notificationId: string) => async (dispatch: Dispatch
     }
   } catch (error) {
     console.log(error);
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
 
@@ -73,6 +74,6 @@ export const deleteNotification = (notificationId: string) => async (dispatch: D
     }
   } catch (error) {
     console.log(error);
-    dispatch(setNotificationMessage('Problem z usunięciem powiadomienia', NotificationTypes.Error));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };

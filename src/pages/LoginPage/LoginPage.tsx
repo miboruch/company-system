@@ -55,7 +55,7 @@ const LoginPage: React.FC<ConnectedProps> = ({ history, userLogin, error, isLoad
                       Nie masz konta? <StyledLink to={'/register'}>zarejestruj się</StyledLink>
                     </AccountParagraph>
                   </FlexWrapperDefault>
-                  <ErrorParagraph isVisible={!!error}>Niepoprawny email lub hasło</ErrorParagraph>
+                  <ErrorParagraph isVisible={!!error}>{error}</ErrorParagraph>
                 </>
               )}
             </StyledForm>

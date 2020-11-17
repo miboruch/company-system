@@ -174,7 +174,7 @@ export const addAttendance = (userId: string, date: Date, wasPresent: boolean, h
       dispatch(getSingleDayAttendance());
     }
   } catch (error) {
-    dispatch(setNotificationMessage('Problem z dodaniem obecności', NotificationTypes.Error));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
 
@@ -202,7 +202,7 @@ export const updateAttendance = (attendanceId: string, wasPresent: boolean, hour
       dispatch(getSingleDayAttendance());
     }
   } catch (error) {
-    dispatch(setNotificationMessage('Problem z aktualizacją obecności', NotificationTypes.Error));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
 
