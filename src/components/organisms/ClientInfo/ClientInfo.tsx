@@ -13,6 +13,7 @@ import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { editClient } from '../../../actions/clientActions';
 import { setEditClientCoordsOpen } from '../../../actions/toggleActions';
+import { ClientSchema } from '../../../validation/modelsValidation';
 
 interface InitialValues {
   name: string;
@@ -56,8 +57,8 @@ const ClientInfo: React.FC<ConnectedProps> = ({ selectedClient, isEditToggled, s
   return (
     <Wrapper>
       {!!selectedClient && (
-        <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize={true}>
-          {({ handleChange, values }) => (
+        <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize={true} validationSchema={ClientSchema} validateOnChange={false} validateOnBlur={false}>
+          {({ handleChange, values, errors }) => (
             <StyledForm>
               <Paragraph>Data dodania: {new Date(selectedClient?.createdDate).toLocaleDateString()}</Paragraph>
               <HeaderWrapper>
@@ -76,12 +77,12 @@ const ClientInfo: React.FC<ConnectedProps> = ({ selectedClient, isEditToggled, s
               </EmployeeInfoBox>
               <Paragraph type={'text'}>Jeżeli chcesz edytować dane klienta, naciśnij przycisk edycji obok nazwy zadania. Pozwoli to na odblokwanie wszystkich pól oraz edycję danych.</Paragraph>
               <InputWrapper>
-                <StyledInput onChange={handleChange} name={'name'} required={true} type={'text'} labelText={'Nazwa'} value={values.name} disabled={!isEditToggled} />
-                <StyledInput onChange={handleChange} name={'email'} required={true} type={'email'} labelText={'Email'} value={values.email} disabled={!isEditToggled} />
-                <StyledInput onChange={handleChange} name={'phoneNumber'} required={true} type={'text'} labelText={'Numer telefonu'} value={values.phoneNumber} disabled={!isEditToggled} />
-                <StyledInput onChange={handleChange} name={'address'} type={'text'} required={true} labelText={'Adres'} value={values.address} disabled={!isEditToggled} />
-                <StyledInput onChange={handleChange} name={'city'} type={'text'} required={true} labelText={'Miasto'} value={values.city} disabled={!isEditToggled} />
-                <StyledInput onChange={handleChange} name={'country'} type={'text'} required={true} labelText={'Państwo'} value={values.country} disabled={!isEditToggled} />
+                <StyledInput onChange={handleChange} name={'name'} required={true} type={'text'} labelText={errors.name || 'Nazwa'} value={values.name} disabled={!isEditToggled} />
+                <StyledInput onChange={handleChange} name={'email'} required={true} type={'email'} labelText={errors.email || 'Email'} value={values.email} disabled={!isEditToggled} />
+                <StyledInput onChange={handleChange} name={'phoneNumber'} required={true} type={'text'} labelText={errors.phoneNumber || 'Numer telefonu'} value={values.phoneNumber} disabled={!isEditToggled} />
+                <StyledInput onChange={handleChange} name={'address'} type={'text'} required={true} labelText={errors.address || 'Adres'} value={values.address} disabled={!isEditToggled} />
+                <StyledInput onChange={handleChange} name={'city'} type={'text'} required={true} labelText={errors.city || 'Miasto'} value={values.city} disabled={!isEditToggled} />
+                <StyledInput onChange={handleChange} name={'country'} type={'text'} required={true} labelText={errors.country ||'Państwo'} value={values.country} disabled={!isEditToggled} />
               </InputWrapper>
               <ButtonWrapper>
                 <Button type={'submit'} text={'Zapisz'} />

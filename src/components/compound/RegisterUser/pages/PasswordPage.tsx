@@ -9,8 +9,6 @@ import { Paragraph } from '../../../../styles/typography/typography';
 import { DoubleFlexWrapper } from '../../../../styles/shared';
 import { StyledInput } from '../../../../pages/LoginPage/LoginPage.styles';
 import { PasswordSchema } from '../validation/validation';
-import { Simulate } from 'react-dom/test-utils';
-import error = Simulate.error;
 
 type defaultValues = {
   password: string;

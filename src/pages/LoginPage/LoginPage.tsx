@@ -14,6 +14,7 @@ import { ErrorParagraph } from '../../styles/typography/typography';
 import { SpinnerWrapper } from '../../styles/shared';
 import Spinner from '../../components/atoms/Spinner/Spinner';
 import LoginTemplate, { TemplatePage } from '../../components/templates/LoginTemplate/LoginTemplate';
+import { LoginSchema } from '../../validation/loginValidation';
 
 type ConnectedProps = RouteComponentProps<any> & LinkDispatchProps & LinkStateProps;
 
@@ -35,8 +36,8 @@ const LoginPage: React.FC<ConnectedProps> = ({ history, userLogin, error, isLoad
   return (
     <LoginTemplate page={TemplatePage.Login}>
       <AuthWrapper>
-        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-          {({ handleChange, values }) => (
+        <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={LoginSchema} validateOnBlur={false} validateOnChange={false}>
+          {({ handleChange, values, errors }) => (
             <StyledForm>
               {isLoading ? (
                 <SpinnerWrapper>
@@ -45,8 +46,8 @@ const LoginPage: React.FC<ConnectedProps> = ({ history, userLogin, error, isLoad
               ) : (
                 <>
                   <Heading>Zaloguj się do panelu</Heading>
-                  <StyledInput onChange={handleChange} type={'email'} name={'email'} value={values.email} required={true} labelText={'Email'} />
-                  <Input onChange={handleChange} type={'password'} name={'password'} value={values.password} required={true} labelText={'Hasło'} />
+                  <StyledInput onChange={handleChange} type={'email'} name={'email'} value={values.email} required={true} labelText={errors.email || 'Email'} />
+                  <Input onChange={handleChange} type={'password'} name={'password'} value={values.password} required={true} labelText={errors.password || 'Hasło'} />
                   <FlexWrapper>
                     <Button type={'submit'} text={'Zaloguj'} />
                   </FlexWrapper>

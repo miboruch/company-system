@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Formik } from 'formik';
@@ -16,6 +16,7 @@ import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { changeTaskState, editTask } from '../../../actions/taskActions';
 import { setTaskMapPreviewOpen } from '../../../actions/toggleActions';
+import { TaskSchema } from '../../../validation/modelsValidation';
 
 interface ParagraphInterface {
   isCompleted: boolean;
@@ -78,8 +79,8 @@ const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, isEditToggled, setEd
   return (
     <Wrapper>
       {!!selectedTask && (
-        <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize={true}>
-          {({ handleChange, values, setFieldValue }) => (
+        <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize={true} validationSchema={TaskSchema} validateOnBlur={false} validateOnChange={false}>
+          {({ handleChange, values, setFieldValue, errors }) => (
             <StyledForm>
               <Paragraph>Data dodania: {new Date(selectedTask.addedDate).toLocaleDateString()}</Paragraph>
               <HeaderWrapper>
@@ -100,17 +101,41 @@ const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, isEditToggled, setEd
               </EmployeeInfoBox>
               <InputWrapper>
                 <div>
-                  <StyledLabel>Data wykonania zadania</StyledLabel>
+                  <StyledLabel>{errors.date || 'Data wykonania zadania'}</StyledLabel>
                   <DatePicker selected={values.date && new Date(values.date)} onChange={(date) => setFieldValue('date', date)} disabled={true} />
                 </div>
               </InputWrapper>
               <Paragraph type={'text'}>Jeżeli chcesz edytować zadanie, naciśnij przycisk edycji obok nazwy zadania. Pozwoli to na odblokwanie wszystkich pól oraz edycję danych.</Paragraph>
               <InputWrapper>
-                <StyledInput onChange={handleChange} name={'name'} required={true} type={'text'} labelText={'Nazwa'} value={values.name} disabled={!isEditToggled} />
-                <StyledInput onChange={handleChange} name={'description'} required={true} type={'text'} labelText={'Opis'} value={values.description} disabled={!isEditToggled} />
-                <StyledInput onChange={handleChange} name={'timeEstimate'} required={true} type={'number'} labelText={'Szacowany czas'} value={values.timeEstimate} disabled={!isEditToggled} />
-                <StyledInput onChange={handleChange} name={'taskIncome'} type={'number'} required={false} labelText={'Przychód z zadania'} value={values.taskIncome} disabled={!isEditToggled} />
-                <StyledInput onChange={handleChange} name={'taskExpense'} type={'number'} required={false} labelText={'Wydatek z zadania'} value={values.taskExpense} disabled={!isEditToggled} />
+                <StyledInput onChange={handleChange} name={'name'} required={true} type={'text'} labelText={errors.name || 'Nazwa'} value={values.name} disabled={!isEditToggled} />
+                <StyledInput onChange={handleChange} name={'description'} required={true} type={'text'} labelText={errors.description || 'Opis'} value={values.description} disabled={!isEditToggled} />
+                <StyledInput
+                  onChange={handleChange}
+                  name={'timeEstimate'}
+                  required={true}
+                  type={'number'}
+                  labelText={errors.timeEstimate || 'Szacowany czas'}
+                  value={values.timeEstimate}
+                  disabled={!isEditToggled}
+                />
+                <StyledInput
+                  onChange={handleChange}
+                  name={'taskIncome'}
+                  type={'number'}
+                  required={false}
+                  labelText={errors.taskIncome || 'Przychód z zadania'}
+                  value={values.taskIncome}
+                  disabled={!isEditToggled}
+                />
+                <StyledInput
+                  onChange={handleChange}
+                  name={'taskExpense'}
+                  type={'number'}
+                  required={false}
+                  labelText={errors.taskExpense || 'Wydatek z zadania'}
+                  value={values.taskExpense}
+                  disabled={!isEditToggled}
+                />
               </InputWrapper>
               <ButtonWrapper>
                 <Button type={'submit'} text={'Zapisz'} />
