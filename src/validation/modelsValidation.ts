@@ -47,3 +47,13 @@ export const AccountSchema = Yup.object().shape({
   city: Yup.string().min(2, 'Minimum 2 znaki').required('To pole jest wymagane'),
   country: Yup.string().min(2, 'Minimum 2 znaki').required('To pole jest wymagane')
 });
+
+export const IncomeExpenseSchema = Yup.object().shape({
+  value: Yup.number().min(0, 'Minimalna wartość to 0').required('To pole jest wymagane'),
+  description: Yup.string().required('To pole jest wymagane')
+});
+
+export const AttendanceSchema = Yup.object().shape({
+  wasPresent: Yup.boolean().required('To pole jest wymagane'),
+  hours: Yup.number().when('wasPresent', { is: true, then: Yup.number().required('To pole jest wymagane').min(0, 'Minimalna wartość to 0'), otherwise: Yup.number() })
+});

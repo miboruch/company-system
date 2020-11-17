@@ -9,6 +9,7 @@ import Button from '../../atoms/Button/Button';
 import { AppState } from '../../../reducers/rootReducer';
 import { StyledForm, Heading } from './AccountSettings.styles';
 import { editAccount } from '../../../actions/authenticationActions';
+import { AccountSchema } from '../../../validation/modelsValidation';
 
 interface DefaultValues {
   email: string;
@@ -42,19 +43,19 @@ const AccountSettings: React.FC = () => {
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize={true}>
-      {({ handleChange, handleBlur, values, setFieldValue }) => (
+    <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize={true} validationSchema={AccountSchema} validateOnChange={false} validateOnBlur={false}>
+      {({ handleChange, values, setFieldValue, errors }) => (
         <StyledForm>
           <Heading>Ustawienia konta</Heading>
-          <StyledInput type={'email'} name={'email'} onChange={handleChange} value={values.email} required={true} labelText={'Email'} />
-          <StyledInput type={'text'} name={'name'} onChange={handleChange} value={values.name} required={true} labelText={'Imię'} />
-          <StyledInput type={'text'} name={'lastName'} onChange={handleChange} value={values.lastName} required={true} labelText={'Nazwisko'} />
+          <StyledInput type={'email'} name={'email'} onChange={handleChange} value={values.email} required={true} labelText={errors.email || 'Email'} />
+          <StyledInput type={'text'} name={'name'} onChange={handleChange} value={values.name} required={true} labelText={errors.name || 'Imię'} />
+          <StyledInput type={'text'} name={'lastName'} onChange={handleChange} value={values.lastName} required={true} labelText={errors.lastName || 'Nazwisko'} />
           <div>
-            <StyledLabel>Data urodzenia</StyledLabel>
+            <StyledLabel>{errors.dateOfBirth || 'Data urodzenia'}</StyledLabel>
             <DatePicker selected={values.dateOfBirth} onChange={(date) => setFieldValue('dateOfBirth', date)} dateFormat={'dd/MM/yyyy'} />
           </div>
           <div>
-            <StyledLabel>Numer telefonu</StyledLabel>
+            <StyledLabel>{errors.phoneNumber || 'Numer telefonu'}</StyledLabel>
             <NumberFormat
               onValueChange={({ formattedValue, value }) => {
                 setFieldValue('phoneNumber', value);
@@ -66,9 +67,9 @@ const AccountSettings: React.FC = () => {
               className={'phone-input'}
             />
           </div>
-          <StyledInput type={'text'} name={'address'} onChange={handleChange} value={values.address} required={true} labelText={'Adres'} />
-          <StyledInput type={'text'} name={'city'} onChange={handleChange} value={values.city} required={true} labelText={'Miasto'} />
-          <StyledInput type={'text'} name={'country'} onChange={handleChange} value={values.country} required={true} labelText={'Kraj'} />
+          <StyledInput type={'text'} name={'address'} onChange={handleChange} value={values.address} required={true} labelText={errors.address || 'Adres'} />
+          <StyledInput type={'text'} name={'city'} onChange={handleChange} value={values.city} required={true} labelText={errors.city || 'Miasto'} />
+          <StyledInput type={'text'} name={'country'} onChange={handleChange} value={values.country} required={true} labelText={errors.country || 'Kraj'} />
           <DoubleFlexWrapper>
             <Button type={'submit'} text={'Zapisz'} />
           </DoubleFlexWrapper>

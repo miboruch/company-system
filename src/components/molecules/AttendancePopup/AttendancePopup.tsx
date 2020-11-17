@@ -13,6 +13,7 @@ import { ButtonWrapper, ContentWrapper } from '../../../styles/popupStyles';
 import { CheckedIcon, NotCheckedIcon, EmptyIcon } from '../../../styles/iconStyles';
 import { FlexWrapper, StyledForm, StyledParagraph, StyledFlexWrapper, InputWrapper } from './AttendancePopup.styles';
 import { addAttendance, updateAttendance } from '../../../actions/attendanceActions';
+import { AttendanceSchema } from '../../../validation/modelsValidation';
 
 interface Props {
   attendance: AttendanceInterface | null;
@@ -48,8 +49,8 @@ const AttendancePopup: React.FC<ConnectedProps> = ({ attendance, isOpen, setOpen
   return (
     <PopupTemplate isOpen={isOpen} headerText={`Obecność z dnia ${date.toLocaleDateString()}`} isHigher={false}>
       <div>
-        <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize={true}>
-          {({ handleChange, values, setFieldValue }) =>
+        <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize={true} validationSchema={AttendanceSchema} validateOnChange={false} validateOnBlur={false}>
+          {({ handleChange, values, setFieldValue, errors }) =>
             !!attendance && (
               <StyledForm>
                 <ContentWrapper>
@@ -70,7 +71,7 @@ const AttendancePopup: React.FC<ConnectedProps> = ({ attendance, isOpen, setOpen
                       name={'hours'}
                       required={false}
                       type={'number'}
-                      labelText={'Ilość godzin'}
+                      labelText={errors.hours || 'Ilość godzin'}
                       disabled={!values.wasPresent}
                       value={!values.wasPresent ? 0 : values.hours}
                     />

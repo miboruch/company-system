@@ -14,6 +14,7 @@ import { StyledInput } from '../../../styles/compoundStyles';
 import { editCompany } from '../../../actions/companyActions';
 import { DoubleFlexWrapper, StyledLabel } from '../../../styles/shared';
 import { setEditCompanyCoordsOpen } from '../../../actions/toggleActions';
+import { CompanySchema } from '../../../validation/modelsValidation';
 
 interface DefaultValues {
   name: string;
@@ -46,15 +47,15 @@ const CompanySettings: React.FC<ConnectedProps> = ({ currentCompany, editCompany
 
   return (
     <>
-      <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize={true}>
-        {({ handleChange, values, setFieldValue }) => (
+      <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize={true} validationSchema={CompanySchema} validateOnBlur={false} validateOnChange={false}>
+        {({ handleChange, values, setFieldValue, errors }) => (
           <StyledForm>
             <Heading>Ustawienia firmy</Heading>
-            <StyledInput type={'text'} name={'name'} onChange={handleChange} value={values.name} required={true} labelText={'Imię'} />
-            <StyledInput type={'email'} name={'email'} onChange={handleChange} value={values.email} required={true} labelText={'Email'} />
-            <StyledInput type={'text'} name={'nip'} onChange={handleChange} value={values.nip} required={true} labelText={'NIP'} />
+            <StyledInput type={'text'} name={'name'} onChange={handleChange} value={values.name} required={true} labelText={errors.name || 'Imię'} />
+            <StyledInput type={'email'} name={'email'} onChange={handleChange} value={values.email} required={true} labelText={errors.email || 'Email'} />
+            <StyledInput type={'text'} name={'nip'} onChange={handleChange} value={values.nip} required={true} labelText={errors.nip || 'NIP'} />
             <div>
-              <StyledLabel>Numer telefonu</StyledLabel>
+              <StyledLabel>{errors.phoneNumber || 'Numer telefonu'}</StyledLabel>
               <NumberFormat
                 onValueChange={({ formattedValue, value }) => {
                   setFieldValue('phoneNumber', value);
@@ -66,9 +67,9 @@ const CompanySettings: React.FC<ConnectedProps> = ({ currentCompany, editCompany
                 className={'phone-input'}
               />
             </div>
-            <StyledInput type={'text'} name={'address'} onChange={handleChange} value={values.address} required={true} labelText={'Adres'} />
-            <StyledInput type={'text'} name={'city'} onChange={handleChange} value={values.city} required={true} labelText={'Miasto'} />
-            <StyledInput type={'text'} name={'country'} onChange={handleChange} value={values.country} required={true} labelText={'Kraj'} />
+            <StyledInput type={'text'} name={'address'} onChange={handleChange} value={values.address} required={true} labelText={errors.address || 'Adres'} />
+            <StyledInput type={'text'} name={'city'} onChange={handleChange} value={values.city} required={true} labelText={errors.city || 'Miasto'} />
+            <StyledInput type={'text'} name={'country'} onChange={handleChange} value={values.country} required={true} labelText={errors.country || 'Kraj'} />
             <p onClick={() => setEditCompanyCoordsOpen(true)}>Edit company coords</p>
             <DoubleFlexWrapper>
               <Button type={'submit'} text={'Zapisz'} />

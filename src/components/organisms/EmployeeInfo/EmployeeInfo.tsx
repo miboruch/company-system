@@ -12,6 +12,7 @@ import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { updateEmployeeSalary } from '../../../actions/employeeActions';
 import { DeleteIcon } from '../../../styles/iconStyles';
+import { EmployeeSchema } from '../../../validation/modelsValidation';
 
 interface InitialValues {
   hourSalary?: number;
@@ -37,8 +38,8 @@ const EmployeeInfo: React.FC<ConnectedProps> = ({ selectedEmployee, updateEmploy
   return (
     <Wrapper>
       {!!selectedEmployee && (
-        <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize={true}>
-          {({ handleChange, values }) => (
+        <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize={true} validationSchema={EmployeeSchema} validateOnChange={false} validateOnBlur={false}>
+          {({ handleChange, values, errors }) => (
             <StyledForm>
               <Paragraph>W firmie od: {new Date(selectedEmployee.userId.createdDate).toLocaleDateString()}</Paragraph>
               <HeaderWrapper>
@@ -58,14 +59,22 @@ const EmployeeInfo: React.FC<ConnectedProps> = ({ selectedEmployee, updateEmploy
                 perspiciatis, porro quam, quasi quos vitae. Blanditiis deleniti et illum inventore ipsum?
               </Paragraph>
               <InputWrapper>
-                <StyledInput name={'hourSalary'} type={'number'} value={values.hourSalary} onChange={handleChange} required={false} labelText={'Stawka godzinowa'} disabled={!!values.monthlySalary} />
+                <StyledInput
+                  name={'hourSalary'}
+                  type={'number'}
+                  value={values.hourSalary}
+                  onChange={handleChange}
+                  required={false}
+                  labelText={errors.hourSalary || 'Stawka godzinowa'}
+                  disabled={!!values.monthlySalary}
+                />
                 <StyledInput
                   name={'monthlySalary'}
                   type={'number'}
                   value={values.monthlySalary}
                   onChange={handleChange}
                   required={false}
-                  labelText={'Stawka miesięczna'}
+                  labelText={errors.monthlySalary || 'Stawka miesięczna'}
                   disabled={!!values.hourSalary}
                 />
               </InputWrapper>
