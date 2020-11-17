@@ -6,6 +6,7 @@ import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { ClientDataContext } from '../../context/ClientDataContext';
 import { FlexWrapper, StyledLabel } from '../../../../../styles/shared';
 import { HeadingWrapper, MobileCompoundTitle, StyledForm, StyledInput, Subheading, Wrapper } from '../../../../../styles/compoundStyles';
+import { MainClientDataSchema } from '../../validation/validation';
 
 type defaultValues = {
   name: string;
@@ -30,18 +31,18 @@ const MainClientPage: React.FC = () => {
   };
 
   return (
-    <Formik onSubmit={handleSubmit} initialValues={initialValues}>
-      {({ handleChange, values, setFieldValue }) => (
+    <Formik onSubmit={handleSubmit} initialValues={initialValues} validationSchema={MainClientDataSchema} validateOnChange={false} validateOnBlur={false}>
+      {({ handleChange, values, setFieldValue, errors }) => (
         <Wrapper>
           <StyledForm>
             <HeadingWrapper>
               <MobileCompoundTitle>Główne informacje o kliencie</MobileCompoundTitle>
               <Subheading>Wszystkie pola są wymagane</Subheading>
             </HeadingWrapper>
-            <StyledInput onChange={handleChange} name={'name'} value={values.name} required={true} type={'text'} labelText={'Nazwa'} />
-            <StyledInput onChange={handleChange} name={'email'} value={values.email} required={true} type={'email'} labelText={'Email'} />
+            <StyledInput onChange={handleChange} name={'name'} value={values.name} required={true} type={'text'} labelText={errors.name || 'Nazwa'} />
+            <StyledInput onChange={handleChange} name={'email'} value={values.email} required={true} type={'email'} labelText={errors.email || 'Email'} />
             <div>
-              <StyledLabel>Numer telefonu</StyledLabel>
+              <StyledLabel>{errors.phoneNumber || 'Numer telefonu'}</StyledLabel>
               <NumberFormat
                 onValueChange={({ formattedValue, value }) => {
                   setFieldValue('phoneNumber', value);

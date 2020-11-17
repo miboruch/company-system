@@ -8,6 +8,7 @@ import { EmployeeDataContext } from '../../context/EmployeeDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { sendRegistrationMail } from '../../../../../actions/authenticationActions';
 import { addNewEmployee } from '../../../../../actions/employeeActions';
+import { EmployeeSalarySchema } from '../../validation/validation';
 
 type DefaultValues = {
   email?: string;
@@ -43,17 +44,33 @@ const SalaryPage: React.FC = () => {
   };
 
   return (
-    <Formik onSubmit={handleSubmit} initialValues={initialValues}>
-      {({ handleChange, values }) => (
+    <Formik onSubmit={handleSubmit} initialValues={initialValues} validationSchema={EmployeeSalarySchema} validateOnBlur={false} validateOnChange={false}>
+      {({ handleChange, values, errors }) => (
         <Wrapper>
           <StyledForm>
             <HeadingWrapper>
               <MobileCompoundTitle>Informacje szczegółowe</MobileCompoundTitle>
               <Subheading>Uzupełnij informacje</Subheading>
             </HeadingWrapper>
-            {data.registerWithMail && <StyledInput onChange={handleChange} name={'email'} value={values.email} type={'email'} required={true} labelText={'Email'} />}
-            <StyledInput onChange={handleChange} name={'pricePerHour'} value={values.pricePerHour} type={'number'} required={false} labelText={'Stawka godzinowa'} disabled={!!values.monthlyPrice} />
-            <StyledInput onChange={handleChange} name={'monthlyPrice'} value={values.monthlyPrice} type={'number'} required={false} labelText={'Stawka miesięczna'} disabled={!!values.pricePerHour} />
+            {data.registerWithMail && <StyledInput onChange={handleChange} name={'email'} value={values.email} type={'email'} required={true} labelText={errors.email || 'Email'} />}
+            <StyledInput
+              onChange={handleChange}
+              name={'pricePerHour'}
+              value={values.pricePerHour}
+              type={'number'}
+              required={false}
+              labelText={errors.pricePerHour || 'Stawka godzinowa'}
+              disabled={!!values.monthlyPrice}
+            />
+            <StyledInput
+              onChange={handleChange}
+              name={'monthlyPrice'}
+              value={values.monthlyPrice}
+              type={'number'}
+              required={false}
+              labelText={errors.monthlyPrice || 'Stawka miesięczna'}
+              disabled={!!values.pricePerHour}
+            />
             <DoubleFlexWrapper>
               <StyledBackParagraph type={'back'} onClick={() => handlePageBack()}>
                 Wstecz

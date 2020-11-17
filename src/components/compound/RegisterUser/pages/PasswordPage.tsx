@@ -8,6 +8,9 @@ import { ErrorParagraph } from '../../../../styles/typography/typography';
 import { Paragraph } from '../../../../styles/typography/typography';
 import { DoubleFlexWrapper } from '../../../../styles/shared';
 import { StyledInput } from '../../../../pages/LoginPage/LoginPage.styles';
+import { PasswordSchema } from '../validation/validation';
+import { Simulate } from 'react-dom/test-utils';
+import error = Simulate.error;
 
 type defaultValues = {
   password: string;
@@ -33,12 +36,12 @@ const PasswordPage: React.FC = () => {
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-      {({ handleChange, values }) => (
+    <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={PasswordSchema} validateOnChange={false} validateOnBlur={false}>
+      {({ handleChange, values, errors }) => (
         <StyledForm>
           <Heading>Podaj hasło</Heading>
-          <StyledInput onChange={handleChange} name={'password'} value={values.password} required={true} type={'password'} labelText={'Hasło'} />
-          <StyledInput onChange={handleChange} name={'repeatedPassword'} value={values.repeatedPassword} required={true} type={'password'} labelText={'Powtórz hasło'} />
+          <StyledInput onChange={handleChange} name={'password'} value={values.password} required={true} type={'password'} labelText={errors.password || 'Hasło'} />
+          <StyledInput onChange={handleChange} name={'repeatedPassword'} value={values.repeatedPassword} required={true} type={'password'} labelText={errors.repeatedPassword || 'Powtórz hasło'} />
           <DoubleFlexWrapper>
             <Paragraph type={'back'} onClick={() => handlePageBack()}>
               Wstecz

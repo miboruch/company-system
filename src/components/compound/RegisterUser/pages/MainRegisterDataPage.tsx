@@ -6,6 +6,7 @@ import { StyledForm, Heading } from '../../../../pages/LoginPage/LoginPage.style
 import { FlexWrapper, StyledLabel } from '../../../../styles/shared';
 import Button from '../../../atoms/Button/Button';
 import { StyledInput } from '../../../../pages/LoginPage/LoginPage.styles';
+import { MainRegisterDataSchema } from '../validation/validation';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import { PageContext } from '../context/PageContext';
@@ -38,15 +39,15 @@ const MainRegisterDataPage: React.FC<Props> = ({ isRegistrationLink }) => {
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-      {({ handleChange, values, setFieldValue }) => (
+    <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={MainRegisterDataSchema} validateOnChange={false} validateOnBlur={false}>
+      {({ handleChange, values, setFieldValue, errors }) => (
         <StyledForm>
           <Heading>Wypełnij dane</Heading>
-          <StyledInput onChange={handleChange} name={'email'} value={values.email} required={true} type={'email'} labelText={'Email'} disabled={isRegistrationLink} />
-          <StyledInput onChange={handleChange} name={'name'} value={values.name} required={true} type={'string'} labelText={'Imię'} />
-          <StyledInput onChange={handleChange} name={'lastName'} value={values.lastName} required={true} type={'string'} labelText={'Nazwisko'} />
+          <StyledInput onChange={handleChange} name={'email'} value={values.email} required={true} type={'email'} labelText={errors.email || 'Email'} disabled={isRegistrationLink} />
+          <StyledInput onChange={handleChange} name={'name'} value={values.name} required={true} type={'string'} labelText={errors.name || 'Imię'} />
+          <StyledInput onChange={handleChange} name={'lastName'} value={values.lastName} required={true} type={'string'} labelText={errors.lastName || 'Nazwisko'} />
           <div>
-            <StyledLabel>Data urodzenia</StyledLabel>
+            <StyledLabel>{errors.dateOfBirth || 'Data urodzenia'}</StyledLabel>
             <DatePicker selected={values.dateOfBirth} onChange={(date) => setFieldValue('dateOfBirth', date)} dateFormat={'dd/MM/yyyy'} />
           </div>
           <FlexWrapper>

@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
+import DatePicker from 'react-datepicker';
 import { Formik } from 'formik';
 import { HeadingWrapper, MobileCompoundTitle, StyledForm, StyledInput, Subheading, Wrapper } from '../../../../../styles/compoundStyles';
 import { DoubleFlexWrapper, StyledLabel } from '../../../../../styles/shared';
 import Button from '../../../../atoms/Button/Button';
 import { TaskDataContext } from '../../context/TaskDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
-import DatePicker from 'react-datepicker';
+import { TaskInfoSchema } from '../../validation/validation';
 
 interface DefaultValues {
   name: string;
@@ -34,18 +35,18 @@ const TaskInfoPage: React.FC<Props> = () => {
   };
 
   return (
-    <Formik onSubmit={handleSubmit} initialValues={initialValues}>
-      {({ handleChange, values, setFieldValue }) => (
+    <Formik onSubmit={handleSubmit} initialValues={initialValues} validationSchema={TaskInfoSchema} validateOnChange={false} validateOnBlur={false}>
+      {({ handleChange, values, setFieldValue, errors }) => (
         <Wrapper>
           <StyledForm>
             <HeadingWrapper>
               <MobileCompoundTitle>Główne informacje o zadaniu</MobileCompoundTitle>
               <Subheading>Wszystkie pola są wymagane</Subheading>
             </HeadingWrapper>
-            <StyledInput onChange={handleChange} name={'name'} value={values.name} required={true} type={'text'} labelText={'Nazwa zadania'} />
-            <StyledInput onChange={handleChange} name={'description'} value={values.description} required={true} type={'text'} labelText={'Opis zadania'} />
+            <StyledInput onChange={handleChange} name={'name'} value={values.name} required={true} type={'text'} labelText={errors.name || 'Nazwa zadania'} />
+            <StyledInput onChange={handleChange} name={'description'} value={values.description} required={true} type={'text'} labelText={errors.description || 'Opis zadania'} />
             <div>
-              <StyledLabel>Data zadania</StyledLabel>
+              <StyledLabel>{errors.date || 'Data zadania'}</StyledLabel>
               <DatePicker selected={values.date} onChange={(date) => setFieldValue('date', date)} dateFormat={'dd/MM/yyyy'} />
             </div>
             <DoubleFlexWrapper>

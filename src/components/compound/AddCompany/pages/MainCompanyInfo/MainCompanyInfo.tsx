@@ -6,6 +6,7 @@ import { FlexWrapper, StyledLabel } from '../../../../../styles/shared';
 import { CompanyDataContext } from '../../context/CompanyDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { Wrapper, StyledForm, StyledInput, MobileCompoundTitle, Subheading, HeadingWrapper } from '../../../../../styles/compoundStyles';
+import { MainCompanyDataSchema } from '../../validation/validation';
 
 type defaultValues = {
   name: string;
@@ -14,9 +15,7 @@ type defaultValues = {
   phoneNumber: string;
 };
 
-interface Props {}
-
-const MainCompanyInfo: React.FC<Props> = () => {
+const MainCompanyInfo: React.FC = () => {
   const { data, setData } = useContext(CompanyDataContext);
   const { setCurrentPage } = useContext(PageContext);
   const [formattedPhoneNumber, setFormattedPhoneNumber] = useState<string | null>(null);
@@ -36,19 +35,19 @@ const MainCompanyInfo: React.FC<Props> = () => {
   };
 
   return (
-    <Formik onSubmit={handleSubmit} initialValues={initialValues}>
-      {({ handleChange, values, setFieldValue }) => (
+    <Formik onSubmit={handleSubmit} initialValues={initialValues} validationSchema={MainCompanyDataSchema} validateOnBlur={false} validateOnChange={false}>
+      {({ handleChange, values, setFieldValue, errors }) => (
         <Wrapper>
           <StyledForm>
             <HeadingWrapper>
               <MobileCompoundTitle>Główne informacje o twojej firmie</MobileCompoundTitle>
               <Subheading>Wszystkie pola są wymagane</Subheading>
             </HeadingWrapper>
-            <StyledInput onChange={handleChange} name={'name'} value={values.name} required={true} type={'text'} labelText={'Naza firmy'} />
-            <StyledInput onChange={handleChange} name={'nip'} value={values.nip} required={true} type={'text'} labelText={'NIP'} />
-            <StyledInput onChange={handleChange} name={'email'} value={values.email} required={true} type={'email'} labelText={'Email'} />
+            <StyledInput onChange={handleChange} name={'name'} value={values.name} required={true} type={'text'} labelText={errors.name || 'Naza firmy'} />
+            <StyledInput onChange={handleChange} name={'nip'} value={values.nip} required={true} type={'text'} labelText={errors.nip || 'NIP'} />
+            <StyledInput onChange={handleChange} name={'email'} value={values.email} required={true} type={'email'} labelText={errors.email || 'Email'} />
             <div>
-              <StyledLabel>Numer telefonu</StyledLabel>
+              <StyledLabel>{errors.phoneNumber || 'Numer telefonu'}</StyledLabel>
               <NumberFormat
                 onValueChange={({ formattedValue, value }) => {
                   setFieldValue('phoneNumber', value);

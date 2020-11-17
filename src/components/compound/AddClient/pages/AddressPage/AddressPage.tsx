@@ -8,6 +8,7 @@ import Button from '../../../../atoms/Button/Button';
 import { ClientDataContext } from '../../context/ClientDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { addNewClient } from '../../../../../actions/clientActions';
+import { AddressDataSchema } from '../../validation/validation';
 
 type defaultValues = {
   address: string;
@@ -34,17 +35,17 @@ const AddressPage: React.FC = () => {
   };
 
   return (
-    <Formik onSubmit={handleSubmit} initialValues={initialValues}>
-      {({ handleChange, values }) => (
+    <Formik onSubmit={handleSubmit} initialValues={initialValues} validationSchema={AddressDataSchema} validateOnChange={false} validateOnBlur={false}>
+      {({ handleChange, values, errors }) => (
         <Wrapper>
           <StyledForm>
             <HeadingWrapper>
               <MobileCompoundTitle>Informacje adresowe</MobileCompoundTitle>
               <Subheading>Wszystkie pola są wymagane</Subheading>
             </HeadingWrapper>
-            <StyledInput onChange={handleChange} name={'address'} value={values.address} required={true} type={'text'} labelText={'Adres'} />
-            <StyledInput onChange={handleChange} name={'city'} value={values.city} required={true} type={'text'} labelText={'Miasto'} />
-            <StyledInput onChange={handleChange} name={'country'} value={values.country} required={true} type={'text'} labelText={'Kraj'} />
+            <StyledInput onChange={handleChange} name={'address'} value={values.address} required={true} type={'text'} labelText={errors.address || 'Adres'} />
+            <StyledInput onChange={handleChange} name={'city'} value={values.city} required={true} type={'text'} labelText={errors.city || 'Miasto'} />
+            <StyledInput onChange={handleChange} name={'country'} value={values.country} required={true} type={'text'} labelText={errors.country || 'Kraj'} />
             <DoubleFlexWrapper>
               <Paragraph type={'back'} onClick={() => setCurrentPage(PageSettingEnum.Second)}>
                 Wstecz

@@ -11,6 +11,7 @@ import { Paragraph } from '../../../../styles/typography/typography';
 import { DoubleFlexWrapper, StyledLabel } from '../../../../styles/shared';
 import { registerFromLink, userRegister } from '../../../../actions/authenticationActions';
 import { StyledInput } from '../../../../pages/LoginPage/LoginPage.styles';
+import { ContactDataSchema } from '../validation/validation';
 
 type defaultValues = {
   phoneNumber: string;
@@ -67,15 +68,15 @@ const ContactDataPage: React.FC<ConnectedProps> = ({ history, isRegistrationLink
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-      {({ handleChange, values, setFieldValue }) => (
+    <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={ContactDataSchema} validateOnBlur={false} validateOnChange={false}>
+      {({ handleChange, values, setFieldValue, errors }) => (
         <StyledForm>
           <Heading>Podaj informacje kontaktowe</Heading>
-          <StyledInput onChange={handleChange} name={'address'} value={values.address} required={true} type={'text'} labelText={'Adres'} />
-          <StyledInput onChange={handleChange} name={'city'} value={values.city} required={true} type={'text'} labelText={'Miasto'} />
-          <StyledInput onChange={handleChange} name={'country'} value={values.country} required={true} type={'text'} labelText={'Państwo'} />
+          <StyledInput onChange={handleChange} name={'address'} value={values.address} required={true} type={'text'} labelText={errors.address || 'Adres'} />
+          <StyledInput onChange={handleChange} name={'city'} value={values.city} required={true} type={'text'} labelText={errors.city || 'Miasto'} />
+          <StyledInput onChange={handleChange} name={'country'} value={values.country} required={true} type={'text'} labelText={errors.country || 'Państwo'} />
           <div>
-            <StyledLabel>Numer telefonu</StyledLabel>
+            <StyledLabel>{errors.phoneNumber || 'Numer telefonu'}</StyledLabel>
             <NumberFormat
               onValueChange={({ formattedValue, value }) => {
                 setFieldValue('phoneNumber', value);

@@ -10,6 +10,7 @@ import { addNewTask } from '../../../../../actions/taskActions';
 import Dropdown from '../../../../atoms/Dropdown/Dropdown';
 import { getCompanyClients } from '../../../../../actions/clientActions';
 import { AppState } from '../../../../../reducers/rootReducer';
+import { TaskSpecificInfoSchema } from '../../validation/validation';
 
 interface DefaultValues {
   timeEstimate: number;
@@ -46,8 +47,8 @@ const SpecificInfoPage: React.FC = () => {
   const handleClientSelect = (selected: string | null) => console.log(allCompanyClients.find((client) => client.name === selected));
 
   return (
-    <Formik onSubmit={handleSubmit} initialValues={initialValues}>
-      {({ handleChange, values, setFieldValue }) => (
+    <Formik onSubmit={handleSubmit} initialValues={initialValues} validationSchema={TaskSpecificInfoSchema} validateOnBlur={false} validateOnChange={false}>
+      {({ handleChange, values, setFieldValue, errors }) => (
         <Wrapper>
           <StyledForm>
             <HeadingWrapper>
@@ -59,9 +60,9 @@ const SpecificInfoPage: React.FC = () => {
               onChange={(selectedItem) => setFieldValue('clientId', allCompanyClients.find((client) => client.name === selectedItem)?._id)}
               labelText={'Wybierz klienta'}
             />
-            <StyledInput onChange={handleChange} name={'timeEstimate'} value={values.timeEstimate} required={true} type={'number'} labelText={'Szacowany czas'} />
-            <StyledInput onChange={handleChange} name={'taskIncome'} value={values.taskIncome} required={false} type={'number'} labelText={'Przychód z zadania'} />
-            <StyledInput onChange={handleChange} name={'taskExpense'} value={values.taskExpense} required={false} type={'number'} labelText={'Wydatek na zadanie'} />
+            <StyledInput onChange={handleChange} name={'timeEstimate'} value={values.timeEstimate} required={true} type={'number'} labelText={errors.timeEstimate || 'Szacowany czas *'} />
+            <StyledInput onChange={handleChange} name={'taskIncome'} value={values.taskIncome} required={false} type={'number'} labelText={errors.taskIncome || 'Przychód z zadania *'} />
+            <StyledInput onChange={handleChange} name={'taskExpense'} value={values.taskExpense} required={false} type={'number'} labelText={errors.taskExpense || 'Wydatek na zadanie *'} />
             <DoubleFlexWrapper>
               <StyledBackParagraph type={'back'} onClick={() => setCurrentPage(PageSettingEnum.First)}>
                 Wstecz

@@ -12,6 +12,7 @@ import { AppState } from '../../../../../reducers/rootReducer';
 import UserBox from '../../../../molecules/UserBox/UserBox';
 import { removeDuplicates } from '../../../../../utils/functions';
 import { Paragraph } from '../../../../../styles/typography/typography';
+import { MainEmployeeSchema } from '../../validation/validation';
 
 const UsersWrapper = styled.div`
   width: 100%;
@@ -56,7 +57,7 @@ const SelectEmployee: React.FC = () => {
   };
 
   return (
-    <Formik onSubmit={handleSubmit} initialValues={initialValues}>
+    <Formik onSubmit={handleSubmit} initialValues={initialValues} validationSchema={MainEmployeeSchema} validateOnChange={false} validateOnBlur={false}>
       {({ handleChange, values, setFieldValue }) => (
         <Wrapper>
           <StyledForm>
@@ -85,7 +86,8 @@ const SelectEmployee: React.FC = () => {
               )}
             </UsersWrapper>
             <DoubleFlexWrapper>
-              <p
+              <Paragraph
+                type={'text'}
                 onClick={() => {
                   setFieldValue('userId', undefined);
                   setFieldValue('registerWithMail', true);
@@ -94,7 +96,7 @@ const SelectEmployee: React.FC = () => {
                 }}
               >
                 Wyślij zaproszenie na maila
-              </p>
+              </Paragraph>
               <Button type={'submit'} text={'Dalej'} disabled={!data.userId && !data.registerWithMail} />
             </DoubleFlexWrapper>
           </StyledForm>
