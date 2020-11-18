@@ -1,14 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 import CloseButton from '../../atoms/CloseButton/CloseButton';
 import gsap from 'gsap';
 import { Formik, Form } from 'formik';
 import { modalOpenAnimation } from '../../../animations/animations';
 import { StyledInput } from '../../../styles/compoundStyles';
-import { Heading } from '../../../styles/typography/typography';
+import { Heading, Paragraph } from '../../../styles/typography/typography';
 import { FlexWrapper } from '../../../styles/shared';
 import InvoiceItem from '../../molecules/InvoiceItemForm/InvoiceItemForm';
 import Button from '../../atoms/Button/Button';
+import { API_URL } from '../../../utils/config';
+import { useSelector } from 'react-redux';
+import { AppState } from '../../../reducers/rootReducer';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -95,6 +99,8 @@ interface Props {
 }
 
 const GenerateInvoice: React.FC<Props> = ({ isOpen, setOpen }) => {
+  const { currentCompany } = useSelector((state: AppState) => state.companyReducer);
+  const { token } = useSelector((state: AppState) => state.authenticationReducer);
   const backgroundRef = useRef<HTMLDivElement | null>(null);
   const boxRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
@@ -116,8 +122,35 @@ const GenerateInvoice: React.FC<Props> = ({ isOpen, setOpen }) => {
     isOpen ? tl.play() : tl.reverse();
   }, [isOpen]);
 
-  const handleSubmit = ({ name, address, city, country }: InvoiceInitialValues) => {
+  const generateInvoiceApi = async (name: string, address: string, city: string, country: string, items: ItemInterface[]): Promise<any> => {
+    try {
+      if (currentCompany && token) {
+        const { data } = await axios.post(
+          `${API_URL}/invoice/create-invoice?company_id=${currentCompany._id}`,
+          {
+            name,
+            address,
+            city,
+            country,
+            items
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
+        console.log(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSubmit = async ({ name, address, city, country }: InvoiceInitialValues) => {
     console.log(name, address, city, country);
+    console.log(items);
+    await generateInvoiceApi(name, address, city, country, items);
   };
 
   return (
@@ -142,6 +175,9 @@ const GenerateInvoice: React.FC<Props> = ({ isOpen, setOpen }) => {
                 </ColumnWrapper>
               </FormContentWrapper>
               <Button type={'submit'} text={'Generuj'} />
+              {items.map((item, index) => (
+                <Paragraph key={index}>{item.item}</Paragraph>
+              ))}
             </StyledForm>
           )}
         </Formik>

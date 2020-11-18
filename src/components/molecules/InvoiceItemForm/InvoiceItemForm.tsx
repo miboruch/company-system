@@ -41,9 +41,6 @@ const InvoiceItem: React.FC<Props> = ({ items, setItems }) => {
           <StyledInput type={'number'} name={'quantity'} value={values.quantity} onChange={handleChange} labelText={'Ilość'} required={true} />
           <StyledInput type={'number'} name={'amount'} value={values.amount} onChange={handleChange} labelText={'Cena'} required={true} />
           <Button type={'submit'} text={'Dodaj'} />
-          {items.map((item, index) => (
-            <Paragraph key={index}>{item.item}</Paragraph>
-          ))}
         </Form>
       )}
     </Formik>
