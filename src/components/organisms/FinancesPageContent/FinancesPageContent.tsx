@@ -21,6 +21,9 @@ import { getCurrencyValue } from '../../../actions/toggleActions';
 import { CurrencyInterface } from '../../../types/actionTypes/toggleAcitonTypes';
 import { roundTo2 } from '../../../utils/functions';
 import { appCurrencies } from '../../../utils/config';
+import { InfoWrapper, StatisticsHeading } from '../LandingPageContent/LandingPageContent.styles';
+import { ArrowIcon } from '../../../styles/iconStyles';
+import GenerateInvoice from '../GenerateInvoice/GenerateInvoice';
 
 const Content = styled.div`
   width: 100%;
@@ -84,6 +87,7 @@ type ConnectedProps = LinkStateProps & LinkDispatchProps;
 
 const FinancesPageContent: React.FC<ConnectedProps> = ({ getIncomeExpenseInTimePeriod, lastIncomes, lastExpenses, budget, currency, getCurrencyValue }) => {
   const [isPopupOpen, setPopupOpen] = useState<boolean>(false);
+  const [isGenerateInvoiceOpen, setGenerateInvoiceOpen] = useState<boolean>(false);
   const [popupType, setPopupType] = useState<FinancePopupInterface>(FinancePopupInterface.Income);
   const [chartData, setChartData] = useState<Array<IncomeDataInterface> | null>(null);
   const [daysBack, setDaysBackTo] = useState<number>(7);
@@ -134,7 +138,9 @@ const FinancesPageContent: React.FC<ConnectedProps> = ({ getIncomeExpenseInTimeP
             <Heading>Waluty</Heading>
             {appCurrencies.map((currency) => (
               // <CurrencyBox key={currency}>
-              <Heading key={currency} onClick={() => getCurrencyValue(currency)}>{currency}</Heading>
+              <Heading key={currency} onClick={() => getCurrencyValue(currency)}>
+                {currency}
+              </Heading>
               // </CurrencyBox>
             ))}
           </InfoBoxWrapper>
@@ -156,9 +162,14 @@ const FinancesPageContent: React.FC<ConnectedProps> = ({ getIncomeExpenseInTimeP
               }}
             />
           </ButtonWrapper>
+          <InfoWrapper onClick={() => setGenerateInvoiceOpen(true)}>
+            <StatisticsHeading>Wygeneruj nową fakturę</StatisticsHeading>
+            <ArrowIcon />
+          </InfoWrapper>
         </ContentGridWrapper>
       </Content>
       <IncomeExpensePopup type={popupType} isOpen={isPopupOpen} setOpen={setPopupOpen} />
+      <GenerateInvoice isOpen={isGenerateInvoiceOpen} setOpen={setGenerateInvoiceOpen} />
     </GridWrapper>
   );
 };

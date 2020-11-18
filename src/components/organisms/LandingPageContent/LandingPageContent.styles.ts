@@ -82,7 +82,7 @@ const StatisticsHeading = styled(Heading)`
   font-size: 22px;
   font-weight: ${({theme}) => theme.font.weight.demi};
   text-overflow: ellipsis;
-  max-width: 110px;
+  max-width: 150px;
   margin-bottom: 1.5rem;
 `;
 

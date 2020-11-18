@@ -22,7 +22,7 @@ const ContentGridWrapper = styled.section<ContentGridWrapperInterface>`
     ${({ isFinancesPage }) =>
       isFinancesPage &&
       css`
-        grid-template-areas: 'budget budget history' 'chart chart history' 'currency buttons history';
+        grid-template-areas: 'budget budget history' 'chart chart history' 'currency buttons info';
       `}
   }
 

@@ -16,7 +16,7 @@ export const ContactDataSchema = Yup.object().shape({
 
 export const PasswordSchema = Yup.object().shape({
   password: Yup.string()
-    .matches(/^(?=.*\d)(?=.*[a-z])[\w~@#$%^&*+=`|{}:;!.?\"()\[\]-]{8,25}$/)
+    .matches(/^(?=.*\d)(?=.*[a-z])[\w~@#$%^&*+=`|{}:;!.?"()[\]-]{8,25}$/)
     .required('To pole jest wymagane'),
   repeatedPassword: Yup.string()
     .oneOf([Yup.ref('password'), undefined], 'Hasło nie jest takie samo')
