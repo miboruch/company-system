@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
+import { saveAs } from 'file-saver';
 import styled from 'styled-components';
 import CloseButton from '../../atoms/CloseButton/CloseButton';
 import gsap from 'gsap';
@@ -13,7 +14,6 @@ import Button from '../../atoms/Button/Button';
 import { API_URL } from '../../../utils/config';
 import { useSelector } from 'react-redux';
 import { AppState } from '../../../reducers/rootReducer';
-import { saveAs } from 'file-saver';
 
 const Wrapper = styled.div`
   position: fixed;

@@ -24,6 +24,7 @@ import { AppState } from '../reducers/rootReducer';
 import { resetState, setNotificationMessage } from './toggleActions';
 import { NotificationTypes } from '../types/actionTypes/toggleAcitonTypes';
 import { RegistrationVerifyTokenResponse } from '../pages/RegisterFromLink/RegisterFromLink';
+import { authApi } from '../api';
 
 const authStart = (): AuthStart => {
   return {
@@ -122,11 +123,13 @@ export const setUserRole = (role: UserRole): SetUserRole => {
 
 export const getUserData = (token: string) => async (dispatch: Dispatch<AppTypes>) => {
   try {
-    const { data } = await axios.get(`${API_URL}/user/user-data`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
+    // const { data } = await axios.get(`${API_URL}/user/user-data`, {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`
+    //   }
+    // });
+
+    const { data } = await authApi.get('/user/user-data');
 
     dispatch(setUserData(data._id, data.email, data.name, data.lastName, data.dateOfBirth, data.phoneNumber, data.country, data.city, data.address));
   } catch (error) {

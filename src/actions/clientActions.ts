@@ -24,6 +24,7 @@ import { setNotificationMessage } from './toggleActions';
 import { NotificationTypes } from '../types/actionTypes/toggleAcitonTypes';
 import { getCompanyTasks, selectTask } from './taskActions';
 import { setCompany } from './companyActions';
+import { adminApi } from '../api';
 
 const setClientsLoading = (isLoading: boolean): SetClientsLoading => {
   return {
@@ -75,11 +76,15 @@ export const getCompanyClients = () => async (dispatch: Dispatch<AppTypes>, getS
 
   try {
     if (currentCompany?._id && token) {
-      const { data } = await axios.get(`${API_URL}/client/get-company-clients?company_id=${currentCompany._id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      // const { data } = await axios.get(`${API_URL}/client/get-company-clients?company_id=${currentCompany._id}`, {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`
+      //   }
+      // });
+
+      const { data } = await adminApi.get('/client/get-company-clients?test=test');
+      console.log('COMPANY CLIENTS');
+      console.log(data);
 
       dispatch(setCompanyClients(data));
     } else {
