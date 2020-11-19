@@ -137,27 +137,27 @@ export const getUserData = (token: string) => async (dispatch: Dispatch<AppTypes
   }
 };
 
-export const userLogin = (email: string, password: string, successCallback: () => void) => async (dispatch: Dispatch<AppTypes | any>) => {
-  try {
-    dispatch(authStart());
-
-    const { data } = await axios.post(`${API_URL}/auth/login`, {
-      email,
-      password
-    });
-
-    dispatch(authSuccess(data.token, data.refreshToken, data.expireIn));
-    dispatch(getUserData(data.token));
-    successCallback();
-
-    const milliseconds = data.expireIn - new Date().getTime();
-    dispatch(authTimeout(data.refreshToken, milliseconds));
-  } catch (error) {
-    dispatch(authFailure(error.response.data));
-    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
-    console.log(error.response);
-  }
-};
+// export const userLogin = (email: string, password: string, successCallback: () => void) => async (dispatch: Dispatch<AppTypes | any>) => {
+//   try {
+//     dispatch(authStart());
+//
+//     const { data } = await axios.post(`${API_URL}/auth/login`, {
+//       email,
+//       password
+//     });
+//
+//     dispatch(authSuccess(data.token, data.refreshToken, data.expireIn));
+//     dispatch(getUserData(data.token));
+//     successCallback();
+//
+//     const milliseconds = data.expireIn - new Date().getTime();
+//     dispatch(authTimeout(data.refreshToken, milliseconds));
+//   } catch (error) {
+//     dispatch(authFailure(error.response.data));
+//     dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
+//     console.log(error.response);
+//   }
+// };
 
 export const userLogout = (successCallback?: () => void, errorCallback?: () => void) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   try {
@@ -178,47 +178,47 @@ export const userLogout = (successCallback?: () => void, errorCallback?: () => v
   }
 };
 
-export const userRegister = (
-  email: string,
-  password: string,
-  repeatedPassword: string,
-  name: string,
-  lastName: string,
-  dateOfBirth: Date,
-  phoneNumber: string,
-  country: string,
-  city: string,
-  address: string,
-  callback: () => void
-) => async (dispatch: Dispatch<any>) => {
-  try {
-    dispatch(authStart());
-
-    const { data } = await axios.post(`${API_URL}/auth/register`, {
-      email,
-      password,
-      repeatedPassword,
-      name,
-      lastName,
-      dateOfBirth,
-      phoneNumber,
-      country,
-      city,
-      address
-    });
-
-    dispatch(authSuccess(data.token, data.refreshToken, data.expireIn));
-    dispatch(getUserData(data.token));
-    dispatch(setNotificationMessage('Utworzono nowe konto'));
-    callback();
-
-    const milliseconds = data.expireIn - new Date().getTime();
-    dispatch(authTimeout(data.refreshToken, milliseconds));
-  } catch (error) {
-    dispatch(authFailure(error.response.data));
-    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
-  }
-};
+// export const userRegister = (
+//   email: string,
+//   password: string,
+//   repeatedPassword: string,
+//   name: string,
+//   lastName: string,
+//   dateOfBirth: Date,
+//   phoneNumber: string,
+//   country: string,
+//   city: string,
+//   address: string,
+//   callback: () => void
+// ) => async (dispatch: Dispatch<any>) => {
+//   try {
+//     dispatch(authStart());
+//
+//     const { data } = await axios.post(`${API_URL}/auth/register`, {
+//       email,
+//       password,
+//       repeatedPassword,
+//       name,
+//       lastName,
+//       dateOfBirth,
+//       phoneNumber,
+//       country,
+//       city,
+//       address
+//     });
+//
+//     dispatch(authSuccess(data.token, data.refreshToken, data.expireIn));
+//     dispatch(getUserData(data.token));
+//     dispatch(setNotificationMessage('Utworzono nowe konto'));
+//     callback();
+//
+//     const milliseconds = data.expireIn - new Date().getTime();
+//     dispatch(authTimeout(data.refreshToken, milliseconds));
+//   } catch (error) {
+//     dispatch(authFailure(error.response.data));
+//     dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
+//   }
+// };
 
 export const authenticateCheck = (successCallback: () => void, errorCallback: () => void) => async (dispatch: Dispatch<AppTypes | any>) => {
   const token = localStorage.getItem('token');
@@ -268,6 +268,7 @@ export const getAllAppUsers = () => async (dispatch: Dispatch<AppTypes>, getStat
   }
 };
 
+//REGISTRATION FROM MAIL SLICE
 export const sendRegistrationMail = (email: string, pricePerHour?: number, monthlyPrice?: number) => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
   const { token } = getState().authenticationReducer;
   const { currentCompany } = getState().companyReducer;
@@ -350,6 +351,9 @@ export const registerFromLink = (
     dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
+
+
+//ACCOUNT SLICE
 
 export const editAccount = (email: string, name: string, lastName: string, dateOfBirth: Date, phoneNumber: string, address: string, city: string, country: string) => async (
   dispatch: Dispatch<any>,

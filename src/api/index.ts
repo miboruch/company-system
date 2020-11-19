@@ -24,8 +24,6 @@ const tokenListener = () => {
 const companyIdListener = () => {
   const { currentCompany } = store.getState().companyReducer;
   if (currentCompany) {
-    // adminApi.defaults.params['company_id'] = currentCompany._id;
-    // adminApi.defaults.params.common['company_id'] = currentCompany._id;
     adminApi.interceptors.request.use((config) => {
       config.params = config.params || {};
       config.params['company_id'] = currentCompany._id;

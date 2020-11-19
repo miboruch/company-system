@@ -9,7 +9,8 @@ import { PageContext } from '../context/PageContext';
 import { Heading, StyledForm } from '../../../../pages/LoginPage/LoginPage.styles';
 import { Paragraph } from '../../../../styles/typography/typography';
 import { DoubleFlexWrapper, StyledLabel } from '../../../../styles/shared';
-import { registerFromLink, userRegister } from '../../../../actions/authenticationActions';
+import { registerFromLink } from '../../../../actions/authenticationActions';
+import { userRegister } from '../../../../ducks/auth/register/register';
 import { StyledInput } from '../../../../pages/LoginPage/LoginPage.styles';
 import { ContactDataSchema } from '../validation/validation';
 
@@ -57,10 +58,23 @@ const ContactDataPage: React.FC<ConnectedProps> = ({ history, isRegistrationLink
       }
     } else {
       if (data.email && data.password && data.repeatedPassword && data.name && data.lastName && data.dateOfBirth) {
+        const { email, password, repeatedPassword, name, lastName, dateOfBirth } = data;
         dispatch(
-          userRegister(data.email, data.password, data.repeatedPassword, data.name, data.lastName, data.dateOfBirth, phoneNumber, country, city, address, () => {
-            history.push('/select');
-            setData({});
+          userRegister({
+            email,
+            password,
+            repeatedPassword,
+            name,
+            lastName,
+            dateOfBirth,
+            phoneNumber,
+            country,
+            city,
+            address,
+            callback: () => {
+              history.push('/select');
+              setData({});
+            }
           })
         );
       }

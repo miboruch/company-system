@@ -1,13 +1,13 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { bindActionCreators } from 'redux';
 import { Formik } from 'formik';
 import Input from '../../components/atoms/Input/Input';
 import Button from '../../components/atoms/Button/Button';
 import { AppTypes } from '../../types/actionTypes/appActionTypes';
-import { userLogin } from '../../actions/authenticationActions';
+// import { userLogin } from '../../actions/authenticationActions';
 import { AccountParagraph, AuthWrapper, FlexWrapper, FlexWrapperDefault, Heading, StyledForm, StyledInput, StyledLink } from './LoginPage.styles';
 import { AppState } from '../../reducers/rootReducer';
 import { ErrorParagraph } from '../../styles/typography/typography';
@@ -15,6 +15,7 @@ import { SpinnerWrapper } from '../../styles/shared';
 import Spinner from '../../components/atoms/Spinner/Spinner';
 import LoginTemplate, { TemplatePage } from '../../components/templates/LoginTemplate/LoginTemplate';
 import { LoginSchema } from '../../validation/loginValidation';
+import { userLogin } from '../../ducks/auth/login/login';
 
 type ConnectedProps = RouteComponentProps<any> & LinkDispatchProps & LinkStateProps;
 
@@ -23,14 +24,16 @@ interface InitialValues {
   password: string;
 }
 
-const LoginPage: React.FC<ConnectedProps> = ({ history, userLogin, error, isLoading }) => {
+const LoginPage: React.FC<ConnectedProps> = ({ history, error, isLoading }) => {
+  const dispatch = useDispatch();
   const initialValues: InitialValues = {
     email: '',
     password: ''
   };
 
-  const handleSubmit = (values: InitialValues): void => {
-    userLogin(values.email, values.password, () => history.push('/select'));
+  const handleSubmit = ({ email, password }: InitialValues): void => {
+    dispatch(userLogin({ email, password, callback: () => history.push('/select') }));
+    // userLogin(values.email, values.password, () => history.push('/select'));
   };
 
   return (
@@ -73,7 +76,7 @@ interface LinkStateProps {
 }
 
 interface LinkDispatchProps {
-  userLogin: (email: string, password: string, successCallback: () => void) => void;
+  // userLogin: (email: string, password: string, successCallback: () => void) => void;
 }
 
 const mapStateToProps = ({ authenticationReducer: { error, isLoading } }: AppState): LinkStateProps => {
@@ -82,7 +85,7 @@ const mapStateToProps = ({ authenticationReducer: { error, isLoading } }: AppSta
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
   return {
-    userLogin: bindActionCreators(userLogin, dispatch)
+    // userLogin: bindActionCreators(userLogin, dispatch)
   };
 };
 

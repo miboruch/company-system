@@ -7,7 +7,7 @@ import Button from '../../atoms/Button/Button';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
-import { setUserRole, userLogout } from '../../../actions/authenticationActions';
+import { setUserRole } from '../../../actions/authenticationActions';
 import { AppState } from '../../../reducers/rootReducer';
 import { MenuContext } from '../../../providers/MenuContext/MenuContext';
 import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';

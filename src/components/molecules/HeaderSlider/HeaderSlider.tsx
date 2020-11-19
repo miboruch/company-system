@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { bindActionCreators } from 'redux';
 import { useOutsideClick } from '../../../utils/customHooks';
@@ -9,9 +9,10 @@ import { AppState } from '../../../reducers/rootReducer';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
 import { notificationsAnimation } from '../../../animations/animations';
-import { userLogout } from '../../../actions/authenticationActions';
+// import { userLogout } from '../../../actions/authenticationActions';
 import { LogoutIcon } from '../../../styles/iconStyles';
 import { StyledWrapper, SliderItem, Content, Text } from './HeaderSlider.styles';
+import {userLogout} from '../../../ducks/auth/logout/logout';
 
 interface Props {
   isOpen: boolean;
@@ -21,7 +22,8 @@ interface Props {
 
 type ConnectedProps = Props & LinkStateProps & LinkDispatchProps & RouteComponentProps;
 
-const HeaderSlider: React.FC<ConnectedProps> = ({ history, isOpen, setOpen, isMobile, role, userLogout }) => {
+const HeaderSlider: React.FC<ConnectedProps> = ({ history, isOpen, setOpen, isMobile, role }) => {
+  const dispatch = useDispatch();
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
@@ -42,7 +44,7 @@ const HeaderSlider: React.FC<ConnectedProps> = ({ history, isOpen, setOpen, isMo
         <SliderItem onClick={() => (role === UserRole.User ? history.push('/user/settings') : history.push('/admin/settings'))}>
           <Text>Ustawienia</Text>
         </SliderItem>
-        <SliderItem onClick={() => userLogout(() => history.push('/login'))}>
+        <SliderItem onClick={() => dispatch(userLogout(() => history.push('/login')))}>
           <Text>Wyloguj</Text>
           <LogoutIcon />
         </SliderItem>
@@ -56,12 +58,12 @@ interface LinkStateProps {
 }
 
 interface LinkDispatchProps {
-  userLogout: (successCallback: () => void) => void;
+  // userLogout: (successCallback: () => void) => void;
 }
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
   return {
-    userLogout: bindActionCreators(userLogout, dispatch)
+    // userLogout: bindActionCreators(userLogout, dispatch)
   };
 };
 
