@@ -76,13 +76,13 @@ export const getCompanyClients = () => async (dispatch: Dispatch<AppTypes>, getS
 
   try {
     if (currentCompany?._id && token) {
-      // const { data } = await axios.get(`${API_URL}/client/get-company-clients?company_id=${currentCompany._id}`, {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`
-      //   }
-      // });
+      const { data } = await axios.get(`${API_URL}/client/get-company-clients?company_id=${currentCompany._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
 
-      const { data } = await adminApi.get('/client/get-company-clients?test=test');
+      // const { data } = await adminApi.get('/client/get-company-clients?test=test');
       console.log('COMPANY CLIENTS');
       console.log(data);
 

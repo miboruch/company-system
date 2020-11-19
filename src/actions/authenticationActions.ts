@@ -123,13 +123,13 @@ export const setUserRole = (role: UserRole): SetUserRole => {
 
 export const getUserData = (token: string) => async (dispatch: Dispatch<AppTypes>) => {
   try {
-    // const { data } = await axios.get(`${API_URL}/user/user-data`, {
-    //   headers: {
-    //     Authorization: `Bearer ${token}`
-    //   }
-    // });
+    const { data } = await axios.get(`${API_URL}/user/user-data`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
 
-    const { data } = await authApi.get('/user/user-data');
+    // const { data } = await authApi.get('/user/user-data');
 
     dispatch(setUserData(data._id, data.email, data.name, data.lastName, data.dateOfBirth, data.phoneNumber, data.country, data.city, data.address));
   } catch (error) {
@@ -137,27 +137,27 @@ export const getUserData = (token: string) => async (dispatch: Dispatch<AppTypes
   }
 };
 
-// export const userLogin = (email: string, password: string, successCallback: () => void) => async (dispatch: Dispatch<AppTypes | any>) => {
-//   try {
-//     dispatch(authStart());
-//
-//     const { data } = await axios.post(`${API_URL}/auth/login`, {
-//       email,
-//       password
-//     });
-//
-//     dispatch(authSuccess(data.token, data.refreshToken, data.expireIn));
-//     dispatch(getUserData(data.token));
-//     successCallback();
-//
-//     const milliseconds = data.expireIn - new Date().getTime();
-//     dispatch(authTimeout(data.refreshToken, milliseconds));
-//   } catch (error) {
-//     dispatch(authFailure(error.response.data));
-//     dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
-//     console.log(error.response);
-//   }
-// };
+export const userLogin = (email: string, password: string, successCallback: () => void) => async (dispatch: Dispatch<AppTypes | any>) => {
+  try {
+    dispatch(authStart());
+
+    const { data } = await axios.post(`${API_URL}/auth/login`, {
+      email,
+      password
+    });
+
+    dispatch(authSuccess(data.token, data.refreshToken, data.expireIn));
+    dispatch(getUserData(data.token));
+    successCallback();
+
+    const milliseconds = data.expireIn - new Date().getTime();
+    dispatch(authTimeout(data.refreshToken, milliseconds));
+  } catch (error) {
+    dispatch(authFailure(error.response.data));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
+    console.log(error.response);
+  }
+};
 
 export const userLogout = (successCallback?: () => void, errorCallback?: () => void) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   try {
@@ -178,47 +178,47 @@ export const userLogout = (successCallback?: () => void, errorCallback?: () => v
   }
 };
 
-// export const userRegister = (
-//   email: string,
-//   password: string,
-//   repeatedPassword: string,
-//   name: string,
-//   lastName: string,
-//   dateOfBirth: Date,
-//   phoneNumber: string,
-//   country: string,
-//   city: string,
-//   address: string,
-//   callback: () => void
-// ) => async (dispatch: Dispatch<any>) => {
-//   try {
-//     dispatch(authStart());
-//
-//     const { data } = await axios.post(`${API_URL}/auth/register`, {
-//       email,
-//       password,
-//       repeatedPassword,
-//       name,
-//       lastName,
-//       dateOfBirth,
-//       phoneNumber,
-//       country,
-//       city,
-//       address
-//     });
-//
-//     dispatch(authSuccess(data.token, data.refreshToken, data.expireIn));
-//     dispatch(getUserData(data.token));
-//     dispatch(setNotificationMessage('Utworzono nowe konto'));
-//     callback();
-//
-//     const milliseconds = data.expireIn - new Date().getTime();
-//     dispatch(authTimeout(data.refreshToken, milliseconds));
-//   } catch (error) {
-//     dispatch(authFailure(error.response.data));
-//     dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
-//   }
-// };
+export const userRegister = (
+  email: string,
+  password: string,
+  repeatedPassword: string,
+  name: string,
+  lastName: string,
+  dateOfBirth: Date,
+  phoneNumber: string,
+  country: string,
+  city: string,
+  address: string,
+  callback: () => void
+) => async (dispatch: Dispatch<any>) => {
+  try {
+    dispatch(authStart());
+
+    const { data } = await axios.post(`${API_URL}/auth/register`, {
+      email,
+      password,
+      repeatedPassword,
+      name,
+      lastName,
+      dateOfBirth,
+      phoneNumber,
+      country,
+      city,
+      address
+    });
+
+    dispatch(authSuccess(data.token, data.refreshToken, data.expireIn));
+    dispatch(getUserData(data.token));
+    dispatch(setNotificationMessage('Utworzono nowe konto'));
+    callback();
+
+    const milliseconds = data.expireIn - new Date().getTime();
+    dispatch(authTimeout(data.refreshToken, milliseconds));
+  } catch (error) {
+    dispatch(authFailure(error.response.data));
+    dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
+  }
+};
 
 export const authenticateCheck = (successCallback: () => void, errorCallback: () => void) => async (dispatch: Dispatch<AppTypes | any>) => {
   const token = localStorage.getItem('token');
