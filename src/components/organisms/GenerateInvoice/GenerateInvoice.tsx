@@ -13,6 +13,7 @@ import Button from '../../atoms/Button/Button';
 import { API_URL } from '../../../utils/config';
 import { useSelector } from 'react-redux';
 import { AppState } from '../../../reducers/rootReducer';
+import { saveAs } from 'file-saver';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -140,7 +141,9 @@ const GenerateInvoice: React.FC<Props> = ({ isOpen, setOpen }) => {
             }
           }
         );
-        console.log(data);
+
+        const base64pdf = `data:application/pdf;base64,${data}`;
+        saveAs(base64pdf, `faktura-${new Date().getTime()}.pdf`);
       }
     } catch (error) {
       console.log(error);
