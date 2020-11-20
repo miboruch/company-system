@@ -24,6 +24,7 @@ import { API_URL } from '../utils/config';
 import { AppState } from '../reducers/rootReducer';
 import { setNotificationMessage } from './toggleActions';
 import { NotificationTypes } from '../types/actionTypes/toggleAcitonTypes';
+import { UserRole } from '../types/actionTypes/authenticationActionTypes';
 
 const setEmployeeLoading = (isLoading: boolean): SetEmployeeLoading => {
   return {
@@ -77,16 +78,19 @@ export const setEmployeeInfoOpen = (isOpen: boolean): SetEmployeeInfoOpen => {
 export const getAllCompanyEmployees = () => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
   dispatch(setEmployeeLoading(true));
 
-  const { token } = getState().authenticationReducer;
+  const { token, role } = getState().authenticationReducer;
   const { currentCompany } = getState().companyReducer;
 
   try {
     if (currentCompany?._id && token) {
-      const { data } = await axios.get(`${API_URL}/employee/get-company-employees?company_id=${currentCompany._id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
+      const { data } = await axios.get(
+        role === UserRole.Admin ? `${API_URL}/employee/get-company-employees?company_id=${currentCompany._id}` : `${API_URL}/employee/employee-data?company_id=${currentCompany._id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
         }
-      });
+      );
 
       // data.length > 0 && dispatch(setSelectedEmployee(data[0]));
 
@@ -192,23 +196,32 @@ export const addNewEmployee = (userId: string, pricePerHour: number, monthlyPric
   }
 };
 
-export const getEmployeeHours =  (userId: string, monthIndex: number, setHours: (hours: number) => void) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
-  const { token } = getState().authenticationReducer;
+export const getEmployeeHours = (userId: string, monthIndex: number, setHours: (hours: number) => void) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
+  const { token, role } = getState().authenticationReducer;
   const { currentCompany } = getState().companyReducer;
 
   try {
     dispatch(setEmployeeLoading(true));
     if (currentCompany?._id && token) {
-      const { data } = await axios.get(`${API_URL}/attendance/get-single-user-hours/${userId}?company_id=${currentCompany._id}&month=${monthIndex}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      if (role === UserRole.User) {
+        const { data } = await axios.get(`${API_URL}/attendance/count-user-hours?company_id=${currentCompany._id}&month=${monthIndex}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
 
-      setHours(data.totalHours);
+        setHours(data.totalHours);
+      } else {
+        const { data } = await axios.get(`${API_URL}/attendance/get-single-user-hours/${userId}?company_id=${currentCompany._id}&month=${monthIndex}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
 
-      dispatch(setEmployeeLoading(false));
+        setHours(data.totalHours);
+      }
     }
+    dispatch(setEmployeeLoading(false));
   } catch (error) {
     console.log(error);
     dispatch(setEmployeeLoading(false));
@@ -216,22 +229,31 @@ export const getEmployeeHours =  (userId: string, monthIndex: number, setHours: 
 };
 
 export const getEmployeeSalary = (userId: string, monthIndex: number, setSalary: (hours: number) => void) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
-  const { token } = getState().authenticationReducer;
+  const { token, role } = getState().authenticationReducer;
   const { currentCompany } = getState().companyReducer;
 
   try {
     dispatch(setEmployeeLoading(true));
     if (currentCompany?._id && token) {
-      const { data } = await axios.get(`${API_URL}/attendance/get-single-user-salary/${userId}?company_id=${currentCompany._id}&month=${monthIndex}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      if (role === UserRole.User) {
+        const { data } = await axios.get(`${API_URL}/attendance/count-user-salary?company_id=${currentCompany._id}&month=${monthIndex}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
 
-      setSalary(data.salary);
+        setSalary(data.salary);
+      } else {
+        const { data } = await axios.get(`${API_URL}/attendance/get-single-user-salary/${userId}?company_id=${currentCompany._id}&month=${monthIndex}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
 
-      dispatch(setEmployeeLoading(false));
+        setSalary(data.salary);
+      }
     }
+    dispatch(setEmployeeLoading(false));
   } catch (error) {
     console.log(error);
     dispatch(setEmployeeLoading(false));

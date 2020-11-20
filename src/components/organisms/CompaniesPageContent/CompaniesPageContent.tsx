@@ -6,19 +6,19 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { getUserCompanies, setAddCompanyOpen, setCompany } from '../../../actions/companyActions';
-import { AddIcon, SpinnerWrapper } from '../../../styles/shared';
+import { AddIcon, AddWrapper, SpinnerWrapper } from '../../../styles/shared';
 import Spinner from '../../atoms/Spinner/Spinner';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
 import { Table, Wrapper } from '../../../pages/CompaniesPage/CompaniesPage.styles';
 import { Paragraph } from '../../../styles/typography/typography';
-import { AddWrapper } from '../../../styles/shared';
 import ListBox from '../../molecules/ListBox/ListBox';
 import AddCompanyController from '../../compound/AddCompany/AddCompanyController';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
 
 type ConnectedProps = LinkStateProps & LinkDispatchProps & RouteComponentProps<any>;
 
-const CompaniesPageContent: React.FC<ConnectedProps> = ({ history, userCompanies, getUserCompanies, isLoading, setAddCompanyOpen, setCompany }) => {
+const CompaniesPageContent: React.FC<ConnectedProps> = ({ history, role, userCompanies, getUserCompanies, isLoading, setAddCompanyOpen, setCompany }) => {
   useEffect(() => {
     getUserCompanies();
   }, []);
@@ -41,7 +41,7 @@ const CompaniesPageContent: React.FC<ConnectedProps> = ({ history, userCompanies
                   name={company.name}
                   topDescription={company.nip}
                   bottomDescription={`${company.address}, ${company.city}`}
-                  callback={() => setCompany(company, () => history.push('/admin/home'))}
+                  callback={() => setCompany(company, () => history.push(role === UserRole.Admin ? '/admin/home' : '/user/home'))}
                   // on callback push to /admin/home or /user/home based on current page
                   isCompanyBox={true}
                   isChecked={false}
@@ -61,6 +61,7 @@ const CompaniesPageContent: React.FC<ConnectedProps> = ({ history, userCompanies
 };
 
 interface LinkStateProps {
+  role: UserRole;
   isLoading: boolean;
   userCompanies: CompanyInterface[];
 }
@@ -71,8 +72,8 @@ interface LinkDispatchProps {
   setCompany: (currentCompany: CompanyInterface | null, successCallback: () => void) => void;
 }
 
-const mapStateToProps = ({ companyReducer: { userCompanies, isLoading } }: AppState): LinkStateProps => {
-  return { userCompanies, isLoading };
+const mapStateToProps = ({ companyReducer: { userCompanies, isLoading }, authenticationReducer: { role } }: AppState): LinkStateProps => {
+  return { userCompanies, isLoading, role };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {

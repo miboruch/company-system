@@ -85,7 +85,7 @@ export const getUserCompanies = () => async (dispatch: Dispatch<any>, getState: 
 
 export const setCompany = (currentCompany: CompanyInterface | null, successCallback?: () => void) => (dispatch: Dispatch<AppTypes>) => {
   dispatch(setCurrentCompany(currentCompany));
-  !!currentCompany && dispatch(setUserRole(UserRole.Admin));
+  // !!currentCompany && dispatch(setUserRole(UserRole.Admin));
   !!successCallback && successCallback();
 };
 
