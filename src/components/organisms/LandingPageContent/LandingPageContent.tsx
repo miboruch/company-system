@@ -63,7 +63,7 @@ const LandingPageContent: React.FC<ConnectedProps> = ({
   }, [daysBack]);
 
   useEffect(() => {
-    getSingleDayAttendance();
+    getSingleDayAttendance(new Date());
     getCompletedTasks();
     allCompanyEmployees.length === 0 && getAllCompanyEmployees();
   }, []);
