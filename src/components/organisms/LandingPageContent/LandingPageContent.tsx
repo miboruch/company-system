@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { History } from 'history';
 import gsap from 'gsap';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
-import { Content, Header, TileWrapper, InfoBoxWrapper, InfoWrapper, StatisticsHeading } from './LandingPageContent.styles';
+import { Content, InfoBoxWrapper, InfoWrapper, StatisticsHeading, TileWrapper } from './LandingPageContent.styles';
 import TaskTile from '../../molecules/TaskTile/TaskTile';
 import { AppState } from '../../../reducers/rootReducer';
 import { AttendanceInterface, EmployeeDataInterface, IncomeDataInterface, TaskInterface } from '../../../types/modelsTypes';
@@ -23,6 +23,7 @@ import { getIncomeExpenseInTimePeriod } from '../../../actions/financeActions';
 import { ArrowIcon } from '../../../styles/iconStyles';
 import { getAllCompanyEmployees } from '../../../actions/employeeActions';
 import AdminStatistics from '../AdminStatistics/AdminStatistics';
+import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
 
 type ConnectedProps = LinkStateProps & LinkDispatchProps & RouteComponentProps<any>;
 
@@ -30,12 +31,14 @@ const LandingPageContent: React.FC<ConnectedProps> = ({
   history,
   singleDayAttendance,
   getSingleDayAttendance,
+  role,
   allCompanyTasks,
   getCompanyTasks,
   redirectToTask,
   getCompletedTasks,
   completedTasks,
   getIncomeExpenseInTimePeriod,
+  companyEmployeesCounter,
   allCompanyEmployees,
   getAllCompanyEmployees
 }) => {
@@ -51,7 +54,7 @@ const LandingPageContent: React.FC<ConnectedProps> = ({
 
   useEffect(() => {
     contentAnimation(tl, contentRef);
-    allCompanyTasks.length === 0 && getCompanyTasks();
+    getCompanyTasks();
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -59,13 +62,13 @@ const LandingPageContent: React.FC<ConnectedProps> = ({
   };
 
   useEffect(() => {
-    getIncomeExpenseInTimePeriod(daysBack, setData);
+    role === UserRole.Admin && getIncomeExpenseInTimePeriod(daysBack, setData);
   }, [daysBack]);
 
   useEffect(() => {
-    getSingleDayAttendance();
+    getSingleDayAttendance(new Date());
     getCompletedTasks();
-    allCompanyEmployees.length === 0 && getAllCompanyEmployees();
+    getAllCompanyEmployees();
   }, []);
 
   return (
@@ -90,7 +93,7 @@ const LandingPageContent: React.FC<ConnectedProps> = ({
           />
           <AttendanceList singleDayAttendance={singleDayAttendance} setSelectedAttendance={setSelectedAttendance} setAttendanceOpen={setAttendanceOpen} />
           <InfoBoxWrapper>
-            <InformationBox title={'Pracownicy'} value={8} areaName={'employees'} chartAnimationDelay={0} />
+            <InformationBox title={'Pracownicy'} value={companyEmployeesCounter} areaName={'employees'} chartAnimationDelay={0} />
             <InformationBox title={'Wykonane zadania (30d)'} value={completedTasks} areaName={'attendance'} chartAnimationDelay={800} />
           </InfoBoxWrapper>
           <InfoWrapper onClick={() => setStatisticsOpen(true)}>
@@ -107,9 +110,11 @@ const LandingPageContent: React.FC<ConnectedProps> = ({
 
 interface LinkStateProps {
   token: string | null;
+  role: UserRole;
   singleDayAttendance: AttendanceInterface[];
   allCompanyTasks: TaskInterface[];
   completedTasks: number;
+  companyEmployeesCounter: number;
   allCompanyEmployees: EmployeeDataInterface[];
 }
 
@@ -123,12 +128,12 @@ interface LinkDispatchProps {
 }
 
 const mapStateToProps = ({
-  authenticationReducer: { token },
+  authenticationReducer: { token, role },
   attendanceReducer: { singleDayAttendance },
   taskReducer: { allCompanyTasks, completedTasks },
-  employeeReducer: { allCompanyEmployees }
+  employeeReducer: { allCompanyEmployees, companyEmployeesCounter }
 }: AppState): LinkStateProps => {
-  return { token, singleDayAttendance, allCompanyTasks, completedTasks, allCompanyEmployees };
+  return { token, role, singleDayAttendance, allCompanyTasks, completedTasks, allCompanyEmployees, companyEmployeesCounter };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {

@@ -228,8 +228,8 @@ export const getCompletedTasks = () => async (dispatch: Dispatch<any>, getState:
           Authorization: `Bearer ${token}`
         }
       });
-      console.log(data);
-      // setCompletedTasks(data.completedTasks);
+
+      dispatch(setCompletedTasks(data.completedTasks));
     }
   } catch (error) {
     console.log(error);

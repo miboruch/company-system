@@ -28,6 +28,7 @@ import { AttendanceInterface, WeekAttendance } from '../types/modelsTypes';
 import { AppState } from '../reducers/rootReducer';
 import { setNotificationMessage } from './toggleActions';
 import { NotificationTypes } from '../types/actionTypes/toggleAcitonTypes';
+import { UserRole } from '../types/actionTypes/authenticationActionTypes';
 
 const setAttendanceLoading = (isLoading: boolean): SetAttendanceLoading => {
   return {
@@ -95,17 +96,22 @@ const setAddNewAttendanceOpen = (isOpen: boolean): SetAddNewAttendanceOpen => {
 export const getSingleDayAttendance = (date?: Date) => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
   dispatch(setAttendanceLoading(true));
 
-  const { token } = getState().authenticationReducer;
+  const { token, role } = getState().authenticationReducer;
   const { currentCompany } = getState().companyReducer;
   const { attendanceDate } = getState().attendanceReducer;
 
   try {
     if (currentCompany?._id && token && attendanceDate) {
-      const { data } = await axios.get(`${API_URL}/attendance/single-day-attendance?company_id=${currentCompany._id}&date=${date ? date.toISOString() : attendanceDate.toISOString()}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
+      const { data } = await axios.get(
+        role === UserRole.Admin
+          ? `${API_URL}/attendance/single-day-attendance?company_id=${currentCompany._id}&date=${date ? date.toISOString() : attendanceDate.toISOString()}`
+          : `${API_URL}/attendance/user-day-attendance?company_id=${currentCompany._id}&date=${date ? date.toISOString() : attendanceDate.toISOString()}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
         }
-      });
+      );
       console.log(data);
 
       dispatch(setDayAttendance(data));

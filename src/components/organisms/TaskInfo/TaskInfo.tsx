@@ -4,19 +4,20 @@ import styled from 'styled-components';
 import { Formik } from 'formik';
 import { StyledInput } from '../../../styles/compoundStyles';
 import { Paragraph } from '../../../styles/typography/typography';
-import { Wrapper, StyledForm, HeaderWrapper, EmployeeInfoBox, Title, InputWrapper, ButtonWrapper, RowIconWrapper } from '../../../styles/contentStyles';
+import { ButtonWrapper, EmployeeInfoBox, HeaderWrapper, InputWrapper, RowIconWrapper, StyledForm, Title, Wrapper } from '../../../styles/contentStyles';
 import { ClientInterface, TaskInterface } from '../../../types/modelsTypes';
 import { AppState } from '../../../reducers/rootReducer';
 import { StyledLabel } from '../../../styles/shared';
 import DatePicker from 'react-datepicker';
 import Button from '../../atoms/Button/Button';
-import { DeleteIcon, EditIcon, CheckedIcon, NotCheckedIcon, LocationIcon } from '../../../styles/iconStyles';
+import { CheckedIcon, DeleteIcon, EditIcon, LocationIcon, NotCheckedIcon } from '../../../styles/iconStyles';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { changeTaskState, editTask } from '../../../actions/taskActions';
 import { setTaskMapPreviewOpen } from '../../../actions/toggleActions';
 import { TaskSchema } from '../../../validation/modelsValidation';
+import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
 
 interface ParagraphInterface {
   isCompleted: boolean;
@@ -57,7 +58,7 @@ interface Props {
 
 type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
-const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, isEditToggled, setEditToggled, setDeleteOpen, editTask, changeTaskState, setTaskMapPreviewOpen }) => {
+const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, role, isEditToggled, setEditToggled, setDeleteOpen, editTask, changeTaskState, setTaskMapPreviewOpen }) => {
   const initialValues: InitialValues = {
     name: selectedTask?.name || '',
     description: selectedTask?.description || '',
@@ -88,16 +89,22 @@ const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, isEditToggled, setEd
                 <RowIconWrapper>
                   {selectedTask?.isCompleted ? <CheckedIcon /> : <NotCheckedIcon />}
                   <LocationIcon onClick={() => setTaskMapPreviewOpen(true)} />
-                  <EditIcon onClick={() => setEditToggled(!isEditToggled)} />
-                  <DeleteIcon onClick={() => setDeleteOpen(true)} />
+                  {role === UserRole.Admin && (
+                    <>
+                      <EditIcon onClick={() => setEditToggled(!isEditToggled)} />
+                      <DeleteIcon onClick={() => setDeleteOpen(true)} />
+                    </>
+                  )}
                 </RowIconWrapper>
               </HeaderWrapper>
               <EmployeeInfoBox>
                 <Paragraph type={'subparagraph'}>Data zadania do wykonania: {new Date(selectedTask.date).toLocaleDateString()}</Paragraph>
                 <Paragraph type={'subparagraph'}>{selectedTask.description}</Paragraph>
-                <ColoredParagraph isCompleted={selectedTask?.isCompleted} onClick={() => changeTaskState(selectedTask?._id, !selectedTask?.isCompleted)}>
-                  Oznacz jako {selectedTask?.isCompleted ? 'niewykonane' : 'wykonane'}
-                </ColoredParagraph>
+                {role === UserRole.Admin && (
+                  <ColoredParagraph isCompleted={selectedTask?.isCompleted} onClick={() => changeTaskState(selectedTask?._id, !selectedTask?.isCompleted)}>
+                    Oznacz jako {selectedTask?.isCompleted ? 'niewykonane' : 'wykonane'}
+                  </ColoredParagraph>
+                )}
               </EmployeeInfoBox>
               <InputWrapper>
                 <div>
@@ -149,6 +156,7 @@ const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, isEditToggled, setEd
 };
 
 interface LinkStateProps {
+  role: UserRole;
   selectedTask: TaskInterface | null;
 }
 
@@ -158,8 +166,8 @@ interface LinkDispatchProps {
   setTaskMapPreviewOpen: (isOpen: boolean) => void;
 }
 
-const mapStateToProps = ({ taskReducer: { selectedTask } }: AppState): LinkStateProps => {
-  return { selectedTask };
+const mapStateToProps = ({ taskReducer: { selectedTask }, authenticationReducer: { role } }: AppState): LinkStateProps => {
+  return { selectedTask, role };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
