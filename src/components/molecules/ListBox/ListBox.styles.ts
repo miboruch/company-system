@@ -20,6 +20,7 @@ const Wrapper = styled.div`
 const Name = styled(Paragraph)`
   color: ${({ theme }) => theme.colors.dark};
   margin: 0.2rem 0;
+  line-height: 18px;
 `;
 
 const Subparagraph = styled(Paragraph)`

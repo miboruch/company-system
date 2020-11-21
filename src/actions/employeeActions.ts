@@ -3,6 +3,7 @@ import {
   RESET_EMPLOYEES,
   ResetEmployees,
   SET_ADD_NEW_EMPLOYEE_OPEN,
+  SET_COMPANY_EMPLOYEE_COUNTER,
   SET_COMPANY_EMPLOYEES,
   SET_EDIT_EMPLOYEE,
   SET_EMPLOYEE_ERROR,
@@ -11,6 +12,7 @@ import {
   SET_SELECTED_EMPLOYEE,
   SetAddNewEmployeeOpen,
   SetCompanyEmployees,
+  SetCompanyEmployeesCounter,
   SetEditEmployee,
   SetEmployeeError,
   SetEmployeeInfoOpen,
@@ -75,6 +77,13 @@ export const setEmployeeInfoOpen = (isOpen: boolean): SetEmployeeInfoOpen => {
   };
 };
 
+const setCompanyEmployeesCounter = (counter: number): SetCompanyEmployeesCounter => {
+  return {
+    type: SET_COMPANY_EMPLOYEE_COUNTER,
+    payload: counter
+  };
+};
+
 export const getAllCompanyEmployees = () => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
   dispatch(setEmployeeLoading(true));
 
@@ -92,9 +101,8 @@ export const getAllCompanyEmployees = () => async (dispatch: Dispatch<AppTypes>,
         }
       );
 
-      // data.length > 0 && dispatch(setSelectedEmployee(data[0]));
-
-      dispatch(setCompanyEmployees(data));
+      dispatch(setCompanyEmployees(data.employees));
+      dispatch(setCompanyEmployeesCounter(data.employeesCounter));
     } else {
       dispatch(setEmployeeError('Brak danych'));
     }
