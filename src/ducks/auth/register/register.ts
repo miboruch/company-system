@@ -1,33 +1,5 @@
-import { createAsyncThunk, createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
-import { api } from '../../../api';
-import {setTokens} from '../tokens/tokens';
-
-interface RegisterInterface {
-  email: string;
-  password: string;
-  repeatedPassword: string;
-  name: string;
-  lastName: string;
-  dateOfBirth: Date;
-  phoneNumber: string;
-  country: string;
-  city: string;
-  address: string;
-  callback: () => void;
-}
-
-export const userRegister = createAsyncThunk('register/userRegister', async ({ callback, ...values }: RegisterInterface, { rejectWithValue, dispatch }) => {
-  try {
-    const { data } = await api.post(`/auth/register`, values);
-
-    //TODO: dispatch actions
-    dispatch(setTokens({ token: data.token, refreshToken: data.refreshToken, expireIn: data.expireIn }));
-    // dispatch(getUserData(data.token));
-    callback();
-  } catch (error) {
-    return rejectWithValue(error.response.statusText);
-  }
-});
+import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
+import { register } from './register-creators';
 
 interface InitialStateInterface {
   isRegisterLoading: boolean;
@@ -44,14 +16,14 @@ const registerSlice: Slice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [userRegister.pending.type]: (state) => {
+    [register.pending.type]: (state) => {
       state.isRegisterLoading = true;
       state.registerError = undefined;
     },
-    [userRegister.fulfilled.type]: (state) => {
+    [register.fulfilled.type]: (state) => {
       state.isRegisterLoading = false;
     },
-    [userRegister.rejected.type]: (state, { payload }: PayloadAction<string | undefined>) => {
+    [register.rejected.type]: (state, { payload }: PayloadAction<string | undefined>) => {
       state.isRegisterLoading = false;
       state.registerError = payload;
     }
