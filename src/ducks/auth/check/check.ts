@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
 
 interface InitialStateInterface {
   isLoading: boolean;
@@ -10,7 +10,7 @@ const initialState: InitialStateInterface = {
   isLoggedIn: false
 };
 
-const authCheckSlice = createSlice({
+const authCheckSlice: Slice = createSlice({
   name: 'authCheck',
   initialState,
   reducers: {
@@ -19,10 +19,11 @@ const authCheckSlice = createSlice({
     },
     setLoading: (state, { payload }: PayloadAction<boolean>) => {
       state.isLoading = payload;
-    }
+    },
+    resetCheckState: () => initialState
   }
 });
 
-export const { setLogged, setLoading } = authCheckSlice.actions;
+export const { setLogged, setLoading, resetCheckState } = authCheckSlice.actions;
 
 export default authCheckSlice.reducer;

@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
 
 interface InitialStateInterface {
   token: string | null;
@@ -10,7 +10,7 @@ const initialState: InitialStateInterface = {
   refreshToken: null
 };
 
-const tokenSlice = createSlice({
+const tokenSlice: Slice = createSlice({
   name: 'tokens',
   initialState,
   reducers: {
@@ -26,10 +26,11 @@ const tokenSlice = createSlice({
         state.token = null;
         state.refreshToken = null;
       }
-    }
+    },
+    resetTokens: () => initialState
   }
 });
 
-export const { setTokens } = tokenSlice.actions;
+export const { setTokens, resetTokens } = tokenSlice.actions;
 
 export default tokenSlice.reducer;

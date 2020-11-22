@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
 import { validateRegistrationToken, registerFromLink } from './link-registration-creators';
 
 interface InitialStateInterface {
@@ -15,10 +15,12 @@ const initialState: InitialStateInterface = {
   isRegisterError: undefined
 };
 
-const registrationMailSlice = createSlice({
+const registrationMailSlice: Slice = createSlice({
   name: 'registrationMail',
   initialState,
-  reducers: {},
+  reducers: {
+    resetMailRegistrationState: () => initialState
+  },
   extraReducers: {
     [validateRegistrationToken.pending.type]: (state) => {
       state.isValidateLoading = true;

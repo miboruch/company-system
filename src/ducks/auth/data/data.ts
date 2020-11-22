@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
 import { UserAuthData } from '../../../types/modelsTypes';
 import { getUserData } from './data-creators';
 
@@ -10,13 +10,11 @@ const initialState: InitialStateInterface = {
   userData: null
 };
 
-const authDataSlice = createSlice({
+const authDataSlice: Slice = createSlice({
   name: 'authData',
   initialState,
   reducers: {
-    resetUserData: (state) => {
-      state.userData = null;
-    }
+    resetUserData: () => initialState
   },
   extraReducers: {
     [getUserData.fulfilled.type]: (state, { payload }: PayloadAction<UserAuthData>) => {
@@ -24,5 +22,7 @@ const authDataSlice = createSlice({
     }
   }
 });
+
+export const { resetUserData } = authDataSlice.actions;
 
 export default authDataSlice.reducer;

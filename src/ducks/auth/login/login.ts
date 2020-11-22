@@ -1,5 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getUserData } from '../data/data';
+import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
 import { login } from './login-creators';
 
 interface InitialStateInterface {
@@ -12,7 +11,7 @@ const initialState: InitialStateInterface = {
   loginError: undefined
 };
 
-const loginSlice = createSlice({
+const loginSlice: Slice = createSlice({
   name: 'login',
   initialState,
   reducers: {},

@@ -1,5 +1,4 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { baseStoreType } from '../../../store/test-store';
+import { Dispatch } from 'redux';
 import { setTokens } from '../tokens/tokens';
 import { getNewAccessToken } from '../tokens/tokens-creators';
 import { getUserData } from '../data/data-creators';
@@ -11,17 +10,18 @@ interface AuthTimeoutInterface {
   expireMilliseconds: number;
 }
 
-export const authTimeout = createAsyncThunk<ReturnType<typeof setTimeout>, AuthTimeoutInterface, baseStoreType>('check/authTimeout', async ({ refreshToken, expireMilliseconds }, { dispatch }) => {
+export const authTimeout = ({ refreshToken, expireMilliseconds }: AuthTimeoutInterface) => (dispatch: Dispatch<any>): ReturnType<typeof setTimeout> => {
   return setTimeout(async () => {
     dispatch(getNewAccessToken({ refreshToken }));
   }, expireMilliseconds);
-});
+};
 
 interface AuthCheckInterface {
   successCallback: () => void;
   errorCallback: () => void;
 }
-export const authCheck = createAsyncThunk<void, AuthCheckInterface, baseStoreType>('check/authCheck', async ({ successCallback, errorCallback }: AuthCheckInterface, { dispatch }) => {
+
+export const authCheck = ({ successCallback, errorCallback }: AuthCheckInterface) => (dispatch: Dispatch<any>): void => {
   const token = localStorage.getItem('token');
   const refreshToken = localStorage.getItem('refreshToken');
   const expireDate = localStorage.getItem('expireDate');
@@ -47,4 +47,4 @@ export const authCheck = createAsyncThunk<void, AuthCheckInterface, baseStoreTyp
       errorCallback();
     }
   }
-});
+};

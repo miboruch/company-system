@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, Slice } from '@reduxjs/toolkit';
 import { editAccount, editPassword } from './account-creators';
 
 interface InitialStateInterface {
@@ -9,7 +9,7 @@ const initialState: InitialStateInterface = {
   isEditAccountLoading: false
 };
 
-const accountSlice = createSlice({
+const accountSlice: Slice = createSlice({
   name: 'account',
   initialState,
   reducers: {},

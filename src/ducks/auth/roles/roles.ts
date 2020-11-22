@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
 
 export enum UserRole {
   Admin = 'admin',
@@ -13,7 +13,7 @@ const initialState: InitialStateInterface = {
   role: UserRole.User
 };
 
-const roleSlice = createSlice({
+const roleSlice: Slice = createSlice({
   name: 'roles',
   initialState,
   reducers: {
