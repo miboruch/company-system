@@ -18,7 +18,6 @@ import { Dispatch } from 'redux';
 import { AppTypes } from '../types/actionTypes/appActionTypes';
 import { API_URL } from '../utils/config';
 import { AppState } from '../reducers/rootReducer';
-import { setUserRole } from './authenticationActions';
 import { UserRole } from '../types/actionTypes/authenticationActionTypes';
 import { resetAllSelected, setNotificationMessage } from './toggleActions';
 import { NotificationTypes } from '../types/actionTypes/toggleAcitonTypes';

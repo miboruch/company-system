@@ -1,31 +1,6 @@
-import { createAsyncThunk, createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
-import { CurrencyInterface, NotificationTypes } from '../../types/actionTypes/toggleAcitonTypes';
-import axios from 'axios';
-import { CURRENCY_API_URL } from '../../utils/config';
-import { setNotificationMessage } from '../popup/popup';
-import { baseStoreType } from '../../store/test-store';
-
-type currencyTypes = 'PLN' | 'EUR' | 'USD';
-
-interface CurrencyReturnInterface {
-  rate: number;
-  name: currencyTypes;
-}
-
-//should be CurrencyReturnInterface instead of any
-export const getCurrencyValue = createAsyncThunk<CurrencyReturnInterface, currencyTypes, baseStoreType>('currency/getCurrencyValue', async (currencyName, { dispatch, rejectWithValue }) => {
-  try {
-    const { data } = await axios.get(`${CURRENCY_API_URL}/latest?base=PLN&symbols=${currencyName}`);
-
-    return {
-      rate: data.rates[currencyName],
-      name: currencyName
-    } as CurrencyReturnInterface;
-  } catch (error) {
-    dispatch(setNotificationMessage({ message: 'Problem z pobraniem walut', notificationType: NotificationTypes.Error }));
-    return rejectWithValue(error.response.data);
-  }
-});
+import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
+import { CurrencyInterface } from '../../types/actionTypes/toggleAcitonTypes';
+import { getCurrencyValue, CurrencyReturnInterface } from './currency-creators';
 
 interface InitialStateInterface {
   isCurrencyLoading: boolean;
@@ -43,7 +18,8 @@ const initialState: InitialStateInterface = {
 const currencySlice: Slice = createSlice({
   name: 'currency',
   initialState,
-  reducers: {
+  reducers: {},
+  extraReducers: {
     [getCurrencyValue.pending.type]: (state) => {
       state.isCurrencyLoading = true;
     },
