@@ -17,10 +17,11 @@ const currentCompanySlice: Slice = createSlice({
   name: 'currentCompany',
   initialState,
   reducers: {
-    setCompany: (state, {payload}: PayloadAction<CompanyInterface | null>) => {
+    resetCurrentCompany: () => initialState,
+    setCompany: (state, { payload }: PayloadAction<CompanyInterface | null>) => {
       state.currentCompany = payload;
     }
-  },
+  }
   // extraReducers: {
   //   [getUserCompanies.pending.type]: (state) => {
   //     state.areUserCompaniesLoading = true;
@@ -37,6 +38,6 @@ const currentCompanySlice: Slice = createSlice({
   // }
 });
 
-export const {setCompany } = currentCompanySlice.actions;
+export const { setCompany, resetCurrentCompany } = currentCompanySlice.actions;
 
 export default currentCompanySlice.reducer;

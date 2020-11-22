@@ -4,9 +4,6 @@ import { CompanyInterface } from '../../../types/modelsTypes';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { baseStoreType } from '../../../store/test-store';
 import { adminApi, authApi } from '../../../api';
-import { AppState } from '../../../reducers/rootReducer';
-import axios from 'axios';
-import { API_URL } from '../../../utils/config';
 import { setNotificationMessage } from '../../popup/popup';
 import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
 
@@ -39,13 +36,13 @@ interface EditCompanyInterface {
 
 export const editCompany = createAsyncThunk<void, EditCompanyInterface, baseStoreType>('currentCompany/editCompany', async (values, { dispatch, getState }) => {
   const { token } = getState().auth.tokens;
-  // const {currentCompany} = getState().company.currentCompany;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
-    if (token) {
+    if (token && currentCompany) {
       await adminApi.put(`/company/edit-company`, values);
 
-      // dispatch(getSingleCompany(currentCompany._id))
+      dispatch(getSingleCompany(currentCompany._id));
       dispatch(setNotificationMessage({ message: 'Edytowano firmę' }));
     }
   } catch (error) {
@@ -56,13 +53,13 @@ export const editCompany = createAsyncThunk<void, EditCompanyInterface, baseStor
 
 export const editCompanyCoords = createAsyncThunk<void, { lat: number; long: number }, baseStoreType>('currentCompany/editCompanyCoords', async ({ lat, long }, { dispatch, getState }) => {
   const { token } = getState().auth.tokens;
-  // const {currentCompany} = getState().company.currentCompany;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
-    if (token) {
+    if (token && currentCompany) {
       await adminApi.put(`/company/edit-company-coords`, { lat, long });
 
-      // dispatch(getSingleCompany(currentCompany._id))
+      dispatch(getSingleCompany(currentCompany._id));
       dispatch(setNotificationMessage({ message: 'Zapisano koordynację' }));
     }
   } catch (error) {

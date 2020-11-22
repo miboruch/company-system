@@ -17,7 +17,9 @@ const initialState: InitialStateInterface = {
 const companiesSlice: Slice = createSlice({
   name: 'companies',
   initialState,
-  reducers: {},
+  reducers: {
+    resetCompanies: () => initialState
+  },
   extraReducers: {
     [getUserCompanies.pending.type]: (state) => {
       state.areUserCompaniesLoading = true;
@@ -33,5 +35,7 @@ const companiesSlice: Slice = createSlice({
     }
   }
 });
+
+export const { resetCompanies } = companiesSlice.actions;
 
 export default companiesSlice.reducer;

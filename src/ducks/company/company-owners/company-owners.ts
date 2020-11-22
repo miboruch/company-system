@@ -12,10 +12,12 @@ const initialState: InitialStateInterface = {
   companyOwners: []
 };
 
-const currentCompanyOwnersSlice: Slice = createSlice({
-  name: 'currentCompanyOwners',
+const companyOwnersSlice: Slice = createSlice({
+  name: 'companyOwners',
   initialState,
-  reducers: {},
+  reducers: {
+    resetCompanyOwners: () => initialState
+  },
   extraReducers: {
     [getCompanyOwners.pending.type]: (state) => {
       state.areOwnersLoading = true;
@@ -30,6 +32,6 @@ const currentCompanyOwnersSlice: Slice = createSlice({
   }
 });
 
-export const { setCompany } = currentCompanyOwnersSlice.actions;
+export const { resetCompanyOwners } = companyOwnersSlice.actions;
 
-export default currentCompanyOwnersSlice.reducer;
+export default companyOwnersSlice.reducer;

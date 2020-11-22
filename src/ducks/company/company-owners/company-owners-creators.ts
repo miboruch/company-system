@@ -8,9 +8,9 @@ import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes'
 export const getCompanyOwners = createAsyncThunk<CompanyOwnersInterface[], void, baseStoreType>('companyOwners/getCompanyOwners', async (_arg, { dispatch, rejectWithValue, getState }) => {
   try {
     const { token } = getState().auth.tokens;
-    // const { currentCompany } = getState().company.currentCompany;
+    const { currentCompany } = getState().company.currentCompany;
 
-    if (token) {
+    if (token && currentCompany) {
       const { data } = await adminApi.get('/company/get-company-owners');
 
       return data as CompanyOwnersInterface[];
@@ -26,9 +26,9 @@ export const getCompanyOwners = createAsyncThunk<CompanyOwnersInterface[], void,
 export const addNewCompanyOwner = createAsyncThunk<void, string, baseStoreType>('companyOwners/addNewCompanyOwner', async (userId, { dispatch, getState }) => {
   try {
     const { token } = getState().auth.tokens;
-    // const { currentCompany } = getState().company.currentCompany;
+    const { currentCompany } = getState().company.currentCompany;
 
-    if (token) {
+    if (token && currentCompany) {
       await adminApi.post('/company/add-company-owner', { toBeOwnerId: userId });
 
       dispatch(getCompanyOwners());
@@ -50,12 +50,13 @@ export const removeCompanyOwner = createAsyncThunk<void, RemoveCompanyOwnerInter
   async ({ userId, addEmployee, pricePerHour, monthlyPrice }, { dispatch, getState }) => {
     try {
       const { token } = getState().auth.tokens;
-      // const { currentCompany } = getState().company.currentCompany;
+      const { currentCompany } = getState().company.currentCompany;
 
-      if (token) {
+      if (token && currentCompany) {
         await adminApi.post('/company/remove-company-owner', { toBeRemovedId: userId, addEmployee, pricePerHour, monthlyPrice });
 
         dispatch(getCompanyOwners());
+        //TODO: get company employees
         // addEmployee && dispatch(getAllCompanyEmployees());
         dispatch(setNotificationMessage({ message: 'Usunięto administratora' }));
       }
