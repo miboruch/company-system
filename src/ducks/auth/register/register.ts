@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
 import { api } from '../../../api';
-// import {  getUserData } from '../data/data';
 import {setTokens} from '../tokens/tokens';
 
 interface RegisterInterface {
