@@ -8,7 +8,6 @@ import {
   SET_TASK_MAP_PREVIEW_OPEN,
   ToggleActionTypes
 } from '../types/actionTypes/toggleAcitonTypes';
-import { act } from 'react-dom/test-utils';
 
 interface DefaultState {
   isNotificationOpen: boolean;

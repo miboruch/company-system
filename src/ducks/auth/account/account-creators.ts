@@ -2,6 +2,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { authApi } from '../../../api';
 import { getUserData } from '../data/data-creators';
 import { baseStoreType } from '../../../store/test-store';
+import { setNotificationMessage } from '../../popup/popup';
+import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
 
 interface EditAccountInterface {
   email: string;
@@ -20,8 +22,9 @@ export const editAccount = createAsyncThunk<void, EditAccountInterface, baseStor
 
     dispatch(getUserData());
     //TODO: notifications
+    dispatch(setNotificationMessage({ message: 'Edytowano konto' }));
   } catch (error) {
-    //TODO: notifications
+    dispatch(setNotificationMessage({ message: error.response.data, notificationType: NotificationTypes.Error }));
     return rejectWithValue(error.response.statusText);
   }
 });
@@ -35,9 +38,9 @@ export const editPassword = createAsyncThunk<void, EditPasswordInterface, baseSt
   try {
     await authApi.put(`/user/password-edit`, { values });
 
-    //TODO: notifications
+    dispatch(setNotificationMessage({ message: 'Edytowano hasło' }));
   } catch (error) {
-    //TODO: notifications
+    dispatch(setNotificationMessage({ message: error.response.data, notificationType: NotificationTypes.Error }));
     return rejectWithValue(error.response.statusText);
   }
 });

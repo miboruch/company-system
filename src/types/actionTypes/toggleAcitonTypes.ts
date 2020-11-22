@@ -16,7 +16,7 @@ export interface CurrencyInterface {
 }
 
 export interface NotificationMessage {
-  notificationType: NotificationTypes;
+  notificationType?: NotificationTypes;
   message: string;
 }
 

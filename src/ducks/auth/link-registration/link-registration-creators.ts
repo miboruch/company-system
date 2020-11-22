@@ -4,6 +4,8 @@ import { baseStoreType } from '../../../store/test-store';
 import { setTokens } from '../tokens/tokens';
 import { api } from '../../../api';
 import { authTimeout } from '../check/check-creators';
+import { setNotificationMessage } from '../../popup/popup';
+import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
 
 interface ValidateTokenInterface {
   token: string;
@@ -48,13 +50,13 @@ export const registerFromLink = createAsyncThunk<void, RegisterFromLinkInterface
       const { data } = await api.post(`/auth/register-from-link`, { values });
 
       dispatch(setTokens({ token: data.token, refreshToken: data.refreshToken, expireIn: data.expireIn }));
-      //TODO: notification
+      dispatch(setNotificationMessage({ message: 'Utworzono nowe konto' }));
       callback();
 
       const milliseconds = data.expireIn - new Date().getTime();
       dispatch(authTimeout({ refreshToken: data.refreshToken, expireMilliseconds: milliseconds }));
     } catch (error) {
-      //TODO: notification
+      dispatch(setNotificationMessage({ message: error.response.data, notificationType: NotificationTypes.Error }));
       return rejectWithValue(error.response.statusText);
     }
   }

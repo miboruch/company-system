@@ -1,5 +1,6 @@
-import { combineReducers, Reducer } from 'redux';
+import { combineReducers } from 'redux';
 import { auth } from '../ducks/auth/auth';
-import store, { AppState } from '../store/test-store';
+import popup from '../ducks/popup/popup';
+import currency from '../ducks/currency/currency';
 
-export const testRootReducer = combineReducers({ auth });
+export const testRootReducer = combineReducers({ auth, popup, currency });
