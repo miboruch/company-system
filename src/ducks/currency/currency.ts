@@ -19,20 +19,20 @@ const currencySlice: Slice = createSlice({
   name: 'currency',
   initialState,
   reducers: {},
-  extraReducers: {
-    [getCurrencyValue.pending.type]: (state) => {
+  extraReducers: (builder) => {
+    builder.addCase(getCurrencyValue.pending.type, (state) => {
       state.isCurrencyLoading = true;
-    },
-    [getCurrencyValue.fulfilled.type]: (state, { payload }: PayloadAction<CurrencyReturnInterface>) => {
+    });
+    builder.addCase(getCurrencyValue.fulfilled.type, (state, { payload }: PayloadAction<CurrencyReturnInterface>) => {
       state.isCurrencyLoading = false;
       state.currency = {
         name: payload.name,
         value: payload.rate
       };
-    },
-    [getCurrencyValue.rejected.type]: (state) => {
+    });
+    builder.addCase(getCurrencyValue.rejected.type, (state) => {
       state.isCurrencyLoading = false;
-    }
+    });
   }
 });
 

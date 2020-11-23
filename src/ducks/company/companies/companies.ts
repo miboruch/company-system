@@ -20,19 +20,19 @@ const companiesSlice: Slice = createSlice({
   reducers: {
     resetCompanies: () => initialState
   },
-  extraReducers: {
-    [getUserCompanies.pending.type]: (state) => {
+  extraReducers: (builder) => {
+    builder.addCase(getUserCompanies.pending.type, (state) => {
       state.areUserCompaniesLoading = true;
       state.userCompaniesError = undefined;
-    },
-    [getUserCompanies.fulfilled.type]: (state, { payload }: PayloadAction<CompanyInterface[]>) => {
+    });
+    builder.addCase(getUserCompanies.fulfilled.type, (state, { payload }: PayloadAction<CompanyInterface[]>) => {
       state.areUserCompaniesLoading = false;
       state.userCompanies = payload;
-    },
-    [getUserCompanies.rejected.type]: (state, { payload }: PayloadAction<string | undefined>) => {
+    });
+    builder.addCase(getUserCompanies.rejected.type, (state, { payload }: PayloadAction<string | undefined>) => {
       state.areUserCompaniesLoading = false;
       state.userCompaniesError = payload;
-    }
+    });
   }
 });
 

@@ -15,18 +15,18 @@ const logoutSlice: Slice = createSlice({
   name: 'logout',
   initialState,
   reducers: {},
-  extraReducers: {
-    [logout.pending.type]: (state) => {
+  extraReducers: (builder) => {
+    builder.addCase(logout.pending.type, (state) => {
       state.isLogoutLoading = true;
       state.logoutError = undefined;
-    },
-    [logout.fulfilled.type]: (state) => {
+    });
+    builder.addCase(logout.fulfilled.type, (state) => {
       state.isLogoutLoading = false;
-    },
-    [logout.rejected.type]: (state, { payload }: PayloadAction<string | undefined>) => {
+    });
+    builder.addCase(logout.rejected.type, (state, { payload }: PayloadAction<string | undefined>) => {
       state.isLogoutLoading = false;
       state.logoutError = payload;
-    }
+    });
   }
 });
 

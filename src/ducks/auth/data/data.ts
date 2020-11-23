@@ -16,10 +16,10 @@ const authDataSlice: Slice = createSlice({
   reducers: {
     resetUserData: () => initialState
   },
-  extraReducers: {
-    [getUserData.fulfilled.type]: (state, { payload }: PayloadAction<UserAuthData>) => {
+  extraReducers: (builder) => {
+    builder.addCase(getUserData.fulfilled.type, (state, { payload }: PayloadAction<UserAuthData>) => {
       state.userData = payload;
-    }
+    });
   }
 });
 

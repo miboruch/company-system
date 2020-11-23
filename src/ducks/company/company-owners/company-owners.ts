@@ -18,17 +18,17 @@ const companyOwnersSlice: Slice = createSlice({
   reducers: {
     resetCompanyOwners: () => initialState
   },
-  extraReducers: {
-    [getCompanyOwners.pending.type]: (state) => {
+  extraReducers: (builder) => {
+    builder.addCase(getCompanyOwners.pending.type, (state) => {
       state.areOwnersLoading = true;
-    },
-    [getCompanyOwners.fulfilled.type]: (state, { payload }: PayloadAction<CompanyOwnersInterface[]>) => {
+    });
+    builder.addCase(getCompanyOwners.fulfilled.type, (state, { payload }: PayloadAction<CompanyOwnersInterface[]>) => {
       state.areOwnersLoading = false;
       state.companyOwners = payload;
-    },
-    [getCompanyOwners.rejected.type]: (state) => {
+    });
+    builder.addCase(getCompanyOwners.rejected.type, (state) => {
       state.areOwnersLoading = false;
-    }
+    });
   }
 });
 

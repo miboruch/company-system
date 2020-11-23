@@ -15,18 +15,18 @@ const registerSlice: Slice = createSlice({
   name: 'register',
   initialState,
   reducers: {},
-  extraReducers: {
-    [register.pending.type]: (state) => {
+  extraReducers: (builder) => {
+    builder.addCase(register.pending.type, (state) => {
       state.isRegisterLoading = true;
       state.registerError = undefined;
-    },
-    [register.fulfilled.type]: (state) => {
+    });
+    builder.addCase(register.fulfilled.type, (state) => {
       state.isRegisterLoading = false;
-    },
-    [register.rejected.type]: (state, { payload }: PayloadAction<string | undefined>) => {
+    });
+    builder.addCase(register.rejected.type, (state, { payload }: PayloadAction<string | undefined>) => {
       state.isRegisterLoading = false;
       state.registerError = payload;
-    }
+    });
   }
 });
 

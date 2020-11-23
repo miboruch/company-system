@@ -13,25 +13,25 @@ const accountSlice: Slice = createSlice({
   name: 'account',
   initialState,
   reducers: {},
-  extraReducers: {
-    [editAccount.pending.type]: (state) => {
+  extraReducers: builder => {
+    builder.addCase(editAccount.pending.type, state => {
       state.isEditAccountLoading = true;
-    },
-    [editAccount.fulfilled.type]: (state) => {
+    });
+    builder.addCase(editAccount.fulfilled.type, state => {
       state.isEditAccountLoading = false;
-    },
-    [editAccount.rejected.type]: (state) => {
+    });
+    builder.addCase(editAccount.rejected.type, state => {
       state.isEditAccountLoading = false;
-    },
-    [editPassword.pending.type]: (state) => {
+    });
+    builder.addCase(editPassword.pending.type, state => {
       state.isEditAccountLoading = true;
-    },
-    [editPassword.fulfilled.type]: (state) => {
+    });
+    builder.addCase(editPassword.fulfilled.type, state => {
       state.isEditAccountLoading = false;
-    },
-    [editPassword.rejected.type]: (state) => {
+    });
+    builder.addCase(editPassword.rejected.type, state => {
       state.isEditAccountLoading = false;
-    }
+    });
   }
 });
 

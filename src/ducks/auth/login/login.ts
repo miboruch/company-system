@@ -15,18 +15,18 @@ const loginSlice: Slice = createSlice({
   name: 'login',
   initialState,
   reducers: {},
-  extraReducers: {
-    [login.pending.type]: (state) => {
+  extraReducers: (builder) => {
+    builder.addCase(login.pending.type, (state) => {
       state.isLoginLoading = true;
       state.loginError = undefined;
-    },
-    [login.fulfilled.type]: (state) => {
+    });
+    builder.addCase(login.fulfilled.type, (state) => {
       state.isLoginLoading = false;
-    },
-    [login.rejected.type]: (state, { payload }: PayloadAction<string | undefined>) => {
+    });
+    builder.addCase(login.rejected.type, (state, { payload }: PayloadAction<string | undefined>) => {
       state.isLoginLoading = false;
       state.loginError = payload;
-    }
+    });
   }
 });
 
