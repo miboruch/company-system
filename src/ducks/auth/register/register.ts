@@ -11,7 +11,7 @@ const initialState: InitialStateInterface = {
   registerError: undefined
 };
 
-const registerSlice: Slice = createSlice({
+const registerSlice = createSlice({
   name: 'register',
   initialState,
   reducers: {},

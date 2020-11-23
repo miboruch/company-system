@@ -15,7 +15,7 @@ const initialState: InitialStateInterface = {
   }
 };
 
-const currencySlice: Slice = createSlice({
+const currencySlice = createSlice({
   name: 'currency',
   initialState,
   reducers: {},

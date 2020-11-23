@@ -11,7 +11,7 @@ const initialState: InitialStateInterface = {
   notificationMessage: null
 };
 
-const popupSlice: Slice = createSlice({
+const popupSlice = createSlice({
   name: 'popup',
   initialState,
   reducers: {

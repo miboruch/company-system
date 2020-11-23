@@ -10,7 +10,7 @@ const initialState: InitialStateInterface = {
   refreshToken: null
 };
 
-const tokenSlice: Slice = createSlice({
+const tokenSlice = createSlice({
   name: 'tokens',
   initialState,
   reducers: {

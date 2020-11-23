@@ -15,7 +15,7 @@ const initialState: InitialStateInterface = {
   isRegisterError: undefined
 };
 
-const registrationMailSlice: Slice = createSlice({
+const registrationMailSlice = createSlice({
   name: 'registrationMail',
   initialState,
   reducers: {

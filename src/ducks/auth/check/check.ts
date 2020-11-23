@@ -10,7 +10,7 @@ const initialState: InitialStateInterface = {
   isLoggedIn: false
 };
 
-const authCheckSlice: Slice = createSlice({
+const authCheckSlice = createSlice({
   name: 'authCheck',
   initialState,
   reducers: {

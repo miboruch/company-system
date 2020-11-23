@@ -11,7 +11,7 @@ const initialState: InitialStateInterface = {
   logoutError: undefined
 };
 
-const logoutSlice: Slice = createSlice({
+const logoutSlice = createSlice({
   name: 'logout',
   initialState,
   reducers: {},

@@ -10,7 +10,7 @@ const initialState: InitialStateInterface = {
   userData: null
 };
 
-const authDataSlice: Slice = createSlice({
+const authDataSlice = createSlice({
   name: 'authData',
   initialState,
   reducers: {

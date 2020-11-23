@@ -11,7 +11,7 @@ const initialState: InitialStateInterface = {
   loginError: undefined
 };
 
-const loginSlice: Slice = createSlice({
+const loginSlice = createSlice({
   name: 'login',
   initialState,
   reducers: {},

@@ -12,7 +12,7 @@ const initialState: InitialStateInterface = {
   companyOwners: []
 };
 
-const companyOwnersSlice: Slice = createSlice({
+const companyOwnersSlice = createSlice({
   name: 'companyOwners',
   initialState,
   reducers: {

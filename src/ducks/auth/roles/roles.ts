@@ -13,7 +13,7 @@ const initialState: InitialStateInterface = {
   role: UserRole.User
 };
 
-const roleSlice: Slice = createSlice({
+const roleSlice = createSlice({
   name: 'roles',
   initialState,
   reducers: {

@@ -14,7 +14,7 @@ const initialState: InitialStateInterface = {
   userCompaniesError: undefined
 };
 
-const companiesSlice: Slice = createSlice({
+const companiesSlice = createSlice({
   name: 'companies',
   initialState,
   reducers: {

@@ -10,7 +10,7 @@ const initialState: InitialStateInterface = {
   isEditCompanyCoordsOpen: false
 };
 
-const companyToggleSlice: Slice = createSlice({
+const companyToggleSlice = createSlice({
   name: 'companyToggle',
   initialState,
   reducers: {

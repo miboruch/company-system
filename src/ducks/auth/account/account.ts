@@ -9,7 +9,7 @@ const initialState: InitialStateInterface = {
   isEditAccountLoading: false
 };
 
-const accountSlice: Slice = createSlice({
+const accountSlice = createSlice({
   name: 'account',
   initialState,
   reducers: {},
