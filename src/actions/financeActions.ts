@@ -143,6 +143,8 @@ const getCompanyBudget = () => async (dispatch: Dispatch<AppTypes>, getState: ()
   }
 };
 
+//---------
+
 export const fetchAllFinancesData = () => async (dispatch: Dispatch<any>) => {
   dispatch(getCompanyIncomeAndExpense(FINANCES_DATA_DAYS_BACK));
   dispatch(getLastIncomesAndExpenses(3));

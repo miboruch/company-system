@@ -17,7 +17,9 @@ const initialState: InitialStateInterface = {
 const clientDataSlice = createSlice({
   name: 'clientData',
   initialState,
-  reducers: {},
+  reducers: {
+    resetClientData: () => initialState
+  },
   extraReducers: (builder) => {
     builder.addCase(getCompanyClients.pending.type, (state) => {
       state.areClientsLoading = true;
@@ -33,5 +35,7 @@ const clientDataSlice = createSlice({
     });
   }
 });
+
+export const { resetClientData } = clientDataSlice.actions;
 
 export default clientDataSlice.reducer;
