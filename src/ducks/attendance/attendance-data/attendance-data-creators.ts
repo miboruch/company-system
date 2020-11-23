@@ -4,37 +4,35 @@ import { API_URL } from '../../../utils/config';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AttendanceInterface, WeekAttendance } from '../../../types/modelsTypes';
 import { baseStoreType } from '../../../store/test-store';
+import { adminApi } from '../../../api';
 
-export const getSingleDayAttendance = createAsyncThunk<AttendanceInterface[], { date?: Date }, baseStoreType>(
-  'attendanceData/getSingleDayAttendance',
-  async ({ date }, { rejectWithValue, getState }) => {
-    const { token } = getState().auth.tokens;
-    const { role } = getState().auth.roles;
-    const { currentCompany } = getState().company.currentCompany;
-    const { attendanceDate } = getState().attendance.attendanceToggle;
+export const getSingleDayAttendance = createAsyncThunk<AttendanceInterface[], Date | void, baseStoreType>('attendanceData/getSingleDayAttendance', async (date, { rejectWithValue, getState }) => {
+  const { token } = getState().auth.tokens;
+  const { role } = getState().auth.roles;
+  const { currentCompany } = getState().company.currentCompany;
+  const { attendanceDate } = getState().attendance.attendanceToggle;
 
-    try {
-      if (currentCompany?._id && token && attendanceDate) {
-        const { data } = await axios.get(
-          role === UserRole.Admin
-            ? `${API_URL}/attendance/single-day-attendance?company_id=${currentCompany._id}&date=${date ? date.toISOString() : attendanceDate.toISOString()}`
-            : `${API_URL}/attendance/user-day-attendance?company_id=${currentCompany._id}&date=${date ? date.toISOString() : attendanceDate.toISOString()}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
+  try {
+    if (currentCompany?._id && token && attendanceDate) {
+      const { data } = await axios.get(
+        role === UserRole.Admin
+          ? `${API_URL}/attendance/single-day-attendance?company_id=${currentCompany._id}&date=${date ? date.toISOString() : attendanceDate.toISOString()}`
+          : `${API_URL}/attendance/user-day-attendance?company_id=${currentCompany._id}&date=${date ? date.toISOString() : attendanceDate.toISOString()}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
           }
-        );
+        }
+      );
 
-        return data as AttendanceInterface[];
-      } else {
-        return [] as AttendanceInterface[];
-      }
-    } catch (error) {
-      return rejectWithValue(error.response.data);
+      return data as AttendanceInterface[];
+    } else {
+      return [] as AttendanceInterface[];
     }
+  } catch (error) {
+    return rejectWithValue(error.response.data);
   }
-);
+});
 
 export const getWeekAttendance = createAsyncThunk<WeekAttendance[], number, baseStoreType>('attendanceData/getSingleDayAttendance', async (weekCounter, { rejectWithValue, getState }) => {
   const { token } = getState().auth.tokens;
@@ -46,11 +44,7 @@ export const getWeekAttendance = createAsyncThunk<WeekAttendance[], number, base
       const { _id: companyId } = currentCompany;
       const { user } = selectedAttendance;
 
-      const { data } = await axios.get(`${API_URL}/attendance/user-week-attendance?company_id=${companyId}&user_id=${user._id}&week=${weekCounter}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      const { data } = await adminApi.get(`${API_URL}/attendance/user-week-attendance?company_id=${companyId}&user_id=${user._id}&week=${weekCounter}`);
 
       return data as WeekAttendance[];
     } else {
