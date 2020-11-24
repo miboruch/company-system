@@ -31,13 +31,10 @@ const attendanceToggleSlice = createSlice({
     setAddNewAttendanceOpen: (state, { payload }: PayloadAction<boolean>) => {
       state.isAddNewAttendanceOpen = payload;
     },
-    resetAttendanceToggle: () => initialState,
-    resetSelectedAttendance: (state) => {
-      state.selectedAttendance = null;
-    }
+    resetAttendanceToggle: () => initialState
   }
 });
 
-export const { setSelectedAttendance, setDate, setAttendanceInfoOpen, setAddNewAttendanceOpen, resetAttendanceToggle, resetSelectedAttendance } = attendanceToggleSlice.actions;
+export const { setSelectedAttendance, setDate, setAttendanceInfoOpen, setAddNewAttendanceOpen, resetAttendanceToggle } = attendanceToggleSlice.actions;
 
 export default attendanceToggleSlice.reducer;

@@ -208,6 +208,8 @@ export const deleteTask = (taskId: string) => async (dispatch: Dispatch<any>, ge
   }
 };
 
+//--
+
 export const redirectToTask = (history: History, task: TaskInterface) => (dispatch: Dispatch<any>, getState: () => AppState) => {
   const { role } = getState().authenticationReducer;
 

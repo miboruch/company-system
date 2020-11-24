@@ -19,7 +19,9 @@ const initialState: InitialStateInterface = {
 const employeesDataSlice = createSlice({
   name: 'employeesData',
   initialState,
-  reducers: {},
+  reducers: {
+    resetEmployeesData: () => initialState
+  },
   extraReducers: (builder) => {
     builder.addCase(getAllCompanyEmployees.pending.type, (state) => {
       state.areEmployeesLoading = true;
@@ -54,5 +56,7 @@ const employeesDataSlice = createSlice({
     });
   }
 });
+
+export const { resetEmployeesData } = employeesDataSlice.actions;
 
 export default employeesDataSlice.reducer;

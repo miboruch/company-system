@@ -31,13 +31,10 @@ const clientToggleSlice = createSlice({
     setEditClientCoords: (state, { payload }: PayloadAction<boolean>) => {
       state.isEditClientCoordsOpen = payload;
     },
-    resetClientToggle: () => initialState,
-    resetSelectedClient: (state) => {
-      state.selectedClient = null;
-    }
+    resetClientToggle: () => initialState
   }
 });
 
-export const { setSelectedClient, setClientInfoOpen, setAddNewClientOpen, setEditClientCoords, resetClientToggle, resetSelectedClient } = clientToggleSlice.actions;
+export const { setSelectedClient, setClientInfoOpen, setAddNewClientOpen, setEditClientCoords, resetClientToggle } = clientToggleSlice.actions;
 
 export default clientToggleSlice.reducer;

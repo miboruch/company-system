@@ -19,7 +19,9 @@ const initialState: InitialStateInterface = {
 const attendanceDataSlice = createSlice({
   name: 'attendanceData',
   initialState,
-  reducers: {},
+  reducers: {
+    resetAttendanceData: () => initialState
+  },
   extraReducers: (builder) => {
     builder.addCase(getSingleDayAttendance.pending.type, (state) => {
       state.isAttendanceLoading = true;
@@ -47,5 +49,7 @@ const attendanceDataSlice = createSlice({
     });
   }
 });
+
+export const { resetAttendanceData } = attendanceDataSlice.actions;
 
 export default attendanceDataSlice.reducer;

@@ -31,13 +31,10 @@ const employeesToggleSlice = createSlice({
     setIsEditEmployeeOpen: (state, { payload }: PayloadAction<boolean>) => {
       state.isEditEmployeeOpen = payload;
     },
-    resetEmployeesToggle: () => initialState,
-    resetSelectedEmployees: (state) => {
-      state.selectedEmployee = null;
-    }
+    resetEmployeesToggle: () => initialState
   }
 });
 
-export const { setSelectedEmployee, setEmployeeInfoOpen, setAddNewEmployeeOpen, setIsEditEmployeeOpen, resetEmployeesToggle, resetSelectedEmployees } = employeesToggleSlice.actions;
+export const { setSelectedEmployee, setEmployeeInfoOpen, setAddNewEmployeeOpen, setIsEditEmployeeOpen, resetEmployeesToggle } = employeesToggleSlice.actions;
 
 export default employeesToggleSlice.reducer;
