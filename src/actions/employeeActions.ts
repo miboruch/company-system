@@ -117,6 +117,7 @@ export const selectEmployee = (employee: EmployeeDataInterface | null) => (dispa
   dispatch(setEmployeeInfoOpen(!!employee));
 };
 
+
 export const updateEmployeeSalary = (pricePerHour?: number, monthlyPrice?: number) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   if (!pricePerHour && !monthlyPrice) {
     return dispatch(setEmployeeError('Brak danych'));
@@ -203,6 +204,8 @@ export const addNewEmployee = (userId: string, pricePerHour: number, monthlyPric
     dispatch(setEmployeeError(error));
   }
 };
+
+//----
 
 export const getEmployeeHours = (userId: string, monthIndex: number, setHours: (hours: number) => void) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   const { token, role } = getState().authenticationReducer;
