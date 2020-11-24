@@ -8,5 +8,6 @@ import { employees } from '../ducks/employees/employees';
 import { tasks } from '../ducks/tasks/tasks';
 import popup from '../ducks/popup/popup';
 import currency from '../ducks/currency/currency';
+import notifications from '../ducks/notifications/notifications';
 
-export const testRootReducer = combineReducers({ auth, popup, currency, company, attendance, client, finances, employees, tasks });
+export const testRootReducer = combineReducers({ auth, company, attendance, client, finances, employees, tasks, popup, currency, notifications });

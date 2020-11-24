@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CompanyInterface } from '../../../types/modelsTypes';
 import { getUserCompanies } from './companies-creators';
 
