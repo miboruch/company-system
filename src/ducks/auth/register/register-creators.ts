@@ -1,6 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { api } from '../../../api';
 import { setTokens } from '../tokens/tokens';
+import { getUserData } from '../data/data-creators';
+import { baseStoreType } from '../../../store/test-store';
 
 interface RegisterInterface {
   email: string;
@@ -16,13 +18,13 @@ interface RegisterInterface {
   callback: () => void;
 }
 
-export const register = createAsyncThunk('register/register', async ({ callback, ...values }: RegisterInterface, { rejectWithValue, dispatch }) => {
+export const register = createAsyncThunk<void, RegisterInterface, baseStoreType>('register/register', async ({ callback, ...values }, { rejectWithValue, dispatch }) => {
   try {
-    const { data } = await api.post(`/auth/register`, values);
+    const { data } = await api.post(`/auth/register`, { ...values });
 
     //TODO: dispatch actions
     dispatch(setTokens({ token: data.token, refreshToken: data.refreshToken, expireIn: data.expireIn }));
-    // dispatch(getUserData(data.token));
+    dispatch(getUserData());
     callback();
   } catch (error) {
     return rejectWithValue(error.response.statusText);

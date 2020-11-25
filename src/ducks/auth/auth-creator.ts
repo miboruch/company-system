@@ -4,7 +4,7 @@ import { resetCheckState } from './check/check';
 import { resetTokens } from './tokens/tokens';
 
 export const resetAuthState = () => (dispatch: Dispatch<any>): void => {
-  dispatch(resetUserData);
-  dispatch(resetCheckState);
-  dispatch(resetTokens);
+  dispatch(resetUserData());
+  dispatch(resetCheckState());
+  dispatch(resetTokens());
 };

@@ -20,10 +20,8 @@ export const validateRegistrationToken = createAsyncThunk<RegistrationVerifyToke
 
       setResponse(data);
 
-      //TODO: notification
       return data;
     } catch (error) {
-      //TODO: notification
       return rejectWithValue(error.response.statusText);
     }
   }
@@ -71,21 +69,24 @@ export const sendRegistrationMail = createAsyncThunk<void, SendRegistrationMailI
   'link-registration/sendRegistrationMail',
   async ({ email, monthlyPrice, pricePerHour }, { dispatch, getState }) => {
     try {
-      //TODO: get current company from state
-      // const data = {
-      //   email,
-      //   pricePerHour,
-      //   monthlyPrice,
-      //   companyName: currentCompany.name
-      // };
-      // const { data } = await api.post(`/auth/send-registration-link?company_id=${currentCompany._id}`, { values });
-      // dispatch(setTokens({ token: data.token, refreshToken: data.refreshToken, expireIn: data.expireIn }));
-      //TODO: notification
-      // const milliseconds = data.expireIn - new Date().getTime();
-      // dispatch(authTimeout({ refreshToken: data.refreshToken, expireMilliseconds: milliseconds }));
+      const { currentCompany } = getState().company.currentCompany;
+
+      if (currentCompany) {
+        const body = {
+          email,
+          pricePerHour,
+          monthlyPrice,
+          companyName: currentCompany.name
+        };
+        const { data } = await api.post(`/auth/send-registration-link?company_id=${currentCompany._id}`, { body });
+        dispatch(setTokens({ token: data.token, refreshToken: data.refreshToken, expireIn: data.expireIn }));
+
+        dispatch(setNotificationMessage({ message: 'Wysłano wiadomość na email' }));
+        const milliseconds = data.expireIn - new Date().getTime();
+        dispatch(authTimeout({ refreshToken: data.refreshToken, expireMilliseconds: milliseconds }));
+      }
     } catch (error) {
-      //TODO: notification
-      console.log(error);
+      dispatch(setNotificationMessage({ message: error.response.data, notificationType: NotificationTypes.Error }));
     }
   }
 );

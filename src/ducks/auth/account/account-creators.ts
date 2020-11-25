@@ -21,8 +21,8 @@ export const editAccount = createAsyncThunk<void, EditAccountInterface, baseStor
     await authApi.put(`/user/edit-user`, values);
 
     dispatch(getUserData());
-    //TODO: notifications
-    dispatch(setNotificationMessage({ message: 'Edytowano konto' }));
+
+    dispatch(setNotificationMessage({ message: 'Edytowano dane' }));
   } catch (error) {
     dispatch(setNotificationMessage({ message: error.response.data, notificationType: NotificationTypes.Error }));
     return rejectWithValue(error.response.statusText);
@@ -38,7 +38,7 @@ export const editPassword = createAsyncThunk<void, EditPasswordInterface, baseSt
   try {
     await authApi.put(`/user/password-edit`, { values });
 
-    dispatch(setNotificationMessage({ message: 'Edytowano hasło' }));
+    dispatch(setNotificationMessage({ message: 'Zmieniono hasło' }));
   } catch (error) {
     dispatch(setNotificationMessage({ message: error.response.data, notificationType: NotificationTypes.Error }));
     return rejectWithValue(error.response.statusText);

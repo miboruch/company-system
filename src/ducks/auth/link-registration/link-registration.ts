@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { validateRegistrationToken, registerFromLink } from './link-registration-creators';
 
 interface InitialStateInterface {
@@ -24,6 +24,7 @@ const registrationMailSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(validateRegistrationToken.pending.type, (state) => {
       state.isValidateLoading = true;
+      state.isValidateError = undefined;
     });
     builder.addCase(validateRegistrationToken.fulfilled.type, (state) => {
       state.isValidateLoading = false;
@@ -34,6 +35,7 @@ const registrationMailSlice = createSlice({
     });
     builder.addCase(registerFromLink.pending.type, (state) => {
       state.isRegisterLoading = true;
+      state.isRegisterError = undefined;
     });
     builder.addCase(registerFromLink.fulfilled.type, (state) => {
       state.isRegisterLoading = false;
