@@ -1,5 +1,5 @@
 import axios from 'axios';
-import testStore from '../store/test-store';
+import store from '../store/test-store';
 
 const api = axios.create({
   baseURL: process.env.REACT_APP_API_URL
@@ -14,7 +14,7 @@ const adminApi = axios.create({
 });
 
 const tokenListener = () => {
-  const { token } = testStore.getState().auth.tokens;
+  const { token } = store.getState().auth.tokens;
   if (token) {
     authApi.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     adminApi.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -32,7 +32,7 @@ const companyIdListener = () => {
   // }
 };
 
-testStore.subscribe(tokenListener);
-testStore.subscribe(companyIdListener);
+store.subscribe(tokenListener);
+store.subscribe(companyIdListener);
 
 export { api, authApi, adminApi };

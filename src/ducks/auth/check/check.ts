@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { setTokens } from '../tokens/tokens';
 
 interface InitialStateInterface {
   isLoading: boolean;
@@ -21,6 +22,11 @@ const authCheckSlice = createSlice({
       state.isLoading = payload;
     },
     resetCheckState: () => initialState
+  },
+  extraReducers: (builder) => {
+    builder.addCase(setTokens, (state, { payload }: PayloadAction<{ token: string; refreshToken: string; expireIn: number } | null>) => {
+      state.isLoggedIn = !!payload;
+    });
   }
 });
 

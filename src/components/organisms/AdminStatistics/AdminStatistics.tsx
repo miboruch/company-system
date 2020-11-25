@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { EmployeeDataInterface } from '../../../types/modelsTypes';
-import { AppState } from '../../../reducers/rootReducer';
+import { AppState } from '../../../store/test-store';
 import ListBox from '../../molecules/ListBox/ListBox';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
@@ -14,7 +14,7 @@ import CloseButton from '../../atoms/CloseButton/CloseButton';
 import gsap from 'gsap';
 import { modalOpenAnimation } from '../../../animations/animations';
 import { CloseButtonWrapper } from '../../../styles/compoundControllerStyles';
-import {Heading, Paragraph} from '../../../styles/typography/typography';
+import { Heading, Paragraph } from '../../../styles/typography/typography';
 import Dropdown from '../../atoms/Dropdown/Dropdown';
 import { months } from '../../../utils/staticData';
 

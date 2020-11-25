@@ -1,36 +1,37 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
-import { bindActionCreators } from 'redux';
+import { useSelector } from 'react-redux';
 import { Formik } from 'formik';
 import Input from '../../components/atoms/Input/Input';
 import Button from '../../components/atoms/Button/Button';
-import { AppTypes } from '../../types/actionTypes/appActionTypes';
-import { userLogin } from '../../actions/authenticationActions';
+import { login } from '../../ducks/auth/login/login-creators';
 import { AccountParagraph, AuthWrapper, FlexWrapper, FlexWrapperDefault, Heading, StyledForm, StyledInput, StyledLink } from './LoginPage.styles';
-import { AppState } from '../../reducers/rootReducer';
+import { AppState } from '../../store/test-store';
 import { ErrorParagraph } from '../../styles/typography/typography';
 import { SpinnerWrapper } from '../../styles/shared';
 import Spinner from '../../components/atoms/Spinner/Spinner';
 import LoginTemplate, { TemplatePage } from '../../components/templates/LoginTemplate/LoginTemplate';
 import { LoginSchema } from '../../validation/loginValidation';
+import { useAppDispatch } from '../../store/test-store';
 
-type ConnectedProps = RouteComponentProps<any> & LinkDispatchProps & LinkStateProps;
+type ConnectedProps = RouteComponentProps<any>;
 
 interface InitialValues {
   email: string;
   password: string;
 }
 
-const LoginPage: React.FC<ConnectedProps> = ({ history, userLogin, error, isLoading }) => {
+const LoginPage: React.FC<ConnectedProps> = ({ history }) => {
+  const dispatch = useAppDispatch();
+  const { isLoginLoading, loginError } = useSelector((state: AppState) => state.auth.login);
+
   const initialValues: InitialValues = {
     email: '',
     password: ''
   };
 
-  const handleSubmit = (values: InitialValues): void => {
-    userLogin(values.email, values.password, () => history.push('/select'));
+  const handleSubmit = ({ email, password }: InitialValues): void => {
+    dispatch(login({ email, password, callback: () => history.push('/select') }));
   };
 
   return (
@@ -39,7 +40,7 @@ const LoginPage: React.FC<ConnectedProps> = ({ history, userLogin, error, isLoad
         <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={LoginSchema} validateOnBlur={false} validateOnChange={false}>
           {({ handleChange, values, errors }) => (
             <StyledForm>
-              {isLoading ? (
+              {isLoginLoading ? (
                 <SpinnerWrapper>
                   <Spinner />
                 </SpinnerWrapper>
@@ -56,7 +57,7 @@ const LoginPage: React.FC<ConnectedProps> = ({ history, userLogin, error, isLoad
                       Nie masz konta? <StyledLink to={'/register'}>zarejestruj się</StyledLink>
                     </AccountParagraph>
                   </FlexWrapperDefault>
-                  <ErrorParagraph isVisible={!!error}>{error}</ErrorParagraph>
+                  <ErrorParagraph isVisible={!!loginError}>{loginError}</ErrorParagraph>
                 </>
               )}
             </StyledForm>
@@ -67,23 +68,4 @@ const LoginPage: React.FC<ConnectedProps> = ({ history, userLogin, error, isLoad
   );
 };
 
-interface LinkStateProps {
-  error: string | null;
-  isLoading: boolean;
-}
-
-interface LinkDispatchProps {
-  userLogin: (email: string, password: string, successCallback: () => void) => void;
-}
-
-const mapStateToProps = ({ authenticationReducer: { error, isLoading } }: AppState): LinkStateProps => {
-  return { error, isLoading };
-};
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
-  return {
-    userLogin: bindActionCreators(userLogin, dispatch)
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+export default LoginPage;

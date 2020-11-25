@@ -18,7 +18,7 @@ import { bindActionCreators } from 'redux';
 import { editCompanyCoords } from '../../../actions/companyActions';
 import { editClientCoords } from '../../../actions/clientActions';
 import { ClientInterface } from '../../../types/modelsTypes';
-import { AppState } from '../../../reducers/rootReducer';
+import { AppState } from '../../../store/test-store';
 
 const StyledWrapper = styled.div`
   position: fixed;

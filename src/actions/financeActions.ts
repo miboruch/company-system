@@ -20,7 +20,7 @@ import {
 } from '../types/actionTypes/financeActionTypes';
 import { Dispatch } from 'redux';
 import { AppTypes } from '../types/actionTypes/appActionTypes';
-import { AppState } from '../reducers/rootReducer';
+import { AppState } from '../store/test-store';
 import { API_URL, FINANCES_DATA_DAYS_BACK } from '../utils/config';
 import { setNotificationMessage } from './toggleActions';
 import { NotificationTypes } from '../types/actionTypes/toggleAcitonTypes';
@@ -77,7 +77,7 @@ const setBudgetError = (error: string | null): SetBudgetError => {
 const getCompanyIncomeAndExpense = (daysBack: number) => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
   dispatch(setBudgetLoading(true));
 
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
 
   try {
@@ -100,7 +100,7 @@ const getCompanyIncomeAndExpense = (daysBack: number) => async (dispatch: Dispat
 const getLastIncomesAndExpenses = (limit?: number) => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
   dispatch(setBudgetLoading(true));
 
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
 
   try {
@@ -124,7 +124,7 @@ const getLastIncomesAndExpenses = (limit?: number) => async (dispatch: Dispatch<
 const getCompanyBudget = () => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
   dispatch(setBudgetLoading(true));
 
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
 
   try {
@@ -152,7 +152,7 @@ export const fetchAllFinancesData = () => async (dispatch: Dispatch<any>) => {
 };
 
 export const getIncomeExpenseInTimePeriod = (daysBack: number, setData: (data: Array<any>) => void) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
 
   try {
@@ -186,7 +186,7 @@ export const getIncomeExpenseInTimePeriod = (daysBack: number, setData: (data: A
 export const addIncome = (incomeValue: number, description: string, callback: () => void) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   dispatch(setBudgetLoading(true));
 
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
 
   try {
@@ -218,7 +218,7 @@ export const addIncome = (incomeValue: number, description: string, callback: ()
 export const addExpense = (expenseValue: number, description: string, callback: () => void) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   dispatch(setBudgetLoading(true));
 
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
 
   try {
@@ -250,7 +250,7 @@ export const addExpense = (expenseValue: number, description: string, callback: 
 export const deleteIncome = (incomeId: number) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   dispatch(setBudgetLoading(true));
 
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
 
   try {
@@ -273,7 +273,7 @@ export const deleteIncome = (incomeId: number) => async (dispatch: Dispatch<any>
 export const deleteExpense = (expenseId: number) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   dispatch(setBudgetLoading(true));
 
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
 
   try {

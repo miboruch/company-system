@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import gsap from 'gsap';
 import DatePicker from 'react-datepicker';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
 import { AttendanceInterface } from '../../../types/modelsTypes';
 import { listAnimation } from '../../../animations/animations';
-import { AppState } from '../../../reducers/rootReducer';
+import { AppState } from '../../../store/test-store';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
@@ -38,7 +38,6 @@ interface Props {}
 type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
 const AttendancePageContent: React.FC<ConnectedProps> = ({
-  token,
   isLoading,
   singleDayAttendance,
   isAttendanceInfoOpen,
@@ -48,6 +47,8 @@ const AttendancePageContent: React.FC<ConnectedProps> = ({
   getSingleDayAttendance,
   setDate
 }) => {
+  const { token } = useSelector((state: AppState) => state.auth.tokens);
+
   const listRef = useRef<HTMLDivElement | null>(null);
   const [filterText, setFilterText] = useState<string>('');
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
@@ -104,7 +105,6 @@ const AttendancePageContent: React.FC<ConnectedProps> = ({
 };
 
 interface LinkStateProps {
-  token: string | null;
   isLoading: boolean;
   singleDayAttendance: AttendanceInterface[];
   isAttendanceInfoOpen: boolean;
@@ -118,8 +118,8 @@ interface LinkDispatchProps {
   setDate: (date: Date) => void;
 }
 
-const mapStateToProps = ({ authenticationReducer: { token }, attendanceReducer: { isLoading, singleDayAttendance, isAttendanceInfoOpen, attendanceDate } }: AppState): LinkStateProps => {
-  return { token, isLoading, singleDayAttendance, isAttendanceInfoOpen, attendanceDate };
+const mapStateToProps = ({ attendanceReducer: { isLoading, singleDayAttendance, isAttendanceInfoOpen, attendanceDate } }: AppState): LinkStateProps => {
+  return { isLoading, singleDayAttendance, isAttendanceInfoOpen, attendanceDate };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {

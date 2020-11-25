@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { History } from 'history';
 import gsap from 'gsap';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
 import { Content, InfoBoxWrapper, InfoWrapper, StatisticsHeading, TileWrapper } from './LandingPageContent.styles';
 import TaskTile from '../../molecules/TaskTile/TaskTile';
-import { AppState } from '../../../reducers/rootReducer';
+import { AppState } from '../../../store/test-store';
 import { AttendanceInterface, EmployeeDataInterface, IncomeDataInterface, TaskInterface } from '../../../types/modelsTypes';
 import Chart from '../../molecules/Chart/Chart';
 import AttendanceList from '../AttendanceList/AttendanceList';
@@ -31,7 +31,6 @@ const LandingPageContent: React.FC<ConnectedProps> = ({
   history,
   singleDayAttendance,
   getSingleDayAttendance,
-  role,
   allCompanyTasks,
   getCompanyTasks,
   redirectToTask,
@@ -42,6 +41,7 @@ const LandingPageContent: React.FC<ConnectedProps> = ({
   allCompanyEmployees,
   getAllCompanyEmployees
 }) => {
+  const { role } = useSelector((state: AppState) => state.auth.roles);
   const [text, setText] = useState<string>('');
   const [data, setData] = useState<Array<IncomeDataInterface> | null>(null);
   const [selectedAttendance, setSelectedAttendance] = useState<AttendanceInterface | null>(null);
@@ -109,8 +109,6 @@ const LandingPageContent: React.FC<ConnectedProps> = ({
 };
 
 interface LinkStateProps {
-  token: string | null;
-  role: UserRole;
   singleDayAttendance: AttendanceInterface[];
   allCompanyTasks: TaskInterface[];
   completedTasks: number;
@@ -128,12 +126,11 @@ interface LinkDispatchProps {
 }
 
 const mapStateToProps = ({
-  authenticationReducer: { token, role },
   attendanceReducer: { singleDayAttendance },
   taskReducer: { allCompanyTasks, completedTasks },
   employeeReducer: { allCompanyEmployees, companyEmployeesCounter }
 }: AppState): LinkStateProps => {
-  return { token, role, singleDayAttendance, allCompanyTasks, completedTasks, allCompanyEmployees, companyEmployeesCounter };
+  return { singleDayAttendance, allCompanyTasks, completedTasks, allCompanyEmployees, companyEmployeesCounter };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {

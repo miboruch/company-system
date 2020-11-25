@@ -22,7 +22,7 @@ import { setUserRole } from './authenticationActions';
 import { resetCompany } from './companyActions';
 import { resetFinances } from './financeActions';
 import { AppTypes } from '../types/actionTypes/appActionTypes';
-import { AppState } from '../reducers/rootReducer';
+import { AppState } from '../store/test-store';
 import { CURRENCY_API_URL } from '../utils/config';
 
 export const setNotificationMessage = (message: string | null, notificationType: NotificationTypes | null = NotificationTypes.Success): SetNotificationMessage => {

@@ -3,7 +3,7 @@ import gsap from 'gsap';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { bindActionCreators } from 'redux';
-import { AppState } from '../../../reducers/rootReducer';
+import { AppState } from '../../../store/test-store';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { NotificationMessage, NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
 import { setNotificationMessage } from '../../../actions/toggleActions';

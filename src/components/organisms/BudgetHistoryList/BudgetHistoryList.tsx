@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { ExpenseInterface, IncomeInterface } from '../../../types/modelsTypes';
 import ListBox from '../../molecules/ListBox/ListBox';
 import { CurrencyInterface } from '../../../types/actionTypes/toggleAcitonTypes';
-import { AppState } from '../../../reducers/rootReducer';
+import { AppState } from '../../../store/test-store';
 import { roundTo2 } from '../../../utils/functions';
 
 const StyledWrapper = styled.div`

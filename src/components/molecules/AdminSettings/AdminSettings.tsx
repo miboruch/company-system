@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { bindActionCreators } from 'redux';
 import AddNewButton from '../../atoms/AddNewButton/AddNewButton';
@@ -7,7 +7,7 @@ import Spinner from '../../atoms/Spinner/Spinner';
 import ListBox from '../ListBox/ListBox';
 import RemoveAdminPopup from '../RemoveAdminPopup/RemoveAdminPopup';
 import { CompanyOwnersInterface, EmployeeDataInterface, UserAuthData } from '../../../types/modelsTypes';
-import { AppState } from '../../../reducers/rootReducer';
+import { AppState } from '../../../store/test-store';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { getAllCompanyEmployees } from '../../../actions/employeeActions';
 import { addNewCompanyOwner, getCompanyOwners } from '../../../actions/companyActions';
@@ -18,7 +18,9 @@ import { Wrapper, ColumnWrapper, Heading } from './AdminSettings.styles';
 
 type ConnectedProps = LinkStateProps & LinkDispatchProps;
 
-const AdminSettings: React.FC<ConnectedProps> = ({ allCompanyEmployees, setNotificationMessage, userData, getAllCompanyEmployees, getCompanyOwners, addNewCompanyOwner }) => {
+const AdminSettings: React.FC<ConnectedProps> = ({ allCompanyEmployees, setNotificationMessage, getAllCompanyEmployees, getCompanyOwners, addNewCompanyOwner }) => {
+  const { userData } = useSelector((state: AppState) => state.auth.data);
+
   const [isLoading, setLoading] = useState<boolean>(false);
   const [isAddNewToggled, setAddNewToggled] = useState<boolean>(false);
   const [isRemoveOpen, setRemoveOpen] = useState<boolean>(false);
@@ -86,7 +88,6 @@ const AdminSettings: React.FC<ConnectedProps> = ({ allCompanyEmployees, setNotif
 
 interface LinkStateProps {
   allCompanyEmployees: EmployeeDataInterface[];
-  userData: null | UserAuthData;
 }
 
 interface LinkDispatchProps {
@@ -96,8 +97,8 @@ interface LinkDispatchProps {
   setNotificationMessage: (message: string | null, notificationType: NotificationTypes | null) => void;
 }
 
-const mapStateToProps = ({ authenticationReducer: { userData }, employeeReducer: { allCompanyEmployees } }: AppState): LinkStateProps => {
-  return { allCompanyEmployees, userData };
+const mapStateToProps = ({ employeeReducer: { allCompanyEmployees } }: AppState): LinkStateProps => {
+  return { allCompanyEmployees };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {

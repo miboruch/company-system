@@ -4,7 +4,7 @@ import { Paragraph } from '../../../styles/typography/typography';
 import { Wrapper, HeaderWrapper, EmployeeInfoBox, Title } from '../../../styles/contentStyles';
 import { SpinnerWrapper } from '../../../styles/shared';
 import { AttendanceInterface, WeekAttendance } from '../../../types/modelsTypes';
-import { AppState } from '../../../reducers/rootReducer';
+import { AppState } from '../../../store/test-store';
 import Spinner from '../../atoms/Spinner/Spinner';
 import WeekAttendanceComponent from '../../molecules/WeekAttendanceComponent/WeekAttendanceComponent';
 

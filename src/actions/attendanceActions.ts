@@ -25,7 +25,7 @@ import { Dispatch } from 'redux';
 import { AppTypes } from '../types/actionTypes/appActionTypes';
 import { API_URL } from '../utils/config';
 import { AttendanceInterface, WeekAttendance } from '../types/modelsTypes';
-import { AppState } from '../reducers/rootReducer';
+import { AppState } from '../store/test-store';
 import { setNotificationMessage } from './toggleActions';
 import { NotificationTypes } from '../types/actionTypes/toggleAcitonTypes';
 import { UserRole } from '../types/actionTypes/authenticationActionTypes';
@@ -96,7 +96,8 @@ const setAddNewAttendanceOpen = (isOpen: boolean): SetAddNewAttendanceOpen => {
 export const getSingleDayAttendance = (date?: Date) => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
   dispatch(setAttendanceLoading(true));
 
-  const { token, role } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
+  const { role } = getState().auth.roles;
   const { currentCompany } = getState().companyReducer;
   const { attendanceDate } = getState().attendanceReducer;
 
@@ -127,7 +128,7 @@ export const getSingleDayAttendance = (date?: Date) => async (dispatch: Dispatch
 export const getWeekAttendance = (weekCounter: number) => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
   dispatch(setAttendanceContentLoading(true));
 
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
   const { selectedAttendance } = getState().attendanceReducer;
 
@@ -156,7 +157,7 @@ export const selectAttendance = (attendance: AttendanceInterface | null) => (dis
 };
 
 export const addAttendance = (userId: string, date: Date, wasPresent: boolean, hours: number) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
 
   try {
@@ -185,7 +186,7 @@ export const addAttendance = (userId: string, date: Date, wasPresent: boolean, h
 };
 
 export const updateAttendance = (attendanceId: string, wasPresent: boolean, hours: number) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
 
   try {

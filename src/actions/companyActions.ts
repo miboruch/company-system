@@ -17,7 +17,7 @@ import {
 import { Dispatch } from 'redux';
 import { AppTypes } from '../types/actionTypes/appActionTypes';
 import { API_URL } from '../utils/config';
-import { AppState } from '../reducers/rootReducer';
+import { AppState } from '../store/test-store';
 import { UserRole } from '../types/actionTypes/authenticationActionTypes';
 import { resetAllSelected, setNotificationMessage } from './toggleActions';
 import { NotificationTypes } from '../types/actionTypes/toggleAcitonTypes';
@@ -61,7 +61,8 @@ export const setAddCompanyOpen = (isOpen: boolean): SetAddCompanyOpen => {
 export const getUserCompanies = () => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   dispatch(setCompanyLoading(true));
 
-  const { token, role } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
+  const { role } = getState().auth.roles;
 
   try {
     if (token && role) {
@@ -89,7 +90,7 @@ export const setCompany = (currentCompany: CompanyInterface | null, successCallb
 };
 
 export const getSingleCompany = (companyId: string) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
 
   try {
     if (token) {
@@ -110,7 +111,7 @@ export const editCompany = (name: string, email: string, nip: string, phoneNumbe
   dispatch: Dispatch<any>,
   getState: () => AppState
 ) => {
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
 
   try {
@@ -142,7 +143,7 @@ export const editCompany = (name: string, email: string, nip: string, phoneNumbe
 };
 
 export const editCompanyCoords = (lat: number, long: number) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
 
   try {
@@ -172,7 +173,7 @@ export const getCompanyOwners = (setCompanyOwners: (owners: CompanyOwnersInterfa
   dispatch: Dispatch<any>,
   getState: () => AppState
 ) => {
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
 
   try {
@@ -194,7 +195,7 @@ export const getCompanyOwners = (setCompanyOwners: (owners: CompanyOwnersInterfa
 };
 
 export const addNewCompanyOwner = (userId: string, callback: () => void) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
   try {
     if (token && currentCompany) {
@@ -222,7 +223,7 @@ export const removeCompanyOwner = (userId: string, addEmployee: boolean, callbac
   dispatch: Dispatch<any>,
   getState: () => AppState
 ) => {
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
   try {
     if (token && currentCompany) {

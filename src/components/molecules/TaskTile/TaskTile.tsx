@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { AppState } from '../../../reducers/rootReducer';
+import { AppState } from '../../../store/test-store';
 import { TaskInterface } from '../../../types/modelsTypes';
 import { CurrencyInterface } from '../../../types/actionTypes/toggleAcitonTypes';
 import { roundTo2 } from '../../../utils/functions';

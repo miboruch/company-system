@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import NumberFormat from 'react-number-format';
 import { Formik } from 'formik';
-import { useDispatch } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import Button from '../../../atoms/Button/Button';
 import { RegisterDataContext } from '../context/RegisterDataContext';
@@ -9,9 +8,11 @@ import { PageContext } from '../context/PageContext';
 import { Heading, StyledForm } from '../../../../pages/LoginPage/LoginPage.styles';
 import { Paragraph } from '../../../../styles/typography/typography';
 import { DoubleFlexWrapper, StyledLabel } from '../../../../styles/shared';
-import { registerFromLink, userRegister } from '../../../../actions/authenticationActions';
+import { register } from '../../../../ducks/auth/register/register-creators';
+import { registerFromLink } from '../../../../ducks/auth/link-registration/link-registration-creators';
 import { StyledInput } from '../../../../pages/LoginPage/LoginPage.styles';
 import { ContactDataSchema } from '../validation/validation';
+import { useAppDispatch } from '../../../../store/test-store';
 
 type defaultValues = {
   phoneNumber: string;
@@ -28,7 +29,7 @@ interface Props {
 type ConnectedProps = Props & RouteComponentProps;
 
 const ContactDataPage: React.FC<ConnectedProps> = ({ history, isRegistrationLink, token }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const { data, setData } = useContext(RegisterDataContext);
   const { currentPage, setCurrentPage } = useContext(PageContext);
@@ -48,19 +49,46 @@ const ContactDataPage: React.FC<ConnectedProps> = ({ history, isRegistrationLink
   const handleSubmit = ({ address, city, country, phoneNumber }: defaultValues): void => {
     if (isRegistrationLink) {
       if (token && data.password && data.repeatedPassword && data.name && data.lastName && data.dateOfBirth) {
+        const { password, repeatedPassword, name, lastName, dateOfBirth } = data;
+
         dispatch(
-          registerFromLink(token, data.password, data.repeatedPassword, data.name, data.lastName, data.dateOfBirth, phoneNumber, country, city, address, () => {
-            history.push('/select');
-            setData({});
+          registerFromLink({
+            token,
+            password,
+            repeatedPassword,
+            name,
+            lastName,
+            dateOfBirth,
+            phoneNumber,
+            country,
+            city,
+            address,
+            callback: () => {
+              history.push('/select');
+              setData({});
+            }
           })
         );
       }
     } else {
       if (data.email && data.password && data.repeatedPassword && data.name && data.lastName && data.dateOfBirth) {
+        const { email, password, repeatedPassword, name, lastName, dateOfBirth } = data;
         dispatch(
-          userRegister(data.email, data.password, data.repeatedPassword, data.name, data.lastName, data.dateOfBirth, phoneNumber, country, city, address, () => {
-            history.push('/select');
-            setData({});
+          register({
+            email,
+            password,
+            repeatedPassword,
+            name,
+            lastName,
+            dateOfBirth,
+            phoneNumber,
+            country,
+            city,
+            address,
+            callback: () => {
+              history.push('/select');
+              setData({});
+            }
           })
         );
       }

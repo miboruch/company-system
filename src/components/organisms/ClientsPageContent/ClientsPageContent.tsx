@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { ClientInterface } from '../../../types/modelsTypes';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
 import { listAnimation } from '../../../animations/animations';
-import { AppState } from '../../../reducers/rootReducer';
+import { AppState } from '../../../store/test-store';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
@@ -104,7 +104,6 @@ const ClientsPageContent: React.FC<ConnectedProps> = ({
 };
 
 interface LinkStateProps {
-  token: string | null;
   isLoading: boolean;
   allCompanyClients: ClientInterface[];
   isClientInfoOpen: boolean;
@@ -121,12 +120,8 @@ interface LinkDispatchProps {
   setEditClientCoordsOpen: (isOpen: boolean) => void;
 }
 
-const mapStateToProps = ({
-  authenticationReducer: { token },
-  clientReducer: { isLoading, allCompanyClients, isClientInfoOpen, selectedClient },
-  toggleReducer: { isEditClientCoordsOpen }
-}: AppState): LinkStateProps => {
-  return { token, isLoading, allCompanyClients, isClientInfoOpen, selectedClient, isEditClientCoordsOpen };
+const mapStateToProps = ({ clientReducer: { isLoading, allCompanyClients, isClientInfoOpen, selectedClient }, toggleReducer: { isEditClientCoordsOpen } }: AppState): LinkStateProps => {
+  return { isLoading, allCompanyClients, isClientInfoOpen, selectedClient, isEditClientCoordsOpen };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {

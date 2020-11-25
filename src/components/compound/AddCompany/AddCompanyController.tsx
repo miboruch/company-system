@@ -11,7 +11,7 @@ import AddressInfo from './pages/AddressInfo/AddressInfo';
 import { StandardCompoundTitle } from '../../../styles/compoundStyles';
 import StepList from './components/StepList/StepList';
 import CloseButton from '../../atoms/CloseButton/CloseButton';
-import { AppState } from '../../../reducers/rootReducer';
+import { AppState } from '../../../store/test-store';
 import { setAddCompanyOpen } from '../../../actions/companyActions';
 import { modalOpenAnimation } from '../../../animations/animations';
 import { MainWrapper, CloseButtonWrapper, Wrapper, ContentWrapper, CompoundTitle } from '../../../styles/compoundControllerStyles';

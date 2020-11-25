@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { testRootReducer } from '../reducers/test-rootReducer';
+import { rootReducer } from '../reducers/rootReducer';
 import { useDispatch } from 'react-redux';
 
 const store = configureStore({
-  reducer: testRootReducer,
+  reducer: rootReducer,
   devTools: process.env.NODE_ENV !== 'production'
 });
 

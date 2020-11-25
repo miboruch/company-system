@@ -8,25 +8,30 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from './types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
-import { authenticateCheck, getAllAppUsers } from './actions/authenticationActions';
+import { getAllAppUsers } from './actions/authenticationActions';
+import { authCheck } from './ducks/auth/check/check-creators';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import Routes from './routes/Routes';
 import SelectPage from './pages/SelectPage/SelectPage';
 import NotificationPopup from './components/molecules/NotificationPopup/NotificationPopup';
 import RegisterFromLink from './pages/RegisterFromLink/RegisterFromLink';
 import { getUserNotifications } from './actions/notificationActions';
+import { useAppDispatch } from './store/test-store';
 
 type ConnectedProps = LinkDispatchProps & RouteComponentProps<any>;
 
-const App: React.FC<ConnectedProps> = ({ history, authenticationCheck, getAllAppUsers, getUserNotifications }) => {
+const App: React.FC<ConnectedProps> = ({ history, getAllAppUsers, getUserNotifications }) => {
+  const dispatch = useAppDispatch();
   useEffect(() => {
-    authenticationCheck(
-      () => {
-        getAllAppUsers();
-        history.push('/select');
-        getUserNotifications(1);
-      },
-      () => history.push('/login')
+    dispatch(
+      authCheck({
+        successCallback: () => {
+          // getAllAppUsers();
+          history.push('/select');
+          getUserNotifications(1);
+        },
+        errorCallback: () => history.push('/test')
+      })
     );
   }, []);
 
@@ -47,14 +52,12 @@ const App: React.FC<ConnectedProps> = ({ history, authenticationCheck, getAllApp
 };
 
 interface LinkDispatchProps {
-  authenticationCheck: (successCallback: () => void, errorCallback: () => void) => void;
   getAllAppUsers: () => void;
   getUserNotifications: (page: number) => void;
 }
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
   return {
-    authenticationCheck: bindActionCreators(authenticateCheck, dispatch),
     getAllAppUsers: bindActionCreators(getAllAppUsers, dispatch),
     getUserNotifications: bindActionCreators(getUserNotifications, dispatch)
   };

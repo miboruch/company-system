@@ -5,7 +5,7 @@ import GridWrapper from '../../templates/GridWrapper/GridWrapper';
 import { ContentGridWrapper } from '../../../styles/HomePageContentGridStyles';
 import Chart from '../../molecules/Chart/Chart';
 import { ExpenseInterface, IncomeDataInterface, IncomeInterface } from '../../../types/modelsTypes';
-import { AppState } from '../../../reducers/rootReducer';
+import { AppState } from '../../../store/test-store';
 import { Heading } from '../../../styles/typography/typography';
 import gsap from 'gsap';
 import { contentAnimation } from '../../../animations/animations';

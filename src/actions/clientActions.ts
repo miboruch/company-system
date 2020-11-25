@@ -19,7 +19,7 @@ import {
 import { Dispatch } from 'redux';
 import { AppTypes } from '../types/actionTypes/appActionTypes';
 import { API_URL } from '../utils/config';
-import { AppState } from '../reducers/rootReducer';
+import { AppState } from '../store/test-store';
 import { setNotificationMessage } from './toggleActions';
 import { NotificationTypes } from '../types/actionTypes/toggleAcitonTypes';
 import { getCompanyTasks, selectTask } from './taskActions';
@@ -70,7 +70,7 @@ export const setAddNewClientOpen = (isOpen: boolean): SetAddNewClientOpen => {
 export const getCompanyClients = () => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
   dispatch(setClientsLoading(true));
 
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
 
   try {
@@ -102,7 +102,7 @@ export const addNewClient = (name: string, address: string, email: string, phone
 ) => {
   dispatch(setClientsLoading(true));
 
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
 
   try {
@@ -141,7 +141,7 @@ export const addNewClient = (name: string, address: string, email: string, phone
 };
 
 export const deleteClient = (clientId: string) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
 
   try {
@@ -167,7 +167,7 @@ export const deleteClient = (clientId: string) => async (dispatch: Dispatch<any>
 };
 
 export const getSingleClient = (clientId: string) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
 
   try {
@@ -191,7 +191,7 @@ export const editClient = (clientId: string, name: string, email: string, phoneN
   dispatch: Dispatch<any>,
   getState: () => AppState
 ) => {
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
 
   try {
@@ -224,7 +224,7 @@ export const editClient = (clientId: string, name: string, email: string, phoneN
 };
 
 export const editClientCoords = (clientId: string, lat: number, long: number) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
 
   try {

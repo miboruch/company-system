@@ -1,17 +1,15 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { UserRole } from '../types/actionTypes/authenticationActionTypes';
 import { Switch } from 'react-router-dom';
 import { adminRoutes, userRoutes } from './routesDefinition';
 import AdminRoute from '../hoc/AdminRoute';
-import { AppState } from '../reducers/rootReducer';
+import { AppState } from '../store/test-store';
 import UserRoute from '../hoc/UserRoute';
 
-interface Props {}
+const Routes: React.FC = () => {
+  const { role } = useSelector((state: AppState) => state.auth.roles);
 
-type ConnectedProps = Props & LinkStateProps;
-
-const Routes: React.FC<ConnectedProps> = ({ role }) => {
   return (
     <Switch>
       {role === UserRole.Admin
@@ -21,12 +19,4 @@ const Routes: React.FC<ConnectedProps> = ({ role }) => {
   );
 };
 
-interface LinkStateProps {
-  role: UserRole;
-}
-
-const mapStateToProps = ({ authenticationReducer: { role } }: AppState): LinkStateProps => {
-  return { role };
-};
-
-export default connect(mapStateToProps)(Routes);
+export default Routes;

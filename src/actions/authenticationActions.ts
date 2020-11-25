@@ -20,7 +20,7 @@ import { Dispatch } from 'redux';
 import { AppTypes } from '../types/actionTypes/appActionTypes';
 import { API_URL } from '../utils/config';
 import { UserDataInterface } from '../types/modelsTypes';
-import { AppState } from '../reducers/rootReducer';
+import { AppState } from '../store/test-store';
 import { resetState, setNotificationMessage } from './toggleActions';
 import { NotificationTypes } from '../types/actionTypes/toggleAcitonTypes';
 import { RegistrationVerifyTokenResponse } from '../pages/RegisterFromLink/RegisterFromLink';
@@ -160,7 +160,7 @@ export const userLogout = (successCallback?: () => void, errorCallback?: () => v
   try {
     dispatch(authStart());
 
-    const { refreshToken } = getState().authenticationReducer;
+    const { refreshToken } = getState().auth.tokens;
     if (refreshToken) {
       await axios.post(`${API_URL}/auth/logout`, { refreshToken: refreshToken });
 
@@ -246,8 +246,10 @@ export const authenticateCheck = (successCallback: () => void, errorCallback: ()
   }
 };
 
+//TODO
+
 export const getAllAppUsers = () => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
 
   try {
@@ -266,7 +268,7 @@ export const getAllAppUsers = () => async (dispatch: Dispatch<AppTypes>, getStat
 };
 
 export const sendRegistrationMail = (email: string, pricePerHour?: number, monthlyPrice?: number) => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
 
   try {
@@ -352,7 +354,7 @@ export const editAccount = (email: string, name: string, lastName: string, dateO
   dispatch: Dispatch<any>,
   getState: () => AppState
 ) => {
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
 
   try {
     if (token) {
@@ -383,8 +385,10 @@ export const editAccount = (email: string, name: string, lastName: string, dateO
   }
 };
 
+//===
+
 export const editPassword = (password: string, repeatedPassword: string) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
 
   try {
     if (token) {

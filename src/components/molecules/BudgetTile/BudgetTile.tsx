@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { CurrencyInterface } from '../../../types/actionTypes/toggleAcitonTypes';
-import { AppState } from '../../../reducers/rootReducer';
+import { AppState } from '../../../store/test-store';
 import { Tile, Name, Description } from '../TaskTile/TaskTile.styles';
 import { Paragraph } from '../../../styles/typography/typography';
 

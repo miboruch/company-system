@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { Formik } from 'formik';
 import Button from '../../atoms/Button/Button';
 import MapCoordsEdit, { CoordsEditType } from '../../organisms/MapCoordsEdit/MapCoordsEdit';
-import { AppState } from '../../../reducers/rootReducer';
+import { AppState } from '../../../store/test-store';
 import { CompanyInterface } from '../../../types/modelsTypes';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { Heading, StyledForm } from '../AccountSettings/AccountSettings.styles';

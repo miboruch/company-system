@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
-import { AppState } from '../../../reducers/rootReducer';
+import { AppState } from '../../../store/test-store';
 import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
 import { adminSettings, userSettings, AdminSettingsSubcategories, UserSettingsSubcategories, renderSettings } from './settingsPageData';
 import { StyledList, ListItems, Paragraph, ContentWrapper } from './SettingsPageContent.styles';
 
-interface Props {}
-
-type ConnectedProps = Props & LinkStateProps;
-
-const SettingsPageContent: React.FC<ConnectedProps> = ({ role }) => {
+const SettingsPageContent: React.FC = () => {
+  const { role } = useSelector((state: AppState) => state.auth.roles);
   const [subcategory, setSubcategory] = useState<AdminSettingsSubcategories | UserSettingsSubcategories>(UserSettingsSubcategories.AccountSettings);
 
   return (
@@ -33,12 +30,4 @@ const SettingsPageContent: React.FC<ConnectedProps> = ({ role }) => {
   );
 };
 
-interface LinkStateProps {
-  role: UserRole;
-}
-
-const mapStateToProps = ({ authenticationReducer: { role } }: AppState): LinkStateProps => {
-  return { role };
-};
-
-export default connect(mapStateToProps)(SettingsPageContent);
+export default SettingsPageContent;

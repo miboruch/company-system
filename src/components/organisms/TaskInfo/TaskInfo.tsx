@@ -1,12 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Formik } from 'formik';
 import { StyledInput } from '../../../styles/compoundStyles';
 import { Paragraph } from '../../../styles/typography/typography';
 import { ButtonWrapper, EmployeeInfoBox, HeaderWrapper, InputWrapper, RowIconWrapper, StyledForm, Title, Wrapper } from '../../../styles/contentStyles';
 import { ClientInterface, TaskInterface } from '../../../types/modelsTypes';
-import { AppState } from '../../../reducers/rootReducer';
+import { AppState } from '../../../store/test-store';
 import { StyledLabel } from '../../../styles/shared';
 import DatePicker from 'react-datepicker';
 import Button from '../../atoms/Button/Button';
@@ -58,7 +58,9 @@ interface Props {
 
 type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
 
-const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, role, isEditToggled, setEditToggled, setDeleteOpen, editTask, changeTaskState, setTaskMapPreviewOpen }) => {
+const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, isEditToggled, setEditToggled, setDeleteOpen, editTask, changeTaskState, setTaskMapPreviewOpen }) => {
+  const { role } = useSelector((state: AppState) => state.auth.roles);
+
   const initialValues: InitialValues = {
     name: selectedTask?.name || '',
     description: selectedTask?.description || '',
@@ -156,7 +158,6 @@ const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, role, isEditToggled,
 };
 
 interface LinkStateProps {
-  role: UserRole;
   selectedTask: TaskInterface | null;
 }
 
@@ -166,8 +167,8 @@ interface LinkDispatchProps {
   setTaskMapPreviewOpen: (isOpen: boolean) => void;
 }
 
-const mapStateToProps = ({ taskReducer: { selectedTask }, authenticationReducer: { role } }: AppState): LinkStateProps => {
-  return { selectedTask, role };
+const mapStateToProps = ({ taskReducer: { selectedTask } }: AppState): LinkStateProps => {
+  return { selectedTask };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {

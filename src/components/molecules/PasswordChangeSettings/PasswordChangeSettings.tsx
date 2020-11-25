@@ -1,23 +1,19 @@
 import React, { useState } from 'react';
 import { Formik } from 'formik';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { ThunkDispatch } from 'redux-thunk';
 import Button from '../../atoms/Button/Button';
-import { AppTypes } from '../../../types/actionTypes/appActionTypes';
-import { editPassword } from '../../../actions/authenticationActions';
+import { editPassword } from '../../../ducks/auth/account/account-creators';
 import { Heading, StyledForm } from '../AccountSettings/AccountSettings.styles';
 import { StyledInput } from '../../../styles/compoundStyles';
 import { DoubleFlexWrapper } from '../../../styles/shared';
+import { useAppDispatch } from '../../../store/test-store';
 
 interface DefaultValues {
   password: string;
   repeatedPassword: string;
 }
 
-type ConnectedProps = LinkDispatchProps;
-
-const PasswordChangeSettings: React.FC<ConnectedProps> = ({ editPassword }) => {
+const PasswordChangeSettings: React.FC = () => {
+  const dispatch = useAppDispatch();
   const [isPasswordShown, setPasswordShown] = useState<boolean>(false);
   const [isRepeatedPasswordShown, setRepeatedPasswordShown] = useState<boolean>(false);
 
@@ -27,7 +23,7 @@ const PasswordChangeSettings: React.FC<ConnectedProps> = ({ editPassword }) => {
   };
 
   const handleSubmit = ({ password, repeatedPassword }: DefaultValues) => {
-    editPassword(password, repeatedPassword);
+    dispatch(editPassword({ password, repeatedPassword }));
   };
 
   return (
@@ -64,14 +60,4 @@ const PasswordChangeSettings: React.FC<ConnectedProps> = ({ editPassword }) => {
   );
 };
 
-interface LinkDispatchProps {
-  editPassword: (password: string, repeatedPassword: string) => void;
-}
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
-  return {
-    editPassword: bindActionCreators(editPassword, dispatch)
-  };
-};
-
-export default connect(null, mapDispatchToProps)(PasswordChangeSettings);
+export default PasswordChangeSettings;

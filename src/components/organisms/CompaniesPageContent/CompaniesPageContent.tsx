@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { CompanyInterface } from '../../../types/modelsTypes';
-import { AppState } from '../../../reducers/rootReducer';
+import { AppState } from '../../../store/test-store';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
@@ -18,7 +18,8 @@ import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
 
 type ConnectedProps = LinkStateProps & LinkDispatchProps & RouteComponentProps<any>;
 
-const CompaniesPageContent: React.FC<ConnectedProps> = ({ history, role, userCompanies, getUserCompanies, isLoading, setAddCompanyOpen, setCompany }) => {
+const CompaniesPageContent: React.FC<ConnectedProps> = ({ history, userCompanies, getUserCompanies, isLoading, setAddCompanyOpen, setCompany }) => {
+  const { role } = useSelector((state: AppState) => state.auth.roles);
   useEffect(() => {
     getUserCompanies();
   }, []);
@@ -61,7 +62,6 @@ const CompaniesPageContent: React.FC<ConnectedProps> = ({ history, role, userCom
 };
 
 interface LinkStateProps {
-  role: UserRole;
   isLoading: boolean;
   userCompanies: CompanyInterface[];
 }
@@ -72,8 +72,8 @@ interface LinkDispatchProps {
   setCompany: (currentCompany: CompanyInterface | null, successCallback: () => void) => void;
 }
 
-const mapStateToProps = ({ companyReducer: { userCompanies, isLoading }, authenticationReducer: { role } }: AppState): LinkStateProps => {
-  return { userCompanies, isLoading, role };
+const mapStateToProps = ({ companyReducer: { userCompanies, isLoading } }: AppState): LinkStateProps => {
+  return { userCompanies, isLoading };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {

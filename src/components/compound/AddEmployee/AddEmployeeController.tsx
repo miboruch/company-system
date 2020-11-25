@@ -9,7 +9,7 @@ import { StandardCompoundTitle } from '../../../styles/compoundStyles';
 import StepList from './components/StepList/StepList';
 import AddEmployeeTemplate from './templates/AddEmployeeTemplate';
 import { PageSettingEnum } from './context/PageContext';
-import { AppState } from '../../../reducers/rootReducer';
+import { AppState } from '../../../store/test-store';
 import { setAddNewEmployeeOpen } from '../../../actions/employeeActions';
 import { modalOpenAnimation } from '../../../animations/animations';
 import AddEmployeeHeader from './components/AddEmployeeHeader/AddEmployeeHeader';

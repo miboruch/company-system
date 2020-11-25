@@ -1,24 +1,22 @@
 import React, { useContext } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { adminMenuItems, userMenuItems } from '../../../utils/menuItems';
 import { ButtonWrapper, CompanyName, LinkWrapper, MenuItemsWrapper, MenuWrapper, StyledLink } from './Menu.styles';
-import Button from '../../atoms/Button/Button';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
-import { setUserRole, userLogout } from '../../../actions/authenticationActions';
-import { AppState } from '../../../reducers/rootReducer';
+import { setUserRole } from '../../../actions/authenticationActions';
+import { AppState } from '../../../store/test-store';
 import { MenuContext } from '../../../providers/MenuContext/MenuContext';
 import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
 import { CompanyInterface } from '../../../types/modelsTypes';
 import { ReactComponent as MenuSvg } from '../../../assets/icons/menuDraw.svg';
 import { ReactComponent as Arrow } from '../../../assets/icons/arrow.svg';
-import { adminRoutes, userRoutes } from '../../../routes/routesDefinition';
 
 import styled from 'styled-components';
 import { changeUserRoleTo } from '../../../actions/toggleActions';
 import MenuItemsRenderer from './MenuItemsRenderer';
+import { useAppDispatch } from '../../../store/test-store';
 
 const RedirectPanel = styled.section`
   width: 100%;
@@ -67,7 +65,9 @@ const RedirectText = styled.p`
 
 type ConnectedProps = LinkDispatchProps & LinkStateProps & RouteComponentProps;
 
-const Menu: React.FC<ConnectedProps> = ({ history, setUserRole, changeUserRoleTo, role, currentCompany }) => {
+const Menu: React.FC<ConnectedProps> = ({ history, changeUserRoleTo, currentCompany }) => {
+  const dispatch = useAppDispatch();
+  const { role } = useSelector((state: AppState) => state.auth.roles);
   const { isMenuOpen } = useContext(MenuContext);
 
   const changeRole = () => {
@@ -87,9 +87,7 @@ const Menu: React.FC<ConnectedProps> = ({ history, setUserRole, changeUserRoleTo
       <RedirectPanel>
         <StyledMenuSvg />
         <RedirectText>Przejdź do panelu {role === UserRole.Admin ? 'użytkownika' : 'administratora'}</RedirectText>
-        <ArrowWrapper
-          onClick={() => changeRole()}
-        >
+        <ArrowWrapper onClick={() => changeRole()}>
           <ArrowIcon />
         </ArrowWrapper>
       </RedirectPanel>
@@ -98,7 +96,6 @@ const Menu: React.FC<ConnectedProps> = ({ history, setUserRole, changeUserRoleTo
 };
 
 interface LinkStateProps {
-  role: UserRole;
   currentCompany: CompanyInterface | null;
 }
 
@@ -107,8 +104,8 @@ interface LinkDispatchProps {
   setUserRole: (role: UserRole) => void;
 }
 
-const mapStateToProps = ({ authenticationReducer: { role }, companyReducer: { currentCompany } }: AppState): LinkStateProps => {
-  return { role, currentCompany };
+const mapStateToProps = ({ companyReducer: { currentCompany } }: AppState): LinkStateProps => {
+  return { currentCompany };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {

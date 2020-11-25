@@ -23,7 +23,7 @@ import { EmployeeDataInterface } from '../types/modelsTypes';
 import { Dispatch } from 'redux';
 import { AppTypes } from '../types/actionTypes/appActionTypes';
 import { API_URL } from '../utils/config';
-import { AppState } from '../reducers/rootReducer';
+import { AppState } from '../store/test-store';
 import { setNotificationMessage } from './toggleActions';
 import { NotificationTypes } from '../types/actionTypes/toggleAcitonTypes';
 import { UserRole } from '../types/actionTypes/authenticationActionTypes';
@@ -87,7 +87,8 @@ const setCompanyEmployeesCounter = (counter: number): SetCompanyEmployeesCounter
 export const getAllCompanyEmployees = () => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
   dispatch(setEmployeeLoading(true));
 
-  const { token, role } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
+  const { role } = getState().auth.roles;
   const { currentCompany } = getState().companyReducer;
 
   try {
@@ -117,7 +118,6 @@ export const selectEmployee = (employee: EmployeeDataInterface | null) => (dispa
   dispatch(setEmployeeInfoOpen(!!employee));
 };
 
-
 export const updateEmployeeSalary = (pricePerHour?: number, monthlyPrice?: number) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   if (!pricePerHour && !monthlyPrice) {
     return dispatch(setEmployeeError('Brak danych'));
@@ -136,7 +136,7 @@ export const updateEmployeeSalary = (pricePerHour?: number, monthlyPrice?: numbe
   }
 
   const { selectedEmployee } = getState().employeeReducer;
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
 
   try {
@@ -172,7 +172,7 @@ export const updateEmployeeSalary = (pricePerHour?: number, monthlyPrice?: numbe
 };
 
 export const addNewEmployee = (userId: string, pricePerHour: number, monthlyPrice: number) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
 
   try {
@@ -208,7 +208,8 @@ export const addNewEmployee = (userId: string, pricePerHour: number, monthlyPric
 //----
 
 export const getEmployeeHours = (userId: string, monthIndex: number, setHours: (hours: number) => void) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
-  const { token, role } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
+  const { role } = getState().auth.roles;
   const { currentCompany } = getState().companyReducer;
 
   try {
@@ -240,7 +241,8 @@ export const getEmployeeHours = (userId: string, monthIndex: number, setHours: (
 };
 
 export const getEmployeeSalary = (userId: string, monthIndex: number, setSalary: (hours: number) => void) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
-  const { token, role } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
+  const { role } = getState().auth.roles;
   const { currentCompany } = getState().companyReducer;
 
   try {

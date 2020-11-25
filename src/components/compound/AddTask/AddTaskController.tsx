@@ -11,7 +11,7 @@ import StepList from './components/StepList/StepList';
 import AddTaskTemplate from './templates/AddTaskTemplate';
 import { PageSettingEnum } from './context/PageContext';
 import { modalOpenAnimation } from '../../../animations/animations';
-import { AppState } from '../../../reducers/rootReducer';
+import { AppState } from '../../../store/test-store';
 import TaskInfoPage from './pages/TaskInfoPage/TaskInfoPage';
 import SpecificInfoPage from './pages/SpecificInfoPage/SpecificInfoPage';
 import { setAddNewTaskOpen } from '../../../actions/taskActions';

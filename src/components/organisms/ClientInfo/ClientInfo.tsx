@@ -2,7 +2,7 @@ import React from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { Formik } from 'formik';
 import { ClientInterface } from '../../../types/modelsTypes';
-import { AppState } from '../../../reducers/rootReducer';
+import { AppState } from '../../../store/test-store';
 import { Paragraph } from '../../../styles/typography/typography';
 import { ButtonWrapper, EmployeeInfoBox, HeaderWrapper, InputWrapper, RowIconWrapper, StyledForm, Title, Wrapper } from '../../../styles/contentStyles';
 import { StyledInput } from '../../../styles/compoundStyles';
@@ -79,10 +79,18 @@ const ClientInfo: React.FC<ConnectedProps> = ({ selectedClient, isEditToggled, s
               <InputWrapper>
                 <StyledInput onChange={handleChange} name={'name'} required={true} type={'text'} labelText={errors.name || 'Nazwa'} value={values.name} disabled={!isEditToggled} />
                 <StyledInput onChange={handleChange} name={'email'} required={true} type={'email'} labelText={errors.email || 'Email'} value={values.email} disabled={!isEditToggled} />
-                <StyledInput onChange={handleChange} name={'phoneNumber'} required={true} type={'text'} labelText={errors.phoneNumber || 'Numer telefonu'} value={values.phoneNumber} disabled={!isEditToggled} />
+                <StyledInput
+                  onChange={handleChange}
+                  name={'phoneNumber'}
+                  required={true}
+                  type={'text'}
+                  labelText={errors.phoneNumber || 'Numer telefonu'}
+                  value={values.phoneNumber}
+                  disabled={!isEditToggled}
+                />
                 <StyledInput onChange={handleChange} name={'address'} type={'text'} required={true} labelText={errors.address || 'Adres'} value={values.address} disabled={!isEditToggled} />
                 <StyledInput onChange={handleChange} name={'city'} type={'text'} required={true} labelText={errors.city || 'Miasto'} value={values.city} disabled={!isEditToggled} />
-                <StyledInput onChange={handleChange} name={'country'} type={'text'} required={true} labelText={errors.country ||'Państwo'} value={values.country} disabled={!isEditToggled} />
+                <StyledInput onChange={handleChange} name={'country'} type={'text'} required={true} labelText={errors.country || 'Państwo'} value={values.country} disabled={!isEditToggled} />
               </InputWrapper>
               <ButtonWrapper>
                 <Button type={'submit'} text={'Zapisz'} />

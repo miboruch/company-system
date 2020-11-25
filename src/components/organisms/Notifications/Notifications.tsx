@@ -6,7 +6,7 @@ import NotificationBox from '../../molecules/NotificationBox/NotificationBox';
 import { StyledWrapper, Header, Content } from './Notifications.styles';
 import { notificationsAnimation } from '../../../animations/animations';
 import { NotificationInterface } from '../../../types/modelsTypes';
-import { AppState } from '../../../reducers/rootReducer';
+import { AppState } from '../../../store/test-store';
 
 interface Props {
   isOpen: boolean;

@@ -9,7 +9,7 @@ import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { addNewTask } from '../../../../../actions/taskActions';
 import Dropdown from '../../../../atoms/Dropdown/Dropdown';
 import { getCompanyClients } from '../../../../../actions/clientActions';
-import { AppState } from '../../../../../reducers/rootReducer';
+import { AppState } from '../../../../../store/test-store';
 import { TaskSpecificInfoSchema } from '../../validation/validation';
 
 interface DefaultValues {

@@ -3,7 +3,7 @@ import { NotificationInterface } from '../types/modelsTypes';
 import { SET_NOTIFICATIONS, SetNotifications } from '../types/actionTypes/notificationActionTypes';
 import { Dispatch } from 'redux';
 import { AppTypes } from '../types/actionTypes/appActionTypes';
-import { AppState } from '../reducers/rootReducer';
+import { AppState } from '../store/test-store';
 import { API_URL } from '../utils/config';
 import { setNotificationMessage } from './toggleActions';
 import { NotificationTypes } from '../types/actionTypes/toggleAcitonTypes';
@@ -16,7 +16,7 @@ const setNotifications = (notifications: NotificationInterface[]): SetNotificati
 };
 
 export const getUserNotifications = (page: number) => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
 
   try {
     if (token) {
@@ -34,7 +34,7 @@ export const getUserNotifications = (page: number) => async (dispatch: Dispatch<
 };
 
 export const checkAsOpen = (notificationId: string) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
 
   try {
     if (token) {
@@ -59,7 +59,7 @@ export const checkAsOpen = (notificationId: string) => async (dispatch: Dispatch
 };
 
 export const deleteNotification = (notificationId: string) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
 
   try {
     if (token) {

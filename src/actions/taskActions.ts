@@ -24,7 +24,7 @@ import { TaskInterface } from '../types/modelsTypes';
 import { Dispatch } from 'redux';
 import { AppTypes } from '../types/actionTypes/appActionTypes';
 import { API_URL } from '../utils/config';
-import { AppState } from '../reducers/rootReducer';
+import { AppState } from '../store/test-store';
 import { setNotificationMessage } from './toggleActions';
 import { NotificationTypes } from '../types/actionTypes/toggleAcitonTypes';
 import { UserRole } from '../types/actionTypes/authenticationActionTypes';
@@ -88,7 +88,7 @@ const setEditTaskOpen = (isOpen: boolean): SetEditTask => {
 export const getCompanyTasks = () => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
   dispatch(setTaskLoading(true));
 
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
 
   try {
@@ -120,7 +120,7 @@ export const addNewTask = (date: Date, timeEstimate: number, name: string, descr
 ) => {
   dispatch(setTaskLoading(true));
 
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
 
   try {
@@ -159,7 +159,7 @@ export const addNewTask = (date: Date, timeEstimate: number, name: string, descr
 };
 
 export const getSingleTask = (taskId: string) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
 
   try {
@@ -182,7 +182,7 @@ export const getSingleTask = (taskId: string) => async (dispatch: Dispatch<any>,
 };
 
 export const deleteTask = (taskId: string) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
 
   try {
@@ -211,7 +211,7 @@ export const deleteTask = (taskId: string) => async (dispatch: Dispatch<any>, ge
 //--
 
 export const redirectToTask = (history: History, task: TaskInterface) => (dispatch: Dispatch<any>, getState: () => AppState) => {
-  const { role } = getState().authenticationReducer;
+  const { role } = getState().auth.roles;
 
   role === UserRole.User ? history.push('/user/tasks') : history.push('/admin/tasks');
   dispatch(setTaskInfoOpen(true));
@@ -220,7 +220,7 @@ export const redirectToTask = (history: History, task: TaskInterface) => (dispat
 
 export const getCompletedTasks = () => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   const DAYS_BACK = 30;
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
 
   try {
@@ -242,7 +242,7 @@ export const editTask = (taskId: string, date: Date, name: string, description: 
   dispatch: Dispatch<any>,
   getState: () => AppState
 ) => {
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
 
   try {
@@ -275,7 +275,7 @@ export const editTask = (taskId: string, date: Date, name: string, description: 
 };
 
 export const changeTaskState = (taskId: string, isCompleted: boolean) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
-  const { token } = getState().authenticationReducer;
+  const { token } = getState().auth.tokens;
   const { currentCompany } = getState().companyReducer;
 
   try {
