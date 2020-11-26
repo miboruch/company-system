@@ -6,20 +6,22 @@ import AddNewButton from '../../atoms/AddNewButton/AddNewButton';
 import Spinner from '../../atoms/Spinner/Spinner';
 import ListBox from '../ListBox/ListBox';
 import RemoveAdminPopup from '../RemoveAdminPopup/RemoveAdminPopup';
-import { CompanyOwnersInterface, EmployeeDataInterface, UserAuthData } from '../../../types/modelsTypes';
+import { CompanyOwnersInterface } from '../../../types/modelsTypes';
 import { AppState, useAppDispatch } from '../../../store/test-store';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
-import { getAllCompanyEmployees } from '../../../actions/employeeActions';
+import { getAllCompanyEmployees } from '../../../ducks/employees/employees-data/employees-data-creators';
 import { getCompanyOwners, addNewCompanyOwner } from '../../../ducks/company/company-owners/company-owners-creators';
 import { SpinnerWrapper } from '../../../styles/shared';
 import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
 import { setNotificationMessage } from '../../../actions/toggleActions';
 import { Wrapper, ColumnWrapper, Heading } from './AdminSettings.styles';
 
-type ConnectedProps = LinkStateProps & LinkDispatchProps;
+type ConnectedProps = LinkDispatchProps;
 
-const AdminSettings: React.FC<ConnectedProps> = ({ allCompanyEmployees, setNotificationMessage, getAllCompanyEmployees }) => {
+const AdminSettings: React.FC<ConnectedProps> = ({ setNotificationMessage }) => {
   const dispatch = useAppDispatch();
+  const { allCompanyEmployees } = useSelector((state: AppState) => state.employees.employeesData);
+
   const { userData } = useSelector((state: AppState) => state.auth.data);
   const { areOwnersLoading, companyOwners } = useSelector((state: AppState) => state.company.companyOwners);
 
@@ -28,7 +30,7 @@ const AdminSettings: React.FC<ConnectedProps> = ({ allCompanyEmployees, setNotif
   const [companyOwnerToDelete, setCompanyOwnerToDelete] = useState<CompanyOwnersInterface | null>(null);
 
   useEffect(() => {
-    allCompanyEmployees.length === 0 && getAllCompanyEmployees();
+    allCompanyEmployees.length === 0 && dispatch(getAllCompanyEmployees());
     dispatch(getCompanyOwners());
   }, []);
 
@@ -87,24 +89,14 @@ const AdminSettings: React.FC<ConnectedProps> = ({ allCompanyEmployees, setNotif
   );
 };
 
-interface LinkStateProps {
-  allCompanyEmployees: EmployeeDataInterface[];
-}
-
 interface LinkDispatchProps {
-  getAllCompanyEmployees: () => void;
   setNotificationMessage: (message: string | null, notificationType: NotificationTypes | null) => void;
 }
 
-const mapStateToProps = ({ employeeReducer: { allCompanyEmployees } }: AppState): LinkStateProps => {
-  return { allCompanyEmployees };
-};
-
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
   return {
-    getAllCompanyEmployees: bindActionCreators(getAllCompanyEmployees, dispatch),
     setNotificationMessage: bindActionCreators(setNotificationMessage, dispatch)
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdminSettings);
+export default connect(null, mapDispatchToProps)(AdminSettings);

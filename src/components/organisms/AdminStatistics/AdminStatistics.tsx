@@ -1,22 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { EmployeeDataInterface } from '../../../types/modelsTypes';
-import { AppState } from '../../../store/test-store';
+import { AppState, useAppDispatch } from '../../../store/test-store';
 import ListBox from '../../molecules/ListBox/ListBox';
-import { ThunkDispatch } from 'redux-thunk';
-import { AppTypes } from '../../../types/actionTypes/appActionTypes';
-import { bindActionCreators } from 'redux';
 import { SpinnerWrapper } from '../../../styles/shared';
-import { getEmployeeHours, getEmployeeSalary } from '../../../actions/employeeActions';
+import { getEmployeeHours, getEmployeeSalary } from '../../../ducks/employees/employees-data/employees-data-creators';
 import Spinner from '../../atoms/Spinner/Spinner';
 import CloseButton from '../../atoms/CloseButton/CloseButton';
 import gsap from 'gsap';
 import { modalOpenAnimation } from '../../../animations/animations';
 import { CloseButtonWrapper } from '../../../styles/compoundControllerStyles';
 import { Heading, Paragraph } from '../../../styles/typography/typography';
-import Dropdown from '../../atoms/Dropdown/Dropdown';
-import { months } from '../../../utils/staticData';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -93,9 +88,10 @@ interface Props {
   setOpen: (isOpen: boolean) => void;
 }
 
-type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
+const AdminStatistics: React.FC<Props> = ({ isOpen, setOpen }) => {
+  const dispatch = useAppDispatch();
+  const { allCompanyEmployees, areEmployeesLoading } = useSelector((state: AppState) => state.employees.employeesData);
 
-const AdminStatistics: React.FC<ConnectedProps> = ({ allCompanyEmployees, getEmployeeSalary, getEmployeeHours, isLoading, isOpen, setOpen }) => {
   const [selectedEmployee, setSelectedEmployee] = useState<EmployeeDataInterface | null>(null);
   const [userSalary, setUserSalary] = useState<number>(0);
   const [userHours, setUserHours] = useState<number>(0);
@@ -105,8 +101,8 @@ const AdminStatistics: React.FC<ConnectedProps> = ({ allCompanyEmployees, getEmp
 
   useEffect(() => {
     if (selectedEmployee) {
-      getEmployeeSalary(selectedEmployee.userId._id, 10, setUserSalary);
-      getEmployeeHours(selectedEmployee.userId._id, 10, setUserHours);
+      dispatch(getEmployeeSalary({ userId: selectedEmployee.userId._id, monthIndex: 10, setSalary: setUserSalary }));
+      dispatch(getEmployeeHours({ userId: selectedEmployee.userId._id, monthIndex: 10, setHours: setUserHours }));
     }
   }, [selectedEmployee?.userId]);
 
@@ -141,7 +137,7 @@ const AdminStatistics: React.FC<ConnectedProps> = ({ allCompanyEmployees, getEmp
           ))}
         </ListWrapper>
         <ContentWrapper>
-          {isLoading ? (
+          {areEmployeesLoading ? (
             <SpinnerWrapper>
               <Spinner />
             </SpinnerWrapper>
@@ -167,25 +163,4 @@ const AdminStatistics: React.FC<ConnectedProps> = ({ allCompanyEmployees, getEmp
   );
 };
 
-interface LinkStateProps {
-  allCompanyEmployees: EmployeeDataInterface[];
-  isLoading: boolean;
-}
-
-const mapStateToProps = ({ employeeReducer: { allCompanyEmployees, isLoading } }: AppState): LinkStateProps => {
-  return { allCompanyEmployees, isLoading };
-};
-
-interface LinkDispatchProps {
-  getEmployeeSalary: (userId: string, monthIndex: number, setSalary: (hours: number) => void) => void;
-  getEmployeeHours: (userId: string, monthIndex: number, setHours: (hours: number) => void) => void;
-}
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
-  return {
-    getEmployeeSalary: bindActionCreators(getEmployeeSalary, dispatch),
-    getEmployeeHours: bindActionCreators(getEmployeeHours, dispatch)
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AdminStatistics);
+export default AdminStatistics;

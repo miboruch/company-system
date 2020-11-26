@@ -84,7 +84,7 @@ const TaskPageContent: React.FC<ConnectedProps> = ({
                   <Paragraph type={'add'}>Dodaj zadanie</Paragraph>
                 </AddWrapper>
               </List>
-              <ContentTemplate isOpen={isTaskInfoOpen} setOpen={setTaskInfoOpen}>
+              <ContentTemplate isOpen={isTaskInfoOpen} close={() => setTaskInfoOpen(false)}>
                 <TaskInfo isEditToggled={isEditToggled} setDeleteOpen={setDeleteOpen} setEditToggled={setEditToggled} />
               </ContentTemplate>
               <DeletePopup

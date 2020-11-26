@@ -4,6 +4,7 @@ import { baseStoreType } from '../../../store/test-store';
 import { adminApi } from '../../../api';
 import { setNotificationMessage } from '../../popup/popup';
 import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
+import { getAllCompanyEmployees } from '../../employees/employees-data/employees-data-creators';
 
 export const getCompanyOwners = createAsyncThunk<CompanyOwnersInterface[], void, baseStoreType>('companyOwners/getCompanyOwners', async (_arg, { dispatch, rejectWithValue, getState }) => {
   try {
@@ -56,8 +57,7 @@ export const removeCompanyOwner = createAsyncThunk<void, RemoveCompanyOwnerInter
         await adminApi.post('/company/remove-company-owner', { toBeRemovedId: userId, addEmployee, pricePerHour, monthlyPrice });
 
         dispatch(getCompanyOwners());
-        //TODO: get company employees
-        // addEmployee && dispatch(getAllCompanyEmployees());
+        addEmployee && dispatch(getAllCompanyEmployees());
         dispatch(setNotificationMessage({ message: 'Usunięto administratora' }));
       }
     } catch (error) {

@@ -95,7 +95,7 @@ const AttendancePageContent: React.FC<ConnectedProps> = ({
             ))}
           </List>
         </ListWrapper>
-        <ContentTemplate isOpen={isAttendanceInfoOpen} setOpen={setAttendanceInfoOpen}>
+        <ContentTemplate isOpen={isAttendanceInfoOpen} close={() => setAttendanceInfoOpen(false)}>
           <AttendanceInfo />
         </ContentTemplate>
       </>

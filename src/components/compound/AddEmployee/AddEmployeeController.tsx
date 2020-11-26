@@ -18,7 +18,7 @@ import SalaryPage from './pages/SalaryPage/SalaryPage';
 
 const AddEmployeeController: React.FC = () => {
   const dispatch = useDispatch();
-  const { isAddNewOpen } = useSelector((state: AppState) => state.employeeReducer);
+  const { isAddNewOpen } = useSelector((state: AppState) => state.employees.employeesToggle);
 
   const mainWrapperRef = useRef<HTMLDivElement | null>(null);
   const wrapperRef = useRef<HTMLDivElement | null>(null);

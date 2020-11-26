@@ -1,35 +1,26 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
 import { Paragraph } from '../../../styles/typography/typography';
 import { SpinnerWrapper, List, AddIcon, AddWrapper } from '../../../styles/shared';
 import ListBox from '../../molecules/ListBox/ListBox';
 import gsap from 'gsap';
 import ContentTemplate from '../../templates/ContentTemplate/ContentTemplate';
-import { AppState } from '../../../store/test-store';
-import { ThunkDispatch } from 'redux-thunk';
-import { AppTypes } from '../../../types/actionTypes/appActionTypes';
-import { bindActionCreators } from 'redux';
-import { getAllCompanyEmployees, selectEmployee, setAddNewEmployeeOpen, setEmployeeInfoOpen } from '../../../actions/employeeActions';
+import { AppState, useAppDispatch } from '../../../store/test-store';
+import { getAllCompanyEmployees } from '../../../ducks/employees/employees-data/employees-data-creators';
+import { selectEmployee } from '../../../ducks/employees/employees-toggle/employees-toggle-creators';
 import { EmployeeDataInterface } from '../../../types/modelsTypes';
 import Spinner from '../../atoms/Spinner/Spinner';
 import EmployeeInfo from '../EmployeeInfo/EmployeeInfo';
 import { listAnimation } from '../../../animations/animations';
 import DeletePopup from '../../molecules/DeletePopup/DeletePopup';
 import AddEmployeeController from '../../compound/AddEmployee/AddEmployeeController';
+import { setEmployeeInfoOpen, setAddNewEmployeeOpen } from '../../../ducks/employees/employees-toggle/employees-toggle';
 
-type ConnectedProps = LinkStateProps & LinkDispatchProps;
-
-const EmployeesPageContent: React.FC<ConnectedProps> = ({
-  getAllCompanyEmployees,
-  isLoading,
-  allCompanyEmployees,
-  selectEmployee,
-  isEmployeeInfoOpen,
-  setEmployeeInfoOpen,
-  selectedEmployee,
-  setAddNewEmployeeOpen
-}) => {
+const EmployeesPageContent: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const { selectedEmployee, isEmployeeInfoOpen } = useSelector((state: AppState) => state.employees.employeesToggle);
+  const { allCompanyEmployees, areEmployeesLoading } = useSelector((state: AppState) => state.employees.employeesData);
   const listRef = useRef<HTMLDivElement | null>(null);
   const [filterText, setFilterText] = useState<string>('');
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
@@ -39,11 +30,11 @@ const EmployeesPageContent: React.FC<ConnectedProps> = ({
   };
 
   useEffect(() => {
-    listAnimation(tl, listRef, isLoading);
-  }, [isLoading]);
+    listAnimation(tl, listRef, areEmployeesLoading);
+  }, [areEmployeesLoading]);
 
   useEffect(() => {
-    getAllCompanyEmployees();
+    dispatch(getAllCompanyEmployees());
     // allCompanyEmployees.length === 0 && getAllCompanyEmployees();
   }, []);
 
@@ -53,7 +44,7 @@ const EmployeesPageContent: React.FC<ConnectedProps> = ({
       pageName={'Pracownicy'}
       setFilterText={setFilterText}
       render={(isDeleteOpen, setDeleteOpen) =>
-        isLoading ? (
+        areEmployeesLoading ? (
           <SpinnerWrapper>
             <Spinner />
           </SpinnerWrapper>
@@ -66,17 +57,17 @@ const EmployeesPageContent: React.FC<ConnectedProps> = ({
                   name={`${employee.userId.name} ${employee.userId.lastName}`}
                   topDescription={new Date(employee.userId.dateOfBirth).toLocaleDateString()}
                   bottomDescription={employee.userId.email}
-                  callback={() => selectEmployee(employee)}
+                  callback={() => dispatch(selectEmployee(employee))}
                   isEmpty={true}
                   isCompanyBox={false}
                 />
               ))}
-              <AddWrapper onClick={() => setAddNewEmployeeOpen(true)}>
+              <AddWrapper onClick={() => dispatch(setAddNewEmployeeOpen(true))}>
                 <AddIcon />
                 <Paragraph type={'add'}>Dodaj pracownika</Paragraph>
               </AddWrapper>
             </List>
-            <ContentTemplate isOpen={isEmployeeInfoOpen} setOpen={setEmployeeInfoOpen}>
+            <ContentTemplate isOpen={isEmployeeInfoOpen} close={() => dispatch(setEmployeeInfoOpen(false))}>
               <EmployeeInfo setDeleteOpen={setDeleteOpen} />
             </ContentTemplate>
             <DeletePopup
@@ -94,31 +85,4 @@ const EmployeesPageContent: React.FC<ConnectedProps> = ({
   );
 };
 
-interface LinkStateProps {
-  isLoading: boolean;
-  allCompanyEmployees: EmployeeDataInterface[];
-  isEmployeeInfoOpen: boolean;
-  selectedEmployee: EmployeeDataInterface | null;
-}
-
-interface LinkDispatchProps {
-  getAllCompanyEmployees: () => void;
-  selectEmployee: (employee: EmployeeDataInterface) => void;
-  setEmployeeInfoOpen: (isOpen: boolean) => void;
-  setAddNewEmployeeOpen: (isOpen: boolean) => void;
-}
-
-const mapStateToProps = ({ employeeReducer: { isLoading, allCompanyEmployees, isEmployeeInfoOpen, selectedEmployee } }: AppState): LinkStateProps => {
-  return { isLoading, allCompanyEmployees, isEmployeeInfoOpen, selectedEmployee };
-};
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
-  return {
-    getAllCompanyEmployees: bindActionCreators(getAllCompanyEmployees, dispatch),
-    selectEmployee: bindActionCreators(selectEmployee, dispatch),
-    setEmployeeInfoOpen: bindActionCreators(setEmployeeInfoOpen, dispatch),
-    setAddNewEmployeeOpen: bindActionCreators(setAddNewEmployeeOpen, dispatch)
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(EmployeesPageContent);
+export default EmployeesPageContent;

@@ -36,7 +36,7 @@ type DefaultValues = SelectUserDefaultValues | SetMailDefaultValues;
 const SelectEmployee: React.FC = () => {
   // const { allAppUsers } = useSelector((state: AppState) => state.authenticationReducer);
   const allAppUsers: UserDataInterface[] = [];
-  const { allCompanyEmployees } = useSelector((state: AppState) => state.employeeReducer);
+  const { allCompanyEmployees } = useSelector((state: AppState) => state.employees.employeesData);
 
   const { data, setData } = useContext(EmployeeDataContext);
   const { setCurrentPage } = useContext(PageContext);

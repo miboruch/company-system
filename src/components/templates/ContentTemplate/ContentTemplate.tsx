@@ -7,12 +7,12 @@ import { Direction } from '../../../types/globalTypes';
 interface Props {
   children: React.ReactNode;
   isOpen: boolean;
-  setOpen: (isOpen: boolean) => void;
+  close: () => void;
 }
 
 type ConnectedProps = Props;
 
-const ContentTemplate: React.FC<ConnectedProps> = ({ children, isOpen, setOpen }) => {
+const ContentTemplate: React.FC<ConnectedProps> = ({ children, isOpen, close }) => {
   const contentWrapperRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
 
@@ -34,7 +34,7 @@ const ContentTemplate: React.FC<ConnectedProps> = ({ children, isOpen, setOpen }
   return (
     <ContentWrapper ref={contentWrapperRef}>
       <ArrowAbsoluteWrapper>
-        <ArrowButton onClick={() => setOpen(false)} direction={Direction.Left} />
+        <ArrowButton onClick={() => close()} direction={Direction.Left} />
       </ArrowAbsoluteWrapper>
       {children}
     </ContentWrapper>

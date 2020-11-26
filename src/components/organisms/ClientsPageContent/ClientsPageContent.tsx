@@ -83,7 +83,7 @@ const ClientsPageContent: React.FC<ConnectedProps> = ({
                   <Paragraph type={'add'}>Dodaj klienta</Paragraph>
                 </AddWrapper>
               </List>
-              <ContentTemplate isOpen={isClientInfoOpen} setOpen={setClientInfoOpen}>
+              <ContentTemplate isOpen={isClientInfoOpen} close={() => setClientInfoOpen(false)}>
                 <ClientInfo isEditToggled={isEditToggled} setEditToggled={setEditToggled} setDeleteOpen={setDeleteOpen} />
               </ContentTemplate>
               <AddClientController />

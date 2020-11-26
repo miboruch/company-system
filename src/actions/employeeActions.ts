@@ -89,7 +89,7 @@ export const getAllCompanyEmployees = () => async (dispatch: Dispatch<AppTypes>,
 
   const { token } = getState().auth.tokens;
   const { role } = getState().auth.roles;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     if (currentCompany?._id && token) {
@@ -137,7 +137,7 @@ export const updateEmployeeSalary = (pricePerHour?: number, monthlyPrice?: numbe
 
   const { selectedEmployee } = getState().employeeReducer;
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     if (selectedEmployee && token && currentCompany) {
@@ -173,7 +173,7 @@ export const updateEmployeeSalary = (pricePerHour?: number, monthlyPrice?: numbe
 
 export const addNewEmployee = (userId: string, pricePerHour: number, monthlyPrice: number) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     dispatch(setEmployeeLoading(true));
@@ -205,12 +205,10 @@ export const addNewEmployee = (userId: string, pricePerHour: number, monthlyPric
   }
 };
 
-//----
-
 export const getEmployeeHours = (userId: string, monthIndex: number, setHours: (hours: number) => void) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   const { token } = getState().auth.tokens;
   const { role } = getState().auth.roles;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     dispatch(setEmployeeLoading(true));
@@ -243,7 +241,7 @@ export const getEmployeeHours = (userId: string, monthIndex: number, setHours: (
 export const getEmployeeSalary = (userId: string, monthIndex: number, setSalary: (hours: number) => void) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   const { token } = getState().auth.tokens;
   const { role } = getState().auth.roles;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     dispatch(setEmployeeLoading(true));

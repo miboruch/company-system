@@ -1,13 +1,12 @@
 import React, { useContext } from 'react';
-import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import { HeadingWrapper, MobileCompoundTitle, StyledBackParagraph, StyledForm, StyledInput, Subheading, Wrapper } from '../../../../../styles/compoundStyles';
 import { DoubleFlexWrapper } from '../../../../../styles/shared';
 import Button from '../../../../atoms/Button/Button';
 import { EmployeeDataContext } from '../../context/EmployeeDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
-import {sendRegistrationMail} from '../../../../../ducks/auth/link-registration/link-registration-creators';
-import { addNewEmployee } from '../../../../../actions/employeeActions';
+import { sendRegistrationMail } from '../../../../../ducks/auth/link-registration/link-registration-creators';
+import { addNewEmployee } from '../../../../../ducks/employees/employees-data/employees-data-creators';
 import { EmployeeSalarySchema } from '../../validation/validation';
 import { useAppDispatch } from '../../../../../store/test-store';
 
@@ -28,14 +27,14 @@ const SalaryPage: React.FC = () => {
     monthlyPrice: data.monthlyPrice || 0
   };
 
-  const handleSubmit = ({email, pricePerHour, monthlyPrice}: DefaultValues): void => {
+  const handleSubmit = ({ email, pricePerHour, monthlyPrice }: DefaultValues): void => {
     setData({ ...data, email, pricePerHour, monthlyPrice });
     if (data.registerWithMail) {
       if (email) {
-        dispatch(sendRegistrationMail({email, pricePerHour, monthlyPrice }));
+        dispatch(sendRegistrationMail({ email, pricePerHour, monthlyPrice }));
       }
     } else {
-      // data.userId && dispatch(addNewEmployee(data.userId, values.pricePerHour, values.monthlyPrice));
+      data.userId && dispatch(addNewEmployee({ userId: data.userId, pricePerHour, monthlyPrice }));
     }
   };
 

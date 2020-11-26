@@ -63,10 +63,11 @@ const RedirectText = styled.p`
   margin-bottom: 1rem;
 `;
 
-type ConnectedProps = LinkDispatchProps & LinkStateProps & RouteComponentProps;
+type ConnectedProps = LinkDispatchProps & RouteComponentProps;
 
-const Menu: React.FC<ConnectedProps> = ({ history, changeUserRoleTo, currentCompany }) => {
+const Menu: React.FC<ConnectedProps> = ({ history, changeUserRoleTo }) => {
   const dispatch = useAppDispatch();
+  const { currentCompany } = useSelector((state: AppState) => state.company.currentCompany);
   const { role } = useSelector((state: AppState) => state.auth.roles);
   const { isMenuOpen } = useContext(MenuContext);
 
@@ -95,18 +96,10 @@ const Menu: React.FC<ConnectedProps> = ({ history, changeUserRoleTo, currentComp
   );
 };
 
-interface LinkStateProps {
-  currentCompany: CompanyInterface | null;
-}
-
 interface LinkDispatchProps {
   changeUserRoleTo: (role: UserRole, callback: () => void) => void;
   setUserRole: (role: UserRole) => void;
 }
-
-const mapStateToProps = ({ companyReducer: { currentCompany } }: AppState): LinkStateProps => {
-  return { currentCompany };
-};
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
   return {
@@ -115,4 +108,4 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDi
   };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Menu));
+export default withRouter(connect(null, mapDispatchToProps)(Menu));

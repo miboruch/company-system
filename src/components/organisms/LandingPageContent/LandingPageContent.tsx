@@ -6,7 +6,7 @@ import gsap from 'gsap';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
 import { Content, InfoBoxWrapper, InfoWrapper, StatisticsHeading, TileWrapper } from './LandingPageContent.styles';
 import TaskTile from '../../molecules/TaskTile/TaskTile';
-import { AppState } from '../../../store/test-store';
+import { AppState, useAppDispatch } from '../../../store/test-store';
 import { AttendanceInterface, EmployeeDataInterface, IncomeDataInterface, TaskInterface } from '../../../types/modelsTypes';
 import Chart from '../../molecules/Chart/Chart';
 import AttendanceList from '../AttendanceList/AttendanceList';
@@ -21,7 +21,7 @@ import { getCompanyTasks, getCompletedTasks, redirectToTask } from '../../../act
 import AttendancePopup from '../../molecules/AttendancePopup/AttendancePopup';
 import { getIncomeExpenseInTimePeriod } from '../../../actions/financeActions';
 import { ArrowIcon } from '../../../styles/iconStyles';
-import { getAllCompanyEmployees } from '../../../actions/employeeActions';
+import { getAllCompanyEmployees } from '../../../ducks/employees/employees-data/employees-data-creators';
 import AdminStatistics from '../AdminStatistics/AdminStatistics';
 import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
 
@@ -36,12 +36,12 @@ const LandingPageContent: React.FC<ConnectedProps> = ({
   redirectToTask,
   getCompletedTasks,
   completedTasks,
-  getIncomeExpenseInTimePeriod,
-  companyEmployeesCounter,
-  allCompanyEmployees,
-  getAllCompanyEmployees
+  getIncomeExpenseInTimePeriod
 }) => {
+  const dispatch = useAppDispatch();
   const { role } = useSelector((state: AppState) => state.auth.roles);
+  const { allCompanyEmployees, companyEmployeesCounter } = useSelector((state: AppState) => state.employees.employeesData);
+
   const [text, setText] = useState<string>('');
   const [data, setData] = useState<Array<IncomeDataInterface> | null>(null);
   const [selectedAttendance, setSelectedAttendance] = useState<AttendanceInterface | null>(null);
@@ -68,7 +68,7 @@ const LandingPageContent: React.FC<ConnectedProps> = ({
   useEffect(() => {
     getSingleDayAttendance(new Date());
     getCompletedTasks();
-    getAllCompanyEmployees();
+    dispatch(getAllCompanyEmployees());
   }, []);
 
   return (
@@ -112,8 +112,6 @@ interface LinkStateProps {
   singleDayAttendance: AttendanceInterface[];
   allCompanyTasks: TaskInterface[];
   completedTasks: number;
-  companyEmployeesCounter: number;
-  allCompanyEmployees: EmployeeDataInterface[];
 }
 
 interface LinkDispatchProps {
@@ -122,15 +120,10 @@ interface LinkDispatchProps {
   redirectToTask: (history: History, task: TaskInterface) => void;
   getCompletedTasks: () => void;
   getIncomeExpenseInTimePeriod: (daysBack: number, setData: (data: any[]) => void) => void;
-  getAllCompanyEmployees: () => void;
 }
 
-const mapStateToProps = ({
-  attendanceReducer: { singleDayAttendance },
-  taskReducer: { allCompanyTasks, completedTasks },
-  employeeReducer: { allCompanyEmployees, companyEmployeesCounter }
-}: AppState): LinkStateProps => {
-  return { singleDayAttendance, allCompanyTasks, completedTasks, allCompanyEmployees, companyEmployeesCounter };
+const mapStateToProps = ({ attendanceReducer: { singleDayAttendance }, taskReducer: { allCompanyTasks, completedTasks } }: AppState): LinkStateProps => {
+  return { singleDayAttendance, allCompanyTasks, completedTasks };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
@@ -139,8 +132,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDi
     getCompanyTasks: bindActionCreators(getCompanyTasks, dispatch),
     redirectToTask: bindActionCreators(redirectToTask, dispatch),
     getCompletedTasks: bindActionCreators(getCompletedTasks, dispatch),
-    getIncomeExpenseInTimePeriod: bindActionCreators(getIncomeExpenseInTimePeriod, dispatch),
-    getAllCompanyEmployees: bindActionCreators(getAllCompanyEmployees, dispatch)
+    getIncomeExpenseInTimePeriod: bindActionCreators(getIncomeExpenseInTimePeriod, dispatch)
   };
 };
 
