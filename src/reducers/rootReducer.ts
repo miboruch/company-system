@@ -25,7 +25,6 @@ export const rootReducer = combineReducers({
   employees,
   tasks,
   client,
-  attendanceReducer,
   attendance,
   financeReducer,
   currency,

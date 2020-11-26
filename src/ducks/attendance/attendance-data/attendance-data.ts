@@ -1,19 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AttendanceInterface, WeekAttendance } from '../../../types/modelsTypes';
-import { getSingleDayAttendance, getWeekAttendance } from './attendance-data-creators';
+import { AttendanceInterface } from '../../../types/modelsTypes';
+import { getSingleDayAttendance } from './attendance-data-creators';
 
 interface InitialStateInterface {
   isAttendanceLoading: boolean;
   attendanceError: string | undefined;
   singleDayAttendance: AttendanceInterface[];
-  weekAttendance: WeekAttendance[] | null;
 }
 
 const initialState: InitialStateInterface = {
   isAttendanceLoading: false,
   attendanceError: undefined,
-  singleDayAttendance: [],
-  weekAttendance: null
+  singleDayAttendance: []
 };
 
 const attendanceDataSlice = createSlice({
@@ -35,19 +33,7 @@ const attendanceDataSlice = createSlice({
       .addCase(getSingleDayAttendance.rejected.type, (state, { payload }: PayloadAction<string | undefined>) => {
         state.isAttendanceLoading = false;
         state.attendanceError = payload;
-      })
-      // .addCase(getWeekAttendance.pending.type, (state) => {
-      //   state.isAttendanceLoading = true;
-      //   state.attendanceError = undefined;
-      // })
-      // .addCase(getWeekAttendance.fulfilled.type, (state, { payload }: PayloadAction<WeekAttendance[]>) => {
-      //   state.isAttendanceLoading = false;
-      //   state.weekAttendance = payload;
-      // })
-      // .addCase(getWeekAttendance.rejected.type, (state, { payload }: PayloadAction<string | undefined>) => {
-      //   state.isAttendanceLoading = false;
-      //   state.attendanceError = payload;
-      // });
+      });
   }
 });
 

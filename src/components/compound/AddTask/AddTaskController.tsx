@@ -14,7 +14,7 @@ import { modalOpenAnimation } from '../../../animations/animations';
 import { AppState } from '../../../store/test-store';
 import TaskInfoPage from './pages/TaskInfoPage/TaskInfoPage';
 import SpecificInfoPage from './pages/SpecificInfoPage/SpecificInfoPage';
-import { setAddNewTaskOpen } from '../../../actions/taskActions';
+import { setAddNewTaskOpen } from '../../../ducks/tasks/tasks-toggle/tasks-toggle';
 
 const AddTaskController: React.FC = () => {
   const dispatch = useDispatch();

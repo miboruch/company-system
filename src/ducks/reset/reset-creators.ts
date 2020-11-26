@@ -14,10 +14,13 @@ import { resetBudget } from '../finances/budget/budget';
 import { resetIncomeExpense } from '../finances/income-expense/income-expense';
 import { resetTasksData } from '../tasks/tasks-data/tasks-data';
 import { resetTaskToggle, setSelectedTask } from '../tasks/tasks-toggle/tasks-toggle';
+import { selectAttendance } from '../attendance/attendance-toggle/attendance-toggle-creators';
+import { resetWeekAttendanceData } from '../attendance/week-attendance-data/week-attendance-data';
 
 const resetAttendanceState = () => (dispatch: AppDispatch): void => {
   dispatch(resetAttendanceToggle());
   dispatch(resetAttendanceData());
+  dispatch(resetWeekAttendanceData());
 };
 
 const resetClientState = () => (dispatch: AppDispatch): void => {
@@ -52,6 +55,7 @@ export const resetAllSelected = () => (dispatch: AppDispatch): void => {
   dispatch(setSelectedClient(null));
   dispatch(setSelectedTask(null));
   dispatch(setSelectedAttendance(null));
+  dispatch(selectAttendance(null));
 };
 
 export const resetState = () => (dispatch: AppDispatch): void => {
