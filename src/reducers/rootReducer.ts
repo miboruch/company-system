@@ -13,13 +13,13 @@ import { auth } from '../ducks/auth/auth';
 import { company } from '../ducks/company/company';
 import { attendance } from '../ducks/attendance/attendance';
 import { employees } from '../ducks/employees/employees';
+import {tasks} from '../ducks/tasks/tasks';
 
 export const rootReducer = combineReducers({
   auth,
   company,
-  employeeReducer,
   employees,
-  // companyReducer,
+  tasks,
   taskReducer,
   clientReducer,
   attendanceReducer,

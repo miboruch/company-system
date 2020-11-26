@@ -1,21 +1,18 @@
 import React from 'react';
-import { connect, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Formik } from 'formik';
 import { StyledInput } from '../../../styles/compoundStyles';
 import { Paragraph } from '../../../styles/typography/typography';
 import { ButtonWrapper, EmployeeInfoBox, HeaderWrapper, InputWrapper, RowIconWrapper, StyledForm, Title, Wrapper } from '../../../styles/contentStyles';
-import { ClientInterface, TaskInterface } from '../../../types/modelsTypes';
-import { AppState } from '../../../store/test-store';
+import { ClientInterface } from '../../../types/modelsTypes';
+import { AppState, useAppDispatch } from '../../../store/test-store';
 import { StyledLabel } from '../../../styles/shared';
 import DatePicker from 'react-datepicker';
 import Button from '../../atoms/Button/Button';
 import { CheckedIcon, DeleteIcon, EditIcon, LocationIcon, NotCheckedIcon } from '../../../styles/iconStyles';
-import { ThunkDispatch } from 'redux-thunk';
-import { AppTypes } from '../../../types/actionTypes/appActionTypes';
-import { bindActionCreators } from 'redux';
-import { changeTaskState, editTask } from '../../../actions/taskActions';
-import { setTaskMapPreviewOpen } from '../../../actions/toggleActions';
+import { changeTaskState, editTask } from '../../../ducks/tasks/tasks-data/task-data-creators';
+import { setTaskMapPreviewOpen } from '../../../ducks/tasks/tasks-toggle/tasks-toggle';
 import { TaskSchema } from '../../../validation/modelsValidation';
 import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
 
@@ -56,10 +53,10 @@ interface Props {
   setDeleteOpen: (toBeOpen: boolean) => void;
 }
 
-type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
-
-const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, isEditToggled, setEditToggled, setDeleteOpen, editTask, changeTaskState, setTaskMapPreviewOpen }) => {
+const TaskInfo: React.FC<Props> = ({ isEditToggled, setEditToggled, setDeleteOpen }) => {
+  const dispatch = useAppDispatch();
   const { role } = useSelector((state: AppState) => state.auth.roles);
+  const { selectedTask } = useSelector((state: AppState) => state.tasks.taskToggle);
 
   const initialValues: InitialValues = {
     name: selectedTask?.name || '',
@@ -75,7 +72,7 @@ const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, isEditToggled, setEd
   const handleSubmit = ({ date, name, description, timeEstimate, taskIncome, taskExpense }: InitialValues) => {
     if (selectedTask) {
       const { _id } = selectedTask;
-      editTask(_id, date, name, description, timeEstimate, taskIncome ? taskIncome : 0, taskExpense ? taskExpense : 0);
+      dispatch(editTask({ taskId: _id, date, name, description, timeEstimate, taskIncome: taskIncome ? taskIncome : 0, taskExpense: taskExpense ? taskExpense : 0 }));
     }
   };
 
@@ -90,7 +87,7 @@ const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, isEditToggled, setEd
                 <Title>{selectedTask.name}</Title>
                 <RowIconWrapper>
                   {selectedTask?.isCompleted ? <CheckedIcon /> : <NotCheckedIcon />}
-                  <LocationIcon onClick={() => setTaskMapPreviewOpen(true)} />
+                  <LocationIcon onClick={() => dispatch(setTaskMapPreviewOpen(true))} />
                   {role === UserRole.Admin && (
                     <>
                       <EditIcon onClick={() => setEditToggled(!isEditToggled)} />
@@ -103,7 +100,7 @@ const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, isEditToggled, setEd
                 <Paragraph type={'subparagraph'}>Data zadania do wykonania: {new Date(selectedTask.date).toLocaleDateString()}</Paragraph>
                 <Paragraph type={'subparagraph'}>{selectedTask.description}</Paragraph>
                 {role === UserRole.Admin && (
-                  <ColoredParagraph isCompleted={selectedTask?.isCompleted} onClick={() => changeTaskState(selectedTask?._id, !selectedTask?.isCompleted)}>
+                  <ColoredParagraph isCompleted={selectedTask?.isCompleted} onClick={() => dispatch(changeTaskState({ taskId: selectedTask?._id, isCompleted: !selectedTask?.isCompleted }))}>
                     Oznacz jako {selectedTask?.isCompleted ? 'niewykonane' : 'wykonane'}
                   </ColoredParagraph>
                 )}
@@ -157,26 +154,4 @@ const TaskInfo: React.FC<ConnectedProps> = ({ selectedTask, isEditToggled, setEd
   );
 };
 
-interface LinkStateProps {
-  selectedTask: TaskInterface | null;
-}
-
-interface LinkDispatchProps {
-  editTask: (taskId: string, date: Date, name: string, description: string, timeEstimate: number, taskIncome: number, taskExpense: number) => void;
-  changeTaskState: (taskId: string, isCompleted: boolean) => void;
-  setTaskMapPreviewOpen: (isOpen: boolean) => void;
-}
-
-const mapStateToProps = ({ taskReducer: { selectedTask } }: AppState): LinkStateProps => {
-  return { selectedTask };
-};
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
-  return {
-    editTask: bindActionCreators(editTask, dispatch),
-    changeTaskState: bindActionCreators(changeTaskState, dispatch),
-    setTaskMapPreviewOpen: bindActionCreators(setTaskMapPreviewOpen, dispatch)
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(TaskInfo);
+export default TaskInfo;

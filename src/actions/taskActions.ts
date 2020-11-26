@@ -89,7 +89,7 @@ export const getCompanyTasks = () => async (dispatch: Dispatch<AppTypes>, getSta
   dispatch(setTaskLoading(true));
 
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     if (currentCompany?._id && token) {
@@ -121,7 +121,7 @@ export const addNewTask = (date: Date, timeEstimate: number, name: string, descr
   dispatch(setTaskLoading(true));
 
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     if (currentCompany?._id && token) {
@@ -160,7 +160,7 @@ export const addNewTask = (date: Date, timeEstimate: number, name: string, descr
 
 export const getSingleTask = (taskId: string) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     if (currentCompany?._id && token) {
@@ -183,7 +183,7 @@ export const getSingleTask = (taskId: string) => async (dispatch: Dispatch<any>,
 
 export const deleteTask = (taskId: string) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     if (currentCompany?._id && token) {
@@ -221,7 +221,7 @@ export const redirectToTask = (history: History, task: TaskInterface) => (dispat
 export const getCompletedTasks = () => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   const DAYS_BACK = 30;
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     if (currentCompany && token) {
@@ -243,7 +243,7 @@ export const editTask = (taskId: string, date: Date, name: string, description: 
   getState: () => AppState
 ) => {
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     if (currentCompany && token) {
@@ -276,7 +276,7 @@ export const editTask = (taskId: string, date: Date, name: string, description: 
 
 export const changeTaskState = (taskId: string, isCompleted: boolean) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     if (currentCompany && token) {

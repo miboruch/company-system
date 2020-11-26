@@ -5,7 +5,7 @@ import { TaskInterface } from '../../../types/modelsTypes';
 import { adminApi, authApi } from '../../../api';
 import { setNotificationMessage } from '../../popup/popup';
 import { selectTask } from '../tasks-toggle/tasks-toggle-creators';
-import { setSelectedTask, setTaskInfoOpen } from '../tasks-toggle/tasks-toggle';
+import { setSelectedTask, setTaskInfoOpen, setAddNewTaskOpen } from '../tasks-toggle/tasks-toggle';
 
 export const getCompanyTasks = createAsyncThunk<TaskInterface[], void, baseStoreType>('tasksData/getCompanyTasks', async (_arg, { dispatch, rejectWithValue, getState }) => {
   const { token } = getState().auth.tokens;
@@ -136,3 +136,45 @@ export const deleteTask = createAsyncThunk<void, string, baseStoreType>('tasksDa
     dispatch(setNotificationMessage({ message: error.response.data, notificationType: NotificationTypes.Error }));
   }
 });
+
+interface AddNewTaskInterface {
+  date: Date;
+  timeEstimate: number;
+  name: string;
+  description: string;
+  isCompleted: boolean;
+  taskIncome?: number;
+  taskExpense?: number;
+  clientId?: string | null;
+}
+
+export const addNewTask = createAsyncThunk<void, AddNewTaskInterface, baseStoreType>(
+  'tasksData/addNewTask',
+  async ({ date, timeEstimate, name, description, isCompleted, taskExpense, taskIncome, clientId }, { dispatch, rejectWithValue, getState }) => {
+    const { token } = getState().auth.tokens;
+    const { currentCompany } = getState().company.currentCompany;
+
+    try {
+      if (currentCompany && token) {
+        await adminApi.post(`/task/add-new-task`, {
+          date,
+          timeEstimate,
+          name,
+          clientId,
+          description,
+          isCompleted,
+          taskIncome: taskIncome ? taskIncome : 0,
+          taskExpense: taskExpense ? taskExpense : 0
+        });
+
+        dispatch(getCompanyTasks());
+        dispatch(setAddNewTaskOpen(false));
+        dispatch(setNotificationMessage({ message: 'Dodano nowe zadanie' }));
+      } else {
+        dispatch(setNotificationMessage({ message: 'Problem z dodaniem zadania', notificationType: NotificationTypes.Error }));
+      }
+    } catch (error) {
+      dispatch(setNotificationMessage({ message: error.response.data, notificationType: NotificationTypes.Error }));
+    }
+  }
+);

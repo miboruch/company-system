@@ -114,7 +114,7 @@ export const editCompany = (name: string, email: string, nip: string, phoneNumbe
   getState: () => AppState
 ) => {
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     if (currentCompany && token) {
@@ -146,7 +146,7 @@ export const editCompany = (name: string, email: string, nip: string, phoneNumbe
 
 export const editCompanyCoords = (lat: number, long: number) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     if (currentCompany && token) {
@@ -177,7 +177,7 @@ export const getCompanyOwners = (setCompanyOwners: (owners: CompanyOwnersInterfa
   getState: () => AppState
 ) => {
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     if (currentCompany && token) {
@@ -199,7 +199,7 @@ export const getCompanyOwners = (setCompanyOwners: (owners: CompanyOwnersInterfa
 
 export const addNewCompanyOwner = (userId: string, callback: () => void) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
   try {
     if (token && currentCompany) {
       await axios.post(
@@ -227,7 +227,7 @@ export const removeCompanyOwner = (userId: string, addEmployee: boolean, callbac
   getState: () => AppState
 ) => {
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
   try {
     if (token && currentCompany) {
       await axios.post(

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { connect, useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { History } from 'history';
 import gsap from 'gsap';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
 import { Content, InfoBoxWrapper, InfoWrapper, StatisticsHeading, TileWrapper } from './LandingPageContent.styles';
@@ -17,7 +16,8 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { getSingleDayAttendance } from '../../../actions/attendanceActions';
-import { getCompanyTasks, getCompletedTasks, redirectToTask } from '../../../actions/taskActions';
+import { getCompanyTasks, getCompletedTasks } from '../../../ducks/tasks/tasks-data/task-data-creators';
+import { redirectToTask } from '../../../ducks/tasks/tasks-toggle/tasks-toggle-creators';
 import AttendancePopup from '../../molecules/AttendancePopup/AttendancePopup';
 import { getIncomeExpenseInTimePeriod } from '../../../actions/financeActions';
 import { ArrowIcon } from '../../../styles/iconStyles';
@@ -27,19 +27,10 @@ import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
 
 type ConnectedProps = LinkStateProps & LinkDispatchProps & RouteComponentProps<any>;
 
-const LandingPageContent: React.FC<ConnectedProps> = ({
-  history,
-  singleDayAttendance,
-  getSingleDayAttendance,
-  allCompanyTasks,
-  getCompanyTasks,
-  redirectToTask,
-  getCompletedTasks,
-  completedTasks,
-  getIncomeExpenseInTimePeriod
-}) => {
+const LandingPageContent: React.FC<ConnectedProps> = ({ history, singleDayAttendance, getSingleDayAttendance, getIncomeExpenseInTimePeriod }) => {
   const dispatch = useAppDispatch();
   const { role } = useSelector((state: AppState) => state.auth.roles);
+  const { allCompanyTasks, completedTasks } = useSelector((state: AppState) => state.tasks.taskData);
   const { allCompanyEmployees, companyEmployeesCounter } = useSelector((state: AppState) => state.employees.employeesData);
 
   const [text, setText] = useState<string>('');
@@ -54,7 +45,7 @@ const LandingPageContent: React.FC<ConnectedProps> = ({
 
   useEffect(() => {
     contentAnimation(tl, contentRef);
-    getCompanyTasks();
+    dispatch(getCompanyTasks());
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -67,7 +58,7 @@ const LandingPageContent: React.FC<ConnectedProps> = ({
 
   useEffect(() => {
     getSingleDayAttendance(new Date());
-    getCompletedTasks();
+    dispatch(getCompletedTasks());
     dispatch(getAllCompanyEmployees());
   }, []);
 
@@ -78,7 +69,7 @@ const LandingPageContent: React.FC<ConnectedProps> = ({
         <ContentGridWrapper ref={contentRef}>
           <TileWrapper>
             {allCompanyTasks.slice(0, 3).map((task) => (
-              <TaskTile key={task._id} task={task} onClick={() => redirectToTask(history, task)} />
+              <TaskTile key={task._id} task={task} onClick={() => dispatch(redirectToTask(history, task))} />
             ))}
           </TileWrapper>
           <Chart
@@ -110,28 +101,20 @@ const LandingPageContent: React.FC<ConnectedProps> = ({
 
 interface LinkStateProps {
   singleDayAttendance: AttendanceInterface[];
-  allCompanyTasks: TaskInterface[];
-  completedTasks: number;
 }
 
 interface LinkDispatchProps {
   getSingleDayAttendance: (date?: Date) => void;
-  getCompanyTasks: () => void;
-  redirectToTask: (history: History, task: TaskInterface) => void;
-  getCompletedTasks: () => void;
   getIncomeExpenseInTimePeriod: (daysBack: number, setData: (data: any[]) => void) => void;
 }
 
-const mapStateToProps = ({ attendanceReducer: { singleDayAttendance }, taskReducer: { allCompanyTasks, completedTasks } }: AppState): LinkStateProps => {
-  return { singleDayAttendance, allCompanyTasks, completedTasks };
+const mapStateToProps = ({ attendanceReducer: { singleDayAttendance } }: AppState): LinkStateProps => {
+  return { singleDayAttendance };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
   return {
     getSingleDayAttendance: bindActionCreators(getSingleDayAttendance, dispatch),
-    getCompanyTasks: bindActionCreators(getCompanyTasks, dispatch),
-    redirectToTask: bindActionCreators(redirectToTask, dispatch),
-    getCompletedTasks: bindActionCreators(getCompletedTasks, dispatch),
     getIncomeExpenseInTimePeriod: bindActionCreators(getIncomeExpenseInTimePeriod, dispatch)
   };
 };

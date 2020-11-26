@@ -6,7 +6,7 @@ import Button from '../../../../atoms/Button/Button';
 import { Formik } from 'formik';
 import { TaskDataContext } from '../../context/TaskDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
-import { addNewTask } from '../../../../../actions/taskActions';
+import { addNewTask } from '../../../../../ducks/tasks/tasks-data/task-data-creators';
 import Dropdown from '../../../../atoms/Dropdown/Dropdown';
 import { getCompanyClients } from '../../../../../actions/clientActions';
 import { AppState } from '../../../../../store/test-store';
@@ -33,10 +33,10 @@ const SpecificInfoPage: React.FC = () => {
     clientId: data.clientId ? data.clientId : null
   };
 
-  const handleSubmit = (values: DefaultValues): void => {
-    setData({ ...data, ...values });
+  const handleSubmit = ({ timeEstimate, taskIncome, taskExpense, clientId }: DefaultValues): void => {
+    setData({ ...data, timeEstimate, taskIncome, taskExpense, clientId });
     if (data.date && data.name && data.description && data.isCompleted !== undefined) {
-      dispatch(addNewTask(data.date, values.timeEstimate, data.name, data.description, data.isCompleted, values.taskIncome, values.taskExpense, values.clientId));
+      dispatch(addNewTask({ date: data.date, timeEstimate, name: data.name, description: data.description, isCompleted: data.isCompleted, taskIncome, taskExpense, clientId }));
     }
   };
 

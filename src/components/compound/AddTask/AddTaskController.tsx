@@ -18,7 +18,7 @@ import { setAddNewTaskOpen } from '../../../actions/taskActions';
 
 const AddTaskController: React.FC = () => {
   const dispatch = useDispatch();
-  const { isAddNewTaskOpen } = useSelector((state: AppState) => state.taskReducer);
+  const { isAddNewTaskOpen } = useSelector((state: AppState) => state.tasks.taskToggle);
 
   const mainWrapperRef = useRef<HTMLDivElement | null>(null);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
