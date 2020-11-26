@@ -1,6 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { CurrencyInterface } from '../../../types/actionTypes/toggleAcitonTypes';
+import { useSelector } from 'react-redux';
 import { AppState } from '../../../store/test-store';
 import { Tile, Name, Description } from '../TaskTile/TaskTile.styles';
 import { Paragraph } from '../../../styles/typography/typography';
@@ -12,9 +11,8 @@ interface Props {
   onClick?: () => void;
 }
 
-type ConnectedProps = Props & LinkStateProps;
-
-const BudgetTile: React.FC<ConnectedProps> = ({ description, value, name, onClick, currency }) => {
+const BudgetTile: React.FC<Props> = ({ description, value, name, onClick }) => {
+  const { currency } = useSelector((state: AppState) => state.currency);
   return (
     <Tile onClick={() => !!onClick && onClick()}>
       <Description>{description}</Description>
@@ -26,12 +24,4 @@ const BudgetTile: React.FC<ConnectedProps> = ({ description, value, name, onClic
   );
 };
 
-interface LinkStateProps {
-  currency: CurrencyInterface;
-}
-
-const mapStateToProps = ({ toggleReducer: { currency } }: AppState): LinkStateProps => {
-  return { currency };
-};
-
-export default connect(mapStateToProps)(BudgetTile);
+export default BudgetTile;

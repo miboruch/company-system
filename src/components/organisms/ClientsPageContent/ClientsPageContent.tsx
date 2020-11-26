@@ -20,7 +20,7 @@ import ClientInfo from '../ClientInfo/ClientInfo';
 import AddClientController from '../../compound/AddClient/AddClientController';
 import DeletePopup from '../../molecules/DeletePopup/DeletePopup';
 import MapCoordsEdit, { CoordsEditType } from '../MapCoordsEdit/MapCoordsEdit';
-import { setEditClientCoordsOpen } from '../../../actions/toggleActions';
+import { setEditClientCoordsOpen } from '../../../ducks/client/client-toggle/client-toggle';
 
 const ClientsPageContent: React.FC = () => {
   const dispatch = useAppDispatch();

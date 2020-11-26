@@ -12,7 +12,7 @@ import InvoiceItem from '../../molecules/InvoiceItemForm/InvoiceItemForm';
 import Button from '../../atoms/Button/Button';
 import { API_URL } from '../../../utils/config';
 import { useSelector } from 'react-redux';
-import {AppState} from '../../../store/test-store';
+import { AppState } from '../../../store/test-store';
 import { saveAs } from 'file-saver';
 
 const Wrapper = styled.div`
@@ -100,7 +100,7 @@ interface Props {
 }
 
 const GenerateInvoice: React.FC<Props> = ({ isOpen, setOpen }) => {
-  const { currentCompany } = useSelector((state: AppState) => state.companyReducer);
+  const { currentCompany } = useSelector((state: AppState) => state.company.currentCompany);
   const { token } = useSelector((state: AppState) => state.auth.tokens);
   const backgroundRef = useRef<HTMLDivElement | null>(null);
   const boxRef = useRef<HTMLDivElement | null>(null);

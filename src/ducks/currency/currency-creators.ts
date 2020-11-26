@@ -5,7 +5,7 @@ import { CURRENCY_API_URL } from '../../utils/config';
 import { setNotificationMessage } from '../popup/popup';
 import { NotificationTypes } from '../../types/actionTypes/toggleAcitonTypes';
 
-type currencyTypes = 'PLN' | 'EUR' | 'USD';
+export type currencyTypes = 'PLN' | 'EUR' | 'USD';
 
 export interface CurrencyReturnInterface {
   rate: number;

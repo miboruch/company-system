@@ -78,7 +78,7 @@ const getCompanyIncomeAndExpense = (daysBack: number) => async (dispatch: Dispat
   dispatch(setBudgetLoading(true));
 
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     if (token && currentCompany) {
@@ -101,7 +101,7 @@ const getLastIncomesAndExpenses = (limit?: number) => async (dispatch: Dispatch<
   dispatch(setBudgetLoading(true));
 
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     if (token && currentCompany) {
@@ -125,7 +125,7 @@ const getCompanyBudget = () => async (dispatch: Dispatch<AppTypes>, getState: ()
   dispatch(setBudgetLoading(true));
 
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     if (token && currentCompany) {
@@ -153,7 +153,7 @@ export const fetchAllFinancesData = () => async (dispatch: Dispatch<any>) => {
 
 export const getIncomeExpenseInTimePeriod = (daysBack: number, setData: (data: Array<any>) => void) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     if (token && currentCompany) {
@@ -187,7 +187,7 @@ export const addIncome = (incomeValue: number, description: string, callback: ()
   dispatch(setBudgetLoading(true));
 
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     if (token && currentCompany) {
@@ -219,7 +219,7 @@ export const addExpense = (expenseValue: number, description: string, callback: 
   dispatch(setBudgetLoading(true));
 
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     if (token && currentCompany) {
@@ -251,7 +251,7 @@ export const deleteIncome = (incomeId: number) => async (dispatch: Dispatch<any>
   dispatch(setBudgetLoading(true));
 
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     if (token && currentCompany) {
@@ -274,7 +274,7 @@ export const deleteExpense = (expenseId: number) => async (dispatch: Dispatch<an
   dispatch(setBudgetLoading(true));
 
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     if (token && currentCompany) {

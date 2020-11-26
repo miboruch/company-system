@@ -5,6 +5,7 @@ import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes'
 import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
 import { CompanyInterface } from '../../../types/modelsTypes';
 import { authApi } from '../../../api';
+import { resetAllSelected } from '../../reset/reset-creators';
 
 export const getUserCompanies = createAsyncThunk<CompanyInterface[], void, baseStoreType>('companies/getUserCompanies', async (_arg, { dispatch, rejectWithValue, getState }) => {
   try {
@@ -18,7 +19,7 @@ export const getUserCompanies = createAsyncThunk<CompanyInterface[], void, baseS
         }
       });
 
-      //TODO: reset all selected
+      dispatch(resetAllSelected());
       return data as CompanyInterface[];
     } else {
       return [] as CompanyInterface[];

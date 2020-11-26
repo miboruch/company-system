@@ -16,6 +16,8 @@ import { employees } from '../ducks/employees/employees';
 import { tasks } from '../ducks/tasks/tasks';
 import { client } from '../ducks/client/client';
 import notifications from '../ducks/notifications/notifications';
+import currency from '../ducks/currency/currency';
+import popup from '../ducks/popup/popup';
 
 export const rootReducer = combineReducers({
   auth,
@@ -25,9 +27,10 @@ export const rootReducer = combineReducers({
   client,
   attendanceReducer,
   attendance,
-  toggleReducer,
   financeReducer,
-  notifications
+  currency,
+  notifications,
+  popup
 });
 
 // export type AppState = ReturnType<typeof rootReducer>;

@@ -1,3 +1,5 @@
+import { currencyTypes } from '../ducks/currency/currency-creators';
+
 export const API_URL = 'http://localhost:8080';
 export const CURRENCY_API_URL = 'https://api.exchangeratesapi.io';
 
@@ -14,4 +16,4 @@ export const weekDays = ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwa
 export const lorem =
   'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, ad asperiores, autem cum deleniti dolorem ea eligendi fuga incidunt inventore itaque labore molestias nihil nobis rerum tempore tenetur voluptatem voluptates. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aut fugit illumitaque magnam, minima, natus nesciunt obcaecati praesentium quas quisquam ratione repellendus sint soluta temporibus totam vel velit vero!';
 
-export const appCurrencies = ['PLN', 'EUR', 'USD'];
+export const appCurrencies: currencyTypes[] = ['PLN', 'EUR', 'USD'];

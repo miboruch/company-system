@@ -64,6 +64,8 @@ const setCurrency = (name: string, value: number): SetCurrency => {
   };
 };
 
+// TODO: !
+
 export const getCurrencyValue = (currencyName: string) => async (dispatch: Dispatch<AppTypes>) => {
   try {
     const { data } = await axios.get(`${CURRENCY_API_URL}/latest?base=PLN&symbols=${currencyName}`);

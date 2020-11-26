@@ -250,7 +250,7 @@ export const authenticateCheck = (successCallback: () => void, errorCallback: ()
 
 export const getAllAppUsers = () => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     if (token && currentCompany) {
@@ -269,7 +269,7 @@ export const getAllAppUsers = () => async (dispatch: Dispatch<AppTypes>, getStat
 
 export const sendRegistrationMail = (email: string, pricePerHour?: number, monthlyPrice?: number) => async (dispatch: Dispatch<AppTypes>, getState: () => AppState) => {
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     if (token && currentCompany) {

@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
 import { ContentGridWrapper } from '../../../styles/HomePageContentGridStyles';
 import Chart from '../../molecules/Chart/Chart';
 import { ExpenseInterface, IncomeDataInterface, IncomeInterface } from '../../../types/modelsTypes';
-import { AppState } from '../../../store/test-store';
+import { AppState, useAppDispatch } from '../../../store/test-store';
 import { Heading } from '../../../styles/typography/typography';
 import gsap from 'gsap';
 import { contentAnimation } from '../../../animations/animations';
@@ -17,8 +17,7 @@ import BudgetHistoryList from '../BudgetHistoryList/BudgetHistoryList';
 import BudgetTile from '../../molecules/BudgetTile/BudgetTile';
 import Button from '../../atoms/Button/Button';
 import IncomeExpensePopup, { FinancePopupInterface } from '../../molecules/IncomeExpensePopup/IncomeExpensePopup';
-import { getCurrencyValue } from '../../../actions/toggleActions';
-import { CurrencyInterface } from '../../../types/actionTypes/toggleAcitonTypes';
+import { getCurrencyValue } from '../../../ducks/currency/currency-creators';
 import { roundTo2 } from '../../../utils/functions';
 import { appCurrencies } from '../../../utils/config';
 import { InfoWrapper, StatisticsHeading } from '../LandingPageContent/LandingPageContent.styles';
@@ -85,7 +84,9 @@ const CurrencyBox = styled.div`
 
 type ConnectedProps = LinkStateProps & LinkDispatchProps;
 
-const FinancesPageContent: React.FC<ConnectedProps> = ({ getIncomeExpenseInTimePeriod, lastIncomes, lastExpenses, budget, currency, getCurrencyValue }) => {
+const FinancesPageContent: React.FC<ConnectedProps> = ({ getIncomeExpenseInTimePeriod, lastIncomes, lastExpenses, budget }) => {
+  const dispatch = useAppDispatch();
+  const { currency } = useSelector((state: AppState) => state.currency);
   const [isPopupOpen, setPopupOpen] = useState<boolean>(false);
   const [isGenerateInvoiceOpen, setGenerateInvoiceOpen] = useState<boolean>(false);
   const [popupType, setPopupType] = useState<FinancePopupInterface>(FinancePopupInterface.Income);
@@ -138,7 +139,7 @@ const FinancesPageContent: React.FC<ConnectedProps> = ({ getIncomeExpenseInTimeP
             <Heading>Waluty</Heading>
             {appCurrencies.map((currency) => (
               // <CurrencyBox key={currency}>
-              <Heading key={currency} onClick={() => getCurrencyValue(currency)}>
+              <Heading key={currency} onClick={() => dispatch(getCurrencyValue(currency))}>
                 {currency}
               </Heading>
               // </CurrencyBox>
@@ -178,22 +179,19 @@ interface LinkStateProps {
   lastIncomes: IncomeInterface[];
   lastExpenses: ExpenseInterface[];
   budget: number;
-  currency: CurrencyInterface;
 }
 
 interface LinkDispatchProps {
   getIncomeExpenseInTimePeriod: (daysBack: number, setData: (data: any[]) => void) => void;
-  getCurrencyValue: (currencyName: string) => void;
 }
 
-const mapStateToProps = ({ financeReducer: { lastIncomes, lastExpenses, budget }, toggleReducer: { currency } }: AppState): LinkStateProps => {
-  return { lastIncomes, lastExpenses, budget, currency };
+const mapStateToProps = ({ financeReducer: { lastIncomes, lastExpenses, budget } }: AppState): LinkStateProps => {
+  return { lastIncomes, lastExpenses, budget };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
   return {
-    getIncomeExpenseInTimePeriod: bindActionCreators(getIncomeExpenseInTimePeriod, dispatch),
-    getCurrencyValue: bindActionCreators(getCurrencyValue, dispatch)
+    getIncomeExpenseInTimePeriod: bindActionCreators(getIncomeExpenseInTimePeriod, dispatch)
   };
 };
 

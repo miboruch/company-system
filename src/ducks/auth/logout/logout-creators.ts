@@ -3,6 +3,7 @@ import { setTokens } from '../tokens/tokens';
 import { setLogged } from '../check/check';
 import { AppDispatch, AppState } from '../../../store/test-store';
 import { api } from '../../../api';
+import { resetState } from '../../reset/reset-creators';
 
 export const clearStorage = () => (dispatch: Dispatch<any>): void => {
   localStorage.removeItem('token');
@@ -19,6 +20,7 @@ export const logout = createAsyncThunk<void, () => void, { dispatch: AppDispatch
     await api.post(`/auth/logout`, { refreshToken });
 
     dispatch(clearStorage());
+    dispatch(resetState());
     callback();
   } catch (error) {
     return rejectWithValue(error.response.statusText);

@@ -135,7 +135,7 @@ export const updateEmployeeSalary = (pricePerHour?: number, monthlyPrice?: numbe
     monthlyPrice?: number;
   }
 
-  const { selectedEmployee } = getState().employeeReducer;
+  const { selectedEmployee } = getState().employees.employeesToggle;
   const { token } = getState().auth.tokens;
   const { currentCompany } = getState().company.currentCompany;
 

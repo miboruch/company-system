@@ -200,7 +200,7 @@ export const getEmployeeSalary = createAsyncThunk<void, GetEmployeeSalaryInterfa
 /*
 export const getEmployeeSalary = (userId: string, monthIndex: number, setSalary: (hours: number) => void) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   const { token, role } = getState().authenticationReducer;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     dispatch(setEmployeeLoading(true));

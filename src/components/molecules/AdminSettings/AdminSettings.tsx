@@ -1,24 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { connect, useSelector } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
-import { bindActionCreators } from 'redux';
+import { useSelector } from 'react-redux';
 import AddNewButton from '../../atoms/AddNewButton/AddNewButton';
 import Spinner from '../../atoms/Spinner/Spinner';
 import ListBox from '../ListBox/ListBox';
 import RemoveAdminPopup from '../RemoveAdminPopup/RemoveAdminPopup';
 import { CompanyOwnersInterface } from '../../../types/modelsTypes';
 import { AppState, useAppDispatch } from '../../../store/test-store';
-import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { getAllCompanyEmployees } from '../../../ducks/employees/employees-data/employees-data-creators';
 import { getCompanyOwners, addNewCompanyOwner } from '../../../ducks/company/company-owners/company-owners-creators';
 import { SpinnerWrapper } from '../../../styles/shared';
 import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
-import { setNotificationMessage } from '../../../actions/toggleActions';
+import { setNotificationMessage } from '../../../ducks/popup/popup';
 import { Wrapper, ColumnWrapper, Heading } from './AdminSettings.styles';
 
-type ConnectedProps = LinkDispatchProps;
-
-const AdminSettings: React.FC<ConnectedProps> = ({ setNotificationMessage }) => {
+const AdminSettings: React.FC = () => {
   const dispatch = useAppDispatch();
   const { allCompanyEmployees } = useSelector((state: AppState) => state.employees.employeesData);
 
@@ -57,7 +52,7 @@ const AdminSettings: React.FC<ConnectedProps> = ({ setNotificationMessage }) => 
                 bottomDescription={owner.email}
                 callback={() => {
                   if (owner._id === userData?.userId) {
-                    setNotificationMessage('Nie możesz usunąc samego siebie', NotificationTypes.Error);
+                    dispatch(setNotificationMessage({ message: 'Nie możesz usunąc samego siebie', notificationType: NotificationTypes.Error }));
                   } else {
                     setRemoveOpen(true);
                     setCompanyOwnerToDelete(owner);
@@ -89,14 +84,4 @@ const AdminSettings: React.FC<ConnectedProps> = ({ setNotificationMessage }) => 
   );
 };
 
-interface LinkDispatchProps {
-  setNotificationMessage: (message: string | null, notificationType: NotificationTypes | null) => void;
-}
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
-  return {
-    setNotificationMessage: bindActionCreators(setNotificationMessage, dispatch)
-  };
-};
-
-export default connect(null, mapDispatchToProps)(AdminSettings);
+export default AdminSettings;

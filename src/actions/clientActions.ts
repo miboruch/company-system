@@ -70,7 +70,7 @@ export const getCompanyClients = () => async (dispatch: Dispatch<AppTypes>, getS
   dispatch(setClientsLoading(true));
 
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     if (currentCompany?._id && token) {
@@ -102,7 +102,7 @@ export const addNewClient = (name: string, address: string, email: string, phone
   dispatch(setClientsLoading(true));
 
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     if (currentCompany?._id && token) {
@@ -141,7 +141,7 @@ export const addNewClient = (name: string, address: string, email: string, phone
 
 export const deleteClient = (clientId: string) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     if (currentCompany?._id && token) {
@@ -167,7 +167,7 @@ export const deleteClient = (clientId: string) => async (dispatch: Dispatch<any>
 
 export const getSingleClient = (clientId: string) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     if (token && currentCompany) {
@@ -191,7 +191,7 @@ export const editClient = (clientId: string, name: string, email: string, phoneN
   getState: () => AppState
 ) => {
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     if (currentCompany && token) {
@@ -224,7 +224,7 @@ export const editClient = (clientId: string, name: string, email: string, phoneN
 
 export const editClientCoords = (clientId: string, lat: number, long: number) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     if (currentCompany && token) {

@@ -98,7 +98,7 @@ export const getSingleDayAttendance = (date?: Date) => async (dispatch: Dispatch
 
   const { token } = getState().auth.tokens;
   const { role } = getState().auth.roles;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
   const { attendanceDate } = getState().attendanceReducer;
 
   try {
@@ -129,7 +129,7 @@ export const getWeekAttendance = (weekCounter: number) => async (dispatch: Dispa
   dispatch(setAttendanceContentLoading(true));
 
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
   const { selectedAttendance } = getState().attendanceReducer;
 
   try {
@@ -158,7 +158,7 @@ export const selectAttendance = (attendance: AttendanceInterface | null) => (dis
 
 export const addAttendance = (userId: string, date: Date, wasPresent: boolean, hours: number) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     if (token && currentCompany) {
@@ -187,7 +187,7 @@ export const addAttendance = (userId: string, date: Date, wasPresent: boolean, h
 
 export const updateAttendance = (attendanceId: string, wasPresent: boolean, hours: number) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().companyReducer;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
     if (token && currentCompany) {

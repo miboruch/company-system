@@ -1,22 +1,21 @@
 import React, { useContext } from 'react';
 import { connect, useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { ButtonWrapper, CompanyName, LinkWrapper, MenuItemsWrapper, MenuWrapper, StyledLink } from './Menu.styles';
+import { CompanyName, MenuItemsWrapper, MenuWrapper } from './Menu.styles';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
 import { setUserRole } from '../../../actions/authenticationActions';
-import { AppState } from '../../../store/test-store';
+import { AppState, useAppDispatch } from '../../../store/test-store';
 import { MenuContext } from '../../../providers/MenuContext/MenuContext';
 import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
-import { CompanyInterface } from '../../../types/modelsTypes';
 import { ReactComponent as MenuSvg } from '../../../assets/icons/menuDraw.svg';
 import { ReactComponent as Arrow } from '../../../assets/icons/arrow.svg';
 
 import styled from 'styled-components';
-import { changeUserRoleTo } from '../../../actions/toggleActions';
+// import { changeUserRoleTo } from '../../../actions/toggleActions';
+import { changeUserRoleTo } from '../../../ducks/auth/roles/roles-creators';
 import MenuItemsRenderer from './MenuItemsRenderer';
-import { useAppDispatch } from '../../../store/test-store';
 
 const RedirectPanel = styled.section`
   width: 100%;
@@ -65,7 +64,7 @@ const RedirectText = styled.p`
 
 type ConnectedProps = LinkDispatchProps & RouteComponentProps;
 
-const Menu: React.FC<ConnectedProps> = ({ history, changeUserRoleTo }) => {
+const Menu: React.FC<ConnectedProps> = ({ history }) => {
   const dispatch = useAppDispatch();
   const { currentCompany } = useSelector((state: AppState) => state.company.currentCompany);
   const { role } = useSelector((state: AppState) => state.auth.roles);
@@ -73,9 +72,9 @@ const Menu: React.FC<ConnectedProps> = ({ history, changeUserRoleTo }) => {
 
   const changeRole = () => {
     if (role === UserRole.Admin) {
-      changeUserRoleTo(UserRole.User, () => history.push('/user/companies'));
+      dispatch(changeUserRoleTo(UserRole.User, () => history.push('/user/companies')));
     } else {
-      changeUserRoleTo(UserRole.Admin, () => history.push('/admin/companies'));
+      dispatch(changeUserRoleTo(UserRole.Admin, () => history.push('/admin/companies')));
     }
   };
 
