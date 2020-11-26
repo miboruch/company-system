@@ -74,7 +74,7 @@ const AttendancePageContent: React.FC<ConnectedProps> = ({
         <ListWrapper>
           <div>
             <StyledLabel>Data</StyledLabel>
-            <DatePicker selected={attendanceDate} onChange={(date) => date && date instanceof Date && setDate(date)} dateFormat={'dd/MM/yyyy'} />
+            <DatePicker selected={new Date(attendanceDate)} onChange={(date) => date && date instanceof Date && setDate(date)} dateFormat={'dd/MM/yyyy'} />
           </div>
           <List ref={listRef}>
             {filterByUserName(filterText, singleDayAttendance).map((attendance) => (
@@ -99,7 +99,7 @@ const AttendancePageContent: React.FC<ConnectedProps> = ({
           <AttendanceInfo />
         </ContentTemplate>
       </>
-      <AttendancePopup attendance={selectedAttendance} isOpen={isAttendanceOpen} setOpen={setAttendanceOpen} date={attendanceDate} />
+      <AttendancePopup attendance={selectedAttendance} isOpen={isAttendanceOpen} setOpen={setAttendanceOpen} date={new Date(attendanceDate)} />
     </GridWrapper>
   );
 };
@@ -108,7 +108,7 @@ interface LinkStateProps {
   isLoading: boolean;
   singleDayAttendance: AttendanceInterface[];
   isAttendanceInfoOpen: boolean;
-  attendanceDate: Date;
+  attendanceDate: Date | string;
 }
 
 interface LinkDispatchProps {

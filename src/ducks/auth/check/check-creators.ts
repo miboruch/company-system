@@ -26,33 +26,30 @@ export const authCheck = ({ successCallback, errorCallback }: AuthCheckInterface
   const token = localStorage.getItem('token');
   const refreshToken = localStorage.getItem('refreshToken');
   const expireDate = localStorage.getItem('expireDate');
-  console.log('CHECK');
 
   if (token && refreshToken && expireDate) {
-    console.log('all tokens');
     dispatch(setLoading(true));
     const expDate = new Date(expireDate);
     if (expDate <= new Date()) {
-      console.log('exp date');
       dispatch(getNewAccessToken({ refreshToken, successCallback, errorCallback }));
+      dispatch(setLoading(false));
     } else {
-      console.log('continue');
-      console.log(token, refreshToken);
       dispatch(setTokens({ token, refreshToken, expireIn: new Date(expireDate).getTime() }));
-      dispatch(getUserData());
       dispatch(authTimeout({ refreshToken, expireMilliseconds: expDate.getTime() - new Date().getTime() }));
+      dispatch(getUserData());
       successCallback();
+      dispatch(setLoading(false));
     }
   } else {
     if (refreshToken) {
-      console.log('no all tokens but refresh');
       dispatch(logout(() => console.log('sign out')));
+      dispatch(setLoading(false));
       //auth logout
     } else {
-      console.log('nothing');
       //resetState full state
       dispatch(clearStorage());
       errorCallback();
+      dispatch(setLoading(false));
     }
   }
 };

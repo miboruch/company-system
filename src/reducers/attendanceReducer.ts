@@ -17,7 +17,7 @@ interface DefaultState {
   singleDayAttendance: AttendanceInterface[];
   selectedAttendance: AttendanceInterface | null;
   weekAttendance: WeekAttendance[] | null;
-  attendanceDate: Date;
+  attendanceDate: Date | string;
   isLoading: boolean;
   isContentLoading: boolean;
   error: string | null;
@@ -29,7 +29,7 @@ const initialState: DefaultState = {
   singleDayAttendance: [],
   selectedAttendance: null,
   weekAttendance: null,
-  attendanceDate: new Date(),
+  attendanceDate: new Date().toString(),
   isLoading: false,
   isContentLoading: false,
   error: null,

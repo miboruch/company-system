@@ -24,6 +24,6 @@ const companyToggleSlice = createSlice({
   }
 });
 
-export const { resetCompanyToggle } = companyToggleSlice.actions;
+export const { resetCompanyToggle, setAddCompanyOpen, setEditCompanyCoordsOpen } = companyToggleSlice.actions;
 
 export default companyToggleSlice.reducer;

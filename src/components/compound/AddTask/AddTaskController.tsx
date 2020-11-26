@@ -38,7 +38,7 @@ const AddTaskController: React.FC = () => {
         <MainWrapper ref={mainWrapperRef}>
           <Wrapper ref={wrapperRef}>
             <CloseButtonWrapper>
-              <CloseButton setBoxState={() => dispatch(setAddNewTaskOpen(false))} />
+              <CloseButton close={() => dispatch(setAddNewTaskOpen(false))} />
             </CloseButtonWrapper>
             <AddTaskHeader />
             <CompoundTitle>Nowe zadanie</CompoundTitle>

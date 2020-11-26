@@ -12,13 +12,13 @@ import { StandardCompoundTitle } from '../../../styles/compoundStyles';
 import StepList from './components/StepList/StepList';
 import CloseButton from '../../atoms/CloseButton/CloseButton';
 import { AppState } from '../../../store/test-store';
-import { setAddCompanyOpen } from '../../../actions/companyActions';
+import { setAddCompanyOpen } from '../../../ducks/company/company-toggle/company-toggle';
 import { modalOpenAnimation } from '../../../animations/animations';
 import { MainWrapper, CloseButtonWrapper, Wrapper, ContentWrapper, CompoundTitle } from '../../../styles/compoundControllerStyles';
 
 const AddCompanyController: React.FC = () => {
   const dispatch = useDispatch();
-  const { isAddCompanyOpen } = useSelector(({ companyReducer }: AppState) => companyReducer);
+  const { isAddCompanyOpen } = useSelector((state: AppState) => state.company.companyToggle);
   const mainWrapperRef = useRef<HTMLDivElement | null>(null);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
@@ -39,7 +39,7 @@ const AddCompanyController: React.FC = () => {
         <MainWrapper ref={mainWrapperRef}>
           <Wrapper ref={wrapperRef}>
             <CloseButtonWrapper>
-              <CloseButton setBoxState={() => dispatch(setAddCompanyOpen(false))} />
+              <CloseButton close={() => dispatch(setAddCompanyOpen(false))} />
             </CloseButtonWrapper>
             <AddCompanyHeader />
             <CompoundTitle>Dodaj firme</CompoundTitle>

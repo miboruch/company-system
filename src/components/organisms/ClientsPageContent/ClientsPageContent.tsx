@@ -98,7 +98,7 @@ const ClientsPageContent: React.FC<ConnectedProps> = ({
           )
         }
       />
-      {selectedClient && <MapCoordsEdit isOpen={isEditClientCoordsOpen} setOpen={setEditClientCoordsOpen} lat={selectedClient.lat} long={selectedClient.long} type={CoordsEditType.Client} />}
+      {selectedClient && <MapCoordsEdit isOpen={isEditClientCoordsOpen} closeMap={() => setEditClientCoordsOpen(false)} lat={selectedClient.lat} long={selectedClient.long} type={CoordsEditType.Client} />}
     </>
   );
 };

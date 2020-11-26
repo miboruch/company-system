@@ -38,7 +38,7 @@ const AddClientController: React.FC = () => {
         <MainWrapper ref={mainWrapperRef}>
           <Wrapper ref={wrapperRef}>
             <CloseButtonWrapper>
-              <CloseButton setBoxState={() => dispatch(setAddNewClientOpen(false))} />
+              <CloseButton close={() => dispatch(setAddNewClientOpen(false))} />
             </CloseButtonWrapper>
             <AddClientHeader />
             <CompoundTitle>Dodaj klienta</CompoundTitle>

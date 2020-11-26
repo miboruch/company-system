@@ -160,7 +160,7 @@ const GenerateInvoice: React.FC<Props> = ({ isOpen, setOpen }) => {
     <Wrapper ref={backgroundRef}>
       <Box ref={boxRef}>
         <CloseButtonWrapper>
-          <CloseButton setBoxState={setOpen} />
+          <CloseButton close={() => setOpen(false)} />
         </CloseButtonWrapper>
         <Formik initialValues={initialValues} onSubmit={handleSubmit}>
           {({ handleChange, values }) => (

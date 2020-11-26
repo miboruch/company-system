@@ -2,12 +2,12 @@ import React from 'react';
 import { ButtonWrapper, InnerButton } from './CloseButton.styles';
 
 interface Props {
-  setBoxState: (isOpen: boolean) => void;
+  close: () => void;
 }
 
-const CloseButton: React.FC<Props> = ({ setBoxState }) => {
+const CloseButton: React.FC<Props> = ({ close }) => {
   return (
-    <ButtonWrapper onClick={() => setBoxState(false)}>
+    <ButtonWrapper onClick={() => close()}>
       <InnerButton />
     </ButtonWrapper>
   );

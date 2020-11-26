@@ -16,7 +16,7 @@ const AddCompanyHeader: React.FC = () => {
     <StyledHeader>
       <ArrowButton direction={Direction.Left} isHidden={currentPage === 0} onClick={() => currentPage !== 0 && setCurrentPage(currentPage - 1)} />
       <Paragraph type={'main'}>Krok {currentPage + 1}</Paragraph>
-      <CloseButton setBoxState={() => dispatch(setAddCompanyOpen(false))} />
+      <CloseButton close={() => dispatch(setAddCompanyOpen(false))} />
     </StyledHeader>
   );
 };

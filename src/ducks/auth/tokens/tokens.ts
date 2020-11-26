@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import axios from 'axios';
 
 interface InitialStateInterface {
   token: string | null;
@@ -19,6 +20,8 @@ const tokenSlice = createSlice({
         localStorage.setItem('token', payload.token);
         localStorage.setItem('refreshToken', payload.refreshToken);
         localStorage.setItem('expireDate', new Date(payload.expireIn).toString());
+
+        axios.defaults.headers.common['Authorization'] = `Bearer ${payload.token}`;
 
         state.token = payload.token;
         state.refreshToken = payload.refreshToken;

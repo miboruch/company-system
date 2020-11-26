@@ -5,14 +5,14 @@ interface InitialStateInterface {
   isAttendanceInfoOpen: boolean;
   isAddNewAttendanceOpen: boolean;
   selectedAttendance: AttendanceInterface | null;
-  attendanceDate: Date;
+  attendanceDate: Date | string;
 }
 
 const initialState: InitialStateInterface = {
   isAttendanceInfoOpen: false,
   isAddNewAttendanceOpen: false,
   selectedAttendance: null,
-  attendanceDate: new Date()
+  attendanceDate: new Date().toString()
 };
 
 const attendanceToggleSlice = createSlice({

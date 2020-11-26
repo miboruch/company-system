@@ -23,7 +23,6 @@ import { AppState } from '../store/test-store';
 import { setNotificationMessage } from './toggleActions';
 import { NotificationTypes } from '../types/actionTypes/toggleAcitonTypes';
 import { getCompanyTasks, selectTask } from './taskActions';
-import { setCompany } from './companyActions';
 
 const setClientsLoading = (isLoading: boolean): SetClientsLoading => {
   return {

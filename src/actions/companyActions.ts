@@ -83,6 +83,8 @@ export const getUserCompanies = () => async (dispatch: Dispatch<any>, getState: 
   }
 };
 
+//--
+
 export const setCompany = (currentCompany: CompanyInterface | null, successCallback?: () => void) => (dispatch: Dispatch<AppTypes>) => {
   dispatch(setCurrentCompany(currentCompany));
   // !!currentCompany && dispatch(setUserRole(UserRole.Admin));
@@ -168,6 +170,7 @@ export const editCompanyCoords = (lat: number, long: number) => async (dispatch:
     dispatch(setNotificationMessage(error.response.data, NotificationTypes.Error));
   }
 };
+
 
 export const getCompanyOwners = (setCompanyOwners: (owners: CompanyOwnersInterface[]) => void, setLoading: (isLoading: boolean) => void) => async (
   dispatch: Dispatch<any>,

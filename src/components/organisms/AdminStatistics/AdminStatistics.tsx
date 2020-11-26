@@ -124,7 +124,7 @@ const AdminStatistics: React.FC<ConnectedProps> = ({ allCompanyEmployees, getEmp
     <StyledWrapper ref={mainWrapperRef}>
       <Box ref={wrapperRef}>
         <CloseButtonWrapper>
-          <CloseButton setBoxState={setOpen} />
+          <CloseButton close={() => setOpen(false)} />
         </CloseButtonWrapper>
         <ListWrapper>
           <StyledHeading>Pracownicy</StyledHeading>

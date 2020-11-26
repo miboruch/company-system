@@ -1,20 +1,16 @@
 import React, { useState } from 'react';
 import NumberFormat from 'react-number-format';
-import { connect } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
-import { bindActionCreators } from 'redux';
+import { useSelector } from 'react-redux';
 import { Formik } from 'formik';
 import Button from '../../atoms/Button/Button';
 import MapCoordsEdit, { CoordsEditType } from '../../organisms/MapCoordsEdit/MapCoordsEdit';
-import { AppState } from '../../../store/test-store';
-import { CompanyInterface } from '../../../types/modelsTypes';
-import { AppTypes } from '../../../types/actionTypes/appActionTypes';
+import { AppState, useAppDispatch } from '../../../store/test-store';
 import { Heading, StyledForm } from '../AccountSettings/AccountSettings.styles';
 import { StyledInput } from '../../../styles/compoundStyles';
-import { editCompany } from '../../../actions/companyActions';
+import { editCompany } from '../../../ducks/company/current-company/current-company-creators';
 import { DoubleFlexWrapper, StyledLabel } from '../../../styles/shared';
-import { setEditCompanyCoordsOpen } from '../../../actions/toggleActions';
 import { CompanySchema } from '../../../validation/modelsValidation';
+import { setEditCompanyCoordsOpen } from '../../../ducks/company/company-toggle/company-toggle';
 
 interface DefaultValues {
   name: string;
@@ -26,9 +22,10 @@ interface DefaultValues {
   country: string;
 }
 
-type ConnectedProps = LinkStateProps & LinkDispatchProps;
-
-const CompanySettings: React.FC<ConnectedProps> = ({ currentCompany, editCompany, isEditCompanyCoordsOpen, setEditCompanyCoordsOpen }) => {
+const CompanySettings: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const { isEditCompanyCoordsOpen } = useSelector((state: AppState) => state.company.companyToggle);
+  const { currentCompany } = useSelector((state: AppState) => state.company.currentCompany);
   const [formattedPhoneNumber, setFormattedPhoneNumber] = useState<string>('');
 
   const initialValues: DefaultValues = {
@@ -42,7 +39,7 @@ const CompanySettings: React.FC<ConnectedProps> = ({ currentCompany, editCompany
   };
 
   const handleSubmit = ({ name, email, nip, phoneNumber, address, city, country }: DefaultValues) => {
-    editCompany(name, email, nip, phoneNumber, address, city, country);
+    dispatch(editCompany({ name, email, nip, phoneNumber, address, city, country }));
   };
 
   return (
@@ -70,37 +67,18 @@ const CompanySettings: React.FC<ConnectedProps> = ({ currentCompany, editCompany
             <StyledInput type={'text'} name={'address'} onChange={handleChange} value={values.address} required={true} labelText={errors.address || 'Adres'} />
             <StyledInput type={'text'} name={'city'} onChange={handleChange} value={values.city} required={true} labelText={errors.city || 'Miasto'} />
             <StyledInput type={'text'} name={'country'} onChange={handleChange} value={values.country} required={true} labelText={errors.country || 'Kraj'} />
-            <p onClick={() => setEditCompanyCoordsOpen(true)}>Edit company coords</p>
+            <p onClick={() => dispatch(setEditCompanyCoordsOpen(true))}>Edit company coords</p>
             <DoubleFlexWrapper>
               <Button type={'submit'} text={'Zapisz'} />
             </DoubleFlexWrapper>
           </StyledForm>
         )}
       </Formik>
-      {currentCompany && <MapCoordsEdit isOpen={isEditCompanyCoordsOpen} setOpen={setEditCompanyCoordsOpen} lat={currentCompany.lat} long={currentCompany.long} type={CoordsEditType.Company} />}
+      {currentCompany && (
+        <MapCoordsEdit isOpen={isEditCompanyCoordsOpen} closeMap={() => dispatch(setEditCompanyCoordsOpen(false))} lat={currentCompany.lat} long={currentCompany.long} type={CoordsEditType.Company} />
+      )}
     </>
   );
 };
 
-interface LinkStateProps {
-  currentCompany: CompanyInterface | null;
-  isEditCompanyCoordsOpen: boolean;
-}
-
-const mapStateToProps = ({ companyReducer: { currentCompany }, toggleReducer: { isEditCompanyCoordsOpen } }: AppState): LinkStateProps => {
-  return { currentCompany, isEditCompanyCoordsOpen };
-};
-
-interface LinkDispatchProps {
-  editCompany: (name: string, email: string, nip: string, phoneNumber: string, address: string, city: string, country: string) => void;
-  setEditCompanyCoordsOpen: (isOpen: boolean) => void;
-}
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
-  return {
-    editCompany: bindActionCreators(editCompany, dispatch),
-    setEditCompanyCoordsOpen: bindActionCreators(setEditCompanyCoordsOpen, dispatch)
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CompanySettings);
+export default CompanySettings;

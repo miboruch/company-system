@@ -34,7 +34,7 @@ const AddTaskHeader: React.FC = () => {
     <StyledHeader>
       <ArrowButton direction={Direction.Left} isHidden={currentPage === 0} onClick={() => currentPage !== 0 && setCurrentPage(currentPage - 1)} />
       <Text>Krok {currentPage + 1}</Text>
-      <CloseButton setBoxState={() => dispatch(setAddNewTaskOpen(false))} />
+      <CloseButton close={() => dispatch(setAddNewTaskOpen(false))} />
     </StyledHeader>
   );
 };

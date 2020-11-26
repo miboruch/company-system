@@ -16,8 +16,8 @@ export const getSingleDayAttendance = createAsyncThunk<AttendanceInterface[], Da
     if (currentCompany?._id && token && attendanceDate) {
       const { data } = await axios.get(
         role === UserRole.Admin
-          ? `${API_URL}/attendance/single-day-attendance?company_id=${currentCompany._id}&date=${date ? date.toISOString() : attendanceDate.toISOString()}`
-          : `${API_URL}/attendance/user-day-attendance?company_id=${currentCompany._id}&date=${date ? date.toISOString() : attendanceDate.toISOString()}`,
+          ? `${API_URL}/attendance/single-day-attendance?company_id=${currentCompany._id}&date=${date ? new Date(date).toISOString() : new Date(attendanceDate).toISOString()}`
+          : `${API_URL}/attendance/user-day-attendance?company_id=${currentCompany._id}&date=${date ? new Date(date).toISOString() : new Date(attendanceDate).toISOString()}`,
         {
           headers: {
             Authorization: `Bearer ${token}`

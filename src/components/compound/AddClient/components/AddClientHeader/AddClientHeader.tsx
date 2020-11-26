@@ -15,7 +15,7 @@ const AddClientHeader: React.FC = () => {
     <StyledHeader>
       <ArrowButton direction={Direction.Left} isHidden={currentPage === 0} onClick={() => currentPage !== 0 && setCurrentPage(currentPage - 1)} />
       <Paragraph type={'main'}>Krok {currentPage + 1}</Paragraph>
-      <CloseButton setBoxState={() => dispatch(setAddNewClientOpen(false))} />
+      <CloseButton close={() => dispatch(setAddNewClientOpen(false))} />
     </StyledHeader>
   );
 };

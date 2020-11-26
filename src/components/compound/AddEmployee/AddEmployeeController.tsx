@@ -38,7 +38,7 @@ const AddEmployeeController: React.FC = () => {
         <MainWrapper ref={mainWrapperRef}>
           <Wrapper ref={wrapperRef}>
             <CloseButtonWrapper>
-              <CloseButton setBoxState={() => dispatch(setAddNewEmployeeOpen(false))} />
+              <CloseButton close={() => dispatch(setAddNewEmployeeOpen(false))} />
             </CloseButtonWrapper>
             <AddEmployeeHeader />
             <CompoundTitle>Dodaj pracownika</CompoundTitle>

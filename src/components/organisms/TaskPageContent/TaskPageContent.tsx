@@ -100,7 +100,7 @@ const TaskPageContent: React.FC<ConnectedProps> = ({
         }
       />
       {selectedTask?.clientId && (
-        <MapCoordsEdit isOpen={isTaskMapPreviewOpen} setOpen={setTaskMapPreviewOpen} lat={selectedTask?.clientId.lat} long={selectedTask?.clientId.long} type={CoordsEditType.View} />
+        <MapCoordsEdit isOpen={isTaskMapPreviewOpen} closeMap={() => setTaskMapPreviewOpen(false)} lat={selectedTask?.clientId.lat} long={selectedTask?.clientId.long} type={CoordsEditType.View} />
       )}
     </>
   );

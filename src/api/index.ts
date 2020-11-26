@@ -14,11 +14,11 @@ const adminApi = axios.create({
 });
 
 const tokenListener = () => {
-  const { token } = store.getState().auth.tokens;
-  if (token) {
-    authApi.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    adminApi.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  }
+  // const { token } = store.getState().auth.tokens;
+  // if (token) {
+  //   authApi.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  //   adminApi.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  // }
 };
 
 const companyIdListener = () => {
@@ -32,7 +32,7 @@ const companyIdListener = () => {
   // }
 };
 
-store.subscribe(tokenListener);
-store.subscribe(companyIdListener);
+// store.subscribe(tokenListener);
+// store.subscribe(companyIdListener);
 
 export { api, authApi, adminApi };

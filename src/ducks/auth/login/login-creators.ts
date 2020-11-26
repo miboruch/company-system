@@ -1,10 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { baseStoreType } from '../../../store/test-store';
-import { api } from '../../../api';
 import { setTokens } from '../tokens/tokens';
 import { getUserData } from '../data/data-creators';
 import { setLogged } from '../check/check';
 import { authTimeout } from '../check/check-creators';
+import { api } from '../../../api';
 
 interface LoginInterface {
   email: string;
@@ -12,7 +12,7 @@ interface LoginInterface {
   callback: () => void;
 }
 
-export const login = createAsyncThunk<void, LoginInterface, baseStoreType>('login/login', async ({ email, password, callback }: LoginInterface, { rejectWithValue, dispatch }) => {
+export const login = createAsyncThunk<void, LoginInterface, baseStoreType>('login/login', async ({ email, password, callback }, { rejectWithValue, dispatch }) => {
   try {
     const { data } = await api.post(`/auth/login`, { email, password });
 
@@ -24,6 +24,6 @@ export const login = createAsyncThunk<void, LoginInterface, baseStoreType>('logi
     dispatch(authTimeout({ refreshToken: data.refreshToken, expireMilliseconds: milliseconds }));
     callback();
   } catch (error) {
-    return rejectWithValue(error.response.statusText);
+    return rejectWithValue(error.response.data);
   }
 });
