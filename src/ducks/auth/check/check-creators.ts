@@ -5,6 +5,8 @@ import { getUserData } from '../data/data-creators';
 import { clearStorage, logout } from '../logout/logout-creators';
 import { setLoading } from './check';
 import { AppDispatch } from '../../../store/test-store';
+import { getUserNotifications } from '../../notifications/notifications-creators';
+import { resetState } from '../../reset/reset-creators';
 
 interface AuthTimeoutInterface {
   refreshToken: string;
@@ -37,6 +39,8 @@ export const authCheck = ({ successCallback, errorCallback }: AuthCheckInterface
       dispatch(setTokens({ token, refreshToken, expireIn: new Date(expireDate).getTime() }));
       dispatch(authTimeout({ refreshToken, expireMilliseconds: expDate.getTime() - new Date().getTime() }));
       dispatch(getUserData());
+      dispatch(getUserNotifications(1));
+      //TODO: get all app users
       successCallback();
       dispatch(setLoading(false));
     }
@@ -44,9 +48,8 @@ export const authCheck = ({ successCallback, errorCallback }: AuthCheckInterface
     if (refreshToken) {
       dispatch(logout(() => console.log('sign out')));
       dispatch(setLoading(false));
-      //auth logout
     } else {
-      //resetState full state
+      dispatch(resetState());
       dispatch(clearStorage());
       errorCallback();
       dispatch(setLoading(false));

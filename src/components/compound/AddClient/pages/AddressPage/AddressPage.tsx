@@ -7,7 +7,7 @@ import { DoubleFlexWrapper } from '../../../../../styles/shared';
 import Button from '../../../../atoms/Button/Button';
 import { ClientDataContext } from '../../context/ClientDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
-import { addNewClient } from '../../../../../actions/clientActions';
+import { addNewClient } from '../../../../../ducks/client/client-creators';
 import { AddressDataSchema } from '../../validation/validation';
 
 type defaultValues = {
@@ -27,10 +27,10 @@ const AddressPage: React.FC = () => {
     country: data?.country || ''
   };
 
-  const handleSubmit = (values: defaultValues): void => {
-    setData({ ...data, ...values });
+  const handleSubmit = ({ address, city, country }: defaultValues): void => {
+    setData({ ...data, address, city, country });
     if (data.name && data.email && data.phoneNumber && data.lat && data.long) {
-      dispatch(addNewClient(data.name, values.address, data.email, data.phoneNumber, values.city, values.country, data.lat, data.long));
+      dispatch(addNewClient({ name: data.name, address, email: data.email, phoneNumber: data.phoneNumber, city, country, lat: data.lat, long: data.long }));
     }
   };
 

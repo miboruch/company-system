@@ -15,7 +15,8 @@ import Routes from './routes/Routes';
 import SelectPage from './pages/SelectPage/SelectPage';
 import NotificationPopup from './components/molecules/NotificationPopup/NotificationPopup';
 import RegisterFromLink from './pages/RegisterFromLink/RegisterFromLink';
-import { getUserNotifications } from './actions/notificationActions';
+// import { getUserNotifications } from './actions/notificationActions';
+import {getUserNotifications} from './ducks/notifications/notifications-creators';
 import { useAppDispatch } from './store/test-store';
 
 type ConnectedProps = LinkDispatchProps & RouteComponentProps<any>;
@@ -28,7 +29,6 @@ const App: React.FC<ConnectedProps> = ({ history, getAllAppUsers, getUserNotific
         successCallback: () => {
           // getAllAppUsers();
           history.push('/select');
-          getUserNotifications(1);
         },
         errorCallback: () => history.push('/test')
       })

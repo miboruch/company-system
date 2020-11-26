@@ -1,18 +1,14 @@
 import React from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Formik } from 'formik';
-import { ClientInterface } from '../../../types/modelsTypes';
 import { AppState } from '../../../store/test-store';
 import { Paragraph } from '../../../styles/typography/typography';
 import { ButtonWrapper, EmployeeInfoBox, HeaderWrapper, InputWrapper, RowIconWrapper, StyledForm, Title, Wrapper } from '../../../styles/contentStyles';
 import { StyledInput } from '../../../styles/compoundStyles';
 import { DeleteIcon, EditIcon, LocationIcon } from '../../../styles/iconStyles';
 import Button from '../../atoms/Button/Button';
-import { ThunkDispatch } from 'redux-thunk';
-import { AppTypes } from '../../../types/actionTypes/appActionTypes';
-import { bindActionCreators } from 'redux';
-import { editClient } from '../../../actions/clientActions';
-import { setEditClientCoordsOpen } from '../../../actions/toggleActions';
+import { editClient } from '../../../ducks/client/client-creators';
+import { setEditClientCoordsOpen } from '../../../ducks/client/client-toggle/client-toggle';
 import { ClientSchema } from '../../../validation/modelsValidation';
 
 interface InitialValues {
@@ -32,10 +28,10 @@ interface Props {
   setDeleteOpen: (toBeOpen: boolean) => void;
 }
 
-type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
-
-const ClientInfo: React.FC<ConnectedProps> = ({ selectedClient, isEditToggled, setEditToggled, setDeleteOpen, editClient }) => {
+const ClientInfo: React.FC<Props> = ({ isEditToggled, setEditToggled, setDeleteOpen }) => {
   const dispatch = useDispatch();
+  const { selectedClient } = useSelector((state: AppState) => state.client.clientToggle);
+
   const initialValues: InitialValues = {
     name: selectedClient?.name || '',
     email: selectedClient?.email || '',
@@ -50,7 +46,7 @@ const ClientInfo: React.FC<ConnectedProps> = ({ selectedClient, isEditToggled, s
   const handleSubmit = ({ name, email, phoneNumber, address, city, country }: InitialValues) => {
     if (selectedClient) {
       const { _id } = selectedClient;
-      editClient(_id, name, email, phoneNumber, address, city, country);
+      dispatch(editClient({ clientId: _id, name, email, phoneNumber, address, city, country }));
     }
   };
 
@@ -103,24 +99,4 @@ const ClientInfo: React.FC<ConnectedProps> = ({ selectedClient, isEditToggled, s
   );
 };
 
-interface LinkStateProps {
-  selectedClient: ClientInterface | null;
-}
-
-interface LinkDispatchProps {
-  editClient: (clientId: string, name: string, email: string, phoneNumber: string, address: string, city: string, country: string) => void;
-  setEditClientCoordsOpen: (isOpen: boolean) => void;
-}
-
-const mapStateToProps = ({ clientReducer: { selectedClient } }: AppState): LinkStateProps => {
-  return { selectedClient };
-};
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
-  return {
-    editClient: bindActionCreators(editClient, dispatch),
-    setEditClientCoordsOpen: bindActionCreators(setEditClientCoordsOpen, dispatch)
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ClientInfo);
+export default ClientInfo;

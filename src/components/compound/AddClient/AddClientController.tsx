@@ -18,7 +18,7 @@ import AddressPage from './pages/AddressPage/AddressPage';
 
 const AddClientController: React.FC = () => {
   const dispatch = useDispatch();
-  const { isAddNewClientOpen } = useSelector(({ clientReducer }: AppState) => clientReducer);
+  const { isAddNewClientOpen } = useSelector((state: AppState) => state.client.clientToggle);
 
   const mainWrapperRef = useRef<HTMLDivElement | null>(null);
   const wrapperRef = useRef<HTMLDivElement | null>(null);

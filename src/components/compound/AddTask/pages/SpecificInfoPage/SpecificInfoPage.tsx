@@ -8,7 +8,7 @@ import { TaskDataContext } from '../../context/TaskDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { addNewTask } from '../../../../../ducks/tasks/tasks-data/task-data-creators';
 import Dropdown from '../../../../atoms/Dropdown/Dropdown';
-import { getCompanyClients } from '../../../../../actions/clientActions';
+import { getCompanyClients } from '../../../../../ducks/client/client-data/client-data-creators';
 import { AppState } from '../../../../../store/test-store';
 import { TaskSpecificInfoSchema } from '../../validation/validation';
 
@@ -21,7 +21,7 @@ interface DefaultValues {
 
 const SpecificInfoPage: React.FC = () => {
   const dispatch = useDispatch();
-  const { allCompanyClients } = useSelector((state: AppState) => state.clientReducer);
+  const { allCompanyClients } = useSelector((state: AppState) => state.client.clientData);
 
   const { data, setData } = useContext(TaskDataContext);
   const { setCurrentPage } = useContext(PageContext);

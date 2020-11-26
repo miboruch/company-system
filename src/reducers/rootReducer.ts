@@ -13,20 +13,21 @@ import { auth } from '../ducks/auth/auth';
 import { company } from '../ducks/company/company';
 import { attendance } from '../ducks/attendance/attendance';
 import { employees } from '../ducks/employees/employees';
-import {tasks} from '../ducks/tasks/tasks';
+import { tasks } from '../ducks/tasks/tasks';
+import { client } from '../ducks/client/client';
+import notifications from '../ducks/notifications/notifications';
 
 export const rootReducer = combineReducers({
   auth,
   company,
   employees,
   tasks,
-  taskReducer,
-  clientReducer,
+  client,
   attendanceReducer,
   attendance,
   toggleReducer,
   financeReducer,
-  notificationReducer
+  notifications
 });
 
 // export type AppState = ReturnType<typeof rootReducer>;
