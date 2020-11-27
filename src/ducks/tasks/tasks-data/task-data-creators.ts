@@ -2,7 +2,7 @@ import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes'
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { baseStoreType } from '../../../store/test-store';
 import { TaskInterface } from '../../../types/modelsTypes';
-import { adminApi, authApi } from '../../../api';
+import { authApi } from '../../../api';
 import { setNotificationMessage } from '../../popup/popup';
 import { selectTask } from '../tasks-toggle/tasks-toggle-creators';
 import { setSelectedTask, setTaskInfoOpen, setAddNewTaskOpen } from '../tasks-toggle/tasks-toggle';
@@ -73,7 +73,7 @@ export const changeTaskState = createAsyncThunk<void, ChangeTaskStateInterface, 
 
     try {
       if (currentCompany && token) {
-        await adminApi.put(`/task/set-task-completed`, {
+        await authApi.put(`/task/set-task-completed`, {
           taskId,
           isCompleted
         });
@@ -104,7 +104,7 @@ export const editTask = createAsyncThunk<void, EditTaskInterface, baseStoreType>
 
   try {
     if (currentCompany && token) {
-      await adminApi.put(`/task/edit-task`, {
+      await authApi.put(`/task/edit-task`, {
         ...values
       });
 
@@ -123,7 +123,7 @@ export const deleteTask = createAsyncThunk<void, string, baseStoreType>('tasksDa
 
   try {
     if (currentCompany && token) {
-      await adminApi.delete(`/task/delete-task/${taskId}`);
+      await authApi.delete(`/task/delete-task/${taskId}`);
 
       dispatch(getCompanyTasks());
       dispatch(setSelectedTask(null));
@@ -156,7 +156,7 @@ export const addNewTask = createAsyncThunk<void, AddNewTaskInterface, baseStoreT
 
     try {
       if (currentCompany && token) {
-        await adminApi.post(`/task/add-new-task`, {
+        await authApi.post(`/task/add-new-task`, {
           date,
           timeEstimate,
           name,

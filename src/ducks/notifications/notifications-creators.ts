@@ -11,7 +11,7 @@ export const getUserNotifications = createAsyncThunk<NotificationInterface[], nu
 
   try {
     if (token) {
-      const { data } = await authApi.get(`${API_URL}/notification/get-notifications?page=${page}`);
+      const { data } = await authApi.get(`/notification/get-notifications?page=${page}`);
 
       return data as NotificationInterface[];
     } else {

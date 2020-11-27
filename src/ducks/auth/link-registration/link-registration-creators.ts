@@ -78,12 +78,9 @@ export const sendRegistrationMail = createAsyncThunk<void, SendRegistrationMailI
           monthlyPrice,
           companyName: currentCompany.name
         };
-        const { data } = await api.post(`/auth/send-registration-link?company_id=${currentCompany._id}`, { body });
-        dispatch(setTokens({ token: data.token, refreshToken: data.refreshToken, expireIn: data.expireIn }));
+        await api.post(`/auth/send-registration-link?company_id=${currentCompany._id}`, { body });
 
         dispatch(setNotificationMessage({ message: 'Wysłano wiadomość na email' }));
-        const milliseconds = data.expireIn - new Date().getTime();
-        dispatch(authTimeout({ refreshToken: data.refreshToken, expireMilliseconds: milliseconds }));
       }
     } catch (error) {
       dispatch(setNotificationMessage({ message: error.response.data, notificationType: NotificationTypes.Error }));

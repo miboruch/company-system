@@ -3,7 +3,7 @@ import { setCompany } from './current-company';
 import { CompanyInterface } from '../../../types/modelsTypes';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { baseStoreType } from '../../../store/test-store';
-import { adminApi, authApi } from '../../../api';
+import { authApi } from '../../../api';
 import { setNotificationMessage } from '../../popup/popup';
 import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
 
@@ -13,9 +13,7 @@ export const setCurrentCompany = (company: CompanyInterface | null, successCallb
   !!successCallback && successCallback();
 };
 
-export const getSingleCompany = createAsyncThunk<void, string, baseStoreType>('currentCompany/getSingleCompany', async (companyId, { dispatch, getState }) => {
-  const { token } = getState().auth.tokens;
-
+export const getSingleCompany = createAsyncThunk<void, string, baseStoreType>('currentCompany/getSingleCompany', async (companyId, { dispatch }) => {
   try {
     const { data } = await authApi.get(`/company/get-company-info/${companyId}`);
 
@@ -41,7 +39,7 @@ export const editCompany = createAsyncThunk<void, EditCompanyInterface, baseStor
 
   try {
     if (token && currentCompany) {
-      await adminApi.put(`/company/edit-company`, values);
+      await authApi.put(`/company/edit-company`, values);
 
       dispatch(getSingleCompany(currentCompany._id));
       dispatch(setNotificationMessage({ message: 'Edytowano firmę' }));
@@ -58,7 +56,7 @@ export const editCompanyCoords = createAsyncThunk<void, { lat: number; long: num
 
   try {
     if (token && currentCompany) {
-      await adminApi.put(`/company/edit-company-coords`, { lat, long });
+      await authApi.put(`/company/edit-company-coords`, { lat, long });
 
       dispatch(getSingleCompany(currentCompany._id));
       dispatch(setNotificationMessage({ message: 'Zapisano koordynację' }));

@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { CompanyOwnersInterface } from '../../../types/modelsTypes';
 import { baseStoreType } from '../../../store/test-store';
-import { adminApi } from '../../../api';
+import { adminApi, authApi } from '../../../api';
 import { setNotificationMessage } from '../../popup/popup';
 import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
 import { getAllCompanyEmployees } from '../../employees/employees-data/employees-data-creators';
@@ -9,10 +9,9 @@ import { getAllCompanyEmployees } from '../../employees/employees-data/employees
 export const getCompanyOwners = createAsyncThunk<CompanyOwnersInterface[], void, baseStoreType>('companyOwners/getCompanyOwners', async (_arg, { dispatch, rejectWithValue, getState }) => {
   try {
     const { token } = getState().auth.tokens;
-    const { currentCompany } = getState().company.currentCompany;
 
-    if (token && currentCompany) {
-      const { data } = await adminApi.get('/company/get-company-owners');
+    if (token) {
+      const { data } = await authApi.get('/company/get-company-owners');
 
       return data as CompanyOwnersInterface[];
     } else {
@@ -27,10 +26,9 @@ export const getCompanyOwners = createAsyncThunk<CompanyOwnersInterface[], void,
 export const addNewCompanyOwner = createAsyncThunk<void, string, baseStoreType>('companyOwners/addNewCompanyOwner', async (userId, { dispatch, getState }) => {
   try {
     const { token } = getState().auth.tokens;
-    const { currentCompany } = getState().company.currentCompany;
 
-    if (token && currentCompany) {
-      await adminApi.post('/company/add-company-owner', { toBeOwnerId: userId });
+    if (token) {
+      await authApi.post('/company/add-company-owner', { toBeOwnerId: userId });
 
       dispatch(getCompanyOwners());
     }
@@ -51,10 +49,9 @@ export const removeCompanyOwner = createAsyncThunk<void, RemoveCompanyOwnerInter
   async ({ userId, addEmployee, pricePerHour, monthlyPrice }, { dispatch, getState }) => {
     try {
       const { token } = getState().auth.tokens;
-      const { currentCompany } = getState().company.currentCompany;
 
-      if (token && currentCompany) {
-        await adminApi.post('/company/remove-company-owner', { toBeRemovedId: userId, addEmployee, pricePerHour, monthlyPrice });
+      if (token) {
+        await authApi.post('/company/remove-company-owner', { toBeRemovedId: userId, addEmployee, pricePerHour, monthlyPrice });
 
         dispatch(getCompanyOwners());
         addEmployee && dispatch(getAllCompanyEmployees());

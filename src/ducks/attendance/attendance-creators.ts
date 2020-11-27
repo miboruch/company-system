@@ -4,7 +4,7 @@ import { NotificationTypes } from '../../types/actionTypes/toggleAcitonTypes';
 import { baseStoreType } from '../../store/test-store';
 import { setNotificationMessage } from '../popup/popup';
 import { getSingleDayAttendance } from './attendance-data/attendance-data-creators';
-import { adminApi } from '../../api';
+import { authApi } from '../../api';
 
 interface AddAttendanceInterface {
   userId: string;
@@ -15,11 +15,10 @@ interface AddAttendanceInterface {
 
 export const addAttendance = createAsyncThunk<void, AddAttendanceInterface, baseStoreType>('attendance/addAttendance', async ({ userId, date, wasPresent, hours }, { dispatch, getState }) => {
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().company.currentCompany;
 
   try {
-    if (token && currentCompany) {
-      await adminApi.post(`${API_URL}/attendance/add-new?company_id=${currentCompany._id}`, {
+    if (token) {
+      await authApi.post(`/attendance/add-new`, {
         userId,
         date,
         wasPresent,
@@ -46,7 +45,7 @@ export const updateAttendance = createAsyncThunk<void, UpdateAttendanceInterface
 
   try {
     if (token && currentCompany) {
-      await adminApi.put(`${API_URL}/attendance/add-new?company_id=${currentCompany._id}`, {
+      await authApi.put(`/attendance/edit-attendance`, {
         attendanceId,
         wasPresent,
         hours

@@ -5,7 +5,7 @@ import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes'
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { EmployeeDataInterface } from '../../../types/modelsTypes';
 import { baseStoreType } from '../../../store/test-store';
-import { adminApi, authApi } from '../../../api';
+import { authApi } from '../../../api';
 import { setNotificationMessage } from '../../popup/popup';
 import { setSelectedEmployee, setEmployeeInfoOpen } from '../employees-toggle/employees-toggle';
 
@@ -21,14 +21,11 @@ export const getAllCompanyEmployees = createAsyncThunk<AllCompanyEmployeesReturn
 
   try {
     if (currentCompany && token) {
-      const { data } = await axios.get(
-        role === UserRole.Admin ? `${API_URL}/employee/get-company-employees?company_id=${currentCompany._id}` : `${API_URL}/employee/employee-data?company_id=${currentCompany._id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+      const { data } = await axios.get(role === UserRole.Admin ? `${API_URL}/employee/get-company-employees` : `${API_URL}/employee/employee-data?company_id=${currentCompany._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      );
+      });
 
       return data as AllCompanyEmployeesReturnInterface;
     } else {
@@ -75,7 +72,7 @@ export const updateEmployeeSalary = createAsyncThunk<void, UpdateEmployeeSalaryI
               monthlyPrice: monthlyPrice
             };
 
-        await adminApi.put('/employee/update-employee', data);
+        await authApi.put('/employee/update-employee', data);
 
         // await axios.put(`${API_URL}/employee/update-employee?company_id=${currentCompany._id}`, data, {
         //   headers: {
@@ -122,7 +119,7 @@ export const addNewEmployee = createAsyncThunk<void, AddEmployeeInterface, baseS
       //   }
       // );
 
-      await adminApi.post('/employee/add-employee', { ...values });
+      await authApi.post('/employee/add-employee', { ...values });
 
       dispatch(getAllCompanyEmployees());
       dispatch(setNotificationMessage({ message: 'Dodano nowego pracownika', notificationType: NotificationTypes.Error }));
@@ -144,7 +141,7 @@ interface GetEmployeeHoursInterface {
 
 export const getEmployeeHours = createAsyncThunk<void, GetEmployeeHoursInterface, baseStoreType>(
   'employees/getEmployeeHours',
-  async ({ userId, monthIndex, setHours }, {  rejectWithValue, getState }) => {
+  async ({ userId, monthIndex, setHours }, { rejectWithValue, getState }) => {
     const { role } = getState().auth.roles;
     const { token } = getState().auth.tokens;
     const { currentCompany } = getState().company.currentCompany;
@@ -156,7 +153,7 @@ export const getEmployeeHours = createAsyncThunk<void, GetEmployeeHoursInterface
 
           setHours(data.totalHours);
         } else {
-          const { data } = await adminApi.get(`/attendance/get-single-user-hours/${userId}?month=${monthIndex}`);
+          const { data } = await authApi.get(`/attendance/get-single-user-hours/${userId}?month=${monthIndex}`);
 
           setHours(data.totalHours);
         }
@@ -175,7 +172,7 @@ interface GetEmployeeSalaryInterface {
 
 export const getEmployeeSalary = createAsyncThunk<void, GetEmployeeSalaryInterface, baseStoreType>(
   'employees/getEmployeeSalary',
-  async ({ userId, monthIndex, setSalary }, {  rejectWithValue, getState }) => {
+  async ({ userId, monthIndex, setSalary }, { rejectWithValue, getState }) => {
     const { role } = getState().auth.roles;
     const { token } = getState().auth.tokens;
     const { currentCompany } = getState().company.currentCompany;
@@ -187,7 +184,7 @@ export const getEmployeeSalary = createAsyncThunk<void, GetEmployeeSalaryInterfa
 
           setSalary(data.salary);
         } else {
-          const { data } = await adminApi.get(`/attendance/get-single-user-salary/${userId}?month=${monthIndex}`);
+          const { data } = await authApi.get(`/attendance/get-single-user-salary/${userId}?month=${monthIndex}`);
 
           setSalary(data.salary);
         }

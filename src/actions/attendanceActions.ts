@@ -99,7 +99,7 @@ export const getSingleDayAttendance = (date?: Date) => async (dispatch: Dispatch
   const { token } = getState().auth.tokens;
   const { role } = getState().auth.roles;
   const { currentCompany } = getState().company.currentCompany;
-  const { attendanceDate } = getState().attendanceReducer;
+  const { attendanceDate } = getState().attendance.attendanceToggle;
 
   try {
     if (currentCompany?._id && token && attendanceDate) {
@@ -130,7 +130,7 @@ export const getWeekAttendance = (weekCounter: number) => async (dispatch: Dispa
 
   const { token } = getState().auth.tokens;
   const { currentCompany } = getState().company.currentCompany;
-  const { selectedAttendance } = getState().attendanceReducer;
+  const { selectedAttendance } = getState().attendance.attendanceToggle;
 
   try {
     if (currentCompany && selectedAttendance && token) {

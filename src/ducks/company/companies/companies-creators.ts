@@ -13,11 +13,7 @@ export const getUserCompanies = createAsyncThunk<CompanyInterface[], void, baseS
     const { role } = getState().auth.roles;
 
     if (token && role) {
-      const { data } = await authApi.get(role === UserRole.Admin ? `/user/get-user-companies` : `/employee/get-employee-companies`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      const { data } = await authApi.get(role === UserRole.Admin ? `/user/get-user-companies` : `/employee/get-employee-companies`);
 
       dispatch(resetAllSelected());
       console.log(data);

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppState, baseStoreType } from '../../../store/test-store';
-import { adminApi } from '../../../api';
+import { authApi } from '../../../api';
 import { ExpenseInterface, IncomeDataInterface, IncomeInterface } from '../../../types/modelsTypes';
 import { setNotificationMessage } from '../../popup/popup';
 import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
@@ -22,7 +22,7 @@ export const getCompanyIncomeAndExpense = createAsyncThunk<IncomeExpenseReturnIn
 
     try {
       if (token && currentCompany) {
-        const { data } = await adminApi.get(`/budget/get-income-expense?daysBack=${daysBack}`);
+        const { data } = await authApi.get(`/budget/get-income-expense?daysBack=${daysBack}`);
 
         return { income: data.income, expense: data.expense } as IncomeExpenseReturnInterface;
       } else {
@@ -43,11 +43,10 @@ export const getLastIncomesAndExpenses = createAsyncThunk<LastIncomesExpensesRet
   'incomeExpense/getLastIncomesAndExpenses',
   async (daysBack, { dispatch, getState, rejectWithValue }) => {
     const { token } = getState().auth.tokens;
-    const { currentCompany } = getState().company.currentCompany;
 
     try {
-      if (token && currentCompany) {
-        const { data } = await adminApi.get(`/budget/get-last-income-expense`);
+      if (token) {
+        const { data } = await authApi.get(`/budget/get-last-income-expense`);
 
         return { lastIncomes: data.incomes, lastExpenses: data.expenses } as LastIncomesExpensesReturnInterface;
       } else {
@@ -70,11 +69,10 @@ export const addIncome = createAsyncThunk<void, AddIncomeInterface, baseStoreTyp
   'incomeExpense/addIncome',
   async ({ incomeValue, description, callback }, { dispatch, getState, rejectWithValue }) => {
     const { token } = getState().auth.tokens;
-    const { currentCompany } = getState().company.currentCompany;
 
     try {
-      if (token && currentCompany) {
-        await adminApi.post(`/income/add-income`, { incomeValue, description });
+      if (token) {
+        await authApi.post(`/income/add-income`, { incomeValue, description });
 
         dispatch(fetchAllFinancesData());
         callback();
@@ -97,11 +95,10 @@ export const addExpense = createAsyncThunk<void, AddExpenseInterface, baseStoreT
   'incomeExpense/addExpense',
   async ({ expenseValue, description, callback }, { dispatch, getState, rejectWithValue }) => {
     const { token } = getState().auth.tokens;
-    const { currentCompany } = getState().company.currentCompany;
 
     try {
-      if (token && currentCompany) {
-        await adminApi.post(`/expense/add-expense`, { expenseValue, description });
+      if (token) {
+        await authApi.post(`/expense/add-expense`, { expenseValue, description });
 
         dispatch(fetchAllFinancesData());
         callback();
@@ -117,11 +114,10 @@ export const addExpense = createAsyncThunk<void, AddExpenseInterface, baseStoreT
 // +loading
 export const deleteIncome = createAsyncThunk<void, number, baseStoreType>('incomeExpense/deleteIncome', async (incomeId, { dispatch, getState, rejectWithValue }) => {
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().company.currentCompany;
 
   try {
-    if (token && currentCompany) {
-      await adminApi.delete(`/income/remove-income/${incomeId}`);
+    if (token) {
+      await authApi.delete(`/income/remove-income/${incomeId}`);
 
       dispatch(fetchAllFinancesData());
       dispatch(setNotificationMessage({ message: 'Usunięto przychód' }));
@@ -135,11 +131,10 @@ export const deleteIncome = createAsyncThunk<void, number, baseStoreType>('incom
 // +loading
 export const deleteExpense = createAsyncThunk<void, number, baseStoreType>('incomeExpense/deleteExpense', async (expenseId, { dispatch, getState, rejectWithValue }) => {
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().company.currentCompany;
 
   try {
-    if (token && currentCompany) {
-      await adminApi.delete(`/expense/remove-expense/${expenseId}`);
+    if (token) {
+      await authApi.delete(`/expense/remove-expense/${expenseId}`);
 
       dispatch(fetchAllFinancesData());
       dispatch(setNotificationMessage({ message: 'Usunięto wydatek' }));
@@ -151,37 +146,33 @@ export const deleteExpense = createAsyncThunk<void, number, baseStoreType>('inco
 });
 
 interface GetIncomeExpenseDataInterface {
-  daysBack: number, setData: (data: Array<any>) => void
+  daysBack: number;
+  setData: (data: Array<any>) => void;
 }
 
-export const getIncomeExpenseInTimePeriod = createAsyncThunk<void, GetIncomeExpenseDataInterface, baseStoreType>('incomeExpense/getIncomeExpenseInTimePeriod', async ({daysBack, setData}, { dispatch, getState, rejectWithValue }) => {
-  const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().company.currentCompany;
+export const getIncomeExpenseInTimePeriod = createAsyncThunk<void, GetIncomeExpenseDataInterface, baseStoreType>(
+  'incomeExpense/getIncomeExpenseInTimePeriod',
+  async ({ daysBack, setData }, { dispatch, getState, rejectWithValue }) => {
+    const { token } = getState().auth.tokens;
+    const { currentCompany } = getState().company.currentCompany;
 
-  try {
-    if (token && currentCompany) {
-      const { data } = await axios.get(`${API_URL}/income/get-last-incomes?company_id=${currentCompany._id}&daysBack=${daysBack}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+    try {
+      if (token && currentCompany) {
+        const { data } = await authApi.get(`/income/get-last-incomes?daysBack=${daysBack}`);
 
-      const { data: expenseData } = await axios.get(`${API_URL}/expense/get-last-expenses?company_id=${currentCompany._id}&daysBack=${daysBack}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+        const { data: expenseData } = await authApi.get(`/expense/get-last-expenses?daysBack=${daysBack}`);
 
-      setData(
-        data.map((income: IncomeDataInterface, index: number) => ({
-          ...income,
-          expenseValue: expenseData[index].expenseValue,
-          createdDate: new Date(income.createdDate).toLocaleDateString()
-        }))
-      );
+        setData(
+          data.map((income: IncomeDataInterface, index: number) => ({
+            ...income,
+            expenseValue: expenseData[index].expenseValue,
+            createdDate: new Date(income.createdDate).toLocaleDateString()
+          }))
+        );
+      }
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data);
     }
-  } catch (error) {
-    console.log(error);
-    return rejectWithValue(error.response.data);
   }
-});
+);

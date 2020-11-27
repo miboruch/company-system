@@ -1,7 +1,7 @@
 import { NotificationTypes } from '../../types/actionTypes/toggleAcitonTypes';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { baseStoreType } from '../../store/test-store';
-import { adminApi } from '../../api';
+import { authApi } from '../../api';
 import { getSingleDayAttendance } from '../attendance/attendance-data/attendance-data-creators';
 import { getCompanyClients } from './client-data/client-data-creators';
 import { setClientInfoOpen, setSelectedClient } from './client-toggle/client-toggle';
@@ -20,11 +20,10 @@ interface AddClientInterface {
 
 export const addNewClient = createAsyncThunk<void, AddClientInterface, baseStoreType>('client/addNewClient', async (values, { dispatch, getState }) => {
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().company.currentCompany;
 
   try {
-    if (token && currentCompany) {
-      await adminApi.post(`/client/create-client`, {
+    if (token) {
+      await authApi.post(`/client/create-client`, {
         values
       });
 
@@ -42,11 +41,10 @@ export const addNewClient = createAsyncThunk<void, AddClientInterface, baseStore
 
 export const deleteClient = createAsyncThunk<void, string, baseStoreType>('client/deleteClient', async (clientId, { dispatch, getState }) => {
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().company.currentCompany;
 
   try {
-    if (token && currentCompany) {
-      await adminApi.post(`/client/delete-client/${clientId}`);
+    if (token) {
+      await authApi.post(`/client/delete-client/${clientId}`);
 
       dispatch(getCompanyClients());
       dispatch(setClientInfoOpen(false));
@@ -63,11 +61,10 @@ export const deleteClient = createAsyncThunk<void, string, baseStoreType>('clien
 
 export const getSingleClient = createAsyncThunk<void, string, baseStoreType>('client/getSingleClient', async (clientId, { dispatch, getState }) => {
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().company.currentCompany;
 
   try {
-    if (token && currentCompany) {
-      const { data } = await adminApi.get(`/client/get-client-data/${clientId}`);
+    if (token) {
+      const { data } = await authApi.get(`/client/get-client-data/${clientId}`);
 
       dispatch(setSelectedClient(data));
     }
@@ -88,11 +85,10 @@ interface EditClientInterface {
 
 export const editClient = createAsyncThunk<void, EditClientInterface, baseStoreType>('client/editClient', async (values, { dispatch, getState }) => {
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().company.currentCompany;
 
   try {
-    if (token && currentCompany) {
-      await adminApi.put(`/client/edit-client`, { values });
+    if (token) {
+      await authApi.put(`/client/edit-client`, { values });
 
       // - setSelectedClient
       // + getSingleClient
@@ -118,7 +114,7 @@ export const editClientCoords = createAsyncThunk<void, EditClientCoorsInterface,
 
   try {
     if (token && currentCompany) {
-      await adminApi.put(`/client/edit-client-coords`, { clientId, lat, long });
+      await authApi.put(`/client/edit-client-coords`, { clientId, lat, long });
 
       dispatch(getSingleClient(clientId));
       dispatch(setNotificationMessage({ message: 'Zapisano koordynację' }));

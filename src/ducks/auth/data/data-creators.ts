@@ -7,26 +7,23 @@ import { authApi } from '../../../api';
 
 export const getUserData = createAsyncThunk<UserAuthData, void, baseStoreType>('data/userData', async (_arg, { rejectWithValue, getState }) => {
   try {
-    const { token } = getState().auth.tokens;
+    // const { token } = getState().auth.tokens;
 
-    if (token) {
-      const { data } = await axios.get(`${API_URL}/user/user-data`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+    // if (token) {
+    //   const { data } = await axios.get(`${API_URL}/user/user-data`, {
+    //     headers: {
+    //       Authorization: `Bearer ${token}`
+    //     }
+    //   });
+    //
+    //   return data as UserAuthData;
+    // } else {
+    //   return rejectWithValue('Brak danych');
+    // }
 
-      return data as UserAuthData;
-    } else {
-      return rejectWithValue('Brak danych');
-    }
-    // const { data } = await axios.get(`${API_URL}/user/user-data`, {
-    //   headers: {
-    //     Authorization: `Bearer ${token}`
-    //   }
-    // });
+    const { data } = await authApi.get(`/user/user-data`);
 
-    // return data as UserAuthData;
+    return data as UserAuthData;
   } catch (error) {
     return rejectWithValue(error.response.statusText);
   }
