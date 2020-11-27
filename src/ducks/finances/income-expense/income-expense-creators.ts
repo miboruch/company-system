@@ -1,9 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { baseStoreType } from '../../../store/test-store';
+import { AppState, baseStoreType } from '../../../store/test-store';
 import { adminApi } from '../../../api';
-import { ExpenseInterface, IncomeInterface } from '../../../types/modelsTypes';
+import { ExpenseInterface, IncomeDataInterface, IncomeInterface } from '../../../types/modelsTypes';
 import { setNotificationMessage } from '../../popup/popup';
 import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
+import { fetchAllFinancesData } from '../finances-creators';
+import { Dispatch } from 'redux';
+import axios from 'axios';
+import { API_URL } from '../../../utils/config';
 
 export interface IncomeExpenseReturnInterface {
   income: number;
@@ -72,7 +76,7 @@ export const addIncome = createAsyncThunk<void, AddIncomeInterface, baseStoreTyp
       if (token && currentCompany) {
         await adminApi.post(`/income/add-income`, { incomeValue, description });
 
-        //TODO: dispatch(fetch all finances data);
+        dispatch(fetchAllFinancesData());
         callback();
         dispatch(setNotificationMessage({ message: 'Dodano przychód' }));
       }
@@ -99,7 +103,7 @@ export const addExpense = createAsyncThunk<void, AddExpenseInterface, baseStoreT
       if (token && currentCompany) {
         await adminApi.post(`/expense/add-expense`, { expenseValue, description });
 
-        //TODO: dispatch(fetch all finances data);
+        dispatch(fetchAllFinancesData());
         callback();
         dispatch(setNotificationMessage({ message: 'Dodano wydatek' }));
       }
@@ -119,7 +123,7 @@ export const deleteIncome = createAsyncThunk<void, number, baseStoreType>('incom
     if (token && currentCompany) {
       await adminApi.delete(`/income/remove-income/${incomeId}`);
 
-      //TODO: dispatch(fetch all finances data);
+      dispatch(fetchAllFinancesData());
       dispatch(setNotificationMessage({ message: 'Usunięto przychód' }));
     }
   } catch (error) {
@@ -137,11 +141,47 @@ export const deleteExpense = createAsyncThunk<void, number, baseStoreType>('inco
     if (token && currentCompany) {
       await adminApi.delete(`/expense/remove-expense/${expenseId}`);
 
-      //TODO: dispatch(fetch all finances data);
+      dispatch(fetchAllFinancesData());
       dispatch(setNotificationMessage({ message: 'Usunięto wydatek' }));
     }
   } catch (error) {
     dispatch(setNotificationMessage({ message: 'Problem z usunięciem wydatku', notificationType: NotificationTypes.Error }));
+    return rejectWithValue(error.response.data);
+  }
+});
+
+interface GetIncomeExpenseDataInterface {
+  daysBack: number, setData: (data: Array<any>) => void
+}
+
+export const getIncomeExpenseInTimePeriod = createAsyncThunk<void, GetIncomeExpenseDataInterface, baseStoreType>('incomeExpense/getIncomeExpenseInTimePeriod', async ({daysBack, setData}, { dispatch, getState, rejectWithValue }) => {
+  const { token } = getState().auth.tokens;
+  const { currentCompany } = getState().company.currentCompany;
+
+  try {
+    if (token && currentCompany) {
+      const { data } = await axios.get(`${API_URL}/income/get-last-incomes?company_id=${currentCompany._id}&daysBack=${daysBack}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      const { data: expenseData } = await axios.get(`${API_URL}/expense/get-last-expenses?company_id=${currentCompany._id}&daysBack=${daysBack}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      setData(
+        data.map((income: IncomeDataInterface, index: number) => ({
+          ...income,
+          expenseValue: expenseData[index].expenseValue,
+          createdDate: new Date(income.createdDate).toLocaleDateString()
+        }))
+      );
+    }
+  } catch (error) {
+    console.log(error);
     return rejectWithValue(error.response.data);
   }
 });

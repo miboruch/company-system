@@ -8,6 +8,7 @@ import { setNotificationMessage } from '../../popup/popup';
 import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
 
 export const setCurrentCompany = (company: CompanyInterface | null, successCallback?: () => void) => async (dispatch: Dispatch<any>) => {
+  //if role is admin, generate set new admin token with companyId
   dispatch(setCompany(company));
   !!successCallback && successCallback();
 };

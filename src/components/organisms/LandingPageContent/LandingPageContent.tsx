@@ -1,37 +1,32 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import gsap from 'gsap';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
 import { Content, InfoBoxWrapper, InfoWrapper, StatisticsHeading, TileWrapper } from './LandingPageContent.styles';
 import TaskTile from '../../molecules/TaskTile/TaskTile';
 import { AppState, useAppDispatch } from '../../../store/test-store';
-import { AttendanceInterface, EmployeeDataInterface, IncomeDataInterface, TaskInterface } from '../../../types/modelsTypes';
+import { AttendanceInterface, IncomeDataInterface } from '../../../types/modelsTypes';
 import Chart from '../../molecules/Chart/Chart';
 import AttendanceList from '../AttendanceList/AttendanceList';
 import { ContentGridWrapper } from '../../../styles/HomePageContentGridStyles';
 import InformationBox from '../../molecules/InformationBox/InformationBox';
 import { contentAnimation } from '../../../animations/animations';
-import { ThunkDispatch } from 'redux-thunk';
-import { AppTypes } from '../../../types/actionTypes/appActionTypes';
-import { bindActionCreators } from 'redux';
 import { getSingleDayAttendance } from '../../../ducks/attendance/attendance-data/attendance-data-creators';
 import { getCompanyTasks, getCompletedTasks } from '../../../ducks/tasks/tasks-data/task-data-creators';
 import { redirectToTask } from '../../../ducks/tasks/tasks-toggle/tasks-toggle-creators';
 import AttendancePopup from '../../molecules/AttendancePopup/AttendancePopup';
-import { getIncomeExpenseInTimePeriod } from '../../../actions/financeActions';
+import { getIncomeExpenseInTimePeriod } from '../../../ducks/finances/income-expense/income-expense-creators';
 import { ArrowIcon } from '../../../styles/iconStyles';
 import { getAllCompanyEmployees } from '../../../ducks/employees/employees-data/employees-data-creators';
 import AdminStatistics from '../AdminStatistics/AdminStatistics';
 import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
 
-type ConnectedProps = LinkDispatchProps & RouteComponentProps<any>;
-
-const LandingPageContent: React.FC<ConnectedProps> = ({ history, getIncomeExpenseInTimePeriod }) => {
+const LandingPageContent: React.FC<RouteComponentProps<any>> = ({ history }) => {
   const dispatch = useAppDispatch();
   const { role } = useSelector((state: AppState) => state.auth.roles);
   const { allCompanyTasks, completedTasks } = useSelector((state: AppState) => state.tasks.taskData);
-  const { allCompanyEmployees, companyEmployeesCounter } = useSelector((state: AppState) => state.employees.employeesData);
+  const { companyEmployeesCounter } = useSelector((state: AppState) => state.employees.employeesData);
   const { singleDayAttendance } = useSelector((state: AppState) => state.attendance.attendanceData);
 
   const [text, setText] = useState<string>('');
@@ -54,7 +49,7 @@ const LandingPageContent: React.FC<ConnectedProps> = ({ history, getIncomeExpens
   };
 
   useEffect(() => {
-    role === UserRole.Admin && getIncomeExpenseInTimePeriod(daysBack, setData);
+    role === UserRole.Admin && dispatch(getIncomeExpenseInTimePeriod({ daysBack, setData }));
   }, [daysBack]);
 
   useEffect(() => {
@@ -100,16 +95,4 @@ const LandingPageContent: React.FC<ConnectedProps> = ({ history, getIncomeExpens
   );
 };
 
-interface LinkDispatchProps {
-  getIncomeExpenseInTimePeriod: (daysBack: number, setData: (data: any[]) => void) => void;
-}
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
-  return {
-    getIncomeExpenseInTimePeriod: bindActionCreators(getIncomeExpenseInTimePeriod, dispatch)
-  };
-};
-
-const LandingPageContentWithRouter = withRouter(LandingPageContent);
-
-export default connect(null, mapDispatchToProps)(LandingPageContentWithRouter);
+export default withRouter(LandingPageContent);

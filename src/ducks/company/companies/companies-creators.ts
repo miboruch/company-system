@@ -20,6 +20,7 @@ export const getUserCompanies = createAsyncThunk<CompanyInterface[], void, baseS
       });
 
       dispatch(resetAllSelected());
+      console.log(data);
       return data as CompanyInterface[];
     } else {
       return [] as CompanyInterface[];

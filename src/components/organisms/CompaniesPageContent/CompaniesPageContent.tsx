@@ -18,6 +18,7 @@ const CompaniesPageContent: React.FC<RouteComponentProps<any>> = ({ history }) =
   const dispatch = useAppDispatch();
   const { areUserCompaniesLoading, userCompanies } = useSelector((state: AppState) => state.company.companies);
   const { role } = useSelector((state: AppState) => state.auth.roles);
+
   useEffect(() => {
     dispatch(getUserCompanies());
   }, []);
