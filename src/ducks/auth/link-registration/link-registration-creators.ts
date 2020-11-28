@@ -70,15 +70,24 @@ export const sendRegistrationMail = createAsyncThunk<void, SendRegistrationMailI
   async ({ email, monthlyPrice, pricePerHour }, { dispatch, getState }) => {
     try {
       const { currentCompany } = getState().company.currentCompany;
+      const { token } = getState().auth.tokens;
 
-      if (currentCompany) {
+      if (token && currentCompany) {
         const body = {
           email,
           pricePerHour,
           monthlyPrice,
           companyName: currentCompany.name
         };
-        await api.post(`/auth/send-registration-link?company_id=${currentCompany._id}`, { body });
+        await api.post(
+          `/auth/send-registration-link`,
+          { body },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
 
         dispatch(setNotificationMessage({ message: 'Wysłano wiadomość na email' }));
       }

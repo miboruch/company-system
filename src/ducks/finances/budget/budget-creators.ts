@@ -8,7 +8,11 @@ export const getCompanyBudget = createAsyncThunk<number, void, baseStoreType>('b
 
   try {
     if (token && currentCompany) {
-      const { data } = await authApi.get(`/budget/get-company-budget`);
+      const { data } = await authApi.get(`/budget/get-company-budget`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
 
       return data.budget;
     } else {

@@ -11,7 +11,11 @@ export const getUserNotifications = createAsyncThunk<NotificationInterface[], nu
 
   try {
     if (token) {
-      const { data } = await authApi.get(`/notification/get-notifications?page=${page}`);
+      const { data } = await authApi.get(`/notification/get-notifications?page=${page}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
 
       return data as NotificationInterface[];
     } else {
@@ -27,9 +31,17 @@ export const checkAsOpen = createAsyncThunk<void, string, baseStoreType>('notifi
 
   try {
     if (token) {
-      await authApi.put(`/notification/check-as-open`, {
-        notificationId: notificationId
-      });
+      await authApi.put(
+        `/notification/check-as-open`,
+        {
+          notificationId: notificationId
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
 
       dispatch(getUserNotifications(1));
     }
@@ -43,7 +55,11 @@ export const deleteNotification = createAsyncThunk<void, string, baseStoreType>(
 
   try {
     if (token) {
-      await authApi.delete(`/notification/delete-notification/${notificationId}`);
+      await authApi.delete(`/notification/delete-notification/${notificationId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
 
       dispatch(getUserNotifications(1));
       dispatch(setNotificationMessage({ message: 'Usunięto powiadomienie' }));

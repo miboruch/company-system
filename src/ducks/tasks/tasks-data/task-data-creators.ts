@@ -13,7 +13,11 @@ export const getCompanyTasks = createAsyncThunk<TaskInterface[], void, baseStore
 
   try {
     if (currentCompany && token) {
-      const { data } = await authApi.get(`/task/get-company-tasks?company_id=${currentCompany._id}`);
+      const { data } = await authApi.get(`/task/get-company-tasks?company_id=${currentCompany._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
 
       return data as TaskInterface[];
     } else {
@@ -32,7 +36,11 @@ export const getCompletedTasks = createAsyncThunk<number, void, baseStoreType>('
 
   try {
     if (currentCompany && token) {
-      const { data } = await authApi.get(`/task/count-last-completed-tasks?company_id=${currentCompany._id}&daysBack=${DAYS_BACK}`);
+      const { data } = await authApi.get(`/task/count-last-completed-tasks?company_id=${currentCompany._id}&daysBack=${DAYS_BACK}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
 
       return data.completedTasks;
     }
@@ -52,7 +60,11 @@ export const getSingleTask = createAsyncThunk<void, string, baseStoreType>('task
 
   try {
     if (currentCompany && token) {
-      const { data } = await authApi.get(`/task/get-single-company-task/${taskId}?company_id=${currentCompany._id}`);
+      const { data } = await authApi.get(`/task/get-single-company-task/${taskId}?company_id=${currentCompany._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
 
       dispatch(setSelectedTask(data));
       dispatch(setNotificationMessage({ message: 'Pobrano zadanie' }));
@@ -73,10 +85,18 @@ export const changeTaskState = createAsyncThunk<void, ChangeTaskStateInterface, 
 
     try {
       if (currentCompany && token) {
-        await authApi.put(`/task/set-task-completed`, {
-          taskId,
-          isCompleted
-        });
+        await authApi.put(
+          `/task/set-task-completed`,
+          {
+            taskId,
+            isCompleted
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
 
         dispatch(getSingleTask(taskId));
         dispatch(getCompanyTasks());
@@ -104,9 +124,17 @@ export const editTask = createAsyncThunk<void, EditTaskInterface, baseStoreType>
 
   try {
     if (currentCompany && token) {
-      await authApi.put(`/task/edit-task`, {
-        ...values
-      });
+      await authApi.put(
+        `/task/edit-task`,
+        {
+          ...values
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
 
       dispatch(selectTask(null));
       dispatch(getCompanyTasks());
@@ -123,7 +151,11 @@ export const deleteTask = createAsyncThunk<void, string, baseStoreType>('tasksDa
 
   try {
     if (currentCompany && token) {
-      await authApi.delete(`/task/delete-task/${taskId}`);
+      await authApi.delete(`/task/delete-task/${taskId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
 
       dispatch(getCompanyTasks());
       dispatch(setSelectedTask(null));
@@ -156,16 +188,24 @@ export const addNewTask = createAsyncThunk<void, AddNewTaskInterface, baseStoreT
 
     try {
       if (currentCompany && token) {
-        await authApi.post(`/task/add-new-task`, {
-          date,
-          timeEstimate,
-          name,
-          clientId,
-          description,
-          isCompleted,
-          taskIncome: taskIncome ? taskIncome : 0,
-          taskExpense: taskExpense ? taskExpense : 0
-        });
+        await authApi.post(
+          `/task/add-new-task`,
+          {
+            date,
+            timeEstimate,
+            name,
+            clientId,
+            description,
+            isCompleted,
+            taskIncome: taskIncome ? taskIncome : 0,
+            taskExpense: taskExpense ? taskExpense : 0
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
 
         dispatch(getCompanyTasks());
         dispatch(setAddNewTaskOpen(false));

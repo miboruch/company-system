@@ -2,22 +2,37 @@ import { Dispatch } from 'redux';
 import { setCompany } from './current-company';
 import { CompanyInterface } from '../../../types/modelsTypes';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { baseStoreType } from '../../../store/test-store';
+import { AppDispatch, AppState, baseStoreType } from '../../../store/test-store';
 import { authApi } from '../../../api';
 import { setNotificationMessage } from '../../popup/popup';
 import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
+import { UserRole } from '../../auth/roles/roles';
+import { getAdminAccessToken } from '../../auth/tokens/tokens-creators';
 
-export const setCurrentCompany = (company: CompanyInterface | null, successCallback?: () => void) => async (dispatch: Dispatch<any>) => {
+export const setCurrentCompany = (company: CompanyInterface | null, successCallback?: () => void) => (dispatch: AppDispatch, getState: () => AppState) => {
   //if role is admin, generate set new admin token with companyId
+  const { role } = getState().auth.roles;
+  const { refreshToken } = getState().auth.tokens;
+
+  if (role === UserRole.Admin && refreshToken && company) {
+    dispatch(getAdminAccessToken({ refreshToken, companyId: company._id, successCallback: () => !!successCallback && successCallback() }));
+  }
+
   dispatch(setCompany(company));
-  !!successCallback && successCallback();
 };
 
-export const getSingleCompany = createAsyncThunk<void, string, baseStoreType>('currentCompany/getSingleCompany', async (companyId, { dispatch }) => {
+export const getSingleCompany = createAsyncThunk<void, string, baseStoreType>('currentCompany/getSingleCompany', async (companyId, { dispatch, getState }) => {
   try {
-    const { data } = await authApi.get(`/company/get-company-info/${companyId}`);
+    const { token } = getState().auth.tokens;
+    if (token) {
+      const { data } = await authApi.get(`/company/get-company-info/${companyId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
 
-    await dispatch(setCurrentCompany(data));
+      await dispatch(setCurrentCompany(data));
+    }
   } catch (error) {
     console.log(error);
   }
@@ -39,7 +54,11 @@ export const editCompany = createAsyncThunk<void, EditCompanyInterface, baseStor
 
   try {
     if (token && currentCompany) {
-      await authApi.put(`/company/edit-company`, values);
+      await authApi.put(`/company/edit-company`, values, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
 
       dispatch(getSingleCompany(currentCompany._id));
       dispatch(setNotificationMessage({ message: 'Edytowano firmę' }));
@@ -56,7 +75,15 @@ export const editCompanyCoords = createAsyncThunk<void, { lat: number; long: num
 
   try {
     if (token && currentCompany) {
-      await authApi.put(`/company/edit-company-coords`, { lat, long });
+      await authApi.put(
+        `/company/edit-company-coords`,
+        { lat, long },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
 
       dispatch(getSingleCompany(currentCompany._id));
       dispatch(setNotificationMessage({ message: 'Zapisano koordynację' }));

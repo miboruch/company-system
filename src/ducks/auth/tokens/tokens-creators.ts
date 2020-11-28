@@ -1,4 +1,4 @@
-import { api } from '../../../api';
+import { api, authApi } from '../../../api';
 import { getUserData } from '../data/data-creators';
 import { authTimeout } from '../check/check-creators';
 import { logout } from '../logout/logout-creators';
@@ -21,6 +21,7 @@ export const getNewAccessToken = ({ refreshToken, successCallback, errorCallback
 
     dispatch(authTimeout({ refreshToken, expireMilliseconds: data.expireIn - new Date().getTime() }));
     !!successCallback && successCallback();
+
     return data;
   } catch (error) {
     !!errorCallback && errorCallback();
@@ -40,10 +41,12 @@ export const getAdminAccessToken = ({ refreshToken, companyId, successCallback, 
     const { data } = await api.post(`/auth/admin-token`, { refreshToken, companyId });
 
     dispatch(setTokens({ token: data.accessToken, refreshToken, expireIn: data.expireIn }));
-    dispatch(getUserData());
+    console.log('set tokens');
+    dispatch(getUserData(data.accessToken));
 
     dispatch(authTimeout({ refreshToken, expireMilliseconds: data.expireIn - new Date().getTime() }));
     !!successCallback && successCallback();
+
     return data;
   } catch (error) {
     !!errorCallback && errorCallback();

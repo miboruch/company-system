@@ -8,7 +8,11 @@ export const getCompanyClients = createAsyncThunk<ClientInterface[], void, baseS
 
   try {
     if (token) {
-      const { data } = await authApi.get(`/client/get-company-clients`);
+      const { data } = await authApi.get(`/client/get-company-clients`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
 
       return data as ClientInterface[];
     } else {

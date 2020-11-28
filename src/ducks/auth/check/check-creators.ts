@@ -45,9 +45,9 @@ export const authCheck = ({ successCallback, errorCallback }: AuthCheckInterface
         : dispatch(getNewAccessToken({ refreshToken, successCallback, errorCallback }));
       dispatch(setLoading(false));
     } else {
-      dispatch(setTokens({ token, refreshToken, expireIn: new Date(expireDate).getTime() }));
+      dispatch(setTokens({ token, refreshToken, expireIn: expDate.getTime() }));
       dispatch(authTimeout({ refreshToken, expireMilliseconds: expDate.getTime() - new Date().getTime() }));
-      dispatch(getUserData());
+      dispatch(getUserData(token));
       dispatch(getUserNotifications(1));
       //TODO: get all app users
       successCallback();
@@ -55,6 +55,7 @@ export const authCheck = ({ successCallback, errorCallback }: AuthCheckInterface
     }
   } else {
     if (refreshToken) {
+      console.log(refreshToken);
       dispatch(logout(() => console.log('sign out')));
       dispatch(setLoading(false));
     } else {

@@ -42,17 +42,11 @@ const App: React.FC<ConnectedProps> = ({ history, getAllAppUsers, getUserNotific
     );
   }, []);
 
-  useEffect(() => {
-    if (token) {
-      authApi.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    } else {
-      authApi.defaults.headers.common['Authorization'] = null;
-    }
-  }, [token]);
-
-  useEffect(() => {
-    role === UserRole.Admin && currentCompany && refreshToken && dispatch(getAdminAccessToken({ refreshToken, companyId: currentCompany._id }));
-  }, [currentCompany, refreshToken]);
+  // useEffect(() => {
+  //   if (role === UserRole.Admin && currentCompany && refreshToken) {
+  //     dispatch(getAdminAccessToken({ refreshToken, companyId: currentCompany._id }));
+  //   }
+  // }, [currentCompany, refreshToken]);
 
   return (
     <Layout>

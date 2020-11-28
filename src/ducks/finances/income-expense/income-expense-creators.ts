@@ -22,7 +22,11 @@ export const getCompanyIncomeAndExpense = createAsyncThunk<IncomeExpenseReturnIn
 
     try {
       if (token && currentCompany) {
-        const { data } = await authApi.get(`/budget/get-income-expense?daysBack=${daysBack}`);
+        const { data } = await authApi.get(`/budget/get-income-expense?daysBack=${daysBack}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
 
         return { income: data.income, expense: data.expense } as IncomeExpenseReturnInterface;
       } else {
@@ -46,7 +50,11 @@ export const getLastIncomesAndExpenses = createAsyncThunk<LastIncomesExpensesRet
 
     try {
       if (token) {
-        const { data } = await authApi.get(`/budget/get-last-income-expense`);
+        const { data } = await authApi.get(`/budget/get-last-income-expense`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
 
         return { lastIncomes: data.incomes, lastExpenses: data.expenses } as LastIncomesExpensesReturnInterface;
       } else {
@@ -72,7 +80,15 @@ export const addIncome = createAsyncThunk<void, AddIncomeInterface, baseStoreTyp
 
     try {
       if (token) {
-        await authApi.post(`/income/add-income`, { incomeValue, description });
+        await authApi.post(
+          `/income/add-income`,
+          { incomeValue, description },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
 
         dispatch(fetchAllFinancesData());
         callback();
@@ -98,7 +114,15 @@ export const addExpense = createAsyncThunk<void, AddExpenseInterface, baseStoreT
 
     try {
       if (token) {
-        await authApi.post(`/expense/add-expense`, { expenseValue, description });
+        await authApi.post(
+          `/expense/add-expense`,
+          { expenseValue, description },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
 
         dispatch(fetchAllFinancesData());
         callback();
@@ -117,7 +141,11 @@ export const deleteIncome = createAsyncThunk<void, number, baseStoreType>('incom
 
   try {
     if (token) {
-      await authApi.delete(`/income/remove-income/${incomeId}`);
+      await authApi.delete(`/income/remove-income/${incomeId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
 
       dispatch(fetchAllFinancesData());
       dispatch(setNotificationMessage({ message: 'Usunięto przychód' }));
@@ -131,10 +159,13 @@ export const deleteIncome = createAsyncThunk<void, number, baseStoreType>('incom
 // +loading
 export const deleteExpense = createAsyncThunk<void, number, baseStoreType>('incomeExpense/deleteExpense', async (expenseId, { dispatch, getState, rejectWithValue }) => {
   const { token } = getState().auth.tokens;
-
   try {
     if (token) {
-      await authApi.delete(`/expense/remove-expense/${expenseId}`);
+      await authApi.delete(`/expense/remove-expense/${expenseId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
 
       dispatch(fetchAllFinancesData());
       dispatch(setNotificationMessage({ message: 'Usunięto wydatek' }));
@@ -158,9 +189,17 @@ export const getIncomeExpenseInTimePeriod = createAsyncThunk<void, GetIncomeExpe
 
     try {
       if (token && currentCompany) {
-        const { data } = await authApi.get(`/income/get-last-incomes?daysBack=${daysBack}`);
+        const { data } = await authApi.get(`/income/get-last-incomes?daysBack=${daysBack}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
 
-        const { data: expenseData } = await authApi.get(`/expense/get-last-expenses?daysBack=${daysBack}`);
+        const { data: expenseData } = await authApi.get(`/expense/get-last-expenses?daysBack=${daysBack}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
 
         setData(
           data.map((income: IncomeDataInterface, index: number) => ({

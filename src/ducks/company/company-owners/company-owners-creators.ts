@@ -11,7 +11,11 @@ export const getCompanyOwners = createAsyncThunk<CompanyOwnersInterface[], void,
     const { token } = getState().auth.tokens;
 
     if (token) {
-      const { data } = await authApi.get('/company/get-company-owners');
+      const { data } = await authApi.get('/company/get-company-owners', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
 
       return data as CompanyOwnersInterface[];
     } else {
@@ -28,7 +32,15 @@ export const addNewCompanyOwner = createAsyncThunk<void, string, baseStoreType>(
     const { token } = getState().auth.tokens;
 
     if (token) {
-      await authApi.post('/company/add-company-owner', { toBeOwnerId: userId });
+      await authApi.post(
+        '/company/add-company-owner',
+        { toBeOwnerId: userId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
 
       dispatch(getCompanyOwners());
     }
@@ -51,7 +63,15 @@ export const removeCompanyOwner = createAsyncThunk<void, RemoveCompanyOwnerInter
       const { token } = getState().auth.tokens;
 
       if (token) {
-        await authApi.post('/company/remove-company-owner', { toBeRemovedId: userId, addEmployee, pricePerHour, monthlyPrice });
+        await authApi.post(
+          '/company/remove-company-owner',
+          { toBeRemovedId: userId, addEmployee, pricePerHour, monthlyPrice },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
 
         dispatch(getCompanyOwners());
         addEmployee && dispatch(getAllCompanyEmployees());

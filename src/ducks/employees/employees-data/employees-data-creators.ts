@@ -72,7 +72,11 @@ export const updateEmployeeSalary = createAsyncThunk<void, UpdateEmployeeSalaryI
               monthlyPrice: monthlyPrice
             };
 
-        await authApi.put('/employee/update-employee', data);
+        await authApi.put('/employee/update-employee', data, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
 
         // await axios.put(`${API_URL}/employee/update-employee?company_id=${currentCompany._id}`, data, {
         //   headers: {
@@ -119,7 +123,15 @@ export const addNewEmployee = createAsyncThunk<void, AddEmployeeInterface, baseS
       //   }
       // );
 
-      await authApi.post('/employee/add-employee', { ...values });
+      await authApi.post(
+        '/employee/add-employee',
+        { ...values },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
 
       dispatch(getAllCompanyEmployees());
       dispatch(setNotificationMessage({ message: 'Dodano nowego pracownika', notificationType: NotificationTypes.Error }));
@@ -149,11 +161,19 @@ export const getEmployeeHours = createAsyncThunk<void, GetEmployeeHoursInterface
     try {
       if (currentCompany && token) {
         if (role === UserRole.User) {
-          const { data } = await authApi.get(`/attendance/count-user-hours?company_id=${currentCompany._id}&month=${monthIndex}`);
+          const { data } = await authApi.get(`/attendance/count-user-hours?company_id=${currentCompany._id}&month=${monthIndex}`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
 
           setHours(data.totalHours);
         } else {
-          const { data } = await authApi.get(`/attendance/get-single-user-hours/${userId}?month=${monthIndex}`);
+          const { data } = await authApi.get(`/attendance/get-single-user-hours/${userId}?month=${monthIndex}`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
 
           setHours(data.totalHours);
         }
@@ -180,11 +200,19 @@ export const getEmployeeSalary = createAsyncThunk<void, GetEmployeeSalaryInterfa
     try {
       if (currentCompany?._id && token) {
         if (role === UserRole.User) {
-          const { data } = await authApi.get(`/attendance/count-user-salary?company_id=${currentCompany._id}&month=${monthIndex}`);
+          const { data } = await authApi.get(`/attendance/count-user-salary?company_id=${currentCompany._id}&month=${monthIndex}`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
 
           setSalary(data.salary);
         } else {
-          const { data } = await authApi.get(`/attendance/get-single-user-salary/${userId}?month=${monthIndex}`);
+          const { data } = await authApi.get(`/attendance/get-single-user-salary/${userId}?month=${monthIndex}`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
 
           setSalary(data.salary);
         }
@@ -194,36 +222,3 @@ export const getEmployeeSalary = createAsyncThunk<void, GetEmployeeSalaryInterfa
     }
   }
 );
-/*
-export const getEmployeeSalary = (userId: string, monthIndex: number, setSalary: (hours: number) => void) => async (dispatch: Dispatch<any>, getState: () => AppState) => {
-  const { token, role } = getState().authenticationReducer;
-  const { currentCompany } = getState().company.currentCompany;
-
-  try {
-    dispatch(setEmployeeLoading(true));
-    if (currentCompany?._id && token) {
-      if (role === UserRole.User) {
-        const { data } = await axios.get(`${API_URL}/attendance/count-user-salary?company_id=${currentCompany._id}&month=${monthIndex}`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-
-        setSalary(data.salary);
-      } else {
-        const { data } = await axios.get(`${API_URL}/attendance/get-single-user-salary/${userId}?company_id=${currentCompany._id}&month=${monthIndex}`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-
-        setSalary(data.salary);
-      }
-    }
-    dispatch(setEmployeeLoading(false));
-  } catch (error) {
-    console.log(error);
-    dispatch(setEmployeeLoading(false));
-  }
-};
- */

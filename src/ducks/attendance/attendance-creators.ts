@@ -18,12 +18,20 @@ export const addAttendance = createAsyncThunk<void, AddAttendanceInterface, base
 
   try {
     if (token) {
-      await authApi.post(`/attendance/add-new`, {
-        userId,
-        date,
-        wasPresent,
-        hours: hours ? hours : 0
-      });
+      await authApi.post(
+        `/attendance/add-new`,
+        {
+          userId,
+          date,
+          wasPresent,
+          hours: hours ? hours : 0
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
 
       dispatch(setNotificationMessage({ message: 'Dodano obecność' }));
       dispatch(getSingleDayAttendance());
@@ -45,11 +53,19 @@ export const updateAttendance = createAsyncThunk<void, UpdateAttendanceInterface
 
   try {
     if (token && currentCompany) {
-      await authApi.put(`/attendance/edit-attendance`, {
-        attendanceId,
-        wasPresent,
-        hours
-      });
+      await authApi.put(
+        `/attendance/edit-attendance`,
+        {
+          attendanceId,
+          wasPresent,
+          hours
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
 
       dispatch(setNotificationMessage({ message: 'Zaktualizowano obecność' }));
       dispatch(getSingleDayAttendance());
