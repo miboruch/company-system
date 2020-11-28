@@ -12,6 +12,9 @@ import gsap from 'gsap';
 import { modalOpenAnimation } from '../../../animations/animations';
 import { CloseButtonWrapper } from '../../../styles/compoundControllerStyles';
 import { Heading, Paragraph } from '../../../styles/typography/typography';
+import Dropdown from '../../atoms/Dropdown/Dropdown';
+import { MonthInterface, months } from '../../../utils/staticData';
+import MonthDropdown from '../../atoms/MonthDropdown/MonthDropdown';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -95,16 +98,18 @@ const AdminStatistics: React.FC<Props> = ({ isOpen, setOpen }) => {
   const [selectedEmployee, setSelectedEmployee] = useState<EmployeeDataInterface | null>(null);
   const [userSalary, setUserSalary] = useState<number>(0);
   const [userHours, setUserHours] = useState<number>(0);
+  const [selectedMonth, setSelectedMonth] = useState<MonthInterface | null>(null);
   const mainWrapperRef = useRef<HTMLDivElement | null>(null);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
 
   useEffect(() => {
+    const currentMonthIndex = new Date().getMonth();
     if (selectedEmployee) {
-      dispatch(getEmployeeSalary({ userId: selectedEmployee.userId._id, monthIndex: 10, setSalary: setUserSalary }));
-      dispatch(getEmployeeHours({ userId: selectedEmployee.userId._id, monthIndex: 10, setHours: setUserHours }));
+      dispatch(getEmployeeSalary({ userId: selectedEmployee.userId._id, monthIndex: selectedMonth ? selectedMonth.index : currentMonthIndex, setSalary: setUserSalary }));
+      dispatch(getEmployeeHours({ userId: selectedEmployee.userId._id, monthIndex: selectedMonth ? selectedMonth.index : currentMonthIndex, setHours: setUserHours }));
     }
-  }, [selectedEmployee?.userId]);
+  }, [selectedEmployee?.userId, selectedMonth]);
 
   useEffect(() => {
     modalOpenAnimation(tl, mainWrapperRef, wrapperRef);
@@ -113,8 +118,6 @@ const AdminStatistics: React.FC<Props> = ({ isOpen, setOpen }) => {
   useEffect(() => {
     isOpen ? tl.play() : tl.reverse();
   }, [isOpen]);
-
-  const handleMonthSelect = (selected: string | null) => console.log(selected);
 
   return (
     <StyledWrapper ref={mainWrapperRef}>
@@ -137,26 +140,27 @@ const AdminStatistics: React.FC<Props> = ({ isOpen, setOpen }) => {
           ))}
         </ListWrapper>
         <ContentWrapper>
-          {areEmployeesLoading ? (
-            <SpinnerWrapper>
-              <Spinner />
-            </SpinnerWrapper>
-          ) : (
-            <TextWrapper isVisible={!!selectedEmployee}>
-              <Heading>
-                {selectedEmployee?.userId.name} {selectedEmployee?.userId.lastName}
-              </Heading>
-              {/*<Dropdown options={months} onChange={handleMonthSelect} labelText={'Wybierz miesiąc'} />*/}
-              <Paragraph type={'subparagraph'}>Statystyki użytkownika w miesiącu: Listopad</Paragraph>
-              <Paragraph type={'text'}>Zarobki {selectedEmployee?.pricePerHour ? `${selectedEmployee.pricePerHour} zł/h` : `${selectedEmployee?.monthlyPrice} miesięcznie`}</Paragraph>
-              <Paragraph type={'text'}>
-                Ilość przepracowanych godzin: <Span>{userHours}</Span>
-              </Paragraph>
-              <Paragraph type={'text'}>
-                Wynagrodzenie: <Span>{userSalary} zł</Span>
-              </Paragraph>
-            </TextWrapper>
-          )}
+          <TextWrapper isVisible={!!selectedEmployee}>
+            <Heading>
+              {selectedEmployee?.userId.name} {selectedEmployee?.userId.lastName}
+            </Heading>
+            <MonthDropdown options={months} onChange={(month) => setSelectedMonth(month)} labelText={'Miesiąc'} />
+            {areEmployeesLoading ? (
+              <SpinnerWrapper>
+                <Spinner />
+              </SpinnerWrapper>
+            ) : (
+              <>
+                <Paragraph type={'text'}>Zarobki {selectedEmployee?.pricePerHour ? `${selectedEmployee.pricePerHour} zł/h` : `${selectedEmployee?.monthlyPrice} miesięcznie`}</Paragraph>
+                <Paragraph type={'text'}>
+                  Ilość przepracowanych godzin: <Span>{userHours}</Span>
+                </Paragraph>
+                <Paragraph type={'text'}>
+                  Wynagrodzenie: <Span>{userSalary} zł</Span>
+                </Paragraph>
+              </>
+            )}
+          </TextWrapper>
         </ContentWrapper>
       </Box>
     </StyledWrapper>
