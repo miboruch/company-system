@@ -13,7 +13,7 @@ const StyledWrapper = styled.div`
   // background-color: ${({ theme }) => theme.colors.dark};
   border: 1px solid ${({ theme }) => theme.colors.impactGray};
   border-radius: 30px;
-  overflow: hidden;
+  overflow-y: scroll;
 
   ${({ theme }) => theme.mq.hdReady} {
     width: 100%;
@@ -26,7 +26,7 @@ const StyledWrapper = styled.div`
 
 const ContentWrapper = styled.div`
   width: 100%;
-  height: 100%;
+  //height: 100%;
   overflow-y: scroll;
 `;
 

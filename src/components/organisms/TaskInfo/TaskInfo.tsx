@@ -87,7 +87,7 @@ const TaskInfo: React.FC<Props> = ({ isEditToggled, setEditToggled, setDeleteOpe
                 <Title>{selectedTask.name}</Title>
                 <RowIconWrapper>
                   {selectedTask?.isCompleted ? <CheckedIcon /> : <NotCheckedIcon />}
-                  <LocationIcon onClick={() => dispatch(setTaskMapPreviewOpen(true))} />
+                  {selectedTask.clientId && <LocationIcon onClick={() => dispatch(setTaskMapPreviewOpen(true))} />}
                   {role === UserRole.Admin && (
                     <>
                       <EditIcon onClick={() => setEditToggled(!isEditToggled)} />

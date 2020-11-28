@@ -1,13 +1,4 @@
 import { combineReducers } from 'redux';
-import { authenticationReducer } from './authenticationReducer';
-import { employeeReducer } from './employeeReducer';
-import { companyReducer } from './companyReducer';
-import { taskReducer } from './taskReducer';
-import { clientReducer } from './clientReducer';
-import { attendanceReducer } from './attendanceReducer';
-import { toggleReducer } from './toggleReducer';
-import { financeReducer } from './financeReducer';
-import { notificationReducer } from './notificationReducer';
 
 import { auth } from '../ducks/auth/auth';
 import { company } from '../ducks/company/company';
@@ -19,6 +10,7 @@ import { finances } from '../ducks/finances/finances';
 import notifications from '../ducks/notifications/notifications';
 import currency from '../ducks/currency/currency';
 import popup from '../ducks/popup/popup';
+import allUsers from '../ducks/users/all-users';
 
 export const rootReducer = combineReducers({
   auth,
@@ -30,7 +22,6 @@ export const rootReducer = combineReducers({
   finances,
   currency,
   notifications,
-  popup
+  popup,
+  allUsers
 });
-
-// export type AppState = ReturnType<typeof rootReducer>;

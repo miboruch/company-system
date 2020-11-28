@@ -16,6 +16,7 @@ import { resetTasksData } from '../tasks/tasks-data/tasks-data';
 import { resetTaskToggle, setSelectedTask } from '../tasks/tasks-toggle/tasks-toggle';
 import { selectAttendance } from '../attendance/attendance-toggle/attendance-toggle-creators';
 import { resetWeekAttendanceData } from '../attendance/week-attendance-data/week-attendance-data';
+import { resetAllUsersState } from '../users/all-users';
 
 const resetAttendanceState = () => (dispatch: AppDispatch): void => {
   dispatch(resetAttendanceToggle());
@@ -50,6 +51,10 @@ const resetTaskState = () => (dispatch: AppDispatch): void => {
   dispatch(resetTaskToggle());
 };
 
+const resetUsersState = () => (dispatch: AppDispatch): void => {
+  dispatch(resetAllUsersState());
+};
+
 export const resetAllSelected = () => (dispatch: AppDispatch): void => {
   dispatch(setSelectedEmployee(null));
   dispatch(setSelectedClient(null));
@@ -65,4 +70,5 @@ export const resetState = () => (dispatch: AppDispatch): void => {
   dispatch(resetEmployeeState());
   dispatch(resetBudgetState());
   dispatch(resetTaskState());
+  dispatch(resetUsersState());
 };

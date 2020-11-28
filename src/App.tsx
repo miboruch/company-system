@@ -1,30 +1,22 @@
 import React, { useEffect } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import Layout from './components/Layout';
 import LoginPage from './pages/LoginPage/LoginPage';
-import { ThunkDispatch } from 'redux-thunk';
-import { AppTypes } from './types/actionTypes/appActionTypes';
-import { bindActionCreators } from 'redux';
-import { getAllAppUsers } from './actions/authenticationActions';
+import { getAllAppUsers } from './ducks/users/all-users-creators';
 import { authCheck } from './ducks/auth/check/check-creators';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import Routes from './routes/Routes';
 import SelectPage from './pages/SelectPage/SelectPage';
 import NotificationPopup from './components/molecules/NotificationPopup/NotificationPopup';
 import RegisterFromLink from './pages/RegisterFromLink/RegisterFromLink';
-// import { getUserNotifications } from './actions/notificationActions';
-import { getUserNotifications } from './ducks/notifications/notifications-creators';
 import { AppState, useAppDispatch } from './store/test-store';
-import { UserRole } from './ducks/auth/roles/roles';
-import { authApi } from './api';
-import { getAdminAccessToken } from './ducks/auth/tokens/tokens-creators';
 
-type ConnectedProps = LinkDispatchProps & RouteComponentProps<any>;
+type ConnectedProps = RouteComponentProps<any>;
 
-const App: React.FC<ConnectedProps> = ({ history, getAllAppUsers, getUserNotifications }) => {
+const App: React.FC<ConnectedProps> = ({ history }) => {
   const dispatch = useAppDispatch();
   const { token, refreshToken } = useSelector((state: AppState) => state.auth.tokens);
   const { role } = useSelector((state: AppState) => state.auth.roles);
@@ -34,7 +26,7 @@ const App: React.FC<ConnectedProps> = ({ history, getAllAppUsers, getUserNotific
     dispatch(
       authCheck({
         successCallback: () => {
-          // getAllAppUsers();
+          dispatch(getAllAppUsers());
           history.push('/select');
         },
         errorCallback: () => history.push('/login')
@@ -62,16 +54,4 @@ const App: React.FC<ConnectedProps> = ({ history, getAllAppUsers, getUserNotific
   );
 };
 
-interface LinkDispatchProps {
-  getAllAppUsers: () => void;
-  getUserNotifications: (page: number) => void;
-}
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
-  return {
-    getAllAppUsers: bindActionCreators(getAllAppUsers, dispatch),
-    getUserNotifications: bindActionCreators(getUserNotifications, dispatch)
-  };
-};
-
-export default withRouter(connect(null, mapDispatchToProps)(App));
+export default withRouter(App);

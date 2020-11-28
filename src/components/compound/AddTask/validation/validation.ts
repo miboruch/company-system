@@ -9,7 +9,6 @@ export const TaskInfoSchema = Yup.object().shape({
 
 export const TaskSpecificInfoSchema = Yup.object().shape({
   timeEstimate: Yup.number().min(0),
-  clientId: Yup.string(),
   taskIncome: Yup.number().min(0),
   taskExpense: Yup.number().min(0)
 });
