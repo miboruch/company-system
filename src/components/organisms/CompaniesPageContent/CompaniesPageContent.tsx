@@ -41,15 +41,7 @@ const CompaniesPageContent: React.FC<RouteComponentProps<any>> = ({ history }) =
                   name={company.name}
                   topDescription={company.nip}
                   bottomDescription={`${company.address}, ${company.city}`}
-                  callback={() =>
-                    dispatch(
-                      setCurrentCompany(company, () => {
-                        history.push(role === UserRole.Admin ? '/admin/home' : '/user/home');
-                        console.log('redirect to home page');
-                      })
-                    )
-                  }
-                  // on callback push to /admin/home or /user/home based on current page
+                  callback={() => dispatch(setCurrentCompany(company, () => history.push(role === UserRole.Admin ? '/admin/home' : '/user/home')))}
                   isCompanyBox={true}
                   isChecked={false}
                 />

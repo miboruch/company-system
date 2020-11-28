@@ -183,12 +183,11 @@ interface GetIncomeExpenseDataInterface {
 
 export const getIncomeExpenseInTimePeriod = createAsyncThunk<void, GetIncomeExpenseDataInterface, baseStoreType>(
   'incomeExpense/getIncomeExpenseInTimePeriod',
-  async ({ daysBack, setData }, { dispatch, getState, rejectWithValue }) => {
+  async ({ daysBack, setData }, { getState, rejectWithValue }) => {
     const { token } = getState().auth.tokens;
-    const { currentCompany } = getState().company.currentCompany;
 
     try {
-      if (token && currentCompany) {
+      if (token) {
         const { data } = await authApi.get(`/income/get-last-incomes?daysBack=${daysBack}`, {
           headers: {
             Authorization: `Bearer ${token}`

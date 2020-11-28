@@ -16,6 +16,8 @@ export const setCurrentCompany = (company: CompanyInterface | null, successCallb
 
   if (role === UserRole.Admin && refreshToken && company) {
     dispatch(getAdminAccessToken({ refreshToken, companyId: company._id, successCallback: () => !!successCallback && successCallback() }));
+  } else {
+    !!successCallback && successCallback();
   }
 
   dispatch(setCompany(company));
@@ -87,6 +89,26 @@ export const editCompanyCoords = createAsyncThunk<void, { lat: number; long: num
 
       dispatch(getSingleCompany(currentCompany._id));
       dispatch(setNotificationMessage({ message: 'Zapisano koordynację' }));
+    }
+  } catch (error) {
+    console.log(error);
+    dispatch(setNotificationMessage({ message: error.response.data, notificationType: NotificationTypes.Error }));
+  }
+});
+
+export const deleteCompany = createAsyncThunk<void, () => void, baseStoreType>('currentCompany/deleteCompany', async (callback, { dispatch, getState }) => {
+  const { token } = getState().auth.tokens;
+
+  try {
+    if (token) {
+      await authApi.put(`/company/remove-company`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      callback();
+      dispatch(setNotificationMessage({ message: 'Usunięto firmę' }));
     }
   } catch (error) {
     console.log(error);

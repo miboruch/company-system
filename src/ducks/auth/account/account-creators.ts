@@ -16,9 +16,14 @@ interface EditAccountInterface {
   country: string;
 }
 
-export const editAccount = createAsyncThunk<void, EditAccountInterface, baseStoreType>('account/editAccount', async (values, { rejectWithValue, dispatch }) => {
+export const editAccount = createAsyncThunk<void, EditAccountInterface, baseStoreType>('account/editAccount', async (values, { rejectWithValue, dispatch, getState }) => {
+  const { token } = getState().auth.tokens;
   try {
-    await authApi.put(`/user/edit-user`, values);
+    await authApi.put(`/user/edit-user`, values, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
 
     dispatch(getUserData());
 
@@ -34,9 +39,18 @@ interface EditPasswordInterface {
   repeatedPassword: string;
 }
 
-export const editPassword = createAsyncThunk<void, EditPasswordInterface, baseStoreType>('account/editPassword', async (values, { rejectWithValue, dispatch }) => {
+export const editPassword = createAsyncThunk<void, EditPasswordInterface, baseStoreType>('account/editPassword', async (values, { rejectWithValue, dispatch, getState }) => {
+  const { token } = getState().auth.tokens;
   try {
-    await authApi.put(`/user/password-edit`, { values });
+    await authApi.put(
+      `/user/password-edit`,
+      { values },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
 
     dispatch(setNotificationMessage({ message: 'Zmieniono hasło' }));
   } catch (error) {

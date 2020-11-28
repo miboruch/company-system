@@ -58,10 +58,9 @@ export const updateEmployeeSalary = createAsyncThunk<void, UpdateEmployeeSalaryI
     }
     const { selectedEmployee } = getState().employees.employeesToggle;
     const { token } = getState().auth.tokens;
-    const { currentCompany } = getState().company.currentCompany;
 
     try {
-      if (selectedEmployee && token && currentCompany) {
+      if (selectedEmployee && token) {
         const data: DataHourInterface | DataMonthlyInterface = pricePerHour
           ? {
               employeeId: selectedEmployee._id,
@@ -77,12 +76,6 @@ export const updateEmployeeSalary = createAsyncThunk<void, UpdateEmployeeSalaryI
             Authorization: `Bearer ${token}`
           }
         });
-
-        // await axios.put(`${API_URL}/employee/update-employee?company_id=${currentCompany._id}`, data, {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`
-        //   }
-        // });
 
         dispatch(getAllCompanyEmployees());
 
@@ -107,22 +100,9 @@ interface AddEmployeeInterface {
 
 export const addNewEmployee = createAsyncThunk<void, AddEmployeeInterface, baseStoreType>('employeesData/addNewEmployee', async (values, { dispatch, rejectWithValue, getState }) => {
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().company.currentCompany;
 
   try {
-    if (currentCompany && token) {
-      // await axios.post(
-      //   `${API_URL}/employee/add-employee?company_id=${currentCompany._id}`,
-      //   {
-      //     ...values
-      //   },
-      //   {
-      //     headers: {
-      //       Authorization: `Bearer ${token}`
-      //     }
-      //   }
-      // );
-
+    if ( token) {
       await authApi.post(
         '/employee/add-employee',
         { ...values },

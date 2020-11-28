@@ -20,13 +20,51 @@ export const getUserCompanies = createAsyncThunk<CompanyInterface[], void, baseS
       });
 
       dispatch(resetAllSelected());
-      console.log(data);
       return data as CompanyInterface[];
     } else {
       return [] as CompanyInterface[];
     }
   } catch (error) {
     dispatch(setNotificationMessage({ message: error.response.data, notificationType: NotificationTypes.Error }));
+    return rejectWithValue(error.response.data);
+  }
+});
+
+interface CreateCompanyInterface {
+  name: string;
+  nip: string;
+  address: string;
+  lat: number;
+  long: number;
+  phoneNumber: string;
+  email: string;
+  country: string;
+  city: string;
+  callback?: () => void;
+}
+
+export const createNewCompany = createAsyncThunk<void, CreateCompanyInterface, baseStoreType>('companies/createNewCompany', async (values, { dispatch, rejectWithValue, getState }) => {
+  const { token } = getState().auth.tokens;
+  const { callback, ...companyData } = values;
+
+  try {
+    if (token) {
+      await authApi.post(
+        '/company/create-company',
+        { ...companyData },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      dispatch(getUserCompanies());
+      callback && callback();
+    } else {
+      return rejectWithValue('Brak tokena');
+    }
+  } catch (error) {
     return rejectWithValue(error.response.data);
   }
 });

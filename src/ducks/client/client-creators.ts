@@ -134,10 +134,9 @@ interface EditClientCoorsInterface {
 
 export const editClientCoords = createAsyncThunk<void, EditClientCoorsInterface, baseStoreType>('client/editClientCoords', async ({ clientId, lat, long }, { dispatch, getState }) => {
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().company.currentCompany;
 
   try {
-    if (token && currentCompany) {
+    if (token) {
       await authApi.put(
         `/client/edit-client-coords`,
         { clientId, lat, long },

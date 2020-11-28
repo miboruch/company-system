@@ -25,7 +25,6 @@ const tokenSlice = createSlice({
         // authApi.interceptors.request.use(
         //   (config) => {
         //     config.headers['Authorization'] = `Bearer ${payload.token}`;
-        //     console.log(config);
         //     return config;
         //   },
         //   (error) => console.log(error)

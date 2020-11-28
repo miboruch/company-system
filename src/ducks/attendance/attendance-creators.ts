@@ -1,5 +1,4 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { API_URL } from '../../utils/config';
 import { NotificationTypes } from '../../types/actionTypes/toggleAcitonTypes';
 import { baseStoreType } from '../../store/test-store';
 import { setNotificationMessage } from '../popup/popup';
@@ -49,10 +48,9 @@ interface UpdateAttendanceInterface {
 
 export const updateAttendance = createAsyncThunk<void, UpdateAttendanceInterface, baseStoreType>('attendance/updateAttendance', async ({ attendanceId, wasPresent, hours }, { dispatch, getState }) => {
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().company.currentCompany;
 
   try {
-    if (token && currentCompany) {
+    if (token) {
       await authApi.put(
         `/attendance/edit-attendance`,
         {

@@ -184,10 +184,9 @@ export const addNewTask = createAsyncThunk<void, AddNewTaskInterface, baseStoreT
   'tasksData/addNewTask',
   async ({ date, timeEstimate, name, description, isCompleted, taskExpense, taskIncome, clientId }, { dispatch, rejectWithValue, getState }) => {
     const { token } = getState().auth.tokens;
-    const { currentCompany } = getState().company.currentCompany;
 
     try {
-      if (currentCompany && token) {
+      if (token) {
         await authApi.post(
           `/task/add-new-task`,
           {

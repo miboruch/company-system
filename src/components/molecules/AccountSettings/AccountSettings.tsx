@@ -6,10 +6,12 @@ import { DoubleFlexWrapper, StyledLabel } from '../../../styles/shared';
 import DatePicker from 'react-datepicker';
 import Button from '../../atoms/Button/Button';
 import { StyledForm, Heading } from './AccountSettings.styles';
-import {editAccount} from '../../../ducks/auth/account/account-creators';
+import { editAccount } from '../../../ducks/auth/account/account-creators';
 import { AccountSchema } from '../../../validation/modelsValidation';
 import { UserAuthData } from '../../../types/modelsTypes';
 import { useAppDispatch } from '../../../store/test-store';
+import { useSelector } from 'react-redux';
+import { AppState } from '../../../store/test-store';
 
 interface DefaultValues {
   email: string;
@@ -24,8 +26,7 @@ interface DefaultValues {
 
 const AccountSettings: React.FC = () => {
   const dispatch = useAppDispatch();
-  // const { userData } = useSelector((state: AppState) => state.authenticationReducer);
-  const userData: UserAuthData = { name: '', email: '', dateOfBirth: new Date(), country: '', city: '', address: '', phoneNumber: '', lastName: '', userId: '' };
+  const { userData } = useSelector((state: AppState) => state.auth.data);
   const [formattedPhoneNumber, setFormattedPhoneNumber] = useState<string>('');
 
   const initialValues: DefaultValues = {
@@ -40,7 +41,7 @@ const AccountSettings: React.FC = () => {
   };
 
   const handleSubmit = ({ email, name, lastName, dateOfBirth, phoneNumber, address, city, country }: DefaultValues) => {
-    dispatch(editAccount({email, name, lastName, dateOfBirth, phoneNumber, address, city, country}));
+    dispatch(editAccount({ email, name, lastName, dateOfBirth, phoneNumber, address, city, country }));
   };
 
   return (

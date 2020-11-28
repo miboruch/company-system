@@ -41,7 +41,6 @@ export const getAdminAccessToken = ({ refreshToken, companyId, successCallback, 
     const { data } = await api.post(`/auth/admin-token`, { refreshToken, companyId });
 
     dispatch(setTokens({ token: data.accessToken, refreshToken, expireIn: data.expireIn }));
-    console.log('set tokens');
     dispatch(getUserData(data.accessToken));
 
     dispatch(authTimeout({ refreshToken, expireMilliseconds: data.expireIn - new Date().getTime() }));

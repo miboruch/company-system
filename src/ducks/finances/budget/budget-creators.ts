@@ -4,10 +4,9 @@ import { authApi } from '../../../api';
 
 export const getCompanyBudget = createAsyncThunk<number, void, baseStoreType>('budget/getCompanyBudget', async (daysBack, { dispatch, getState, rejectWithValue }) => {
   const { token } = getState().auth.tokens;
-  const { currentCompany } = getState().company.currentCompany;
 
   try {
-    if (token && currentCompany) {
+    if (token) {
       const { data } = await authApi.get(`/budget/get-company-budget`, {
         headers: {
           Authorization: `Bearer ${token}`
