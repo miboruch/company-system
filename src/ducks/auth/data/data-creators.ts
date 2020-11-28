@@ -5,7 +5,7 @@ import { baseStoreType } from '../../../store/test-store';
 import { API_URL } from '../../../utils/config';
 import { authApi } from '../../../api';
 
-export const getUserData = createAsyncThunk<UserAuthData, void, baseStoreType>('data/userData', async (_arg, { rejectWithValue, getState }) => {
+export const getUserData = createAsyncThunk<UserAuthData, void, baseStoreType>('data/userData', async (_arg, { rejectWithValue }) => {
   try {
     // const { token } = getState().auth.tokens;
 

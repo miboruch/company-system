@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
@@ -16,13 +16,20 @@ import SelectPage from './pages/SelectPage/SelectPage';
 import NotificationPopup from './components/molecules/NotificationPopup/NotificationPopup';
 import RegisterFromLink from './pages/RegisterFromLink/RegisterFromLink';
 // import { getUserNotifications } from './actions/notificationActions';
-import {getUserNotifications} from './ducks/notifications/notifications-creators';
-import { useAppDispatch } from './store/test-store';
+import { getUserNotifications } from './ducks/notifications/notifications-creators';
+import { AppState, useAppDispatch } from './store/test-store';
+import { UserRole } from './ducks/auth/roles/roles';
+import { authApi } from './api';
+import { getAdminAccessToken } from './ducks/auth/tokens/tokens-creators';
 
 type ConnectedProps = LinkDispatchProps & RouteComponentProps<any>;
 
 const App: React.FC<ConnectedProps> = ({ history, getAllAppUsers, getUserNotifications }) => {
   const dispatch = useAppDispatch();
+  const { token, refreshToken } = useSelector((state: AppState) => state.auth.tokens);
+  const { role } = useSelector((state: AppState) => state.auth.roles);
+  const { currentCompany } = useSelector((state: AppState) => state.company.currentCompany);
+
   useEffect(() => {
     dispatch(
       authCheck({
@@ -30,12 +37,22 @@ const App: React.FC<ConnectedProps> = ({ history, getAllAppUsers, getUserNotific
           // getAllAppUsers();
           history.push('/select');
         },
-        errorCallback: () => history.push('/test')
+        errorCallback: () => history.push('/login')
       })
     );
   }, []);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (token) {
+      authApi.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    } else {
+      authApi.defaults.headers.common['Authorization'] = null;
+    }
+  }, [token]);
+
+  useEffect(() => {
+    role === UserRole.Admin && currentCompany && refreshToken && dispatch(getAdminAccessToken({ refreshToken, companyId: currentCompany._id }));
+  }, [currentCompany, refreshToken]);
 
   return (
     <Layout>

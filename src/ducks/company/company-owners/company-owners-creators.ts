@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { CompanyOwnersInterface } from '../../../types/modelsTypes';
 import { baseStoreType } from '../../../store/test-store';
-import { adminApi, authApi } from '../../../api';
+import { authApi } from '../../../api';
 import { setNotificationMessage } from '../../popup/popup';
 import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
 import { getAllCompanyEmployees } from '../../employees/employees-data/employees-data-creators';

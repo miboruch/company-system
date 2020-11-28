@@ -1,21 +1,25 @@
 import { Dispatch } from 'redux';
 import { setTokens } from '../tokens/tokens';
-import { getNewAccessToken } from '../tokens/tokens-creators';
+import { getAdminAccessToken, getNewAccessToken } from '../tokens/tokens-creators';
 import { getUserData } from '../data/data-creators';
 import { clearStorage, logout } from '../logout/logout-creators';
 import { setLoading } from './check';
-import { AppDispatch } from '../../../store/test-store';
+import { AppDispatch, AppState } from '../../../store/test-store';
 import { getUserNotifications } from '../../notifications/notifications-creators';
 import { resetState } from '../../reset/reset-creators';
+import { UserRole } from '../roles/roles';
 
 interface AuthTimeoutInterface {
   refreshToken: string;
   expireMilliseconds: number;
 }
 
-export const authTimeout = ({ refreshToken, expireMilliseconds }: AuthTimeoutInterface) => (dispatch: Dispatch<any>): ReturnType<typeof setTimeout> => {
+export const authTimeout = ({ refreshToken, expireMilliseconds }: AuthTimeoutInterface) => (dispatch: Dispatch<any>, getState: () => AppState): ReturnType<typeof setTimeout> => {
+  const { role } = getState().auth.roles;
+  const { currentCompany } = getState().company.currentCompany;
+
   return setTimeout(async () => {
-    dispatch(getNewAccessToken({ refreshToken }));
+    role === UserRole.Admin && currentCompany ? dispatch(getAdminAccessToken({ refreshToken, companyId: currentCompany._id })) : dispatch(getNewAccessToken({ refreshToken }));
   }, expireMilliseconds);
 };
 
@@ -24,7 +28,10 @@ interface AuthCheckInterface {
   errorCallback: () => void;
 }
 
-export const authCheck = ({ successCallback, errorCallback }: AuthCheckInterface) => (dispatch: AppDispatch): void => {
+export const authCheck = ({ successCallback, errorCallback }: AuthCheckInterface) => (dispatch: AppDispatch, getState: () => AppState): void => {
+  const { role } = getState().auth.roles;
+  const { currentCompany } = getState().company.currentCompany;
+
   const token = localStorage.getItem('token');
   const refreshToken = localStorage.getItem('refreshToken');
   const expireDate = localStorage.getItem('expireDate');
@@ -33,7 +40,9 @@ export const authCheck = ({ successCallback, errorCallback }: AuthCheckInterface
     dispatch(setLoading(true));
     const expDate = new Date(expireDate);
     if (expDate <= new Date()) {
-      dispatch(getNewAccessToken({ refreshToken, successCallback, errorCallback }));
+      role === UserRole.Admin && currentCompany
+        ? dispatch(getAdminAccessToken({ refreshToken, companyId: currentCompany._id, successCallback, errorCallback }))
+        : dispatch(getNewAccessToken({ refreshToken, successCallback, errorCallback }));
       dispatch(setLoading(false));
     } else {
       dispatch(setTokens({ token, refreshToken, expireIn: new Date(expireDate).getTime() }));

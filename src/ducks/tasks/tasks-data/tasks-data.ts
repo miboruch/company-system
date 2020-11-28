@@ -30,6 +30,7 @@ const tasksDataSlice = createSlice({
     builder.addCase(getCompanyTasks.fulfilled.type, (state, { payload }: PayloadAction<TaskInterface[]>) => {
       state.areTasksLoading = false;
       state.tasksError = undefined;
+      state.allCompanyTasks = payload;
     });
     builder.addCase(getCompanyTasks.rejected.type, (state, { payload }: PayloadAction<string | undefined>) => {
       state.areTasksLoading = false;
