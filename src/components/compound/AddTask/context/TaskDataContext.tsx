@@ -9,6 +9,7 @@ export interface TaskDataInterface {
   taskIncome?: number;
   taskExpense?: number;
   clientId?: string;
+  selectedEmployees?: string[]
 }
 
 type TaskDataContextType = {

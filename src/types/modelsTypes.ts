@@ -72,7 +72,7 @@ export interface EmployeeDataInterface {
 }
 
 export interface ClientInterface {
-  createdDate: Date,
+  createdDate: Date;
   _id: string;
   name: string;
   companyId: string;
@@ -93,6 +93,7 @@ export interface TaskInterface {
   timeEstimate: number;
   name: string;
   description: string;
+  employees: EmployeeDataInterface[]; //?
   clientId?: ClientInterface | null;
   companyId: string;
   taskIncome?: number;

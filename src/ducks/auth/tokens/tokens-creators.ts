@@ -1,9 +1,8 @@
-import { api, authApi } from '../../../api';
+import { api } from '../../../api';
 import { getUserData } from '../data/data-creators';
 import { authTimeout } from '../check/check-creators';
 import { logout } from '../logout/logout-creators';
 import { setTokens } from './tokens';
-import { Dispatch } from '@reduxjs/toolkit';
 import { AppDispatch } from '../../../store/test-store';
 
 interface GetNewAccessTokenInterface {

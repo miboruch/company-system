@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Downshift, { ControllerStateAndHelpers } from 'downshift';
 import { EmployeeDataInterface } from '../../../types/modelsTypes';
 import { Menu, Item, Form } from '../../../styles/dropdownStyles';
@@ -7,6 +7,7 @@ import { StyledLabel } from '../../../styles/shared';
 import { Paragraph } from '../../../styles/typography/typography';
 import { FlexWrapper } from '../../../styles/shared';
 import styled from 'styled-components';
+import { TaskDataContext } from '../../compound/AddTask/context/TaskDataContext';
 
 const StyledFlexWrapper = styled(FlexWrapper)`
   justify-content: flex-start;
@@ -52,7 +53,13 @@ interface Props {
 }
 
 const MultipleDropdown: React.FC<Props> = ({ items, labelText, onSelectionItemsChange, ...rest }) => {
+  const { data } = useContext(TaskDataContext);
   const [selectedItems, setSelectedItems] = useState<EmployeeDataInterface[]>([]);
+
+  useEffect(() => {
+    const result = items.filter((employee) => data.selectedEmployees?.includes(employee._id));
+    data.selectedEmployees ? setSelectedItems(result) : setSelectedItems([]);
+  }, []);
 
   return (
     <Downshift {...rest} onChange={changeHandler(selectedItems, setSelectedItems, onSelectionItemsChange)}>

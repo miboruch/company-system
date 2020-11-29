@@ -35,8 +35,21 @@ const SpecificInfoPage: React.FC = () => {
 
   const handleSubmit = ({ timeEstimate, taskIncome, taskExpense, clientId }: DefaultValues): void => {
     setData({ ...data, timeEstimate, taskIncome, taskExpense, clientId });
-    if (data.date && data.name && data.description && data.isCompleted !== undefined) {
-      dispatch(addNewTask({ date: data.date, timeEstimate, name: data.name, description: data.description, isCompleted: data.isCompleted, taskIncome, taskExpense, clientId }));
+
+    if (data.date && data.name && data.description && data.selectedEmployees && data.isCompleted !== undefined) {
+      dispatch(
+        addNewTask({
+          date: data.date,
+          timeEstimate,
+          name: data.name,
+          description: data.description,
+          isCompleted: data.isCompleted,
+          taskIncome,
+          taskExpense,
+          clientId,
+          employees: data.selectedEmployees
+        })
+      );
     }
   };
 

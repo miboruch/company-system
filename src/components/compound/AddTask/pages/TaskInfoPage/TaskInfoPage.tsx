@@ -20,9 +20,7 @@ interface DefaultValues {
   selectedEmployees: string[];
 }
 
-interface Props {}
-
-const TaskInfoPage: React.FC<Props> = () => {
+const TaskInfoPage: React.FC = () => {
   const { data, setData } = useContext(TaskDataContext);
   const { setCurrentPage } = useContext(PageContext);
 
@@ -33,7 +31,7 @@ const TaskInfoPage: React.FC<Props> = () => {
     description: data.description ? data.description : '',
     date: data.date ? data.date : new Date(),
     isCompleted: data.isCompleted ? data.isCompleted : false,
-    selectedEmployees: []
+    selectedEmployees: data.selectedEmployees ? data.selectedEmployees : []
   };
 
   const handleSubmit = (values: DefaultValues): void => {
@@ -57,7 +55,7 @@ const TaskInfoPage: React.FC<Props> = () => {
                 <MobileCompoundTitle>Główne informacje o zadaniu</MobileCompoundTitle>
                 <Subheading>Wszystkie pola są wymagane</Subheading>
               </HeadingWrapper>
-              <MultipleDropdown items={allCompanyEmployees} labelText={'Wybierz pracownika'} onSelectionItemsChange={handleEmployeeSelect}/>
+              <MultipleDropdown items={allCompanyEmployees} labelText={'Wybierz pracownika'} onSelectionItemsChange={handleEmployeeSelect} />
               <StyledInput onChange={handleChange} name={'name'} value={values.name} required={true} type={'text'} labelText={errors.name || 'Nazwa zadania'} />
               <StyledInput onChange={handleChange} name={'description'} value={values.description} required={true} type={'text'} labelText={errors.description || 'Opis zadania'} />
               <div>

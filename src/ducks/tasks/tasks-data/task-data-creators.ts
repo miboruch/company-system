@@ -178,11 +178,12 @@ interface AddNewTaskInterface {
   taskIncome?: number;
   taskExpense?: number;
   clientId?: string | null;
+  employees: string[];
 }
 
 export const addNewTask = createAsyncThunk<void, AddNewTaskInterface, baseStoreType>(
   'tasksData/addNewTask',
-  async ({ date, timeEstimate, name, description, isCompleted, taskExpense, taskIncome, clientId }, { dispatch, rejectWithValue, getState }) => {
+  async ({ date, timeEstimate, name, description, isCompleted, taskExpense, taskIncome, clientId, employees }, { dispatch, rejectWithValue, getState }) => {
     const { token } = getState().auth.tokens;
 
     try {
@@ -194,6 +195,7 @@ export const addNewTask = createAsyncThunk<void, AddNewTaskInterface, baseStoreT
             timeEstimate,
             name,
             clientId,
+            employees,
             description,
             isCompleted,
             taskIncome: taskIncome ? taskIncome : 0,

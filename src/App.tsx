@@ -25,10 +25,7 @@ const App: React.FC<ConnectedProps> = ({ history }) => {
   useEffect(() => {
     dispatch(
       authCheck({
-        successCallback: () => {
-          dispatch(getAllAppUsers());
-          history.push('/select');
-        },
+        successCallback: () => history.push('/select'),
         errorCallback: () => history.push('/login')
       })
     );

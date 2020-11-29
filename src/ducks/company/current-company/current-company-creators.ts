@@ -1,4 +1,3 @@
-import { Dispatch } from 'redux';
 import { setCompany } from './current-company';
 import { CompanyInterface } from '../../../types/modelsTypes';
 import { createAsyncThunk } from '@reduxjs/toolkit';
@@ -8,6 +7,7 @@ import { setNotificationMessage } from '../../popup/popup';
 import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
 import { UserRole } from '../../auth/roles/roles';
 import { getAdminAccessToken } from '../../auth/tokens/tokens-creators';
+import { getOwnEmployeeData } from '../../auth/data/data-creators';
 
 export const setCurrentCompany = (company: CompanyInterface | null, successCallback?: () => void) => (dispatch: AppDispatch, getState: () => AppState) => {
   //if role is admin, generate set new admin token with companyId
@@ -17,6 +17,7 @@ export const setCurrentCompany = (company: CompanyInterface | null, successCallb
   if (role === UserRole.Admin && refreshToken && company) {
     dispatch(getAdminAccessToken({ refreshToken, companyId: company._id, successCallback: () => !!successCallback && successCallback() }));
   } else {
+    company && dispatch(getOwnEmployeeData(company._id));
     !!successCallback && successCallback();
   }
 

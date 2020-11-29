@@ -8,6 +8,7 @@ import { AppDispatch, AppState } from '../../../store/test-store';
 import { getUserNotifications } from '../../notifications/notifications-creators';
 import { resetState } from '../../reset/reset-creators';
 import { UserRole } from '../roles/roles';
+import { getAllAppUsers } from '../../users/all-users-creators';
 
 interface AuthTimeoutInterface {
   refreshToken: string;
@@ -52,7 +53,8 @@ export const authCheck = ({ successCallback, errorCallback }: AuthCheckInterface
       dispatch(authTimeout({ refreshToken, expireMilliseconds: expDate.getTime() - new Date().getTime() }));
       dispatch(getUserData(token));
       dispatch(getUserNotifications(1));
-      //TODO: get all app users
+      role === UserRole.Admin && dispatch(getAllAppUsers());
+
       successCallback();
       dispatch(setLoading(false));
     }
