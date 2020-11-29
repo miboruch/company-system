@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Hamburger from '../../atoms/Hamburger/Hamburger';
 import HeaderSlider from '../HeaderSlider/HeaderSlider';
 import SearchInput from '../../atoms/SearchInput/SearchInput';
 import ArrowButton from '../../atoms/ArrowButton/ArrowButton';
 import Notifications from '../../organisms/Notifications/Notifications';
 import { Direction } from '../../../types/globalTypes';
-import { AppState } from '../../../reducers/rootReducer';
-import { UserAuthData } from '../../../types/modelsTypes';
+import { AppState } from '../../../store/test-store';
 import { Circle, IconWrapper, NameParagraph, StyledHeader, UserWrapper, MobileCircle } from './Header.styles';
 import { NotificationIcon } from '../../../styles/iconStyles';
 
@@ -15,9 +14,9 @@ interface Props {
   setFilterText?: (filterText: string) => void;
 }
 
-type ConnectedProps = Props & LinkStateProps;
+const Header: React.FC<Props> = ({ setFilterText }) => {
+  const { userData } = useSelector((state: AppState) => state.auth.data);
 
-const Header: React.FC<ConnectedProps> = ({ setFilterText, userData }) => {
   const [areNotificationsOpen, setNotificationsOpen] = useState<boolean>(false);
   const [isSliderOpen, setSliderOpen] = useState<boolean>(false);
 
@@ -57,12 +56,4 @@ const Header: React.FC<ConnectedProps> = ({ setFilterText, userData }) => {
   );
 };
 
-interface LinkStateProps {
-  userData: UserAuthData | null;
-}
-
-const mapStateToProps = ({ authenticationReducer: { userData } }: AppState): LinkStateProps => {
-  return { userData };
-};
-
-export default connect(mapStateToProps)(Header);
+export default Header;

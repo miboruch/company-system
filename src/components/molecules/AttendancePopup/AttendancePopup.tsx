@@ -1,19 +1,16 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Formik } from 'formik';
-import { ThunkDispatch } from 'redux-thunk';
-import { bindActionCreators } from 'redux';
 import PopupTemplate from '../../templates/PopupTemplate/PopupTemplate';
 import ModalButton, { ButtonType } from '../../atoms/ModalButton/ModalButton';
 import Input from '../../atoms/Input/Input';
 import Checkbox from '../../atoms/Checkbox/Checkbox';
 import { AttendanceInterface } from '../../../types/modelsTypes';
-import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { ButtonWrapper, ContentWrapper } from '../../../styles/popupStyles';
 import { CheckedIcon, NotCheckedIcon, EmptyIcon } from '../../../styles/iconStyles';
 import { FlexWrapper, StyledForm, StyledParagraph, StyledFlexWrapper, InputWrapper } from './AttendancePopup.styles';
-import { addAttendance, updateAttendance } from '../../../actions/attendanceActions';
+import { addAttendance, updateAttendance } from '../../../ducks/attendance/attendance-creators';
 import { AttendanceSchema } from '../../../validation/modelsValidation';
+import { useAppDispatch } from '../../../store/test-store';
 
 interface Props {
   attendance: AttendanceInterface | null;
@@ -27,21 +24,20 @@ interface DefaultValues {
   hours: number;
 }
 
-type ConnectedProps = Props & LinkDispatchProps;
-
-const AttendancePopup: React.FC<ConnectedProps> = ({ attendance, isOpen, setOpen, updateAttendance, addAttendance, date }) => {
+const AttendancePopup: React.FC<Props> = ({ attendance, isOpen, setOpen, date }) => {
+  const dispatch = useAppDispatch();
   const initialValues: DefaultValues = {
     wasPresent: !attendance?.attendance ? null : attendance.attendance.wasPresent,
     hours: !attendance?.attendance ? 0 : attendance.attendance.hours
   };
 
-  const handleSubmit = (values: DefaultValues) => {
+  const handleSubmit = ({ wasPresent, hours }: DefaultValues) => {
     setOpen(false);
     if (attendance) {
       if (attendance?.attendance) {
-        values.wasPresent !== null && updateAttendance(attendance.attendance._id, values.wasPresent, values.hours);
+        wasPresent !== null && dispatch(updateAttendance({ attendanceId: attendance.attendance._id, wasPresent: !!wasPresent, hours }));
       } else {
-        values.wasPresent !== null && addAttendance(attendance.user._id, date, values.wasPresent, values.hours);
+        wasPresent !== null && dispatch(addAttendance({ userId: attendance.user._id, date, wasPresent: !!wasPresent, hours }));
       }
     }
   };
@@ -90,16 +86,4 @@ const AttendancePopup: React.FC<ConnectedProps> = ({ attendance, isOpen, setOpen
   );
 };
 
-interface LinkDispatchProps {
-  updateAttendance: (attendanceId: string, wasPresent: boolean, hours: number) => void;
-  addAttendance: (userId: string, date: Date, wasPresent: boolean, hours: number) => void;
-}
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
-  return {
-    updateAttendance: bindActionCreators(updateAttendance, dispatch),
-    addAttendance: bindActionCreators(addAttendance, dispatch)
-  };
-};
-
-export default connect(null, mapDispatchToProps)(AttendancePopup);
+export default AttendancePopup;

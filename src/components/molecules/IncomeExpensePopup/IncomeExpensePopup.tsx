@@ -1,16 +1,13 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Formik } from 'formik';
-import { ThunkDispatch } from 'redux-thunk';
-import { bindActionCreators } from 'redux';
 import PopupTemplate from '../../templates/PopupTemplate/PopupTemplate';
 import ModalButton, { ButtonType } from '../../atoms/ModalButton/ModalButton';
 import Input from '../../atoms/Input/Input';
-import { AppTypes } from '../../../types/actionTypes/appActionTypes';
-import { addExpense, addIncome } from '../../../actions/financeActions';
+import { addIncome, addExpense } from '../../../ducks/finances/income-expense/income-expense-creators';
 import { ButtonWrapper, ContentWrapper } from '../../../styles/popupStyles';
 import { StyledForm, StyledInput } from './IncomeExpensePopup.styles';
 import { IncomeExpenseSchema } from '../../../validation/modelsValidation';
+import { useAppDispatch } from '../../../store/test-store';
 
 export enum FinancePopupInterface {
   Income = 'income',
@@ -28,16 +25,17 @@ interface DefaultValue {
   description: string;
 }
 
-type ConnectedProps = Props & LinkDispatchProps;
-
-const IncomeExpensePopup: React.FC<ConnectedProps> = ({ type, isOpen, setOpen, addExpense, addIncome }) => {
+const IncomeExpensePopup: React.FC<Props> = ({ type, isOpen, setOpen }) => {
+  const dispatch = useAppDispatch();
   const initialValues: DefaultValue = {
     value: 0,
     description: ''
   };
 
   const handleSubmit = ({ value, description }: DefaultValue) => {
-    type === FinancePopupInterface.Income ? addIncome(value, description, () => setOpen(false)) : addExpense(value, description, () => setOpen(false));
+    type === FinancePopupInterface.Income
+      ? dispatch(addIncome({ incomeValue: value, description, callback: () => setOpen(false) }))
+      : dispatch(addExpense({ expenseValue: value, description, callback: () => setOpen(false) }));
   };
 
   return (
@@ -69,16 +67,4 @@ const IncomeExpensePopup: React.FC<ConnectedProps> = ({ type, isOpen, setOpen, a
   );
 };
 
-interface LinkDispatchProps {
-  addIncome: (incomeValue: number, description: string, callback: () => void) => void;
-  addExpense: (expenseValue: number, description: string, callback: () => void) => void;
-}
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
-  return {
-    addIncome: bindActionCreators(addIncome, dispatch),
-    addExpense: bindActionCreators(addExpense, dispatch)
-  };
-};
-
-export default connect(null, mapDispatchToProps)(IncomeExpensePopup);
+export default IncomeExpensePopup;

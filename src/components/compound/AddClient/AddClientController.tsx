@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import ClientDataContextProvider from './context/ClientDataContext';
 import PageContextProvider, { PageSettingEnum } from './context/PageContext';
 import { modalOpenAnimation } from '../../../animations/animations';
-import { AppState } from '../../../reducers/rootReducer';
-import { setAddNewClientOpen } from '../../../actions/clientActions';
+import { AppState } from '../../../store/test-store';
+import { setAddNewClientOpen } from '../../../ducks/client/client-toggle/client-toggle';
 import { CloseButtonWrapper, CompoundTitle, ContentWrapper, MainWrapper, Wrapper } from '../../../styles/compoundControllerStyles';
 import CloseButton from '../../atoms/CloseButton/CloseButton';
 import AddClientHeader from './components/AddClientHeader/AddClientHeader';
@@ -18,7 +18,7 @@ import AddressPage from './pages/AddressPage/AddressPage';
 
 const AddClientController: React.FC = () => {
   const dispatch = useDispatch();
-  const { isAddNewClientOpen } = useSelector(({ clientReducer }: AppState) => clientReducer);
+  const { isAddNewClientOpen } = useSelector((state: AppState) => state.client.clientToggle);
 
   const mainWrapperRef = useRef<HTMLDivElement | null>(null);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
@@ -38,7 +38,7 @@ const AddClientController: React.FC = () => {
         <MainWrapper ref={mainWrapperRef}>
           <Wrapper ref={wrapperRef}>
             <CloseButtonWrapper>
-              <CloseButton setBoxState={() => dispatch(setAddNewClientOpen(false))} />
+              <CloseButton close={() => dispatch(setAddNewClientOpen(false))} />
             </CloseButtonWrapper>
             <AddClientHeader />
             <CompoundTitle>Dodaj klienta</CompoundTitle>

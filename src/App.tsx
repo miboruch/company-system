@@ -1,36 +1,44 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import Layout from './components/Layout';
 import LoginPage from './pages/LoginPage/LoginPage';
-import { ThunkDispatch } from 'redux-thunk';
-import { AppTypes } from './types/actionTypes/appActionTypes';
-import { bindActionCreators } from 'redux';
-import { authenticateCheck, getAllAppUsers } from './actions/authenticationActions';
+import { getAllAppUsers } from './ducks/users/all-users-creators';
+import { authCheck } from './ducks/auth/check/check-creators';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import Routes from './routes/Routes';
 import SelectPage from './pages/SelectPage/SelectPage';
 import NotificationPopup from './components/molecules/NotificationPopup/NotificationPopup';
 import RegisterFromLink from './pages/RegisterFromLink/RegisterFromLink';
-import { getUserNotifications } from './actions/notificationActions';
+import { AppState, useAppDispatch } from './store/test-store';
 
-type ConnectedProps = LinkDispatchProps & RouteComponentProps<any>;
+type ConnectedProps = RouteComponentProps<any>;
 
-const App: React.FC<ConnectedProps> = ({ history, authenticationCheck, getAllAppUsers, getUserNotifications }) => {
+const App: React.FC<ConnectedProps> = ({ history }) => {
+  const dispatch = useAppDispatch();
+  const { token, refreshToken } = useSelector((state: AppState) => state.auth.tokens);
+  const { role } = useSelector((state: AppState) => state.auth.roles);
+  const { currentCompany } = useSelector((state: AppState) => state.company.currentCompany);
+
   useEffect(() => {
-    authenticationCheck(
-      () => {
-        getAllAppUsers();
-        history.push('/select');
-        getUserNotifications(1);
-      },
-      () => history.push('/login')
+    dispatch(
+      authCheck({
+        successCallback: () => {
+          dispatch(getAllAppUsers());
+          history.push('/select');
+        },
+        errorCallback: () => history.push('/login')
+      })
     );
   }, []);
 
-  useEffect(() => {}, []);
+  // useEffect(() => {
+  //   if (role === UserRole.Admin && currentCompany && refreshToken) {
+  //     dispatch(getAdminAccessToken({ refreshToken, companyId: currentCompany._id }));
+  //   }
+  // }, [currentCompany, refreshToken]);
 
   return (
     <Layout>
@@ -46,18 +54,4 @@ const App: React.FC<ConnectedProps> = ({ history, authenticationCheck, getAllApp
   );
 };
 
-interface LinkDispatchProps {
-  authenticationCheck: (successCallback: () => void, errorCallback: () => void) => void;
-  getAllAppUsers: () => void;
-  getUserNotifications: (page: number) => void;
-}
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
-  return {
-    authenticationCheck: bindActionCreators(authenticateCheck, dispatch),
-    getAllAppUsers: bindActionCreators(getAllAppUsers, dispatch),
-    getUserNotifications: bindActionCreators(getUserNotifications, dispatch)
-  };
-};
-
-export default withRouter(connect(null, mapDispatchToProps)(App));
+export default withRouter(App);

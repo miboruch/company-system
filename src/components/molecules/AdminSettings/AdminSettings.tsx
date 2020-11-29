@@ -1,41 +1,41 @@
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
-import { bindActionCreators } from 'redux';
+import { useSelector } from 'react-redux';
 import AddNewButton from '../../atoms/AddNewButton/AddNewButton';
 import Spinner from '../../atoms/Spinner/Spinner';
 import ListBox from '../ListBox/ListBox';
 import RemoveAdminPopup from '../RemoveAdminPopup/RemoveAdminPopup';
-import { CompanyOwnersInterface, EmployeeDataInterface, UserAuthData } from '../../../types/modelsTypes';
-import { AppState } from '../../../reducers/rootReducer';
-import { AppTypes } from '../../../types/actionTypes/appActionTypes';
-import { getAllCompanyEmployees } from '../../../actions/employeeActions';
-import { addNewCompanyOwner, getCompanyOwners } from '../../../actions/companyActions';
+import { CompanyOwnersInterface } from '../../../types/modelsTypes';
+import { AppState, useAppDispatch } from '../../../store/test-store';
+import { getAllCompanyEmployees } from '../../../ducks/employees/employees-data/employees-data-creators';
+import { getCompanyOwners, addNewCompanyOwner } from '../../../ducks/company/company-owners/company-owners-creators';
 import { SpinnerWrapper } from '../../../styles/shared';
 import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
-import { setNotificationMessage } from '../../../actions/toggleActions';
+import { setNotificationMessage } from '../../../ducks/popup/popup';
 import { Wrapper, ColumnWrapper, Heading } from './AdminSettings.styles';
 
-type ConnectedProps = LinkStateProps & LinkDispatchProps;
+const AdminSettings: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const { allCompanyEmployees } = useSelector((state: AppState) => state.employees.employeesData);
 
-const AdminSettings: React.FC<ConnectedProps> = ({ allCompanyEmployees, setNotificationMessage, userData, getAllCompanyEmployees, getCompanyOwners, addNewCompanyOwner }) => {
-  const [isLoading, setLoading] = useState<boolean>(false);
+  const { userData } = useSelector((state: AppState) => state.auth.data);
+  const { areOwnersLoading, companyOwners } = useSelector((state: AppState) => state.company.companyOwners);
+
   const [isAddNewToggled, setAddNewToggled] = useState<boolean>(false);
   const [isRemoveOpen, setRemoveOpen] = useState<boolean>(false);
-  const [companyOwners, setCompanyOwners] = useState<CompanyOwnersInterface[]>([]);
   const [companyOwnerToDelete, setCompanyOwnerToDelete] = useState<CompanyOwnersInterface | null>(null);
+
   useEffect(() => {
-    allCompanyEmployees.length === 0 && getAllCompanyEmployees();
-    getCompanyOwners(setCompanyOwners, setLoading);
+    allCompanyEmployees.length === 0 && dispatch(getAllCompanyEmployees());
+    dispatch(getCompanyOwners());
   }, []);
 
   const addCompanyOwner = (userId: string) => {
-    addNewCompanyOwner(userId, async () => getCompanyOwners(setCompanyOwners, setLoading));
+    dispatch(addNewCompanyOwner(userId));
   };
 
   return (
     <Wrapper>
-      {isLoading ? (
+      {areOwnersLoading ? (
         <SpinnerWrapper>
           <Spinner />
         </SpinnerWrapper>
@@ -52,7 +52,7 @@ const AdminSettings: React.FC<ConnectedProps> = ({ allCompanyEmployees, setNotif
                 bottomDescription={owner.email}
                 callback={() => {
                   if (owner._id === userData?.userId) {
-                    setNotificationMessage('Nie możesz usunąc samego siebie', NotificationTypes.Error);
+                    dispatch(setNotificationMessage({ message: 'Nie możesz usunąc samego siebie', notificationType: NotificationTypes.Error }));
                   } else {
                     setRemoveOpen(true);
                     setCompanyOwnerToDelete(owner);
@@ -79,34 +79,9 @@ const AdminSettings: React.FC<ConnectedProps> = ({ allCompanyEmployees, setNotif
           </ColumnWrapper>
         </>
       )}
-      <RemoveAdminPopup isOpen={isRemoveOpen} setOpen={setRemoveOpen} companyOwnerToDelete={companyOwnerToDelete} callback={() => getCompanyOwners(setCompanyOwners, setLoading)} />
+      <RemoveAdminPopup isOpen={isRemoveOpen} closePopup={() => setRemoveOpen(false)} companyOwnerToDelete={companyOwnerToDelete} />
     </Wrapper>
   );
 };
 
-interface LinkStateProps {
-  allCompanyEmployees: EmployeeDataInterface[];
-  userData: null | UserAuthData;
-}
-
-interface LinkDispatchProps {
-  getAllCompanyEmployees: () => void;
-  getCompanyOwners: (setCompanyOwners: (owners: CompanyOwnersInterface[]) => void, setLoading: (isLoading: boolean) => void) => void;
-  addNewCompanyOwner: (userId: string, callback: () => void) => void;
-  setNotificationMessage: (message: string | null, notificationType: NotificationTypes | null) => void;
-}
-
-const mapStateToProps = ({ authenticationReducer: { userData }, employeeReducer: { allCompanyEmployees } }: AppState): LinkStateProps => {
-  return { allCompanyEmployees, userData };
-};
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
-  return {
-    getAllCompanyEmployees: bindActionCreators(getAllCompanyEmployees, dispatch),
-    getCompanyOwners: bindActionCreators(getCompanyOwners, dispatch),
-    addNewCompanyOwner: bindActionCreators(addNewCompanyOwner, dispatch),
-    setNotificationMessage: bindActionCreators(setNotificationMessage, dispatch)
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AdminSettings);
+export default AdminSettings;

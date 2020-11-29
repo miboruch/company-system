@@ -1,16 +1,12 @@
 import React from 'react';
 import { Formik } from 'formik';
-import { connect } from 'react-redux';
-import { EmployeeDataInterface } from '../../../types/modelsTypes';
-import { AppState } from '../../../reducers/rootReducer';
+import { useSelector } from 'react-redux';
+import { AppState, useAppDispatch } from '../../../store/test-store';
 import Button from '../../atoms/Button/Button';
 import { StyledInput } from '../../../styles/compoundStyles';
 import { Paragraph } from '../../../styles/typography/typography';
 import { Wrapper, StyledForm, HeaderWrapper, EmployeeInfoBox, Title, InputWrapper } from '../../../styles/contentStyles';
-import { ThunkDispatch } from 'redux-thunk';
-import { AppTypes } from '../../../types/actionTypes/appActionTypes';
-import { bindActionCreators } from 'redux';
-import { updateEmployeeSalary } from '../../../actions/employeeActions';
+import { updateEmployeeSalary } from '../../../ducks/employees/employees-data/employees-data-creators';
 import { DeleteIcon } from '../../../styles/iconStyles';
 import { EmployeeSchema } from '../../../validation/modelsValidation';
 
@@ -23,16 +19,17 @@ interface Props {
   setDeleteOpen: (isOpen: boolean) => void;
 }
 
-type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
+const EmployeeInfo: React.FC<Props> = ({ setDeleteOpen }) => {
+  const dispatch = useAppDispatch();
+  const { selectedEmployee } = useSelector((state: AppState) => state.employees.employeesToggle);
 
-const EmployeeInfo: React.FC<ConnectedProps> = ({ selectedEmployee, updateEmployeeSalary, setDeleteOpen }) => {
   const initialValues: InitialValues = {
     hourSalary: selectedEmployee?.pricePerHour,
     monthlySalary: selectedEmployee?.monthlyPrice
   };
 
-  const handleSubmit = (values: InitialValues): void => {
-    updateEmployeeSalary(values.hourSalary, values.monthlySalary);
+  const handleSubmit = ({ hourSalary, monthlySalary }: InitialValues): void => {
+    dispatch(updateEmployeeSalary({ pricePerHour: hourSalary, monthlyPrice: monthlySalary }));
   };
 
   return (
@@ -87,22 +84,4 @@ const EmployeeInfo: React.FC<ConnectedProps> = ({ selectedEmployee, updateEmploy
   );
 };
 
-interface LinkStateProps {
-  selectedEmployee: EmployeeDataInterface | null;
-}
-
-interface LinkDispatchProps {
-  updateEmployeeSalary: (pricePerHour?: number, monthlyPrice?: number) => void;
-}
-
-const mapStateToProps = ({ employeeReducer: { selectedEmployee } }: AppState): LinkStateProps => {
-  return { selectedEmployee };
-};
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
-  return {
-    updateEmployeeSalary: bindActionCreators(updateEmployeeSalary, dispatch)
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(EmployeeInfo);
+export default EmployeeInfo;

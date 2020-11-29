@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
 import { TaskInterface } from '../../../types/modelsTypes';
-import { AppState } from '../../../reducers/rootReducer';
-import { ThunkDispatch } from 'redux-thunk';
-import { AppTypes } from '../../../types/actionTypes/appActionTypes';
-import { bindActionCreators } from 'redux';
-import { deleteTask, getCompanyTasks, selectTask, setAddNewTaskOpen, setTaskInfoOpen } from '../../../actions/taskActions';
+import { AppState, useAppDispatch } from '../../../store/test-store';
+import { deleteTask, getCompanyTasks } from '../../../ducks/tasks/tasks-data/task-data-creators';
+import { selectTask } from '../../../ducks/tasks/tasks-toggle/tasks-toggle-creators';
+import { setAddNewTaskOpen, setTaskInfoOpen, setTaskMapPreviewOpen } from '../../../ducks/tasks/tasks-toggle/tasks-toggle';
 import Spinner from '../../atoms/Spinner/Spinner';
 import { Paragraph } from '../../../styles/typography/typography';
 import { SpinnerWrapper, List, AddIcon, AddWrapper } from '../../../styles/shared';
@@ -17,26 +16,12 @@ import TaskInfo from '../TaskInfo/TaskInfo';
 import { listAnimation } from '../../../animations/animations';
 import DeletePopup from '../../molecules/DeletePopup/DeletePopup';
 import AddTaskController from '../../compound/AddTask/AddTaskController';
-import { setTaskMapPreviewOpen } from '../../../actions/toggleActions';
 import MapCoordsEdit, { CoordsEditType } from '../MapCoordsEdit/MapCoordsEdit';
 
-interface Props {}
-
-type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
-
-const TaskPageContent: React.FC<ConnectedProps> = ({
-  isLoading,
-  allCompanyTasks,
-  getCompanyTasks,
-  selectTask,
-  isTaskInfoOpen,
-  setTaskInfoOpen,
-  setAddNewTaskOpen,
-  selectedTask,
-  deleteTask,
-  isTaskMapPreviewOpen,
-  setTaskMapPreviewOpen
-}) => {
+const TaskPageContent: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const { allCompanyTasks, areTasksLoading } = useSelector((state: AppState) => state.tasks.taskData);
+  const { isTaskInfoOpen, isTaskMapPreviewOpen, selectedTask } = useSelector((state: AppState) => state.tasks.taskToggle);
   const listRef = useRef<HTMLDivElement | null>(null);
   const [filterText, setFilterText] = useState<string>('');
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
@@ -46,11 +31,11 @@ const TaskPageContent: React.FC<ConnectedProps> = ({
   };
 
   useEffect(() => {
-    listAnimation(tl, listRef, isLoading);
-  }, [isLoading]);
+    listAnimation(tl, listRef, areTasksLoading);
+  }, [areTasksLoading]);
 
   useEffect(() => {
-    getCompanyTasks();
+    dispatch(getCompanyTasks());
     // allCompanyTasks.length === 0 && getCompanyTasks();
   }, []);
 
@@ -61,7 +46,7 @@ const TaskPageContent: React.FC<ConnectedProps> = ({
         pageName={'Zadania'}
         setFilterText={setFilterText}
         render={(isEditToggled, setEditToggled, isDeleteOpen, setDeleteOpen) =>
-          isLoading ? (
+          areTasksLoading ? (
             <SpinnerWrapper>
               <Spinner />
             </SpinnerWrapper>
@@ -76,15 +61,15 @@ const TaskPageContent: React.FC<ConnectedProps> = ({
                     bottomDescription={task.description}
                     isCompanyBox={false}
                     isChecked={task.isCompleted}
-                    callback={() => selectTask(task)}
+                    callback={() => dispatch(selectTask(task))}
                   />
                 ))}
-                <AddWrapper onClick={() => setAddNewTaskOpen(true)}>
+                <AddWrapper onClick={() => dispatch(setAddNewTaskOpen(true))}>
                   <AddIcon />
                   <Paragraph type={'add'}>Dodaj zadanie</Paragraph>
                 </AddWrapper>
               </List>
-              <ContentTemplate isOpen={isTaskInfoOpen} setOpen={setTaskInfoOpen}>
+              <ContentTemplate isOpen={isTaskInfoOpen} close={() => dispatch(setTaskInfoOpen(false))}>
                 <TaskInfo isEditToggled={isEditToggled} setDeleteOpen={setDeleteOpen} setEditToggled={setEditToggled} />
               </ContentTemplate>
               <DeletePopup
@@ -92,7 +77,7 @@ const TaskPageContent: React.FC<ConnectedProps> = ({
                 setOpen={setDeleteOpen}
                 headerText={'Usuń zadanie'}
                 text={`${selectedTask?.name}`}
-                callback={() => selectedTask?._id && deleteTask(selectedTask._id)}
+                callback={() => selectedTask?._id && dispatch(deleteTask(selectedTask._id))}
               />
               <AddTaskController />
             </>
@@ -100,42 +85,16 @@ const TaskPageContent: React.FC<ConnectedProps> = ({
         }
       />
       {selectedTask?.clientId && (
-        <MapCoordsEdit isOpen={isTaskMapPreviewOpen} setOpen={setTaskMapPreviewOpen} lat={selectedTask?.clientId.lat} long={selectedTask?.clientId.long} type={CoordsEditType.View} />
+        <MapCoordsEdit
+          isOpen={isTaskMapPreviewOpen}
+          closeMap={() => dispatch(setTaskMapPreviewOpen(false))}
+          lat={selectedTask?.clientId.lat}
+          long={selectedTask?.clientId.long}
+          type={CoordsEditType.View}
+        />
       )}
     </>
   );
 };
 
-interface LinkStateProps {
-  isLoading: boolean;
-  allCompanyTasks: TaskInterface[];
-  isTaskInfoOpen: boolean;
-  selectedTask: TaskInterface | null;
-  isTaskMapPreviewOpen: boolean;
-}
-
-interface LinkDispatchProps {
-  getCompanyTasks: () => void;
-  selectTask: (task: TaskInterface) => void;
-  setTaskInfoOpen: (isOpen: boolean) => void;
-  setAddNewTaskOpen: (isOpen: boolean) => void;
-  deleteTask: (taskId: string) => void;
-  setTaskMapPreviewOpen: (isOpen: boolean) => void;
-}
-
-const mapStateToProps = ({ taskReducer: { isLoading, allCompanyTasks, isTaskInfoOpen, selectedTask }, toggleReducer: { isTaskMapPreviewOpen } }: AppState): LinkStateProps => {
-  return { isLoading, allCompanyTasks, isTaskInfoOpen, selectedTask, isTaskMapPreviewOpen };
-};
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
-  return {
-    getCompanyTasks: bindActionCreators(getCompanyTasks, dispatch),
-    selectTask: bindActionCreators(selectTask, dispatch),
-    setTaskInfoOpen: bindActionCreators(setTaskInfoOpen, dispatch),
-    setAddNewTaskOpen: bindActionCreators(setAddNewTaskOpen, dispatch),
-    deleteTask: bindActionCreators(deleteTask, dispatch),
-    setTaskMapPreviewOpen: bindActionCreators(setTaskMapPreviewOpen, dispatch)
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(TaskPageContent);
+export default TaskPageContent;

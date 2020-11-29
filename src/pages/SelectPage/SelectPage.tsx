@@ -1,40 +1,24 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { UserRole } from '../../types/actionTypes/authenticationActionTypes';
-import { ThunkDispatch } from 'redux-thunk';
-import { AppTypes } from '../../types/actionTypes/appActionTypes';
-import { bindActionCreators } from 'redux';
-import { setUserRole } from '../../actions/authenticationActions';
+import { setRole } from '../../ducks/auth/roles/roles';
+import { useAppDispatch } from '../../store/test-store';
 
-interface Props {}
-
-type ConnectedProps = Props & LinkDispatchProps;
-
-const SelectPage: React.FC<ConnectedProps> = ({ setUserRole }) => {
+const SelectPage: React.FC = () => {
+  const dispatch = useAppDispatch();
   return (
     <div>
-      <Link to={'/admin/companies'} onClick={() => setUserRole(UserRole.Admin)}>
+      <Link to={'/admin/companies'} onClick={() => dispatch(setRole(UserRole.Admin))}>
         Admin
       </Link>
-      <Link to={'/admin/settings'} onClick={() => setUserRole(UserRole.Admin)}>
+      <Link to={'/admin/settings'} onClick={() => dispatch(setRole(UserRole.Admin))}>
         Admin settings
       </Link>
-      <Link to={'/user/companies'} onClick={() => setUserRole(UserRole.User)}>
+      <Link to={'/user/companies'} onClick={() => dispatch(setRole(UserRole.User))}>
         Użytkownik
       </Link>
     </div>
   );
 };
 
-interface LinkDispatchProps {
-  setUserRole: (role: UserRole) => void;
-}
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
-  return {
-    setUserRole: bindActionCreators(setUserRole, dispatch)
-  };
-};
-
-export default connect(null, mapDispatchToProps)(SelectPage);
+export default SelectPage;

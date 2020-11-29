@@ -9,8 +9,8 @@ import { StandardCompoundTitle } from '../../../styles/compoundStyles';
 import StepList from './components/StepList/StepList';
 import AddEmployeeTemplate from './templates/AddEmployeeTemplate';
 import { PageSettingEnum } from './context/PageContext';
-import { AppState } from '../../../reducers/rootReducer';
-import { setAddNewEmployeeOpen } from '../../../actions/employeeActions';
+import { AppState } from '../../../store/test-store';
+import { setAddNewEmployeeOpen } from '../../../ducks/employees/employees-toggle/employees-toggle';
 import { modalOpenAnimation } from '../../../animations/animations';
 import AddEmployeeHeader from './components/AddEmployeeHeader/AddEmployeeHeader';
 import SelectEmployee from './pages/SelectEmployee/SelectEmployee';
@@ -18,7 +18,7 @@ import SalaryPage from './pages/SalaryPage/SalaryPage';
 
 const AddEmployeeController: React.FC = () => {
   const dispatch = useDispatch();
-  const { isAddNewOpen } = useSelector((state: AppState) => state.employeeReducer);
+  const { isAddNewOpen } = useSelector((state: AppState) => state.employees.employeesToggle);
 
   const mainWrapperRef = useRef<HTMLDivElement | null>(null);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
@@ -38,7 +38,7 @@ const AddEmployeeController: React.FC = () => {
         <MainWrapper ref={mainWrapperRef}>
           <Wrapper ref={wrapperRef}>
             <CloseButtonWrapper>
-              <CloseButton setBoxState={() => dispatch(setAddNewEmployeeOpen(false))} />
+              <CloseButton close={() => dispatch(setAddNewEmployeeOpen(false))} />
             </CloseButtonWrapper>
             <AddEmployeeHeader />
             <CompoundTitle>Dodaj pracownika</CompoundTitle>

@@ -1,22 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { EmployeeDataInterface } from '../../../types/modelsTypes';
-import { AppState } from '../../../reducers/rootReducer';
+import { AppState, useAppDispatch } from '../../../store/test-store';
 import ListBox from '../../molecules/ListBox/ListBox';
-import { ThunkDispatch } from 'redux-thunk';
-import { AppTypes } from '../../../types/actionTypes/appActionTypes';
-import { bindActionCreators } from 'redux';
 import { SpinnerWrapper } from '../../../styles/shared';
-import { getEmployeeHours, getEmployeeSalary } from '../../../actions/employeeActions';
+import { getEmployeeHours, getEmployeeSalary } from '../../../ducks/employees/employees-data/employees-data-creators';
 import Spinner from '../../atoms/Spinner/Spinner';
 import CloseButton from '../../atoms/CloseButton/CloseButton';
 import gsap from 'gsap';
 import { modalOpenAnimation } from '../../../animations/animations';
 import { CloseButtonWrapper } from '../../../styles/compoundControllerStyles';
-import {Heading, Paragraph} from '../../../styles/typography/typography';
+import { Heading, Paragraph } from '../../../styles/typography/typography';
 import Dropdown from '../../atoms/Dropdown/Dropdown';
-import { months } from '../../../utils/staticData';
+import { MonthInterface, months } from '../../../utils/staticData';
+import MonthDropdown from '../../atoms/MonthDropdown/MonthDropdown';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -93,22 +91,25 @@ interface Props {
   setOpen: (isOpen: boolean) => void;
 }
 
-type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
+const AdminStatistics: React.FC<Props> = ({ isOpen, setOpen }) => {
+  const dispatch = useAppDispatch();
+  const { allCompanyEmployees, areEmployeesLoading } = useSelector((state: AppState) => state.employees.employeesData);
 
-const AdminStatistics: React.FC<ConnectedProps> = ({ allCompanyEmployees, getEmployeeSalary, getEmployeeHours, isLoading, isOpen, setOpen }) => {
   const [selectedEmployee, setSelectedEmployee] = useState<EmployeeDataInterface | null>(null);
   const [userSalary, setUserSalary] = useState<number>(0);
   const [userHours, setUserHours] = useState<number>(0);
+  const [selectedMonth, setSelectedMonth] = useState<MonthInterface | null>(null);
   const mainWrapperRef = useRef<HTMLDivElement | null>(null);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
 
   useEffect(() => {
+    const currentMonthIndex = new Date().getMonth();
     if (selectedEmployee) {
-      getEmployeeSalary(selectedEmployee.userId._id, 10, setUserSalary);
-      getEmployeeHours(selectedEmployee.userId._id, 10, setUserHours);
+      dispatch(getEmployeeSalary({ userId: selectedEmployee.userId._id, monthIndex: selectedMonth ? selectedMonth.index : currentMonthIndex, setSalary: setUserSalary }));
+      dispatch(getEmployeeHours({ userId: selectedEmployee.userId._id, monthIndex: selectedMonth ? selectedMonth.index : currentMonthIndex, setHours: setUserHours }));
     }
-  }, [selectedEmployee?.userId]);
+  }, [selectedEmployee?.userId, selectedMonth]);
 
   useEffect(() => {
     modalOpenAnimation(tl, mainWrapperRef, wrapperRef);
@@ -118,13 +119,11 @@ const AdminStatistics: React.FC<ConnectedProps> = ({ allCompanyEmployees, getEmp
     isOpen ? tl.play() : tl.reverse();
   }, [isOpen]);
 
-  const handleMonthSelect = (selected: string | null) => console.log(selected);
-
   return (
     <StyledWrapper ref={mainWrapperRef}>
       <Box ref={wrapperRef}>
         <CloseButtonWrapper>
-          <CloseButton setBoxState={setOpen} />
+          <CloseButton close={() => setOpen(false)} />
         </CloseButtonWrapper>
         <ListWrapper>
           <StyledHeading>Pracownicy</StyledHeading>
@@ -141,51 +140,31 @@ const AdminStatistics: React.FC<ConnectedProps> = ({ allCompanyEmployees, getEmp
           ))}
         </ListWrapper>
         <ContentWrapper>
-          {isLoading ? (
-            <SpinnerWrapper>
-              <Spinner />
-            </SpinnerWrapper>
-          ) : (
-            <TextWrapper isVisible={!!selectedEmployee}>
-              <Heading>
-                {selectedEmployee?.userId.name} {selectedEmployee?.userId.lastName}
-              </Heading>
-              {/*<Dropdown options={months} onChange={handleMonthSelect} labelText={'Wybierz miesiąc'} />*/}
-              <Paragraph type={'subparagraph'}>Statystyki użytkownika w miesiącu: Listopad</Paragraph>
-              <Paragraph type={'text'}>Zarobki {selectedEmployee?.pricePerHour ? `${selectedEmployee.pricePerHour} zł/h` : `${selectedEmployee?.monthlyPrice} miesięcznie`}</Paragraph>
-              <Paragraph type={'text'}>
-                Ilość przepracowanych godzin: <Span>{userHours}</Span>
-              </Paragraph>
-              <Paragraph type={'text'}>
-                Wynagrodzenie: <Span>{userSalary} zł</Span>
-              </Paragraph>
-            </TextWrapper>
-          )}
+          <TextWrapper isVisible={!!selectedEmployee}>
+            <Heading>
+              {selectedEmployee?.userId.name} {selectedEmployee?.userId.lastName}
+            </Heading>
+            <MonthDropdown options={months} onChange={(month) => setSelectedMonth(month)} labelText={'Miesiąc'} />
+            {areEmployeesLoading ? (
+              <SpinnerWrapper>
+                <Spinner />
+              </SpinnerWrapper>
+            ) : (
+              <>
+                <Paragraph type={'text'}>Zarobki {selectedEmployee?.pricePerHour ? `${selectedEmployee.pricePerHour} zł/h` : `${selectedEmployee?.monthlyPrice} miesięcznie`}</Paragraph>
+                <Paragraph type={'text'}>
+                  Ilość przepracowanych godzin: <Span>{userHours}</Span>
+                </Paragraph>
+                <Paragraph type={'text'}>
+                  Wynagrodzenie: <Span>{userSalary} zł</Span>
+                </Paragraph>
+              </>
+            )}
+          </TextWrapper>
         </ContentWrapper>
       </Box>
     </StyledWrapper>
   );
 };
 
-interface LinkStateProps {
-  allCompanyEmployees: EmployeeDataInterface[];
-  isLoading: boolean;
-}
-
-const mapStateToProps = ({ employeeReducer: { allCompanyEmployees, isLoading } }: AppState): LinkStateProps => {
-  return { allCompanyEmployees, isLoading };
-};
-
-interface LinkDispatchProps {
-  getEmployeeSalary: (userId: string, monthIndex: number, setSalary: (hours: number) => void) => void;
-  getEmployeeHours: (userId: string, monthIndex: number, setHours: (hours: number) => void) => void;
-}
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
-  return {
-    getEmployeeSalary: bindActionCreators(getEmployeeSalary, dispatch),
-    getEmployeeHours: bindActionCreators(getEmployeeHours, dispatch)
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AdminStatistics);
+export default AdminStatistics;

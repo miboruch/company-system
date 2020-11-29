@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk, { ThunkMiddleware } from 'redux-thunk';
-import { AppState, rootReducer } from '../reducers/rootReducer';
+import { rootReducer } from '../reducers/rootReducer';
+import { AppState } from './test-store';
 import { AppTypes } from '../types/actionTypes/appActionTypes';
 
 declare global {

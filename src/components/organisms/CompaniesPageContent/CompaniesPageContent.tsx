@@ -1,11 +1,8 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { CompanyInterface } from '../../../types/modelsTypes';
-import { AppState } from '../../../reducers/rootReducer';
-import { ThunkDispatch } from 'redux-thunk';
-import { AppTypes } from '../../../types/actionTypes/appActionTypes';
-import { bindActionCreators } from 'redux';
-import { getUserCompanies, setAddCompanyOpen, setCompany } from '../../../actions/companyActions';
+import { useSelector } from 'react-redux';
+import { getUserCompanies } from '../../../ducks/company/companies/companies-creators';
+import { setCurrentCompany } from '../../../ducks/company/current-company/current-company-creators';
+import { AppState, useAppDispatch } from '../../../store/test-store';
 import { AddIcon, AddWrapper, SpinnerWrapper } from '../../../styles/shared';
 import Spinner from '../../atoms/Spinner/Spinner';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
@@ -15,17 +12,20 @@ import ListBox from '../../molecules/ListBox/ListBox';
 import AddCompanyController from '../../compound/AddCompany/AddCompanyController';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
+import { setAddCompanyOpen } from '../../../ducks/company/company-toggle/company-toggle';
 
-type ConnectedProps = LinkStateProps & LinkDispatchProps & RouteComponentProps<any>;
+const CompaniesPageContent: React.FC<RouteComponentProps<any>> = ({ history }) => {
+  const dispatch = useAppDispatch();
+  const { areUserCompaniesLoading, userCompanies } = useSelector((state: AppState) => state.company.companies);
+  const { role } = useSelector((state: AppState) => state.auth.roles);
 
-const CompaniesPageContent: React.FC<ConnectedProps> = ({ history, role, userCompanies, getUserCompanies, isLoading, setAddCompanyOpen, setCompany }) => {
   useEffect(() => {
-    getUserCompanies();
+    dispatch(getUserCompanies());
   }, []);
 
   return (
     <GridWrapper mobilePadding={true} onlyHeader={true} pageName={'Twoje firmy'}>
-      {isLoading ? (
+      {areUserCompaniesLoading ? (
         <SpinnerWrapper>
           <Spinner />
         </SpinnerWrapper>
@@ -41,15 +41,14 @@ const CompaniesPageContent: React.FC<ConnectedProps> = ({ history, role, userCom
                   name={company.name}
                   topDescription={company.nip}
                   bottomDescription={`${company.address}, ${company.city}`}
-                  callback={() => setCompany(company, () => history.push(role === UserRole.Admin ? '/admin/home' : '/user/home'))}
-                  // on callback push to /admin/home or /user/home based on current page
+                  callback={() => dispatch(setCurrentCompany(company, () => history.push(role === UserRole.Admin ? '/admin/home' : '/user/home')))}
                   isCompanyBox={true}
                   isChecked={false}
                 />
               ))
             )}
           </Table>
-          <AddWrapper onClick={() => setAddCompanyOpen(true)}>
+          <AddWrapper onClick={() => dispatch(setAddCompanyOpen(true))}>
             <AddIcon />
             <Paragraph type={'add'}>Dodaj firme</Paragraph>
           </AddWrapper>
@@ -60,30 +59,4 @@ const CompaniesPageContent: React.FC<ConnectedProps> = ({ history, role, userCom
   );
 };
 
-interface LinkStateProps {
-  role: UserRole;
-  isLoading: boolean;
-  userCompanies: CompanyInterface[];
-}
-
-interface LinkDispatchProps {
-  getUserCompanies: () => void;
-  setAddCompanyOpen: (isOpen: boolean) => void;
-  setCompany: (currentCompany: CompanyInterface | null, successCallback: () => void) => void;
-}
-
-const mapStateToProps = ({ companyReducer: { userCompanies, isLoading }, authenticationReducer: { role } }: AppState): LinkStateProps => {
-  return { userCompanies, isLoading, role };
-};
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
-  return {
-    getUserCompanies: bindActionCreators(getUserCompanies, dispatch),
-    setAddCompanyOpen: bindActionCreators(setAddCompanyOpen, dispatch),
-    setCompany: bindActionCreators(setCompany, dispatch)
-  };
-};
-
-const CompaniesPageContentWithRouter = withRouter(CompaniesPageContent);
-
-export default connect(mapStateToProps, mapDispatchToProps)(CompaniesPageContentWithRouter);
+export default withRouter(CompaniesPageContent);

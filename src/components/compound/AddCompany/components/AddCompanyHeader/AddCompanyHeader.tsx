@@ -6,7 +6,7 @@ import CloseButton from '../../../../atoms/CloseButton/CloseButton';
 import { StyledHeader } from '../../../styles/headerStyles';
 import { Paragraph } from '../../../../../styles/typography/typography';
 import { Direction } from '../../../../../types/globalTypes';
-import { setAddCompanyOpen } from '../../../../../actions/companyActions';
+import { setAddCompanyOpen } from '../../../../../ducks/company/company-toggle/company-toggle';
 
 const AddCompanyHeader: React.FC = () => {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ const AddCompanyHeader: React.FC = () => {
     <StyledHeader>
       <ArrowButton direction={Direction.Left} isHidden={currentPage === 0} onClick={() => currentPage !== 0 && setCurrentPage(currentPage - 1)} />
       <Paragraph type={'main'}>Krok {currentPage + 1}</Paragraph>
-      <CloseButton setBoxState={() => dispatch(setAddCompanyOpen(false))} />
+      <CloseButton close={() => dispatch(setAddCompanyOpen(false))} />
     </StyledHeader>
   );
 };

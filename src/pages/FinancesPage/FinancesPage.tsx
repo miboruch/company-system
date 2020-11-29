@@ -1,20 +1,16 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
 import MenuTemplate from '../../components/templates/MenuTemplate/MenuTemplate';
 import FinancesPageContent from '../../components/organisms/FinancesPageContent/FinancesPageContent';
-import { ThunkDispatch } from 'redux-thunk';
-import { AppTypes } from '../../types/actionTypes/appActionTypes';
-import { bindActionCreators } from 'redux';
-import { fetchAllFinancesData } from '../../actions/financeActions';
+import { fetchAllFinancesData } from '../../ducks/finances/finances-creators';
+import { useAppDispatch } from '../../store/test-store';
 
-interface Props {}
+const FinancesPage: React.FC = () => {
+  const dispatch = useAppDispatch();
 
-type ConnectedProps = Props & LinkDispatchProps;
-
-const FinancesPage: React.FC<ConnectedProps> = ({ fetchAllFinancesData }) => {
   useEffect(() => {
-    fetchAllFinancesData();
+    dispatch(fetchAllFinancesData());
   }, []);
+
   return (
     <MenuTemplate>
       <FinancesPageContent />
@@ -22,14 +18,4 @@ const FinancesPage: React.FC<ConnectedProps> = ({ fetchAllFinancesData }) => {
   );
 };
 
-interface LinkDispatchProps {
-  fetchAllFinancesData: () => void;
-}
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
-  return {
-    fetchAllFinancesData: bindActionCreators(fetchAllFinancesData, dispatch)
-  };
-};
-
-export default connect(null, mapDispatchToProps)(FinancesPage);
+export default FinancesPage;

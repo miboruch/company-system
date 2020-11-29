@@ -8,7 +8,7 @@ import { Formik } from 'formik';
 import { EmployeeDataContext } from '../../context/EmployeeDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { UserDataInterface } from '../../../../../types/modelsTypes';
-import { AppState } from '../../../../../reducers/rootReducer';
+import { AppState } from '../../../../../store/test-store';
 import UserBox from '../../../../molecules/UserBox/UserBox';
 import { removeDuplicates } from '../../../../../utils/functions';
 import { Paragraph } from '../../../../../styles/typography/typography';
@@ -34,8 +34,9 @@ type SetMailDefaultValues = {
 type DefaultValues = SelectUserDefaultValues | SetMailDefaultValues;
 
 const SelectEmployee: React.FC = () => {
-  const { allAppUsers } = useSelector((state: AppState) => state.authenticationReducer);
-  const { allCompanyEmployees } = useSelector((state: AppState) => state.employeeReducer);
+  // const { allAppUsers } = useSelector((state: AppState) => state.authenticationReducer);
+  const allAppUsers: UserDataInterface[] = [];
+  const { allCompanyEmployees } = useSelector((state: AppState) => state.employees.employeesData);
 
   const { data, setData } = useContext(EmployeeDataContext);
   const { setCurrentPage } = useContext(PageContext);

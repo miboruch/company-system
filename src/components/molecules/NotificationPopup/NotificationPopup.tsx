@@ -1,19 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import { connect } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
-import { bindActionCreators } from 'redux';
-import { AppState } from '../../../reducers/rootReducer';
-import { AppTypes } from '../../../types/actionTypes/appActionTypes';
-import { NotificationMessage, NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
-import { setNotificationMessage } from '../../../actions/toggleActions';
+import { useSelector } from 'react-redux';
+import { AppState, useAppDispatch } from '../../../store/test-store';
+import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
 import { NOTIFICATION_VISIBILITY_TIME } from '../../../utils/config';
 import { CheckedIcon, NotCheckedIcon } from '../../../styles/iconStyles';
 import { NotificationWrapper, NotificationParagraph } from './NotificationPopup.styles';
+import { setNotificationMessage } from '../../../ducks/popup/popup';
 
-type ConnectedProps = LinkStateProps & LinkDispatchProps;
-
-const NotificationPopup: React.FC<ConnectedProps> = ({ isNotificationOpen, notificationMessage, setNotificationMessage }) => {
+const NotificationPopup: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const { isNotificationOpen, notificationMessage } = useSelector((state: AppState) => state.popup);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
   const [shouldPopupBeOpen, setPopupOpen] = useState<boolean>(false);
@@ -44,7 +41,7 @@ const NotificationPopup: React.FC<ConnectedProps> = ({ isNotificationOpen, notif
     // * one second after animation end, we set redux state to null
     if (!shouldPopupBeOpen) {
       setTimeout(() => {
-        setNotificationMessage(null, null);
+        dispatch(setNotificationMessage({ message: '', notificationType: undefined }));
       }, 1000);
     }
   }, [shouldPopupBeOpen]);
@@ -68,23 +65,4 @@ const NotificationPopup: React.FC<ConnectedProps> = ({ isNotificationOpen, notif
   );
 };
 
-interface LinkStateProps {
-  isNotificationOpen: boolean;
-  notificationMessage: NotificationMessage | null;
-}
-
-interface LinkDispatchProps {
-  setNotificationMessage: (message: string | null, notificationType: NotificationTypes | null) => void;
-}
-
-const mapStateToProps = ({ toggleReducer: { isNotificationOpen, notificationMessage } }: AppState): LinkStateProps => {
-  return { isNotificationOpen, notificationMessage };
-};
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
-  return {
-    setNotificationMessage: bindActionCreators(setNotificationMessage, dispatch)
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(NotificationPopup);
+export default NotificationPopup;

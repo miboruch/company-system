@@ -6,7 +6,7 @@ import CloseButton from '../../../../atoms/CloseButton/CloseButton';
 import { PageContext } from '../../context/PageContext';
 import { StyledHeader } from '../../../styles/headerStyles';
 import { Paragraph } from '../../../../../styles/typography/typography';
-import { setAddNewClientOpen } from '../../../../../actions/clientActions';
+import { setAddNewClientOpen } from '../../../../../ducks/client/client-toggle/client-toggle';
 
 const AddClientHeader: React.FC = () => {
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ const AddClientHeader: React.FC = () => {
     <StyledHeader>
       <ArrowButton direction={Direction.Left} isHidden={currentPage === 0} onClick={() => currentPage !== 0 && setCurrentPage(currentPage - 1)} />
       <Paragraph type={'main'}>Krok {currentPage + 1}</Paragraph>
-      <CloseButton setBoxState={() => dispatch(setAddNewClientOpen(false))} />
+      <CloseButton close={() => dispatch(setAddNewClientOpen(false))} />
     </StyledHeader>
   );
 };

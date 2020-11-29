@@ -1,14 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { ClientInterface } from '../../../types/modelsTypes';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
 import { listAnimation } from '../../../animations/animations';
-import { AppState } from '../../../reducers/rootReducer';
-import { ThunkDispatch } from 'redux-thunk';
-import { AppTypes } from '../../../types/actionTypes/appActionTypes';
-import { bindActionCreators } from 'redux';
-import { deleteClient, getCompanyClients, selectClient, setAddNewClientOpen, setClientInfoOpen } from '../../../actions/clientActions';
+import { AppState, useAppDispatch } from '../../../store/test-store';
+
+import { deleteClient } from '../../../ducks/client/client-creators';
+import { getCompanyClients } from '../../../ducks/client/client-data/client-data-creators';
+import { selectClient } from '../../../ducks/client/client-toggle/client-toggle-creators';
+import { setAddNewClientOpen, setClientInfoOpen } from '../../../ducks/client/client-toggle/client-toggle';
+
 import { Paragraph } from '../../../styles/typography/typography';
 import { AddIcon, AddWrapper, List, SpinnerWrapper } from '../../../styles/shared';
 import Spinner from '../../atoms/Spinner/Spinner';
@@ -18,25 +20,13 @@ import ClientInfo from '../ClientInfo/ClientInfo';
 import AddClientController from '../../compound/AddClient/AddClientController';
 import DeletePopup from '../../molecules/DeletePopup/DeletePopup';
 import MapCoordsEdit, { CoordsEditType } from '../MapCoordsEdit/MapCoordsEdit';
-import { setEditClientCoordsOpen } from '../../../actions/toggleActions';
+import { setEditClientCoordsOpen } from '../../../ducks/client/client-toggle/client-toggle';
 
-interface Props {}
+const ClientsPageContent: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const { isEditClientCoordsOpen, isClientInfoOpen, selectedClient } = useSelector((state: AppState) => state.client.clientToggle);
+  const { allCompanyClients, areClientsLoading } = useSelector((state: AppState) => state.client.clientData);
 
-type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
-
-const ClientsPageContent: React.FC<ConnectedProps> = ({
-  isLoading,
-  allCompanyClients,
-  isClientInfoOpen,
-  setClientInfoOpen,
-  selectClient,
-  getCompanyClients,
-  setAddNewClientOpen,
-  selectedClient,
-  deleteClient,
-  isEditClientCoordsOpen,
-  setEditClientCoordsOpen
-}) => {
   const listRef = useRef<HTMLDivElement | null>(null);
   const [filterText, setFilterText] = useState<string>('');
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
@@ -50,7 +40,7 @@ const ClientsPageContent: React.FC<ConnectedProps> = ({
   }, []);
 
   useEffect(() => {
-    allCompanyClients.length === 0 && getCompanyClients();
+    allCompanyClients.length === 0 && dispatch(getCompanyClients());
   }, []);
 
   return (
@@ -60,7 +50,7 @@ const ClientsPageContent: React.FC<ConnectedProps> = ({
         pageName={'Klienci'}
         setFilterText={setFilterText}
         render={(isEditToggled, setEditToggled, isDeleteOpen, setDeleteOpen) =>
-          isLoading ? (
+          areClientsLoading ? (
             <SpinnerWrapper>
               <Spinner />
             </SpinnerWrapper>
@@ -73,17 +63,17 @@ const ClientsPageContent: React.FC<ConnectedProps> = ({
                     name={client.name}
                     topDescription={`${client.address}, ${client.city}`}
                     bottomDescription={client.email}
-                    callback={() => selectClient(client)}
+                    callback={() => dispatch(selectClient(client))}
                     isCompanyBox={false}
                     isEmpty={true}
                   />
                 ))}
-                <AddWrapper onClick={() => setAddNewClientOpen(true)}>
+                <AddWrapper onClick={() => dispatch(setAddNewClientOpen(true))}>
                   <AddIcon />
                   <Paragraph type={'add'}>Dodaj klienta</Paragraph>
                 </AddWrapper>
               </List>
-              <ContentTemplate isOpen={isClientInfoOpen} setOpen={setClientInfoOpen}>
+              <ContentTemplate isOpen={isClientInfoOpen} close={() => dispatch(setClientInfoOpen(false))}>
                 <ClientInfo isEditToggled={isEditToggled} setEditToggled={setEditToggled} setDeleteOpen={setDeleteOpen} />
               </ContentTemplate>
               <AddClientController />
@@ -92,52 +82,17 @@ const ClientsPageContent: React.FC<ConnectedProps> = ({
                 setOpen={setDeleteOpen}
                 headerText={'Usuń klienta'}
                 text={`${selectedClient?.name}`}
-                callback={() => selectedClient?._id && deleteClient(selectedClient._id)}
+                callback={() => selectedClient?._id && dispatch(deleteClient(selectedClient._id))}
               />
             </>
           )
         }
       />
-      {selectedClient && <MapCoordsEdit isOpen={isEditClientCoordsOpen} setOpen={setEditClientCoordsOpen} lat={selectedClient.lat} long={selectedClient.long} type={CoordsEditType.Client} />}
+      {selectedClient && (
+        <MapCoordsEdit isOpen={isEditClientCoordsOpen} closeMap={() => dispatch(setEditClientCoordsOpen(false))} lat={selectedClient.lat} long={selectedClient.long} type={CoordsEditType.Client} />
+      )}
     </>
   );
 };
 
-interface LinkStateProps {
-  token: string | null;
-  isLoading: boolean;
-  allCompanyClients: ClientInterface[];
-  isClientInfoOpen: boolean;
-  selectedClient: ClientInterface | null;
-  isEditClientCoordsOpen: boolean;
-}
-
-interface LinkDispatchProps {
-  getCompanyClients: () => void;
-  selectClient: (client: ClientInterface) => void;
-  setClientInfoOpen: (isOpen: boolean) => void;
-  setAddNewClientOpen: (isOpen: boolean) => void;
-  deleteClient: (clientId: string) => void;
-  setEditClientCoordsOpen: (isOpen: boolean) => void;
-}
-
-const mapStateToProps = ({
-  authenticationReducer: { token },
-  clientReducer: { isLoading, allCompanyClients, isClientInfoOpen, selectedClient },
-  toggleReducer: { isEditClientCoordsOpen }
-}: AppState): LinkStateProps => {
-  return { token, isLoading, allCompanyClients, isClientInfoOpen, selectedClient, isEditClientCoordsOpen };
-};
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
-  return {
-    getCompanyClients: bindActionCreators(getCompanyClients, dispatch),
-    selectClient: bindActionCreators(selectClient, dispatch),
-    setClientInfoOpen: bindActionCreators(setClientInfoOpen, dispatch),
-    setAddNewClientOpen: bindActionCreators(setAddNewClientOpen, dispatch),
-    deleteClient: bindActionCreators(deleteClient, dispatch),
-    setEditClientCoordsOpen: bindActionCreators(setEditClientCoordsOpen, dispatch)
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ClientsPageContent);
+export default ClientsPageContent;

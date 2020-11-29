@@ -1,16 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Paragraph } from '../../../styles/typography/typography';
 import { Wrapper, HeaderWrapper, EmployeeInfoBox, Title } from '../../../styles/contentStyles';
 import { SpinnerWrapper } from '../../../styles/shared';
-import { AttendanceInterface, WeekAttendance } from '../../../types/modelsTypes';
-import { AppState } from '../../../reducers/rootReducer';
+import { AppState } from '../../../store/test-store';
 import Spinner from '../../atoms/Spinner/Spinner';
 import WeekAttendanceComponent from '../../molecules/WeekAttendanceComponent/WeekAttendanceComponent';
 
-type ConnectedProps = LinkStateProps;
-
-const AttendanceInfo: React.FC<ConnectedProps> = ({ selectedAttendance, weekAttendance, isContentLoading }) => {
+const AttendanceInfo: React.FC = () => {
+  const { weekAttendance, isContentLoading } = useSelector((state: AppState) => state.attendance.weekAttendanceData);
+  const { selectedAttendance } = useSelector((state: AppState) => state.attendance.attendanceToggle);
   return (
     <Wrapper>
       {isContentLoading ? (
@@ -40,14 +39,4 @@ const AttendanceInfo: React.FC<ConnectedProps> = ({ selectedAttendance, weekAtte
   );
 };
 
-interface LinkStateProps {
-  selectedAttendance: AttendanceInterface | null;
-  weekAttendance: WeekAttendance[] | null;
-  isContentLoading: boolean;
-}
-
-const mapStateToProps = ({ attendanceReducer: { selectedAttendance, weekAttendance, isContentLoading } }: AppState): LinkStateProps => {
-  return { selectedAttendance, weekAttendance, isContentLoading };
-};
-
-export default connect(mapStateToProps)(AttendanceInfo);
+export default AttendanceInfo;

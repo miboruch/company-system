@@ -11,14 +11,14 @@ import StepList from './components/StepList/StepList';
 import AddTaskTemplate from './templates/AddTaskTemplate';
 import { PageSettingEnum } from './context/PageContext';
 import { modalOpenAnimation } from '../../../animations/animations';
-import { AppState } from '../../../reducers/rootReducer';
+import { AppState } from '../../../store/test-store';
 import TaskInfoPage from './pages/TaskInfoPage/TaskInfoPage';
 import SpecificInfoPage from './pages/SpecificInfoPage/SpecificInfoPage';
-import { setAddNewTaskOpen } from '../../../actions/taskActions';
+import { setAddNewTaskOpen } from '../../../ducks/tasks/tasks-toggle/tasks-toggle';
 
 const AddTaskController: React.FC = () => {
   const dispatch = useDispatch();
-  const { isAddNewTaskOpen } = useSelector((state: AppState) => state.taskReducer);
+  const { isAddNewTaskOpen } = useSelector((state: AppState) => state.tasks.taskToggle);
 
   const mainWrapperRef = useRef<HTMLDivElement | null>(null);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
@@ -38,7 +38,7 @@ const AddTaskController: React.FC = () => {
         <MainWrapper ref={mainWrapperRef}>
           <Wrapper ref={wrapperRef}>
             <CloseButtonWrapper>
-              <CloseButton setBoxState={() => dispatch(setAddNewTaskOpen(false))} />
+              <CloseButton close={() => dispatch(setAddNewTaskOpen(false))} />
             </CloseButtonWrapper>
             <AddTaskHeader />
             <CompoundTitle>Nowe zadanie</CompoundTitle>

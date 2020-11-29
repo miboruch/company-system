@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { ButtonWrapper, CenterBox, MapWrapper } from '../../../styles/compoundStyles';
 import { Map, Marker, TileLayer } from 'react-leaflet';
@@ -15,10 +15,10 @@ import { modalOpenAnimation } from '../../../animations/animations';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppTypes } from '../../../types/actionTypes/appActionTypes';
 import { bindActionCreators } from 'redux';
-import { editCompanyCoords } from '../../../actions/companyActions';
-import { editClientCoords } from '../../../actions/clientActions';
+import { editCompanyCoords } from '../../../ducks/company/current-company/current-company-creators';
+import { editClientCoords } from '../../../ducks/client/client-creators';
 import { ClientInterface } from '../../../types/modelsTypes';
-import { AppState } from '../../../reducers/rootReducer';
+import { AppState, useAppDispatch } from '../../../store/test-store';
 
 const StyledWrapper = styled.div`
   position: fixed;
@@ -58,15 +58,16 @@ export enum CoordsEditType {
 
 interface Props {
   isOpen: boolean;
-  setOpen: (isOpen: boolean) => void;
+  closeMap: () => void;
   lat: number;
   long: number;
   type: CoordsEditType;
 }
 
-type ConnectedProps = Props & LinkStateProps & LinkDispatchProps;
+const MapCoordsEdit: React.FC<Props> = ({ isOpen, closeMap, lat, long, type }) => {
+  const dispatch = useAppDispatch();
+  const { selectedClient } = useSelector((state: AppState) => state.client.clientToggle);
 
-const MapCoordsEdit: React.FC<ConnectedProps> = ({ isOpen, setOpen, lat, long, type, selectedClient, editClientCoords, editCompanyCoords }) => {
   const [updatedLat, setUpdatedLat] = useState<number>(lat);
   const [updatedLong, setUpdatedLong] = useState<number>(long);
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -84,13 +85,13 @@ const MapCoordsEdit: React.FC<ConnectedProps> = ({ isOpen, setOpen, lat, long, t
   const handleSubmit = () => {
     if (type !== CoordsEditType.View) {
       if (type === CoordsEditType.Client) {
-        selectedClient && editClientCoords(selectedClient._id, updatedLat, updatedLong);
-        setOpen(false);
+        selectedClient && dispatch(editClientCoords({ clientId: selectedClient._id, lat: updatedLat, long: updatedLong }));
+        closeMap();
       }
 
       if (type === CoordsEditType.Company) {
-        editCompanyCoords(updatedLat, updatedLong);
-        setOpen(false);
+        dispatch(editCompanyCoords({ lat: updatedLat, long: updatedLong }));
+        closeMap();
       }
     }
   };
@@ -107,7 +108,7 @@ const MapCoordsEdit: React.FC<ConnectedProps> = ({ isOpen, setOpen, lat, long, t
     <StyledWrapper ref={mainWrapperRef}>
       <Box ref={boxRef}>
         <CloseButtonWrapper>
-          <CloseButton setBoxState={() => setOpen(false)} />
+          <CloseButton close={() => closeMap()} />
         </CloseButtonWrapper>
         <StyledMapWrapper>
           {isLoading ? (
@@ -145,24 +146,4 @@ const MapCoordsEdit: React.FC<ConnectedProps> = ({ isOpen, setOpen, lat, long, t
   );
 };
 
-interface LinkStateProps {
-  selectedClient: ClientInterface | null;
-}
-
-const mapStateToProps = ({ clientReducer: { selectedClient } }: AppState): LinkStateProps => {
-  return { selectedClient };
-};
-
-interface LinkDispatchProps {
-  editCompanyCoords: (lat: number, long: number) => void;
-  editClientCoords: (clientId: string, lat: number, long: number) => void;
-}
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AppTypes>): LinkDispatchProps => {
-  return {
-    editCompanyCoords: bindActionCreators(editCompanyCoords, dispatch),
-    editClientCoords: bindActionCreators(editClientCoords, dispatch)
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(MapCoordsEdit);
+export default MapCoordsEdit;

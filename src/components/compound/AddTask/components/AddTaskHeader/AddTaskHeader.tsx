@@ -5,7 +5,7 @@ import { PageContext } from '../../context/PageContext';
 import ArrowButton from '../../../../atoms/ArrowButton/ArrowButton';
 import { Direction } from '../../../../../types/globalTypes';
 import CloseButton from '../../../../atoms/CloseButton/CloseButton';
-import { setAddNewTaskOpen } from '../../../../../actions/taskActions';
+import { setAddNewTaskOpen } from '../../../../../ducks/tasks/tasks-toggle/tasks-toggle';
 
 const StyledHeader = styled.header`
   width: 100%;
@@ -34,7 +34,7 @@ const AddTaskHeader: React.FC = () => {
     <StyledHeader>
       <ArrowButton direction={Direction.Left} isHidden={currentPage === 0} onClick={() => currentPage !== 0 && setCurrentPage(currentPage - 1)} />
       <Text>Krok {currentPage + 1}</Text>
-      <CloseButton setBoxState={() => dispatch(setAddNewTaskOpen(false))} />
+      <CloseButton close={() => dispatch(setAddNewTaskOpen(false))} />
     </StyledHeader>
   );
 };
