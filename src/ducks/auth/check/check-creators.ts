@@ -18,9 +18,12 @@ export const authTimeout = ({ refreshToken, expireMilliseconds }: AuthTimeoutInt
   const { role } = getState().auth.roles;
   const { currentCompany } = getState().company.currentCompany;
 
-  return setTimeout(async () => {
+  const timeoutFunction = async () => {
     role === UserRole.Admin && currentCompany ? dispatch(getAdminAccessToken({ refreshToken, companyId: currentCompany._id })) : dispatch(getNewAccessToken({ refreshToken }));
-  }, expireMilliseconds);
+  };
+
+  //TODO: functions to remove previous timeout
+  return setTimeout(timeoutFunction, expireMilliseconds);
 };
 
 interface AuthCheckInterface {

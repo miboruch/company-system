@@ -132,4 +132,27 @@ const AddWrapper = styled.div`
   }
 `;
 
-export { HomeIcon, PaymentIcon, ListIcon, SupportIcon, UserIcon, AddIcon, SettingsIcon, SpinnerWrapper, FlexWrapper, StyledLabel, DoubleFlexWrapper, CompoundListWrapper, List, AddWrapper };
+const EmptyWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+`;
+
+export {
+  HomeIcon,
+  PaymentIcon,
+  ListIcon,
+  SupportIcon,
+  UserIcon,
+  AddIcon,
+  SettingsIcon,
+  SpinnerWrapper,
+  FlexWrapper,
+  StyledLabel,
+  DoubleFlexWrapper,
+  CompoundListWrapper,
+  List,
+  AddWrapper,
+  EmptyWrapper
+};

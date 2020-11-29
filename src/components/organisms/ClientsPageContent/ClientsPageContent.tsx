@@ -40,7 +40,7 @@ const ClientsPageContent: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    allCompanyClients.length === 0 && dispatch(getCompanyClients());
+    dispatch(getCompanyClients());
   }, []);
 
   return (
