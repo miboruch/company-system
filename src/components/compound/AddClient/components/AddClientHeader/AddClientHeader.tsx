@@ -6,7 +6,7 @@ import CloseButton from '../../../../atoms/CloseButton/CloseButton';
 import { PageContext } from '../../context/PageContext';
 import { StyledHeader } from '../../../styles/headerStyles';
 import { Paragraph } from '../../../../../styles/typography/typography';
-import { setAddNewClientOpen } from '../../../../../actions/clientActions';
+import { setAddNewClientOpen } from '../../../../../ducks/client/client-toggle/client-toggle';
 
 const AddClientHeader: React.FC = () => {
   const dispatch = useDispatch();

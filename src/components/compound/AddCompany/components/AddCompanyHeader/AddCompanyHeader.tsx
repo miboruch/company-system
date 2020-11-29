@@ -6,7 +6,7 @@ import CloseButton from '../../../../atoms/CloseButton/CloseButton';
 import { StyledHeader } from '../../../styles/headerStyles';
 import { Paragraph } from '../../../../../styles/typography/typography';
 import { Direction } from '../../../../../types/globalTypes';
-import { setAddCompanyOpen } from '../../../../../actions/companyActions';
+import { setAddCompanyOpen } from '../../../../../ducks/company/company-toggle/company-toggle';
 
 const AddCompanyHeader: React.FC = () => {
   const dispatch = useDispatch();

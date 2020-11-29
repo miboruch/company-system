@@ -5,7 +5,7 @@ import { PageContext } from '../../context/PageContext';
 import ArrowButton from '../../../../atoms/ArrowButton/ArrowButton';
 import { Direction } from '../../../../../types/globalTypes';
 import CloseButton from '../../../../atoms/CloseButton/CloseButton';
-import { setAddNewEmployeeOpen } from '../../../../../actions/employeeActions';
+import { setAddNewEmployeeOpen } from '../../../../../ducks/employees/employees-toggle/employees-toggle';
 
 const StyledHeader = styled.header`
   width: 100%;

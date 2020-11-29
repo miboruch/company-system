@@ -5,7 +5,7 @@ import { PageContext } from '../../context/PageContext';
 import ArrowButton from '../../../../atoms/ArrowButton/ArrowButton';
 import { Direction } from '../../../../../types/globalTypes';
 import CloseButton from '../../../../atoms/CloseButton/CloseButton';
-import { setAddNewTaskOpen } from '../../../../../actions/taskActions';
+import { setAddNewTaskOpen } from '../../../../../ducks/tasks/tasks-toggle/tasks-toggle';
 
 const StyledHeader = styled.header`
   width: 100%;
