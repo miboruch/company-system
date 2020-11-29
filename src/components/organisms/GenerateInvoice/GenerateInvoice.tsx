@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import axios from 'axios';
 import styled from 'styled-components';
 import CloseButton from '../../atoms/CloseButton/CloseButton';
 import gsap from 'gsap';
@@ -7,13 +6,11 @@ import { Formik, Form } from 'formik';
 import { modalOpenAnimation } from '../../../animations/animations';
 import { StyledInput } from '../../../styles/compoundStyles';
 import { Heading, Paragraph } from '../../../styles/typography/typography';
-import { FlexWrapper } from '../../../styles/shared';
 import InvoiceItem from '../../molecules/InvoiceItemForm/InvoiceItemForm';
 import Button from '../../atoms/Button/Button';
-import { API_URL } from '../../../utils/config';
 import { useSelector } from 'react-redux';
-import { AppState } from '../../../store/test-store';
-import { saveAs } from 'file-saver';
+import { AppState, useAppDispatch } from '../../../store/test-store';
+import { generateInvoice } from '../../../ducks/invoice/invoice-creators';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -100,6 +97,7 @@ interface Props {
 }
 
 const GenerateInvoice: React.FC<Props> = ({ isOpen, setOpen }) => {
+  const dispatch = useAppDispatch();
   const { currentCompany } = useSelector((state: AppState) => state.company.currentCompany);
   const { token } = useSelector((state: AppState) => state.auth.tokens);
   const backgroundRef = useRef<HTMLDivElement | null>(null);
@@ -123,37 +121,8 @@ const GenerateInvoice: React.FC<Props> = ({ isOpen, setOpen }) => {
     isOpen ? tl.play() : tl.reverse();
   }, [isOpen]);
 
-  const generateInvoiceApi = async (name: string, address: string, city: string, country: string, items: ItemInterface[]): Promise<any> => {
-    try {
-      if (currentCompany && token) {
-        const { data } = await axios.post(
-          `${API_URL}/invoice/create-invoice?company_id=${currentCompany._id}`,
-          {
-            name,
-            address,
-            city,
-            country,
-            items
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          }
-        );
-
-        const base64pdf = `data:application/pdf;base64,${data}`;
-        saveAs(base64pdf, `faktura-${new Date().getTime()}.pdf`);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const handleSubmit = async ({ name, address, city, country }: InvoiceInitialValues) => {
-    console.log(name, address, city, country);
-    console.log(items);
-    await generateInvoiceApi(name, address, city, country, items);
+    dispatch(generateInvoice({ name, address, city, country, items }));
   };
 
   return (
