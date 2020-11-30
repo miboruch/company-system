@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import Button from '../../atoms/Button/Button';
+
+import { ReactComponent as MenuSvg } from '../../../assets/icons/menuDraw.svg';
+import { ReactComponent as Arrow } from '../../../assets/icons/arrow.svg';
 
 interface IMenu {
   isOpen: boolean;
@@ -9,7 +11,6 @@ interface IMenu {
 const MenuWrapper = styled.div<IMenu>`
   width: 100%;
   height: 100vh;
-  //background-color: ${({ theme }) => theme.colors.white};
   background-color: ${({ theme }) => theme.colors.menuBackground};
   position: fixed;
   top: 0;
@@ -18,7 +19,7 @@ const MenuWrapper = styled.div<IMenu>`
   padding: 7rem 2.5rem 3rem;
   transform: translateX(${({ isOpen }) => (isOpen ? '0' : '-100%')});
   transition: transform 0.6s ease;
-  
+
   ${({ theme }) => theme.mq.tablet} {
     width: 400px;
   }
@@ -50,8 +51,8 @@ const LinkWrapper = styled.div<LinkWrapperInterface>`
 
 const CompanyName = styled.h3`
   font-size: 18px;
-  font-weight: ${({theme}) => theme.font.weight.bold};
-  color: ${({theme}) => theme.colors.dark};
+  font-weight: ${({ theme }) => theme.font.weight.bold};
+  color: ${({ theme }) => theme.colors.dark};
   letter-spacing: -1px;
 `;
 
@@ -76,4 +77,49 @@ const ButtonWrapper = styled.div`
   left: 2rem;
 `;
 
-export { MenuWrapper, LinkWrapper, StyledLink, CompanyName, MenuItemsWrapper, ButtonWrapper };
+const RedirectPanel = styled.section`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+`;
+
+const StyledMenuSvg = styled(MenuSvg)`
+  width: 220px;
+  height: 150px;
+
+  ${({ theme }) => theme.mq.hdReady} {
+    width: 220px;
+    height: 130px;
+  }
+`;
+
+const ArrowIcon = styled(Arrow)`
+  fill: #fff;
+  width: 15px;
+  height: 15px;
+`;
+
+const ArrowWrapper = styled.div`
+  width: 30px;
+  height: 30px;
+  background-color: ${({ theme }) => theme.colors.dark};
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+`;
+
+const RedirectText = styled.p`
+  font-weight: ${({ theme }) => theme.font.weight.demi};
+  font-size: 14px;
+  color: ${({ theme }) => theme.colors.dark};
+  margin-bottom: 1rem;
+`;
+
+export { MenuWrapper, LinkWrapper, StyledLink, CompanyName, MenuItemsWrapper, ButtonWrapper, RedirectPanel, StyledMenuSvg, ArrowIcon, ArrowWrapper, RedirectText };
