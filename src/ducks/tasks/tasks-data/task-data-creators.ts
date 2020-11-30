@@ -29,6 +29,28 @@ export const getCompanyTasks = createAsyncThunk<TaskInterface[], void, baseStore
   }
 });
 
+export const getEmployeeTasks = createAsyncThunk<TaskInterface[], void, baseStoreType>('tasksData/getEmployeeTasks', async (_arg, { dispatch, rejectWithValue, getState }) => {
+  const { token } = getState().auth.tokens;
+  const { employeeData } = getState().auth.data;
+
+  try {
+    if (token && employeeData) {
+      const { data } = await authApi.get(`/task/get-employee-tasks/${employeeData._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      return data as TaskInterface[];
+    } else {
+      return rejectWithValue('Brak danych');
+    }
+  } catch (error) {
+    dispatch(setNotificationMessage({ message: error.response.data, notificationType: NotificationTypes.Error }));
+    return rejectWithValue(error.response.data);
+  }
+});
+
 export const getCompletedTasks = createAsyncThunk<number, void, baseStoreType>('tasksData/getCompletedTasks', async (_arg, { rejectWithValue, getState }) => {
   const DAYS_BACK = 30;
   const { token } = getState().auth.tokens;

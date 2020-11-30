@@ -13,7 +13,7 @@ import { ContentGridWrapper } from '../../../styles/HomePageContentGridStyles';
 import InformationBox from '../../molecules/InformationBox/InformationBox';
 import { contentAnimation } from '../../../animations/animations';
 import { getSingleDayAttendance } from '../../../ducks/attendance/attendance-data/attendance-data-creators';
-import { getCompanyTasks, getCompletedTasks } from '../../../ducks/tasks/tasks-data/task-data-creators';
+import { getCompanyTasks, getCompletedTasks, getEmployeeTasks } from '../../../ducks/tasks/tasks-data/task-data-creators';
 import { redirectToTask } from '../../../ducks/tasks/tasks-toggle/tasks-toggle-creators';
 import AttendancePopup from '../../molecules/AttendancePopup/AttendancePopup';
 import { getIncomeExpenseInTimePeriod } from '../../../ducks/finances/income-expense/income-expense-creators';
@@ -25,6 +25,7 @@ import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
 const LandingPageContent: React.FC<RouteComponentProps<any>> = ({ history }) => {
   const dispatch = useAppDispatch();
   const { role } = useSelector((state: AppState) => state.auth.roles);
+  const { employeeData } = useSelector((state: AppState) => state.auth.data);
   const { allCompanyTasks, completedTasks } = useSelector((state: AppState) => state.tasks.taskData);
   const { companyEmployeesCounter } = useSelector((state: AppState) => state.employees.employeesData);
   const { singleDayAttendance } = useSelector((state: AppState) => state.attendance.attendanceData);
@@ -41,8 +42,12 @@ const LandingPageContent: React.FC<RouteComponentProps<any>> = ({ history }) => 
 
   useEffect(() => {
     contentAnimation(tl, contentRef);
-    dispatch(getCompanyTasks());
+    role === UserRole.Admin && dispatch(getCompanyTasks())
   }, []);
+
+  useEffect(() => {
+    role === UserRole.User && employeeData && dispatch(getEmployeeTasks());
+  }, [employeeData]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setText(e.target.value);
