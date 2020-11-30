@@ -1,7 +1,7 @@
 import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { baseStoreType } from '../../../store/test-store';
-import { TaskInterface } from '../../../types/modelsTypes';
+import { IncomeDataInterface, TaskInterface } from '../../../types/modelsTypes';
 import { authApi } from '../../../api';
 import { setNotificationMessage } from '../../popup/popup';
 import { selectTask } from '../tasks-toggle/tasks-toggle-creators';
@@ -241,3 +241,33 @@ export const addNewTask = createAsyncThunk<void, AddNewTaskInterface, baseStoreT
     }
   }
 );
+
+export interface TaskPeriodInterface {
+  date: Date;
+  totalTasks: number;
+}
+
+interface GetTasksPeriodInterface {
+  daysBack: number;
+  setData: (data: TaskPeriodInterface[]) => void;
+}
+
+export const getTasksInTimePeriod = createAsyncThunk<void, GetTasksPeriodInterface, baseStoreType>('tasksData/getTasksInTimePeriod', async ({ daysBack, setData }, { getState, rejectWithValue }) => {
+  const { token } = getState().auth.tokens;
+  const { currentCompany } = getState().company.currentCompany;
+
+  try {
+    if (token && currentCompany) {
+      const { data } = await authApi.get(`/task/completed-tasks-period?company_id=${currentCompany._id}&daysBack=${daysBack}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      setData(data);
+    }
+  } catch (error) {
+    console.log(error);
+    return rejectWithValue(error.response.data);
+  }
+});

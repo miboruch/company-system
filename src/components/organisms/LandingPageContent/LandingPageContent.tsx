@@ -13,7 +13,7 @@ import { ContentGridWrapper } from '../../../styles/HomePageContentGridStyles';
 import InformationBox from '../../molecules/InformationBox/InformationBox';
 import { contentAnimation } from '../../../animations/animations';
 import { getSingleDayAttendance } from '../../../ducks/attendance/attendance-data/attendance-data-creators';
-import { getCompanyTasks, getCompletedTasks, getEmployeeTasks } from '../../../ducks/tasks/tasks-data/task-data-creators';
+import { getCompanyTasks, getCompletedTasks, getEmployeeTasks, getTasksInTimePeriod, TaskPeriodInterface } from '../../../ducks/tasks/tasks-data/task-data-creators';
 import { redirectToTask } from '../../../ducks/tasks/tasks-toggle/tasks-toggle-creators';
 import AttendancePopup from '../../molecules/AttendancePopup/AttendancePopup';
 import { getIncomeExpenseInTimePeriod } from '../../../ducks/finances/income-expense/income-expense-creators';
@@ -32,17 +32,18 @@ const LandingPageContent: React.FC<RouteComponentProps<any>> = ({ history }) => 
 
   const [text, setText] = useState<string>('');
   const [data, setData] = useState<Array<IncomeDataInterface> | null>(null);
+  const [taskData, setTaskData] = useState<Array<TaskPeriodInterface> | null>(null);
   const [selectedAttendance, setSelectedAttendance] = useState<AttendanceInterface | null>(null);
   const [isAttendanceOpen, setAttendanceOpen] = useState<boolean>(false);
   const [areStatisticsOpen, setStatisticsOpen] = useState<boolean>(false);
-
+  console.log(taskData);
   const [daysBack, setDaysBackTo] = useState<number>(7);
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
 
   useEffect(() => {
     contentAnimation(tl, contentRef);
-    role === UserRole.Admin && dispatch(getCompanyTasks())
+    role === UserRole.Admin && dispatch(getCompanyTasks());
   }, []);
 
   useEffect(() => {
@@ -54,7 +55,7 @@ const LandingPageContent: React.FC<RouteComponentProps<any>> = ({ history }) => 
   };
 
   useEffect(() => {
-    role === UserRole.Admin && dispatch(getIncomeExpenseInTimePeriod({ daysBack, setData }));
+    role === UserRole.Admin ? dispatch(getIncomeExpenseInTimePeriod({ daysBack, setData })) : dispatch(getTasksInTimePeriod({ daysBack, setData: setTaskData }));
   }, [daysBack]);
 
   useEffect(() => {
