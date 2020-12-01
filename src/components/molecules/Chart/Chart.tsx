@@ -1,6 +1,7 @@
 import React from 'react';
 import { CartesianGrid, XAxis, YAxis, Tooltip, Legend, AreaChart, Area } from 'recharts';
 import { ChartWrapper, StyledResponsiveContainer, RowWrapper, FlexRowWrapper, StyledParagraph } from './Chart.styles';
+import {chartButtons} from '../../../utils/staticData';
 
 interface Props {
   data: Array<any> | null;
@@ -13,25 +14,14 @@ interface Props {
   daysBack: number;
 }
 
-interface ChartButtonInterface {
-  value: number;
-  text: string;
-}
-
 const Chart: React.FC<Props> = ({ data, xAxisDataKey, barDataKey, secondBarDataKey, secondBarDataName, barDataName, setDaysBack, daysBack }) => {
-  const buttons: ChartButtonInterface[] = [
-    { value: 1, text: '1d' },
-    { value: 7, text: '7d' },
-    { value: 30, text: '1m' },
-    { value: 90, text: '3m' }
-  ];
   return (
     <ChartWrapper>
       <RowWrapper>
         <h4>Finanse</h4>
         {!!setDaysBack && (
           <FlexRowWrapper>
-            {buttons.map(({ value, text }) => (
+            {chartButtons.map(({ value, text }) => (
               <StyledParagraph key={text} isActive={daysBack === value} onClick={() => setDaysBack(value)}>
                 {text}
               </StyledParagraph>

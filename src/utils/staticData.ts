@@ -50,3 +50,15 @@ export interface MonthInterface {
 
 const monthsNames = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'];
 export const months: MonthInterface[] = monthsNames.map((month, index) => ({ name: month, index }));
+
+interface ChartButtonInterface {
+  value: number;
+  text: string;
+}
+
+export const chartButtons: ChartButtonInterface[] = [
+  { value: 1, text: '1d' },
+  { value: 7, text: '7d' },
+  { value: 30, text: '1m' },
+  { value: 90, text: '3m' }
+];

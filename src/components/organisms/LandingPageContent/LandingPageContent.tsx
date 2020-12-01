@@ -21,6 +21,7 @@ import { ArrowIcon } from '../../../styles/iconStyles';
 import { getAllCompanyEmployees } from '../../../ducks/employees/employees-data/employees-data-creators';
 import AdminStatistics from '../AdminStatistics/AdminStatistics';
 import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
+import BarChart from '../../molecules/BarChart/BarChart';
 
 const LandingPageContent: React.FC<RouteComponentProps<any>> = ({ history }) => {
   const dispatch = useAppDispatch();
@@ -74,16 +75,20 @@ const LandingPageContent: React.FC<RouteComponentProps<any>> = ({ history }) => 
               <TaskTile key={task._id} task={task} onClick={() => dispatch(redirectToTask(history, task))} />
             ))}
           </TileWrapper>
-          <Chart
-            xAxisDataKey={'createdDate'}
-            secondBarDataKey={'expenseValue'}
-            secondBarDataName={'Wydatek'}
-            barDataKey={'incomeValue'}
-            barDataName={'Dochód'}
-            data={data}
-            daysBack={daysBack}
-            setDaysBack={setDaysBackTo}
-          />
+          {role === UserRole.Admin ? (
+            <Chart
+              xAxisDataKey={'createdDate'}
+              secondBarDataKey={'expenseValue'}
+              secondBarDataName={'Wydatek'}
+              barDataKey={'incomeValue'}
+              barDataName={'Dochód'}
+              data={data}
+              daysBack={daysBack}
+              setDaysBack={setDaysBackTo}
+            />
+          ) : (
+            <BarChart data={taskData} xAxisDataKey={'date'} barDataKey={'totalTasks'} barDataName={'Zadania'} setDaysBack={setDaysBackTo} daysBack={daysBack} />
+          )}
           <AttendanceList singleDayAttendance={singleDayAttendance} setSelectedAttendance={setSelectedAttendance} setAttendanceOpen={setAttendanceOpen} />
           <InfoBoxWrapper>
             <InformationBox title={'Pracownicy'} value={companyEmployeesCounter} areaName={'employees'} chartAnimationDelay={0} />
