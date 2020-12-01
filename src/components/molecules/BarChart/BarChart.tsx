@@ -26,22 +26,11 @@ const BarChart: React.FC<Props> = ({ data, xAxisDataKey, barDataKey, barDataName
         </FlexRowWrapper>
       </RowWrapper>
       <StyledResponsiveContainer width={'100%'} height={250}>
-        <Chart data={data ? data : []}>
-          <defs>
-            <linearGradient id='incomeColor' x1='0' y1='0' x2='0' y2='1'>
-              <stop offset='65%' stopColor={'#85BE9B'} stopOpacity={1} />
-              <stop offset='90%' stopColor={'#fff'} stopOpacity={1} />
-            </linearGradient>
-            <linearGradient id='expenseColor' x1='0' y1='0' x2='0' y2='1'>
-              <stop offset='65%' stopColor={'#FE7070'} stopOpacity={1} />
-              <stop offset='90%' stopColor={'#fff'} stopOpacity={1} />
-            </linearGradient>
-          </defs>
-          <XAxis dataKey={xAxisDataKey} />
-          <YAxis tick={{ fontSize: 12 }} />
+        <Chart data={data ? data : []} barSize={30}>
           <CartesianGrid strokeDasharray='2 2' />
+          <XAxis dataKey={xAxisDataKey} stroke={'#aaa'} tick={{ fontSize: 12 }} />
+          <YAxis stroke={'#aaa'} tick={{ fontSize: 12 }} />
           <Tooltip
-            cursor={false}
             itemStyle={{
               color: '#2d2d2d',
               fontSize: '12px',
@@ -49,7 +38,7 @@ const BarChart: React.FC<Props> = ({ data, xAxisDataKey, barDataKey, barDataName
             }}
           />
           <Legend iconSize={16} />
-          <Bar dataKey={barDataKey} name={barDataName} />
+          <Bar dataKey={barDataKey} name={barDataName} fill='#2d2d2d' radius={[30, 30, 30, 30]} />
         </Chart>
       </StyledResponsiveContainer>
     </ChartWrapper>
