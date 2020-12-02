@@ -110,7 +110,11 @@ const PageNameHeading = styled.h1`
 const Heading = styled.h1`
   font-size: 22px;
   font-weight: ${({ theme }) => theme.font.weight.demi};
-  margin-bottom: 1.5rem;
+  margin-bottom: 0;
+
+  ${({ theme }) => theme.mq.hdReady} {
+    margin-bottom: 1.5rem;
+  }
 `;
 
 export { Paragraph, ErrorParagraph, PageNameHeading, Heading };

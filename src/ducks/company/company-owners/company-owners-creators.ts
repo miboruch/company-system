@@ -17,7 +17,7 @@ export const getCompanyOwners = createAsyncThunk<CompanyOwnersInterface[], void,
         }
       });
 
-      return data as CompanyOwnersInterface[];
+      return data.owners as CompanyOwnersInterface[];
     } else {
       return [] as CompanyOwnersInterface[];
     }

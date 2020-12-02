@@ -34,6 +34,16 @@ const List = styled.div`
   height: 100%;
 `;
 
+const DatePickerWrapper = styled.div`
+  width: 70%;
+  padding-left: 2rem;
+
+  ${({ theme }) => theme.mq.standard} {
+    width: 100%;
+    padding-left: 0;
+  }
+`;
+
 const AttendancePageContent: React.FC = () => {
   const dispatch = useAppDispatch();
   const { token } = useSelector((state: AppState) => state.auth.tokens);
@@ -68,10 +78,10 @@ const AttendancePageContent: React.FC = () => {
       ) : (
         <>
           <ListWrapper>
-            <div>
+            <DatePickerWrapper>
               <StyledLabel>Data</StyledLabel>
               <DatePicker selected={new Date(attendanceDate)} onChange={(date) => date && date instanceof Date && dispatch(setDate(date))} dateFormat={'dd/MM/yyyy'} />
-            </div>
+            </DatePickerWrapper>
             <List ref={listRef}>
               {filterByUserName(filterText, singleDayAttendance).map((attendance) => (
                 <ListBox

@@ -22,6 +22,7 @@ import { getAllCompanyEmployees } from '../../../ducks/employees/employees-data/
 import AdminStatistics from '../AdminStatistics/AdminStatistics';
 import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
 import BarChart from '../../molecules/BarChart/BarChart';
+import { getAllAppUsers } from '../../../ducks/users/all-users-creators';
 
 const LandingPageContent: React.FC<RouteComponentProps<any>> = ({ history }) => {
   const dispatch = useAppDispatch();
@@ -63,6 +64,7 @@ const LandingPageContent: React.FC<RouteComponentProps<any>> = ({ history }) => 
     dispatch(getSingleDayAttendance(new Date()));
     dispatch(getCompletedTasks());
     dispatch(getAllCompanyEmployees());
+    role === UserRole.Admin && dispatch(getAllAppUsers());
   }, []);
 
   return (
