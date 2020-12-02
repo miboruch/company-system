@@ -13,6 +13,7 @@ import SelectPage from './pages/SelectPage/SelectPage';
 import NotificationPopup from './components/molecules/NotificationPopup/NotificationPopup';
 import RegisterFromLink from './pages/RegisterFromLink/RegisterFromLink';
 import { AppState, useAppDispatch } from './store/test-store';
+import { adminInterceptors } from './api';
 
 type ConnectedProps = RouteComponentProps<any>;
 
@@ -30,6 +31,12 @@ const App: React.FC<ConnectedProps> = ({ history }) => {
       })
     );
   }, []);
+
+  // useEffect(() => {
+  //   if (currentCompany && refreshToken) {
+  //     adminInterceptors(refreshToken, currentCompany._id);
+  //   }
+  // }, [currentCompany, refreshToken]);
 
   // useEffect(() => {
   //   if (role === UserRole.Admin && currentCompany && refreshToken) {

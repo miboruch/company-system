@@ -37,7 +37,7 @@ const LandingPageContent: React.FC<RouteComponentProps<any>> = ({ history }) => 
   const [selectedAttendance, setSelectedAttendance] = useState<AttendanceInterface | null>(null);
   const [isAttendanceOpen, setAttendanceOpen] = useState<boolean>(false);
   const [areStatisticsOpen, setStatisticsOpen] = useState<boolean>(false);
-  console.log(taskData);
+
   const [daysBack, setDaysBackTo] = useState<number>(7);
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
