@@ -37,7 +37,7 @@ interface GetAdminTokenInterface {
 
 export const getAdminAccessToken = ({ refreshToken, companyId, successCallback, errorCallback }: GetAdminTokenInterface) => async (dispatch: AppDispatch): Promise<any> => {
   try {
-    const { data } = await api.post(`/auth/admin-token`, { refreshToken, companyId });
+    const { data } = await api.post(`/auth/company-token`, { refreshToken, companyId });
 
     dispatch(setTokens({ token: data.accessToken, refreshToken, expireIn: data.expireIn }));
     dispatch(getUserData(data.accessToken));

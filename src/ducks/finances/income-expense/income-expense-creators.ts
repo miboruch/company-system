@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppState, baseStoreType } from '../../../store/test-store';
-import { authApi } from '../../../api';
+import { companyApi } from '../../../api';
 import { ExpenseInterface, IncomeDataInterface, IncomeInterface } from '../../../types/modelsTypes';
 import { setNotificationMessage } from '../../popup/popup';
 import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
@@ -22,7 +22,7 @@ export const getCompanyIncomeAndExpense = createAsyncThunk<IncomeExpenseReturnIn
 
     try {
       if (token && currentCompany) {
-        const { data } = await authApi.get(`/budget/get-income-expense?daysBack=${daysBack}`, {
+        const { data } = await companyApi.get(`/budget/get-income-expense?daysBack=${daysBack}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -50,7 +50,7 @@ export const getLastIncomesAndExpenses = createAsyncThunk<LastIncomesExpensesRet
 
     try {
       if (token) {
-        const { data } = await authApi.get(`/budget/get-last-income-expense`, {
+        const { data } = await companyApi.get(`/budget/get-last-income-expense`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -80,7 +80,7 @@ export const addIncome = createAsyncThunk<void, AddIncomeInterface, baseStoreTyp
 
     try {
       if (token) {
-        await authApi.post(
+        await companyApi.post(
           `/income/add-income`,
           { incomeValue, description },
           {
@@ -114,7 +114,7 @@ export const addExpense = createAsyncThunk<void, AddExpenseInterface, baseStoreT
 
     try {
       if (token) {
-        await authApi.post(
+        await companyApi.post(
           `/expense/add-expense`,
           { expenseValue, description },
           {
@@ -141,7 +141,7 @@ export const deleteIncome = createAsyncThunk<void, number, baseStoreType>('incom
 
   try {
     if (token) {
-      await authApi.delete(`/income/remove-income/${incomeId}`, {
+      await companyApi.delete(`/income/remove-income/${incomeId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -161,7 +161,7 @@ export const deleteExpense = createAsyncThunk<void, number, baseStoreType>('inco
   const { token } = getState().auth.tokens;
   try {
     if (token) {
-      await authApi.delete(`/expense/remove-expense/${expenseId}`, {
+      await companyApi.delete(`/expense/remove-expense/${expenseId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -188,13 +188,13 @@ export const getIncomeExpenseInTimePeriod = createAsyncThunk<void, GetIncomeExpe
 
     try {
       if (token) {
-        const { data } = await authApi.get(`/income/get-last-incomes?daysBack=${daysBack}`, {
+        const { data } = await companyApi.get(`/income/get-last-incomes?daysBack=${daysBack}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
         });
 
-        const { data: expenseData } = await authApi.get(`/expense/get-last-expenses?daysBack=${daysBack}`, {
+        const { data: expenseData } = await companyApi.get(`/expense/get-last-expenses?daysBack=${daysBack}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }

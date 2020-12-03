@@ -4,7 +4,7 @@ import { setNotificationMessage } from '../../popup/popup';
 import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
 import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
 import { CompanyInterface } from '../../../types/modelsTypes';
-import { authApi } from '../../../api';
+import { companyApi } from '../../../api';
 import { resetAllSelected } from '../../reset/reset-creators';
 
 export const getUserCompanies = createAsyncThunk<CompanyInterface[], void, baseStoreType>('companies/getUserCompanies', async (_arg, { dispatch, rejectWithValue, getState }) => {
@@ -13,7 +13,7 @@ export const getUserCompanies = createAsyncThunk<CompanyInterface[], void, baseS
     const { role } = getState().auth.roles;
 
     if (token && role) {
-      const { data } = await authApi.get(role === UserRole.Admin ? `/user/get-user-companies` : `/employee/get-employee-companies`, {
+      const { data } = await companyApi.get(role === UserRole.Admin ? `/user/get-user-companies` : `/employee/get-employee-companies`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -49,7 +49,7 @@ export const createNewCompany = createAsyncThunk<void, CreateCompanyInterface, b
 
   try {
     if (token) {
-      await authApi.post(
+      await companyApi.post(
         '/company/create-company',
         { ...companyData },
         {

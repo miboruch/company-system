@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { authApi } from '../../../api';
+import { companyApi } from '../../../api';
 import { getUserData } from '../data/data-creators';
 import { baseStoreType } from '../../../store/test-store';
 import { setNotificationMessage } from '../../popup/popup';
@@ -19,7 +19,7 @@ interface EditAccountInterface {
 export const editAccount = createAsyncThunk<void, EditAccountInterface, baseStoreType>('account/editAccount', async (values, { rejectWithValue, dispatch, getState }) => {
   const { token } = getState().auth.tokens;
   try {
-    await authApi.put(`/user/edit-user`, values, {
+    await companyApi.put(`/user/edit-user`, values, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -42,7 +42,7 @@ interface EditPasswordInterface {
 export const editPassword = createAsyncThunk<void, EditPasswordInterface, baseStoreType>('account/editPassword', async (values, { rejectWithValue, dispatch, getState }) => {
   const { token } = getState().auth.tokens;
   try {
-    await authApi.put(
+    await companyApi.put(
       `/user/password-edit`,
       { values },
       {

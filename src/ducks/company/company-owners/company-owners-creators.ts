@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { CompanyOwnersInterface } from '../../../types/modelsTypes';
 import { baseStoreType } from '../../../store/test-store';
-import { authApi } from '../../../api';
+import { companyApi } from '../../../api';
 import { setNotificationMessage } from '../../popup/popup';
 import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
 import { getAllCompanyEmployees } from '../../employees/employees-data/employees-data-creators';
@@ -11,7 +11,7 @@ export const getCompanyOwners = createAsyncThunk<CompanyOwnersInterface[], void,
     const { token } = getState().auth.tokens;
 
     if (token) {
-      const { data } = await authApi.get('/company/get-company-owners', {
+      const { data } = await companyApi.get('/company/get-company-owners', {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -32,7 +32,7 @@ export const addNewCompanyOwner = createAsyncThunk<void, string, baseStoreType>(
     const { token } = getState().auth.tokens;
 
     if (token) {
-      await authApi.post(
+      await companyApi.post(
         '/company/add-company-owner',
         { toBeOwnerId: userId },
         {
@@ -63,7 +63,7 @@ export const removeCompanyOwner = createAsyncThunk<void, RemoveCompanyOwnerInter
       const { token } = getState().auth.tokens;
 
       if (token) {
-        await authApi.post(
+        await companyApi.post(
           '/company/remove-company-owner',
           { toBeRemovedId: userId, addEmployee, pricePerHour, monthlyPrice },
           {

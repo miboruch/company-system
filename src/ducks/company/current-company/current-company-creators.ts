@@ -2,7 +2,7 @@ import { setCompany } from './current-company';
 import { CompanyInterface } from '../../../types/modelsTypes';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, AppState, baseStoreType } from '../../../store/test-store';
-import { authApi } from '../../../api';
+import { companyApi } from '../../../api';
 import { setNotificationMessage } from '../../popup/popup';
 import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
 import { UserRole } from '../../auth/roles/roles';
@@ -14,7 +14,10 @@ export const setCurrentCompany = (company: CompanyInterface | null, successCallb
   const { role } = getState().auth.roles;
   const { refreshToken } = getState().auth.tokens;
 
-  if (role === UserRole.Admin && refreshToken && company) {
+  //if (role === UserRole.Admin && refreshToken && company) {
+
+  if (refreshToken && company) {
+    localStorage.setItem('companyId', company._id);
     dispatch(getAdminAccessToken({ refreshToken, companyId: company._id, successCallback: () => !!successCallback && successCallback() }));
   } else {
     company && dispatch(getOwnEmployeeData(company._id));
@@ -28,7 +31,7 @@ export const getSingleCompany = createAsyncThunk<void, string, baseStoreType>('c
   try {
     const { token } = getState().auth.tokens;
     if (token) {
-      const { data } = await authApi.get(`/company/get-company-info/${companyId}`, {
+      const { data } = await companyApi.get(`/company/get-company-info/${companyId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -57,7 +60,7 @@ export const editCompany = createAsyncThunk<void, EditCompanyInterface, baseStor
 
   try {
     if (token && currentCompany) {
-      await authApi.put(`/company/edit-company`, values, {
+      await companyApi.put(`/company/edit-company`, values, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -78,7 +81,7 @@ export const editCompanyCoords = createAsyncThunk<void, { lat: number; long: num
 
   try {
     if (token && currentCompany) {
-      await authApi.put(
+      await companyApi.put(
         `/company/edit-company-coords`,
         { lat, long },
         {
@@ -102,7 +105,7 @@ export const deleteCompany = createAsyncThunk<void, () => void, baseStoreType>('
 
   try {
     if (token) {
-      await authApi.put(`/company/remove-company`, {
+      await companyApi.put(`/company/remove-company`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

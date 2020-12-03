@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { authApi } from '../../../api';
 
 interface InitialStateInterface {
   token: string | null;

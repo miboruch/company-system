@@ -1,7 +1,7 @@
 import { NotificationTypes } from '../../types/actionTypes/toggleAcitonTypes';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { baseStoreType } from '../../store/test-store';
-import { authApi } from '../../api';
+import { companyApi } from '../../api';
 import { getSingleDayAttendance } from '../attendance/attendance-data/attendance-data-creators';
 import { getCompanyClients } from './client-data/client-data-creators';
 import { setClientInfoOpen, setSelectedClient } from './client-toggle/client-toggle';
@@ -23,7 +23,7 @@ export const addNewClient = createAsyncThunk<void, AddClientInterface, baseStore
 
   try {
     if (token) {
-      await authApi.post(
+      await companyApi.post(
         `/client/create-client`,
         {
           values
@@ -52,7 +52,7 @@ export const deleteClient = createAsyncThunk<void, string, baseStoreType>('clien
 
   try {
     if (token) {
-      await authApi.post(`/client/delete-client/${clientId}`, {
+      await companyApi.post(`/client/delete-client/${clientId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -76,7 +76,7 @@ export const getSingleClient = createAsyncThunk<void, string, baseStoreType>('cl
 
   try {
     if (token) {
-      const { data } = await authApi.get(`/client/get-client-data/${clientId}`, {
+      const { data } = await companyApi.get(`/client/get-client-data/${clientId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -104,7 +104,7 @@ export const editClient = createAsyncThunk<void, EditClientInterface, baseStoreT
 
   try {
     if (token) {
-      await authApi.put(
+      await companyApi.put(
         `/client/edit-client`,
         { values },
         {
@@ -137,7 +137,7 @@ export const editClientCoords = createAsyncThunk<void, EditClientCoorsInterface,
 
   try {
     if (token) {
-      await authApi.put(
+      await companyApi.put(
         `/client/edit-client-coords`,
         { clientId, lat, long },
         {

@@ -1,12 +1,18 @@
 import axios from 'axios';
-import { rejects } from 'assert';
 // import store from '../store/test-store';
 
+//* not logged in
 const api = axios.create({
   baseURL: process.env.REACT_APP_API_URL
 });
 
+//* only logged in users
 const authApi = axios.create({
+  baseURL: process.env.REACT_APP_API_URL
+});
+
+//* users currently in company (employee + admin)
+const companyApi = axios.create({
   baseURL: process.env.REACT_APP_API_URL
 });
 
@@ -27,7 +33,7 @@ export const adminInterceptors = (refreshToken: string, companyId: string) => {
           originalRequest._isRetryRequest = true;
 
           console.log('im trying to get new admin token');
-          const res = fetch(`${process.env.REACT_APP_API_URL}/auth/admin-token`, {
+          const res = fetch(`${process.env.REACT_APP_API_URL}/company/admin-token`, {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
@@ -52,4 +58,4 @@ export const adminInterceptors = (refreshToken: string, companyId: string) => {
   );
 };
 
-export { api, authApi };
+export { api, authApi, companyApi };

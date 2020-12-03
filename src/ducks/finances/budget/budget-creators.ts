@@ -1,13 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { baseStoreType } from '../../../store/test-store';
-import { authApi } from '../../../api';
+import { companyApi } from '../../../api';
 
 export const getCompanyBudget = createAsyncThunk<number, void, baseStoreType>('budget/getCompanyBudget', async (daysBack, { dispatch, getState, rejectWithValue }) => {
   const { token } = getState().auth.tokens;
 
   try {
     if (token) {
-      const { data } = await authApi.get(`/budget/get-company-budget`, {
+      const { data } = await companyApi.get(`/budget/get-company-budget`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

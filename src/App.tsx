@@ -13,7 +13,8 @@ import SelectPage from './pages/SelectPage/SelectPage';
 import NotificationPopup from './components/molecules/NotificationPopup/NotificationPopup';
 import RegisterFromLink from './pages/RegisterFromLink/RegisterFromLink';
 import { AppState, useAppDispatch } from './store/test-store';
-import { adminInterceptors } from './api';
+import { authApi, companyApi } from './api';
+import { handleCompanyRefreshToken, handleAuthRefreshToken } from './api/middleware';
 
 type ConnectedProps = RouteComponentProps<any>;
 
@@ -30,6 +31,16 @@ const App: React.FC<ConnectedProps> = ({ history }) => {
         errorCallback: () => history.push('/login')
       })
     );
+  }, []);
+
+  useEffect(() => {
+    companyApi.interceptors.response.use((response: any) => {
+      return response;
+    }, handleCompanyRefreshToken);
+
+    authApi.interceptors.response.use((response: any) => {
+      return response;
+    }, handleAuthRefreshToken);
   }, []);
 
   // useEffect(() => {

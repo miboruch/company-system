@@ -1,7 +1,7 @@
 import { saveAs } from 'file-saver';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { authApi } from '../../api';
+import { companyApi } from '../../api';
 import { setNotificationMessage } from '../popup/popup';
 import { ItemInterface } from '../../components/organisms/GenerateInvoice/GenerateInvoice';
 import { baseStoreType } from '../../store/test-store';
@@ -20,7 +20,7 @@ export const generateInvoice = createAsyncThunk<void, InvoiceInterface, baseStor
 
   try {
     if (token) {
-      const { data } = await authApi.post(
+      const { data } = await companyApi.post(
         `/invoice/create-invoice`,
         { ...values },
         {
