@@ -20,10 +20,12 @@ export const getAllCompanyEmployees = createAsyncThunk<AllCompanyEmployeesReturn
   const { currentCompany } = getState().company.currentCompany;
 
   try {
+    console.log(currentCompany);
+    console.log(token);
     if (currentCompany && token) {
       const { data } = await companyApi.get(role === UserRole.Admin ? `/employee/get-company-employees` : `/employee/employee-data`, {
         headers: {
-          // Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`
         }
       });
 

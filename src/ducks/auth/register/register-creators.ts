@@ -3,6 +3,7 @@ import { api } from '../../../api';
 import { setTokens } from '../tokens/tokens';
 import { getUserData } from '../data/data-creators';
 import { baseStoreType } from '../../../store/test-store';
+import { getUserNotifications } from '../../notifications/notifications-creators';
 
 interface RegisterInterface {
   email: string;
@@ -23,8 +24,9 @@ export const register = createAsyncThunk<void, RegisterInterface, baseStoreType>
     const { data } = await api.post(`/auth/register`, { ...values });
 
     //TODO: dispatch actions
-    dispatch(setTokens({ token: data.token, refreshToken: data.refreshToken, expireIn: data.expireIn }));
+    dispatch(setTokens({ token: data.token, refreshToken: data.refreshToken }));
     dispatch(getUserData());
+    dispatch(getUserNotifications(1));
     callback();
   } catch (error) {
     return rejectWithValue(error.response.statusText);

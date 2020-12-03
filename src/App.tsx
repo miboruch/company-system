@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter, useRouteMatch } from 'react-router-dom';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import Layout from './components/Layout';
@@ -15,22 +15,19 @@ import RegisterFromLink from './pages/RegisterFromLink/RegisterFromLink';
 import { AppState, useAppDispatch } from './store/test-store';
 import { authApi, companyApi } from './api';
 import { handleCompanyRefreshToken, handleAuthRefreshToken } from './api/middleware';
+import Spinner from './components/atoms/Spinner/Spinner';
 
 type ConnectedProps = RouteComponentProps<any>;
 
 const App: React.FC<ConnectedProps> = ({ history }) => {
   const dispatch = useAppDispatch();
+  const { isLoading } = useSelector((state: AppState) => state.initialLoad);
   const { token, refreshToken } = useSelector((state: AppState) => state.auth.tokens);
   const { role } = useSelector((state: AppState) => state.auth.roles);
   const { currentCompany } = useSelector((state: AppState) => state.company.currentCompany);
 
   useEffect(() => {
-    dispatch(
-      authCheck({
-        successCallback: () => history.push('/select'),
-        errorCallback: () => history.push('/login')
-      })
-    );
+    dispatch(authCheck());
   }, []);
 
   useEffect(() => {
@@ -55,7 +52,9 @@ const App: React.FC<ConnectedProps> = ({ history }) => {
   //   }
   // }, [currentCompany, refreshToken]);
 
-  return (
+  return isLoading ? (
+    <Spinner />
+  ) : (
     <Layout>
       <Switch>
         <Route path={'/login'} component={LoginPage} />

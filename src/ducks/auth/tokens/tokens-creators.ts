@@ -1,6 +1,5 @@
 import { api } from '../../../api';
 import { getUserData } from '../data/data-creators';
-import { authTimeout } from '../check/check-creators';
 import { logout } from '../logout/logout-creators';
 import { setTokens } from './tokens';
 import { AppDispatch } from '../../../store/test-store';
@@ -15,16 +14,15 @@ export const getNewAccessToken = ({ refreshToken, successCallback, errorCallback
   try {
     const { data } = await api.post(`/auth/token`, { refreshToken });
 
-    dispatch(setTokens({ token: data.accessToken, refreshToken, expireIn: data.expireIn }));
-    dispatch(getUserData());
+    dispatch(setTokens({ token: data.accessToken, refreshToken }));
+    dispatch(getUserData(data.accessToken));
 
-    dispatch(authTimeout({ refreshToken, expireMilliseconds: data.expireIn - new Date().getTime() }));
     !!successCallback && successCallback();
 
     return data;
   } catch (error) {
     !!errorCallback && errorCallback();
-    dispatch(logout(() => console.log('sign out')));
+    dispatch(logout(() => history.pushState({}, '', '/login')));
   }
 };
 
@@ -35,19 +33,18 @@ interface GetAdminTokenInterface {
   errorCallback?: () => void;
 }
 
-export const getAdminAccessToken = ({ refreshToken, companyId, successCallback, errorCallback }: GetAdminTokenInterface) => async (dispatch: AppDispatch): Promise<any> => {
+export const getCompanyAccessToken = ({ refreshToken, companyId, successCallback, errorCallback }: GetAdminTokenInterface) => async (dispatch: AppDispatch): Promise<any> => {
   try {
     const { data } = await api.post(`/auth/company-token`, { refreshToken, companyId });
 
-    dispatch(setTokens({ token: data.accessToken, refreshToken, expireIn: data.expireIn }));
+    dispatch(setTokens({ token: data.accessToken, refreshToken }));
     dispatch(getUserData(data.accessToken));
 
-    dispatch(authTimeout({ refreshToken, expireMilliseconds: data.expireIn - new Date().getTime() }));
     !!successCallback && successCallback();
 
     return data;
   } catch (error) {
     !!errorCallback && errorCallback();
-    dispatch(logout(() => console.log('sign out')));
+    dispatch(logout(() => history.pushState({}, '', '/login')));
   }
 };

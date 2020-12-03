@@ -1,35 +1,29 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { setTokens } from '../tokens/tokens';
+import { setTokens } from '../auth/tokens/tokens';
 
 interface InitialStateInterface {
   isLoading: boolean;
-  isLoggedIn: boolean;
 }
 
 const initialState: InitialStateInterface = {
-  isLoading: false,
-  isLoggedIn: false
+  isLoading: true
 };
 
-const authCheckSlice = createSlice({
-  name: 'authCheck',
+const initialLoadSlice = createSlice({
+  name: 'initialLoad',
   initialState,
   reducers: {
-    setLogged: (state, { payload }: PayloadAction<boolean>) => {
-      state.isLoggedIn = payload;
-    },
     setLoading: (state, { payload }: PayloadAction<boolean>) => {
       state.isLoading = payload;
-    },
-    resetCheckState: () => initialState
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(setTokens, (state, { payload }: PayloadAction<{ token: string; refreshToken: string } | null>) => {
-      state.isLoggedIn = !!payload;
+      state.isLoading = false;
     });
   }
 });
 
-export const { setLogged, setLoading, resetCheckState } = authCheckSlice.actions;
+export const { setLoading } = initialLoadSlice.actions;
 
-export default authCheckSlice.reducer;
+export default initialLoadSlice.reducer;

@@ -5,20 +5,23 @@ import { AppDispatch, AppState, baseStoreType } from '../../../store/test-store'
 import { companyApi } from '../../../api';
 import { setNotificationMessage } from '../../popup/popup';
 import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
-import { UserRole } from '../../auth/roles/roles';
-import { getAdminAccessToken } from '../../auth/tokens/tokens-creators';
+import { getCompanyAccessToken } from '../../auth/tokens/tokens-creators';
 import { getOwnEmployeeData } from '../../auth/data/data-creators';
 
 export const setCurrentCompany = (company: CompanyInterface | null, successCallback?: () => void) => (dispatch: AppDispatch, getState: () => AppState) => {
-  //if role is admin, generate set new admin token with companyId
-  const { role } = getState().auth.roles;
   const { refreshToken } = getState().auth.tokens;
 
-  //if (role === UserRole.Admin && refreshToken && company) {
-
   if (refreshToken && company) {
-    localStorage.setItem('companyId', company._id);
-    dispatch(getAdminAccessToken({ refreshToken, companyId: company._id, successCallback: () => !!successCallback && successCallback() }));
+    dispatch(
+      getCompanyAccessToken({
+        refreshToken,
+        companyId: company._id,
+        successCallback: () => {
+          !!successCallback && successCallback();
+          localStorage.setItem('companyId', company._id);
+        }
+      })
+    );
   } else {
     company && dispatch(getOwnEmployeeData(company._id));
     !!successCallback && successCallback();

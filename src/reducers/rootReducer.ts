@@ -11,6 +11,7 @@ import notifications from '../ducks/notifications/notifications';
 import currency from '../ducks/currency/currency';
 import popup from '../ducks/popup/popup';
 import allUsers from '../ducks/users/all-users';
+import initialLoad from '../ducks/app/initial-load';
 
 export const rootReducer = combineReducers({
   auth,
@@ -23,5 +24,6 @@ export const rootReducer = combineReducers({
   currency,
   notifications,
   popup,
-  allUsers
+  allUsers,
+  initialLoad
 });

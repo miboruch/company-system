@@ -26,7 +26,7 @@ export const addNewClient = createAsyncThunk<void, AddClientInterface, baseStore
       await companyApi.post(
         `/client/create-client`,
         {
-          values
+          ...values
         },
         {
           headers: {
@@ -106,7 +106,7 @@ export const editClient = createAsyncThunk<void, EditClientInterface, baseStoreT
     if (token) {
       await companyApi.put(
         `/client/edit-client`,
-        { values },
+        { ...values },
         {
           headers: {
             Authorization: `Bearer ${token}`
