@@ -2,7 +2,7 @@ import { RegistrationVerifyTokenResponse } from '../../../pages/RegisterFromLink
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { baseStoreType } from '../../../store/test-store';
 import { setTokens } from '../tokens/tokens';
-import { api } from '../../../api';
+import { api, companyApi } from '../../../api';
 import { authTimeout } from '../check/check-creators';
 import { setNotificationMessage } from '../../popup/popup';
 import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
@@ -79,7 +79,7 @@ export const sendRegistrationMail = createAsyncThunk<void, SendRegistrationMailI
           monthlyPrice,
           companyName: currentCompany.name
         };
-        await api.post(
+        await companyApi.post(
           `/auth/send-registration-link`,
           { body },
           {

@@ -1,14 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { EmployeeDataInterface, UserAuthData } from '../../../types/modelsTypes';
 import { baseStoreType } from '../../../store/test-store';
-import { companyApi } from '../../../api';
+import { authApi } from '../../../api';
 
 export const getUserData = createAsyncThunk<UserAuthData, string | void, baseStoreType>('data/userData', async (argToken, { rejectWithValue, getState }) => {
   try {
     const { token } = getState().auth.tokens;
 
     if (argToken) {
-      const { data } = await companyApi.get(`/user/user-data`, {
+      const { data } = await authApi.get(`/user/user-data`, {
         headers: {
           Authorization: `Bearer ${argToken}`
         }
@@ -16,7 +16,7 @@ export const getUserData = createAsyncThunk<UserAuthData, string | void, baseSto
 
       return data as UserAuthData;
     } else {
-      const { data } = await companyApi.get(`/user/user-data`, {
+      const { data } = await authApi.get(`/user/user-data`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -33,7 +33,7 @@ export const getOwnEmployeeData = createAsyncThunk<EmployeeDataInterface, string
   try {
     const { token } = getState().auth.tokens;
 
-    const { data } = await companyApi.get(`/employee/employee-data`, {
+    const { data } = await authApi.get(`/employee/employee-data`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
