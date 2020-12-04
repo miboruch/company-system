@@ -12,7 +12,7 @@ import { setRole } from '../roles/roles';
 import { setLoading } from '../../app/initial-load';
 import { getSingleCompany } from '../../company/current-company/current-company-creators';
 
-export const authCheck = () => (dispatch: AppDispatch, getState: () => AppState): void => {
+export const authCheck = (pathname: string) => (dispatch: AppDispatch, getState: () => AppState): void => {
   dispatch(setLoading(true));
   const { role } = getState().auth.roles;
 
@@ -27,9 +27,8 @@ export const authCheck = () => (dispatch: AppDispatch, getState: () => AppState)
           refreshToken,
           companyId,
           successCallback: () => {
-            //TODO: set user role based on path
-            dispatch(setRole(UserRole.Admin));
-            dispatch(getSingleCompany(companyId));
+            pathname.includes('admin') ? dispatch(setRole(UserRole.Admin)) : dispatch(setRole(UserRole.User));
+            // dispatch(getSingleCompany(companyId));
             //TODO: wait until this company fetch, then setInitialLoading = false
 
             console.log('refresh token and company');
@@ -43,6 +42,7 @@ export const authCheck = () => (dispatch: AppDispatch, getState: () => AppState)
   } else {
     dispatch(clearStorage());
     dispatch(resetState());
+    history.pushState({}, '', '/login');
     console.log('no refresh token');
   }
 };

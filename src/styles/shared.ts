@@ -66,6 +66,12 @@ const SpinnerWrapper = styled.div`
   }
 `;
 
+const MainSpinnerWrapper = styled(SpinnerWrapper)`
+  ${({ theme }) => theme.mq.hdReady} {
+    height: 100vh;
+  }
+`;
+
 const FlexWrapper = styled.div`
   display: flex;
   flex-direction: row;
@@ -154,5 +160,6 @@ export {
   CompoundListWrapper,
   List,
   AddWrapper,
-  EmptyWrapper
+  EmptyWrapper,
+  MainSpinnerWrapper
 };

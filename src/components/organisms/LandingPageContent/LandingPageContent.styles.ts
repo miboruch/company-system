@@ -80,7 +80,7 @@ const InfoWrapper = styled.section`
     height: 100%;
     background-color: ${({ theme }) => theme.colors.menuBackground};
     border-radius: 30px;
-    margin-bottom: 0;
+    margin: 0;
   }
 `;
 
