@@ -45,7 +45,7 @@ const LandingPageContent: React.FC<RouteComponentProps<any>> = ({ history }) => 
 
   useEffect(() => {
     contentAnimation(tl, contentRef);
-    role === UserRole.Admin && dispatch(getCompanyTasks());
+    dispatch(getCompanyTasks());
   }, []);
 
   useEffect(() => {

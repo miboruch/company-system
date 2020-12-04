@@ -11,8 +11,9 @@ import { getAllAppUsers } from '../../users/all-users-creators';
 import { setRole } from '../roles/roles';
 import { setLoading } from '../../app/initial-load';
 import { getSingleCompany } from '../../company/current-company/current-company-creators';
+import { History } from 'history';
 
-export const authCheck = (pathname: string) => (dispatch: AppDispatch, getState: () => AppState): void => {
+export const authCheck = (pathname: string, history: History) => (dispatch: AppDispatch, getState: () => AppState): void => {
   dispatch(setLoading(true));
   const { role } = getState().auth.roles;
 
@@ -28,21 +29,15 @@ export const authCheck = (pathname: string) => (dispatch: AppDispatch, getState:
           companyId,
           successCallback: () => {
             pathname.includes('admin') ? dispatch(setRole(UserRole.Admin)) : dispatch(setRole(UserRole.User));
-            // dispatch(getSingleCompany(companyId));
-            //TODO: wait until this company fetch, then setInitialLoading = false
-
-            console.log('refresh token and company');
           }
         })
       );
     } else {
-      dispatch(getNewAccessToken({ refreshToken }));
-      console.log('refresh token but no company');
+      dispatch(getNewAccessToken({ refreshToken, successCallback: () => history.push('/select') }));
     }
   } else {
     dispatch(clearStorage());
     dispatch(resetState());
-    history.pushState({}, '', '/login');
-    console.log('no refresh token');
+    history.push('/login');
   }
 };

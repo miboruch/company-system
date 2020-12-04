@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { RouteComponentProps, withRouter, useLocation } from 'react-router-dom';
+import { RouteComponentProps, withRouter, useLocation, useHistory, Redirect } from 'react-router-dom';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import Layout from './components/Layout';
@@ -17,11 +17,11 @@ import { authApi, companyApi } from './api';
 import { handleCompanyRefreshToken, handleAuthRefreshToken } from './api/middleware';
 import Spinner from './components/atoms/Spinner/Spinner';
 import { MainSpinnerWrapper } from './styles/shared';
+import NotAuthRoute from './hoc/NotAuthRoute';
 
-type ConnectedProps = RouteComponentProps<any>;
-
-const App: React.FC<ConnectedProps> = ({ history, location }) => {
+const App: React.FC = () => {
   const { pathname } = useLocation();
+  const history = useHistory();
   const dispatch = useAppDispatch();
   const { isLoading } = useSelector((state: AppState) => state.initialLoad);
   const { token, refreshToken } = useSelector((state: AppState) => state.auth.tokens);
@@ -29,7 +29,7 @@ const App: React.FC<ConnectedProps> = ({ history, location }) => {
   const { currentCompany } = useSelector((state: AppState) => state.company.currentCompany);
 
   useEffect(() => {
-    dispatch(authCheck(pathname));
+    dispatch(authCheck(pathname, history));
     /*
      * company id should be fetched before tokens are set
      *
@@ -66,12 +66,13 @@ const App: React.FC<ConnectedProps> = ({ history, location }) => {
         </MainSpinnerWrapper>
       ) : (
         <Switch>
-          {/*<Route path={'/'} exact component={SelectPage} />*/}
-          <Route path={'/login'} exact component={LoginPage} />
-          <Route path={'/register'} component={RegisterPage} />
+          {/*<Route path={'/'} exact component={} />*/}
           <Route path={'/select'} component={SelectPage} />
-          <Route path={'/link-register/:token'} component={RegisterFromLink} />
+          <NotAuthRoute path={'/login'} exact component={LoginPage} />
+          <NotAuthRoute path={'/register'} component={RegisterPage} />
+          <NotAuthRoute path={'/link-register/:token'} component={RegisterFromLink} />
           <Routes />
+          <Redirect from={'*'} to={'/select'} />
         </Switch>
       )}
       <NotificationPopup />
@@ -79,4 +80,4 @@ const App: React.FC<ConnectedProps> = ({ history, location }) => {
   );
 };
 
-export default withRouter(App);
+export default App;
