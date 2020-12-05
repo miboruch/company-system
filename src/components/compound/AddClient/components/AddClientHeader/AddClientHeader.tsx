@@ -1,12 +1,14 @@
 import React, { useContext } from 'react';
 import { useDispatch } from 'react-redux';
+
 import ArrowButton from '../../../../atoms/ArrowButton/ArrowButton';
-import { Direction } from '../../../../../types/globalTypes';
 import CloseButton from '../../../../atoms/CloseButton/CloseButton';
+
+import { Direction } from '../../../../../types/globalTypes';
+import { setAddNewClientOpen } from '../../../../../ducks/client/client-toggle/client-toggle';
 import { PageContext } from '../../context/PageContext';
 import { StyledHeader } from '../../../styles/headerStyles';
 import { Paragraph } from '../../../../../styles/typography/typography';
-import { setAddNewClientOpen } from '../../../../../ducks/client/client-toggle/client-toggle';
 
 const AddClientHeader: React.FC = () => {
   const dispatch = useDispatch();

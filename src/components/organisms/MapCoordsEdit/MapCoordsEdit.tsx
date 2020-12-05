@@ -93,6 +93,11 @@ const MapCoordsEdit: React.FC<Props> = ({ isOpen, closeMap, lat, long, type }) =
   };
 
   useEffect(() => {
+    setUpdatedLat(lat);
+    setUpdatedLong(long);
+  }, [lat, long, isOpen]);
+
+  useEffect(() => {
     modalOpenAnimation(tl, mainWrapperRef, boxRef);
   }, []);
 

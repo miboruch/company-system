@@ -73,10 +73,11 @@ export const deleteClient = createAsyncThunk<void, string, baseStoreType>('clien
 
 export const getSingleClient = createAsyncThunk<void, string, baseStoreType>('client/getSingleClient', async (clientId, { dispatch, getState }) => {
   const { token } = getState().auth.tokens;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
-    if (token) {
-      const { data } = await companyApi.get(`/client/get-client-data/${clientId}`, {
+    if (token && currentCompany) {
+      const { data } = await companyApi.get(`/client/get-client-data/${clientId}?company_id=${currentCompany._id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
