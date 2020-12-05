@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
+import { UserRole } from '../../auth/roles/roles';
 import { API_URL } from '../../../utils/config';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AttendanceInterface } from '../../../types/modelsTypes';

@@ -3,7 +3,7 @@ import { CompanyOwnersInterface } from '../../../types/modelsTypes';
 import { baseStoreType } from '../../../store/store';
 import { companyApi } from '../../../api';
 import { setNotificationMessage } from '../../popup/popup';
-import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
+import { NotificationTypes } from '../../../types/globalTypes';
 import { getAllCompanyEmployees } from '../../employees/employees-data/employees-data-creators';
 
 export const getCompanyOwners = createAsyncThunk<CompanyOwnersInterface[], void, baseStoreType>('companyOwners/getCompanyOwners', async (_arg, { dispatch, rejectWithValue, getState }) => {

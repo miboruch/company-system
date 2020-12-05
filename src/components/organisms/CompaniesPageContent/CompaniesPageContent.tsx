@@ -11,7 +11,7 @@ import { Paragraph } from '../../../styles/typography/typography';
 import ListBox from '../../molecules/ListBox/ListBox';
 import AddCompanyController from '../../compound/AddCompany/AddCompanyController';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
+import { UserRole } from '../../../ducks/auth/roles/roles';
 import { setAddCompanyOpen } from '../../../ducks/company/company-toggle/company-toggle';
 
 const CompaniesPageContent: React.FC<RouteComponentProps<any>> = ({ history }) => {

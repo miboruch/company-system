@@ -4,7 +4,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useOutsideClick } from '../../../utils/customHooks';
 import { AppState } from '../../../store/store';
-import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
+import { UserRole } from '../../../ducks/auth/roles/roles';
 import { notificationsAnimation } from '../../../animations/animations';
 import { logout } from '../../../ducks/auth/logout/logout-creators';
 import { LogoutIcon } from '../../../styles/iconStyles';

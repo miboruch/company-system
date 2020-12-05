@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { NotificationTypes } from '../../types/actionTypes/toggleAcitonTypes';
+import { NotificationTypes } from '../../types/globalTypes';
 import { baseStoreType } from '../../store/store';
 import { setNotificationMessage } from '../popup/popup';
 import { getSingleDayAttendance } from './attendance-data/attendance-data-creators';

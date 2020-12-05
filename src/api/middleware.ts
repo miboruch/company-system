@@ -3,7 +3,7 @@ import store from '../store/store';
 import { clearStorage, logout } from '../ducks/auth/logout/logout-creators';
 import { resetState } from '../ducks/reset/reset-creators';
 import { setNotificationMessage } from '../ducks/popup/popup';
-import { NotificationTypes } from '../types/actionTypes/toggleAcitonTypes';
+import { NotificationTypes } from '../types/globalTypes';
 
 const logoutUser = (refreshToken: string | null) => {
   if (refreshToken) {

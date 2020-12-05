@@ -4,7 +4,7 @@ import { NotificationInterface } from '../../types/modelsTypes';
 import { baseStoreType } from '../../store/store';
 import { authApi } from '../../api';
 import { setNotificationMessage } from '../popup/popup';
-import { NotificationTypes } from '../../types/actionTypes/toggleAcitonTypes';
+import { NotificationTypes } from '../../types/globalTypes';
 
 export const getUserNotifications = createAsyncThunk<NotificationInterface[], number, baseStoreType>('notifications/getUserNotifications', async (page, { rejectWithValue, getState }) => {
   const { token } = getState().auth.tokens;

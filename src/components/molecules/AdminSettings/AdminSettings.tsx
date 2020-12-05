@@ -9,7 +9,7 @@ import { AppState, useAppDispatch } from '../../../store/store';
 import { getAllCompanyEmployees } from '../../../ducks/employees/employees-data/employees-data-creators';
 import { getCompanyOwners, addNewCompanyOwner } from '../../../ducks/company/company-owners/company-owners-creators';
 import { SpinnerWrapper } from '../../../styles/shared';
-import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
+import { NotificationTypes } from '../../../types/globalTypes';
 import { setNotificationMessage } from '../../../ducks/popup/popup';
 import { Wrapper, ColumnWrapper, Heading } from './AdminSettings.styles';
 

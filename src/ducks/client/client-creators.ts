@@ -1,4 +1,4 @@
-import { NotificationTypes } from '../../types/actionTypes/toggleAcitonTypes';
+import { NotificationTypes } from '../../types/globalTypes';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { baseStoreType } from '../../store/store';
 import { companyApi } from '../../api';

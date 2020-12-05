@@ -14,7 +14,7 @@ import { CheckedIcon, DeleteIcon, EditIcon, LocationIcon, NotCheckedIcon } from 
 import { changeTaskState, editTask } from '../../../ducks/tasks/tasks-data/task-data-creators';
 import { setTaskMapPreviewOpen } from '../../../ducks/tasks/tasks-toggle/tasks-toggle';
 import { TaskSchema } from '../../../validation/modelsValidation';
-import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
+import { UserRole } from '../../../ducks/auth/roles/roles';
 
 interface ParagraphInterface {
   isCompleted: boolean;

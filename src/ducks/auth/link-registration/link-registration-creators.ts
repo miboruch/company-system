@@ -4,7 +4,7 @@ import { baseStoreType } from '../../../store/store';
 import { setTokens } from '../tokens/tokens';
 import { api, companyApi } from '../../../api';
 import { setNotificationMessage } from '../../popup/popup';
-import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
+import { NotificationTypes } from '../../../types/globalTypes';
 
 interface ValidateTokenInterface {
   token: string;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { UserRole } from '../types/actionTypes/authenticationActionTypes';
+import { UserRole } from '../ducks/auth/roles/roles';
 import { Switch } from 'react-router-dom';
 import { adminRoutes, userRoutes } from './routesDefinition';
 import AdminRoute from '../hoc/AdminRoute';

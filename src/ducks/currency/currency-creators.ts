@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { baseStoreType } from '../../store/store';
 import { CURRENCY_API_URL } from '../../utils/config';
 import { setNotificationMessage } from '../popup/popup';
-import { NotificationTypes } from '../../types/actionTypes/toggleAcitonTypes';
+import { NotificationTypes } from '../../types/globalTypes';
 
 export type currencyTypes = 'PLN' | 'EUR' | 'USD';
 

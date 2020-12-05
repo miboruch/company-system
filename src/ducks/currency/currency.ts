@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
-import { CurrencyInterface } from '../../types/actionTypes/toggleAcitonTypes';
+import { CurrencyInterface } from '../../types/globalTypes';
 import { getCurrencyValue, CurrencyReturnInterface } from './currency-creators';
 
 interface InitialStateInterface {

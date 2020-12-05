@@ -4,7 +4,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, AppState, baseStoreType } from '../../../store/store';
 import { companyApi } from '../../../api';
 import { setNotificationMessage } from '../../popup/popup';
-import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
+import { NotificationTypes } from '../../../types/globalTypes';
 import { getCompanyAccessToken } from '../../auth/tokens/tokens-creators';
 import { getOwnEmployeeData } from '../../auth/data/data-creators';
 

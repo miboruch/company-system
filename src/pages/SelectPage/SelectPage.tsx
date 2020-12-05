@@ -4,7 +4,7 @@ import { useAppDispatch } from '../../store/store';
 import ArrowButton from '../../components/atoms/ArrowButton/ArrowButton';
 import { Direction } from '../../types/globalTypes';
 import { changeUserRoleTo } from '../../ducks/auth/roles/roles-creators';
-import { UserRole } from '../../types/actionTypes/authenticationActionTypes';
+import { UserRole } from '../../ducks/auth/roles/roles';
 import { Wrapper, Heading, Header, StyledHeading, ContentWrapper, Paragraph, ContentBox, ArrowWrapper, StyledCompanyName } from './SelectPage.styles';
 
 const SelectPage: React.FC = () => {

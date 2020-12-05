@@ -6,7 +6,7 @@ import MenuItemsRenderer from './MenuItemsRenderer';
 
 import { changeUserRoleTo } from '../../../ducks/auth/roles/roles-creators';
 import { AppState, useAppDispatch } from '../../../store/store';
-import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
+import { UserRole } from '../../../ducks/auth/roles/roles';
 import { MenuContext } from '../../../providers/MenuContext/MenuContext';
 import { CompanyName, MenuItemsWrapper, MenuWrapper, RedirectPanel, StyledMenuSvg, ArrowIcon, ArrowWrapper, RedirectText } from './Menu.styles';
 

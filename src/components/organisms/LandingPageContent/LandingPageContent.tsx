@@ -20,7 +20,7 @@ import { getIncomeExpenseInTimePeriod } from '../../../ducks/finances/income-exp
 import { ArrowIcon } from '../../../styles/iconStyles';
 import { getAllCompanyEmployees } from '../../../ducks/employees/employees-data/employees-data-creators';
 import AdminStatistics from '../AdminStatistics/AdminStatistics';
-import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
+import { UserRole } from '../../../ducks/auth/roles/roles';
 import BarChart from '../../molecules/BarChart/BarChart';
 import { getAllAppUsers } from '../../../ducks/users/all-users-creators';
 
