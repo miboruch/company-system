@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useAppDispatch } from '../../store/test-store';
+import { useAppDispatch } from '../../store/store';
 import ArrowButton from '../../components/atoms/ArrowButton/ArrowButton';
 import { Direction } from '../../types/globalTypes';
 import { changeUserRoleTo } from '../../ducks/auth/roles/roles-creators';

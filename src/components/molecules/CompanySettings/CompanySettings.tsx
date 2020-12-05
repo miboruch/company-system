@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Formik } from 'formik';
 import Button from '../../atoms/Button/Button';
 import MapCoordsEdit, { CoordsEditType } from '../../organisms/MapCoordsEdit/MapCoordsEdit';
-import { AppState, useAppDispatch } from '../../../store/test-store';
+import { AppState, useAppDispatch } from '../../../store/store';
 import { Heading, StyledForm } from '../AccountSettings/AccountSettings.styles';
 import { StyledInput } from '../../../styles/compoundStyles';
 import { editCompany } from '../../../ducks/company/current-company/current-company-creators';

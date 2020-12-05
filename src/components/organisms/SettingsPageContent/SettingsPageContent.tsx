@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
-import { AppState } from '../../../store/test-store';
+import { AppState } from '../../../store/store';
 import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
 import { adminSettings, userSettings, AdminSettingsSubcategories, UserSettingsSubcategories, renderSettings } from './settingsPageData';
 import { StyledList, ListItems, Paragraph, ContentWrapper } from './SettingsPageContent.styles';

@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { ClientInterface } from '../../../types/modelsTypes';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
 import { listAnimation } from '../../../animations/animations';
-import { AppState, useAppDispatch } from '../../../store/test-store';
+import { AppState, useAppDispatch } from '../../../store/store';
 
 import { deleteClient } from '../../../ducks/client/client-creators';
 import { getCompanyClients } from '../../../ducks/client/client-data/client-data-creators';

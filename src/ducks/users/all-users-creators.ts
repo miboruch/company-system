@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { UserDataInterface } from '../../types/modelsTypes';
-import { baseStoreType } from '../../store/test-store';
+import { baseStoreType } from '../../store/store';
 import { companyApi } from '../../api';
 
 export const getAllAppUsers = createAsyncThunk<UserDataInterface[], void, baseStoreType>('allUsers/getAllUsers', async (_arg, { rejectWithValue, getState }) => {

@@ -5,7 +5,7 @@ import DatePicker from 'react-datepicker';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
 import { AttendanceInterface } from '../../../types/modelsTypes';
 import { listAnimation } from '../../../animations/animations';
-import { AppState, useAppDispatch } from '../../../store/test-store';
+import { AppState, useAppDispatch } from '../../../store/store';
 import { getSingleDayAttendance } from '../../../ducks/attendance/attendance-data/attendance-data-creators';
 import { selectAttendance } from '../../../ducks/attendance/attendance-toggle/attendance-toggle-creators';
 import { setAttendanceInfoOpen, setDate } from '../../../ducks/attendance/attendance-toggle/attendance-toggle';

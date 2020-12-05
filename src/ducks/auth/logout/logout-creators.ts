@@ -1,7 +1,7 @@
 import { createAsyncThunk, Dispatch } from '@reduxjs/toolkit';
 import { setTokens } from '../tokens/tokens';
 import { setLogged } from '../check/check';
-import { AppDispatch, AppState } from '../../../store/test-store';
+import { AppDispatch, AppState } from '../../../store/store';
 import { api } from '../../../api';
 import { resetState } from '../../reset/reset-creators';
 

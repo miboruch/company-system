@@ -10,7 +10,7 @@ import { CheckedIcon, NotCheckedIcon, EmptyIcon } from '../../../styles/iconStyl
 import { FlexWrapper, StyledForm, StyledParagraph, StyledFlexWrapper, InputWrapper } from './AttendancePopup.styles';
 import { addAttendance, updateAttendance } from '../../../ducks/attendance/attendance-creators';
 import { AttendanceSchema } from '../../../validation/modelsValidation';
-import { useAppDispatch } from '../../../store/test-store';
+import { useAppDispatch } from '../../../store/store';
 
 interface Props {
   attendance: AttendanceInterface | null;

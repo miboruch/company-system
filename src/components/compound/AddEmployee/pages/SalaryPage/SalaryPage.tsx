@@ -8,7 +8,7 @@ import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { sendRegistrationMail } from '../../../../../ducks/auth/link-registration/link-registration-creators';
 import { addNewEmployee } from '../../../../../ducks/employees/employees-data/employees-data-creators';
 import { EmployeeSalarySchema } from '../../validation/validation';
-import { useAppDispatch } from '../../../../../store/test-store';
+import { useAppDispatch } from '../../../../../store/store';
 
 type DefaultValues = {
   email?: string;

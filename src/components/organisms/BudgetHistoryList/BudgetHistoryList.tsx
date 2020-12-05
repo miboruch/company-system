@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { ExpenseInterface, IncomeInterface } from '../../../types/modelsTypes';
 import ListBox from '../../molecules/ListBox/ListBox';
-import { AppState } from '../../../store/test-store';
+import { AppState } from '../../../store/store';
 import { roundTo2 } from '../../../utils/functions';
 import { Paragraph } from '../../../styles/typography/typography';
 import { EmptyWrapper } from '../../../styles/shared';

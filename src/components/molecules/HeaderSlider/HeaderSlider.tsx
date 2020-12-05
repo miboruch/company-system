@@ -3,13 +3,13 @@ import gsap from 'gsap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useOutsideClick } from '../../../utils/customHooks';
-import { AppState } from '../../../store/test-store';
+import { AppState } from '../../../store/store';
 import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
 import { notificationsAnimation } from '../../../animations/animations';
 import { logout } from '../../../ducks/auth/logout/logout-creators';
 import { LogoutIcon } from '../../../styles/iconStyles';
 import { StyledWrapper, SliderItem, Content, Text } from './HeaderSlider.styles';
-import { useAppDispatch } from '../../../store/test-store';
+import { useAppDispatch } from '../../../store/store';
 
 interface Props {
   isOpen: boolean;

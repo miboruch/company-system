@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { EmployeeDataInterface } from '../../../types/modelsTypes';
-import { AppState, useAppDispatch } from '../../../store/test-store';
+import { AppState, useAppDispatch } from '../../../store/store';
 import ListBox from '../../molecules/ListBox/ListBox';
 import { SpinnerWrapper } from '../../../styles/shared';
 import { getEmployeeHours, getEmployeeSalary } from '../../../ducks/employees/employees-data/employees-data-creators';

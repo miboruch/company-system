@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import MenuTemplate from '../../components/templates/MenuTemplate/MenuTemplate';
 import EmployeesPageContent from '../../components/organisms/EmployeesPageContent/EmployeesPageContent';
 import { useSelector } from 'react-redux';
-import { AppState, useAppDispatch } from '../../store/test-store';
+import { AppState, useAppDispatch } from '../../store/store';
 import { UserRole } from '../../ducks/auth/roles/roles';
 import { getAllAppUsers } from '../../ducks/users/all-users-creators';
 

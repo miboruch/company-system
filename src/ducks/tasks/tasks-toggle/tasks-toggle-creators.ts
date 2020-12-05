@@ -1,7 +1,7 @@
 import { History } from 'history';
-import { AppDispatch } from '../../../store/test-store';
+import { AppDispatch } from '../../../store/store';
 import { TaskInterface } from '../../../types/modelsTypes';
-import { AppState } from '../../../store/test-store';
+import { AppState } from '../../../store/store';
 import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
 import { setTaskInfoOpen, setSelectedTask } from './tasks-toggle';
 

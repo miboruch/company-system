@@ -6,7 +6,7 @@ import { StyledInput } from '../../../styles/compoundStyles';
 import { Paragraph } from '../../../styles/typography/typography';
 import { ButtonWrapper, EmployeeInfoBox, HeaderWrapper, InputWrapper, RowIconWrapper, StyledForm, Title, Wrapper } from '../../../styles/contentStyles';
 import { ClientInterface } from '../../../types/modelsTypes';
-import { AppState, useAppDispatch } from '../../../store/test-store';
+import { AppState, useAppDispatch } from '../../../store/store';
 import { StyledLabel } from '../../../styles/shared';
 import DatePicker from 'react-datepicker';
 import Button from '../../atoms/Button/Button';

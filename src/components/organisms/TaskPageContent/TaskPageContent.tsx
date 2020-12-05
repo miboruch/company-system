@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
 import { TaskInterface } from '../../../types/modelsTypes';
-import { AppState, useAppDispatch } from '../../../store/test-store';
+import { AppState, useAppDispatch } from '../../../store/store';
 import { deleteTask, getCompanyTasks } from '../../../ducks/tasks/tasks-data/task-data-creators';
 import { selectTask } from '../../../ducks/tasks/tasks-toggle/tasks-toggle-creators';
 import { setAddNewTaskOpen, setTaskInfoOpen, setTaskMapPreviewOpen } from '../../../ducks/tasks/tasks-toggle/tasks-toggle';

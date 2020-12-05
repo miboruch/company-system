@@ -12,7 +12,7 @@ import { register } from '../../../../ducks/auth/register/register-creators';
 import { registerFromLink } from '../../../../ducks/auth/link-registration/link-registration-creators';
 import { StyledInput } from '../../../../pages/LoginPage/LoginPage.styles';
 import { ContactDataSchema } from '../validation/validation';
-import { useAppDispatch } from '../../../../store/test-store';
+import { useAppDispatch } from '../../../../store/store';
 
 type defaultValues = {
   phoneNumber: string;

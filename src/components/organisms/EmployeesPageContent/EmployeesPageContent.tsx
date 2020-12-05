@@ -6,7 +6,7 @@ import { SpinnerWrapper, List, AddIcon, AddWrapper } from '../../../styles/share
 import ListBox from '../../molecules/ListBox/ListBox';
 import gsap from 'gsap';
 import ContentTemplate from '../../templates/ContentTemplate/ContentTemplate';
-import { AppState, useAppDispatch } from '../../../store/test-store';
+import { AppState, useAppDispatch } from '../../../store/store';
 import { getAllCompanyEmployees } from '../../../ducks/employees/employees-data/employees-data-creators';
 import { selectEmployee } from '../../../ducks/employees/employees-toggle/employees-toggle-creators';
 import { EmployeeDataInterface } from '../../../types/modelsTypes';

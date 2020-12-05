@@ -1,7 +1,9 @@
 import axios from 'axios';
-import store from '../store/test-store';
+import store from '../store/store';
 import { clearStorage, logout } from '../ducks/auth/logout/logout-creators';
 import { resetState } from '../ducks/reset/reset-creators';
+import { setNotificationMessage } from '../ducks/popup/popup';
+import { NotificationTypes } from '../types/actionTypes/toggleAcitonTypes';
 
 const logoutUser = (refreshToken: string | null) => {
   if (refreshToken) {
@@ -33,13 +35,13 @@ export const handleAuthRefreshToken = (error: any) => {
       .then((res) => {
         const token = res?.data?.accessToken;
         if (token) {
-          console.log(`new auth token: ${token}`);
           localStorage.setItem('token', token);
           originalRequest.headers['Authorization'] = `Bearer ${token}`;
           return axios(originalRequest);
         }
       })
       .catch((error) => {
+        store.dispatch(setNotificationMessage({ message: 'Nie masz dostępu do tej akcji', notificationType: NotificationTypes.Error }));
         logoutUser(refreshToken);
       });
   }
@@ -69,13 +71,13 @@ export const handleCompanyRefreshToken = (error: any): Promise<any> => {
       .then((res) => {
         const token = res?.data?.accessToken;
         if (token) {
-          console.log(`new admin and employee token: ${token}`);
           localStorage.setItem('token', token);
           originalRequest.headers['Authorization'] = `Bearer ${token}`;
           return axios(originalRequest);
         }
       })
       .catch((error) => {
+        store.dispatch(setNotificationMessage({ message: 'Nie masz dostępu do tej akcji', notificationType: NotificationTypes.Error }));
         logoutUser(refreshToken);
       });
   }

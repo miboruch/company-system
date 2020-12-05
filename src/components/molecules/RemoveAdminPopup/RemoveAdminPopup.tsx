@@ -7,7 +7,7 @@ import { CompanyOwnersInterface } from '../../../types/modelsTypes';
 import { Paragraph } from '../../../styles/typography/typography';
 import { ContentWrapper, StyledForm, StyledButtonWrapper, StyledInput, RowWrapper, InputRowWrapper, StyledInfoParagraph } from './RemoveAdminPopup.styles';
 import { removeCompanyOwner } from '../../../ducks/company/company-owners/company-owners-creators';
-import { useAppDispatch } from '../../../store/test-store';
+import { useAppDispatch } from '../../../store/store';
 
 interface DefaultState {
   addEmployee: boolean;

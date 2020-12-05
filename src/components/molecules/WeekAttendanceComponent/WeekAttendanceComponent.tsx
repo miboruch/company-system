@@ -17,7 +17,7 @@ import {
   StyledNotCheckedIcon
 } from './WeekAttendanceComponent.styles';
 import { months, weekDays } from '../../../utils/config';
-import { AppState, useAppDispatch } from '../../../store/test-store';
+import { AppState, useAppDispatch } from '../../../store/store';
 
 interface Props {
   weekAttendance: WeekAttendance[];

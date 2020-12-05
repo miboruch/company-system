@@ -3,7 +3,7 @@ import { setTokens } from '../tokens/tokens';
 import { getCompanyAccessToken, getNewAccessToken } from '../tokens/tokens-creators';
 import { getUserData } from '../data/data-creators';
 import { clearStorage, logout } from '../logout/logout-creators';
-import { AppDispatch, AppState } from '../../../store/test-store';
+import { AppDispatch, AppState } from '../../../store/store';
 import { getUserNotifications } from '../../notifications/notifications-creators';
 import { resetState } from '../../reset/reset-creators';
 import { UserRole } from '../roles/roles';

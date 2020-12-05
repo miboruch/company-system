@@ -12,7 +12,7 @@ import Routes from './routes/Routes';
 import SelectPage from './pages/SelectPage/SelectPage';
 import NotificationPopup from './components/molecules/NotificationPopup/NotificationPopup';
 import RegisterFromLink from './pages/RegisterFromLink/RegisterFromLink';
-import { AppState, useAppDispatch } from './store/test-store';
+import { AppState, useAppDispatch } from './store/store';
 import { authApi, companyApi } from './api';
 import { handleCompanyRefreshToken, handleAuthRefreshToken } from './api/middleware';
 import Spinner from './components/atoms/Spinner/Spinner';

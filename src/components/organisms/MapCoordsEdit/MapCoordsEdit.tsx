@@ -12,13 +12,9 @@ import CloseButton from '../../atoms/CloseButton/CloseButton';
 import { CloseButtonWrapper } from '../../../styles/compoundControllerStyles';
 import gsap from 'gsap';
 import { modalOpenAnimation } from '../../../animations/animations';
-import { ThunkDispatch } from 'redux-thunk';
-import { AppTypes } from '../../../types/actionTypes/appActionTypes';
-import { bindActionCreators } from 'redux';
 import { editCompanyCoords } from '../../../ducks/company/current-company/current-company-creators';
 import { editClientCoords } from '../../../ducks/client/client-creators';
-import { ClientInterface } from '../../../types/modelsTypes';
-import { AppState, useAppDispatch } from '../../../store/test-store';
+import { AppState, useAppDispatch } from '../../../store/store';
 
 const StyledWrapper = styled.div`
   position: fixed;

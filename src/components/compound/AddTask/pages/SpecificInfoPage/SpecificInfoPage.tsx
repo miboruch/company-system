@@ -9,7 +9,7 @@ import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { addNewTask } from '../../../../../ducks/tasks/tasks-data/task-data-creators';
 import Dropdown from '../../../../atoms/Dropdown/Dropdown';
 import { getCompanyClients } from '../../../../../ducks/client/client-data/client-data-creators';
-import { AppState, useAppDispatch } from '../../../../../store/test-store';
+import { AppState, useAppDispatch } from '../../../../../store/store';
 import { TaskSpecificInfoSchema } from '../../validation/validation';
 
 interface DefaultValues {

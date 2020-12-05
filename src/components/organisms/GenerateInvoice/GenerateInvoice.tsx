@@ -9,7 +9,7 @@ import { Heading, Paragraph } from '../../../styles/typography/typography';
 import InvoiceItem from '../../molecules/InvoiceItemForm/InvoiceItemForm';
 import Button from '../../atoms/Button/Button';
 import { useSelector } from 'react-redux';
-import { AppState, useAppDispatch } from '../../../store/test-store';
+import { AppState, useAppDispatch } from '../../../store/store';
 import { generateInvoice } from '../../../ducks/invoice/invoice-creators';
 
 const Wrapper = styled.div`

@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import ClientDataContextProvider from './context/ClientDataContext';
 import PageContextProvider, { PageSettingEnum } from './context/PageContext';
 import { modalOpenAnimation } from '../../../animations/animations';
-import { AppState } from '../../../store/test-store';
+import { AppState } from '../../../store/store';
 import { setAddNewClientOpen } from '../../../ducks/client/client-toggle/client-toggle';
 import { CloseButtonWrapper, CompoundTitle, ContentWrapper, MainWrapper, Wrapper } from '../../../styles/compoundControllerStyles';
 import CloseButton from '../../atoms/CloseButton/CloseButton';

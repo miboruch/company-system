@@ -7,7 +7,7 @@ import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { HeadingWrapper, MobileCompoundTitle, StyledForm, StyledInput, Subheading, Wrapper, StyledBackParagraph } from '../../../../../styles/compoundStyles';
 import { AddressDataSchema } from '../../validation/validation';
 import { createNewCompany } from '../../../../../ducks/company/companies/companies-creators';
-import { useAppDispatch } from '../../../../../store/test-store';
+import { useAppDispatch } from '../../../../../store/store';
 
 type defaultValues = {
   address: string;

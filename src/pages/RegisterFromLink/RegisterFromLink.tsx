@@ -5,7 +5,7 @@ import LoginTemplate, { TemplatePage } from '../../components/templates/LoginTem
 import RegistrationLinkController from '../../components/compound/RegisterUser/RegistrationLinkController';
 import Spinner from '../../components/atoms/Spinner/Spinner';
 import { validateRegistrationToken } from '../../ducks/auth/link-registration/link-registration-creators';
-import { AppState, useAppDispatch } from '../../store/test-store';
+import { AppState, useAppDispatch } from '../../store/store';
 
 interface RegistrationTokenResponse {
   companyId: string;

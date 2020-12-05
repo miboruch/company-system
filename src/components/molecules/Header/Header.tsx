@@ -6,7 +6,7 @@ import SearchInput from '../../atoms/SearchInput/SearchInput';
 import ArrowButton from '../../atoms/ArrowButton/ArrowButton';
 import Notifications from '../../organisms/Notifications/Notifications';
 import { Direction } from '../../../types/globalTypes';
-import { AppState } from '../../../store/test-store';
+import { AppState } from '../../../store/store';
 import { Circle, IconWrapper, NameParagraph, StyledHeader, UserWrapper, MobileCircle } from './Header.styles';
 import { NotificationIcon } from '../../../styles/iconStyles';
 

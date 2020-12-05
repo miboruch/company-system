@@ -1,4 +1,4 @@
-import { AppDispatch } from '../../store/test-store';
+import { AppDispatch } from '../../store/store';
 import { getCompanyIncomeAndExpense, getLastIncomesAndExpenses } from './income-expense/income-expense-creators';
 import { getCompanyBudget } from './budget/budget-creators';
 import { FINANCES_DATA_DAYS_BACK } from '../../utils/config';

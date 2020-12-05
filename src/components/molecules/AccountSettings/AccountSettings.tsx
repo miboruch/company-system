@@ -9,9 +9,9 @@ import { StyledForm, Heading } from './AccountSettings.styles';
 import { editAccount } from '../../../ducks/auth/account/account-creators';
 import { AccountSchema } from '../../../validation/modelsValidation';
 import { UserAuthData } from '../../../types/modelsTypes';
-import { useAppDispatch } from '../../../store/test-store';
+import { useAppDispatch } from '../../../store/store';
 import { useSelector } from 'react-redux';
-import { AppState } from '../../../store/test-store';
+import { AppState } from '../../../store/store';
 
 interface DefaultValues {
   email: string;

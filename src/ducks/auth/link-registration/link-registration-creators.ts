@@ -1,6 +1,6 @@
 import { RegistrationVerifyTokenResponse } from '../../../pages/RegisterFromLink/RegisterFromLink';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { baseStoreType } from '../../../store/test-store';
+import { baseStoreType } from '../../../store/store';
 import { setTokens } from '../tokens/tokens';
 import { api, companyApi } from '../../../api';
 import { setNotificationMessage } from '../../popup/popup';

@@ -4,7 +4,7 @@ import { API_URL } from '../../../utils/config';
 import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { EmployeeDataInterface } from '../../../types/modelsTypes';
-import { baseStoreType } from '../../../store/test-store';
+import { baseStoreType } from '../../../store/store';
 import { companyApi } from '../../../api';
 import { setNotificationMessage } from '../../popup/popup';
 import { setSelectedEmployee, setEmployeeInfoOpen } from '../employees-toggle/employees-toggle';

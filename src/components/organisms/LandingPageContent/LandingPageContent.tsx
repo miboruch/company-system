@@ -5,7 +5,7 @@ import gsap from 'gsap';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
 import { Content, InfoBoxWrapper, InfoWrapper, StatisticsHeading, TileWrapper } from './LandingPageContent.styles';
 import TaskTile from '../../molecules/TaskTile/TaskTile';
-import { AppState, useAppDispatch } from '../../../store/test-store';
+import { AppState, useAppDispatch } from '../../../store/store';
 import { AttendanceInterface, IncomeDataInterface } from '../../../types/modelsTypes';
 import Chart from '../../molecules/Chart/Chart';
 import AttendanceList from '../AttendanceList/AttendanceList';

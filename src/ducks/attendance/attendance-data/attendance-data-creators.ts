@@ -3,7 +3,7 @@ import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
 import { API_URL } from '../../../utils/config';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AttendanceInterface } from '../../../types/modelsTypes';
-import { baseStoreType } from '../../../store/test-store';
+import { baseStoreType } from '../../../store/store';
 
 export const getSingleDayAttendance = createAsyncThunk<AttendanceInterface[], Date | void, baseStoreType>('attendanceData/getSingleDayAttendance', async (date, { rejectWithValue, getState }) => {
   const { token } = getState().auth.tokens;

@@ -1,7 +1,7 @@
 import { setCompany } from './current-company';
 import { CompanyInterface } from '../../../types/modelsTypes';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AppDispatch, AppState, baseStoreType } from '../../../store/test-store';
+import { AppDispatch, AppState, baseStoreType } from '../../../store/store';
 import { companyApi } from '../../../api';
 import { setNotificationMessage } from '../../popup/popup';
 import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';

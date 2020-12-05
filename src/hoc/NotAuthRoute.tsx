@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { AppState } from '../store/test-store';
+import { AppState } from '../store/store';
 import { Redirect, Route } from 'react-router-dom';
 
 interface Props {

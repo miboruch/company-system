@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { useSelector } from 'react-redux';
-import { AppState, useAppDispatch } from '../../../store/test-store';
+import { AppState, useAppDispatch } from '../../../store/store';
 import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
 import { NOTIFICATION_VISIBILITY_TIME } from '../../../utils/config';
 import { CheckedIcon, NotCheckedIcon } from '../../../styles/iconStyles';

@@ -8,7 +8,7 @@ import { TaskDataContext } from '../../context/TaskDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { TaskInfoSchema } from '../../validation/validation';
 import { useSelector } from 'react-redux';
-import { AppState } from '../../../../../store/test-store';
+import { AppState } from '../../../../../store/store';
 import { EmployeeDataInterface } from '../../../../../types/modelsTypes';
 import MultipleDropdown from '../../../../atoms/MultipleDropdown/MultipleDropdown';
 

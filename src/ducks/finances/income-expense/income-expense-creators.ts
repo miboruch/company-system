@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AppState, baseStoreType } from '../../../store/test-store';
+import { AppState, baseStoreType } from '../../../store/store';
 import { companyApi } from '../../../api';
 import { ExpenseInterface, IncomeDataInterface, IncomeInterface } from '../../../types/modelsTypes';
 import { setNotificationMessage } from '../../popup/popup';

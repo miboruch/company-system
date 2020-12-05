@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { WeekAttendance } from '../../../types/modelsTypes';
-import { baseStoreType } from '../../../store/test-store';
+import { baseStoreType } from '../../../store/store';
 import { companyApi } from '../../../api';
 
 export const getWeekAttendance = createAsyncThunk<WeekAttendance[], number, baseStoreType>('weekAttendanceData/getWeekAttendance', async (weekCounter, { rejectWithValue, getState }) => {

@@ -8,7 +8,7 @@ import { Formik } from 'formik';
 import { EmployeeDataContext } from '../../context/EmployeeDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { UserDataInterface } from '../../../../../types/modelsTypes';
-import { AppState } from '../../../../../store/test-store';
+import { AppState } from '../../../../../store/store';
 import UserBox from '../../../../molecules/UserBox/UserBox';
 import { removeDuplicates } from '../../../../../utils/functions';
 import { Paragraph } from '../../../../../styles/typography/typography';

@@ -7,7 +7,7 @@ import { addIncome, addExpense } from '../../../ducks/finances/income-expense/in
 import { ButtonWrapper, ContentWrapper } from '../../../styles/popupStyles';
 import { StyledForm, StyledInput } from './IncomeExpensePopup.styles';
 import { IncomeExpenseSchema } from '../../../validation/modelsValidation';
-import { useAppDispatch } from '../../../store/test-store';
+import { useAppDispatch } from '../../../store/store';
 
 export enum FinancePopupInterface {
   Income = 'income',

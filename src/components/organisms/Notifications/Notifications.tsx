@@ -5,7 +5,7 @@ import { useOutsideClick } from '../../../utils/customHooks';
 import NotificationBox from '../../molecules/NotificationBox/NotificationBox';
 import { StyledWrapper, Header, Content } from './Notifications.styles';
 import { notificationsAnimation } from '../../../animations/animations';
-import { AppState } from '../../../store/test-store';
+import { AppState } from '../../../store/store';
 import Spinner from '../../atoms/Spinner/Spinner';
 
 interface Props {

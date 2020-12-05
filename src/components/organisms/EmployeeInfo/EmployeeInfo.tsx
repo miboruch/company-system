@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik } from 'formik';
 import { useSelector } from 'react-redux';
-import { AppState, useAppDispatch } from '../../../store/test-store';
+import { AppState, useAppDispatch } from '../../../store/store';
 import Button from '../../atoms/Button/Button';
 import { StyledInput } from '../../../styles/compoundStyles';
 import { Paragraph } from '../../../styles/typography/typography';

@@ -4,7 +4,7 @@ import { UserRole } from '../types/actionTypes/authenticationActionTypes';
 import { Switch } from 'react-router-dom';
 import { adminRoutes, userRoutes } from './routesDefinition';
 import AdminRoute from '../hoc/AdminRoute';
-import { AppState } from '../store/test-store';
+import { AppState } from '../store/store';
 import UserRoute from '../hoc/UserRoute';
 
 const Routes: React.FC = () => {

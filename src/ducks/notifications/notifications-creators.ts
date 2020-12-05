@@ -1,7 +1,7 @@
 import { API_URL } from '../../utils/config';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { NotificationInterface } from '../../types/modelsTypes';
-import { baseStoreType } from '../../store/test-store';
+import { baseStoreType } from '../../store/store';
 import { authApi } from '../../api';
 import { setNotificationMessage } from '../popup/popup';
 import { NotificationTypes } from '../../types/actionTypes/toggleAcitonTypes';

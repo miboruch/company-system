@@ -1,4 +1,4 @@
-import { AppDispatch } from '../../store/test-store';
+import { AppDispatch } from '../../store/store';
 
 import { resetAttendanceToggle, setSelectedAttendance } from '../attendance/attendance-toggle/attendance-toggle';
 import { resetAttendanceData } from '../attendance/attendance-data/attendance-data';

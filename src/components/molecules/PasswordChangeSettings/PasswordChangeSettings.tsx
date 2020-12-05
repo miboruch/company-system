@@ -5,7 +5,7 @@ import { editPassword } from '../../../ducks/auth/account/account-creators';
 import { Heading, StyledForm } from '../AccountSettings/AccountSettings.styles';
 import { StyledInput } from '../../../styles/compoundStyles';
 import { DoubleFlexWrapper } from '../../../styles/shared';
-import { useAppDispatch } from '../../../store/test-store';
+import { useAppDispatch } from '../../../store/store';
 
 interface DefaultValues {
   password: string;

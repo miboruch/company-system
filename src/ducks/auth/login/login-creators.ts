@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { baseStoreType } from '../../../store/test-store';
+import { baseStoreType } from '../../../store/store';
 import { setTokens } from '../tokens/tokens';
 import { getUserData } from '../data/data-creators';
 import { api } from '../../../api';

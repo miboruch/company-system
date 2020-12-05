@@ -6,13 +6,13 @@ import Input from '../../components/atoms/Input/Input';
 import Button from '../../components/atoms/Button/Button';
 import { login } from '../../ducks/auth/login/login-creators';
 import { AccountParagraph, AuthWrapper, FlexWrapper, FlexWrapperDefault, Heading, StyledForm, StyledInput, StyledLink } from './LoginPage.styles';
-import { AppState } from '../../store/test-store';
+import { AppState } from '../../store/store';
 import { ErrorParagraph } from '../../styles/typography/typography';
 import { SpinnerWrapper } from '../../styles/shared';
 import Spinner from '../../components/atoms/Spinner/Spinner';
 import LoginTemplate, { TemplatePage } from '../../components/templates/LoginTemplate/LoginTemplate';
 import { LoginSchema } from '../../validation/loginValidation';
-import { useAppDispatch } from '../../store/test-store';
+import { useAppDispatch } from '../../store/store';
 
 type ConnectedProps = RouteComponentProps<any>;
 
