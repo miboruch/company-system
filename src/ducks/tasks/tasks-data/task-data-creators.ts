@@ -2,7 +2,7 @@ import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes'
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { baseStoreType } from '../../../store/test-store';
 import { IncomeDataInterface, TaskInterface } from '../../../types/modelsTypes';
-import { authApi } from '../../../api';
+import { companyApi } from '../../../api';
 import { setNotificationMessage } from '../../popup/popup';
 import { selectTask } from '../tasks-toggle/tasks-toggle-creators';
 import { setSelectedTask, setTaskInfoOpen, setAddNewTaskOpen } from '../tasks-toggle/tasks-toggle';
@@ -13,7 +13,7 @@ export const getCompanyTasks = createAsyncThunk<TaskInterface[], void, baseStore
 
   try {
     if (currentCompany && token) {
-      const { data } = await authApi.get(`/task/get-company-tasks?company_id=${currentCompany._id}`, {
+      const { data } = await companyApi.get(`/task/get-company-tasks?company_id=${currentCompany._id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -35,7 +35,7 @@ export const getEmployeeTasks = createAsyncThunk<TaskInterface[], void, baseStor
 
   try {
     if (token && employeeData) {
-      const { data } = await authApi.get(`/task/get-employee-tasks/${employeeData._id}`, {
+      const { data } = await companyApi.get(`/task/get-employee-tasks/${employeeData._id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -58,7 +58,7 @@ export const getCompletedTasks = createAsyncThunk<number, void, baseStoreType>('
 
   try {
     if (currentCompany && token) {
-      const { data } = await authApi.get(`/task/count-last-completed-tasks?company_id=${currentCompany._id}&daysBack=${DAYS_BACK}`, {
+      const { data } = await companyApi.get(`/task/count-last-completed-tasks?company_id=${currentCompany._id}&daysBack=${DAYS_BACK}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -82,7 +82,7 @@ export const getSingleTask = createAsyncThunk<void, string, baseStoreType>('task
 
   try {
     if (currentCompany && token) {
-      const { data } = await authApi.get(`/task/get-single-company-task/${taskId}?company_id=${currentCompany._id}`, {
+      const { data } = await companyApi.get(`/task/get-single-company-task/${taskId}?company_id=${currentCompany._id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -107,7 +107,7 @@ export const changeTaskState = createAsyncThunk<void, ChangeTaskStateInterface, 
 
     try {
       if (currentCompany && token) {
-        await authApi.put(
+        await companyApi.put(
           `/task/set-task-completed`,
           {
             taskId,
@@ -146,7 +146,7 @@ export const editTask = createAsyncThunk<void, EditTaskInterface, baseStoreType>
 
   try {
     if (currentCompany && token) {
-      await authApi.put(
+      await companyApi.put(
         `/task/edit-task`,
         {
           ...values
@@ -173,7 +173,7 @@ export const deleteTask = createAsyncThunk<void, string, baseStoreType>('tasksDa
 
   try {
     if (currentCompany && token) {
-      await authApi.delete(`/task/delete-task/${taskId}`, {
+      await companyApi.delete(`/task/delete-task/${taskId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -210,7 +210,7 @@ export const addNewTask = createAsyncThunk<void, AddNewTaskInterface, baseStoreT
 
     try {
       if (token) {
-        await authApi.post(
+        await companyApi.post(
           `/task/add-new-task`,
           {
             date,
@@ -258,7 +258,7 @@ export const getTasksInTimePeriod = createAsyncThunk<void, GetTasksPeriodInterfa
 
   try {
     if (token && currentCompany) {
-      const { data } = await authApi.get(`/task/completed-tasks-period?company_id=${currentCompany._id}&daysBack=${daysBack}`, {
+      const { data } = await companyApi.get(`/task/completed-tasks-period?company_id=${currentCompany._id}&daysBack=${daysBack}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

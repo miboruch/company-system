@@ -5,7 +5,7 @@ interface WrapperProps {
 }
 
 const Wrapper = styled.div<WrapperProps>`
-  width: 46%;
+  width: 48%;
   height: 120px;
   align-self: center;
   border-radius: 30px;

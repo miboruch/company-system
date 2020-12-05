@@ -1,73 +1,43 @@
 import { Dispatch } from 'redux';
 import { setTokens } from '../tokens/tokens';
-import { getAdminAccessToken, getNewAccessToken } from '../tokens/tokens-creators';
+import { getCompanyAccessToken, getNewAccessToken } from '../tokens/tokens-creators';
 import { getUserData } from '../data/data-creators';
 import { clearStorage, logout } from '../logout/logout-creators';
-import { setLoading } from './check';
 import { AppDispatch, AppState } from '../../../store/test-store';
 import { getUserNotifications } from '../../notifications/notifications-creators';
 import { resetState } from '../../reset/reset-creators';
 import { UserRole } from '../roles/roles';
 import { getAllAppUsers } from '../../users/all-users-creators';
+import { setRole } from '../roles/roles';
+import { setLoading } from '../../app/initial-load';
+import { getSingleCompany } from '../../company/current-company/current-company-creators';
+import { History } from 'history';
 
-interface AuthTimeoutInterface {
-  refreshToken: string;
-  expireMilliseconds: number;
-}
-
-export const authTimeout = ({ refreshToken, expireMilliseconds }: AuthTimeoutInterface) => (dispatch: Dispatch<any>, getState: () => AppState): ReturnType<typeof setTimeout> => {
+export const authCheck = (pathname: string, history: History) => (dispatch: AppDispatch, getState: () => AppState): void => {
+  dispatch(setLoading(true));
   const { role } = getState().auth.roles;
-  const { currentCompany } = getState().company.currentCompany;
-
-  const timeoutFunction = async () => {
-    role === UserRole.Admin && currentCompany ? dispatch(getAdminAccessToken({ refreshToken, companyId: currentCompany._id })) : dispatch(getNewAccessToken({ refreshToken }));
-  };
-
-  //TODO: functions to remove previous timeout
-  return setTimeout(timeoutFunction, expireMilliseconds);
-};
-
-interface AuthCheckInterface {
-  successCallback: () => void;
-  errorCallback: () => void;
-}
-
-export const authCheck = ({ successCallback, errorCallback }: AuthCheckInterface) => (dispatch: AppDispatch, getState: () => AppState): void => {
-  const { role } = getState().auth.roles;
-  const { currentCompany } = getState().company.currentCompany;
 
   const token = localStorage.getItem('token');
   const refreshToken = localStorage.getItem('refreshToken');
-  const expireDate = localStorage.getItem('expireDate');
+  const companyId = localStorage.getItem('companyId');
 
-  if (token && refreshToken && expireDate) {
-    dispatch(setLoading(true));
-    const expDate = new Date(expireDate);
-    if (expDate <= new Date()) {
-      role === UserRole.Admin && currentCompany
-        ? dispatch(getAdminAccessToken({ refreshToken, companyId: currentCompany._id, successCallback, errorCallback }))
-        : dispatch(getNewAccessToken({ refreshToken, successCallback, errorCallback }));
-      dispatch(setLoading(false));
+  if (refreshToken) {
+    if (companyId) {
+      dispatch(
+        getCompanyAccessToken({
+          refreshToken,
+          companyId,
+          successCallback: () => {
+            pathname.includes('admin') ? dispatch(setRole(UserRole.Admin)) : dispatch(setRole(UserRole.User));
+          }
+        })
+      );
     } else {
-      dispatch(setTokens({ token, refreshToken, expireIn: expDate.getTime() }));
-      dispatch(authTimeout({ refreshToken, expireMilliseconds: expDate.getTime() - new Date().getTime() }));
-      dispatch(getUserData(token));
-      dispatch(getUserNotifications(1));
-      role === UserRole.Admin && dispatch(getAllAppUsers());
-
-      successCallback();
-      dispatch(setLoading(false));
+      dispatch(getNewAccessToken({ refreshToken, successCallback: () => history.push('/select') }));
     }
   } else {
-    if (refreshToken) {
-      console.log(refreshToken);
-      dispatch(logout(() => console.log('sign out')));
-      dispatch(setLoading(false));
-    } else {
-      dispatch(resetState());
-      dispatch(clearStorage());
-      errorCallback();
-      dispatch(setLoading(false));
-    }
+    dispatch(clearStorage());
+    dispatch(resetState());
+    history.push('/login');
   }
 };

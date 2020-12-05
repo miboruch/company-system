@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { HeadingWrapper, MobileCompoundTitle, StyledForm, Subheading, Wrapper } from '../../../../../styles/compoundStyles';
@@ -34,8 +34,7 @@ type SetMailDefaultValues = {
 type DefaultValues = SelectUserDefaultValues | SetMailDefaultValues;
 
 const SelectEmployee: React.FC = () => {
-  // const { allAppUsers } = useSelector((state: AppState) => state.authenticationReducer);
-  const allAppUsers: UserDataInterface[] = [];
+  const { allUsers } = useSelector((state: AppState) => state.allUsers);
   const { allCompanyEmployees } = useSelector((state: AppState) => state.employees.employeesData);
 
   const { data, setData } = useContext(EmployeeDataContext);
@@ -47,12 +46,13 @@ const SelectEmployee: React.FC = () => {
     registerWithMail: undefined
   };
 
-  if (allCompanyEmployees.length > 0 && allAppUsers.length > 0) {
-    setUsers(removeDuplicates(allAppUsers, allCompanyEmployees));
-  }
+  useEffect(() => {
+    if (allCompanyEmployees.length > 0 && allUsers.length > 0) {
+      setUsers(removeDuplicates(allUsers, allCompanyEmployees));
+    }
+  }, [allCompanyEmployees, allUsers]);
 
   const handleSubmit = (values: DefaultValues) => {
-    console.log(values);
     setData({ ...data, ...values });
     setCurrentPage(PageSettingEnum.Second);
   };

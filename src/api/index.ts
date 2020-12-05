@@ -1,12 +1,18 @@
 import axios from 'axios';
-// import store from '../store/test-store';
 
+//* not logged in
 const api = axios.create({
   baseURL: process.env.REACT_APP_API_URL
 });
 
+//* only logged in users
 const authApi = axios.create({
   baseURL: process.env.REACT_APP_API_URL
 });
 
-export { api, authApi };
+//* users currently in company (employee + admin)
+const companyApi = axios.create({
+  baseURL: process.env.REACT_APP_API_URL
+});
+
+export { api, authApi, companyApi };

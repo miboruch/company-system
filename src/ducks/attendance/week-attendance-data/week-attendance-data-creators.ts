@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { WeekAttendance } from '../../../types/modelsTypes';
 import { baseStoreType } from '../../../store/test-store';
-import { authApi } from '../../../api';
+import { companyApi } from '../../../api';
 
 export const getWeekAttendance = createAsyncThunk<WeekAttendance[], number, baseStoreType>('weekAttendanceData/getWeekAttendance', async (weekCounter, { rejectWithValue, getState }) => {
   const { token } = getState().auth.tokens;
@@ -11,7 +11,7 @@ export const getWeekAttendance = createAsyncThunk<WeekAttendance[], number, base
     if (selectedAttendance && token) {
       const { user } = selectedAttendance;
 
-      const { data } = await authApi.get(`/attendance/user-week-attendance?user_id=${user._id}&week=${weekCounter}`, {
+      const { data } = await companyApi.get(`/attendance/user-week-attendance?user_id=${user._id}&week=${weekCounter}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

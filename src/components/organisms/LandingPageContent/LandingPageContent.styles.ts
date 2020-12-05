@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {Heading} from '../../../styles/typography/typography';
+import { Heading } from '../../../styles/typography/typography';
 
 const Content = styled.div`
   width: 100%;
@@ -56,6 +56,7 @@ const InfoBoxWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin: 3rem 0;
 
   ${({ theme }) => theme.mq.hdReady} {
     display: contents;
@@ -64,26 +65,35 @@ const InfoBoxWrapper = styled.div`
 
 const InfoWrapper = styled.section`
   width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 3rem 0;
 
   ${({ theme }) => theme.mq.hdReady} {
-    display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: flex-start;
     padding-left: 5rem;
     grid-area: info;
     //padding: 5rem;
     height: 100%;
     background-color: ${({ theme }) => theme.colors.menuBackground};
     border-radius: 30px;
+    margin: 0;
   }
 `;
 
 const StatisticsHeading = styled(Heading)`
+  margin-bottom: 0;
   font-size: 22px;
-  font-weight: ${({theme}) => theme.font.weight.demi};
+  font-weight: ${({ theme }) => theme.font.weight.demi};
   text-overflow: ellipsis;
   max-width: 150px;
-  margin-bottom: 1.5rem;
+
+  ${({ theme }) => theme.mq.hdReady} {
+    margin-bottom: 1.5rem;
+  }
 `;
 
 export { Content, List, Header, Test, TileWrapper, InfoBoxWrapper, InfoWrapper, StatisticsHeading };

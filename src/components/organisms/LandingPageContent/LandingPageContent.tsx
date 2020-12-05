@@ -22,6 +22,7 @@ import { getAllCompanyEmployees } from '../../../ducks/employees/employees-data/
 import AdminStatistics from '../AdminStatistics/AdminStatistics';
 import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
 import BarChart from '../../molecules/BarChart/BarChart';
+import { getAllAppUsers } from '../../../ducks/users/all-users-creators';
 
 const LandingPageContent: React.FC<RouteComponentProps<any>> = ({ history }) => {
   const dispatch = useAppDispatch();
@@ -37,14 +38,14 @@ const LandingPageContent: React.FC<RouteComponentProps<any>> = ({ history }) => 
   const [selectedAttendance, setSelectedAttendance] = useState<AttendanceInterface | null>(null);
   const [isAttendanceOpen, setAttendanceOpen] = useState<boolean>(false);
   const [areStatisticsOpen, setStatisticsOpen] = useState<boolean>(false);
-  console.log(taskData);
+
   const [daysBack, setDaysBackTo] = useState<number>(7);
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
 
   useEffect(() => {
     contentAnimation(tl, contentRef);
-    role === UserRole.Admin && dispatch(getCompanyTasks());
+    dispatch(getCompanyTasks());
   }, []);
 
   useEffect(() => {
@@ -63,6 +64,7 @@ const LandingPageContent: React.FC<RouteComponentProps<any>> = ({ history }) => 
     dispatch(getSingleDayAttendance(new Date()));
     dispatch(getCompletedTasks());
     dispatch(getAllCompanyEmployees());
+    role === UserRole.Admin && dispatch(getAllAppUsers());
   }, []);
 
   return (

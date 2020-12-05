@@ -9,6 +9,7 @@ export const clearStorage = () => (dispatch: Dispatch<any>): void => {
   localStorage.removeItem('token');
   localStorage.removeItem('refreshToken');
   localStorage.removeItem('expireDate');
+  localStorage.removeItem('companyId');
 
   dispatch(setTokens(null));
   dispatch(setLogged(false));

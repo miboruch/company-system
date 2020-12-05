@@ -33,7 +33,7 @@ export const getOwnEmployeeData = createAsyncThunk<EmployeeDataInterface, string
   try {
     const { token } = getState().auth.tokens;
 
-    const { data } = await authApi.get(`/employee/employee-data?company_id=${companyId}`, {
+    const { data } = await authApi.get(`/employee/employee-data`, {
       headers: {
         Authorization: `Bearer ${token}`
       }

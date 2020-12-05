@@ -41,23 +41,32 @@ const BudgetWrapper = styled.section`
   }
 `;
 
-const InfoBoxWrapper = styled.div`
+interface InfoBoxWrapper {
+  noPadding?: boolean;
+}
+
+const InfoBoxWrapper = styled.div<InfoBoxWrapper>`
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  overflow: hidden;
+  margin: 3rem 0;
 
   ${({ theme }) => theme.mq.hdReady} {
     //display: contents;
     border: 1px solid ${({ theme }) => theme.colors.impactGray};
+    margin: 0;
     grid-area: currency;
     border-radius: 30px;
-    padding: 3rem;
+    padding: ${({ noPadding }) => (noPadding ? '0' : '3rem')};
   }
 `;
 
 const ButtonWrapper = styled.div`
   width: 100%;
+  overflow: hidden;
 
   ${({ theme }) => theme.mq.hdReady} {
     display: flex;
@@ -69,15 +78,41 @@ const ButtonWrapper = styled.div`
   }
 `;
 
+const IncomeExpenseField = styled.div`
+  width: 100%;
+  height: 100%;
+  border-right: 1px solid #e7e8e8;
+  background-color: ${({ theme }) => theme.colors.white};
+  margin-bottom: 2rem;
+  display: grid;
+  place-items: center;
+  transition: background-color 0.3s ease;
+
+  ${({ theme }) => theme.mq.hdReady} {
+    width: 50%;
+    margin-bottom: 0;
+  }
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.menuBackground};
+  }
+
+  &:last-child {
+    border-right: none;
+  }
+`;
+
+const RightIncomeExpenseField = styled(IncomeExpenseField)`
+  border-right: none;
+`;
+
 interface CurrencyBoxInterface {
   isActive: boolean;
 }
 
-const CurrencyBox = styled.div`
+const CurrencyBox = styled(IncomeExpenseField)<CurrencyBoxInterface>`
   width: calc(100% / 3);
-  height: 100%;
-  display: grid;
-  place-items: center;
+  background-color: ${({ theme, isActive }) => (isActive ? theme.colors.menuBackground : theme.colors.white)};
 `;
 
 const FinancesPageContent: React.FC = () => {
@@ -133,33 +168,46 @@ const FinancesPageContent: React.FC = () => {
             daysBack={daysBack}
           />
           <BudgetHistoryList budgetHistory={budgetHistoryData} />
-          <InfoBoxWrapper>
-            <Heading>Waluty</Heading>
-            {appCurrencies.map((currency) => (
-              // <CurrencyBox key={currency}>
-              <Heading key={currency} onClick={() => dispatch(getCurrencyValue(currency))}>
-                {currency}
-              </Heading>
-              // </CurrencyBox>
+          <InfoBoxWrapper noPadding={true}>
+            {appCurrencies.map((currencyName) => (
+              <CurrencyBox key={currencyName} isActive={currencyName === currency.name} onClick={() => dispatch(getCurrencyValue(currencyName))}>
+                <Heading>{currencyName}</Heading>
+              </CurrencyBox>
             ))}
           </InfoBoxWrapper>
           <ButtonWrapper>
-            <Button
-              type={'button'}
-              text={'Dodaj dochód'}
+            <IncomeExpenseField
               onClick={() => {
                 setPopupOpen(true);
                 setPopupType(FinancePopupInterface.Income);
               }}
-            />
-            <Button
-              type={'button'}
-              text={'Dodaj wydatek'}
+            >
+              <StatisticsHeading>Dochód</StatisticsHeading>
+            </IncomeExpenseField>
+            <RightIncomeExpenseField
               onClick={() => {
                 setPopupOpen(true);
                 setPopupType(FinancePopupInterface.Expense);
               }}
-            />
+            >
+              <StatisticsHeading>Wydatek</StatisticsHeading>
+            </RightIncomeExpenseField>
+            {/*<Button*/}
+            {/*  type={'button'}*/}
+            {/*  text={'Dodaj dochód'}*/}
+            {/*  onClick={() => {*/}
+            {/*    setPopupOpen(true);*/}
+            {/*    setPopupType(FinancePopupInterface.Income);*/}
+            {/*  }}*/}
+            {/*/>*/}
+            {/*<Button*/}
+            {/*  type={'button'}*/}
+            {/*  text={'Dodaj wydatek'}*/}
+            {/*  onClick={() => {*/}
+            {/*    setPopupOpen(true);*/}
+            {/*    setPopupType(FinancePopupInterface.Expense);*/}
+            {/*  }}*/}
+            {/*/>*/}
           </ButtonWrapper>
           <InfoWrapper onClick={() => setGenerateInvoiceOpen(true)}>
             <StatisticsHeading>Wygeneruj nową fakturę</StatisticsHeading>

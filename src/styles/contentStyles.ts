@@ -6,9 +6,11 @@ const Wrapper = styled.div`
   height: 100%;
   padding: 3rem;
   flex-direction: column;
+  margin-top: 5rem;
 
   ${({ theme }) => theme.mq.hdReady} {
     padding: 5rem;
+    margin-top: 0;
   }
 `;
 

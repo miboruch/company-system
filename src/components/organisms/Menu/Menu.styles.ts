@@ -54,6 +54,15 @@ const CompanyName = styled.h3`
   font-weight: ${({ theme }) => theme.font.weight.bold};
   color: ${({ theme }) => theme.colors.dark};
   letter-spacing: -1px;
+  margin-top: 4rem;
+
+  ${({ theme }) => theme.mq.tablet} {
+    margin-top: 2rem;
+  }
+
+  ${({ theme }) => theme.mq.standard} {
+    margin-top: 0;
+  }
 `;
 
 const StyledLink = styled(Link)`
@@ -92,6 +101,11 @@ const RedirectPanel = styled.section`
 const StyledMenuSvg = styled(MenuSvg)`
   width: 220px;
   height: 150px;
+  display: none;
+
+  ${({ theme }) => theme.mq.standard} {
+    display: block;
+  }
 
   ${({ theme }) => theme.mq.hdReady} {
     width: 220px;
