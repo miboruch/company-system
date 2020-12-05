@@ -1,29 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Downshift, { ControllerStateAndHelpers } from 'downshift';
-import { EmployeeDataInterface } from '../../../types/modelsTypes';
-import { Menu, Item, Form } from '../../../styles/dropdownStyles';
+
 import Input from '../Input/Input';
+
+import { EmployeeDataInterface } from '../../../types/modelsTypes';
+import { TaskDataContext } from '../../compound/AddTask/context/TaskDataContext';
+import { Menu, Item, Form } from '../../../styles/dropdownStyles';
 import { StyledLabel } from '../../../styles/shared';
 import { Paragraph } from '../../../styles/typography/typography';
-import { FlexWrapper } from '../../../styles/shared';
-import styled from 'styled-components';
-import { TaskDataContext } from '../../compound/AddTask/context/TaskDataContext';
-
-const StyledFlexWrapper = styled(FlexWrapper)`
-  justify-content: flex-start;
-  align-items: center;
-  margin-bottom: 2rem;
-`;
-
-const UserBox = styled.div`
-  border: 1px solid #aaa;
-  border-radius: 5px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 0 2rem;
-  align-items: center;
-`;
+import { StyledFlexWrapper, UserBox } from './MultipleDropdown.styles';
 
 const changeHandler = (
   selectedItems: EmployeeDataInterface[],

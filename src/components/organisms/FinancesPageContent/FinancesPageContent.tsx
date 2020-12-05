@@ -27,6 +27,11 @@ const Content = styled.div`
   height: 100%;
   grid-area: content;
   background-color: #fff;
+
+  ${({ theme }) => theme.mq.hdReady} {
+    height: 100vh;
+    padding: 2rem;
+  }
 `;
 
 const BudgetWrapper = styled.section`

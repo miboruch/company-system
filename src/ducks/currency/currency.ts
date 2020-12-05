@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CurrencyInterface } from '../../types/globalTypes';
 import { getCurrencyValue, CurrencyReturnInterface } from './currency-creators';
 

@@ -13,7 +13,7 @@ interface ValidateTokenInterface {
 
 export const validateRegistrationToken = createAsyncThunk<RegistrationVerifyTokenResponse, ValidateTokenInterface, baseStoreType>(
   'link-registration/validateRegistrationToken',
-  async ({ token, setResponse }, { rejectWithValue }) => {
+  async ({ token, setResponse }, { rejectWithValue, dispatch }) => {
     try {
       const { data } = await api.post(`/auth/verify-registration-token`, { token });
 
@@ -21,6 +21,7 @@ export const validateRegistrationToken = createAsyncThunk<RegistrationVerifyToke
 
       return data;
     } catch (error) {
+      // dispatch(setNotificationMessage({ message: 'Błędna weryfikacja', notificationType: NotificationTypes.Error }));
       return rejectWithValue(error.response.statusText);
     }
   }

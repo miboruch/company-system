@@ -19,8 +19,9 @@ const StyledWrapper = styled.div`
 
   ${({ theme }) => theme.mq.hdReady} {
     width: 100%;
-    height: 100%;
+    //height: 100%;
     min-height: auto;
+    max-height: 100%;
     grid-area: history;
     align-self: center;
   }

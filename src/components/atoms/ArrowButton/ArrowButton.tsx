@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyledArrowButton } from './ArrowButton.styles';
+
 import { Direction } from '../../../types/globalTypes';
+import { StyledArrowButton } from './ArrowButton.styles';
 
 interface Props {
   onClick?: () => void;
