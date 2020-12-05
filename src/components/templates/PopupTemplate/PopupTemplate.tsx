@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
+
 import { modalOpenAnimation } from '../../../animations/animations';
 import { Wrapper, Box, HeaderText, Header } from '../../../styles/popupStyles';
 

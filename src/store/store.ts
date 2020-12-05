@@ -9,7 +9,6 @@ const store = configureStore({
 
 export type AppDispatch = typeof store.dispatch;
 export type AppState = ReturnType<typeof store.getState>;
-// export type AppState = ReturnType<typeof testRootReducer>;
 
 export type baseStoreType = { dispatch: AppDispatch; state: AppState };
 

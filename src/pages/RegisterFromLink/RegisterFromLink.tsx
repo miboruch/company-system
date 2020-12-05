@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
-import LoginTemplate, { TemplatePage } from '../../components/templates/LoginTemplate/LoginTemplate';
+
 import RegistrationLinkController from '../../components/compound/RegisterUser/RegistrationLinkController';
 import Spinner from '../../components/atoms/Spinner/Spinner';
-import { validateRegistrationToken } from '../../ducks/auth/link-registration/link-registration-creators';
+import LoginTemplate, { TemplatePage } from '../../components/templates/LoginTemplate/LoginTemplate';
+
 import { AppState, useAppDispatch } from '../../store/store';
+import { validateRegistrationToken } from '../../ducks/auth/link-registration/link-registration-creators';
 
 interface RegistrationTokenResponse {
   companyId: string;
@@ -35,7 +37,7 @@ type ConnectedProps = RouteComponentProps<MatchProps>;
 
 const RegisterFromLink: React.FC<ConnectedProps> = ({ match }) => {
   const dispatch = useAppDispatch();
-  const { isValidateLoading, isValidateError } = useSelector((state: AppState) => state.auth.linkRegistration);
+  const { isValidateLoading } = useSelector((state: AppState) => state.auth.linkRegistration);
 
   const [response, setResponse] = useState<RegistrationVerifyTokenResponse | null>(null);
 

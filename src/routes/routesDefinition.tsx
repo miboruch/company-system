@@ -1,4 +1,5 @@
 import React from 'react';
+
 import LandingPage from '../pages/LandingPage/LandingPage';
 import CompaniesPage from '../pages/CompaniesPage/CompaniesPage';
 import EmployeePage from '../pages/EmployeePage/EmployeePage';
@@ -7,6 +8,7 @@ import ClientsPage from '../pages/ClientsPage/ClientsPage';
 import AttendancePage from '../pages/AttendancePage/AttendancePage';
 import FinancesPage from '../pages/FinancesPage/FinancesPage';
 import SettingsPage from '../pages/SettingsPage/SettingsPage';
+
 import { HomeIcon, PaymentIcon, ListIcon, SupportIcon, UserIcon, SettingsIcon } from '../styles/shared';
 
 interface Routes {
@@ -19,13 +21,6 @@ interface Routes {
 }
 
 export const adminRoutes: Routes[] = [
-  // {
-  //   path: '/',
-  //   exact: true,
-  //   component: LandingPage,
-  //   name: 'Strona główna',
-  //   icon: <HomeIcon />
-  // },
   {
     path: '/admin/home',
     exact: false,
@@ -93,13 +88,6 @@ export const adminRoutes: Routes[] = [
 ];
 
 export const userRoutes: Routes[] = [
-  // {
-  //   path: '/',
-  //   exact: true,
-  //   component: LandingPage,
-  //   name: 'Twoje firmy',
-  //   icon: <HomeIcon />
-  // },
   {
     path: '/user/home',
     exact: false,

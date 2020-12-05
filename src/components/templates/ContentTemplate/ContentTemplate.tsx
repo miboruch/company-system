@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
+
 import ArrowButton from '../../atoms/ArrowButton/ArrowButton';
+
 import { ContentWrapper, ArrowAbsoluteWrapper } from './ContentTemplate.styles';
 import { Direction } from '../../../types/globalTypes';
 
@@ -10,9 +12,7 @@ interface Props {
   close: () => void;
 }
 
-type ConnectedProps = Props;
-
-const ContentTemplate: React.FC<ConnectedProps> = ({ children, isOpen, close }) => {
+const ContentTemplate: React.FC<Props> = ({ children, isOpen, close }) => {
   const contentWrapperRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
 

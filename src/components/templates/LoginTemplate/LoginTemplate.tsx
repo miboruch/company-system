@@ -1,6 +1,8 @@
 import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
+
 import Button from '../../atoms/Button/Button';
+
 import { StyledWrapper, FormWrapper, ImageBackground, ImageContent, Heading, StyledParagraph } from './LoginTemplate.styles';
 import { lorem } from '../../../utils/config';
 
