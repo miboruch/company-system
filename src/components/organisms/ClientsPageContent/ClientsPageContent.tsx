@@ -1,18 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useSelector } from 'react-redux';
-import { ClientInterface } from '../../../types/modelsTypes';
+
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
-import { listAnimation } from '../../../animations/animations';
-import { AppState, useAppDispatch } from '../../../store/store';
-
-import { deleteClient } from '../../../ducks/client/client-creators';
-import { getCompanyClients } from '../../../ducks/client/client-data/client-data-creators';
-import { selectClient } from '../../../ducks/client/client-toggle/client-toggle-creators';
-import { setAddNewClientOpen, setClientInfoOpen } from '../../../ducks/client/client-toggle/client-toggle';
-
-import { Paragraph } from '../../../styles/typography/typography';
-import { AddIcon, AddWrapper, List, SpinnerWrapper } from '../../../styles/shared';
 import Spinner from '../../atoms/Spinner/Spinner';
 import ListBox from '../../molecules/ListBox/ListBox';
 import ContentTemplate from '../../templates/ContentTemplate/ContentTemplate';
@@ -20,7 +10,17 @@ import ClientInfo from '../ClientInfo/ClientInfo';
 import AddClientController from '../../compound/AddClient/AddClientController';
 import DeletePopup from '../../molecules/DeletePopup/DeletePopup';
 import MapCoordsEdit, { CoordsEditType } from '../MapCoordsEdit/MapCoordsEdit';
+
+import { ClientInterface } from '../../../types/modelsTypes';
+import { AppState, useAppDispatch } from '../../../store/store';
+import { listAnimation } from '../../../animations/animations';
+import { selectClient } from '../../../ducks/client/client-toggle/client-toggle-creators';
+import { setAddNewClientOpen, setClientInfoOpen } from '../../../ducks/client/client-toggle/client-toggle';
 import { setEditClientCoordsOpen } from '../../../ducks/client/client-toggle/client-toggle';
+import { deleteClient } from '../../../ducks/client/client-creators';
+import { getCompanyClients } from '../../../ducks/client/client-data/client-data-creators';
+import { Paragraph } from '../../../styles/typography/typography';
+import { AddIcon, AddWrapper, List, SpinnerWrapper } from '../../../styles/shared';
 
 const ClientsPageContent: React.FC = () => {
   const dispatch = useAppDispatch();

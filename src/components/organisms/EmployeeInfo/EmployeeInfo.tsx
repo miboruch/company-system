@@ -1,8 +1,10 @@
 import React from 'react';
 import { Formik } from 'formik';
 import { useSelector } from 'react-redux';
-import { AppState, useAppDispatch } from '../../../store/store';
+
 import Button from '../../atoms/Button/Button';
+
+import { AppState, useAppDispatch } from '../../../store/store';
 import { StyledInput } from '../../../styles/compoundStyles';
 import { Paragraph } from '../../../styles/typography/typography';
 import { Wrapper, StyledForm, HeaderWrapper, EmployeeInfoBox, Title, InputWrapper } from '../../../styles/contentStyles';

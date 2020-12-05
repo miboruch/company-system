@@ -1,124 +1,26 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
-import styled from 'styled-components';
-import GridWrapper from '../../templates/GridWrapper/GridWrapper';
-import { ContentGridWrapper } from '../../../styles/HomePageContentGridStyles';
-import Chart from '../../molecules/Chart/Chart';
-import { ExpenseInterface, IncomeDataInterface, IncomeInterface } from '../../../types/modelsTypes';
-import { AppState, useAppDispatch } from '../../../store/store';
-import { Heading } from '../../../styles/typography/typography';
 import gsap from 'gsap';
-import { contentAnimation } from '../../../animations/animations';
+import { useSelector } from 'react-redux';
 
-import { getIncomeExpenseInTimePeriod } from '../../../ducks/finances/income-expense/income-expense-creators';
+import GridWrapper from '../../templates/GridWrapper/GridWrapper';
+import Chart from '../../molecules/Chart/Chart';
 import BudgetHistoryList from '../BudgetHistoryList/BudgetHistoryList';
 import BudgetTile from '../../molecules/BudgetTile/BudgetTile';
-import Button from '../../atoms/Button/Button';
+import GenerateInvoice from '../GenerateInvoice/GenerateInvoice';
 import IncomeExpensePopup, { FinancePopupInterface } from '../../molecules/IncomeExpensePopup/IncomeExpensePopup';
-import { getCurrencyValue } from '../../../ducks/currency/currency-creators';
+
+import { ExpenseInterface, IncomeDataInterface, IncomeInterface } from '../../../types/modelsTypes';
+import { AppState, useAppDispatch } from '../../../store/store';
+import { contentAnimation } from '../../../animations/animations';
 import { roundTo2 } from '../../../utils/functions';
+import { ContentGridWrapper } from '../../../styles/HomePageContentGridStyles';
+import { Heading } from '../../../styles/typography/typography';
+import { getIncomeExpenseInTimePeriod } from '../../../ducks/finances/income-expense/income-expense-creators';
+import { getCurrencyValue } from '../../../ducks/currency/currency-creators';
 import { appCurrencies } from '../../../utils/config';
 import { InfoWrapper, StatisticsHeading } from '../LandingPageContent/LandingPageContent.styles';
 import { ArrowIcon } from '../../../styles/iconStyles';
-import GenerateInvoice from '../GenerateInvoice/GenerateInvoice';
-
-const Content = styled.div`
-  width: 100%;
-  height: 100%;
-  grid-area: content;
-  background-color: #fff;
-
-  ${({ theme }) => theme.mq.hdReady} {
-    height: 100vh;
-    padding: 2rem;
-  }
-`;
-
-const BudgetWrapper = styled.section`
-  width: 100%;
-  display: -webkit-box;
-  display: -moz-box;
-  overflow-x: scroll;
-  flex-direction: row;
-
-  ${({ theme }) => theme.mq.hdReady} {
-    grid-area: budget;
-  }
-`;
-
-interface InfoBoxWrapper {
-  noPadding?: boolean;
-}
-
-const InfoBoxWrapper = styled.div<InfoBoxWrapper>`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  overflow: hidden;
-  margin: 3rem 0;
-
-  ${({ theme }) => theme.mq.hdReady} {
-    //display: contents;
-    border: 1px solid ${({ theme }) => theme.colors.impactGray};
-    margin: 0;
-    grid-area: currency;
-    border-radius: 30px;
-    padding: ${({ noPadding }) => (noPadding ? '0' : '3rem')};
-  }
-`;
-
-const ButtonWrapper = styled.div`
-  width: 100%;
-  overflow: hidden;
-
-  ${({ theme }) => theme.mq.hdReady} {
-    display: flex;
-    flex-direction: row;
-    height: 100%;
-    grid-area: buttons;
-    border-radius: 30px;
-    border: 1px solid ${({ theme }) => theme.colors.impactGray};
-  }
-`;
-
-const IncomeExpenseField = styled.div`
-  width: 100%;
-  height: 100%;
-  border-right: 1px solid #e7e8e8;
-  background-color: ${({ theme }) => theme.colors.white};
-  margin-bottom: 2rem;
-  display: grid;
-  place-items: center;
-  transition: background-color 0.3s ease;
-
-  ${({ theme }) => theme.mq.hdReady} {
-    width: 50%;
-    margin-bottom: 0;
-  }
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.menuBackground};
-  }
-
-  &:last-child {
-    border-right: none;
-  }
-`;
-
-const RightIncomeExpenseField = styled(IncomeExpenseField)`
-  border-right: none;
-`;
-
-interface CurrencyBoxInterface {
-  isActive: boolean;
-}
-
-const CurrencyBox = styled(IncomeExpenseField)<CurrencyBoxInterface>`
-  width: calc(100% / 3);
-  background-color: ${({ theme, isActive }) => (isActive ? theme.colors.menuBackground : theme.colors.white)};
-`;
+import { Content, BudgetWrapper, InfoBoxWrapper, ButtonWrapper, IncomeExpenseField, RightIncomeExpenseField, CurrencyBox } from './FinancesPageContent.styles';
 
 const FinancesPageContent: React.FC = () => {
   const dispatch = useAppDispatch();

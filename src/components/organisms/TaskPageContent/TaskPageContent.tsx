@@ -1,22 +1,24 @@
 import React, { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
 import { useSelector } from 'react-redux';
+
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
-import { TaskInterface } from '../../../types/modelsTypes';
-import { AppState, useAppDispatch } from '../../../store/store';
-import { deleteTask, getCompanyTasks } from '../../../ducks/tasks/tasks-data/task-data-creators';
-import { selectTask } from '../../../ducks/tasks/tasks-toggle/tasks-toggle-creators';
-import { setAddNewTaskOpen, setTaskInfoOpen, setTaskMapPreviewOpen } from '../../../ducks/tasks/tasks-toggle/tasks-toggle';
 import Spinner from '../../atoms/Spinner/Spinner';
-import { Paragraph } from '../../../styles/typography/typography';
-import { SpinnerWrapper, List, AddIcon, AddWrapper } from '../../../styles/shared';
 import ListBox from '../../molecules/ListBox/ListBox';
 import ContentTemplate from '../../templates/ContentTemplate/ContentTemplate';
-import gsap from 'gsap';
 import TaskInfo from '../TaskInfo/TaskInfo';
-import { listAnimation } from '../../../animations/animations';
 import DeletePopup from '../../molecules/DeletePopup/DeletePopup';
 import AddTaskController from '../../compound/AddTask/AddTaskController';
 import MapCoordsEdit, { CoordsEditType } from '../MapCoordsEdit/MapCoordsEdit';
+
+import { TaskInterface } from '../../../types/modelsTypes';
+import { AppState, useAppDispatch } from '../../../store/store';
+import { selectTask } from '../../../ducks/tasks/tasks-toggle/tasks-toggle-creators';
+import { setAddNewTaskOpen, setTaskInfoOpen, setTaskMapPreviewOpen } from '../../../ducks/tasks/tasks-toggle/tasks-toggle';
+import { listAnimation } from '../../../animations/animations';
+import { deleteTask, getCompanyTasks } from '../../../ducks/tasks/tasks-data/task-data-creators';
+import { Paragraph } from '../../../styles/typography/typography';
+import { SpinnerWrapper, List, AddIcon, AddWrapper } from '../../../styles/shared';
 
 const TaskPageContent: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -36,7 +38,6 @@ const TaskPageContent: React.FC = () => {
 
   useEffect(() => {
     dispatch(getCompanyTasks());
-    // allCompanyTasks.length === 0 && getCompanyTasks();
   }, []);
 
   return (

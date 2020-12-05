@@ -1,20 +1,22 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import DatePicker from 'react-datepicker';
+import { useSelector } from 'react-redux';
 import { Formik } from 'formik';
+
+import Button from '../../atoms/Button/Button';
+
+import { AppState, useAppDispatch } from '../../../store/store';
+import { ClientInterface } from '../../../types/modelsTypes';
+import { UserRole } from '../../../ducks/auth/roles/roles';
+import { setTaskMapPreviewOpen } from '../../../ducks/tasks/tasks-toggle/tasks-toggle';
 import { StyledInput } from '../../../styles/compoundStyles';
 import { Paragraph } from '../../../styles/typography/typography';
 import { ButtonWrapper, EmployeeInfoBox, HeaderWrapper, InputWrapper, RowIconWrapper, StyledForm, Title, Wrapper } from '../../../styles/contentStyles';
-import { ClientInterface } from '../../../types/modelsTypes';
-import { AppState, useAppDispatch } from '../../../store/store';
 import { StyledLabel } from '../../../styles/shared';
-import DatePicker from 'react-datepicker';
-import Button from '../../atoms/Button/Button';
 import { CheckedIcon, DeleteIcon, EditIcon, LocationIcon, NotCheckedIcon } from '../../../styles/iconStyles';
 import { changeTaskState, editTask } from '../../../ducks/tasks/tasks-data/task-data-creators';
-import { setTaskMapPreviewOpen } from '../../../ducks/tasks/tasks-toggle/tasks-toggle';
 import { TaskSchema } from '../../../validation/modelsValidation';
-import { UserRole } from '../../../ducks/auth/roles/roles';
 
 interface ParagraphInterface {
   isCompleted: boolean;
@@ -22,17 +24,6 @@ interface ParagraphInterface {
 
 const ColoredParagraph = styled(Paragraph)<ParagraphInterface>`
   color: ${({ theme, isCompleted }) => (isCompleted ? theme.colors.red : theme.colors.green)};
-  cursor: pointer;
-`;
-
-const RowWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  justify-content: space-between;
-`;
-
-const StyledParagraph = styled(Paragraph)`
   cursor: pointer;
 `;
 

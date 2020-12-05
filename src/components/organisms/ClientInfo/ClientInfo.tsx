@@ -1,15 +1,17 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik } from 'formik';
+
+import Button from '../../atoms/Button/Button';
+
 import { AppState } from '../../../store/store';
+import { setEditClientCoordsOpen } from '../../../ducks/client/client-toggle/client-toggle';
 import { Paragraph } from '../../../styles/typography/typography';
-import { ButtonWrapper, EmployeeInfoBox, HeaderWrapper, InputWrapper, RowIconWrapper, StyledForm, Title, Wrapper } from '../../../styles/contentStyles';
 import { StyledInput } from '../../../styles/compoundStyles';
 import { DeleteIcon, EditIcon, LocationIcon } from '../../../styles/iconStyles';
-import Button from '../../atoms/Button/Button';
 import { editClient } from '../../../ducks/client/client-creators';
-import { setEditClientCoordsOpen } from '../../../ducks/client/client-toggle/client-toggle';
 import { ClientSchema } from '../../../validation/modelsValidation';
+import { ButtonWrapper, EmployeeInfoBox, HeaderWrapper, InputWrapper, RowIconWrapper, StyledForm, Title, Wrapper } from '../../../styles/contentStyles';
 
 interface InitialValues {
   name: string;

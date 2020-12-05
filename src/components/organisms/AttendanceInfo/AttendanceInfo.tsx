@@ -1,11 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+
+import Spinner from '../../atoms/Spinner/Spinner';
+import WeekAttendanceComponent from '../../molecules/WeekAttendanceComponent/WeekAttendanceComponent';
+
+import { AppState } from '../../../store/store';
 import { Paragraph } from '../../../styles/typography/typography';
 import { Wrapper, HeaderWrapper, EmployeeInfoBox, Title } from '../../../styles/contentStyles';
 import { SpinnerWrapper } from '../../../styles/shared';
-import { AppState } from '../../../store/store';
-import Spinner from '../../atoms/Spinner/Spinner';
-import WeekAttendanceComponent from '../../molecules/WeekAttendanceComponent/WeekAttendanceComponent';
 
 const AttendanceInfo: React.FC = () => {
   const { weekAttendance, isContentLoading } = useSelector((state: AppState) => state.attendance.weekAttendanceData);
