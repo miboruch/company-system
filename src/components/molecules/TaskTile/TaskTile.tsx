@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+
 import { AppState } from '../../../store/store';
 import { TaskInterface } from '../../../types/modelsTypes';
 import { roundTo2 } from '../../../utils/functions';

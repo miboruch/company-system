@@ -1,5 +1,6 @@
 import React from 'react';
-import { CartesianGrid, XAxis, YAxis, Tooltip, Legend, BarChart as Chart, Bar, Area } from 'recharts';
+import { CartesianGrid, XAxis, YAxis, Tooltip, Legend, BarChart as Chart, Bar } from 'recharts';
+
 import { ChartWrapper, StyledResponsiveContainer, RowWrapper, FlexRowWrapper, StyledParagraph } from '../Chart/Chart.styles';
 import { chartButtons } from '../../../utils/staticData';
 

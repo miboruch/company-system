@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Wrapper, Name, Subparagraph, ContentWrapper, CompletedIcon } from './CompoundStepBox.styles';
 
 interface Props {

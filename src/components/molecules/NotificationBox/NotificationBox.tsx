@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { DeleteIcon } from '../../../styles/iconStyles';
 import { FlexWrapper } from '../../../styles/shared';
 import { NotificationWrapper, TextWrapper, Title, Description, NewNotificationDot, Date } from './NotificationBox.styles';

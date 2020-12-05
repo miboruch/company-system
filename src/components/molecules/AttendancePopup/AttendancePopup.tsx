@@ -1,16 +1,18 @@
 import React from 'react';
 import { Formik } from 'formik';
+
 import PopupTemplate from '../../templates/PopupTemplate/PopupTemplate';
 import ModalButton, { ButtonType } from '../../atoms/ModalButton/ModalButton';
 import Input from '../../atoms/Input/Input';
 import Checkbox from '../../atoms/Checkbox/Checkbox';
+
 import { AttendanceInterface } from '../../../types/modelsTypes';
+import { useAppDispatch } from '../../../store/store';
 import { ButtonWrapper, ContentWrapper } from '../../../styles/popupStyles';
 import { CheckedIcon, NotCheckedIcon, EmptyIcon } from '../../../styles/iconStyles';
 import { FlexWrapper, StyledForm, StyledParagraph, StyledFlexWrapper, InputWrapper } from './AttendancePopup.styles';
 import { addAttendance, updateAttendance } from '../../../ducks/attendance/attendance-creators';
 import { AttendanceSchema } from '../../../validation/modelsValidation';
-import { useAppDispatch } from '../../../store/store';
 
 interface Props {
   attendance: AttendanceInterface | null;

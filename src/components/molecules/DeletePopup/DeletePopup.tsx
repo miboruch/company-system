@@ -1,6 +1,8 @@
 import React from 'react';
+
 import ModalButton, { ButtonType } from '../../atoms/ModalButton/ModalButton';
 import PopupTemplate from '../../templates/PopupTemplate/PopupTemplate';
+
 import { Paragraph } from '../../../styles/typography/typography';
 import { ContentWrapper, ButtonWrapper } from '../../../styles/popupStyles';
 

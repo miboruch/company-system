@@ -2,15 +2,17 @@ import React, { useState } from 'react';
 import NumberFormat from 'react-number-format';
 import { useSelector } from 'react-redux';
 import { Formik } from 'formik';
+
 import Button from '../../atoms/Button/Button';
 import MapCoordsEdit, { CoordsEditType } from '../../organisms/MapCoordsEdit/MapCoordsEdit';
+
 import { AppState, useAppDispatch } from '../../../store/store';
+import { setEditCompanyCoordsOpen } from '../../../ducks/company/company-toggle/company-toggle';
 import { Heading, StyledForm } from '../AccountSettings/AccountSettings.styles';
 import { StyledInput } from '../../../styles/compoundStyles';
 import { editCompany } from '../../../ducks/company/current-company/current-company-creators';
 import { DoubleFlexWrapper, StyledLabel } from '../../../styles/shared';
 import { CompanySchema } from '../../../validation/modelsValidation';
-import { setEditCompanyCoordsOpen } from '../../../ducks/company/company-toggle/company-toggle';
 
 interface DefaultValues {
   name: string;

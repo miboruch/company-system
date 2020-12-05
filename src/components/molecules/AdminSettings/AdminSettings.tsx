@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+
 import AddNewButton from '../../atoms/AddNewButton/AddNewButton';
 import Spinner from '../../atoms/Spinner/Spinner';
 import ListBox from '../ListBox/ListBox';
 import RemoveAdminPopup from '../RemoveAdminPopup/RemoveAdminPopup';
+
 import { CompanyOwnersInterface } from '../../../types/modelsTypes';
 import { AppState, useAppDispatch } from '../../../store/store';
+import { NotificationTypes } from '../../../types/globalTypes';
+import { setNotificationMessage } from '../../../ducks/popup/popup';
 import { getAllCompanyEmployees } from '../../../ducks/employees/employees-data/employees-data-creators';
 import { getCompanyOwners, addNewCompanyOwner } from '../../../ducks/company/company-owners/company-owners-creators';
 import { SpinnerWrapper } from '../../../styles/shared';
-import { NotificationTypes } from '../../../types/globalTypes';
-import { setNotificationMessage } from '../../../ducks/popup/popup';
 import { Wrapper, ColumnWrapper, Heading } from './AdminSettings.styles';
 
 const AdminSettings: React.FC = () => {
