@@ -1,22 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
 import * as Leaflet from 'leaflet';
 import { Map, Marker, TileLayer } from 'react-leaflet';
-import {
-  ButtonWrapper,
-  CenterBox,
-  MapHeadingWrapper,
-  MapWrapper,
-  MobileCompoundTitle,
-  StyledBackParagraph
-} from '../../../../../styles/compoundStyles';
+
 import Spinner from '../../../../atoms/Spinner/Spinner';
 import Button from '../../../../atoms/Button/Button';
-import { SpinnerWrapper } from '../../../../../styles/shared';
+
 import { Coords } from '../../../../../types/globalTypes';
-import { markerCustomIcon } from '../../../AddCompany/utils/customMapIcons';
-import { PageContext, PageSettingEnum } from '../../context/PageContext';
-import { ClientDataContext } from '../../context/ClientDataContext';
 import { getLocation } from '../../../../../utils/mapFunctions';
+import { PageContext, PageSettingEnum } from '../../context/PageContext';
+import { SpinnerWrapper } from '../../../../../styles/shared';
+import { markerCustomIcon } from '../../../AddCompany/utils/customMapIcons';
+import { ClientDataContext } from '../../context/ClientDataContext';
+import { ButtonWrapper, CenterBox, MapHeadingWrapper, MapWrapper, MobileCompoundTitle, StyledBackParagraph } from '../../../../../styles/compoundStyles';
 
 const MapPage: React.FC = () => {
   const { data, setData } = useContext(ClientDataContext);
@@ -39,7 +34,6 @@ const MapPage: React.FC = () => {
 
   const handleSubmit = () => {
     setData({ ...data, ...coords });
-    console.log(data);
     setCurrentPage(PageSettingEnum.Third);
   };
 
@@ -70,7 +64,9 @@ const MapPage: React.FC = () => {
               {coords.lat && coords.long && <Marker icon={markerCustomIcon} position={[coords.lat, coords.long]} />}
             </Map>
             <ButtonWrapper>
-              <StyledBackParagraph type={'back'} onClick={() => setCurrentPage(PageSettingEnum.First)}>Wstecz</StyledBackParagraph>
+              <StyledBackParagraph type={'back'} onClick={() => setCurrentPage(PageSettingEnum.First)}>
+                Wstecz
+              </StyledBackParagraph>
               <Button onClick={() => handleSubmit()} type={'button'} text={'Dodaj'} disabled={!coords.lat || !coords.long} />
             </ButtonWrapper>
           </>

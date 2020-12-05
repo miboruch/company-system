@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
-import { addCompanySteps } from '../../utils/addCompanySteps';
+
 import CompoundStepBox from '../../../../molecules/CompoundStepBox/CompoundStepBox';
+
+import { addCompanySteps } from '../../utils/addCompanySteps';
 import { ListWrapper } from '../../../../../styles/compoundStyles';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { CompanyDataContext } from '../../context/CompanyDataContext';
 
-interface Props {}
-
-const StepList: React.FC<Props> = () => {
+const StepList: React.FC = () => {
   const { data } = useContext(CompanyDataContext);
   const { setCurrentPage } = useContext(PageContext);
   const isStepCompleted = (page: PageSettingEnum): boolean => {

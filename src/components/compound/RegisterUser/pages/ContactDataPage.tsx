@@ -2,7 +2,10 @@ import React, { useContext, useState } from 'react';
 import NumberFormat from 'react-number-format';
 import { Formik } from 'formik';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
+
 import Button from '../../../atoms/Button/Button';
+
+import { useAppDispatch } from '../../../../store/store';
 import { RegisterDataContext } from '../context/RegisterDataContext';
 import { PageContext } from '../context/PageContext';
 import { Heading, StyledForm } from '../../../../pages/LoginPage/LoginPage.styles';
@@ -12,7 +15,6 @@ import { register } from '../../../../ducks/auth/register/register-creators';
 import { registerFromLink } from '../../../../ducks/auth/link-registration/link-registration-creators';
 import { StyledInput } from '../../../../pages/LoginPage/LoginPage.styles';
 import { ContactDataSchema } from '../validation/validation';
-import { useAppDispatch } from '../../../../store/store';
 
 type defaultValues = {
   phoneNumber: string;

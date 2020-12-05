@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
+
+import Button from '../../../../atoms/Button/Button';
+
 import { HeadingWrapper, MobileCompoundTitle, StyledForm, StyledInput, Subheading, Wrapper } from '../../../../../styles/compoundStyles';
 import { Paragraph } from '../../../../../styles/typography/typography';
 import { DoubleFlexWrapper } from '../../../../../styles/shared';
-import Button from '../../../../atoms/Button/Button';
 import { ClientDataContext } from '../../context/ClientDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { addNewClient } from '../../../../../ducks/client/client-creators';

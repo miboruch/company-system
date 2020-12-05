@@ -1,7 +1,9 @@
 import React, { useContext, useState } from 'react';
 import NumberFormat from 'react-number-format';
 import { Formik } from 'formik';
+
 import Button from '../../../../atoms/Button/Button';
+
 import { FlexWrapper, StyledLabel } from '../../../../../styles/shared';
 import { CompanyDataContext } from '../../context/CompanyDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';

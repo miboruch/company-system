@@ -1,14 +1,16 @@
 import React, { useContext } from 'react';
 import { Formik } from 'formik';
+
+import Button from '../../../../atoms/Button/Button';
+
+import { useAppDispatch } from '../../../../../store/store';
 import { HeadingWrapper, MobileCompoundTitle, StyledBackParagraph, StyledForm, StyledInput, Subheading, Wrapper } from '../../../../../styles/compoundStyles';
 import { DoubleFlexWrapper } from '../../../../../styles/shared';
-import Button from '../../../../atoms/Button/Button';
 import { EmployeeDataContext } from '../../context/EmployeeDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { sendRegistrationMail } from '../../../../../ducks/auth/link-registration/link-registration-creators';
 import { addNewEmployee } from '../../../../../ducks/employees/employees-data/employees-data-creators';
 import { EmployeeSalarySchema } from '../../validation/validation';
-import { useAppDispatch } from '../../../../../store/store';
 
 type DefaultValues = {
   email?: string;
@@ -18,6 +20,7 @@ type DefaultValues = {
 
 const SalaryPage: React.FC = () => {
   const dispatch = useAppDispatch();
+
   const { data, setData } = useContext(EmployeeDataContext);
   const { setCurrentPage } = useContext(PageContext);
 

@@ -1,10 +1,12 @@
 import React from 'react';
+
 import PageContextProvider from './context/PageContext';
 import RegisterTemplate from './templates/RegisterTemplate/RegisterTemplate';
 import MainRegisterDataPage from './pages/MainRegisterDataPage';
 import PasswordPage from './pages/PasswordPage';
 import ContactDataPage from './pages/ContactDataPage';
 import RegisterDataContextProvider from './context/RegisterDataContext';
+
 import { RegistrationVerifyTokenResponse } from '../../../pages/RegisterFromLink/RegisterFromLink';
 
 interface Props {

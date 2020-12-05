@@ -1,20 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { connect, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { ButtonWrapper, CenterBox, MapWrapper } from '../../../styles/compoundStyles';
-import { Map, Marker, TileLayer } from 'react-leaflet';
 import * as Leaflet from 'leaflet';
-import { markerCustomIcon } from '../../compound/AddCompany/utils/customMapIcons';
+import gsap from 'gsap';
+import { useSelector } from 'react-redux';
+import { Map, Marker, TileLayer } from 'react-leaflet';
+
 import Button from '../../atoms/Button/Button';
 import Spinner from '../../atoms/Spinner/Spinner';
-import { SpinnerWrapper } from '../../../styles/shared';
 import CloseButton from '../../atoms/CloseButton/CloseButton';
-import { CloseButtonWrapper } from '../../../styles/compoundControllerStyles';
-import gsap from 'gsap';
+
+import { AppState, useAppDispatch } from '../../../store/store';
 import { modalOpenAnimation } from '../../../animations/animations';
+import { ButtonWrapper, CenterBox, MapWrapper } from '../../../styles/compoundStyles';
+import { markerCustomIcon } from '../../compound/AddCompany/utils/customMapIcons';
+import { SpinnerWrapper } from '../../../styles/shared';
+import { CloseButtonWrapper } from '../../../styles/compoundControllerStyles';
 import { editCompanyCoords } from '../../../ducks/company/current-company/current-company-creators';
 import { editClientCoords } from '../../../ducks/client/client-creators';
-import { AppState, useAppDispatch } from '../../../store/store';
 
 const StyledWrapper = styled.div`
   position: fixed;
