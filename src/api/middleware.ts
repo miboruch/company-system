@@ -2,6 +2,7 @@ import axios from 'axios';
 import store from '../store/store';
 import { clearStorage, logout } from '../ducks/auth/logout/logout-creators';
 import { resetState } from '../ducks/reset/reset-creators';
+import { setTokens } from '../ducks/auth/tokens/tokens';
 import { setNotificationMessage } from '../ducks/popup/popup';
 import { NotificationTypes } from '../types/globalTypes';
 
@@ -34,9 +35,12 @@ export const handleAuthRefreshToken = (error: any) => {
       })
       .then((res) => {
         const token = res?.data?.accessToken;
-        if (token) {
+        if (token && refreshToken) {
           localStorage.setItem('token', token);
           originalRequest.headers['Authorization'] = `Bearer ${token}`;
+
+          store.dispatch(setTokens({ refreshToken, token }));
+
           return axios(originalRequest);
         }
       })
@@ -70,9 +74,12 @@ export const handleCompanyRefreshToken = (error: any): Promise<any> => {
       })
       .then((res) => {
         const token = res?.data?.accessToken;
-        if (token) {
+        if (token && refreshToken) {
           localStorage.setItem('token', token);
           originalRequest.headers['Authorization'] = `Bearer ${token}`;
+
+          store.dispatch(setTokens({ refreshToken, token }));
+
           return axios(originalRequest);
         }
       })
