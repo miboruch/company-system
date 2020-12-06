@@ -26,7 +26,6 @@ const AttendanceInfo: React.FC = () => {
               <Title>
                 {selectedAttendance.user.name} {selectedAttendance.user.lastName}
               </Title>
-              <p>icon</p>
             </HeaderWrapper>
             <EmployeeInfoBox>
               <Paragraph type={'subparagraph'}>Email: {selectedAttendance.user.email}</Paragraph>

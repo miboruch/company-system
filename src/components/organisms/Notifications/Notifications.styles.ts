@@ -32,4 +32,11 @@ const Content = styled.div`
   overflow-y: scroll;
 `;
 
-export { StyledWrapper, Header, Content };
+const EmptyWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+`;
+
+export { StyledWrapper, Header, Content, EmptyWrapper };

@@ -99,22 +99,6 @@ const FinancesPageContent: React.FC = () => {
             >
               <StatisticsHeading>Wydatek</StatisticsHeading>
             </RightIncomeExpenseField>
-            {/*<Button*/}
-            {/*  type={'button'}*/}
-            {/*  text={'Dodaj dochód'}*/}
-            {/*  onClick={() => {*/}
-            {/*    setPopupOpen(true);*/}
-            {/*    setPopupType(FinancePopupInterface.Income);*/}
-            {/*  }}*/}
-            {/*/>*/}
-            {/*<Button*/}
-            {/*  type={'button'}*/}
-            {/*  text={'Dodaj wydatek'}*/}
-            {/*  onClick={() => {*/}
-            {/*    setPopupOpen(true);*/}
-            {/*    setPopupType(FinancePopupInterface.Expense);*/}
-            {/*  }}*/}
-            {/*/>*/}
           </ButtonWrapper>
           <InfoWrapper onClick={() => setGenerateInvoiceOpen(true)}>
             <StatisticsHeading>Wygeneruj nową fakturę</StatisticsHeading>

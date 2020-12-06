@@ -52,7 +52,7 @@ const App: React.FC = () => {
         </MainSpinnerWrapper>
       ) : (
         <Switch>
-          {/*<Route path={'/'} exact component={} />*/}
+          <Route path={'/'} exact component={SelectPage} />
           <Route path={'/select'} component={SelectPage} />
           <NotAuthRoute path={'/login'} exact component={LoginPage} />
           <NotAuthRoute path={'/register'} component={RegisterPage} />
