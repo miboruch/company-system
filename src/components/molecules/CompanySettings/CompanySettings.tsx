@@ -13,6 +13,7 @@ import { StyledInput } from '../../../styles/compoundStyles';
 import { editCompany } from '../../../ducks/company/current-company/current-company-creators';
 import { DoubleFlexWrapper, StyledLabel } from '../../../styles/shared';
 import { CompanySchema } from '../../../validation/modelsValidation';
+import { AddNewParagraph } from '../../atoms/AddNewButton/AddNewButton.styles';
 
 interface DefaultValues {
   name: string;
@@ -69,7 +70,7 @@ const CompanySettings: React.FC = () => {
             <StyledInput type={'text'} name={'address'} onChange={handleChange} value={values.address} required={true} labelText={errors.address || 'Adres'} />
             <StyledInput type={'text'} name={'city'} onChange={handleChange} value={values.city} required={true} labelText={errors.city || 'Miasto'} />
             <StyledInput type={'text'} name={'country'} onChange={handleChange} value={values.country} required={true} labelText={errors.country || 'Kraj'} />
-            <p onClick={() => dispatch(setEditCompanyCoordsOpen(true))}>Edit company coords</p>
+            <AddNewParagraph style={{marginBottom: '2rem', fontSize: '15px'}} onClick={() => dispatch(setEditCompanyCoordsOpen(true))}>Edit company coords</AddNewParagraph>
             <DoubleFlexWrapper>
               <Button type={'submit'} text={'Zapisz'} />
             </DoubleFlexWrapper>
