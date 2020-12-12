@@ -1,6 +1,6 @@
 import { setSelectedAttendance, setAttendanceInfoOpen } from './attendance-toggle';
 import { AttendanceInterface } from '../../../types/modelsTypes';
-import { AppDispatch } from '../../../store/test-store';
+import { AppDispatch } from '../../../store/store';
 import { getWeekAttendance } from '../week-attendance-data/week-attendance-data-creators';
 
 export const selectAttendance = (attendance: AttendanceInterface | null) => (dispatch: AppDispatch): void => {

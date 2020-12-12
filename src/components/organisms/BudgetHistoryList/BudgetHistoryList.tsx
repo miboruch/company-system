@@ -1,44 +1,14 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
-import { ExpenseInterface, IncomeInterface } from '../../../types/modelsTypes';
+
 import ListBox from '../../molecules/ListBox/ListBox';
-import { AppState } from '../../../store/test-store';
+
+import { ExpenseInterface, IncomeInterface } from '../../../types/modelsTypes';
+import { AppState } from '../../../store/store';
 import { roundTo2 } from '../../../utils/functions';
 import { Paragraph } from '../../../styles/typography/typography';
 import { EmptyWrapper } from '../../../styles/shared';
-
-const StyledWrapper = styled.div`
-  width: 100%;
-  min-height: 600px;
-  background-color: ${({ theme }) => theme.colors.white};
-  // background-color: ${({ theme }) => theme.colors.dark};
-  border: 1px solid ${({ theme }) => theme.colors.impactGray};
-  border-radius: 30px;
-  overflow-y: scroll;
-
-  ${({ theme }) => theme.mq.hdReady} {
-    width: 100%;
-    height: 100%;
-    min-height: auto;
-    grid-area: history;
-    align-self: center;
-  }
-`;
-
-const ContentWrapper = styled.div`
-  width: 100%;
-  //height: 100%;
-  overflow-y: scroll;
-`;
-
-const Title = styled.h3`
-  font-size: 18px;
-  letter-spacing: -2px;
-  font-weight: ${({ theme }) => theme.font.weight.bold};
-  color: ${({ theme }) => theme.colors.dark};
-  padding: 3rem 2rem;
-`;
+import { StyledWrapper, ContentWrapper, Title } from './BudgetHistoryList.styles';
 
 interface Props {
   budgetHistory: (IncomeInterface | ExpenseInterface)[];

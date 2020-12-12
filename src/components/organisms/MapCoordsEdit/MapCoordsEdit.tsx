@@ -1,24 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { connect, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { ButtonWrapper, CenterBox, MapWrapper } from '../../../styles/compoundStyles';
-import { Map, Marker, TileLayer } from 'react-leaflet';
 import * as Leaflet from 'leaflet';
-import { markerCustomIcon } from '../../compound/AddCompany/utils/customMapIcons';
+import gsap from 'gsap';
+import { useSelector } from 'react-redux';
+import { Map, Marker, TileLayer } from 'react-leaflet';
+
 import Button from '../../atoms/Button/Button';
 import Spinner from '../../atoms/Spinner/Spinner';
-import { SpinnerWrapper } from '../../../styles/shared';
 import CloseButton from '../../atoms/CloseButton/CloseButton';
-import { CloseButtonWrapper } from '../../../styles/compoundControllerStyles';
-import gsap from 'gsap';
+
+import { AppState, useAppDispatch } from '../../../store/store';
 import { modalOpenAnimation } from '../../../animations/animations';
-import { ThunkDispatch } from 'redux-thunk';
-import { AppTypes } from '../../../types/actionTypes/appActionTypes';
-import { bindActionCreators } from 'redux';
+import { ButtonWrapper, CenterBox, MapWrapper } from '../../../styles/compoundStyles';
+import { markerCustomIcon } from '../../compound/AddCompany/utils/customMapIcons';
+import { SpinnerWrapper } from '../../../styles/shared';
+import { CloseButtonWrapper } from '../../../styles/compoundControllerStyles';
 import { editCompanyCoords } from '../../../ducks/company/current-company/current-company-creators';
 import { editClientCoords } from '../../../ducks/client/client-creators';
-import { ClientInterface } from '../../../types/modelsTypes';
-import { AppState, useAppDispatch } from '../../../store/test-store';
 
 const StyledWrapper = styled.div`
   position: fixed;
@@ -95,6 +93,11 @@ const MapCoordsEdit: React.FC<Props> = ({ isOpen, closeMap, lat, long, type }) =
       }
     }
   };
+
+  useEffect(() => {
+    setUpdatedLat(lat);
+    setUpdatedLong(long);
+  }, [lat, long, isOpen]);
 
   useEffect(() => {
     modalOpenAnimation(tl, mainWrapperRef, boxRef);

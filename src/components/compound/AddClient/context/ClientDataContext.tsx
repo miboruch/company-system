@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 
 type MainPageData = {
   name: string;
@@ -16,6 +16,7 @@ type AddressPageData = {
   city: string;
   country: string;
 };
+
 type ConnectedPagesData = MainPageData | MapData | AddressPageData;
 type ClientData = MainPageData & MapData & AddressPageData;
 

@@ -1,52 +1,28 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
 import gsap from 'gsap';
 import DatePicker from 'react-datepicker';
+import { useSelector } from 'react-redux';
+
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
-import { AttendanceInterface } from '../../../types/modelsTypes';
-import { listAnimation } from '../../../animations/animations';
-import { AppState, useAppDispatch } from '../../../store/test-store';
-import { getSingleDayAttendance } from '../../../ducks/attendance/attendance-data/attendance-data-creators';
-import { selectAttendance } from '../../../ducks/attendance/attendance-toggle/attendance-toggle-creators';
-import { setAttendanceInfoOpen, setDate } from '../../../ducks/attendance/attendance-toggle/attendance-toggle';
-import { StyledLabel } from '../../../styles/shared';
-import ListBox from '../../molecules/ListBox/ListBox';
-import styled from 'styled-components';
-import { isEmpty } from '../../../utils/functions';
+import Spinner from '../../atoms/Spinner/Spinner';
 import ContentTemplate from '../../templates/ContentTemplate/ContentTemplate';
 import AttendanceInfo from '../AttendanceInfo/AttendanceInfo';
 import AttendancePopup from '../../molecules/AttendancePopup/AttendancePopup';
+import ListBox from '../../molecules/ListBox/ListBox';
+
+import { AttendanceInterface } from '../../../types/modelsTypes';
+import { AppState, useAppDispatch } from '../../../store/store';
+import { listAnimation } from '../../../animations/animations';
+import { selectAttendance } from '../../../ducks/attendance/attendance-toggle/attendance-toggle-creators';
+import { setAttendanceInfoOpen, setDate } from '../../../ducks/attendance/attendance-toggle/attendance-toggle';
+import { isEmpty } from '../../../utils/functions';
+import { getSingleDayAttendance } from '../../../ducks/attendance/attendance-data/attendance-data-creators';
+import { StyledLabel } from '../../../styles/shared';
 import { SpinnerWrapper } from '../../../styles/shared';
-import Spinner from '../../atoms/Spinner/Spinner';
-
-const ListWrapper = styled.section`
-  width: 100%;
-  height: 100%;
-
-  ${({ theme }) => theme.mq.hdReady} {
-    background-color: #fff;
-    grid-area: list;
-  }
-`;
-
-const List = styled.div`
-  width: 100%;
-  height: 100%;
-`;
-
-const DatePickerWrapper = styled.div`
-  width: 70%;
-  padding-left: 2rem;
-
-  ${({ theme }) => theme.mq.standard} {
-    width: 100%;
-    padding-left: 0;
-  }
-`;
+import { ListWrapper, List, DatePickerWrapper } from './AttendancePageContent.styles';
 
 const AttendancePageContent: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { token } = useSelector((state: AppState) => state.auth.tokens);
   const { singleDayAttendance, isAttendanceLoading } = useSelector((state: AppState) => state.attendance.attendanceData);
   const { isAttendanceInfoOpen, attendanceDate } = useSelector((state: AppState) => state.attendance.attendanceToggle);
 

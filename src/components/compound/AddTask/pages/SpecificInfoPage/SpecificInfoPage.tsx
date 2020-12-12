@@ -1,15 +1,17 @@
 import React, { useContext, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { Formik } from 'formik';
+import { useSelector } from 'react-redux';
+
+import Dropdown from '../../../../atoms/Dropdown/Dropdown';
+import Button from '../../../../atoms/Button/Button';
+
+import { AppState, useAppDispatch } from '../../../../../store/store';
+import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { HeadingWrapper, MobileCompoundTitle, StyledBackParagraph, StyledForm, StyledInput, Subheading, Wrapper } from '../../../../../styles/compoundStyles';
 import { DoubleFlexWrapper } from '../../../../../styles/shared';
-import Button from '../../../../atoms/Button/Button';
-import { Formik } from 'formik';
 import { TaskDataContext } from '../../context/TaskDataContext';
-import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { addNewTask } from '../../../../../ducks/tasks/tasks-data/task-data-creators';
-import Dropdown from '../../../../atoms/Dropdown/Dropdown';
 import { getCompanyClients } from '../../../../../ducks/client/client-data/client-data-creators';
-import { AppState, useAppDispatch } from '../../../../../store/test-store';
 import { TaskSpecificInfoSchema } from '../../validation/validation';
 
 interface DefaultValues {
@@ -56,8 +58,6 @@ const SpecificInfoPage: React.FC = () => {
   useEffect(() => {
     allCompanyClients.length === 0 && dispatch(getCompanyClients());
   }, []);
-
-  const handleClientSelect = (selected: string | null) => console.log(allCompanyClients.find((client) => client.name === selected));
 
   return (
     <Formik onSubmit={handleSubmit} initialValues={initialValues} validationSchema={TaskSpecificInfoSchema} validateOnBlur={false} validateOnChange={false}>

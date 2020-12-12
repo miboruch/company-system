@@ -1,27 +1,29 @@
 import React, { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
 import { useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import gsap from 'gsap';
+
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
-import { Content, InfoBoxWrapper, InfoWrapper, StatisticsHeading, TileWrapper } from './LandingPageContent.styles';
 import TaskTile from '../../molecules/TaskTile/TaskTile';
-import { AppState, useAppDispatch } from '../../../store/test-store';
-import { AttendanceInterface, IncomeDataInterface } from '../../../types/modelsTypes';
 import Chart from '../../molecules/Chart/Chart';
 import AttendanceList from '../AttendanceList/AttendanceList';
-import { ContentGridWrapper } from '../../../styles/HomePageContentGridStyles';
+import AttendancePopup from '../../molecules/AttendancePopup/AttendancePopup';
+import AdminStatistics from '../AdminStatistics/AdminStatistics';
+import BarChart from '../../molecules/BarChart/BarChart';
 import InformationBox from '../../molecules/InformationBox/InformationBox';
+
+import { AppState, useAppDispatch } from '../../../store/store';
+import { AttendanceInterface, IncomeDataInterface } from '../../../types/modelsTypes';
+import { UserRole } from '../../../ducks/auth/roles/roles';
 import { contentAnimation } from '../../../animations/animations';
+import { redirectToTask } from '../../../ducks/tasks/tasks-toggle/tasks-toggle-creators';
+import { ContentGridWrapper } from '../../../styles/HomePageContentGridStyles';
 import { getSingleDayAttendance } from '../../../ducks/attendance/attendance-data/attendance-data-creators';
 import { getCompanyTasks, getCompletedTasks, getEmployeeTasks, getTasksInTimePeriod, TaskPeriodInterface } from '../../../ducks/tasks/tasks-data/task-data-creators';
-import { redirectToTask } from '../../../ducks/tasks/tasks-toggle/tasks-toggle-creators';
-import AttendancePopup from '../../molecules/AttendancePopup/AttendancePopup';
 import { getIncomeExpenseInTimePeriod } from '../../../ducks/finances/income-expense/income-expense-creators';
 import { ArrowIcon } from '../../../styles/iconStyles';
 import { getAllCompanyEmployees } from '../../../ducks/employees/employees-data/employees-data-creators';
-import AdminStatistics from '../AdminStatistics/AdminStatistics';
-import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
-import BarChart from '../../molecules/BarChart/BarChart';
+import { Content, InfoBoxWrapper, InfoWrapper, StatisticsHeading, TileWrapper } from './LandingPageContent.styles';
 import { getAllAppUsers } from '../../../ducks/users/all-users-creators';
 
 const LandingPageContent: React.FC<RouteComponentProps<any>> = ({ history }) => {

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useSelector, useDispatch } from 'react-redux';
+
 import PageContextProvider, { PageSettingEnum } from './context/PageContext';
 import AddCompanyTemplate from './templates/AddCompanyTemplate/AddCompanyTemplate';
 import AddCompanyHeader from './components/AddCompanyHeader/AddCompanyHeader';
@@ -8,12 +9,13 @@ import CompanyDataContextProvider from './context/CompanyDataContext';
 import MainCompanyInfo from './pages/MainCompanyInfo/MainCompanyInfo';
 import MapPage from './pages/MapPage/MapPage';
 import AddressInfo from './pages/AddressInfo/AddressInfo';
-import { StandardCompoundTitle } from '../../../styles/compoundStyles';
 import StepList from './components/StepList/StepList';
 import CloseButton from '../../atoms/CloseButton/CloseButton';
-import { AppState } from '../../../store/test-store';
+
+import { AppState } from '../../../store/store';
 import { setAddCompanyOpen } from '../../../ducks/company/company-toggle/company-toggle';
 import { modalOpenAnimation } from '../../../animations/animations';
+import { StandardCompoundTitle } from '../../../styles/compoundStyles';
 import { MainWrapper, CloseButtonWrapper, Wrapper, ContentWrapper, CompoundTitle } from '../../../styles/compoundControllerStyles';
 
 const AddCompanyController: React.FC = () => {
@@ -22,8 +24,6 @@ const AddCompanyController: React.FC = () => {
   const mainWrapperRef = useRef<HTMLDivElement | null>(null);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
-
-  // useOutsideClick(wrapperRef, isOpen, () => setOpen(false));
 
   useEffect(() => {
     modalOpenAnimation(tl, mainWrapperRef, wrapperRef);

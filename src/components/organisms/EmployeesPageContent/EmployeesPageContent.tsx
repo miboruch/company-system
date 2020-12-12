@@ -1,21 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
-import GridWrapper from '../../templates/GridWrapper/GridWrapper';
-import { Paragraph } from '../../../styles/typography/typography';
-import { SpinnerWrapper, List, AddIcon, AddWrapper } from '../../../styles/shared';
-import ListBox from '../../molecules/ListBox/ListBox';
 import gsap from 'gsap';
-import ContentTemplate from '../../templates/ContentTemplate/ContentTemplate';
-import { AppState, useAppDispatch } from '../../../store/test-store';
-import { getAllCompanyEmployees } from '../../../ducks/employees/employees-data/employees-data-creators';
-import { selectEmployee } from '../../../ducks/employees/employees-toggle/employees-toggle-creators';
-import { EmployeeDataInterface } from '../../../types/modelsTypes';
+import { useSelector } from 'react-redux';
+
+import GridWrapper from '../../templates/GridWrapper/GridWrapper';
 import Spinner from '../../atoms/Spinner/Spinner';
 import EmployeeInfo from '../EmployeeInfo/EmployeeInfo';
-import { listAnimation } from '../../../animations/animations';
 import DeletePopup from '../../molecules/DeletePopup/DeletePopup';
 import AddEmployeeController from '../../compound/AddEmployee/AddEmployeeController';
+import ListBox from '../../molecules/ListBox/ListBox';
+import ContentTemplate from '../../templates/ContentTemplate/ContentTemplate';
+
+import { EmployeeDataInterface } from '../../../types/modelsTypes';
+import { AppState, useAppDispatch } from '../../../store/store';
+import { listAnimation } from '../../../animations/animations';
+import { selectEmployee } from '../../../ducks/employees/employees-toggle/employees-toggle-creators';
 import { setEmployeeInfoOpen, setAddNewEmployeeOpen } from '../../../ducks/employees/employees-toggle/employees-toggle';
+import { Paragraph } from '../../../styles/typography/typography';
+import { SpinnerWrapper, List, AddIcon, AddWrapper } from '../../../styles/shared';
+import { getAllCompanyEmployees } from '../../../ducks/employees/employees-data/employees-data-creators';
 
 const EmployeesPageContent: React.FC = () => {
   const dispatch = useAppDispatch();

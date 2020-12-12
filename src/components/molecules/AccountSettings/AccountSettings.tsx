@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
-import { Formik } from 'formik';
-import { StyledInput } from '../../../styles/compoundStyles';
 import NumberFormat from 'react-number-format';
-import { DoubleFlexWrapper, StyledLabel } from '../../../styles/shared';
 import DatePicker from 'react-datepicker';
+import { Formik } from 'formik';
+import { useSelector } from 'react-redux';
+
 import Button from '../../atoms/Button/Button';
+
+import { AppState } from '../../../store/store';
+import { useAppDispatch } from '../../../store/store';
+import { StyledInput } from '../../../styles/compoundStyles';
+import { DoubleFlexWrapper, StyledLabel } from '../../../styles/shared';
 import { StyledForm, Heading } from './AccountSettings.styles';
 import { editAccount } from '../../../ducks/auth/account/account-creators';
 import { AccountSchema } from '../../../validation/modelsValidation';
-import { UserAuthData } from '../../../types/modelsTypes';
-import { useAppDispatch } from '../../../store/test-store';
-import { useSelector } from 'react-redux';
-import { AppState } from '../../../store/test-store';
 
 interface DefaultValues {
   email: string;

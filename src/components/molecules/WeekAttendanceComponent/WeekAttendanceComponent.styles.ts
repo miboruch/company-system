@@ -51,7 +51,8 @@ const SingleAttendanceWrapper = styled.div<SingleAttendanceWrapperInterface>`
 
   ${({ theme }) => theme.mq.hdReady} {
     background-color: ${({ theme }) => theme.colors.white};
-    padding: 0;
+    justify-content: space-between;
+    padding: 1rem;
 
     &:hover {
       background-color: ${({ theme }) => theme.colors.contentBackground};

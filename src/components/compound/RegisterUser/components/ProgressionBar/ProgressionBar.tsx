@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+
 import { PageContext } from '../../context/PageContext';
 import { ProgressionBarDiv } from './ProgressionBar.styles';
 

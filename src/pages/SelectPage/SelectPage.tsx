@@ -1,10 +1,12 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useAppDispatch } from '../../store/test-store';
+
 import ArrowButton from '../../components/atoms/ArrowButton/ArrowButton';
+
+import { UserRole } from '../../ducks/auth/roles/roles';
 import { Direction } from '../../types/globalTypes';
+import { useAppDispatch } from '../../store/store';
 import { changeUserRoleTo } from '../../ducks/auth/roles/roles-creators';
-import { UserRole } from '../../types/actionTypes/authenticationActionTypes';
 import { Wrapper, Heading, Header, StyledHeading, ContentWrapper, Paragraph, ContentBox, ArrowWrapper, StyledCompanyName } from './SelectPage.styles';
 
 const SelectPage: React.FC = () => {

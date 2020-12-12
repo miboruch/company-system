@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { useSelector } from 'react-redux';
-import { AppState, useAppDispatch } from '../../../store/test-store';
-import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
+
+import { NotificationTypes } from '../../../types/globalTypes';
+import { AppState, useAppDispatch } from '../../../store/store';
+import { setNotificationMessage } from '../../../ducks/popup/popup';
 import { NOTIFICATION_VISIBILITY_TIME } from '../../../utils/config';
 import { CheckedIcon, NotCheckedIcon } from '../../../styles/iconStyles';
 import { NotificationWrapper, NotificationParagraph } from './NotificationPopup.styles';
-import { setNotificationMessage } from '../../../ducks/popup/popup';
 
 const NotificationPopup: React.FC = () => {
   const dispatch = useAppDispatch();

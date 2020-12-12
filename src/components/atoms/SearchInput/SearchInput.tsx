@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { SearchWrapper, StyledInput, SearchIcon } from './SearchInput.styles';
 
 interface Props {

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { AddButton, AddNewParagraph, RowWrapper } from './AddNewButton.styles';
 
 interface Props {

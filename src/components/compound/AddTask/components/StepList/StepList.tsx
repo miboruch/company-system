@@ -1,13 +1,12 @@
 import React, { useContext } from 'react';
-import {addTaskSteps} from '../../utils/addTaskSteps';
+
 import CompoundStepBox from '../../../../molecules/CompoundStepBox/CompoundStepBox';
+import { PageContext, PageSettingEnum } from '../../context/PageContext';
+import { addTaskSteps } from '../../utils/addTaskSteps';
 import { ListWrapper } from '../../../../../styles/compoundStyles';
-import {PageContext, PageSettingEnum} from '../../context/PageContext';
-import {TaskDataContext} from '../../context/TaskDataContext';
+import { TaskDataContext } from '../../context/TaskDataContext';
 
-interface Props {}
-
-const StepList: React.FC<Props> = () => {
+const StepList: React.FC = () => {
   const { data } = useContext(TaskDataContext);
   const { setCurrentPage } = useContext(PageContext);
   const isStepCompleted = (page: PageSettingEnum): boolean => {
@@ -15,7 +14,7 @@ const StepList: React.FC<Props> = () => {
       case PageSettingEnum.First:
         return !!(data.name && data.description && data.date);
       case PageSettingEnum.Second:
-        return !!(data.timeEstimate);
+        return !!data.timeEstimate;
     }
   };
 

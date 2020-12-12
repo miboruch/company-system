@@ -1,20 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useSelector, useDispatch } from 'react-redux';
+
 import ClientDataContextProvider from './context/ClientDataContext';
 import PageContextProvider, { PageSettingEnum } from './context/PageContext';
-import { modalOpenAnimation } from '../../../animations/animations';
-import { AppState } from '../../../store/test-store';
-import { setAddNewClientOpen } from '../../../ducks/client/client-toggle/client-toggle';
-import { CloseButtonWrapper, CompoundTitle, ContentWrapper, MainWrapper, Wrapper } from '../../../styles/compoundControllerStyles';
 import CloseButton from '../../atoms/CloseButton/CloseButton';
 import AddClientHeader from './components/AddClientHeader/AddClientHeader';
-import { StandardCompoundTitle } from '../../../styles/compoundStyles';
 import AddClientTemplate from './templates/AddClientTemplate';
 import StepList from './components/StepList/StepList';
 import MainClientPage from './pages/MainClientPage/MainClientPage';
 import MapPage from './pages/MapPage/MapPage';
 import AddressPage from './pages/AddressPage/AddressPage';
+
+import { AppState } from '../../../store/store';
+import { modalOpenAnimation } from '../../../animations/animations';
+import { setAddNewClientOpen } from '../../../ducks/client/client-toggle/client-toggle';
+import { CloseButtonWrapper, CompoundTitle, ContentWrapper, MainWrapper, Wrapper } from '../../../styles/compoundControllerStyles';
+import { StandardCompoundTitle } from '../../../styles/compoundStyles';
 
 const AddClientController: React.FC = () => {
   const dispatch = useDispatch();

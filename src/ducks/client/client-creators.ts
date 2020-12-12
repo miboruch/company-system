@@ -1,6 +1,6 @@
-import { NotificationTypes } from '../../types/actionTypes/toggleAcitonTypes';
+import { NotificationTypes } from '../../types/globalTypes';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { baseStoreType } from '../../store/test-store';
+import { baseStoreType } from '../../store/store';
 import { companyApi } from '../../api';
 import { getSingleDayAttendance } from '../attendance/attendance-data/attendance-data-creators';
 import { getCompanyClients } from './client-data/client-data-creators';
@@ -73,10 +73,11 @@ export const deleteClient = createAsyncThunk<void, string, baseStoreType>('clien
 
 export const getSingleClient = createAsyncThunk<void, string, baseStoreType>('client/getSingleClient', async (clientId, { dispatch, getState }) => {
   const { token } = getState().auth.tokens;
+  const { currentCompany } = getState().company.currentCompany;
 
   try {
-    if (token) {
-      const { data } = await companyApi.get(`/client/get-client-data/${clientId}`, {
+    if (token && currentCompany) {
+      const { data } = await companyApi.get(`/client/get-client-data/${clientId}?company_id=${currentCompany._id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

@@ -1,12 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
 import gsap from 'gsap';
-import { useOutsideClick } from '../../../utils/customHooks';
+import { useSelector } from 'react-redux';
+
 import NotificationBox from '../../molecules/NotificationBox/NotificationBox';
-import { StyledWrapper, Header, Content } from './Notifications.styles';
-import { notificationsAnimation } from '../../../animations/animations';
-import { AppState } from '../../../store/test-store';
 import Spinner from '../../atoms/Spinner/Spinner';
+
+import { AppState } from '../../../store/store';
+import { useOutsideClick } from '../../../utils/customHooks';
+import { notificationsAnimation } from '../../../animations/animations';
+import { StyledWrapper, Header, Content, EmptyWrapper } from './Notifications.styles';
+import { Paragraph } from '../../../styles/typography/typography';
 
 interface Props {
   isOpen: boolean;
@@ -44,7 +47,9 @@ const Notifications: React.FC<Props> = ({ isOpen, setOpen }) => {
                 <NotificationBox key={index} title={notification.title} description={notification.description} createdDate={new Date(notification.createdDate)} wasOpened={notification.wasOpened} />
               ))
             ) : (
-              <p>Brak powiadomień</p>
+              <EmptyWrapper>
+                <Paragraph type={'empty'}>Brak powiadomień</Paragraph>
+              </EmptyWrapper>
             )}
           </Content>
         </>

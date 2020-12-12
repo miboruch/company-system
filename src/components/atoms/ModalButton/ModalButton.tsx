@@ -1,15 +1,11 @@
 import React from 'react';
+
 import { Button } from './ModalButton.styles';
 
 export enum ButtonType {
   Cancel = 'cancel',
   Delete = 'delete',
   Add = 'add',
-  Submit = 'submit'
-}
-
-enum Types {
-  Button = 'button',
   Submit = 'submit'
 }
 

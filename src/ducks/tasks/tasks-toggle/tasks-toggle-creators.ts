@@ -1,8 +1,8 @@
 import { History } from 'history';
-import { AppDispatch } from '../../../store/test-store';
+import { AppDispatch } from '../../../store/store';
 import { TaskInterface } from '../../../types/modelsTypes';
-import { AppState } from '../../../store/test-store';
-import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
+import { AppState } from '../../../store/store';
+import { UserRole } from '../../auth/roles/roles';
 import { setTaskInfoOpen, setSelectedTask } from './tasks-toggle';
 
 export const selectTask = (task: TaskInterface | null) => (dispatch: AppDispatch): void => {

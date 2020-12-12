@@ -2,15 +2,18 @@ import React, { useState } from 'react';
 import NumberFormat from 'react-number-format';
 import { useSelector } from 'react-redux';
 import { Formik } from 'formik';
+
 import Button from '../../atoms/Button/Button';
 import MapCoordsEdit, { CoordsEditType } from '../../organisms/MapCoordsEdit/MapCoordsEdit';
-import { AppState, useAppDispatch } from '../../../store/test-store';
+
+import { AppState, useAppDispatch } from '../../../store/store';
+import { setEditCompanyCoordsOpen } from '../../../ducks/company/company-toggle/company-toggle';
 import { Heading, StyledForm } from '../AccountSettings/AccountSettings.styles';
 import { StyledInput } from '../../../styles/compoundStyles';
 import { editCompany } from '../../../ducks/company/current-company/current-company-creators';
 import { DoubleFlexWrapper, StyledLabel } from '../../../styles/shared';
 import { CompanySchema } from '../../../validation/modelsValidation';
-import { setEditCompanyCoordsOpen } from '../../../ducks/company/company-toggle/company-toggle';
+import { AddNewParagraph } from '../../atoms/AddNewButton/AddNewButton.styles';
 
 interface DefaultValues {
   name: string;
@@ -67,7 +70,7 @@ const CompanySettings: React.FC = () => {
             <StyledInput type={'text'} name={'address'} onChange={handleChange} value={values.address} required={true} labelText={errors.address || 'Adres'} />
             <StyledInput type={'text'} name={'city'} onChange={handleChange} value={values.city} required={true} labelText={errors.city || 'Miasto'} />
             <StyledInput type={'text'} name={'country'} onChange={handleChange} value={values.country} required={true} labelText={errors.country || 'Kraj'} />
-            <p onClick={() => dispatch(setEditCompanyCoordsOpen(true))}>Edit company coords</p>
+            <AddNewParagraph style={{marginBottom: '2rem', fontSize: '15px'}} onClick={() => dispatch(setEditCompanyCoordsOpen(true))}>Edit company coords</AddNewParagraph>
             <DoubleFlexWrapper>
               <Button type={'submit'} text={'Zapisz'} />
             </DoubleFlexWrapper>

@@ -1,7 +1,8 @@
 import React from 'react';
 import { CartesianGrid, XAxis, YAxis, Tooltip, Legend, AreaChart, Area } from 'recharts';
+
 import { ChartWrapper, StyledResponsiveContainer, RowWrapper, FlexRowWrapper, StyledParagraph } from './Chart.styles';
-import {chartButtons} from '../../../utils/staticData';
+import { chartButtons } from '../../../utils/staticData';
 
 interface Props {
   data: Array<any> | null;

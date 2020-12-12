@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
+import styled from 'styled-components';
 import { Form, Formik } from 'formik';
+
+import Button from '../../atoms/Button/Button';
+
+import { ItemInterface } from '../../organisms/GenerateInvoice/GenerateInvoice';
 import { FlexWrapper } from '../../../styles/shared';
 import { StyledInput } from '../../../styles/compoundStyles';
-import styled from 'styled-components';
 import { Heading } from '../../../styles/typography/typography';
-import { ItemInterface } from '../../organisms/GenerateInvoice/GenerateInvoice';
-import Button from '../../atoms/Button/Button';
-import { Paragraph } from '../../../styles/typography/typography';
 
 const StyledHeading = styled(Heading)`
   margin: 4rem 0;

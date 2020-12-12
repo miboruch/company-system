@@ -1,18 +1,20 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { getUserCompanies } from '../../../ducks/company/companies/companies-creators';
-import { setCurrentCompany } from '../../../ducks/company/current-company/current-company-creators';
-import { AppState, useAppDispatch } from '../../../store/test-store';
-import { AddIcon, AddWrapper, SpinnerWrapper } from '../../../styles/shared';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+
 import Spinner from '../../atoms/Spinner/Spinner';
 import GridWrapper from '../../templates/GridWrapper/GridWrapper';
-import { Table, Wrapper } from '../../../pages/CompaniesPage/CompaniesPage.styles';
-import { Paragraph } from '../../../styles/typography/typography';
 import ListBox from '../../molecules/ListBox/ListBox';
 import AddCompanyController from '../../compound/AddCompany/AddCompanyController';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
+
+import { AppState, useAppDispatch } from '../../../store/store';
+import { UserRole } from '../../../ducks/auth/roles/roles';
+import { setCurrentCompany } from '../../../ducks/company/current-company/current-company-creators';
 import { setAddCompanyOpen } from '../../../ducks/company/company-toggle/company-toggle';
+import { getUserCompanies } from '../../../ducks/company/companies/companies-creators';
+import { AddIcon, AddWrapper, SpinnerWrapper } from '../../../styles/shared';
+import { Table, Wrapper } from '../../../pages/CompaniesPage/CompaniesPage.styles';
+import { Paragraph } from '../../../styles/typography/typography';
 
 const CompaniesPageContent: React.FC<RouteComponentProps<any>> = ({ history }) => {
   const dispatch = useAppDispatch();

@@ -1,9 +1,11 @@
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
+
+import MenuContextProvider from '../providers/MenuContext/MenuContext';
+import SEO from './SEO';
+
 import { theme } from '../styles/theme';
 import GlobalStyle from '../styles/GlobalStyle';
-import SEO from './SEO';
-import MenuContextProvider from '../providers/MenuContext/MenuContext';
 
 const Wrapper = styled.div`
   width: 100%;

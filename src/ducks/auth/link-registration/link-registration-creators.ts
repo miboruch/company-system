@@ -1,10 +1,10 @@
 import { RegistrationVerifyTokenResponse } from '../../../pages/RegisterFromLink/RegisterFromLink';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { baseStoreType } from '../../../store/test-store';
+import { baseStoreType } from '../../../store/store';
 import { setTokens } from '../tokens/tokens';
 import { api, companyApi } from '../../../api';
 import { setNotificationMessage } from '../../popup/popup';
-import { NotificationTypes } from '../../../types/actionTypes/toggleAcitonTypes';
+import { NotificationTypes } from '../../../types/globalTypes';
 
 interface ValidateTokenInterface {
   token: string;
@@ -13,7 +13,7 @@ interface ValidateTokenInterface {
 
 export const validateRegistrationToken = createAsyncThunk<RegistrationVerifyTokenResponse, ValidateTokenInterface, baseStoreType>(
   'link-registration/validateRegistrationToken',
-  async ({ token, setResponse }, { rejectWithValue }) => {
+  async ({ token, setResponse }, { rejectWithValue, dispatch }) => {
     try {
       const { data } = await api.post(`/auth/verify-registration-token`, { token });
 
@@ -21,6 +21,7 @@ export const validateRegistrationToken = createAsyncThunk<RegistrationVerifyToke
 
       return data;
     } catch (error) {
+      // dispatch(setNotificationMessage({ message: 'Błędna weryfikacja', notificationType: NotificationTypes.Error }));
       return rejectWithValue(error.response.statusText);
     }
   }

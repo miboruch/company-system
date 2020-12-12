@@ -2,7 +2,7 @@ import { api } from '../../../api';
 import { getUserData } from '../data/data-creators';
 import { logout } from '../logout/logout-creators';
 import { setTokens } from './tokens';
-import { AppDispatch } from '../../../store/test-store';
+import { AppDispatch } from '../../../store/store';
 import { setCompany } from '../../company/current-company/current-company';
 import { getSingleCompany } from '../../company/current-company/current-company-creators';
 

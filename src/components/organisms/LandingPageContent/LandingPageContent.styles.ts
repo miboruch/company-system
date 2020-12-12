@@ -6,6 +6,11 @@ const Content = styled.div`
   height: 100%;
   grid-area: content;
   background-color: #fff;
+
+  ${({ theme }) => theme.mq.hdReady} {
+    height: 100vh;
+    padding: 2rem;
+  }
 `;
 
 const List = styled.div`
@@ -89,7 +94,7 @@ const StatisticsHeading = styled(Heading)`
   font-size: 22px;
   font-weight: ${({ theme }) => theme.font.weight.demi};
   text-overflow: ellipsis;
-  max-width: 150px;
+  max-width: 200px;
 
   ${({ theme }) => theme.mq.hdReady} {
     margin-bottom: 1.5rem;

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+
+import Header from '../../molecules/Header/Header';
+
 import { StyledWrapper, TitleWrapper } from './GridWrapper.styles';
 import {PageNameHeading} from '../../../styles/typography/typography';
-import Header from '../../molecules/Header/Header';
 
 interface Props {
   onlyHeader?: boolean;

@@ -1,16 +1,18 @@
 import React, { useContext } from 'react';
 import DatePicker from 'react-datepicker';
 import { Formik } from 'formik';
+import { useSelector } from 'react-redux';
+
+import Button from '../../../../atoms/Button/Button';
+import MultipleDropdown from '../../../../atoms/MultipleDropdown/MultipleDropdown';
+
+import { AppState } from '../../../../../store/store';
+import { EmployeeDataInterface } from '../../../../../types/modelsTypes';
 import { HeadingWrapper, MobileCompoundTitle, StyledForm, StyledInput, Subheading, Wrapper } from '../../../../../styles/compoundStyles';
 import { DoubleFlexWrapper, StyledLabel } from '../../../../../styles/shared';
-import Button from '../../../../atoms/Button/Button';
 import { TaskDataContext } from '../../context/TaskDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { TaskInfoSchema } from '../../validation/validation';
-import { useSelector } from 'react-redux';
-import { AppState } from '../../../../../store/test-store';
-import { EmployeeDataInterface } from '../../../../../types/modelsTypes';
-import MultipleDropdown from '../../../../atoms/MultipleDropdown/MultipleDropdown';
 
 interface DefaultValues {
   name: string;
@@ -35,7 +37,6 @@ const TaskInfoPage: React.FC = () => {
   };
 
   const handleSubmit = (values: DefaultValues): void => {
-    console.log(values);
     setData({ ...data, ...values });
     setCurrentPage(PageSettingEnum.Second);
   };

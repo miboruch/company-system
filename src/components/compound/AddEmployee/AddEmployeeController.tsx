@@ -1,20 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useDispatch, useSelector } from 'react-redux';
+
 import EmployeeDataContextProvider from './context/EmployeeDataContext';
 import PageContextProvider from './context/PageContext';
-import { MainWrapper, CompoundTitle, CloseButtonWrapper, ContentWrapper, Wrapper } from '../../../styles/compoundControllerStyles';
 import CloseButton from '../../atoms/CloseButton/CloseButton';
-import { StandardCompoundTitle } from '../../../styles/compoundStyles';
 import StepList from './components/StepList/StepList';
 import AddEmployeeTemplate from './templates/AddEmployeeTemplate';
-import { PageSettingEnum } from './context/PageContext';
-import { AppState } from '../../../store/test-store';
-import { setAddNewEmployeeOpen } from '../../../ducks/employees/employees-toggle/employees-toggle';
-import { modalOpenAnimation } from '../../../animations/animations';
 import AddEmployeeHeader from './components/AddEmployeeHeader/AddEmployeeHeader';
 import SelectEmployee from './pages/SelectEmployee/SelectEmployee';
 import SalaryPage from './pages/SalaryPage/SalaryPage';
+
+import { AppState } from '../../../store/store';
+import { PageSettingEnum } from './context/PageContext';
+import { setAddNewEmployeeOpen } from '../../../ducks/employees/employees-toggle/employees-toggle';
+import { modalOpenAnimation } from '../../../animations/animations';
+import { MainWrapper, CompoundTitle, CloseButtonWrapper, ContentWrapper, Wrapper } from '../../../styles/compoundControllerStyles';
+import { StandardCompoundTitle } from '../../../styles/compoundStyles';
 
 const AddEmployeeController: React.FC = () => {
   const dispatch = useDispatch();

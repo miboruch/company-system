@@ -1,20 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useDispatch, useSelector } from 'react-redux';
+
 import TaskDataContextProvider from './context/TaskDataContext';
 import PageContextProvider from './context/PageContext';
-import { CloseButtonWrapper, CompoundTitle, ContentWrapper, MainWrapper, Wrapper } from '../../../styles/compoundControllerStyles';
 import CloseButton from '../../atoms/CloseButton/CloseButton';
 import AddTaskHeader from './components/AddTaskHeader/AddTaskHeader';
-import { StandardCompoundTitle } from '../../../styles/compoundStyles';
 import StepList from './components/StepList/StepList';
 import AddTaskTemplate from './templates/AddTaskTemplate';
-import { PageSettingEnum } from './context/PageContext';
-import { modalOpenAnimation } from '../../../animations/animations';
-import { AppState } from '../../../store/test-store';
 import TaskInfoPage from './pages/TaskInfoPage/TaskInfoPage';
 import SpecificInfoPage from './pages/SpecificInfoPage/SpecificInfoPage';
+
+import { AppState } from '../../../store/store';
+import { PageSettingEnum } from './context/PageContext';
+import { modalOpenAnimation } from '../../../animations/animations';
 import { setAddNewTaskOpen } from '../../../ducks/tasks/tasks-toggle/tasks-toggle';
+import { CloseButtonWrapper, CompoundTitle, ContentWrapper, MainWrapper, Wrapper } from '../../../styles/compoundControllerStyles';
+import { StandardCompoundTitle } from '../../../styles/compoundStyles';
 
 const AddTaskController: React.FC = () => {
   const dispatch = useDispatch();

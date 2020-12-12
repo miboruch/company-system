@@ -1,13 +1,15 @@
 import React from 'react';
 import { Formik } from 'formik';
+
 import PopupTemplate from '../../templates/PopupTemplate/PopupTemplate';
 import ModalButton, { ButtonType } from '../../atoms/ModalButton/ModalButton';
 import Input from '../../atoms/Input/Input';
+
 import { addIncome, addExpense } from '../../../ducks/finances/income-expense/income-expense-creators';
 import { ButtonWrapper, ContentWrapper } from '../../../styles/popupStyles';
 import { StyledForm, StyledInput } from './IncomeExpensePopup.styles';
 import { IncomeExpenseSchema } from '../../../validation/modelsValidation';
-import { useAppDispatch } from '../../../store/test-store';
+import { useAppDispatch } from '../../../store/store';
 
 export enum FinancePopupInterface {
   Income = 'income',

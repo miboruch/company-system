@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import { Formik } from 'formik';
 import DatePicker from 'react-datepicker';
+
+import Button from '../../../atoms/Button/Button';
 import { RegisterDataContext } from '../context/RegisterDataContext';
 import { StyledForm, Heading } from '../../../../pages/LoginPage/LoginPage.styles';
 import { FlexWrapper, StyledLabel } from '../../../../styles/shared';
-import Button from '../../../atoms/Button/Button';
 import { StyledInput } from '../../../../pages/LoginPage/LoginPage.styles';
 import { MainRegisterDataSchema } from '../validation/validation';
 

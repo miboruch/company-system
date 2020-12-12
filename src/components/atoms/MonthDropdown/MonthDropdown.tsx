@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Downshift from 'downshift';
+
+import Input from '../Input/Input';
+
+import { MonthInterface } from '../../../utils/staticData';
 import { StyledLabel } from '../../../styles/shared';
 import { Form, Menu, Item } from '../../../styles/dropdownStyles';
-import { MonthInterface } from '../../../utils/staticData';
-import Input from '../Input/Input';
 
 interface Props {
   options: MonthInterface[];

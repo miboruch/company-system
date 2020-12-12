@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { UserRole } from '../../../types/actionTypes/authenticationActionTypes';
+import { UserRole } from '../../../ducks/auth/roles/roles';
 import { adminRoutes, userRoutes } from '../../../routes/routesDefinition';
 import { LinkWrapper, StyledLink } from './Menu.styles';
-import { AppState } from '../../../store/test-store';
+import { AppState } from '../../../store/store';
 import { MenuContext } from '../../../providers/MenuContext/MenuContext';
 
 const MenuItemsRenderer: React.FC<RouteComponentProps> = ({ location }) => {

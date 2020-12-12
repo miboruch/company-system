@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { ButtonWrapper, InnerButton } from './CloseButton.styles';
 
 interface Props {

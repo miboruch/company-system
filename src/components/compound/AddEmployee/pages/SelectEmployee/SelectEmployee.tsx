@@ -1,16 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { Formik } from 'formik';
 import { useSelector } from 'react-redux';
+
+import Button from '../../../../atoms/Button/Button';
+import UserBox from '../../../../molecules/UserBox/UserBox';
+
+import { UserDataInterface } from '../../../../../types/modelsTypes';
+import { AppState } from '../../../../../store/store';
+import { removeDuplicates } from '../../../../../utils/functions';
+
 import { HeadingWrapper, MobileCompoundTitle, StyledForm, Subheading, Wrapper } from '../../../../../styles/compoundStyles';
 import { DoubleFlexWrapper } from '../../../../../styles/shared';
-import Button from '../../../../atoms/Button/Button';
-import { Formik } from 'formik';
 import { EmployeeDataContext } from '../../context/EmployeeDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
-import { UserDataInterface } from '../../../../../types/modelsTypes';
-import { AppState } from '../../../../../store/test-store';
-import UserBox from '../../../../molecules/UserBox/UserBox';
-import { removeDuplicates } from '../../../../../utils/functions';
 import { Paragraph } from '../../../../../styles/typography/typography';
 import { MainEmployeeSchema } from '../../validation/validation';
 
