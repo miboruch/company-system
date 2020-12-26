@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { DeleteIcon } from '../../../styles/iconStyles';
-import { FlexWrapper } from '../../../styles/shared';
+import { DeleteIcon } from 'styles/iconStyles';
+import { FlexWrapper } from 'styles/shared';
 import { NotificationWrapper, TextWrapper, Title, Description, NewNotificationDot, Date } from './NotificationBox.styles';
 
 interface Props {
@@ -13,12 +13,13 @@ interface Props {
 }
 
 const NotificationBox: React.FC<Props> = ({ title, description, wasOpened, createdDate, deleteCallback }) => {
+  const localCreatedDate = createdDate.toLocaleString();
   return (
     <NotificationWrapper>
       <TextWrapper>
         <Title>{title}</Title>
         <Description>{description}</Description>
-        <Date>{createdDate.toLocaleString()}</Date>
+        <Date>{localCreatedDate}</Date>
       </TextWrapper>
       <FlexWrapper>
         {!wasOpened && <NewNotificationDot />}

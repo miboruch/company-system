@@ -6,13 +6,13 @@ import { useSelector } from 'react-redux';
 
 import Button from '../../atoms/Button/Button';
 
-import { AppState } from '../../../store/store';
-import { useAppDispatch } from '../../../store/store';
-import { StyledInput } from '../../../styles/compoundStyles';
-import { DoubleFlexWrapper, StyledLabel } from '../../../styles/shared';
+import { AppState } from 'store/store';
+import { useAppDispatch } from 'store/store';
+import { StyledInput } from 'styles/compoundStyles';
+import { DoubleFlexWrapper, StyledLabel } from 'styles/shared';
 import { StyledForm, Heading } from './AccountSettings.styles';
-import { editAccount } from '../../../ducks/auth/account/account-creators';
-import { AccountSchema } from '../../../validation/modelsValidation';
+import { editAccount } from 'ducks/auth/account/account-creators';
+import { AccountSchema } from 'validation/modelsValidation';
 
 interface DefaultValues {
   email: string;

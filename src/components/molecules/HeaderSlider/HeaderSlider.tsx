@@ -3,13 +3,13 @@ import gsap from 'gsap';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { AppState } from '../../../store/store';
-import { UserRole } from '../../../ducks/auth/roles/roles';
-import { useAppDispatch } from '../../../store/store';
-import { useOutsideClick } from '../../../utils/customHooks';
-import { notificationsAnimation } from '../../../animations/animations';
-import { logout } from '../../../ducks/auth/logout/logout-creators';
-import { LogoutIcon } from '../../../styles/iconStyles';
+import { AppState } from 'store/store';
+import { UserRole } from 'ducks/auth/roles/roles';
+import { useAppDispatch } from 'store/store';
+import { useOutsideClick } from 'utils/customHooks';
+import { notificationsAnimation } from 'animations/animations';
+import { logout } from 'ducks/auth/logout/logout-creators';
+import { LogoutIcon } from 'styles/iconStyles';
 import { StyledWrapper, SliderItem, Content, Text } from './HeaderSlider.styles';
 
 interface Props {
@@ -38,13 +38,16 @@ const HeaderSlider: React.FC<ConnectedProps> = ({ history, isOpen, setOpen, isMo
     isOpen ? tl.play() : tl.reverse();
   }, [isOpen]);
 
+  const handleSliderItemClick = () => (role === UserRole.User ? history.push('/user/settings') : history.push('/admin/settings'));
+  const handleLogout = () => dispatch(logout(() => history.push('/login')));
+
   return (
     <StyledWrapper ref={wrapperRef} isMobile={!!isMobile}>
       <Content ref={contentRef}>
-        <SliderItem onClick={() => (role === UserRole.User ? history.push('/user/settings') : history.push('/admin/settings'))}>
+        <SliderItem onClick={handleSliderItemClick}>
           <Text>Ustawienia</Text>
         </SliderItem>
-        <SliderItem onClick={() => dispatch(logout(() => history.push('/login')))}>
+        <SliderItem onClick={handleLogout}>
           <Text>Wyloguj</Text>
           <LogoutIcon />
         </SliderItem>

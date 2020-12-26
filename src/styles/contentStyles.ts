@@ -62,7 +62,7 @@ const InputWrapper = styled.div`
 
 const ButtonWrapper = styled.div`
   width: 100%;
-  margin-bottom: 3rem;
+  padding-bottom: 3rem;
 `;
 
 const RowIconWrapper = styled.div`

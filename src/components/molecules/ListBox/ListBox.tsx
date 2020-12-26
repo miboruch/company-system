@@ -3,7 +3,7 @@ import React from 'react';
 import ArrowButton from '../../atoms/ArrowButton/ArrowButton';
 
 import { ContentWrapper, Name, Subparagraph, Wrapper, ValueParagraph } from './ListBox.styles';
-import { CheckedIcon, EmptyIcon, NotCheckedIcon, EditIcon } from '../../../styles/iconStyles';
+import { CheckedIcon, EmptyIcon, NotCheckedIcon, EditIcon } from 'styles/iconStyles';
 
 interface Props {
   name: string;
@@ -30,7 +30,7 @@ const ListBox: React.FC<ListBoxProps> = ({ name, topDescription, bottomDescripti
           <Subparagraph>{bottomDescription}</Subparagraph>
         </div>
       </ContentWrapper>
-      {value ? <ValueParagraph>{value}</ValueParagraph> : editCallback ? <EditIcon onClick={() => editCallback()} /> : <ArrowButton />}
+      {value ? <ValueParagraph>{value}</ValueParagraph> : editCallback ? <EditIcon onClick={editCallback} /> : <ArrowButton />}
     </Wrapper>
   );
 };

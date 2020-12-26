@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { AppState } from '../../../store/store';
+import { AppState } from 'store/store';
 import { Tile, Name, Description } from '../TaskTile/TaskTile.styles';
-import { Paragraph } from '../../../styles/typography/typography';
+import { Paragraph } from 'styles/typography/typography';
 
 interface Props {
   description: string;

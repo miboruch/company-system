@@ -5,11 +5,11 @@ import PopupTemplate from '../../templates/PopupTemplate/PopupTemplate';
 import ModalButton, { ButtonType } from '../../atoms/ModalButton/ModalButton';
 import Checkbox from '../../atoms/Checkbox/Checkbox';
 
-import { CompanyOwnersInterface } from '../../../types/modelsTypes';
-import { useAppDispatch } from '../../../store/store';
-import { Paragraph } from '../../../styles/typography/typography';
+import { CompanyOwnersInterface } from 'types/modelsTypes';
+import { useAppDispatch } from 'store/store';
+import { Paragraph } from 'styles/typography/typography';
 import { ContentWrapper, StyledForm, StyledButtonWrapper, StyledInput, RowWrapper, InputRowWrapper, StyledInfoParagraph } from './RemoveAdminPopup.styles';
-import { removeCompanyOwner } from '../../../ducks/company/company-owners/company-owners-creators';
+import { removeCompanyOwner } from 'ducks/company/company-owners/company-owners-creators';
 
 interface DefaultState {
   addEmployee: boolean;
@@ -52,7 +52,7 @@ const RemoveAdminPopup: React.FC<Props> = ({ isOpen, closePopup, companyOwnerToD
                 <StyledInput onChange={handleChange} name={'monthlyPrice'} required={false} type={'number'} labelText={'Stawka miesięczna'} disabled={!values.addEmployee || !!values.pricePerHour} />
               </InputRowWrapper>
               <StyledButtonWrapper>
-                <ModalButton onClick={() => closePopup()} buttonType={ButtonType.Cancel} text={'Zamknij'} />
+                <ModalButton onClick={closePopup} buttonType={ButtonType.Cancel} text={'Zamknij'} />
                 <ModalButton submit={true} buttonType={ButtonType.Add} text={'Akceptuj'} />
               </StyledButtonWrapper>
             </StyledForm>

@@ -4,7 +4,7 @@ import ArrowButton from '../../atoms/ArrowButton/ArrowButton';
 
 import { Name, Subparagraph } from '../ListBox/ListBox.styles';
 import { Wrapper, ContentWrapper } from './UserBox.styles';
-import { EmptyIcon } from '../../../styles/iconStyles';
+import { EmptyIcon } from 'styles/iconStyles';
 
 interface Props {
   name: string;
@@ -16,7 +16,7 @@ interface Props {
 
 const UserBox: React.FC<Props> = ({ name, topDescription, bottomDescription, callback, isActive }) => {
   return (
-    <Wrapper onClick={() => callback()} isActive={isActive}>
+    <Wrapper onClick={callback} isActive={isActive}>
       <ContentWrapper>
         <EmptyIcon />
         <div>

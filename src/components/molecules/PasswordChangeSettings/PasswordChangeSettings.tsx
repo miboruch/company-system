@@ -3,11 +3,11 @@ import { Formik } from 'formik';
 
 import Button from '../../atoms/Button/Button';
 
-import { useAppDispatch } from '../../../store/store';
-import { editPassword } from '../../../ducks/auth/account/account-creators';
+import { useAppDispatch } from 'store/store';
+import { editPassword } from 'ducks/auth/account/account-creators';
 import { Heading, StyledForm } from '../AccountSettings/AccountSettings.styles';
-import { StyledInput } from '../../../styles/compoundStyles';
-import { DoubleFlexWrapper } from '../../../styles/shared';
+import { StyledInput } from 'styles/compoundStyles';
+import { DoubleFlexWrapper } from 'styles/shared';
 
 interface DefaultValues {
   password: string;
@@ -28,6 +28,9 @@ const PasswordChangeSettings: React.FC = () => {
     dispatch(editPassword({ password, repeatedPassword }));
   };
 
+  const togglePasswordInput = () => setPasswordShown(!isPasswordShown);
+  const toggleRepeatedPasswordInput = () => setRepeatedPasswordShown(!isRepeatedPasswordShown);
+
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize={true}>
       {({ handleChange, values }) => (
@@ -36,7 +39,7 @@ const PasswordChangeSettings: React.FC = () => {
           <StyledInput
             type={isPasswordShown ? 'text' : 'password'}
             name={'password'}
-            togglePasswordInputType={() => setPasswordShown(!isPasswordShown)}
+            togglePasswordInputType={togglePasswordInput}
             isPassword={true}
             onChange={handleChange}
             value={values.password}
@@ -46,7 +49,7 @@ const PasswordChangeSettings: React.FC = () => {
           <StyledInput
             type={isRepeatedPasswordShown ? 'text' : 'password'}
             name={'repeatedPassword'}
-            togglePasswordInputType={() => setRepeatedPasswordShown(!isRepeatedPasswordShown)}
+            togglePasswordInputType={toggleRepeatedPasswordInput}
             isPassword={true}
             onChange={handleChange}
             value={values.repeatedPassword}

@@ -7,10 +7,10 @@ import SearchInput from '../../atoms/SearchInput/SearchInput';
 import ArrowButton from '../../atoms/ArrowButton/ArrowButton';
 import Notifications from '../../organisms/Notifications/Notifications';
 
-import { Direction } from '../../../types/globalTypes';
-import { AppState } from '../../../store/store';
+import { Direction } from 'types/globalTypes';
+import { AppState } from 'store/store';
 import { Circle, IconWrapper, NameParagraph, StyledHeader, UserWrapper, MobileCircle } from './Header.styles';
-import { NotificationIcon } from '../../../styles/iconStyles';
+import { NotificationIcon } from 'styles/iconStyles';
 
 interface Props {
   setFilterText?: (filterText: string) => void;
@@ -45,14 +45,14 @@ const Header: React.FC<Props> = ({ setFilterText }) => {
           </NameParagraph>
         )}
         <Circle />
-        <ArrowButton direction={Direction.Bottom} isSmaller={true} onClick={() => toggleHeaderSlider()} />
+        <ArrowButton direction={Direction.Bottom} isSmaller={true} onClick={toggleHeaderSlider} />
         <IconWrapper>
-          <NotificationIcon onClick={() => toggleNotifications()} />
+          <NotificationIcon onClick={toggleNotifications} />
         </IconWrapper>
         <Notifications isOpen={areNotificationsOpen} setOpen={setNotificationsOpen} />
         <HeaderSlider isOpen={isSliderOpen} setOpen={setSliderOpen} />
       </UserWrapper>
-      <MobileCircle onClick={() => toggleHeaderSlider()} />
+      <MobileCircle onClick={toggleHeaderSlider} />
       <HeaderSlider isOpen={isSliderOpen} setOpen={setSliderOpen} isMobile={true} />
     </StyledHeader>
   );

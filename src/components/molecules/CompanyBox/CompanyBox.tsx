@@ -19,7 +19,7 @@ const CompanyBox: React.FC<Props> = ({ name, nip, address, callback }) => {
         <Name>{name}</Name>
         <Subparagraph>{address}</Subparagraph>
       </ContentWrapper>
-      <ArrowButton onClick={() => callback()} />
+      <ArrowButton onClick={callback} />
     </Wrapper>
   );
 };

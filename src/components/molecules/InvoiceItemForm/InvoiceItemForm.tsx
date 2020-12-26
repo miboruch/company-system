@@ -5,9 +5,9 @@ import { Form, Formik } from 'formik';
 import Button from '../../atoms/Button/Button';
 
 import { ItemInterface } from '../../organisms/GenerateInvoice/GenerateInvoice';
-import { FlexWrapper } from '../../../styles/shared';
-import { StyledInput } from '../../../styles/compoundStyles';
-import { Heading } from '../../../styles/typography/typography';
+import { FlexWrapper } from 'styles/shared';
+import { StyledInput } from 'styles/compoundStyles';
+import { Heading } from 'styles/typography/typography';
 
 const StyledHeading = styled(Heading)`
   margin: 4rem 0;

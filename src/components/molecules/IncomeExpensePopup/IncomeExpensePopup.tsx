@@ -5,11 +5,11 @@ import PopupTemplate from '../../templates/PopupTemplate/PopupTemplate';
 import ModalButton, { ButtonType } from '../../atoms/ModalButton/ModalButton';
 import Input from '../../atoms/Input/Input';
 
-import { addIncome, addExpense } from '../../../ducks/finances/income-expense/income-expense-creators';
-import { ButtonWrapper, ContentWrapper } from '../../../styles/popupStyles';
+import { addIncome, addExpense } from 'ducks/finances/income-expense/income-expense-creators';
+import { ButtonWrapper, ContentWrapper } from 'styles/popupStyles';
 import { StyledForm, StyledInput } from './IncomeExpensePopup.styles';
-import { IncomeExpenseSchema } from '../../../validation/modelsValidation';
-import { useAppDispatch } from '../../../store/store';
+import { IncomeExpenseSchema } from 'validation/modelsValidation';
+import { useAppDispatch } from 'store/store';
 
 export enum FinancePopupInterface {
   Income = 'income',
@@ -40,6 +40,8 @@ const IncomeExpensePopup: React.FC<Props> = ({ type, isOpen, setOpen }) => {
       : dispatch(addExpense({ expenseValue: value, description, callback: () => setOpen(false) }));
   };
 
+  const handleClose = () => setOpen(false);
+
   return (
     <PopupTemplate isOpen={isOpen} headerText={`Dodaj ${type === FinancePopupInterface.Expense ? 'wydatek' : 'przychód'}`} isHigher={false}>
       <div>
@@ -58,7 +60,7 @@ const IncomeExpensePopup: React.FC<Props> = ({ type, isOpen, setOpen }) => {
                 <Input onChange={handleChange} name={'description'} required={true} value={values.description} type={'text'} labelText={errors.description || 'Opis'} />
               </ContentWrapper>
               <ButtonWrapper>
-                <ModalButton onClick={() => setOpen(false)} buttonType={ButtonType.Cancel} text={'Zamknij'} />
+                <ModalButton onClick={handleClose} buttonType={ButtonType.Cancel} text={'Zamknij'} />
                 <ModalButton submit={true} buttonType={ButtonType.Add} text={'Akceptuj'} />
               </ButtonWrapper>
             </StyledForm>

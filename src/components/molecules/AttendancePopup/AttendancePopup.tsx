@@ -6,13 +6,13 @@ import ModalButton, { ButtonType } from '../../atoms/ModalButton/ModalButton';
 import Input from '../../atoms/Input/Input';
 import Checkbox from '../../atoms/Checkbox/Checkbox';
 
-import { AttendanceInterface } from '../../../types/modelsTypes';
-import { useAppDispatch } from '../../../store/store';
-import { ButtonWrapper, ContentWrapper } from '../../../styles/popupStyles';
-import { CheckedIcon, NotCheckedIcon, EmptyIcon } from '../../../styles/iconStyles';
+import { AttendanceInterface } from 'types/modelsTypes';
+import { useAppDispatch } from 'store/store';
+import { ButtonWrapper, ContentWrapper } from 'styles/popupStyles';
+import { CheckedIcon, NotCheckedIcon, EmptyIcon } from 'styles/iconStyles';
 import { FlexWrapper, StyledForm, StyledParagraph, StyledFlexWrapper, InputWrapper } from './AttendancePopup.styles';
-import { addAttendance, updateAttendance } from '../../../ducks/attendance/attendance-creators';
-import { AttendanceSchema } from '../../../validation/modelsValidation';
+import { addAttendance, updateAttendance } from 'ducks/attendance/attendance-creators';
+import { AttendanceSchema } from 'validation/modelsValidation';
 
 interface Props {
   attendance: AttendanceInterface | null;
@@ -37,9 +37,9 @@ const AttendancePopup: React.FC<Props> = ({ attendance, isOpen, setOpen, date })
     setOpen(false);
     if (attendance) {
       if (attendance?.attendance) {
-        wasPresent !== null && dispatch(updateAttendance({ attendanceId: attendance.attendance._id, wasPresent: !!wasPresent, hours }));
+        wasPresent !== null && dispatch(updateAttendance({ attendanceId: attendance.attendance._id, wasPresent: wasPresent, hours }));
       } else {
-        wasPresent !== null && dispatch(addAttendance({ userId: attendance.user._id, date, wasPresent: !!wasPresent, hours }));
+        wasPresent !== null && dispatch(addAttendance({ userId: attendance.user._id, date, wasPresent: wasPresent, hours }));
       }
     }
   };

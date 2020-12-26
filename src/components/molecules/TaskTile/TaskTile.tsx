@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { AppState } from '../../../store/store';
-import { TaskInterface } from '../../../types/modelsTypes';
-import { roundTo2 } from '../../../utils/functions';
+import { AppState } from 'store/store';
+import { TaskInterface } from 'types/modelsTypes';
+import { roundTo2 } from 'utils/functions';
 import { Tile, Description, Name, IncomeWrapper, TaskIncome, TaskExpense } from './TaskTile.styles';
 
 interface Props {
@@ -13,16 +13,22 @@ interface Props {
 
 const TaskTile: React.FC<Props> = ({ task, onClick }) => {
   const { currency } = useSelector((state: AppState) => state.currency);
+
+  const header = task.isCompleted ? 'Ukończone zadanie' : 'Aktywne zadanie';
+
+  const incomeValue = task.taskIncome ? roundTo2(task.taskIncome * currency.value) : 0;
+  const expenseValue = task.taskExpense ? roundTo2(task.taskExpense * currency.value) : 0;
+
   return (
     <Tile onClick={() => !!onClick && onClick()}>
-      <Description>{task.isCompleted ? 'Ukończone zadanie' : 'Aktywne zadanie'}</Description>
+      <Description>{header}</Description>
       <Name>{task.name}</Name>
       <IncomeWrapper>
         <TaskIncome>
-          + {task.taskIncome ? roundTo2(task.taskIncome * currency.value) : 0} {currency.name}
+          + {incomeValue} {currency.name}
         </TaskIncome>
         <TaskExpense>
-          - {task.taskExpense ? roundTo2(task.taskExpense * currency.value) : 0} {currency.name}
+          - {expenseValue} {currency.name}
         </TaskExpense>
       </IncomeWrapper>
     </Tile>

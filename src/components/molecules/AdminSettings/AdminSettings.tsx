@@ -6,13 +6,13 @@ import Spinner from '../../atoms/Spinner/Spinner';
 import ListBox from '../ListBox/ListBox';
 import RemoveAdminPopup from '../RemoveAdminPopup/RemoveAdminPopup';
 
-import { CompanyOwnersInterface } from '../../../types/modelsTypes';
-import { AppState, useAppDispatch } from '../../../store/store';
-import { NotificationTypes } from '../../../types/globalTypes';
-import { setNotificationMessage } from '../../../ducks/popup/popup';
-import { getAllCompanyEmployees } from '../../../ducks/employees/employees-data/employees-data-creators';
-import { getCompanyOwners, addNewCompanyOwner } from '../../../ducks/company/company-owners/company-owners-creators';
-import { SpinnerWrapper } from '../../../styles/shared';
+import { CompanyOwnersInterface } from 'types/modelsTypes';
+import { AppState, useAppDispatch } from 'store/store';
+import { NotificationTypes } from 'types/globalTypes';
+import { setNotificationMessage } from 'ducks/popup/popup';
+import { getAllCompanyEmployees } from 'ducks/employees/employees-data/employees-data-creators';
+import { getCompanyOwners, addNewCompanyOwner } from 'ducks/company/company-owners/company-owners-creators';
+import { SpinnerWrapper } from 'styles/shared';
 import { Wrapper, ColumnWrapper, Heading } from './AdminSettings.styles';
 
 const AdminSettings: React.FC = () => {
@@ -31,9 +31,21 @@ const AdminSettings: React.FC = () => {
     dispatch(getCompanyOwners());
   }, []);
 
-  const addCompanyOwner = (userId: string) => {
+  const addCompanyOwner = (userId: string) => () => {
     dispatch(addNewCompanyOwner(userId));
   };
+
+  const listBoxCallback = (owner: CompanyOwnersInterface) => () => {
+    if (owner._id === userData?.userId) {
+      dispatch(setNotificationMessage({ message: 'Nie możesz usunąc samego siebie', notificationType: NotificationTypes.Error }));
+    } else {
+      setRemoveOpen(true);
+      setCompanyOwnerToDelete(owner);
+    }
+  };
+
+  const handleRemoveOpen = (isOpen: boolean) => () => setRemoveOpen(isOpen);
+  const handleAddNewToggle = () => setAddNewToggled(!isAddNewToggled);
 
   return (
     <Wrapper>
@@ -45,21 +57,14 @@ const AdminSettings: React.FC = () => {
         <>
           <ColumnWrapper>
             <Heading>Administratorzy</Heading>
-            <AddNewButton text={'Dodaj nowego administratora'} callback={() => setAddNewToggled(!isAddNewToggled)} />
+            <AddNewButton text={'Dodaj nowego administratora'} callback={handleAddNewToggle} />
             {companyOwners.map((owner) => (
               <ListBox
                 key={owner._id}
                 name={`${owner.name} ${owner.lastName}`}
                 topDescription={''}
                 bottomDescription={owner.email}
-                callback={() => {
-                  if (owner._id === userData?.userId) {
-                    dispatch(setNotificationMessage({ message: 'Nie możesz usunąc samego siebie', notificationType: NotificationTypes.Error }));
-                  } else {
-                    setRemoveOpen(true);
-                    setCompanyOwnerToDelete(owner);
-                  }
-                }}
+                callback={listBoxCallback(owner)}
                 isCompanyBox={false}
                 isEmpty={true}
               />
@@ -73,7 +78,7 @@ const AdminSettings: React.FC = () => {
                 name={`${employee.userId.name} ${employee.userId.name}`}
                 topDescription={new Date(employee.userId.dateOfBirth).toLocaleDateString()}
                 bottomDescription={employee.userId.email}
-                callback={() => addCompanyOwner(employee.userId._id)}
+                callback={addCompanyOwner(employee.userId._id)}
                 isCompanyBox={false}
                 isEmpty={true}
               />
@@ -81,7 +86,7 @@ const AdminSettings: React.FC = () => {
           </ColumnWrapper>
         </>
       )}
-      <RemoveAdminPopup isOpen={isRemoveOpen} closePopup={() => setRemoveOpen(false)} companyOwnerToDelete={companyOwnerToDelete} />
+      <RemoveAdminPopup isOpen={isRemoveOpen} closePopup={handleRemoveOpen(false)} companyOwnerToDelete={companyOwnerToDelete} />
     </Wrapper>
   );
 };
