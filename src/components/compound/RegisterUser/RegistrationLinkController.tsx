@@ -7,7 +7,7 @@ import PasswordPage from './pages/PasswordPage';
 import ContactDataPage from './pages/ContactDataPage';
 import RegisterDataContextProvider from './context/RegisterDataContext';
 
-import { RegistrationVerifyTokenResponse } from '../../../pages/RegisterFromLink/RegisterFromLink';
+import { RegistrationVerifyTokenResponse } from 'pages/RegisterFromLink/RegisterFromLink';
 
 interface Props {
   response: RegistrationVerifyTokenResponse;

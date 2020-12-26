@@ -11,12 +11,12 @@ import AddTaskTemplate from './templates/AddTaskTemplate';
 import TaskInfoPage from './pages/TaskInfoPage/TaskInfoPage';
 import SpecificInfoPage from './pages/SpecificInfoPage/SpecificInfoPage';
 
-import { AppState } from '../../../store/store';
+import { AppState } from 'store/store';
 import { PageSettingEnum } from './context/PageContext';
-import { modalOpenAnimation } from '../../../animations/animations';
-import { setAddNewTaskOpen } from '../../../ducks/tasks/tasks-toggle/tasks-toggle';
-import { CloseButtonWrapper, CompoundTitle, ContentWrapper, MainWrapper, Wrapper } from '../../../styles/compoundControllerStyles';
-import { StandardCompoundTitle } from '../../../styles/compoundStyles';
+import { modalOpenAnimation } from 'animations/animations';
+import { setAddNewTaskOpen } from 'ducks/tasks/tasks-toggle/tasks-toggle';
+import { CloseButtonWrapper, CompoundTitle, ContentWrapper, MainWrapper, Wrapper } from 'styles/compoundControllerStyles';
+import { StandardCompoundTitle } from 'styles/compoundStyles';
 
 const AddTaskController: React.FC = () => {
   const dispatch = useDispatch();
@@ -25,6 +25,8 @@ const AddTaskController: React.FC = () => {
   const mainWrapperRef = useRef<HTMLDivElement | null>(null);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
+
+  const handleAddNewTaskClose = () => dispatch(setAddNewTaskOpen(false));
 
   useEffect(() => {
     modalOpenAnimation(tl, mainWrapperRef, wrapperRef);
@@ -40,7 +42,7 @@ const AddTaskController: React.FC = () => {
         <MainWrapper ref={mainWrapperRef}>
           <Wrapper ref={wrapperRef}>
             <CloseButtonWrapper>
-              <CloseButton close={() => dispatch(setAddNewTaskOpen(false))} />
+              <CloseButton close={handleAddNewTaskClose} />
             </CloseButtonWrapper>
             <AddTaskHeader />
             <CompoundTitle>Nowe zadanie</CompoundTitle>

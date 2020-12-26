@@ -6,10 +6,10 @@ import { useSelector } from 'react-redux';
 import Button from '../../../../atoms/Button/Button';
 import MultipleDropdown from '../../../../atoms/MultipleDropdown/MultipleDropdown';
 
-import { AppState } from '../../../../../store/store';
-import { EmployeeDataInterface } from '../../../../../types/modelsTypes';
-import { HeadingWrapper, MobileCompoundTitle, StyledForm, StyledInput, Subheading, Wrapper } from '../../../../../styles/compoundStyles';
-import { DoubleFlexWrapper, StyledLabel } from '../../../../../styles/shared';
+import { AppState } from 'store/store';
+import { EmployeeDataInterface } from 'types/modelsTypes';
+import { HeadingWrapper, MobileCompoundTitle, StyledForm, StyledInput, Subheading, Wrapper } from 'styles/compoundStyles';
+import { DoubleFlexWrapper, StyledLabel } from 'styles/shared';
 import { TaskDataContext } from '../../context/TaskDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { TaskInfoSchema } from '../../validation/validation';

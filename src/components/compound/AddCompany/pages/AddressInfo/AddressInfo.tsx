@@ -1,15 +1,15 @@
 import React, { useContext } from 'react';
 import { Formik } from 'formik';
-import { useAppDispatch } from '../../../../../store/store';
+import { useAppDispatch } from 'store/store';
 
 import Button from '../../../../atoms/Button/Button';
 
-import { DoubleFlexWrapper } from '../../../../../styles/shared';
+import { DoubleFlexWrapper } from 'styles/shared';
 import { CompanyDataContext } from '../../context/CompanyDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
-import { HeadingWrapper, MobileCompoundTitle, StyledForm, StyledInput, Subheading, Wrapper, StyledBackParagraph } from '../../../../../styles/compoundStyles';
+import { HeadingWrapper, MobileCompoundTitle, StyledForm, StyledInput, Subheading, Wrapper, StyledBackParagraph } from 'styles/compoundStyles';
 import { AddressDataSchema } from '../../validation/validation';
-import { createNewCompany } from '../../../../../ducks/company/companies/companies-creators';
+import { createNewCompany } from 'ducks/company/companies/companies-creators';
 
 type defaultValues = {
   address: string;
@@ -47,6 +47,9 @@ const AddressInfo: React.FC = () => {
       );
     }
   };
+
+  const handlePreviousPage = () => setCurrentPage(PageSettingEnum.Second);
+
   return (
     <Formik onSubmit={handleSubmit} initialValues={initialValues} validationSchema={AddressDataSchema} validateOnChange={false} validateOnBlur={false}>
       {({ handleChange, values, errors }) => (
@@ -60,7 +63,7 @@ const AddressInfo: React.FC = () => {
             <StyledInput onChange={handleChange} name={'city'} value={values.city} required={true} type={'text'} labelText={errors.city || 'Miasto'} />
             <StyledInput onChange={handleChange} name={'country'} value={values.country} required={true} type={'text'} labelText={errors.country || 'Kraj'} />
             <DoubleFlexWrapper>
-              <StyledBackParagraph type={'back'} onClick={() => setCurrentPage(PageSettingEnum.Second)}>
+              <StyledBackParagraph type={'back'} onClick={handlePreviousPage}>
                 Wstecz
               </StyledBackParagraph>
               <Button type={'submit'} text={'Dalej'} />

@@ -4,7 +4,7 @@ import CompoundStepBox from '../../../../molecules/CompoundStepBox/CompoundStepB
 
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { ClientDataContext } from '../../context/ClientDataContext';
-import { ListWrapper } from '../../../../../styles/compoundStyles';
+import { ListWrapper } from 'styles/compoundStyles';
 import { addClientSteps } from '../../utils/AddClientSteps';
 
 const StepList: React.FC = () => {

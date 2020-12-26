@@ -6,15 +6,15 @@ import { useSelector } from 'react-redux';
 import Button from '../../../../atoms/Button/Button';
 import UserBox from '../../../../molecules/UserBox/UserBox';
 
-import { UserDataInterface } from '../../../../../types/modelsTypes';
-import { AppState } from '../../../../../store/store';
-import { removeDuplicates } from '../../../../../utils/functions';
+import { UserDataInterface } from 'types/modelsTypes';
+import { AppState } from 'store/store';
+import { removeDuplicates } from 'utils/functions';
 
-import { HeadingWrapper, MobileCompoundTitle, StyledForm, Subheading, Wrapper } from '../../../../../styles/compoundStyles';
-import { DoubleFlexWrapper } from '../../../../../styles/shared';
+import { HeadingWrapper, MobileCompoundTitle, StyledForm, Subheading, Wrapper } from 'styles/compoundStyles';
+import { DoubleFlexWrapper } from 'styles/shared';
 import { EmployeeDataContext } from '../../context/EmployeeDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
-import { Paragraph } from '../../../../../styles/typography/typography';
+import { Paragraph } from 'styles/typography/typography';
 import { MainEmployeeSchema } from '../../validation/validation';
 
 const UsersWrapper = styled.div`
@@ -62,7 +62,7 @@ const SelectEmployee: React.FC = () => {
 
   return (
     <Formik onSubmit={handleSubmit} initialValues={initialValues} validationSchema={MainEmployeeSchema} validateOnChange={false} validateOnBlur={false}>
-      {({ handleChange, values, setFieldValue }) => (
+      {({ setFieldValue }) => (
         <Wrapper>
           <StyledForm>
             <HeadingWrapper>

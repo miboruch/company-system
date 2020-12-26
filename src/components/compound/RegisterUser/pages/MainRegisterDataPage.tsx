@@ -4,9 +4,9 @@ import DatePicker from 'react-datepicker';
 
 import Button from '../../../atoms/Button/Button';
 import { RegisterDataContext } from '../context/RegisterDataContext';
-import { StyledForm, Heading } from '../../../../pages/LoginPage/LoginPage.styles';
-import { FlexWrapper, StyledLabel } from '../../../../styles/shared';
-import { StyledInput } from '../../../../pages/LoginPage/LoginPage.styles';
+import { StyledForm, Heading } from 'pages/LoginPage/LoginPage.styles';
+import { FlexWrapper, StyledLabel } from 'styles/shared';
+import { StyledInput } from 'pages/LoginPage/LoginPage.styles';
 import { MainRegisterDataSchema } from '../validation/validation';
 
 import 'react-datepicker/dist/react-datepicker.css';

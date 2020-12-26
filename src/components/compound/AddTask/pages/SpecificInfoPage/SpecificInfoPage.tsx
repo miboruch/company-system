@@ -5,13 +5,13 @@ import { useSelector } from 'react-redux';
 import Dropdown from '../../../../atoms/Dropdown/Dropdown';
 import Button from '../../../../atoms/Button/Button';
 
-import { AppState, useAppDispatch } from '../../../../../store/store';
+import { AppState, useAppDispatch } from 'store/store';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
-import { HeadingWrapper, MobileCompoundTitle, StyledBackParagraph, StyledForm, StyledInput, Subheading, Wrapper } from '../../../../../styles/compoundStyles';
-import { DoubleFlexWrapper } from '../../../../../styles/shared';
+import { HeadingWrapper, MobileCompoundTitle, StyledBackParagraph, StyledForm, StyledInput, Subheading, Wrapper } from 'styles/compoundStyles';
+import { DoubleFlexWrapper } from 'styles/shared';
 import { TaskDataContext } from '../../context/TaskDataContext';
-import { addNewTask } from '../../../../../ducks/tasks/tasks-data/task-data-creators';
-import { getCompanyClients } from '../../../../../ducks/client/client-data/client-data-creators';
+import { addNewTask } from 'ducks/tasks/tasks-data/task-data-creators';
+import { getCompanyClients } from 'ducks/client/client-data/client-data-creators';
 import { TaskSpecificInfoSchema } from '../../validation/validation';
 
 interface DefaultValues {
@@ -55,6 +55,8 @@ const SpecificInfoPage: React.FC = () => {
     }
   };
 
+  const handlePreviousPage = () => setCurrentPage(PageSettingEnum.First);
+
   useEffect(() => {
     allCompanyClients.length === 0 && dispatch(getCompanyClients());
   }, []);
@@ -77,7 +79,7 @@ const SpecificInfoPage: React.FC = () => {
             <StyledInput onChange={handleChange} name={'taskIncome'} value={values.taskIncome} required={false} type={'number'} labelText={errors.taskIncome || 'Przychód z zadania *'} />
             <StyledInput onChange={handleChange} name={'taskExpense'} value={values.taskExpense} required={false} type={'number'} labelText={errors.taskExpense || 'Wydatek na zadanie *'} />
             <DoubleFlexWrapper>
-              <StyledBackParagraph type={'back'} onClick={() => setCurrentPage(PageSettingEnum.First)}>
+              <StyledBackParagraph type={'back'} onClick={handlePreviousPage}>
                 Wstecz
               </StyledBackParagraph>
               <Button type={'submit'} text={'Dodaj'} />

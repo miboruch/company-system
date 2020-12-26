@@ -3,13 +3,13 @@ import { Formik } from 'formik';
 
 import Button from '../../../../atoms/Button/Button';
 
-import { useAppDispatch } from '../../../../../store/store';
-import { HeadingWrapper, MobileCompoundTitle, StyledBackParagraph, StyledForm, StyledInput, Subheading, Wrapper } from '../../../../../styles/compoundStyles';
-import { DoubleFlexWrapper } from '../../../../../styles/shared';
+import { useAppDispatch } from 'store/store';
+import { HeadingWrapper, MobileCompoundTitle, StyledBackParagraph, StyledForm, StyledInput, Subheading, Wrapper } from 'styles/compoundStyles';
+import { DoubleFlexWrapper } from 'styles/shared';
 import { EmployeeDataContext } from '../../context/EmployeeDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
-import { sendRegistrationMail } from '../../../../../ducks/auth/link-registration/link-registration-creators';
-import { addNewEmployee } from '../../../../../ducks/employees/employees-data/employees-data-creators';
+import { sendRegistrationMail } from 'ducks/auth/link-registration/link-registration-creators';
+import { addNewEmployee } from 'ducks/employees/employees-data/employees-data-creators';
 import { EmployeeSalarySchema } from '../../validation/validation';
 
 type DefaultValues = {
@@ -75,14 +75,10 @@ const SalaryPage: React.FC = () => {
               disabled={!!values.pricePerHour}
             />
             <DoubleFlexWrapper>
-              <StyledBackParagraph type={'back'} onClick={() => handlePageBack()}>
+              <StyledBackParagraph type={'back'} onClick={handlePageBack}>
                 Wstecz
               </StyledBackParagraph>
-              <Button
-                type={'submit'}
-                text={'Dodaj'}
-                // disabled={data.registerWithMail ? !values.email || !(values.pricePerHour && values.monthlyPrice) : !(values.pricePerHour && values.monthlyPrice)}
-              />
+              <Button type={'submit'} text={'Dodaj'} />
             </DoubleFlexWrapper>
           </StyledForm>
         </Wrapper>

@@ -4,10 +4,10 @@ import { Formik } from 'formik';
 
 import Button from '../../../../atoms/Button/Button';
 
-import { FlexWrapper, StyledLabel } from '../../../../../styles/shared';
+import { FlexWrapper, StyledLabel } from 'styles/shared';
 import { CompanyDataContext } from '../../context/CompanyDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
-import { Wrapper, StyledForm, StyledInput, MobileCompoundTitle, Subheading, HeadingWrapper } from '../../../../../styles/compoundStyles';
+import { Wrapper, StyledForm, StyledInput, MobileCompoundTitle, Subheading, HeadingWrapper } from 'styles/compoundStyles';
 import { MainCompanyDataSchema } from '../../validation/validation';
 
 type defaultValues = {
@@ -32,8 +32,6 @@ const MainCompanyInfo: React.FC = () => {
   const handleSubmit = (values: defaultValues): void => {
     setData({ ...data, ...values });
     setCurrentPage(PageSettingEnum.Second);
-    console.log(values);
-    console.log('set to context');
   };
 
   return (

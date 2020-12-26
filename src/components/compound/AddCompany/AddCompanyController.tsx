@@ -12,11 +12,11 @@ import AddressInfo from './pages/AddressInfo/AddressInfo';
 import StepList from './components/StepList/StepList';
 import CloseButton from '../../atoms/CloseButton/CloseButton';
 
-import { AppState } from '../../../store/store';
-import { setAddCompanyOpen } from '../../../ducks/company/company-toggle/company-toggle';
-import { modalOpenAnimation } from '../../../animations/animations';
-import { StandardCompoundTitle } from '../../../styles/compoundStyles';
-import { MainWrapper, CloseButtonWrapper, Wrapper, ContentWrapper, CompoundTitle } from '../../../styles/compoundControllerStyles';
+import { AppState } from 'store/store';
+import { setAddCompanyOpen } from 'ducks/company/company-toggle/company-toggle';
+import { modalOpenAnimation } from 'animations/animations';
+import { StandardCompoundTitle } from 'styles/compoundStyles';
+import { MainWrapper, CloseButtonWrapper, Wrapper, ContentWrapper, CompoundTitle } from 'styles/compoundControllerStyles';
 
 const AddCompanyController: React.FC = () => {
   const dispatch = useDispatch();
@@ -33,13 +33,15 @@ const AddCompanyController: React.FC = () => {
     isAddCompanyOpen ? tl.play() : tl.reverse();
   }, [isAddCompanyOpen]);
 
+  const handleAddCompanyClose = () => dispatch(setAddCompanyOpen(false));
+
   return (
     <CompanyDataContextProvider>
       <PageContextProvider>
         <MainWrapper ref={mainWrapperRef}>
           <Wrapper ref={wrapperRef}>
             <CloseButtonWrapper>
-              <CloseButton close={() => dispatch(setAddCompanyOpen(false))} />
+              <CloseButton close={handleAddCompanyClose} />
             </CloseButtonWrapper>
             <AddCompanyHeader />
             <CompoundTitle>Dodaj firme</CompoundTitle>

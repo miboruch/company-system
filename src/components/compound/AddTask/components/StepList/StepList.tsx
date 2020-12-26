@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import CompoundStepBox from '../../../../molecules/CompoundStepBox/CompoundStepBox';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { addTaskSteps } from '../../utils/addTaskSteps';
-import { ListWrapper } from '../../../../../styles/compoundStyles';
+import { ListWrapper } from 'styles/compoundStyles';
 import { TaskDataContext } from '../../context/TaskDataContext';
 
 const StepList: React.FC = () => {

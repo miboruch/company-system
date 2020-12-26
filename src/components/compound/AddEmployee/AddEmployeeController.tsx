@@ -11,12 +11,12 @@ import AddEmployeeHeader from './components/AddEmployeeHeader/AddEmployeeHeader'
 import SelectEmployee from './pages/SelectEmployee/SelectEmployee';
 import SalaryPage from './pages/SalaryPage/SalaryPage';
 
-import { AppState } from '../../../store/store';
+import { AppState } from 'store/store';
 import { PageSettingEnum } from './context/PageContext';
-import { setAddNewEmployeeOpen } from '../../../ducks/employees/employees-toggle/employees-toggle';
-import { modalOpenAnimation } from '../../../animations/animations';
-import { MainWrapper, CompoundTitle, CloseButtonWrapper, ContentWrapper, Wrapper } from '../../../styles/compoundControllerStyles';
-import { StandardCompoundTitle } from '../../../styles/compoundStyles';
+import { setAddNewEmployeeOpen } from 'ducks/employees/employees-toggle/employees-toggle';
+import { modalOpenAnimation } from 'animations/animations';
+import { MainWrapper, CompoundTitle, CloseButtonWrapper, ContentWrapper, Wrapper } from 'styles/compoundControllerStyles';
+import { StandardCompoundTitle } from 'styles/compoundStyles';
 
 const AddEmployeeController: React.FC = () => {
   const dispatch = useDispatch();
@@ -34,13 +34,15 @@ const AddEmployeeController: React.FC = () => {
     isAddNewOpen ? tl.play() : tl.reverse();
   }, [isAddNewOpen]);
 
+  const handleCloseAddEmployee = () => dispatch(setAddNewEmployeeOpen(false));
+
   return (
     <EmployeeDataContextProvider>
       <PageContextProvider>
         <MainWrapper ref={mainWrapperRef}>
           <Wrapper ref={wrapperRef}>
             <CloseButtonWrapper>
-              <CloseButton close={() => dispatch(setAddNewEmployeeOpen(false))} />
+              <CloseButton close={handleCloseAddEmployee} />
             </CloseButtonWrapper>
             <AddEmployeeHeader />
             <CompoundTitle>Dodaj pracownika</CompoundTitle>

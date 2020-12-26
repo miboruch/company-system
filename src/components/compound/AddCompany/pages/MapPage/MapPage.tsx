@@ -5,15 +5,15 @@ import { Map, Marker, TileLayer } from 'react-leaflet';
 import Spinner from '../../../../atoms/Spinner/Spinner';
 import Button from '../../../../atoms/Button/Button';
 
-import { Coords } from '../../../../../types/globalTypes';
-import { getLocation } from '../../../../../utils/mapFunctions';
-import { SpinnerWrapper } from '../../../../../styles/shared';
+import { Coords } from 'types/globalTypes';
+import { getLocation } from 'utils/mapFunctions';
+import { SpinnerWrapper } from 'styles/shared';
 import { markerCustomIcon } from '../../utils/customMapIcons';
 import { CompanyDataContext } from '../../context/CompanyDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
-import { StyledBackParagraph } from '../../../../../styles/compoundStyles';
-import { MobileCompoundTitle } from '../../../../../styles/compoundStyles';
-import { MapHeadingWrapper, MapWrapper, CenterBox, ButtonWrapper } from '../../../../../styles/compoundStyles';
+import { StyledBackParagraph } from 'styles/compoundStyles';
+import { MobileCompoundTitle } from 'styles/compoundStyles';
+import { MapHeadingWrapper, MapWrapper, CenterBox, ButtonWrapper } from 'styles/compoundStyles';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -35,6 +35,9 @@ const MapPage: React.FC = () => {
     setMapPositionLong(data.long);
   };
 
+  const handlePreviousPage = () => setCurrentPage(PageSettingEnum.First);
+  const handleNextPage = () => setCurrentPage(PageSettingEnum.Third);
+
   return (
     <>
       <MapHeadingWrapper>
@@ -47,7 +50,7 @@ const MapPage: React.FC = () => {
           </SpinnerWrapper>
         ) : (
           <>
-            {data.lat && data.long && <CenterBox onClick={() => handleCenterMap()}>Wyśrodkuj</CenterBox>}
+            {data.lat && data.long && <CenterBox onClick={handleCenterMap}>Wyśrodkuj</CenterBox>}
             <Map
               center={[mapPositionLat ? mapPositionLat : 52, mapPositionLong ? mapPositionLong : 20]}
               whenReady={() => setLoading(false)}
@@ -62,10 +65,10 @@ const MapPage: React.FC = () => {
               {coords.lat && coords.long && <Marker icon={markerCustomIcon} position={[coords.lat, coords.long]} />}
             </Map>
             <ButtonWrapper>
-              <StyledBackParagraph type={'back'} onClick={() => setCurrentPage(PageSettingEnum.First)}>
+              <StyledBackParagraph type={'back'} onClick={handlePreviousPage}>
                 Wstecz
               </StyledBackParagraph>
-              <Button onClick={() => setCurrentPage(PageSettingEnum.Third)} type={'button'} text={'Dalej'} disabled={!coords.lat || !coords.long} />
+              <Button onClick={handleNextPage} type={'button'} text={'Dalej'} disabled={!coords.lat || !coords.long} />
             </ButtonWrapper>
           </>
         )}

@@ -5,15 +5,15 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import Button from '../../../atoms/Button/Button';
 
-import { useAppDispatch } from '../../../../store/store';
+import { useAppDispatch } from 'store/store';
 import { RegisterDataContext } from '../context/RegisterDataContext';
 import { PageContext } from '../context/PageContext';
-import { Heading, StyledForm } from '../../../../pages/LoginPage/LoginPage.styles';
-import { Paragraph } from '../../../../styles/typography/typography';
-import { DoubleFlexWrapper, StyledLabel } from '../../../../styles/shared';
-import { register } from '../../../../ducks/auth/register/register-creators';
-import { registerFromLink } from '../../../../ducks/auth/link-registration/link-registration-creators';
-import { StyledInput } from '../../../../pages/LoginPage/LoginPage.styles';
+import { Heading, StyledForm } from 'pages/LoginPage/LoginPage.styles';
+import { Paragraph } from 'styles/typography/typography';
+import { DoubleFlexWrapper, StyledLabel } from 'styles/shared';
+import { register } from 'ducks/auth/register/register-creators';
+import { registerFromLink } from 'ducks/auth/link-registration/link-registration-creators';
+import { StyledInput } from 'pages/LoginPage/LoginPage.styles';
 import { ContactDataSchema } from '../validation/validation';
 
 type defaultValues = {
@@ -119,7 +119,7 @@ const ContactDataPage: React.FC<ConnectedProps> = ({ history, isRegistrationLink
             />
           </div>
           <DoubleFlexWrapper>
-            <Paragraph type={'back'} onClick={() => handlePageBack()}>
+            <Paragraph type={'back'} onClick={handlePageBack}>
               Wstecz
             </Paragraph>
             <Button type={'submit'} text={'Dalej'} />

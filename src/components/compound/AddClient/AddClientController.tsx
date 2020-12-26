@@ -12,11 +12,11 @@ import MainClientPage from './pages/MainClientPage/MainClientPage';
 import MapPage from './pages/MapPage/MapPage';
 import AddressPage from './pages/AddressPage/AddressPage';
 
-import { AppState } from '../../../store/store';
-import { modalOpenAnimation } from '../../../animations/animations';
-import { setAddNewClientOpen } from '../../../ducks/client/client-toggle/client-toggle';
-import { CloseButtonWrapper, CompoundTitle, ContentWrapper, MainWrapper, Wrapper } from '../../../styles/compoundControllerStyles';
-import { StandardCompoundTitle } from '../../../styles/compoundStyles';
+import { AppState } from 'store/store';
+import { modalOpenAnimation } from 'animations/animations';
+import { setAddNewClientOpen } from 'ducks/client/client-toggle/client-toggle';
+import { CloseButtonWrapper, CompoundTitle, ContentWrapper, MainWrapper, Wrapper } from 'styles/compoundControllerStyles';
+import { StandardCompoundTitle } from 'styles/compoundStyles';
 
 const AddClientController: React.FC = () => {
   const dispatch = useDispatch();
@@ -34,13 +34,15 @@ const AddClientController: React.FC = () => {
     isAddNewClientOpen ? tl.play() : tl.reverse();
   }, [isAddNewClientOpen]);
 
+  const handleAddClientClose = () => dispatch(setAddNewClientOpen(false));
+
   return (
     <ClientDataContextProvider>
       <PageContextProvider>
         <MainWrapper ref={mainWrapperRef}>
           <Wrapper ref={wrapperRef}>
             <CloseButtonWrapper>
-              <CloseButton close={() => dispatch(setAddNewClientOpen(false))} />
+              <CloseButton close={handleAddClientClose} />
             </CloseButtonWrapper>
             <AddClientHeader />
             <CompoundTitle>Dodaj klienta</CompoundTitle>

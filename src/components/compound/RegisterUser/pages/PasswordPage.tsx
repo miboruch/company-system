@@ -5,11 +5,11 @@ import { Formik } from 'formik';
 import Button from '../../../atoms/Button/Button';
 
 import { PageContext } from '../context/PageContext';
-import { Heading, StyledForm } from '../../../../pages/LoginPage/LoginPage.styles';
-import { ErrorParagraph } from '../../../../styles/typography/typography';
-import { Paragraph } from '../../../../styles/typography/typography';
-import { DoubleFlexWrapper } from '../../../../styles/shared';
-import { StyledInput } from '../../../../pages/LoginPage/LoginPage.styles';
+import { Heading, StyledForm } from 'pages/LoginPage/LoginPage.styles';
+import { ErrorParagraph } from 'styles/typography/typography';
+import { Paragraph } from 'styles/typography/typography';
+import { DoubleFlexWrapper } from 'styles/shared';
+import { StyledInput } from 'pages/LoginPage/LoginPage.styles';
 import { PasswordSchema } from '../validation/validation';
 
 type defaultValues = {
@@ -43,7 +43,7 @@ const PasswordPage: React.FC = () => {
           <StyledInput onChange={handleChange} name={'password'} value={values.password} required={true} type={'password'} labelText={errors.password || 'Hasło'} />
           <StyledInput onChange={handleChange} name={'repeatedPassword'} value={values.repeatedPassword} required={true} type={'password'} labelText={errors.repeatedPassword || 'Powtórz hasło'} />
           <DoubleFlexWrapper>
-            <Paragraph type={'back'} onClick={() => handlePageBack()}>
+            <Paragraph type={'back'} onClick={handlePageBack}>
               Wstecz
             </Paragraph>
             <Button type={'submit'} text={'Dalej'} disabled={values.password !== values.repeatedPassword} />
