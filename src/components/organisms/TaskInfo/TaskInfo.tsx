@@ -4,19 +4,19 @@ import DatePicker from 'react-datepicker';
 import { useSelector } from 'react-redux';
 import { Formik } from 'formik';
 
-import Button from '../../atoms/Button/Button';
+import Button from 'components/atoms/Button/Button';
 
-import { AppState, useAppDispatch } from '../../../store/store';
-import { ClientInterface } from '../../../types/modelsTypes';
-import { UserRole } from '../../../ducks/auth/roles/roles';
-import { setTaskMapPreviewOpen } from '../../../ducks/tasks/tasks-toggle/tasks-toggle';
-import { StyledInput } from '../../../styles/compoundStyles';
-import { Paragraph } from '../../../styles/typography/typography';
-import { ButtonWrapper, EmployeeInfoBox, HeaderWrapper, InputWrapper, RowIconWrapper, StyledForm, Title, Wrapper } from '../../../styles/contentStyles';
-import { StyledLabel } from '../../../styles/shared';
-import { CheckedIcon, DeleteIcon, EditIcon, LocationIcon, NotCheckedIcon } from '../../../styles/iconStyles';
-import { changeTaskState, editTask } from '../../../ducks/tasks/tasks-data/task-data-creators';
-import { TaskSchema } from '../../../validation/modelsValidation';
+import { AppState, useAppDispatch } from 'store/store';
+import { ClientInterface } from 'types/modelsTypes';
+import { UserRole } from 'ducks/auth/roles/roles';
+import { setTaskMapPreviewOpen } from 'ducks/tasks/tasks-toggle/tasks-toggle';
+import { StyledInput } from 'styles/compoundStyles';
+import { Paragraph } from 'styles/typography/typography';
+import { ButtonWrapper, EmployeeInfoBox, HeaderWrapper, InputWrapper, RowIconWrapper, StyledForm, Title, Wrapper } from 'styles/contentStyles';
+import { StyledLabel } from 'styles/shared';
+import { CheckedIcon, DeleteIcon, EditIcon, LocationIcon, NotCheckedIcon } from 'styles/iconStyles';
+import { changeTaskState, editTask } from 'ducks/tasks/tasks-data/task-data-creators';
+import { TaskSchema } from 'validation/modelsValidation';
 
 interface ParagraphInterface {
   isCompleted: boolean;
@@ -67,6 +67,15 @@ const TaskInfo: React.FC<Props> = ({ isEditToggled, setEditToggled, setDeleteOpe
     }
   };
 
+  const handleTaskMapPreview = () => dispatch(setTaskMapPreviewOpen(true));
+  const handleEditToggle = () => setEditToggled(!isEditToggled);
+  const handleDeleteOpen = () => setDeleteOpen(true);
+  const handleTaskStateChange = () => {
+    if (selectedTask) {
+      dispatch(changeTaskState({ taskId: selectedTask?._id, isCompleted: !selectedTask?.isCompleted }));
+    }
+  };
+
   return (
     <Wrapper>
       {!!selectedTask && (
@@ -78,11 +87,11 @@ const TaskInfo: React.FC<Props> = ({ isEditToggled, setEditToggled, setDeleteOpe
                 <Title>{selectedTask.name}</Title>
                 <RowIconWrapper>
                   {selectedTask?.isCompleted ? <CheckedIcon /> : <NotCheckedIcon />}
-                  {selectedTask.clientId && <LocationIcon onClick={() => dispatch(setTaskMapPreviewOpen(true))} />}
+                  {selectedTask.clientId && <LocationIcon onClick={handleTaskMapPreview} />}
                   {role === UserRole.Admin && (
                     <>
-                      <EditIcon onClick={() => setEditToggled(!isEditToggled)} />
-                      <DeleteIcon onClick={() => setDeleteOpen(true)} />
+                      <EditIcon onClick={handleEditToggle} />
+                      <DeleteIcon onClick={handleDeleteOpen} />
                     </>
                   )}
                 </RowIconWrapper>
@@ -91,7 +100,7 @@ const TaskInfo: React.FC<Props> = ({ isEditToggled, setEditToggled, setDeleteOpe
                 <Paragraph type={'subparagraph'}>Data zadania do wykonania: {new Date(selectedTask.date).toLocaleDateString()}</Paragraph>
                 <Paragraph type={'subparagraph'}>{selectedTask.description}</Paragraph>
                 {role === UserRole.Admin && (
-                  <ColoredParagraph isCompleted={selectedTask?.isCompleted} onClick={() => dispatch(changeTaskState({ taskId: selectedTask?._id, isCompleted: !selectedTask?.isCompleted }))}>
+                  <ColoredParagraph isCompleted={selectedTask?.isCompleted} onClick={handleTaskStateChange}>
                     Oznacz jako {selectedTask?.isCompleted ? 'niewykonane' : 'wykonane'}
                   </ColoredParagraph>
                 )}

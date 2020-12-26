@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
 import gsap from 'gsap';
 import { useSelector } from 'react-redux';
 
@@ -8,14 +7,14 @@ import CloseButton from '../../atoms/CloseButton/CloseButton';
 import Spinner from '../../atoms/Spinner/Spinner';
 import MonthDropdown from '../../atoms/MonthDropdown/MonthDropdown';
 
-import { EmployeeDataInterface } from '../../../types/modelsTypes';
-import { AppState, useAppDispatch } from '../../../store/store';
-import { MonthInterface, months } from '../../../utils/staticData';
-import { modalOpenAnimation } from '../../../animations/animations';
-import { SpinnerWrapper } from '../../../styles/shared';
-import { getEmployeeHours, getEmployeeSalary } from '../../../ducks/employees/employees-data/employees-data-creators';
-import { CloseButtonWrapper } from '../../../styles/compoundControllerStyles';
-import { Heading, Paragraph } from '../../../styles/typography/typography';
+import { EmployeeDataInterface } from 'types/modelsTypes';
+import { AppState, useAppDispatch } from 'store/store';
+import { MonthInterface, months } from 'utils/staticData';
+import { modalOpenAnimation } from 'animations/animations';
+import { SpinnerWrapper } from 'styles/shared';
+import { getEmployeeHours, getEmployeeSalary } from 'ducks/employees/employees-data/employees-data-creators';
+import { CloseButtonWrapper } from 'styles/compoundControllerStyles';
+import { Heading, Paragraph } from 'styles/typography/typography';
 import { StyledWrapper, Box, ListWrapper, ContentWrapper, StyledHeading, TextWrapper, Span } from './AdminStatistics.styles';
 
 interface Props {
@@ -42,6 +41,8 @@ const AdminStatistics: React.FC<Props> = ({ isOpen, setOpen }) => {
       dispatch(getEmployeeHours({ userId: selectedEmployee.userId._id, monthIndex: selectedMonth ? selectedMonth.index : currentMonthIndex, setHours: setUserHours }));
     }
   }, [selectedEmployee?.userId, selectedMonth]);
+
+  const selectedEmployeeSalary = selectedEmployee?.pricePerHour ? `${selectedEmployee.pricePerHour} zł/h` : `${selectedEmployee?.monthlyPrice} miesięcznie`;
 
   useEffect(() => {
     modalOpenAnimation(tl, mainWrapperRef, wrapperRef);
@@ -83,7 +84,7 @@ const AdminStatistics: React.FC<Props> = ({ isOpen, setOpen }) => {
               </SpinnerWrapper>
             ) : (
               <>
-                <Paragraph type={'text'}>Zarobki {selectedEmployee?.pricePerHour ? `${selectedEmployee.pricePerHour} zł/h` : `${selectedEmployee?.monthlyPrice} miesięcznie`}</Paragraph>
+                <Paragraph type={'text'}>Zarobki {selectedEmployeeSalary}</Paragraph>
                 <Paragraph type={'text'}>
                   Ilość przepracowanych godzin: <Span>{userHours}</Span>
                 </Paragraph>

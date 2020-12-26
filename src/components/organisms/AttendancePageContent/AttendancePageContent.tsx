@@ -10,15 +10,15 @@ import AttendanceInfo from '../AttendanceInfo/AttendanceInfo';
 import AttendancePopup from '../../molecules/AttendancePopup/AttendancePopup';
 import ListBox from '../../molecules/ListBox/ListBox';
 
-import { AttendanceInterface } from '../../../types/modelsTypes';
-import { AppState, useAppDispatch } from '../../../store/store';
-import { listAnimation } from '../../../animations/animations';
-import { selectAttendance } from '../../../ducks/attendance/attendance-toggle/attendance-toggle-creators';
-import { setAttendanceInfoOpen, setDate } from '../../../ducks/attendance/attendance-toggle/attendance-toggle';
-import { isEmpty } from '../../../utils/functions';
-import { getSingleDayAttendance } from '../../../ducks/attendance/attendance-data/attendance-data-creators';
-import { StyledLabel } from '../../../styles/shared';
-import { SpinnerWrapper } from '../../../styles/shared';
+import { AttendanceInterface } from 'types/modelsTypes';
+import { AppState, useAppDispatch } from 'store/store';
+import { listAnimation } from 'animations/animations';
+import { selectAttendance } from 'ducks/attendance/attendance-toggle/attendance-toggle-creators';
+import { setAttendanceInfoOpen, setDate } from 'ducks/attendance/attendance-toggle/attendance-toggle';
+import { isEmpty } from 'utils/functions';
+import { getSingleDayAttendance } from 'ducks/attendance/attendance-data/attendance-data-creators';
+import { StyledLabel } from 'styles/shared';
+import { SpinnerWrapper } from 'styles/shared';
 import { ListWrapper, List, DatePickerWrapper } from './AttendancePageContent.styles';
 
 const AttendancePageContent: React.FC = () => {
@@ -37,6 +37,13 @@ const AttendancePageContent: React.FC = () => {
     return dayAttendance.filter((attendance) => `${attendance.user.name} ${attendance.user.lastName}`.toLowerCase().includes(filterText.toLowerCase()));
   };
 
+  const handleAttendanceInfoClose = () => dispatch(setAttendanceInfoOpen(false));
+  const handleSelectAttendance = (attendance: AttendanceInterface) => () => dispatch(selectAttendance(attendance));
+  const editAttendanceCallback = (attendance: AttendanceInterface) => () => {
+    setSelectedAttendance(attendance);
+    setAttendanceOpen(true);
+  };
+
   useEffect(() => {
     listAnimation(tl, listRef, isAttendanceLoading);
   }, [isAttendanceLoading]);
@@ -49,7 +56,7 @@ const AttendancePageContent: React.FC = () => {
     <GridWrapper mobilePadding={false} pageName={'Lista obecności'} setFilterText={setFilterText}>
       {isAttendanceLoading ? (
         <SpinnerWrapper>
-          <Spinner />{' '}
+          <Spinner />
         </SpinnerWrapper>
       ) : (
         <>
@@ -68,16 +75,13 @@ const AttendancePageContent: React.FC = () => {
                   isCompanyBox={false}
                   isEmpty={isEmpty(attendance.attendance)}
                   isChecked={!isEmpty(attendance.attendance) && attendance.attendance?.wasPresent}
-                  editCallback={() => {
-                    setSelectedAttendance(attendance);
-                    setAttendanceOpen(true);
-                  }}
-                  callback={() => dispatch(selectAttendance(attendance))}
+                  editCallback={editAttendanceCallback(attendance)}
+                  callback={handleSelectAttendance(attendance)}
                 />
               ))}
             </List>
           </ListWrapper>
-          <ContentTemplate isOpen={isAttendanceInfoOpen} close={() => dispatch(setAttendanceInfoOpen(false))}>
+          <ContentTemplate isOpen={isAttendanceInfoOpen} close={handleAttendanceInfoClose}>
             <AttendanceInfo />
           </ContentTemplate>
         </>

@@ -4,10 +4,10 @@ import { useSelector } from 'react-redux';
 import Spinner from '../../atoms/Spinner/Spinner';
 import WeekAttendanceComponent from '../../molecules/WeekAttendanceComponent/WeekAttendanceComponent';
 
-import { AppState } from '../../../store/store';
-import { Paragraph } from '../../../styles/typography/typography';
-import { Wrapper, HeaderWrapper, EmployeeInfoBox, Title } from '../../../styles/contentStyles';
-import { SpinnerWrapper } from '../../../styles/shared';
+import { AppState } from 'store/store';
+import { Paragraph } from 'styles/typography/typography';
+import { Wrapper, HeaderWrapper, EmployeeInfoBox, Title } from 'styles/contentStyles';
+import { SpinnerWrapper } from 'styles/shared';
 
 const AttendanceInfo: React.FC = () => {
   const { weekAttendance, isContentLoading } = useSelector((state: AppState) => state.attendance.weekAttendanceData);
@@ -30,7 +30,6 @@ const AttendanceInfo: React.FC = () => {
             <EmployeeInfoBox>
               <Paragraph type={'subparagraph'}>Email: {selectedAttendance.user.email}</Paragraph>
               <Paragraph type={'subparagraph'}>{selectedAttendance.user.phoneNumber}</Paragraph>
-              {/*<SubParagraph>{selectedEmployee.userId.phoneNumber}</SubParagraph>*/}
             </EmployeeInfoBox>
             {weekAttendance && <WeekAttendanceComponent weekAttendance={weekAttendance} />}
           </>

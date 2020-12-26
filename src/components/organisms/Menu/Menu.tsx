@@ -2,12 +2,12 @@ import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
-import MenuItemsRenderer from './MenuItemsRenderer';
+import MenuItemsRenderer from 'components/organisms/Menu/MenuItemsRenderer';
 
-import { AppState, useAppDispatch } from '../../../store/store';
-import { UserRole } from '../../../ducks/auth/roles/roles';
-import { changeUserRoleTo } from '../../../ducks/auth/roles/roles-creators';
-import { MenuContext } from '../../../providers/MenuContext/MenuContext';
+import { AppState, useAppDispatch } from 'store/store';
+import { UserRole } from 'ducks/auth/roles/roles';
+import { changeUserRoleTo } from 'ducks/auth/roles/roles-creators';
+import { MenuContext } from 'providers/MenuContext/MenuContext';
 import { CompanyName, MenuItemsWrapper, MenuWrapper, RedirectPanel, StyledMenuSvg, ArrowIcon, ArrowWrapper, RedirectText } from './Menu.styles';
 
 const Menu: React.FC<RouteComponentProps> = ({ history }) => {
@@ -16,7 +16,9 @@ const Menu: React.FC<RouteComponentProps> = ({ history }) => {
   const { role } = useSelector((state: AppState) => state.auth.roles);
   const { isMenuOpen } = useContext(MenuContext);
 
-  const changeRole = () => {
+  const changePanelTo = `Przejdź do panelu ${role === UserRole.Admin ? 'użytkownika' : 'administratora'}`;
+
+  const handleChangeRole = () => {
     if (role === UserRole.Admin) {
       dispatch(changeUserRoleTo(UserRole.User, () => history.push('/user/companies')));
     } else {
@@ -32,8 +34,8 @@ const Menu: React.FC<RouteComponentProps> = ({ history }) => {
       </MenuItemsWrapper>
       <RedirectPanel>
         <StyledMenuSvg />
-        <RedirectText>Przejdź do panelu {role === UserRole.Admin ? 'użytkownika' : 'administratora'}</RedirectText>
-        <ArrowWrapper onClick={() => changeRole()}>
+        <RedirectText>{changePanelTo}</RedirectText>
+        <ArrowWrapper onClick={handleChangeRole}>
           <ArrowIcon />
         </ArrowWrapper>
       </RedirectPanel>

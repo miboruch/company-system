@@ -2,15 +2,15 @@ import React from 'react';
 import { Formik } from 'formik';
 import { useSelector } from 'react-redux';
 
-import Button from '../../atoms/Button/Button';
+import Button from 'components/atoms/Button/Button';
 
-import { AppState, useAppDispatch } from '../../../store/store';
-import { StyledInput } from '../../../styles/compoundStyles';
-import { Paragraph } from '../../../styles/typography/typography';
-import { Wrapper, StyledForm, HeaderWrapper, EmployeeInfoBox, Title, InputWrapper } from '../../../styles/contentStyles';
-import { updateEmployeeSalary } from '../../../ducks/employees/employees-data/employees-data-creators';
-import { DeleteIcon } from '../../../styles/iconStyles';
-import { EmployeeSchema } from '../../../validation/modelsValidation';
+import { AppState, useAppDispatch } from 'store/store';
+import { StyledInput } from 'styles/compoundStyles';
+import { Paragraph } from 'styles/typography/typography';
+import { Wrapper, StyledForm, HeaderWrapper, EmployeeInfoBox, Title, InputWrapper } from 'styles/contentStyles';
+import { updateEmployeeSalary } from 'ducks/employees/employees-data/employees-data-creators';
+import { DeleteIcon } from 'styles/iconStyles';
+import { EmployeeSchema } from 'validation/modelsValidation';
 
 interface InitialValues {
   hourSalary?: number;
@@ -34,6 +34,8 @@ const EmployeeInfo: React.FC<Props> = ({ setDeleteOpen }) => {
     dispatch(updateEmployeeSalary({ pricePerHour: hourSalary, monthlyPrice: monthlySalary }));
   };
 
+  const handleDeleteOpen = () => setDeleteOpen(true);
+
   return (
     <Wrapper>
       {!!selectedEmployee && (
@@ -45,7 +47,7 @@ const EmployeeInfo: React.FC<Props> = ({ setDeleteOpen }) => {
                 <Title>
                   {selectedEmployee.userId.name} {selectedEmployee.userId.lastName}
                 </Title>
-                <DeleteIcon onClick={() => setDeleteOpen(true)} />
+                <DeleteIcon onClick={handleDeleteOpen} />
               </HeaderWrapper>
               <EmployeeInfoBox>
                 <Paragraph type={'subparagraph'}>Data urodzenia: {new Date(selectedEmployee.userId.dateOfBirth).toLocaleDateString()}</Paragraph>

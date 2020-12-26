@@ -11,13 +11,13 @@ interface Props {
   setOpen: (isOpen: boolean) => void;
   headerText: string;
   text: string;
-  callback: () => void;
+  callback?: () => void;
 }
 
 const DeletePopup: React.FC<Props> = ({ isOpen, setOpen, headerText, text, callback }) => {
   const handleModalClick = () => {
     setOpen(false);
-    callback();
+    callback && callback();
   };
 
   const handleClose = () => setOpen(false);

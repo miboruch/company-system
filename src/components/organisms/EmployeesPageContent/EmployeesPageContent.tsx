@@ -2,22 +2,22 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useSelector } from 'react-redux';
 
-import GridWrapper from '../../templates/GridWrapper/GridWrapper';
-import Spinner from '../../atoms/Spinner/Spinner';
-import EmployeeInfo from '../EmployeeInfo/EmployeeInfo';
-import DeletePopup from '../../molecules/DeletePopup/DeletePopup';
-import AddEmployeeController from '../../compound/AddEmployee/AddEmployeeController';
-import ListBox from '../../molecules/ListBox/ListBox';
-import ContentTemplate from '../../templates/ContentTemplate/ContentTemplate';
+import GridWrapper from 'components/templates/GridWrapper/GridWrapper';
+import Spinner from 'components/atoms/Spinner/Spinner';
+import EmployeeInfo from 'components/organisms/EmployeeInfo/EmployeeInfo';
+import DeletePopup from 'components/molecules/DeletePopup/DeletePopup';
+import AddEmployeeController from 'components/compound/AddEmployee/AddEmployeeController';
+import ListBox from 'components/molecules/ListBox/ListBox';
+import ContentTemplate from 'components/templates/ContentTemplate/ContentTemplate';
 
-import { EmployeeDataInterface } from '../../../types/modelsTypes';
-import { AppState, useAppDispatch } from '../../../store/store';
-import { listAnimation } from '../../../animations/animations';
-import { selectEmployee } from '../../../ducks/employees/employees-toggle/employees-toggle-creators';
-import { setEmployeeInfoOpen, setAddNewEmployeeOpen } from '../../../ducks/employees/employees-toggle/employees-toggle';
-import { Paragraph } from '../../../styles/typography/typography';
-import { SpinnerWrapper, List, AddIcon, AddWrapper } from '../../../styles/shared';
-import { getAllCompanyEmployees } from '../../../ducks/employees/employees-data/employees-data-creators';
+import { EmployeeDataInterface } from 'types/modelsTypes';
+import { AppState, useAppDispatch } from 'store/store';
+import { listAnimation } from 'animations/animations';
+import { selectEmployee } from 'ducks/employees/employees-toggle/employees-toggle-creators';
+import { setEmployeeInfoOpen, setAddNewEmployeeOpen } from 'ducks/employees/employees-toggle/employees-toggle';
+import { Paragraph } from 'styles/typography/typography';
+import { SpinnerWrapper, List, AddIcon, AddWrapper } from 'styles/shared';
+import { getAllCompanyEmployees } from 'ducks/employees/employees-data/employees-data-creators';
 
 const EmployeesPageContent: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -30,6 +30,9 @@ const EmployeesPageContent: React.FC = () => {
   const filterByEmployeeName = (filterText: string, allEmployees: EmployeeDataInterface[]): EmployeeDataInterface[] => {
     return allEmployees.filter((employee) => `${employee.userId.name} ${employee.userId.lastName}`.toLowerCase().includes(filterText.toLowerCase()));
   };
+
+  const handleEmployeeInfoClose = () => dispatch(setEmployeeInfoOpen(false));
+  const handleAddEmployeeOpen = () => dispatch(setAddNewEmployeeOpen(true));
 
   useEffect(() => {
     listAnimation(tl, listRef, areEmployeesLoading);
@@ -64,12 +67,12 @@ const EmployeesPageContent: React.FC = () => {
                   isCompanyBox={false}
                 />
               ))}
-              <AddWrapper onClick={() => dispatch(setAddNewEmployeeOpen(true))}>
+              <AddWrapper onClick={handleAddEmployeeOpen}>
                 <AddIcon />
                 <Paragraph type={'add'}>Dodaj pracownika</Paragraph>
               </AddWrapper>
             </List>
-            <ContentTemplate isOpen={isEmployeeInfoOpen} close={() => dispatch(setEmployeeInfoOpen(false))}>
+            <ContentTemplate isOpen={isEmployeeInfoOpen} close={handleEmployeeInfoClose}>
               <EmployeeInfo setDeleteOpen={setDeleteOpen} />
             </ContentTemplate>
             <DeletePopup
@@ -77,7 +80,6 @@ const EmployeesPageContent: React.FC = () => {
               setOpen={setDeleteOpen}
               headerText={'Usuń pracownika'}
               text={`${selectedEmployee?.userId.name} ${selectedEmployee?.userId.lastName}`}
-              callback={() => console.log('delete employee')}
             />
             <AddEmployeeController />
           </>

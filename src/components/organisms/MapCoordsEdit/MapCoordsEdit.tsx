@@ -1,52 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
 import * as Leaflet from 'leaflet';
 import gsap from 'gsap';
 import { useSelector } from 'react-redux';
 import { Map, Marker, TileLayer } from 'react-leaflet';
 
-import Button from '../../atoms/Button/Button';
-import Spinner from '../../atoms/Spinner/Spinner';
-import CloseButton from '../../atoms/CloseButton/CloseButton';
+import Button from 'components/atoms/Button/Button';
+import Spinner from 'components/atoms/Spinner/Spinner';
+import CloseButton from 'components/atoms/CloseButton/CloseButton';
 
-import { AppState, useAppDispatch } from '../../../store/store';
-import { modalOpenAnimation } from '../../../animations/animations';
-import { ButtonWrapper, CenterBox, MapWrapper } from '../../../styles/compoundStyles';
-import { markerCustomIcon } from '../../compound/AddCompany/utils/customMapIcons';
-import { SpinnerWrapper } from '../../../styles/shared';
-import { CloseButtonWrapper } from '../../../styles/compoundControllerStyles';
-import { editCompanyCoords } from '../../../ducks/company/current-company/current-company-creators';
-import { editClientCoords } from '../../../ducks/client/client-creators';
-
-const StyledWrapper = styled.div`
-  position: fixed;
-  width: 100%;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  display: grid;
-  place-items: center;
-  z-index: 1500;
-  background-color: ${({ theme }) => theme.colors.blurBackground};
-`;
-
-const Box = styled.div`
-  width: 100%;
-  height: 100%;
-  background-color: #fff;
-  overflow: hidden;
-  position: relative;
-
-  ${({ theme }) => theme.mq.hdReady} {
-    width: 80%;
-    height: 80%;
-    border-radius: 30px;
-  }
-`;
-
-const StyledMapWrapper = styled(MapWrapper)`
-  height: 100%;
-`;
+import { AppState, useAppDispatch } from 'store/store';
+import { modalOpenAnimation } from 'animations/animations';
+import { ButtonWrapper, CenterBox } from 'styles/compoundStyles';
+import { markerCustomIcon } from 'components/compound/AddCompany/utils/customMapIcons';
+import { SpinnerWrapper } from 'styles/shared';
+import { CloseButtonWrapper } from 'styles/compoundControllerStyles';
+import { editCompanyCoords } from 'ducks/company/current-company/current-company-creators';
+import { editClientCoords } from 'ducks/client/client-creators';
+import { StyledWrapper, Box, StyledMapWrapper } from './MapCoordsEdit.styles';
 
 export enum CoordsEditType {
   Company = 'company',
@@ -120,7 +90,7 @@ const MapCoordsEdit: React.FC<Props> = ({ isOpen, closeMap, lat, long, type }) =
             </SpinnerWrapper>
           ) : (
             <>
-              {updatedLat && updatedLong && <CenterBox onClick={() => handleCenterMap()}>Wyśrodkuj</CenterBox>}
+              {updatedLat && updatedLong && <CenterBox onClick={handleCenterMap}>Wyśrodkuj</CenterBox>}
               <Map
                 center={[mapPositionLat ? mapPositionLat : updatedLat, mapPositionLong ? mapPositionLong : updatedLong]}
                 whenReady={() => setLoading(false)}
@@ -138,7 +108,7 @@ const MapCoordsEdit: React.FC<Props> = ({ isOpen, closeMap, lat, long, type }) =
               </Map>
               {type !== CoordsEditType.View && (
                 <ButtonWrapper>
-                  <Button onClick={() => handleSubmit()} type={'button'} text={'Dalej'} />
+                  <Button onClick={handleSubmit} type={'button'} text={'Dalej'} />
                 </ButtonWrapper>
               )}
             </>

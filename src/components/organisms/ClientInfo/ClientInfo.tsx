@@ -4,14 +4,14 @@ import { Formik } from 'formik';
 
 import Button from '../../atoms/Button/Button';
 
-import { AppState } from '../../../store/store';
-import { setEditClientCoordsOpen } from '../../../ducks/client/client-toggle/client-toggle';
-import { Paragraph } from '../../../styles/typography/typography';
-import { StyledInput } from '../../../styles/compoundStyles';
-import { DeleteIcon, EditIcon, LocationIcon } from '../../../styles/iconStyles';
-import { editClient } from '../../../ducks/client/client-creators';
-import { ClientSchema } from '../../../validation/modelsValidation';
-import { ButtonWrapper, EmployeeInfoBox, HeaderWrapper, InputWrapper, RowIconWrapper, StyledForm, Title, Wrapper } from '../../../styles/contentStyles';
+import { AppState } from 'store/store';
+import { setEditClientCoordsOpen } from 'ducks/client/client-toggle/client-toggle';
+import { Paragraph } from 'styles/typography/typography';
+import { StyledInput } from 'styles/compoundStyles';
+import { DeleteIcon, EditIcon, LocationIcon } from 'styles/iconStyles';
+import { editClient } from 'ducks/client/client-creators';
+import { ClientSchema } from 'validation/modelsValidation';
+import { ButtonWrapper, EmployeeInfoBox, HeaderWrapper, InputWrapper, RowIconWrapper, StyledForm, Title, Wrapper } from 'styles/contentStyles';
 
 interface InitialValues {
   name: string;
@@ -52,6 +52,8 @@ const ClientInfo: React.FC<Props> = ({ isEditToggled, setEditToggled, setDeleteO
     }
   };
 
+  const handleEditCoordsOpen = () => dispatch(setEditClientCoordsOpen(true));
+
   return (
     <Wrapper>
       {!!selectedClient && (
@@ -62,7 +64,7 @@ const ClientInfo: React.FC<Props> = ({ isEditToggled, setEditToggled, setDeleteO
               <HeaderWrapper>
                 <Title>{values.name}</Title>
                 <RowIconWrapper>
-                  <LocationIcon onClick={() => dispatch(setEditClientCoordsOpen(true))} />
+                  <LocationIcon onClick={handleEditCoordsOpen} />
                   <EditIcon onClick={() => setEditToggled(!isEditToggled)} />
                   <DeleteIcon onClick={() => setDeleteOpen(true)} />
                 </RowIconWrapper>

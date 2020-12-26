@@ -4,7 +4,7 @@ import gsap from 'gsap';
 import ArrowButton from '../../atoms/ArrowButton/ArrowButton';
 
 import { ContentWrapper, ArrowAbsoluteWrapper } from './ContentTemplate.styles';
-import { Direction } from '../../../types/globalTypes';
+import { Direction } from 'types/globalTypes';
 
 interface Props {
   children: React.ReactNode;

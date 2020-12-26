@@ -3,15 +3,15 @@ import gsap from 'gsap';
 import { Formik } from 'formik';
 import { useSelector } from 'react-redux';
 
-import CloseButton from '../../atoms/CloseButton/CloseButton';
-import InvoiceItem from '../../molecules/InvoiceItemForm/InvoiceItemForm';
-import Button from '../../atoms/Button/Button';
+import CloseButton from 'components/atoms/CloseButton/CloseButton';
+import InvoiceItem from 'components/molecules/InvoiceItemForm/InvoiceItemForm';
+import Button from 'components/atoms/Button/Button';
 
-import { AppState, useAppDispatch } from '../../../store/store';
-import { modalOpenAnimation } from '../../../animations/animations';
-import { StyledInput } from '../../../styles/compoundStyles';
-import { Paragraph } from '../../../styles/typography/typography';
-import { generateInvoice } from '../../../ducks/invoice/invoice-creators';
+import { AppState, useAppDispatch } from 'store/store';
+import { modalOpenAnimation } from 'animations/animations';
+import { StyledInput } from 'styles/compoundStyles';
+import { Paragraph } from 'styles/typography/typography';
+import { generateInvoice } from 'ducks/invoice/invoice-creators';
 import { Wrapper, Box, StyledForm, FormContentWrapper, ColumnWrapper, CloseButtonWrapper, StyledHeading } from './GenerateInvoice.styles';
 
 export interface ItemInterface {
@@ -35,8 +35,6 @@ interface Props {
 
 const GenerateInvoice: React.FC<Props> = ({ isOpen, setOpen }) => {
   const dispatch = useAppDispatch();
-  const { currentCompany } = useSelector((state: AppState) => state.company.currentCompany);
-  const { token } = useSelector((state: AppState) => state.auth.tokens);
   const backgroundRef = useRef<HTMLDivElement | null>(null);
   const boxRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));

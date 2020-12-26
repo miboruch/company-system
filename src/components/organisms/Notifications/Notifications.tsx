@@ -2,14 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useSelector } from 'react-redux';
 
-import NotificationBox from '../../molecules/NotificationBox/NotificationBox';
-import Spinner from '../../atoms/Spinner/Spinner';
+import NotificationBox from 'components/molecules/NotificationBox/NotificationBox';
+import Spinner from 'components/atoms/Spinner/Spinner';
 
-import { AppState } from '../../../store/store';
-import { useOutsideClick } from '../../../utils/customHooks';
-import { notificationsAnimation } from '../../../animations/animations';
+import { AppState } from 'store/store';
+import { useOutsideClick } from 'utils/customHooks';
+import { notificationsAnimation } from 'animations/animations';
 import { StyledWrapper, Header, Content, EmptyWrapper } from './Notifications.styles';
-import { Paragraph } from '../../../styles/typography/typography';
+import { Paragraph } from 'styles/typography/typography';
 
 interface Props {
   isOpen: boolean;

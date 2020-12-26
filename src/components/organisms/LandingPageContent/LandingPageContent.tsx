@@ -3,28 +3,28 @@ import gsap from 'gsap';
 import { useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
-import GridWrapper from '../../templates/GridWrapper/GridWrapper';
-import TaskTile from '../../molecules/TaskTile/TaskTile';
-import Chart from '../../molecules/Chart/Chart';
-import AttendanceList from '../AttendanceList/AttendanceList';
-import AttendancePopup from '../../molecules/AttendancePopup/AttendancePopup';
-import AdminStatistics from '../AdminStatistics/AdminStatistics';
-import BarChart from '../../molecules/BarChart/BarChart';
-import InformationBox from '../../molecules/InformationBox/InformationBox';
+import GridWrapper from 'components/templates/GridWrapper/GridWrapper';
+import TaskTile from 'components/molecules/TaskTile/TaskTile';
+import Chart from 'components/molecules/Chart/Chart';
+import AttendanceList from 'components/organisms/AttendanceList/AttendanceList';
+import AttendancePopup from 'components/molecules/AttendancePopup/AttendancePopup';
+import AdminStatistics from 'components/organisms/AdminStatistics/AdminStatistics';
+import BarChart from 'components/molecules/BarChart/BarChart';
+import InformationBox from 'components/molecules/InformationBox/InformationBox';
 
-import { AppState, useAppDispatch } from '../../../store/store';
-import { AttendanceInterface, IncomeDataInterface } from '../../../types/modelsTypes';
-import { UserRole } from '../../../ducks/auth/roles/roles';
-import { contentAnimation } from '../../../animations/animations';
-import { redirectToTask } from '../../../ducks/tasks/tasks-toggle/tasks-toggle-creators';
-import { ContentGridWrapper } from '../../../styles/HomePageContentGridStyles';
-import { getSingleDayAttendance } from '../../../ducks/attendance/attendance-data/attendance-data-creators';
-import { getCompanyTasks, getCompletedTasks, getEmployeeTasks, getTasksInTimePeriod, TaskPeriodInterface } from '../../../ducks/tasks/tasks-data/task-data-creators';
-import { getIncomeExpenseInTimePeriod } from '../../../ducks/finances/income-expense/income-expense-creators';
-import { ArrowIcon } from '../../../styles/iconStyles';
-import { getAllCompanyEmployees } from '../../../ducks/employees/employees-data/employees-data-creators';
+import { AppState, useAppDispatch } from 'store/store';
+import { AttendanceInterface, IncomeDataInterface, TaskInterface } from 'types/modelsTypes';
+import { UserRole } from 'ducks/auth/roles/roles';
+import { contentAnimation } from 'animations/animations';
+import { redirectToTask } from 'ducks/tasks/tasks-toggle/tasks-toggle-creators';
+import { ContentGridWrapper } from 'styles/HomePageContentGridStyles';
+import { getSingleDayAttendance } from 'ducks/attendance/attendance-data/attendance-data-creators';
+import { getCompanyTasks, getCompletedTasks, getEmployeeTasks, getTasksInTimePeriod, TaskPeriodInterface } from 'ducks/tasks/tasks-data/task-data-creators';
+import { getIncomeExpenseInTimePeriod } from 'ducks/finances/income-expense/income-expense-creators';
+import { ArrowIcon } from 'styles/iconStyles';
+import { getAllCompanyEmployees } from 'ducks/employees/employees-data/employees-data-creators';
 import { Content, InfoBoxWrapper, InfoWrapper, StatisticsHeading, TileWrapper } from './LandingPageContent.styles';
-import { getAllAppUsers } from '../../../ducks/users/all-users-creators';
+import { getAllAppUsers } from 'ducks/users/all-users-creators';
 
 const LandingPageContent: React.FC<RouteComponentProps<any>> = ({ history }) => {
   const dispatch = useAppDispatch();
@@ -34,7 +34,6 @@ const LandingPageContent: React.FC<RouteComponentProps<any>> = ({ history }) => 
   const { companyEmployeesCounter } = useSelector((state: AppState) => state.employees.employeesData);
   const { singleDayAttendance } = useSelector((state: AppState) => state.attendance.attendanceData);
 
-  const [text, setText] = useState<string>('');
   const [data, setData] = useState<Array<IncomeDataInterface> | null>(null);
   const [taskData, setTaskData] = useState<Array<TaskPeriodInterface> | null>(null);
   const [selectedAttendance, setSelectedAttendance] = useState<AttendanceInterface | null>(null);
@@ -54,9 +53,8 @@ const LandingPageContent: React.FC<RouteComponentProps<any>> = ({ history }) => 
     role === UserRole.User && employeeData && dispatch(getEmployeeTasks());
   }, [employeeData]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setText(e.target.value);
-  };
+  const handleStatisticsOpen = () => setStatisticsOpen(true);
+  const handleTaskClick = (task: TaskInterface) => () => dispatch(redirectToTask(history, task));
 
   useEffect(() => {
     role === UserRole.Admin ? dispatch(getIncomeExpenseInTimePeriod({ daysBack, setData })) : dispatch(getTasksInTimePeriod({ daysBack, setData: setTaskData }));
@@ -72,11 +70,10 @@ const LandingPageContent: React.FC<RouteComponentProps<any>> = ({ history }) => 
   return (
     <GridWrapper mobilePadding={true} onlyHeader={true} pageName={'Home'}>
       <Content>
-        {/*TODO: make another grid in this component - only hdReady resolutions */}
         <ContentGridWrapper ref={contentRef}>
           <TileWrapper>
             {allCompanyTasks.slice(0, 3).map((task) => (
-              <TaskTile key={task._id} task={task} onClick={() => dispatch(redirectToTask(history, task))} />
+              <TaskTile key={task._id} task={task} onClick={handleTaskClick(task)} />
             ))}
           </TileWrapper>
           {role === UserRole.Admin ? (
@@ -98,7 +95,7 @@ const LandingPageContent: React.FC<RouteComponentProps<any>> = ({ history }) => 
             <InformationBox title={'Pracownicy'} value={companyEmployeesCounter} areaName={'employees'} chartAnimationDelay={0} />
             <InformationBox title={'Wykonane zadania (30d)'} value={completedTasks} areaName={'attendance'} chartAnimationDelay={800} />
           </InfoBoxWrapper>
-          <InfoWrapper onClick={() => setStatisticsOpen(true)}>
+          <InfoWrapper onClick={handleStatisticsOpen}>
             <StatisticsHeading>Zobacz statystyki pracowników</StatisticsHeading>
             <ArrowIcon />
           </InfoWrapper>

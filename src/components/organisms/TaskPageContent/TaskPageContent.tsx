@@ -2,23 +2,23 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useSelector } from 'react-redux';
 
-import GridWrapper from '../../templates/GridWrapper/GridWrapper';
-import Spinner from '../../atoms/Spinner/Spinner';
-import ListBox from '../../molecules/ListBox/ListBox';
-import ContentTemplate from '../../templates/ContentTemplate/ContentTemplate';
-import TaskInfo from '../TaskInfo/TaskInfo';
-import DeletePopup from '../../molecules/DeletePopup/DeletePopup';
-import AddTaskController from '../../compound/AddTask/AddTaskController';
-import MapCoordsEdit, { CoordsEditType } from '../MapCoordsEdit/MapCoordsEdit';
+import GridWrapper from 'components/templates/GridWrapper/GridWrapper';
+import Spinner from 'components/atoms/Spinner/Spinner';
+import ListBox from 'components/molecules/ListBox/ListBox';
+import ContentTemplate from 'components/templates/ContentTemplate/ContentTemplate';
+import TaskInfo from 'components/organisms/TaskInfo/TaskInfo';
+import DeletePopup from 'components/molecules/DeletePopup/DeletePopup';
+import AddTaskController from 'components/compound/AddTask/AddTaskController';
+import MapCoordsEdit, { CoordsEditType } from 'components/organisms/MapCoordsEdit/MapCoordsEdit';
 
-import { TaskInterface } from '../../../types/modelsTypes';
-import { AppState, useAppDispatch } from '../../../store/store';
-import { selectTask } from '../../../ducks/tasks/tasks-toggle/tasks-toggle-creators';
-import { setAddNewTaskOpen, setTaskInfoOpen, setTaskMapPreviewOpen } from '../../../ducks/tasks/tasks-toggle/tasks-toggle';
-import { listAnimation } from '../../../animations/animations';
-import { deleteTask, getCompanyTasks } from '../../../ducks/tasks/tasks-data/task-data-creators';
-import { Paragraph } from '../../../styles/typography/typography';
-import { SpinnerWrapper, List, AddIcon, AddWrapper } from '../../../styles/shared';
+import { TaskInterface } from 'types/modelsTypes';
+import { AppState, useAppDispatch } from 'store/store';
+import { selectTask } from 'ducks/tasks/tasks-toggle/tasks-toggle-creators';
+import { setAddNewTaskOpen, setTaskInfoOpen, setTaskMapPreviewOpen } from 'ducks/tasks/tasks-toggle/tasks-toggle';
+import { listAnimation } from 'animations/animations';
+import { deleteTask, getCompanyTasks } from 'ducks/tasks/tasks-data/task-data-creators';
+import { Paragraph } from 'styles/typography/typography';
+import { SpinnerWrapper, List, AddIcon, AddWrapper } from 'styles/shared';
 
 const TaskPageContent: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -31,6 +31,12 @@ const TaskPageContent: React.FC = () => {
   const filterByTaskName = (filterText: string, allTasks: TaskInterface[]): TaskInterface[] => {
     return allTasks.filter((task) => task.name.toLowerCase().includes(filterText.toLowerCase()));
   };
+
+  const handleSelectTask = (task: TaskInterface) => () => dispatch(selectTask(task));
+  const handleCloseTaskMapPreview = () => dispatch(setTaskMapPreviewOpen(false));
+  const handleAddNewTaskOpen = () => dispatch(setAddNewTaskOpen(true));
+  const handleTaskInfoClose = () => dispatch(setTaskInfoOpen(false));
+  const handleDeleteTask = (id: string) => dispatch(deleteTask(id));
 
   useEffect(() => {
     listAnimation(tl, listRef, areTasksLoading);
@@ -62,15 +68,15 @@ const TaskPageContent: React.FC = () => {
                     bottomDescription={task.description}
                     isCompanyBox={false}
                     isChecked={task.isCompleted}
-                    callback={() => dispatch(selectTask(task))}
+                    callback={handleSelectTask(task)}
                   />
                 ))}
-                <AddWrapper onClick={() => dispatch(setAddNewTaskOpen(true))}>
+                <AddWrapper onClick={handleAddNewTaskOpen}>
                   <AddIcon />
                   <Paragraph type={'add'}>Dodaj zadanie</Paragraph>
                 </AddWrapper>
               </List>
-              <ContentTemplate isOpen={isTaskInfoOpen} close={() => dispatch(setTaskInfoOpen(false))}>
+              <ContentTemplate isOpen={isTaskInfoOpen} close={handleTaskInfoClose}>
                 <TaskInfo isEditToggled={isEditToggled} setDeleteOpen={setDeleteOpen} setEditToggled={setEditToggled} />
               </ContentTemplate>
               <DeletePopup
@@ -78,7 +84,7 @@ const TaskPageContent: React.FC = () => {
                 setOpen={setDeleteOpen}
                 headerText={'Usuń zadanie'}
                 text={`${selectedTask?.name}`}
-                callback={() => selectedTask?._id && dispatch(deleteTask(selectedTask._id))}
+                callback={() => selectedTask && handleDeleteTask(selectedTask._id)}
               />
               <AddTaskController />
             </>
@@ -86,13 +92,7 @@ const TaskPageContent: React.FC = () => {
         }
       />
       {selectedTask?.clientId && (
-        <MapCoordsEdit
-          isOpen={isTaskMapPreviewOpen}
-          closeMap={() => dispatch(setTaskMapPreviewOpen(false))}
-          lat={selectedTask?.clientId.lat}
-          long={selectedTask?.clientId.long}
-          type={CoordsEditType.View}
-        />
+        <MapCoordsEdit isOpen={isTaskMapPreviewOpen} closeMap={handleCloseTaskMapPreview} lat={selectedTask?.clientId.lat} long={selectedTask?.clientId.long} type={CoordsEditType.View} />
       )}
     </>
   );

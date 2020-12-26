@@ -9,7 +9,7 @@ interface Props {
   name: string;
   topDescription: string | Date;
   bottomDescription: string;
-  callback: () => void;
+  callback?: () => void;
   isCompanyBox: boolean;
   isEmpty?: boolean;
   isChecked?: boolean;
@@ -21,7 +21,7 @@ export type ListBoxProps = Props;
 
 const ListBox: React.FC<ListBoxProps> = ({ name, topDescription, bottomDescription, callback, isEmpty, isChecked, isCompanyBox, value, editCallback }) => {
   return (
-    <Wrapper onClick={() => callback()}>
+    <Wrapper onClick={() => callback && callback()}>
       <ContentWrapper>
         {!isCompanyBox && (isEmpty ? <EmptyIcon /> : isChecked ? <CheckedIcon /> : <NotCheckedIcon />)}
         <div>
