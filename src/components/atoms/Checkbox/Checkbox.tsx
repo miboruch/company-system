@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { StyledLabel } from '../../../styles/shared';
+import { StyledLabel } from 'styles/shared';
 import { StyledCheckbox, Wrapper } from './Checkbox.styles';
 
 interface Props {

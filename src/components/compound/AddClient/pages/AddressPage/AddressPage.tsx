@@ -4,13 +4,13 @@ import { Formik } from 'formik';
 
 import Button from '../../../../atoms/Button/Button';
 
-import { HeadingWrapper, MobileCompoundTitle, StyledForm, StyledInput, Subheading, Wrapper } from '../../../../../styles/compoundStyles';
-import { Paragraph } from '../../../../../styles/typography/typography';
-import { DoubleFlexWrapper } from '../../../../../styles/shared';
+import { Paragraph } from 'styles/typography/typography';
+import { DoubleFlexWrapper } from 'styles/shared';
 import { ClientDataContext } from '../../context/ClientDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
-import { addNewClient } from '../../../../../ducks/client/client-creators';
+import { addNewClient } from 'ducks/client/client-creators';
 import { AddressDataSchema } from '../../validation/validation';
+import { HeadingWrapper, MobileCompoundTitle, StyledForm, StyledInput, Subheading, Wrapper } from 'styles/compoundStyles';
 
 type defaultValues = {
   address: string;
@@ -36,6 +36,8 @@ const AddressPage: React.FC = () => {
     }
   };
 
+  const handlePreviousPage = () => setCurrentPage(PageSettingEnum.Second);
+
   return (
     <Formik onSubmit={handleSubmit} initialValues={initialValues} validationSchema={AddressDataSchema} validateOnChange={false} validateOnBlur={false}>
       {({ handleChange, values, errors }) => (
@@ -49,7 +51,7 @@ const AddressPage: React.FC = () => {
             <StyledInput onChange={handleChange} name={'city'} value={values.city} required={true} type={'text'} labelText={errors.city || 'Miasto'} />
             <StyledInput onChange={handleChange} name={'country'} value={values.country} required={true} type={'text'} labelText={errors.country || 'Kraj'} />
             <DoubleFlexWrapper>
-              <Paragraph type={'back'} onClick={() => setCurrentPage(PageSettingEnum.Second)}>
+              <Paragraph type={'back'} onClick={handlePreviousPage}>
                 Wstecz
               </Paragraph>
               <Button type={'submit'} text={'Dalej'} />

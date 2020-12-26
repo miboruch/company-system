@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { InputWrapper, StyledLabel, StyledInput } from './Input.styles';
-import { ShowPasswordIcon } from '../../../styles/iconStyles';
+import { ShowPasswordIcon } from 'styles/iconStyles';
 
 interface Props {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;

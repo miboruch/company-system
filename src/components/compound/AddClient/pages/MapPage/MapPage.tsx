@@ -5,13 +5,13 @@ import { Map, Marker, TileLayer } from 'react-leaflet';
 import Spinner from '../../../../atoms/Spinner/Spinner';
 import Button from '../../../../atoms/Button/Button';
 
-import { Coords } from '../../../../../types/globalTypes';
-import { getLocation } from '../../../../../utils/mapFunctions';
+import { Coords } from 'types/globalTypes';
+import { getLocation } from 'utils/mapFunctions';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
-import { SpinnerWrapper } from '../../../../../styles/shared';
+import { SpinnerWrapper } from 'styles/shared';
 import { markerCustomIcon } from '../../../AddCompany/utils/customMapIcons';
 import { ClientDataContext } from '../../context/ClientDataContext';
-import { ButtonWrapper, CenterBox, MapHeadingWrapper, MapWrapper, MobileCompoundTitle, StyledBackParagraph } from '../../../../../styles/compoundStyles';
+import { ButtonWrapper, CenterBox, MapHeadingWrapper, MapWrapper, MobileCompoundTitle, StyledBackParagraph } from 'styles/compoundStyles';
 
 const MapPage: React.FC = () => {
   const { data, setData } = useContext(ClientDataContext);
@@ -37,6 +37,13 @@ const MapPage: React.FC = () => {
     setCurrentPage(PageSettingEnum.Third);
   };
 
+  const handleMapClick = (e: Leaflet.LeafletMouseEvent) => {
+    setCoords({ lat: e.latlng.lat, long: e.latlng.lng });
+    setData({ ...data, lat: e.latlng.lat, long: e.latlng.lng });
+  };
+
+  const handlePreviousPage = () => setCurrentPage(PageSettingEnum.First);
+
   return (
     <>
       <MapHeadingWrapper>
@@ -49,25 +56,22 @@ const MapPage: React.FC = () => {
           </SpinnerWrapper>
         ) : (
           <>
-            {data.lat && data.long && <CenterBox onClick={() => handleCenterMap()}>Wyśrodkuj</CenterBox>}
+            {data.lat && data.long && <CenterBox onClick={handleCenterMap}>Wyśrodkuj</CenterBox>}
             <Map
               center={[mapPositionLat ? mapPositionLat : 52, mapPositionLong ? mapPositionLong : 20]}
               whenReady={() => setLoading(false)}
               zoom={mapPositionLat && mapPositionLong ? 13 : 5}
               zoomControl={false}
-              onClick={(e: Leaflet.LeafletMouseEvent) => {
-                setCoords({ lat: e.latlng.lat, long: e.latlng.lng });
-                setData({ ...data, lat: e.latlng.lat, long: e.latlng.lng });
-              }}
+              onClick={(e: Leaflet.LeafletMouseEvent) => handleMapClick(e)}
             >
               <TileLayer attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
               {coords.lat && coords.long && <Marker icon={markerCustomIcon} position={[coords.lat, coords.long]} />}
             </Map>
             <ButtonWrapper>
-              <StyledBackParagraph type={'back'} onClick={() => setCurrentPage(PageSettingEnum.First)}>
+              <StyledBackParagraph type={'back'} onClick={handlePreviousPage}>
                 Wstecz
               </StyledBackParagraph>
-              <Button onClick={() => handleSubmit()} type={'button'} text={'Dodaj'} disabled={!coords.lat || !coords.long} />
+              <Button onClick={handleSubmit} type={'button'} text={'Dodaj'} disabled={!coords.lat || !coords.long} />
             </ButtonWrapper>
           </>
         )}

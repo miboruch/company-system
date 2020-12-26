@@ -6,8 +6,8 @@ import Button from '../../../../atoms/Button/Button';
 
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { ClientDataContext } from '../../context/ClientDataContext';
-import { FlexWrapper, StyledLabel } from '../../../../../styles/shared';
-import { HeadingWrapper, MobileCompoundTitle, StyledForm, StyledInput, Subheading, Wrapper } from '../../../../../styles/compoundStyles';
+import { FlexWrapper, StyledLabel } from 'styles/shared';
+import { HeadingWrapper, MobileCompoundTitle, StyledForm, StyledInput, Subheading, Wrapper } from 'styles/compoundStyles';
 import { MainClientDataSchema } from '../../validation/validation';
 
 type defaultValues = {

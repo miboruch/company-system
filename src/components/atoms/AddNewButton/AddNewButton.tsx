@@ -9,7 +9,7 @@ interface Props {
 
 const AddNewButton: React.FC<Props> = ({ text, callback }) => {
   return (
-    <RowWrapper onClick={() => callback()}>
+    <RowWrapper onClick={callback}>
       <AddButton>+</AddButton>
       <AddNewParagraph>{text}</AddNewParagraph>
     </RowWrapper>

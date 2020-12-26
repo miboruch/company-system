@@ -45,6 +45,8 @@ const CompanySettings: React.FC = () => {
     dispatch(editCompany({ name, email, nip, phoneNumber, address, city, country }));
   };
 
+  const handleCoordsEditOpen = (isOpen: boolean) => () => setEditCompanyCoordsOpen(isOpen);
+
   return (
     <>
       <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize={true} validationSchema={CompanySchema} validateOnBlur={false} validateOnChange={false}>
@@ -70,16 +72,16 @@ const CompanySettings: React.FC = () => {
             <StyledInput type={'text'} name={'address'} onChange={handleChange} value={values.address} required={true} labelText={errors.address || 'Adres'} />
             <StyledInput type={'text'} name={'city'} onChange={handleChange} value={values.city} required={true} labelText={errors.city || 'Miasto'} />
             <StyledInput type={'text'} name={'country'} onChange={handleChange} value={values.country} required={true} labelText={errors.country || 'Kraj'} />
-            <AddNewParagraph style={{marginBottom: '2rem', fontSize: '15px'}} onClick={() => dispatch(setEditCompanyCoordsOpen(true))}>Edit company coords</AddNewParagraph>
+            <AddNewParagraph style={{ marginBottom: '2rem', fontSize: '15px' }} onClick={handleCoordsEditOpen(true)}>
+              Edit company coords
+            </AddNewParagraph>
             <DoubleFlexWrapper>
               <Button type={'submit'} text={'Zapisz'} />
             </DoubleFlexWrapper>
           </StyledForm>
         )}
       </Formik>
-      {currentCompany && (
-        <MapCoordsEdit isOpen={isEditCompanyCoordsOpen} closeMap={() => dispatch(setEditCompanyCoordsOpen(false))} lat={currentCompany.lat} long={currentCompany.long} type={CoordsEditType.Company} />
-      )}
+      {currentCompany && <MapCoordsEdit isOpen={isEditCompanyCoordsOpen} closeMap={handleCoordsEditOpen(false)} lat={currentCompany.lat} long={currentCompany.long} type={CoordsEditType.Company} />}
     </>
   );
 };

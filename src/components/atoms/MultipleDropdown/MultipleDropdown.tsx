@@ -3,11 +3,11 @@ import Downshift, { ControllerStateAndHelpers } from 'downshift';
 
 import Input from '../Input/Input';
 
-import { EmployeeDataInterface } from '../../../types/modelsTypes';
+import { EmployeeDataInterface } from 'types/modelsTypes';
 import { TaskDataContext } from '../../compound/AddTask/context/TaskDataContext';
-import { Menu, Item, Form } from '../../../styles/dropdownStyles';
-import { StyledLabel } from '../../../styles/shared';
-import { Paragraph } from '../../../styles/typography/typography';
+import { Menu, Item, Form } from 'styles/dropdownStyles';
+import { StyledLabel } from 'styles/shared';
+import { Paragraph } from 'styles/typography/typography';
 import { StyledFlexWrapper, UserBox } from './MultipleDropdown.styles';
 
 const changeHandler = (
@@ -24,12 +24,12 @@ const changeHandler = (
   };
 };
 
-function removeSelectedItemByIndex(index: number, selectedItems: any, setSelectedItems: any, onSelectionItemsChange: any) {
+const removeSelectedItemByIndex = (index: number, selectedItems: any, setSelectedItems: any, onSelectionItemsChange: any) => () => {
   const temp = [...selectedItems];
   temp.splice(index, 1);
   setSelectedItems(temp);
   onSelectionItemsChange(temp);
-}
+};
 
 interface Props {
   items: EmployeeDataInterface[];
@@ -61,24 +61,13 @@ const MultipleDropdown: React.FC<Props> = ({ items, labelText, onSelectionItemsC
                     <Paragraph type={'text'} style={{ marginRight: '2rem', marginBottom: 0 }}>
                       {value.userId.name} {value.userId.lastName}
                     </Paragraph>
-                    <p onClick={() => removeSelectedItemByIndex(index, selectedItems, setSelectedItems, onSelectionItemsChange)}>X</p>
+                    <p onClick={removeSelectedItemByIndex(index, selectedItems, setSelectedItems, onSelectionItemsChange)}>X</p>
                   </UserBox>
                 );
               })}
             </StyledFlexWrapper>
             <StyledLabel {...getLabelProps()}>{labelText}</StyledLabel>
             <Input {...getInputProps()} type='text' />
-            {/*{selectedItem || selectedItems.length > 0 ? (*/}
-            {/*  <Paragraph*/}
-            {/*    onClick={() => {*/}
-            {/*      setSelectedItems([]);*/}
-            {/*      clearSelection();*/}
-            {/*    }}*/}
-            {/*  >*/}
-            {/*    Wyczyść*/}
-            {/*  </Paragraph>*/}
-            {/*) : null}*/}
-
             <Menu {...getMenuProps()} isOpen={isOpen}>
               {items
                 .filter((item) => !selectedItems.find(({ _id }) => _id === item._id) && inputValue && `${item.userId.name} ${item.userId.lastName}`.includes(inputValue))

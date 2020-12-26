@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { Direction } from '../../../types/globalTypes';
+import { Direction } from 'types/globalTypes';
 import { StyledArrowButton } from './ArrowButton.styles';
 
 interface Props {
   onClick?: () => void;
   direction?: Direction;
   isHidden?: boolean;
-  isSmaller?: boolean
+  isSmaller?: boolean;
 }
 
 const ArrowButton: React.FC<Props> = ({ onClick, direction, isHidden, isSmaller }) => {

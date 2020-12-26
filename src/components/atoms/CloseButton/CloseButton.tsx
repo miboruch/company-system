@@ -8,7 +8,7 @@ interface Props {
 
 const CloseButton: React.FC<Props> = ({ close }) => {
   return (
-    <ButtonWrapper onClick={() => close()}>
+    <ButtonWrapper onClick={close}>
       <InnerButton />
     </ButtonWrapper>
   );

@@ -3,9 +3,9 @@ import Downshift from 'downshift';
 
 import Input from '../Input/Input';
 
-import { MonthInterface } from '../../../utils/staticData';
-import { StyledLabel } from '../../../styles/shared';
-import { Form, Menu, Item } from '../../../styles/dropdownStyles';
+import { MonthInterface } from 'utils/staticData';
+import { StyledLabel } from 'styles/shared';
+import { Form, Menu, Item } from 'styles/dropdownStyles';
 
 interface Props {
   options: MonthInterface[];
