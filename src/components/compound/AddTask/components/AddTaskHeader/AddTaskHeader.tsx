@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import { useDispatch } from 'react-redux';
 
-import ArrowButton from '../../../../atoms/ArrowButton/ArrowButton';
-import CloseButton from '../../../../atoms/CloseButton/CloseButton';
+import ArrowButton from 'components/atoms/ArrowButton/ArrowButton';
+import CloseButton from 'components/atoms/CloseButton/CloseButton';
+
 import { Direction } from 'types/globalTypes';
 import { setAddNewTaskOpen } from 'ducks/tasks/tasks-toggle/tasks-toggle';
 import { PageContext } from '../../context/PageContext';

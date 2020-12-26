@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Downshift, { ControllerStateAndHelpers } from 'downshift';
 
-import Input from '../Input/Input';
+import Input from 'components/atoms/Input/Input';
 
 import { EmployeeDataInterface } from 'types/modelsTypes';
 import { TaskDataContext } from '../../compound/AddTask/context/TaskDataContext';

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Formik } from 'formik';
 
-import PopupTemplate from '../../templates/PopupTemplate/PopupTemplate';
-import ModalButton, { ButtonType } from '../../atoms/ModalButton/ModalButton';
-import Checkbox from '../../atoms/Checkbox/Checkbox';
+import PopupTemplate from 'components/templates/PopupTemplate/PopupTemplate';
+import Checkbox from 'components/atoms/Checkbox/Checkbox';
+import ModalButton, { ButtonType } from 'components/atoms/ModalButton/ModalButton';
 
 import { CompanyOwnersInterface } from 'types/modelsTypes';
 import { useAppDispatch } from 'store/store';

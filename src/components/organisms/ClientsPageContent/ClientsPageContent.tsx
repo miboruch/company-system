@@ -2,14 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useSelector } from 'react-redux';
 
-import GridWrapper from '../../templates/GridWrapper/GridWrapper';
-import Spinner from '../../atoms/Spinner/Spinner';
-import ListBox from '../../molecules/ListBox/ListBox';
-import ContentTemplate from '../../templates/ContentTemplate/ContentTemplate';
-import ClientInfo from '../ClientInfo/ClientInfo';
-import AddClientController from '../../compound/AddClient/AddClientController';
-import DeletePopup from '../../molecules/DeletePopup/DeletePopup';
-import MapCoordsEdit, { CoordsEditType } from '../MapCoordsEdit/MapCoordsEdit';
+import GridWrapper from 'components/templates/GridWrapper/GridWrapper';
+import Spinner from 'components/atoms/Spinner/Spinner';
+import ListBox from 'components/molecules/ListBox/ListBox';
+import ContentTemplate from 'components/templates/ContentTemplate/ContentTemplate';
+import ClientInfo from 'components/organisms/ClientInfo/ClientInfo';
+import AddClientController from 'components/compound/AddClient/AddClientController';
+import DeletePopup from 'components/molecules/DeletePopup/DeletePopup';
+import MapCoordsEdit, { CoordsEditType } from 'components/organisms/MapCoordsEdit/MapCoordsEdit';
 
 import { ClientInterface } from 'types/modelsTypes';
 import { AppState, useAppDispatch } from 'store/store';
@@ -35,7 +35,7 @@ const ClientsPageContent: React.FC = () => {
     return allClients.filter((client) => client.name.toLowerCase().includes(filterText.toLowerCase()));
   };
 
-  const handleSelectClient = (client: ClientInterface) => () =>  dispatch(selectClient(client));
+  const handleSelectClient = (client: ClientInterface) => () => dispatch(selectClient(client));
 
   useEffect(() => {
     listAnimation(tl, listRef);

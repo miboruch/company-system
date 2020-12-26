@@ -1,6 +1,6 @@
 import React from 'react';
 
-import TinyLineChart from '../TinyLineChart/TinyLineChart';
+import TinyLineChart from 'components/molecules/TinyLineChart/TinyLineChart';
 
 import { UserIcon } from 'styles/iconStyles';
 import { Wrapper, RowWrapper, TitleParagraph, Value } from './InformationBox.styles';

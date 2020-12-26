@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ArrowButton from '../../atoms/ArrowButton/ArrowButton';
+import ArrowButton from 'components/atoms/ArrowButton/ArrowButton';
 
 import { ContentWrapper, Name, Subparagraph, Wrapper } from './CompanyBox.styles';
 

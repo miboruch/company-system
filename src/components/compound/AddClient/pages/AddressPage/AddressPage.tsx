@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 
-import Button from '../../../../atoms/Button/Button';
+import Button from 'components/atoms/Button/Button';
 
 import { Paragraph } from 'styles/typography/typography';
 import { DoubleFlexWrapper } from 'styles/shared';

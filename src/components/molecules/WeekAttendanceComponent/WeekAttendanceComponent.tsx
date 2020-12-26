@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import ArrowButton from '../../atoms/ArrowButton/ArrowButton';
+import ArrowButton from 'components/atoms/ArrowButton/ArrowButton';
 
 import { WeekAttendance } from 'types/modelsTypes';
 import { AppState, useAppDispatch } from 'store/store';

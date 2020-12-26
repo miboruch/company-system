@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Formik } from 'formik';
 import { useAppDispatch } from 'store/store';
 
-import Button from '../../../../atoms/Button/Button';
+import Button from 'components/atoms/Button/Button';
 
 import { DoubleFlexWrapper } from 'styles/shared';
 import { CompanyDataContext } from '../../context/CompanyDataContext';

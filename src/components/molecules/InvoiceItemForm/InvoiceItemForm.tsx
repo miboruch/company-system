@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Form, Formik } from 'formik';
 
-import Button from '../../atoms/Button/Button';
+import Button from 'components/atoms/Button/Button';
 
 import { ItemInterface } from '../../organisms/GenerateInvoice/GenerateInvoice';
 import { FlexWrapper } from 'styles/shared';

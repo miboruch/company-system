@@ -3,8 +3,8 @@ import NumberFormat from 'react-number-format';
 import { useSelector } from 'react-redux';
 import { Formik } from 'formik';
 
-import Button from '../../atoms/Button/Button';
-import MapCoordsEdit, { CoordsEditType } from '../../organisms/MapCoordsEdit/MapCoordsEdit';
+import Button from 'components/atoms/Button/Button';
+import MapCoordsEdit, {CoordsEditType} from 'components/organisms/MapCoordsEdit/MapCoordsEdit';
 
 import { AppState, useAppDispatch } from 'store/store';
 import { setEditCompanyCoordsOpen } from 'ducks/company/company-toggle/company-toggle';

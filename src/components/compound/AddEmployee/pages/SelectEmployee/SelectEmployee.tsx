@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { Formik } from 'formik';
 import { useSelector } from 'react-redux';
 
-import Button from '../../../../atoms/Button/Button';
-import UserBox from '../../../../molecules/UserBox/UserBox';
+import Button from 'components/atoms/Button/Button';
+import UserBox from 'components/molecules/UserBox/UserBox';
 
 import { UserDataInterface } from 'types/modelsTypes';
 import { AppState } from 'store/store';

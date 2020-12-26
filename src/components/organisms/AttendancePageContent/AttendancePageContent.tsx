@@ -3,12 +3,12 @@ import gsap from 'gsap';
 import DatePicker from 'react-datepicker';
 import { useSelector } from 'react-redux';
 
-import GridWrapper from '../../templates/GridWrapper/GridWrapper';
-import Spinner from '../../atoms/Spinner/Spinner';
-import ContentTemplate from '../../templates/ContentTemplate/ContentTemplate';
-import AttendanceInfo from '../AttendanceInfo/AttendanceInfo';
-import AttendancePopup from '../../molecules/AttendancePopup/AttendancePopup';
-import ListBox from '../../molecules/ListBox/ListBox';
+import GridWrapper from 'components/templates/GridWrapper/GridWrapper';
+import Spinner from 'components/atoms/Spinner/Spinner';
+import ContentTemplate from 'components/templates/ContentTemplate/ContentTemplate';
+import AttendanceInfo from 'components/organisms/AttendanceInfo/AttendanceInfo';
+import AttendancePopup from 'components/molecules/AttendancePopup/AttendancePopup';
+import ListBox from 'components/molecules/ListBox/ListBox';
 
 import { AttendanceInterface } from 'types/modelsTypes';
 import { AppState, useAppDispatch } from 'store/store';

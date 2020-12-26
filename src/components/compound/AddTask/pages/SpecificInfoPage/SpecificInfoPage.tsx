@@ -2,8 +2,8 @@ import React, { useContext, useEffect } from 'react';
 import { Formik } from 'formik';
 import { useSelector } from 'react-redux';
 
-import Dropdown from '../../../../atoms/Dropdown/Dropdown';
-import Button from '../../../../atoms/Button/Button';
+import Dropdown from 'components/atoms/Dropdown/Dropdown';
+import Button from 'components/atoms/Button/Button';
 
 import { AppState, useAppDispatch } from 'store/store';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';

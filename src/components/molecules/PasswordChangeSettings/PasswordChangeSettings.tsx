@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Formik } from 'formik';
 
-import Button from '../../atoms/Button/Button';
+import Button from 'components/atoms/Button/Button';
 
 import { useAppDispatch } from 'store/store';
 import { editPassword } from 'ducks/auth/account/account-creators';

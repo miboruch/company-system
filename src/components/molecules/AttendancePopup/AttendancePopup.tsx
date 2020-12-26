@@ -1,10 +1,10 @@
 import React from 'react';
 import { Formik } from 'formik';
 
-import PopupTemplate from '../../templates/PopupTemplate/PopupTemplate';
-import ModalButton, { ButtonType } from '../../atoms/ModalButton/ModalButton';
-import Input from '../../atoms/Input/Input';
-import Checkbox from '../../atoms/Checkbox/Checkbox';
+import PopupTemplate from 'components/templates/PopupTemplate/PopupTemplate';
+import ModalButton, { ButtonType } from 'components/atoms/ModalButton/ModalButton';
+import Input from 'components/atoms/Input/Input';
+import Checkbox from 'components/atoms/Checkbox/Checkbox';
 
 import { AttendanceInterface } from 'types/modelsTypes';
 import { useAppDispatch } from 'store/store';

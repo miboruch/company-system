@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import CompoundStepBox from '../../../../molecules/CompoundStepBox/CompoundStepBox';
+import CompoundStepBox from 'components/molecules/CompoundStepBox/CompoundStepBox';
 
 import { addCompanySteps } from '../../utils/addCompanySteps';
 import { ListWrapper } from 'styles/compoundStyles';

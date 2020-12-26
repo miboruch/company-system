@@ -2,10 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useSelector } from 'react-redux';
 
-import ListBox from '../../molecules/ListBox/ListBox';
-import CloseButton from '../../atoms/CloseButton/CloseButton';
-import Spinner from '../../atoms/Spinner/Spinner';
-import MonthDropdown from '../../atoms/MonthDropdown/MonthDropdown';
+import ListBox from 'components/molecules/ListBox/ListBox';
+import CloseButton from 'components/atoms/CloseButton/CloseButton';
+import Spinner from 'components/atoms/Spinner/Spinner';
+import MonthDropdown from 'components/atoms/MonthDropdown/MonthDropdown';
 
 import { EmployeeDataInterface } from 'types/modelsTypes';
 import { AppState, useAppDispatch } from 'store/store';

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import Hamburger from '../../atoms/Hamburger/Hamburger';
-import HeaderSlider from '../HeaderSlider/HeaderSlider';
-import SearchInput from '../../atoms/SearchInput/SearchInput';
-import ArrowButton from '../../atoms/ArrowButton/ArrowButton';
-import Notifications from '../../organisms/Notifications/Notifications';
+import Hamburger from 'components/atoms/Hamburger/Hamburger';
+import HeaderSlider from 'components/molecules/HeaderSlider/HeaderSlider';
+import SearchInput from 'components/atoms/SearchInput/SearchInput';
+import ArrowButton from 'components/atoms/ArrowButton/ArrowButton';
+import Notifications from 'components/organisms/Notifications/Notifications';
 
 import { Direction } from 'types/globalTypes';
 import { AppState } from 'store/store';

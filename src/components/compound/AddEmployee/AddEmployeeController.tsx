@@ -2,17 +2,16 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useDispatch, useSelector } from 'react-redux';
 
-import EmployeeDataContextProvider from './context/EmployeeDataContext';
-import PageContextProvider from './context/PageContext';
-import CloseButton from '../../atoms/CloseButton/CloseButton';
-import StepList from './components/StepList/StepList';
-import AddEmployeeTemplate from './templates/AddEmployeeTemplate';
-import AddEmployeeHeader from './components/AddEmployeeHeader/AddEmployeeHeader';
-import SelectEmployee from './pages/SelectEmployee/SelectEmployee';
-import SalaryPage from './pages/SalaryPage/SalaryPage';
+import EmployeeDataContextProvider from 'components/compound/AddEmployee/context/EmployeeDataContext';
+import PageContextProvider, { PageSettingEnum } from './context/PageContext';
+import CloseButton from 'components/atoms/CloseButton/CloseButton';
+import StepList from 'components/compound/AddEmployee/components/StepList/StepList';
+import AddEmployeeTemplate from 'components/compound/AddEmployee/templates/AddEmployeeTemplate';
+import AddEmployeeHeader from 'components/compound/AddEmployee/components/AddEmployeeHeader/AddEmployeeHeader';
+import SelectEmployee from 'components/compound/AddEmployee/pages/SelectEmployee/SelectEmployee';
+import SalaryPage from 'components/compound/AddEmployee/pages/SalaryPage/SalaryPage';
 
 import { AppState } from 'store/store';
-import { PageSettingEnum } from './context/PageContext';
 import { setAddNewEmployeeOpen } from 'ducks/employees/employees-toggle/employees-toggle';
 import { modalOpenAnimation } from 'animations/animations';
 import { MainWrapper, CompoundTitle, CloseButtonWrapper, ContentWrapper, Wrapper } from 'styles/compoundControllerStyles';

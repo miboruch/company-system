@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 
-import ArrowButton from '../../atoms/ArrowButton/ArrowButton';
+import ArrowButton from 'components/atoms/ArrowButton/ArrowButton';
 
 import { ContentWrapper, ArrowAbsoluteWrapper } from './ContentTemplate.styles';
 import { Direction } from 'types/globalTypes';

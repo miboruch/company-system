@@ -4,7 +4,7 @@ import DatePicker from 'react-datepicker';
 import { Formik } from 'formik';
 import { useSelector } from 'react-redux';
 
-import Button from '../../atoms/Button/Button';
+import Button from 'components/atoms/Button/Button';
 
 import { AppState } from 'store/store';
 import { useAppDispatch } from 'store/store';

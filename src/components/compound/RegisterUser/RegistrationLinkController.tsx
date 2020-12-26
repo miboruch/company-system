@@ -1,11 +1,11 @@
 import React from 'react';
 
 import PageContextProvider from './context/PageContext';
-import RegisterTemplate from './templates/RegisterTemplate/RegisterTemplate';
-import MainRegisterDataPage from './pages/MainRegisterDataPage';
-import PasswordPage from './pages/PasswordPage';
-import ContactDataPage from './pages/ContactDataPage';
-import RegisterDataContextProvider from './context/RegisterDataContext';
+import RegisterTemplate from 'components/compound/RegisterUser/templates/RegisterTemplate/RegisterTemplate';
+import MainRegisterDataPage from 'components/compound/RegisterUser/pages/MainRegisterDataPage';
+import PasswordPage from 'components/compound/RegisterUser/pages/PasswordPage';
+import ContactDataPage from 'components/compound/RegisterUser/pages/ContactDataPage';
+import RegisterDataContextProvider from 'components/compound/RegisterUser/context/RegisterDataContext';
 
 import { RegistrationVerifyTokenResponse } from 'pages/RegisterFromLink/RegisterFromLink';
 

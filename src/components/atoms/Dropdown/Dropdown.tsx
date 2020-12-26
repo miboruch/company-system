@@ -1,7 +1,7 @@
 import React from 'react';
 import Downshift from 'downshift';
 
-import Input from '../Input/Input';
+import Input from 'components/atoms/Input/Input';
 
 import { ClientInterface } from 'types/modelsTypes';
 import { StyledLabel } from 'styles/shared';

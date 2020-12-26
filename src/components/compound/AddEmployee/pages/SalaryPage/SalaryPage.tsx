@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Formik } from 'formik';
 
-import Button from '../../../../atoms/Button/Button';
+import Button from 'components/atoms/Button/Button';
 
 import { useAppDispatch } from 'store/store';
 import { HeadingWrapper, MobileCompoundTitle, StyledBackParagraph, StyledForm, StyledInput, Subheading, Wrapper } from 'styles/compoundStyles';

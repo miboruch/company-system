@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import ListBox from '../../molecules/ListBox/ListBox';
+import ListBox from 'components/molecules/ListBox/ListBox';
 
 import { ExpenseInterface, IncomeInterface } from 'types/modelsTypes';
 import { AppState } from 'store/store';
@@ -17,7 +17,8 @@ interface Props {
 const BudgetHistoryList: React.FC<Props> = ({ budgetHistory }) => {
   const { currency } = useSelector((state: AppState) => state.currency);
 
-  const prepareExpenseValue = (history: IncomeInterface | ExpenseInterface) => `${history.expenseValue ? -1 * roundTo2(history.expenseValue * currency.value) : history.incomeValue ? roundTo2(history.incomeValue * currency.value) : 0} ${currency.name}`
+  const prepareExpenseValue = (history: IncomeInterface | ExpenseInterface) =>
+    `${history.expenseValue ? -1 * roundTo2(history.expenseValue * currency.value) : history.incomeValue ? roundTo2(history.incomeValue * currency.value) : 0} ${currency.name}`;
 
   return (
     <StyledWrapper>

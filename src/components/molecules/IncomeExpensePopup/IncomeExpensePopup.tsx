@@ -1,9 +1,9 @@
 import React from 'react';
 import { Formik } from 'formik';
 
-import PopupTemplate from '../../templates/PopupTemplate/PopupTemplate';
-import ModalButton, { ButtonType } from '../../atoms/ModalButton/ModalButton';
-import Input from '../../atoms/Input/Input';
+import PopupTemplate from 'components/templates/PopupTemplate/PopupTemplate';
+import Input from 'components/atoms/Input/Input';
+import ModalButton, { ButtonType } from 'components/atoms/ModalButton/ModalButton';
 
 import { addIncome, addExpense } from 'ducks/finances/income-expense/income-expense-creators';
 import { ButtonWrapper, ContentWrapper } from 'styles/popupStyles';

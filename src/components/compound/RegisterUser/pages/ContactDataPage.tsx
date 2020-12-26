@@ -3,7 +3,7 @@ import NumberFormat from 'react-number-format';
 import { Formik } from 'formik';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import Button from '../../../atoms/Button/Button';
+import Button from 'components/atoms/Button/Button';
 
 import { useAppDispatch } from 'store/store';
 import { RegisterDataContext } from '../context/RegisterDataContext';

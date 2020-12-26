@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import Spinner from '../../atoms/Spinner/Spinner';
-import WeekAttendanceComponent from '../../molecules/WeekAttendanceComponent/WeekAttendanceComponent';
+import Spinner from 'components/atoms/Spinner/Spinner';
+import WeekAttendanceComponent from 'components/molecules/WeekAttendanceComponent/WeekAttendanceComponent';
 
 import { AppState } from 'store/store';
 import { Paragraph } from 'styles/typography/typography';

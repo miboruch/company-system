@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import * as Leaflet from 'leaflet';
 import { Map, Marker, TileLayer } from 'react-leaflet';
 
-import Spinner from '../../../../atoms/Spinner/Spinner';
-import Button from '../../../../atoms/Button/Button';
+import Spinner from 'components/atoms/Spinner/Spinner';
+import Button from 'components/atoms/Button/Button';
 
 import { Coords } from 'types/globalTypes';
 import { getLocation } from 'utils/mapFunctions';

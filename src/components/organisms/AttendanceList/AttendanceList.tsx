@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ListBox from '../../molecules/ListBox/ListBox';
+import ListBox from 'components/molecules/ListBox/ListBox';
 
 import { AttendanceInterface } from 'types/modelsTypes';
 import { isEmpty } from 'utils/functions';

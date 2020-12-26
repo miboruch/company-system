@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import { Formik } from 'formik';
 import DatePicker from 'react-datepicker';
 
-import Button from '../../../atoms/Button/Button';
+import Button from 'components/atoms/Button/Button';
+
 import { RegisterDataContext } from '../context/RegisterDataContext';
 import { StyledForm, Heading } from 'pages/LoginPage/LoginPage.styles';
 import { FlexWrapper, StyledLabel } from 'styles/shared';

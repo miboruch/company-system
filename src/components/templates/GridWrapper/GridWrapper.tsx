@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
-import Header from '../../molecules/Header/Header';
+import Header from 'components/molecules/Header/Header';
 
 import { StyledWrapper, TitleWrapper } from './GridWrapper.styles';
-import {PageNameHeading} from '../../../styles/typography/typography';
+import { PageNameHeading } from 'styles/typography/typography';
 
 interface Props {
   onlyHeader?: boolean;
@@ -18,7 +18,7 @@ interface ChildrenPropsInterface extends Props {
   render?: never;
 }
 
-interface RenderPropsInterface extends Props{
+interface RenderPropsInterface extends Props {
   children?: never;
   render: (isEditToggled: boolean, setEditToggled: (isToggled: boolean) => void, isDeleteOpen: boolean, setDeleteOpen: (isOpen: boolean) => void) => void;
 }

@@ -3,8 +3,8 @@ import DatePicker from 'react-datepicker';
 import { Formik } from 'formik';
 import { useSelector } from 'react-redux';
 
-import Button from '../../../../atoms/Button/Button';
-import MultipleDropdown from '../../../../atoms/MultipleDropdown/MultipleDropdown';
+import Button from 'components/atoms/Button/Button';
+import MultipleDropdown from 'components/atoms/MultipleDropdown/MultipleDropdown';
 
 import { AppState } from 'store/store';
 import { EmployeeDataInterface } from 'types/modelsTypes';

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ArrowButton from '../../atoms/ArrowButton/ArrowButton';
+import ArrowButton from 'components/atoms/ArrowButton/ArrowButton';
 
 import { ContentWrapper, Name, Subparagraph, Wrapper, ValueParagraph } from './ListBox.styles';
 import { CheckedIcon, EmptyIcon, NotCheckedIcon, EditIcon } from 'styles/iconStyles';

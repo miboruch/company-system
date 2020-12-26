@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import AddNewButton from '../../atoms/AddNewButton/AddNewButton';
-import Spinner from '../../atoms/Spinner/Spinner';
-import ListBox from '../ListBox/ListBox';
-import RemoveAdminPopup from '../RemoveAdminPopup/RemoveAdminPopup';
+import AddNewButton from 'components/atoms/AddNewButton/AddNewButton';
+import Spinner from 'components/atoms/Spinner/Spinner';
+import ListBox from 'components/molecules/ListBox/ListBox';
+import RemoveAdminPopup from 'components/molecules/RemoveAdminPopup/RemoveAdminPopup';
 
 import { CompanyOwnersInterface } from 'types/modelsTypes';
 import { AppState, useAppDispatch } from 'store/store';

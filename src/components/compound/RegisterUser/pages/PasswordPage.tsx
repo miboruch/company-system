@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { RegisterDataContext } from '../context/RegisterDataContext';
 import { Formik } from 'formik';
 
-import Button from '../../../atoms/Button/Button';
+import Button from 'components/atoms/Button/Button';
 
 import { PageContext } from '../context/PageContext';
 import { Heading, StyledForm } from 'pages/LoginPage/LoginPage.styles';

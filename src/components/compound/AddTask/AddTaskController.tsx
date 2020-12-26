@@ -2,14 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useDispatch, useSelector } from 'react-redux';
 
-import TaskDataContextProvider from './context/TaskDataContext';
+import TaskDataContextProvider from 'components/compound/AddTask/context/TaskDataContext';
 import PageContextProvider from './context/PageContext';
-import CloseButton from '../../atoms/CloseButton/CloseButton';
-import AddTaskHeader from './components/AddTaskHeader/AddTaskHeader';
-import StepList from './components/StepList/StepList';
-import AddTaskTemplate from './templates/AddTaskTemplate';
-import TaskInfoPage from './pages/TaskInfoPage/TaskInfoPage';
-import SpecificInfoPage from './pages/SpecificInfoPage/SpecificInfoPage';
+import CloseButton from 'components/atoms/CloseButton/CloseButton';
+import AddTaskHeader from 'components/compound/AddTask/components/AddTaskHeader/AddTaskHeader';
+import StepList from 'components/compound/AddTask/components/StepList/StepList';
+import AddTaskTemplate from 'components/compound/AddTask/templates/AddTaskTemplate';
+import TaskInfoPage from 'components/compound/AddTask/pages/TaskInfoPage/TaskInfoPage';
+import SpecificInfoPage from 'components/compound/AddTask/pages/SpecificInfoPage/SpecificInfoPage';
 
 import { AppState } from 'store/store';
 import { PageSettingEnum } from './context/PageContext';

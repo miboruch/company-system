@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Menu from '../../organisms/Menu/Menu';
+import Menu from 'components/organisms/Menu/Menu';
 
 import { MenuTemplateWrapper } from './MenuTemplate.styles';
 

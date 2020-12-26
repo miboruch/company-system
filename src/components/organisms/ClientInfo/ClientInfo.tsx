@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik } from 'formik';
 
-import Button from '../../atoms/Button/Button';
+import Button from 'components/atoms/Button/Button';
 
 import { AppState } from 'store/store';
 import { setEditClientCoordsOpen } from 'ducks/client/client-toggle/client-toggle';
