@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { baseStoreType } from '../../../store/store';
+import { baseStoreType } from 'store/store';
 import { setTokens } from '../tokens/tokens';
 import { getUserData } from '../data/data-creators';
-import { api } from '../../../api';
+import { api } from 'api';
 import { getUserNotifications } from '../../notifications/notifications-creators';
 
 interface LoginInterface {

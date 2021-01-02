@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { ClientInterface } from '../../../types/modelsTypes';
-import { baseStoreType } from '../../../store/store';
-import { companyApi } from '../../../api';
+import { ClientInterface } from 'types/modelsTypes';
+import { baseStoreType } from 'store/store';
+import { companyApi } from 'api';
 
 export const getCompanyClients = createAsyncThunk<ClientInterface[], void, baseStoreType>('client/getCompanyClients', async (_arg, { rejectWithValue, getState }) => {
   const { token } = getState().auth.tokens;

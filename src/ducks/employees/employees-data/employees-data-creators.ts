@@ -1,11 +1,9 @@
-import axios from 'axios';
 import { UserRole } from '../../auth/roles/roles';
-import { API_URL } from '../../../utils/config';
-import { NotificationTypes } from '../../../types/globalTypes';
+import { NotificationTypes } from 'types/globalTypes';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { EmployeeDataInterface } from '../../../types/modelsTypes';
-import { baseStoreType } from '../../../store/store';
-import { companyApi } from '../../../api';
+import { EmployeeDataInterface } from 'types/modelsTypes';
+import { baseStoreType } from 'store/store';
+import { companyApi } from 'api';
 import { setNotificationMessage } from '../../popup/popup';
 import { setSelectedEmployee, setEmployeeInfoOpen } from '../employees-toggle/employees-toggle';
 

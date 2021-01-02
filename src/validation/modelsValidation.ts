@@ -29,7 +29,7 @@ export const EmployeeSchema = Yup.object().shape(
 
 export const CompanySchema = Yup.object().shape({
   name: Yup.string().min(2, 'Nazwa jest za krótka').max(50, 'Nazwa jest za długa').required('To pole jest wymagane'),
-  nip: Yup.string().min(10, 'Za krótki NIP').max(50, 'Za długi NIP').required('To pole jest wymagane'),
+  nip: Yup.string().min(10, 'Za krótki NIP').max(10, 'Za długi NIP').required('To pole jest wymagane'),
   email: Yup.string().email('Niepoprawny email').required('To pole jest wymagane'),
   phoneNumber: Yup.string().min(9, 'Numer telefonu jest za krótki').max(14, 'Numer telefonu jest za długi').required('To pole jest wymagane'),
   address: Yup.string().min(2, 'Minimum 2 znaki').required('To pole jest wymagane'),

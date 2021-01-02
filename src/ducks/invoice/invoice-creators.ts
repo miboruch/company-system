@@ -1,11 +1,11 @@
 import { saveAs } from 'file-saver';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { companyApi } from '../../api';
+import { companyApi } from 'api';
 import { setNotificationMessage } from '../popup/popup';
-import { ItemInterface } from '../../components/organisms/GenerateInvoice/GenerateInvoice';
-import { baseStoreType } from '../../store/store';
-import { NotificationTypes } from '../../types/globalTypes';
+import { ItemInterface } from 'components/organisms/GenerateInvoice/GenerateInvoice';
+import { baseStoreType } from 'store/store';
+import { NotificationTypes } from 'types/globalTypes';
 
 export interface InvoiceInterface {
   name: string;

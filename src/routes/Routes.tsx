@@ -1,11 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { UserRole } from '../ducks/auth/roles/roles';
 import { Switch } from 'react-router-dom';
-import { adminRoutes, userRoutes } from './routesDefinition';
+
 import AdminRoute from '../hoc/AdminRoute';
-import { AppState } from '../store/store';
 import UserRoute from '../hoc/UserRoute';
+
+import { AppState } from 'store/store';
+import { UserRole } from 'ducks/auth/roles/roles';
+import { adminRoutes, userRoutes } from './routesDefinition';
 
 const Routes: React.FC = () => {
   const { role } = useSelector((state: AppState) => state.auth.roles);

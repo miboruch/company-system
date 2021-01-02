@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { authApi } from '../../../api';
+import { authApi } from 'api';
 import { getUserData } from '../data/data-creators';
-import { baseStoreType } from '../../../store/store';
+import { baseStoreType } from 'store/store';
 import { setNotificationMessage } from '../../popup/popup';
-import { NotificationTypes } from '../../../types/globalTypes';
+import { NotificationTypes } from 'types/globalTypes';
 
 interface EditAccountInterface {
   email: string;

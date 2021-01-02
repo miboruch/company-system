@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { api } from '../../../api';
+import { api } from 'api';
 import { setTokens } from '../tokens/tokens';
 import { getUserData } from '../data/data-creators';
-import { baseStoreType } from '../../../store/store';
+import { baseStoreType } from 'store/store';
 import { getUserNotifications } from '../../notifications/notifications-creators';
 
 interface RegisterInterface {

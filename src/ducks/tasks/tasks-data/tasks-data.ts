@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TaskInterface } from '../../../types/modelsTypes';
+import { TaskInterface } from 'types/modelsTypes';
 import { getCompanyTasks, getCompletedTasks, getEmployeeTasks } from './task-data-creators';
 
 interface InitialStateInterface {

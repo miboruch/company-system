@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { EmployeeDataInterface, UserAuthData } from '../../../types/modelsTypes';
-import { baseStoreType } from '../../../store/store';
-import { authApi } from '../../../api';
+import { EmployeeDataInterface, UserAuthData } from 'types/modelsTypes';
+import { baseStoreType } from 'store/store';
+import { authApi } from 'api';
 
 export const getUserData = createAsyncThunk<UserAuthData, string | void, baseStoreType>('data/userData', async (argToken, { rejectWithValue, getState }) => {
   try {
@@ -41,7 +41,6 @@ export const getOwnEmployeeData = createAsyncThunk<EmployeeDataInterface, string
 
     return data.employees[0] as EmployeeDataInterface;
   } catch (error) {
-    console.log(error);
     return rejectWithValue(error.response);
   }
 });

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { baseStoreType } from '../../../store/store';
-import { companyApi } from '../../../api';
+import { baseStoreType } from 'store/store';
+import { companyApi } from 'api';
 
 export const getCompanyBudget = createAsyncThunk<number, void, baseStoreType>('budget/getCompanyBudget', async (daysBack, { dispatch, getState, rejectWithValue }) => {
   const { token } = getState().auth.tokens;

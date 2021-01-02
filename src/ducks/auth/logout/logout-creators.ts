@@ -1,8 +1,8 @@
 import { createAsyncThunk, Dispatch } from '@reduxjs/toolkit';
 import { setTokens } from '../tokens/tokens';
 import { setLogged } from '../check/check';
-import { AppDispatch, AppState } from '../../../store/store';
-import { api } from '../../../api';
+import { AppDispatch, AppState } from 'store/store';
+import { api } from 'api';
 import { resetState } from '../../reset/reset-creators';
 
 export const clearStorage = () => (dispatch: Dispatch<any>): void => {

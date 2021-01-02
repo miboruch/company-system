@@ -26,9 +26,7 @@ const Header: React.FC<Props> = ({ setFilterText }) => {
     setSliderOpen(!isSliderOpen);
   };
 
-  const toggleNotifications = () => {
-    setNotificationsOpen(!areNotificationsOpen);
-  };
+  const toggleNotifications = () => setNotificationsOpen(!areNotificationsOpen);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setFilterText && setFilterText(e.target.value);

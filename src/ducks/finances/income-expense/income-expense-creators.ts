@@ -1,13 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AppState, baseStoreType } from '../../../store/store';
-import { companyApi } from '../../../api';
-import { ExpenseInterface, IncomeDataInterface, IncomeInterface } from '../../../types/modelsTypes';
+import { baseStoreType } from 'store/store';
+import { companyApi } from 'api';
+import { ExpenseInterface, IncomeDataInterface, IncomeInterface } from 'types/modelsTypes';
 import { setNotificationMessage } from '../../popup/popup';
-import { NotificationTypes } from '../../../types/globalTypes';
+import { NotificationTypes } from 'types/globalTypes';
 import { fetchAllFinancesData } from '../finances-creators';
-import { Dispatch } from 'redux';
-import axios from 'axios';
-import { API_URL } from '../../../utils/config';
 
 export interface IncomeExpenseReturnInterface {
   income: number;

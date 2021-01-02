@@ -1,4 +1,4 @@
-import { currencyTypes } from '../ducks/currency/currency-creators';
+import { currencyTypes } from 'ducks/currency/currency-creators';
 
 export const API_URL = 'http://localhost:8080';
 export const CURRENCY_API_URL = 'https://api.exchangeratesapi.io';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { HomeIcon, PaymentIcon, ListIcon, SupportIcon, UserIcon } from '../styles/shared';
+import { HomeIcon, PaymentIcon, ListIcon, SupportIcon, UserIcon } from 'styles/shared';
 
 interface MenuItem {
   name: string;

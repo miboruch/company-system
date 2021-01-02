@@ -1,7 +1,7 @@
-import { NotificationTypes } from '../../types/globalTypes';
+import { NotificationTypes } from 'types/globalTypes';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { baseStoreType } from '../../store/store';
-import { companyApi } from '../../api';
+import { baseStoreType } from 'store/store';
+import { companyApi } from 'api';
 import { getSingleDayAttendance } from '../attendance/attendance-data/attendance-data-creators';
 import { getCompanyClients } from './client-data/client-data-creators';
 import { setClientInfoOpen, setSelectedClient } from './client-toggle/client-toggle';

@@ -1,5 +1,5 @@
-import { ClientInterface } from '../../../types/modelsTypes';
-import { AppDispatch } from '../../../store/store';
+import { ClientInterface } from 'types/modelsTypes';
+import { AppDispatch } from 'store/store';
 import { setSelectedClient } from './client-toggle';
 import { setClientInfoOpen } from './client-toggle';
 

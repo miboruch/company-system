@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NotificationMessage, NotificationTypes } from '../../types/globalTypes';
+import { NotificationMessage, NotificationTypes } from 'types/globalTypes';
 
 interface InitialStateInterface {
   isNotificationOpen: boolean;

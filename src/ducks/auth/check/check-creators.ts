@@ -1,23 +1,14 @@
-import { Dispatch } from 'redux';
-import { setTokens } from '../tokens/tokens';
+import { History } from 'history';
 import { getCompanyAccessToken, getNewAccessToken } from '../tokens/tokens-creators';
-import { getUserData } from '../data/data-creators';
-import { clearStorage, logout } from '../logout/logout-creators';
-import { AppDispatch, AppState } from '../../../store/store';
-import { getUserNotifications } from '../../notifications/notifications-creators';
+import { clearStorage } from '../logout/logout-creators';
+import { AppDispatch } from 'store/store';
 import { resetState } from '../../reset/reset-creators';
 import { UserRole } from '../roles/roles';
-import { getAllAppUsers } from '../../users/all-users-creators';
 import { setRole } from '../roles/roles';
 import { setLoading } from '../../app/initial-load';
-import { getSingleCompany } from '../../company/current-company/current-company-creators';
-import { History } from 'history';
 
-export const authCheck = (pathname: string, history: History) => (dispatch: AppDispatch, getState: () => AppState): void => {
+export const authCheck = (pathname: string, history: History) => (dispatch: AppDispatch): void => {
   dispatch(setLoading(true));
-  const { role } = getState().auth.roles;
-
-  const token = localStorage.getItem('token');
   const refreshToken = localStorage.getItem('refreshToken');
   const companyId = localStorage.getItem('companyId');
 

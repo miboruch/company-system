@@ -9,7 +9,7 @@ import AttendancePage from '../pages/AttendancePage/AttendancePage';
 import FinancesPage from '../pages/FinancesPage/FinancesPage';
 import SettingsPage from '../pages/SettingsPage/SettingsPage';
 
-import { HomeIcon, PaymentIcon, ListIcon, SupportIcon, UserIcon, SettingsIcon } from '../styles/shared';
+import { HomeIcon, PaymentIcon, ListIcon, SupportIcon, UserIcon, SettingsIcon } from 'styles/shared';
 
 interface Routes {
   path: string;

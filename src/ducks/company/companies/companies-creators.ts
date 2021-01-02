@@ -1,10 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { baseStoreType } from '../../../store/store';
+import { baseStoreType } from 'store/store';
 import { setNotificationMessage } from '../../popup/popup';
-import { NotificationTypes } from '../../../types/globalTypes';
+import { NotificationTypes } from 'types/globalTypes';
 import { UserRole } from '../../auth/roles/roles';
-import { CompanyInterface } from '../../../types/modelsTypes';
-import { companyApi } from '../../../api';
+import { CompanyInterface } from 'types/modelsTypes';
+import { companyApi } from 'api';
 import { resetAllSelected } from '../../reset/reset-creators';
 
 export const getUserCompanies = createAsyncThunk<CompanyInterface[], void, baseStoreType>('companies/getUserCompanies', async (_arg, { dispatch, rejectWithValue, getState }) => {

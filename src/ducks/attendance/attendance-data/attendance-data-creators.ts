@@ -1,9 +1,10 @@
 import axios from 'axios';
-import { UserRole } from '../../auth/roles/roles';
-import { API_URL } from '../../../utils/config';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AttendanceInterface } from '../../../types/modelsTypes';
-import { baseStoreType } from '../../../store/store';
+
+import { UserRole } from '../../auth/roles/roles';
+import { AttendanceInterface } from 'types/modelsTypes';
+import { baseStoreType } from 'store/store';
+import { API_URL } from 'utils/config';
 
 export const getSingleDayAttendance = createAsyncThunk<AttendanceInterface[], Date | void, baseStoreType>('attendanceData/getSingleDayAttendance', async (date, { rejectWithValue, getState }) => {
   const { token } = getState().auth.tokens;

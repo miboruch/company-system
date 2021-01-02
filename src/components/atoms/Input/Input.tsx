@@ -18,11 +18,12 @@ interface Props {
 }
 
 const Input: React.FC<Props> = ({ onChange, name, value, required, isPassword, disabled, togglePasswordInputType, type, labelText, isError, errorMessage, ...props }) => {
+  const label = isError ? errorMessage : labelText;
   return (
     <InputWrapper>
       <StyledInput name={name} onChange={onChange} value={value && value} required={required} type={type} disabled={disabled} {...props} />
-      <StyledLabel>{isError ? errorMessage : labelText}</StyledLabel>
-      {!!isPassword && <ShowPasswordIcon onClick={() => !!togglePasswordInputType && togglePasswordInputType()} />}
+      <StyledLabel>{label}</StyledLabel>
+      {!!isPassword && <ShowPasswordIcon onClick={togglePasswordInputType} />}
     </InputWrapper>
   );
 };

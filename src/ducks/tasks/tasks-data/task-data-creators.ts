@@ -1,8 +1,8 @@
-import { NotificationTypes } from '../../../types/globalTypes';
+import { NotificationTypes } from 'types/globalTypes';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { baseStoreType } from '../../../store/store';
-import { IncomeDataInterface, TaskInterface } from '../../../types/modelsTypes';
-import { companyApi } from '../../../api';
+import { baseStoreType } from 'store/store';
+import { TaskInterface } from 'types/modelsTypes';
+import { companyApi } from 'api';
 import { setNotificationMessage } from '../../popup/popup';
 import { selectTask } from '../tasks-toggle/tasks-toggle-creators';
 import { setSelectedTask, setTaskInfoOpen, setAddNewTaskOpen } from '../tasks-toggle/tasks-toggle';
