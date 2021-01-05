@@ -8,13 +8,13 @@ import Button from '../../components/atoms/Button/Button';
 import Spinner from '../../components/atoms/Spinner/Spinner';
 import LoginTemplate, { TemplatePage } from '../../components/templates/LoginTemplate/LoginTemplate';
 
-import { AppState } from '../../store/store';
-import { useAppDispatch } from '../../store/store';
-import { LoginSchema } from '../../validation/loginValidation';
-import { login } from '../../ducks/auth/login/login-creators';
+import { AppState } from 'store/store';
+import { useAppDispatch } from 'store/store';
+import { LoginSchema } from 'validation/loginValidation';
+import { login } from 'ducks/auth/login/login-creators';
 import { AccountParagraph, AuthWrapper, FlexWrapper, FlexWrapperDefault, Heading, StyledForm, StyledInput, StyledLink } from './LoginPage.styles';
-import { ErrorParagraph } from '../../styles/typography/typography';
-import { SpinnerWrapper } from '../../styles/shared';
+import { ErrorParagraph } from 'styles/typography/typography';
+import { SpinnerWrapper } from 'styles/shared';
 
 type ConnectedProps = RouteComponentProps<any>;
 

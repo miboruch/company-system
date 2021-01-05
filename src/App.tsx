@@ -12,11 +12,11 @@ import RegisterFromLink from './pages/RegisterFromLink/RegisterFromLink';
 import Spinner from './components/atoms/Spinner/Spinner';
 import NotAuthRoute from './hoc/NotAuthRoute';
 
-import { AppState, useAppDispatch } from './store/store';
-import { authCheck } from './ducks/auth/check/check-creators';
-import { handleCompanyRefreshToken, handleAuthRefreshToken } from './api/middleware';
-import { authApi, companyApi } from './api';
-import { MainSpinnerWrapper } from './styles/shared';
+import { AppState, useAppDispatch } from 'store/store';
+import { authCheck } from 'ducks/auth/check/check-creators';
+import { handleCompanyRefreshToken, handleAuthRefreshToken } from 'api/middleware';
+import { authApi, companyApi } from 'api';
+import { MainSpinnerWrapper } from 'styles/shared';
 
 import './App.css';
 

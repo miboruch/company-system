@@ -21,9 +21,9 @@ const Input: React.FC<Props> = ({ onChange, name, value, required, isPassword, d
   const label = isError ? errorMessage : labelText;
   return (
     <InputWrapper>
-      <StyledInput name={name} onChange={onChange} value={value && value} required={required} type={type} disabled={disabled} {...props} />
-      <StyledLabel>{label}</StyledLabel>
-      {!!isPassword && <ShowPasswordIcon onClick={togglePasswordInputType} />}
+      <StyledInput id={name} name={name} onChange={onChange} value={value && value} required={required} type={type} disabled={disabled} {...props} />
+      <StyledLabel htmlFor={name}>{label}</StyledLabel>
+      {!!isPassword && <ShowPasswordIcon onClick={togglePasswordInputType} data-testid={'password-icon'} />}
     </InputWrapper>
   );
 };

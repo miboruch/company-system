@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { rootReducer } from '../reducers/rootReducer';
+import { rootReducer } from 'reducers/rootReducer';
 import { useDispatch } from 'react-redux';
 
 const store = configureStore({

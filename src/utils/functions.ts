@@ -1,4 +1,4 @@
-import { EmployeeDataInterface, ExpenseInterface, IncomeInterface, UserDataInterface } from '../types/modelsTypes';
+import { EmployeeDataInterface, UserDataInterface } from 'types/modelsTypes';
 
 export const isEmpty = (obj: object | undefined): boolean => {
   return obj !== undefined ? Object.keys(obj).length === 0 && obj.constructor === Object : true;

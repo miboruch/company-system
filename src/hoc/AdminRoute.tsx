@@ -2,8 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
 
-import { AppState } from '../store/store';
-import { UserRole } from '../ducks/auth/roles/roles';
+import { AppState } from 'store/store';
+import { UserRole } from 'ducks/auth/roles/roles';
 
 interface Props {
   component: React.FC<any>;
