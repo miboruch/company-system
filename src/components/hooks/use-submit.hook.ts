@@ -1,25 +1,25 @@
+import { useEffect, useRef } from 'react';
 import memoizee from 'memoizee';
-import { ErrorResponse, Status } from 'api/api.middleware';
-import { useRef } from 'react';
 import { FormikHelpers } from 'formik';
 
-type Unwrap<T> = T extends (...args: any) => () => Promise<infer U> ? U : T extends (...args: any) => Promise<infer U> ? U : T;
-//TODO: try to extract value from array without ts-ignore
+import { ErrorResponse, Status } from 'api/api.middleware';
 
-type SuccessCallback<T, Values> = (
+type Unwrap<T> = T extends (...args: any) => () => Promise<infer U> ? U : T extends (...args: any) => Promise<infer U> ? U : T;
+
+type SuccessCallback<T, V> = (
   // @ts-ignore
-  callback: (payload: NonNullable<Unwrap<T>>[0], values: Values) => void,
+  callback: (payload: NonNullable<Unwrap<T>>[0], values: V) => void,
   dependencies?: any[]
 ) => void;
 
 type ErrorCallback = (callback: (error: NonNullable<ErrorResponse>) => void, dependencies?: any[]) => void;
-
-type ArgumentType<T> = T extends (...args: infer A) => any ? A : never;
+type MapData<V> = (callback: (data: V) => void, dependencies?: any[]) => void;
 
 interface Options<T, Values> {
   // @ts-ignore
   onSubmitSuccess?: (payload: NonNullable<Unwrap<T>>[0], values: Values) => void;
   onSubmitError?: (error: NonNullable<ErrorResponse>, values: Values) => void;
+  onMapData?: (values: Values) => void;
 }
 
 const memoizeOptions = {
@@ -28,11 +28,34 @@ const memoizeOptions = {
 
 function useSubmit<T, Values>(asyncApiCall: (...options: any) => Promise<[any | null, ErrorResponse | null, Status]>) {
   const isComponentMounted = useRef(true);
+
+  const handleComponentMount = () => {
+    isComponentMounted.current = true;
+  };
+  const handleWillComponentUnmount = () => {
+    isComponentMounted.current = false;
+  };
+
+  useEffect(() => {
+    handleComponentMount();
+
+    return () => handleWillComponentUnmount();
+  }, []);
+
   const onSuccess = useRef<Options<T, Values>['onSubmitSuccess'] | null>(null);
   const onError = useRef<Options<T, Values>['onSubmitError'] | null>(null);
+  const onMapData = useRef<Options<T, Values>['onMapData'] | null>(null);
+
+  const getMapData = (data: Values) => {
+    if (onMapData.current) {
+      onMapData.current(data);
+    }
+    return data;
+  };
 
   const sendSubmit = async (values: Values, { resetForm, setSubmitting }: FormikHelpers<Values>) => {
-    const [payload, error] = await asyncApiCall(values);
+    const data = getMapData(values);
+    const [payload, error] = await asyncApiCall(data);
 
     if (!isComponentMounted.current) {
       return;
@@ -56,10 +79,15 @@ function useSubmit<T, Values>(asyncApiCall: (...options: any) => Promise<[any | 
     onError.current = submitError;
   }, memoizeOptions);
 
+  const mapData = memoizee((mapDataCallback: Options<T, Values>['onMapData']) => {
+    onMapData.current = mapDataCallback;
+  });
+
   return {
     onSubmitSuccess: handleSuccess as SuccessCallback<T, Values>,
     onSubmitError: handleError as ErrorCallback,
-    onSubmit: sendSubmit
+    onSubmit: sendSubmit,
+    mapData: mapData as MapData<Values>
   };
 }
 

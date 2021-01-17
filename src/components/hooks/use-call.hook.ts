@@ -1,6 +1,15 @@
 import { useReducer, useEffect, useRef } from 'react';
-import { ErrorResponse } from 'api/api.middleware';
 import memoizee from 'memoizee';
+
+const SET_SUBMITTING = 'SET_SUBMITTING';
+const SET_DATA = 'SET_DATA';
+const SET_ERROR = 'SET_ERROR';
+const SET_STATUS = 'SET_STATUS';
+
+import { ErrorResponse, Status } from 'api/api.middleware';
+
+type Unwrap<T> = T extends (...args: any) => () => Promise<infer U> ? U : T extends (...args: any) => Promise<infer U> ? U : T;
+type Argument<T> = T extends (...args: infer A) => any ? A : never;
 
 type SuccessCallback<T> = (
   // @ts-ignore
@@ -8,47 +17,46 @@ type SuccessCallback<T> = (
   dependencies?: any[]
 ) => void;
 
-type ErrorCallback = (callback: (error: NonNullable<ErrorResponse>) => void, dependencies?: any[]) => void;
-type ArgumentType<T> = T extends (...args: infer A) => any ? A : never;
-
-type Unwrap<T> = T extends (...args: any) => () => Promise<infer U> ? U : T extends (...args: any) => Promise<infer U> ? U : T;
-//TODO: try to extract value from array without ts-ignore
+type ErrorCallback = (callback: (error: ErrorResponse) => void, dependencies?: any[]) => void;
 
 interface Options<T> {
   // @ts-ignore
-  onSuccess?: (payload: NonNullable<Unwrap<T>>[0]) => void;
-  onError?: (error: NonNullable<ErrorResponse>) => void;
+  onCallSuccess?: (payload: NonNullable<Unwrap<T>>[0]) => void;
+  onCallError?: (error: NonNullable<ErrorResponse>) => void;
 }
 
-type Action = { type: 'setSubmitting'; isSubmitting: boolean } | { type: 'setData'; data: any } | { type: 'setError'; error: any } | { type: 'setDetails'; details: any };
-
-type Status = { status: number; isCanceled: boolean };
-type State = { isSubmitting: boolean; error: any; data: any; errorDetails: Status };
+type Action =
+  | { type: typeof SET_SUBMITTING; isSubmitting: boolean }
+  | { type: typeof SET_DATA; data: any }
+  | { type: typeof SET_ERROR; error: ErrorResponse | null }
+  | { type: typeof SET_STATUS; status: Status };
 
 type Actions = {
   setSubmitting: (isSubmitting: boolean) => void;
   setData: (data: any) => void;
   setError: (error: any) => void;
-  setDetails: (details: Status) => void;
+  setStatus: (status: Status) => void;
 };
+
+type State = { isSubmitting: boolean; error: ErrorResponse | null; data: any; status: Status };
 
 const initialState: State = {
   isSubmitting: false,
   error: null,
   data: null,
-  errorDetails: { status: 0, isCanceled: false }
+  status: { status: 0, isCanceled: false }
 };
 
 const reducer = (state = initialState, action: Action) => {
   switch (action.type) {
-    case 'setSubmitting':
+    case SET_SUBMITTING:
       return { ...state, isSubmitting: action.isSubmitting };
-    case 'setData':
+    case SET_DATA:
       return { ...state, data: action.data };
-    case 'setError':
+    case SET_ERROR:
       return { ...state, error: action.error };
-    case 'setDetails':
-      return { ...state, errorDetails: action.details };
+    case SET_STATUS:
+      return { ...state, status: action.status };
   }
 };
 
@@ -64,14 +72,14 @@ function useCall<T>(asyncApiCall: (...options: any) => Promise<[any | null, null
 
   const [state, dispatch] = useReducer(reducer, initialState);
   const actions: Actions = {
-    setSubmitting: (isSubmitting: boolean) => dispatch({ type: 'setSubmitting', isSubmitting }),
-    setData: (data: any) => dispatch({ type: 'setData', data }),
-    setError: (error: any) => dispatch({ type: 'setError', error }),
-    setDetails: (details: Status) => dispatch({ type: 'setDetails', details })
+    setSubmitting: (isSubmitting: boolean) => dispatch({ type: SET_SUBMITTING, isSubmitting }),
+    setData: (data: any) => dispatch({ type: SET_DATA, data }),
+    setError: (error: any) => dispatch({ type: SET_ERROR, error }),
+    setStatus: (status: Status) => dispatch({ type: SET_STATUS, status })
   };
 
-  const onCallSuccess = useRef<Options<T>['onSuccess'] | null>(null);
-  const onCallError = useRef<Options<T>['onError'] | null>(null);
+  const onCallSuccess = useRef<Options<T>['onCallSuccess'] | null>(null);
+  const onCallError = useRef<Options<T>['onCallError'] | null>(null);
 
   useEffect(() => {
     handleComponentMount();
@@ -83,36 +91,36 @@ function useCall<T>(asyncApiCall: (...options: any) => Promise<[any | null, null
     normalizer: (args: any) => JSON.stringify(args[1])
   };
 
-  const handleCall = async (...args: ArgumentType<T>) => {
-    const { setSubmitting, setData, setError, setDetails } = actions;
+  const handleCall = async (...args: Argument<T>) => {
+    const { setSubmitting, setData, setError, setStatus } = actions;
 
     setSubmitting(true);
     setError(null);
 
-    const [payload, error, details] = await asyncApiCall(...args);
+    const [payload, error, status] = await asyncApiCall(...args);
 
     if (!componentIsMounted.current) {
       return;
     }
-    if (error && !details.isCanceled && details.status !== 0) {
+    if (error && !status.isCanceled && status.status !== 0) {
       setError(error);
+      setStatus(status);
       onCallError.current && onCallError.current(error);
-      setDetails(details);
       setSubmitting(false);
     }
-    if (!details.isCanceled) {
+    if (!status.isCanceled) {
       setData(payload);
+      setStatus(status);
       onCallSuccess.current && onCallSuccess.current(payload);
-      setDetails(details);
       setSubmitting(false);
     }
   };
 
-  const handleSuccess = memoizee((successCall: Options<T>['onSuccess']) => {
+  const handleSuccess = memoizee((successCall: Options<T>['onCallSuccess']) => {
     onCallSuccess.current = successCall;
   }, memoizeOptions);
 
-  const handleError = memoizee((errorCall: Options<T>['onError']) => {
+  const handleError = memoizee((errorCall: Options<T>['onCallError']) => {
     onCallError.current = errorCall;
   }, memoizeOptions);
 

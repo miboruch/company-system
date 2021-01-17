@@ -20,8 +20,8 @@ import { MainSpinnerWrapper } from 'styles/shared';
 import { fetchEmployeeData, fetchEmployees } from 'api/auth/auth';
 
 import './App.css';
-import useFetch from 'hooks/use-fetch.hook';
-import useCall from 'hooks/use-call.hook';
+import useFetch from 'components/hooks/use-fetch.hook';
+import useCall from 'components/hooks/use-call.hook';
 
 const App: React.FC = () => {
   const { pathname } = useLocation();
@@ -71,9 +71,6 @@ const App: React.FC = () => {
         </MainSpinnerWrapper>
       ) : (
         <Switch>
-          {/*<button type={'button'} onClick={() => token && submit(token)}>*/}
-          {/*  potwierdź*/}
-          {/*</button>*/}
           <Route path={'/'} exact component={SelectPage} />
           <Route path={'/select'} component={SelectPage} />
           <NotAuthRoute path={'/login'} exact component={LoginPage} />

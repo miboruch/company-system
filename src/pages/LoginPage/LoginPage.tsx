@@ -16,7 +16,7 @@ import { login } from 'ducks/auth/login/login-creators';
 import { AccountParagraph, AuthWrapper, FlexWrapper, FlexWrapperDefault, Heading, StyledForm, StyledInput, StyledLink } from './LoginPage.styles';
 import { ErrorParagraph } from 'styles/typography/typography';
 import { SpinnerWrapper } from 'styles/shared';
-import useSubmit from 'hooks/use-submit.hook';
+import useSubmit from 'components/hooks/use-submit.hook';
 
 type ConnectedProps = RouteComponentProps<any>;
 
