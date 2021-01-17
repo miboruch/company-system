@@ -20,8 +20,6 @@ import { MainSpinnerWrapper } from 'styles/shared';
 import { fetchEmployeeData, fetchEmployees } from 'api/auth/auth';
 
 import './App.css';
-import useFetch from 'components/hooks/use-fetch.hook';
-import useCall from 'components/hooks/use-call.hook';
 
 const App: React.FC = () => {
   const { pathname } = useLocation();
@@ -29,21 +27,6 @@ const App: React.FC = () => {
   const dispatch = useAppDispatch();
   const { isLoading } = useSelector((state: AppState) => state.initialLoad);
   const { token } = useSelector((state: AppState) => state.auth.tokens);
-  // const { refresh, actions, details, loading, payload } = useFetch<typeof fetchEmployeeData>(fetchEmployeeData(token || ''), {
-  //   dependencies: [token],
-  //   onSuccess: (data) => console.log(data),
-  //   onError: (error) => console.log(error)
-  // });
-
-  const { isSubmitting, error, onCallError, onCallSuccess, submit } = useCall<typeof fetchEmployeeData>(fetchEmployeeData);
-
-  onCallSuccess((payload) => {
-    console.log(payload);
-  });
-
-  onCallError((error) => {
-    console.log(error);
-  });
 
   useEffect(() => {
     dispatch(authCheck(pathname, history));
