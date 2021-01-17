@@ -22,6 +22,7 @@ module.exports = {
     //remove this rules
     '@typescript-eslint/ban-types': 0,
     '@typescript-eslint/no-inferrable-types': 0,
+    '@typescript-eslint/ban-ts-comment': 0
 
   }
 };

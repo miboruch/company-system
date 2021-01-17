@@ -12,7 +12,7 @@ const SearchInput: React.FC<Props> = ({ onChange }) => {
       {!!onChange && (
         <SearchWrapper>
           <SearchIcon />
-          <StyledInput placeholder={'Szukaj'} onChange={onChange} />
+          <StyledInput placeholder={'Szukaj'} onChange={onChange} data-testid={'search-input'} />
         </SearchWrapper>
       )}
     </>

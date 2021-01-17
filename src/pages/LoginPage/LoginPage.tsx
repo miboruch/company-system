@@ -11,10 +11,12 @@ import LoginTemplate, { TemplatePage } from '../../components/templates/LoginTem
 import { AppState } from 'store/store';
 import { useAppDispatch } from 'store/store';
 import { LoginSchema } from 'validation/loginValidation';
+// import {login} from 'api/auth/auth';
 import { login } from 'ducks/auth/login/login-creators';
 import { AccountParagraph, AuthWrapper, FlexWrapper, FlexWrapperDefault, Heading, StyledForm, StyledInput, StyledLink } from './LoginPage.styles';
 import { ErrorParagraph } from 'styles/typography/typography';
 import { SpinnerWrapper } from 'styles/shared';
+import useSubmit from 'components/hooks/use-submit.hook';
 
 type ConnectedProps = RouteComponentProps<any>;
 
@@ -26,6 +28,17 @@ interface InitialValues {
 const LoginPage: React.FC<ConnectedProps> = ({ history }) => {
   const dispatch = useAppDispatch();
   const { isLoginLoading, loginError } = useSelector((state: AppState) => state.auth.login);
+
+  // const {onSubmit, onSubmitSuccess, onSubmitError} = useSubmit<typeof login, InitialValues>(login);
+  //
+  // onSubmitSuccess((payload, values) => {
+  //   console.log(payload);
+  //   console.log(values);
+  // });
+  //
+  // onSubmitError((error) => {
+  //   console.log(error);
+  // })
 
   const initialValues: InitialValues = {
     email: '',
@@ -39,6 +52,7 @@ const LoginPage: React.FC<ConnectedProps> = ({ history }) => {
   return (
     <LoginTemplate page={TemplatePage.Login}>
       <AuthWrapper>
+        {/*handleSubmit*/}
         <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={LoginSchema} validateOnBlur={false} validateOnChange={false}>
           {({ handleChange, values, errors }) => (
             <StyledForm>

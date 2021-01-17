@@ -55,7 +55,7 @@ const EmployeesPageContent: React.FC = () => {
           </SpinnerWrapper>
         ) : (
           <>
-            <List ref={listRef}>
+            <List ref={listRef} data-testid={'list'}>
               {filterByEmployeeName(filterText, allCompanyEmployees).map((employee) => (
                 <ListBox
                   key={employee._id}
