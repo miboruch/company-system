@@ -11,6 +11,7 @@ const Wrapper = styled.div`
   justify-content: space-between;
   padding: 1rem 2.5rem;
   transition: background-color 0.3s ease;
+  cursor: pointer;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.backgroundHover};

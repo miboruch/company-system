@@ -23,7 +23,7 @@ const SettingsPageContent: React.FC = () => {
               </ListItems>
             ))
           : userSettings.map((userSetting) => (
-              <ListItems key={userSetting.name} listLength={userSettings.length} isActive={userSetting.roleEnum === subcategory} onClick={() => setSubcategory(userSetting.roleEnum)}>
+              <ListItems style={{marginRight: '2rem'}} key={userSetting.name} listLength={userSettings.length} isActive={userSetting.roleEnum === subcategory} onClick={() => setSubcategory(userSetting.roleEnum)}>
                 <AddNewParagraph style={{ fontSize: '15px' }}>{userSetting.name}</AddNewParagraph>
               </ListItems>
             ))}

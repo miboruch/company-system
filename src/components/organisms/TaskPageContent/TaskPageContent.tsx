@@ -19,11 +19,13 @@ import { listAnimation } from 'animations/animations';
 import { deleteTask, getCompanyTasks } from 'ducks/tasks/tasks-data/task-data-creators';
 import { Paragraph } from 'styles/typography/typography';
 import { SpinnerWrapper, List, AddIcon, AddWrapper } from 'styles/shared';
+import { UserRole } from 'ducks/auth/roles/roles';
 
 const TaskPageContent: React.FC = () => {
   const dispatch = useAppDispatch();
   const { allCompanyTasks, areTasksLoading } = useSelector((state: AppState) => state.tasks.taskData);
   const { isTaskInfoOpen, isTaskMapPreviewOpen, selectedTask } = useSelector((state: AppState) => state.tasks.taskToggle);
+  const { role } = useSelector((state: AppState) => state.auth.roles);
   const listRef = useRef<HTMLDivElement | null>(null);
   const [filterText, setFilterText] = useState<string>('');
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
@@ -71,10 +73,12 @@ const TaskPageContent: React.FC = () => {
                     callback={handleSelectTask(task)}
                   />
                 ))}
-                <AddWrapper onClick={handleAddNewTaskOpen}>
-                  <AddIcon />
-                  <Paragraph type={'add'}>Dodaj zadanie</Paragraph>
-                </AddWrapper>
+                {role === UserRole.Admin && (
+                  <AddWrapper onClick={handleAddNewTaskOpen}>
+                    <AddIcon />
+                    <Paragraph type={'add'}>Dodaj zadanie</Paragraph>
+                  </AddWrapper>
+                )}
               </List>
               <ContentTemplate isOpen={isTaskInfoOpen} close={handleTaskInfoClose}>
                 <TaskInfo isEditToggled={isEditToggled} setDeleteOpen={setDeleteOpen} setEditToggled={setEditToggled} />

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { useParams, useRouteMatch } from 'react-router-dom';
 
 import { AppState } from 'store/store';
 import { UserRole } from 'ducks/auth/roles/roles';
@@ -8,7 +8,10 @@ import { adminRoutes, userRoutes } from 'routes/routesDefinition';
 import { LinkWrapper, StyledLink } from './Menu.styles';
 import { MenuContext } from 'providers/MenuContext/MenuContext';
 
-const MenuItemsRenderer: React.FC<RouteComponentProps> = ({ location }) => {
+const MenuItemsRenderer: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const { url } = useRouteMatch();
+
   const { role } = useSelector((state: AppState) => state.auth.roles);
   const { userData } = useSelector((state: AppState) => state.auth.data);
   const { token } = useSelector((state: AppState) => state.auth.tokens);
@@ -17,12 +20,14 @@ const MenuItemsRenderer: React.FC<RouteComponentProps> = ({ location }) => {
 
   const condition: boolean = !!(userData && token && currentCompany);
 
+  const handleCloseMenu = () => setMenuOpen(false);
+
   const renderAdminRoutes = adminRoutes
     .filter((route) => (condition ? route : !route.isGuarded))
-    .map(({ name, path, icon }) => (
-      <LinkWrapper isActive={path.includes(location.pathname)} key={path}>
+    .map(({ name, main, icon }) => (
+      <LinkWrapper isActive={url.includes(main)} key={main}>
         {icon}
-        <StyledLink to={path} onClick={() => setMenuOpen(false)}>
+        <StyledLink to={`${main}/${id}`} onClick={handleCloseMenu}>
           {name}
         </StyledLink>
       </LinkWrapper>
@@ -30,10 +35,10 @@ const MenuItemsRenderer: React.FC<RouteComponentProps> = ({ location }) => {
 
   const renderUserRoutes = userRoutes
     .filter((route) => (condition ? route : !route.isGuarded))
-    .map(({ name, path, icon }) => (
-      <LinkWrapper isActive={path.includes(location.pathname)} key={path}>
+    .map(({ name, main, icon }) => (
+      <LinkWrapper isActive={url.includes(main)} key={main}>
         {icon}
-        <StyledLink to={path} onClick={() => setMenuOpen(false)}>
+        <StyledLink to={`${main}/${id}`} onClick={handleCloseMenu}>
           {name}
         </StyledLink>
       </LinkWrapper>
@@ -42,4 +47,4 @@ const MenuItemsRenderer: React.FC<RouteComponentProps> = ({ location }) => {
   return <>{role === UserRole.Admin ? renderAdminRoutes : renderUserRoutes}</>;
 };
 
-export default withRouter(MenuItemsRenderer);
+export default MenuItemsRenderer;

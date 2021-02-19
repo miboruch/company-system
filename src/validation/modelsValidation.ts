@@ -12,7 +12,7 @@ export const ClientSchema = Yup.object().shape({
 export const TaskSchema = Yup.object().shape({
   name: Yup.string().min(2, 'Minimum 2 znaki').required('To pole jest wymagane'),
   description: Yup.string().min(2, 'Minimum 2 znaki').required('To pole jest wymagane'),
-  date: Yup.date().required('To pole jest wymagane'),
+  date: Yup.date(),
   timeEstimate: Yup.number().min(0),
   clientId: Yup.string(),
   taskIncome: Yup.number().min(0),

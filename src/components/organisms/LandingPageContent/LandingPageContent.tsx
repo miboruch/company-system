@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useSelector } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter, useParams } from 'react-router-dom';
 
 import GridWrapper from 'components/templates/GridWrapper/GridWrapper';
 import TaskTile from 'components/molecules/TaskTile/TaskTile';
@@ -28,6 +28,7 @@ import { getAllAppUsers } from 'ducks/users/all-users-creators';
 
 const LandingPageContent: React.FC<RouteComponentProps<any>> = ({ history }) => {
   const dispatch = useAppDispatch();
+  const { id } = useParams<{id: string}>();
   const { role } = useSelector((state: AppState) => state.auth.roles);
   const { employeeData } = useSelector((state: AppState) => state.auth.data);
   const { allCompanyTasks, completedTasks } = useSelector((state: AppState) => state.tasks.taskData);
@@ -54,7 +55,7 @@ const LandingPageContent: React.FC<RouteComponentProps<any>> = ({ history }) => 
   }, [employeeData]);
 
   const handleStatisticsOpen = () => setStatisticsOpen(true);
-  const handleTaskClick = (task: TaskInterface) => () => dispatch(redirectToTask(history, task));
+  const handleTaskClick = (task: TaskInterface) => () => dispatch(redirectToTask(history, task, id));
 
   useEffect(() => {
     role === UserRole.Admin ? dispatch(getIncomeExpenseInTimePeriod({ daysBack, setData })) : dispatch(getTasksInTimePeriod({ daysBack, setData: setTaskData }));

@@ -9,9 +9,16 @@ import { Coords } from 'types/globalTypes';
 import { getLocation } from 'utils/mapFunctions';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { SpinnerWrapper } from 'styles/shared';
-import { markerCustomIcon } from '../../../AddCompany/utils/customMapIcons';
+import { markerCustomIcon } from 'pages/Companies/components/AddCompany/utils/customMapIcons';
 import { ClientDataContext } from '../../context/ClientDataContext';
-import { ButtonWrapper, CenterBox, MapHeadingWrapper, MapWrapper, MobileCompoundTitle, StyledBackParagraph } from 'styles/compoundStyles';
+import {
+  ButtonWrapper,
+  CenterBox,
+  MapHeadingWrapper,
+  MapWrapper,
+  MobileCompoundTitle,
+  StyledBackParagraph
+} from 'styles/compoundStyles';
 
 const MapPage: React.FC = () => {
   const { data, setData } = useContext(ClientDataContext);
@@ -64,7 +71,10 @@ const MapPage: React.FC = () => {
               zoomControl={false}
               onClick={(e: Leaflet.LeafletMouseEvent) => handleMapClick(e)}
             >
-              <TileLayer attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
+              <TileLayer
+                attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+              />
               {coords.lat && coords.long && <Marker icon={markerCustomIcon} position={[coords.lat, coords.long]} />}
             </Map>
             <ButtonWrapper>
