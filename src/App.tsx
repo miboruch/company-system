@@ -6,7 +6,7 @@ import Layout from './components/Layout';
 import LoginPage from './pages/LoginPage/LoginPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import Routes from './routes/Routes';
-import SelectPage from './pages/SelectPage/SelectPage';
+import Select from 'pages/Select/Select';
 import NotificationPopup from './components/molecules/NotificationPopup/NotificationPopup';
 import RegisterFromLink from './pages/RegisterFromLink/RegisterFromLink';
 import Spinner from './components/atoms/Spinner/Spinner';
@@ -54,8 +54,8 @@ const App: React.FC = () => {
         </MainSpinnerWrapper>
       ) : (
         <Switch>
-          <Route path={'/'} exact component={SelectPage} />
-          <Route path={'/select'} component={SelectPage} />
+          <Route path={'/'} exact component={Select} />
+          <Route path={'/select'} component={Select} />
           <NotAuthRoute path={'/login'} exact component={LoginPage} />
           <NotAuthRoute path={'/register'} component={RegisterPage} />
           <NotAuthRoute path={'/link-register/:token'} component={RegisterFromLink} />

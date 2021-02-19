@@ -6,8 +6,7 @@ import Spinner from 'components/atoms/Spinner/Spinner';
 import GridWrapper from 'components/templates/GridWrapper/GridWrapper';
 import ListBox from 'components/molecules/ListBox/ListBox';
 import AddCompanyController from '../AddCompany/AddCompanyController';
-import useFetch from 'components/hooks/use-fetch.hook';
-import useShowContent from 'components/hooks/use-show-content.hook';
+import { useFetch, useShowContent } from 'components/hooks';
 
 import { fetchAdminCompanies, fetchEmployeeCompanies } from 'api/company/api.company';
 import { setCurrentCompany } from 'ducks/company/current-company/current-company-creators';
@@ -15,6 +14,7 @@ import { setAddCompanyOpen } from 'ducks/company/company-toggle/company-toggle';
 import { CompanyInterface } from 'types/modelsTypes';
 import { AppState, useAppDispatch } from 'store/store';
 import { UserRole } from 'ducks/auth/roles/roles';
+
 import { AddIcon, AddWrapper, SpinnerWrapper } from 'styles/shared';
 import { Table, Wrapper } from 'pages/Companies/Companies.styles';
 import { Paragraph } from 'styles/typography/typography';
