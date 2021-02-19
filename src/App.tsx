@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 import { useLocation, useHistory, Redirect, Route, Switch } from 'react-router-dom';
 
 import Layout from './components/Layout';
-import LoginPage from './pages/LoginPage/LoginPage';
-import RegisterPage from './pages/RegisterPage/RegisterPage';
+import Login from 'pages/Login/Login';
+import Register from 'pages/Register/Register';
 import Routes from './routes/Routes';
 import Select from 'pages/Select/Select';
 import NotificationPopup from './components/molecules/NotificationPopup/NotificationPopup';
@@ -55,8 +55,8 @@ const App: React.FC = () => {
         <Switch>
           <Route path={'/'} exact component={Select} />
           <Route path={'/select'} component={Select} />
-          <NotAuthRoute path={'/login'} exact component={LoginPage} />
-          <NotAuthRoute path={'/register'} component={RegisterPage} />
+          <NotAuthRoute path={'/login'} exact component={Login} />
+          <NotAuthRoute path={'/register'} component={Register} />
           <NotAuthRoute path={'/link-register/:token'} component={RegisterFromLink} />
           <Routes />
           <Redirect from={'*'} to={'/select'} />

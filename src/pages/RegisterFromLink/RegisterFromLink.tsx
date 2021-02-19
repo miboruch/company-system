@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 
-import RegistrationLinkController from '../../components/compound/RegisterUser/RegistrationLinkController';
+import RegistrationLinkController from 'pages/Register/components/RegisterUser/RegistrationLinkController';
 import Spinner from '../../components/atoms/Spinner/Spinner';
 import LoginTemplate, { TemplatePage } from '../../components/templates/LoginTemplate/LoginTemplate';
-
-import { AppState, useAppDispatch } from '../../store/store';
-import { validateRegistrationToken } from '../../ducks/auth/link-registration/link-registration-creators';
+import { AppState, useAppDispatch } from 'store/store';
+import { validateRegistrationToken } from 'ducks/auth/link-registration/link-registration-creators';
 
 interface RegistrationTokenResponse {
   companyId: string;
@@ -47,7 +46,11 @@ const RegisterFromLink: React.FC<ConnectedProps> = ({ match }) => {
 
   return (
     <LoginTemplate page={TemplatePage.Register} companyName={response?.companyName}>
-      {isValidateLoading ? <Spinner /> : !!response && <RegistrationLinkController response={response} token={match.params.token} />}
+      {isValidateLoading ? (
+        <Spinner />
+      ) : (
+        !!response && <RegistrationLinkController response={response} token={match.params.token} />
+      )}
     </LoginTemplate>
   );
 };

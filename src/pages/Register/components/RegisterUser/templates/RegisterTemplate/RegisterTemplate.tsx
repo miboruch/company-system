@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { AuthWrapper } from 'pages/LoginPage/LoginPage.styles';
+import { AuthWrapper } from 'pages/Login/Login.styles';
 import { PageContext } from '../../context/PageContext';
 
 interface Props {

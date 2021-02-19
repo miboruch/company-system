@@ -1,11 +1,11 @@
 import React from 'react';
 
 import PageContextProvider from './context/PageContext';
-import RegisterTemplate from 'components/compound/RegisterUser/templates/RegisterTemplate/RegisterTemplate';
-import MainRegisterDataPage from 'components/compound/RegisterUser/pages/MainRegisterDataPage';
-import PasswordPage from 'components/compound/RegisterUser/pages/PasswordPage';
-import ContactDataPage from 'components/compound/RegisterUser/pages/ContactDataPage';
-import RegisterDataContextProvider from 'components/compound/RegisterUser/context/RegisterDataContext';
+import RegisterTemplate from './templates/RegisterTemplate/RegisterTemplate';
+import MainRegisterData from './pages/MainRegisterData';
+import Password from './pages/Password';
+import ContactData from './pages/ContactData';
+import RegisterDataContextProvider from './context/RegisterDataContext';
 
 import { RegistrationVerifyTokenResponse } from 'pages/RegisterFromLink/RegisterFromLink';
 
@@ -19,13 +19,13 @@ const RegistrationLinkController: React.FC<Props> = ({ response, token }) => {
     <RegisterDataContextProvider isRegistrationLink={true} email={response.email}>
       <PageContextProvider>
         <RegisterTemplate pageIndex={0}>
-          <MainRegisterDataPage isRegistrationLink={true} />
+          <MainRegisterData isRegistrationLink={true} />
         </RegisterTemplate>
         <RegisterTemplate pageIndex={1}>
-          <PasswordPage />
+          <Password />
         </RegisterTemplate>
         <RegisterTemplate pageIndex={2}>
-          <ContactDataPage isRegistrationLink={true} token={token} />
+          <ContactData isRegistrationLink={true} token={token} />
         </RegisterTemplate>
       </PageContextProvider>
     </RegisterDataContextProvider>

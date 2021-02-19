@@ -5,14 +5,16 @@ import { useField } from 'formik';
 
 import Input, { InputProps } from 'components/form/Input/Input';
 import Checkbox, { CheckboxProps } from 'components/form/Checkbox/Checkbox';
+import { phoneFormat } from 'utils/format';
 
 import { StyledLabel } from 'styles/shared';
-import { phoneFormat } from 'utils/format';
+
 
 interface Props {
   type: React.HTMLProps<HTMLInputElement>['type'] | 'phone' | 'date' | 'checkbox' | 'textarea' | 'zipCode';
   name: string;
   label?: string;
+  spacing?: boolean;
   onFieldChange?: () => void;
   onFieldError?: () => void;
 }
@@ -20,7 +22,7 @@ interface Props {
 type FieldProps = InputProps | CheckboxProps;
 type FormFieldProps = React.HTMLProps<HTMLInputElement> & Props & FieldProps;
 
-const FormField: React.FC<FormFieldProps> = ({ type = 'text', name, label, onFieldChange, onFieldError, ...rest }) => {
+const FormField: React.FC<FormFieldProps> = ({ type = 'text', name, spacing, label, onFieldChange, onFieldError, ...rest }) => {
   const [field, meta, helpers] = useField({ name });
 
   const { error, touched } = meta;
@@ -102,7 +104,7 @@ const FormField: React.FC<FormFieldProps> = ({ type = 'text', name, label, onFie
     );
   }
 
-  return <Input {...rest} type={type} field={{ ...field, onChange: onInputChange }} labelText={label} errorMessage={error} />;
+  return <Input {...rest} type={type} spacing={spacing} field={{ ...field, onChange: onInputChange }} labelText={label} errorMessage={error} />;
 };
 
 export default FormField;

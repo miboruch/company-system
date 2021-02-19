@@ -5,11 +5,11 @@ import { Formik } from 'formik';
 import Button from 'components/atoms/Button/Button';
 
 import { PageContext } from '../context/PageContext';
-import { Heading, StyledForm } from 'pages/LoginPage/LoginPage.styles';
+import { Heading, StyledForm } from 'pages/Login/Login.styles';
 import { ErrorParagraph } from 'styles/typography/typography';
 import { Paragraph } from 'styles/typography/typography';
 import { DoubleFlexWrapper } from 'styles/shared';
-import { StyledInput } from 'pages/LoginPage/LoginPage.styles';
+import { StyledInput } from 'pages/Login/Login.styles';
 import { PasswordSchema } from '../validation/validation';
 
 type defaultValues = {
@@ -17,7 +17,7 @@ type defaultValues = {
   repeatedPassword: string;
 };
 
-const PasswordPage: React.FC = () => {
+const Password: React.FC = () => {
   const { data, setData } = useContext(RegisterDataContext);
   const { currentPage, setCurrentPage } = useContext(PageContext);
 
@@ -55,4 +55,4 @@ const PasswordPage: React.FC = () => {
   );
 };
 
-export default PasswordPage;
+export default Password;

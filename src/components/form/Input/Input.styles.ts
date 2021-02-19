@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const InputWrapper = styled.div`
   position: relative;
@@ -19,7 +19,7 @@ const StyledLabel = styled.label`
   }
 `;
 
-const StyledInput = styled.input`
+const StyledInput = styled.input<{ spacing: boolean }>`
   width: 100%;
   font-size: 13px;
   font-family: ${({ theme }) => theme.font.family.avantGarde};
@@ -63,6 +63,12 @@ const StyledInput = styled.input`
   ${({ theme }) => theme.mq.standard} {
     color: ${({ theme }) => theme.colors.inputColorStandard};
   }
+
+  ${({ spacing }) =>
+    spacing &&
+    css`
+      margin-bottom: 5rem;
+    `}
 `;
 
 export { InputWrapper, StyledLabel, StyledInput };

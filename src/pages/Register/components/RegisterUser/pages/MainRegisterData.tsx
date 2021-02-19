@@ -5,9 +5,9 @@ import DatePicker from 'react-datepicker';
 import Button from 'components/atoms/Button/Button';
 
 import { RegisterDataContext } from '../context/RegisterDataContext';
-import { StyledForm, Heading } from 'pages/LoginPage/LoginPage.styles';
+import { StyledForm, Heading } from 'pages/Login/Login.styles';
 import { FlexWrapper, StyledLabel } from 'styles/shared';
-import { StyledInput } from 'pages/LoginPage/LoginPage.styles';
+import { StyledInput } from 'pages/Login/Login.styles';
 import { MainRegisterDataSchema } from '../validation/validation';
 
 import 'react-datepicker/dist/react-datepicker.css';
@@ -24,7 +24,7 @@ interface Props {
   isRegistrationLink: boolean;
 }
 
-const MainRegisterDataPage: React.FC<Props> = ({ isRegistrationLink }) => {
+const MainRegisterData: React.FC<Props> = ({ isRegistrationLink }) => {
   const { data, setData } = useContext(RegisterDataContext);
   const { currentPage, setCurrentPage } = useContext(PageContext);
 
@@ -61,4 +61,4 @@ const MainRegisterDataPage: React.FC<Props> = ({ isRegistrationLink }) => {
   );
 };
 
-export default MainRegisterDataPage;
+export default MainRegisterData;

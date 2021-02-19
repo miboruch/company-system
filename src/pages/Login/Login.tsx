@@ -20,9 +20,9 @@ import {
   Heading,
   StyledForm,
   StyledLink
-} from './LoginPage.styles';
+} from 'pages/Login/Login.styles';
 
-const LoginPage: React.FC = () => {
+const Login: React.FC = () => {
   const history = useHistory();
   const { isLoginLoading, loginError } = useSelector((state: AppState) => state.auth.login);
 
@@ -73,4 +73,4 @@ const LoginPage: React.FC = () => {
   );
 };
 
-export default LoginPage;
+export default Login;

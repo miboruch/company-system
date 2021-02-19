@@ -1,9 +1,9 @@
 import React from 'react';
 
 import LoginTemplate, { TemplatePage } from '../../components/templates/LoginTemplate/LoginTemplate';
-import RegisterUserController from '../../components/compound/RegisterUser/RegisterUserController';
+import RegisterUserController from './components/RegisterUser/RegisterUserController';
 
-const RegisterPage: React.FC = () => {
+const Register: React.FC = () => {
   return (
     <LoginTemplate page={TemplatePage.Register}>
       <RegisterUserController />
@@ -11,4 +11,4 @@ const RegisterPage: React.FC = () => {
   );
 };
 
-export default RegisterPage;
+export default Register;
