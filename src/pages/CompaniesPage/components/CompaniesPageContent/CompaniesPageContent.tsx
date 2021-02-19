@@ -5,7 +5,7 @@ import { RouteComponentProps, withRouter, useHistory } from 'react-router-dom';
 import Spinner from 'components/atoms/Spinner/Spinner';
 import GridWrapper from 'components/templates/GridWrapper/GridWrapper';
 import ListBox from 'components/molecules/ListBox/ListBox';
-import AddCompanyController from 'components/compound/AddCompany/AddCompanyController';
+import AddCompanyController from '../AddCompany/AddCompanyController';
 import useFetch from 'components/hooks/use-fetch.hook';
 import useShowContent from 'components/hooks/use-show-content.hook';
 

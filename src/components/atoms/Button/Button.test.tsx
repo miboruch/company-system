@@ -1,6 +1,10 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import { render, screen, fireEvent } from '@testing-library/react';
+import {
+  render,
+  screen,
+  fireEvent
+} from '@testing-library/react';
 
 import Button from 'components/atoms/Button/Button';
 
@@ -20,7 +24,11 @@ describe('button', () => {
   it('renders disabled button', () => {
     const { getByText } = render(
       <ThemeProvider theme={theme}>
-        <Button type={'button'} text={buttonText} disabled={true} />
+        <Button
+          type={'button'}
+          text={buttonText}
+          disabled={true}
+        />
       </ThemeProvider>
     );
 
@@ -30,7 +38,11 @@ describe('button', () => {
     const handleClick = jest.fn();
     render(
       <ThemeProvider theme={theme}>
-        <Button type={'button'} text={buttonText} onClick={handleClick} />
+        <Button
+          type={'button'}
+          text={buttonText}
+          onClick={handleClick}
+        />
       </ThemeProvider>
     );
 
@@ -38,16 +50,21 @@ describe('button', () => {
 
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
-  it('does not call onClick when button is disabled', () => {
+  it('does not call onClick when disabled', () => {
     const handleClick = jest.fn();
     render(
       <ThemeProvider theme={theme}>
-        <Button type={'button'} text={buttonText} onClick={handleClick} disabled={true} />
+        <Button
+          type={'button'}
+          text={buttonText}
+          onClick={handleClick}
+          disabled={true}
+        />
       </ThemeProvider>
     );
 
     fireEvent.click(screen.getByText(buttonText));
 
     expect(handleClick).toHaveBeenCalledTimes(0);
-  })
+  });
 });

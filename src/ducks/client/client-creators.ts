@@ -4,7 +4,7 @@ import { baseStoreType } from 'store/store';
 import { companyApi } from 'api';
 import { getSingleDayAttendance } from '../attendance/attendance-data/attendance-data-creators';
 import { getCompanyClients } from './client-data/client-data-creators';
-import { setClientInfoOpen, setSelectedClient } from './client-toggle/client-toggle';
+import { setClientInfoOpen, setSelectedClient, setAddNewClientOpen } from './client-toggle/client-toggle';
 import { setNotificationMessage } from '../popup/popup';
 
 interface AddClientInterface {
@@ -37,6 +37,7 @@ export const addNewClient = createAsyncThunk<void, AddClientInterface, baseStore
 
       dispatch(getCompanyClients());
       dispatch(setClientInfoOpen(false));
+      dispatch(setAddNewClientOpen(false));
       dispatch(setNotificationMessage({ message: 'Dodano klienta' }));
       dispatch(getSingleDayAttendance());
     } else {
@@ -52,7 +53,7 @@ export const deleteClient = createAsyncThunk<void, string, baseStoreType>('clien
 
   try {
     if (token) {
-      await companyApi.post(`/client/delete-client/${clientId}`, {
+      await companyApi.delete(`/client/delete-client/${clientId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

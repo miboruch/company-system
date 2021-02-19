@@ -1,7 +1,7 @@
 import React from 'react';
 
 import MenuTemplate from '../../components/templates/MenuTemplate/MenuTemplate';
-import CompaniesPageContent from '../../components/organisms/CompaniesPageContent/CompaniesPageContent';
+import CompaniesPageContent from './components/CompaniesPageContent/CompaniesPageContent';
 
 const CompaniesPage: React.FC = () => {
   return (

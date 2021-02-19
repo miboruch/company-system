@@ -92,6 +92,7 @@ const SelectEmployee: React.FC = () => {
             <DoubleFlexWrapper>
               <Paragraph
                 type={'text'}
+                style={{cursor: 'pointer'}}
                 onClick={() => {
                   setFieldValue('userId', undefined);
                   setFieldValue('registerWithMail', true);

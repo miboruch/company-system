@@ -2,14 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useSelector, useDispatch } from 'react-redux';
 
-import PageContextProvider, { PageSettingEnum } from 'components/compound/AddCompany/context/PageContext';
-import AddCompanyTemplate from 'components/compound/AddCompany/templates/AddCompanyTemplate/AddCompanyTemplate';
-import AddCompanyHeader from 'components/compound/AddCompany/components/AddCompanyHeader/AddCompanyHeader';
-import CompanyDataContextProvider from 'components/compound/AddCompany/context/CompanyDataContext';
-import MainCompanyInfo from 'components/compound/AddCompany/pages/MainCompanyInfo/MainCompanyInfo';
-import MapPage from 'components/compound/AddCompany/pages/MapPage/MapPage';
-import AddressInfo from 'components/compound/AddCompany/pages/AddressInfo/AddressInfo';
-import StepList from 'components/compound/AddCompany/components/StepList/StepList';
+import PageContextProvider, { PageSettingEnum } from './context/PageContext';
+import AddCompanyTemplate from './templates/AddCompanyTemplate/AddCompanyTemplate';
+import AddCompanyHeader from './components/AddCompanyHeader/AddCompanyHeader';
+import CompanyDataContextProvider from './context/CompanyDataContext';
+import MainCompanyInfo from './pages/MainCompanyInfo/MainCompanyInfo';
+import MapPage from './pages/MapPage/MapPage';
+import AddressInfo from './pages/AddressInfo/AddressInfo';
+import StepList from './components/StepList/StepList';
 import CloseButton from 'components/atoms/CloseButton/CloseButton';
 
 import { AppState } from 'store/store';

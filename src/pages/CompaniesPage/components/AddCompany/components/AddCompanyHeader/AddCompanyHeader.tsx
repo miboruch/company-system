@@ -7,14 +7,14 @@ import CloseButton from 'components/atoms/CloseButton/CloseButton';
 import { Direction } from 'types/globalTypes';
 import { setAddCompanyOpen } from 'ducks/company/company-toggle/company-toggle';
 import { PageContext } from '../../context/PageContext';
-import { StyledHeader } from '../../../styles/headerStyles';
+import { StyledHeader } from 'components/compound/styles/headerStyles';
 import { Paragraph } from 'styles/typography/typography';
 
 const AddCompanyHeader: React.FC = () => {
   const dispatch = useDispatch();
   const { currentPage, setCurrentPage } = useContext(PageContext);
 
-  const handleArrowClick = () =>  currentPage !== 0 && setCurrentPage(currentPage - 1);
+  const handleArrowClick = () => currentPage !== 0 && setCurrentPage(currentPage - 1);
   const handleCloseButtonClick = () => dispatch(setAddCompanyOpen(false));
 
   return (

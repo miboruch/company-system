@@ -10,10 +10,10 @@ export const selectTask = (task: TaskInterface | null) => (dispatch: AppDispatch
   dispatch(setTaskInfoOpen(!!task));
 };
 
-export const redirectToTask = (history: History, task: TaskInterface) => (dispatch: AppDispatch, getState: () => AppState): void => {
+export const redirectToTask = (history: History, task: TaskInterface, id: string) => (dispatch: AppDispatch, getState: () => AppState): void => {
   const { role } = getState().auth.roles;
 
-  role === UserRole.User ? history.push('/user/tasks') : history.push('/admin/tasks');
+  role === UserRole.User ? history.push(`/user/tasks/${id}`) : history.push(`/admin/tasks/${id}`);
   dispatch(setTaskInfoOpen(true));
   dispatch(setSelectedTask(task));
 };

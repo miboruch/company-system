@@ -11,7 +11,7 @@ import CloseButton from 'components/atoms/CloseButton/CloseButton';
 import { AppState, useAppDispatch } from 'store/store';
 import { modalOpenAnimation } from 'animations/animations';
 import { ButtonWrapper, CenterBox } from 'styles/compoundStyles';
-import { markerCustomIcon } from 'components/compound/AddCompany/utils/customMapIcons';
+import { markerCustomIcon } from 'pages/CompaniesPage/components/AddCompany/utils/customMapIcons';
 import { SpinnerWrapper } from 'styles/shared';
 import { CloseButtonWrapper } from 'styles/compoundControllerStyles';
 import { editCompanyCoords } from 'ducks/company/current-company/current-company-creators';
@@ -103,7 +103,10 @@ const MapCoordsEdit: React.FC<Props> = ({ isOpen, closeMap, lat, long, type }) =
                   }
                 }}
               >
-                <TileLayer attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
+                <TileLayer
+                  attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                  url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                />
                 {updatedLat && updatedLong && <Marker icon={markerCustomIcon} position={[updatedLat, updatedLong]} />}
               </Map>
               {type !== CoordsEditType.View && (
