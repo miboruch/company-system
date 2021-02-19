@@ -1,7 +1,7 @@
 import React from 'react';
 
 import LandingPage from '../pages/LandingPage/LandingPage';
-import CompaniesPage from '../pages/CompaniesPage/CompaniesPage';
+import Companies from 'pages/Companies/Companies';
 import EmployeePage from '../pages/EmployeePage/EmployeePage';
 import TaskPage from '../pages/TaskPage/TaskPage';
 import ClientsPage from '../pages/ClientsPage/ClientsPage';
@@ -80,7 +80,7 @@ export const adminRoutes: Routes[] = [
     path: '/admin/companies',
     main: '/admin/companies',
     exact: false,
-    component: CompaniesPage,
+    component: Companies,
     name: 'Twoje firmy',
     icon: <HomeIcon />,
     isGuarded: false
@@ -128,7 +128,7 @@ export const userRoutes: Routes[] = [
     path: '/user/companies',
     main: '/user/companies',
     exact: false,
-    component: CompaniesPage,
+    component: Companies,
     name: 'Twoje firmy',
     icon: <HomeIcon />,
     isGuarded: false

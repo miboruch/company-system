@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
-import { RouteComponentProps, withRouter, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import Spinner from 'components/atoms/Spinner/Spinner';
 import GridWrapper from 'components/templates/GridWrapper/GridWrapper';
@@ -16,10 +16,10 @@ import { CompanyInterface } from 'types/modelsTypes';
 import { AppState, useAppDispatch } from 'store/store';
 import { UserRole } from 'ducks/auth/roles/roles';
 import { AddIcon, AddWrapper, SpinnerWrapper } from 'styles/shared';
-import { Table, Wrapper } from 'pages/CompaniesPage/CompaniesPage.styles';
+import { Table, Wrapper } from 'pages/Companies/Companies.styles';
 import { Paragraph } from 'styles/typography/typography';
 
-const CompaniesPageContent: React.FC = () => {
+const CompaniesContent: React.FC = () => {
   const history = useHistory();
   const dispatch = useAppDispatch();
   const { role } = useSelector((state: AppState) => state.auth.roles);
@@ -76,4 +76,4 @@ const CompaniesPageContent: React.FC = () => {
   );
 };
 
-export default CompaniesPageContent;
+export default CompaniesContent;

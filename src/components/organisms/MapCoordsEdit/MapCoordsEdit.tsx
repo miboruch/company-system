@@ -11,7 +11,7 @@ import CloseButton from 'components/atoms/CloseButton/CloseButton';
 import { AppState, useAppDispatch } from 'store/store';
 import { modalOpenAnimation } from 'animations/animations';
 import { ButtonWrapper, CenterBox } from 'styles/compoundStyles';
-import { markerCustomIcon } from 'pages/CompaniesPage/components/AddCompany/utils/customMapIcons';
+import { markerCustomIcon } from 'pages/Companies/components/AddCompany/utils/customMapIcons';
 import { SpinnerWrapper } from 'styles/shared';
 import { CloseButtonWrapper } from 'styles/compoundControllerStyles';
 import { editCompanyCoords } from 'ducks/company/current-company/current-company-creators';

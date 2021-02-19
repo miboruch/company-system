@@ -9,7 +9,7 @@ import { Coords } from 'types/globalTypes';
 import { getLocation } from 'utils/mapFunctions';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { SpinnerWrapper } from 'styles/shared';
-import { markerCustomIcon } from 'pages/CompaniesPage/components/AddCompany/utils/customMapIcons';
+import { markerCustomIcon } from 'pages/Companies/components/AddCompany/utils/customMapIcons';
 import { ClientDataContext } from '../../context/ClientDataContext';
 import {
   ButtonWrapper,
