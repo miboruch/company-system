@@ -17,7 +17,6 @@ import { authCheck } from 'ducks/auth/check/check-creators';
 import { handleCompanyRefreshToken, handleAuthRefreshToken } from 'api/middleware';
 import { authApi, companyApi } from 'api';
 import { MainSpinnerWrapper } from 'styles/shared';
-import { fetchEmployeeData, fetchEmployees } from 'api/auth/auth';
 
 import './App.css';
 

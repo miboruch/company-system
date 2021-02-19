@@ -1,60 +1,47 @@
 import React from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Formik } from 'formik';
 
-import Input from '../../components/atoms/Input/Input';
-import Button from '../../components/atoms/Button/Button';
-import Spinner from '../../components/atoms/Spinner/Spinner';
 import LoginTemplate, { TemplatePage } from '../../components/templates/LoginTemplate/LoginTemplate';
-
+import { FormField, Spinner, Button } from 'components';
+import { useSubmit } from 'components/hooks';
+import { login, LoginData } from 'api';
 import { AppState } from 'store/store';
-import { useAppDispatch } from 'store/store';
 import { LoginSchema } from 'validation/loginValidation';
-// import {login} from 'api/auth/auth';
-import { login } from 'ducks/auth/login/login-creators';
-import { AccountParagraph, AuthWrapper, FlexWrapper, FlexWrapperDefault, Heading, StyledForm, StyledInput, StyledLink } from './LoginPage.styles';
+
 import { ErrorParagraph } from 'styles/typography/typography';
 import { SpinnerWrapper } from 'styles/shared';
-import useSubmit from 'components/hooks/use-submit.hook';
+import {
+  AccountParagraph,
+  AuthWrapper,
+  FlexWrapper,
+  FlexWrapperDefault,
+  Heading,
+  StyledForm,
+  StyledLink
+} from './LoginPage.styles';
 
-type ConnectedProps = RouteComponentProps<any>;
-
-interface InitialValues {
-  email: string;
-  password: string;
-}
-
-const LoginPage: React.FC<ConnectedProps> = ({ history }) => {
-  const dispatch = useAppDispatch();
+const LoginPage: React.FC = () => {
+  const history = useHistory();
   const { isLoginLoading, loginError } = useSelector((state: AppState) => state.auth.login);
 
-  // const {onSubmit, onSubmitSuccess, onSubmitError} = useSubmit<typeof login, InitialValues>(login);
-  //
-  // onSubmitSuccess((payload, values) => {
-  //   console.log(payload);
-  //   console.log(values);
-  // });
-  //
-  // onSubmitError((error) => {
-  //   console.log(error);
-  // })
+  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit<typeof login, LoginData>(login);
 
-  const initialValues: InitialValues = {
+  onSubmitSuccess(() => {
+    history.push('/select');
+  });
+
+  const initialValues: LoginData = {
     email: '',
     password: ''
-  };
-
-  const handleSubmit = ({ email, password }: InitialValues): void => {
-    dispatch(login({ email, password, callback: () => history.push('/select') }));
   };
 
   return (
     <LoginTemplate page={TemplatePage.Login}>
       <AuthWrapper>
-        {/*handleSubmit*/}
-        <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={LoginSchema} validateOnBlur={false} validateOnChange={false}>
-          {({ handleChange, values, errors }) => (
+        <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={LoginSchema}>
+          {({ isSubmitting }) => (
             <StyledForm>
               {isLoginLoading ? (
                 <SpinnerWrapper>
@@ -63,10 +50,12 @@ const LoginPage: React.FC<ConnectedProps> = ({ history }) => {
               ) : (
                 <>
                   <Heading>Zaloguj się do panelu</Heading>
-                  <StyledInput onChange={handleChange} type={'email'} name={'email'} value={values.email} required={true} labelText={errors.email || 'Email'} />
-                  <Input onChange={handleChange} type={'password'} name={'password'} value={values.password} required={true} labelText={errors.password || 'Hasło'} />
+                  <FormField type={'email'} name={'email'} required={true} label={'Email'} style={{ marginBottom: '5rem' }} />
+                  <FormField type={'password'} name={'password'} required={true} label={'Hasło'} />
                   <FlexWrapper>
-                    <Button type={'submit'} text={'Zaloguj'} />
+                    <Button type={'submit'} disabled={isSubmitting}>
+                      Zaloguj
+                    </Button>
                   </FlexWrapper>
                   <FlexWrapperDefault>
                     <AccountParagraph>
