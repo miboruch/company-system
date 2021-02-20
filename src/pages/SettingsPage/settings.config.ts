@@ -1,8 +1,8 @@
 import React from 'react';
-import AccountSettings from '../../molecules/AccountSettings/AccountSettings';
-import CompanySettings from '../../molecules/CompanySettings/CompanySettings';
-import PasswordChangeSettings from '../../molecules/PasswordChangeSettings/PasswordChangeSettings';
-import AdminSettings from '../../molecules/AdminSettings/AdminSettings';
+import AccountSettings from './components/AccountSettings/AccountSettings';
+import AdminSettings from './components/AdminSettings/AdminSettings';
+import CompanySettings from './components/CompanySettings/CompanySettings';
+import PasswordChangeSettings from './components/PasswordChangeSettings/PasswordChangeSettings';
 
 export enum AdminSettingsSubcategories {
   AccountSettings = 'accountSettings',
@@ -54,12 +54,12 @@ export const userSettings: SettingsInterface[] = [
 export const renderSettings = (subcategory: AdminSettingsSubcategories | UserSettingsSubcategories): React.ReactNode => {
   switch (subcategory) {
     case AdminSettingsSubcategories.AccountSettings || UserSettingsSubcategories.AccountSettings:
-      return <AccountSettings />;
+      return AccountSettings;
     case AdminSettingsSubcategories.ChangePassword || UserSettingsSubcategories.ChangePassword:
-      return <PasswordChangeSettings />;
+      return PasswordChangeSettings;
     case AdminSettingsSubcategories.AddAdmin:
-      return <AdminSettings />;
+      return AdminSettings;
     case AdminSettingsSubcategories.CompanySettings:
-      return <CompanySettings />;
+      return CompanySettings;
   }
 };

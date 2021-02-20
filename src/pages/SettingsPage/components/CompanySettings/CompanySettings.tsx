@@ -4,16 +4,15 @@ import { useSelector } from 'react-redux';
 import { Formik } from 'formik';
 
 import Button from 'components/atoms/Button/Button';
-import MapCoordsEdit, {CoordsEditType} from 'components/organisms/MapCoordsEdit/MapCoordsEdit';
+import MapCoordsEdit, { CoordsEditType } from 'components/organisms/MapCoordsEdit/MapCoordsEdit';
 
 import { AppState, useAppDispatch } from 'store/store';
 import { setEditCompanyCoordsOpen } from 'ducks/company/company-toggle/company-toggle';
 import { Heading, StyledForm } from '../AccountSettings/AccountSettings.styles';
 import { StyledInput } from 'styles/compoundStyles';
 import { editCompany } from 'ducks/company/current-company/current-company-creators';
-import { DoubleFlexWrapper, StyledLabel } from 'styles/shared';
+import { DoubleFlexWrapper, StyledLabel, AddNewParagraph } from 'styles/shared';
 import { CompanySchema } from 'validation/modelsValidation';
-import { AddNewParagraph } from '../../atoms/AddNewButton/AddNewButton.styles';
 
 interface DefaultValues {
   name: string;
@@ -49,13 +48,41 @@ const CompanySettings: React.FC = () => {
 
   return (
     <>
-      <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize={true} validationSchema={CompanySchema} validateOnBlur={false} validateOnChange={false}>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        enableReinitialize={true}
+        validationSchema={CompanySchema}
+        validateOnBlur={false}
+        validateOnChange={false}
+      >
         {({ handleChange, values, setFieldValue, errors }) => (
           <StyledForm>
             <Heading>Ustawienia firmy</Heading>
-            <StyledInput type={'text'} name={'name'} onChange={handleChange} value={values.name} required={true} labelText={errors.name || 'Imię'} />
-            <StyledInput type={'email'} name={'email'} onChange={handleChange} value={values.email} required={true} labelText={errors.email || 'Email'} />
-            <StyledInput type={'text'} name={'nip'} onChange={handleChange} value={values.nip} required={true} labelText={errors.nip || 'NIP'} />
+            <StyledInput
+              type={'text'}
+              name={'name'}
+              onChange={handleChange}
+              value={values.name}
+              required={true}
+              labelText={errors.name || 'Imię'}
+            />
+            <StyledInput
+              type={'email'}
+              name={'email'}
+              onChange={handleChange}
+              value={values.email}
+              required={true}
+              labelText={errors.email || 'Email'}
+            />
+            <StyledInput
+              type={'text'}
+              name={'nip'}
+              onChange={handleChange}
+              value={values.nip}
+              required={true}
+              labelText={errors.nip || 'NIP'}
+            />
             <div>
               <StyledLabel>{errors.phoneNumber || 'Numer telefonu'}</StyledLabel>
               <NumberFormat
@@ -69,9 +96,30 @@ const CompanySettings: React.FC = () => {
                 className={'phone-input'}
               />
             </div>
-            <StyledInput type={'text'} name={'address'} onChange={handleChange} value={values.address} required={true} labelText={errors.address || 'Adres'} />
-            <StyledInput type={'text'} name={'city'} onChange={handleChange} value={values.city} required={true} labelText={errors.city || 'Miasto'} />
-            <StyledInput type={'text'} name={'country'} onChange={handleChange} value={values.country} required={true} labelText={errors.country || 'Kraj'} />
+            <StyledInput
+              type={'text'}
+              name={'address'}
+              onChange={handleChange}
+              value={values.address}
+              required={true}
+              labelText={errors.address || 'Adres'}
+            />
+            <StyledInput
+              type={'text'}
+              name={'city'}
+              onChange={handleChange}
+              value={values.city}
+              required={true}
+              labelText={errors.city || 'Miasto'}
+            />
+            <StyledInput
+              type={'text'}
+              name={'country'}
+              onChange={handleChange}
+              value={values.country}
+              required={true}
+              labelText={errors.country || 'Kraj'}
+            />
             <AddNewParagraph style={{ marginBottom: '2rem', fontSize: '15px' }} onClick={handleCoordsEditOpen(true)}>
               Edit company coords
             </AddNewParagraph>
@@ -81,7 +129,15 @@ const CompanySettings: React.FC = () => {
           </StyledForm>
         )}
       </Formik>
-      {currentCompany && <MapCoordsEdit isOpen={isEditCompanyCoordsOpen} closeMap={handleCoordsEditOpen(false)} lat={currentCompany.lat} long={currentCompany.long} type={CoordsEditType.Company} />}
+      {currentCompany && (
+        <MapCoordsEdit
+          isOpen={isEditCompanyCoordsOpen}
+          closeMap={handleCoordsEditOpen(false)}
+          lat={currentCompany.lat}
+          long={currentCompany.long}
+          type={CoordsEditType.Company}
+        />
+      )}
     </>
   );
 };

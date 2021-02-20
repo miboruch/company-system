@@ -1,10 +1,9 @@
 import styled from 'styled-components';
-import { List } from '../../../styles/shared';
+import { List } from 'styles';
 
 const StyledList = styled(List)`
   display: flex;
   flex-direction: row;
-
   ${({ theme }) => theme.mq.hdReady} {
     flex-direction: column;
   }
@@ -32,7 +31,6 @@ const Paragraph = styled.p`
   font-size: 14px;
   font-weight: ${({ theme }) => theme.font.weight.book};
   color: inherit;
-
   ${({ theme }) => theme.mq.hdReady} {
     font-size: 22px;
   }
@@ -40,7 +38,6 @@ const Paragraph = styled.p`
 
 const ContentWrapper = styled.div`
   width: 100%;
-
   ${({ theme }) => theme.mq.hdReady} {
     height: 100%;
     padding: 2rem 4rem;

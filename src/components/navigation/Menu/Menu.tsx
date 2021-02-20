@@ -2,13 +2,22 @@ import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
-import MenuItemsRenderer from 'components/organisms/Menu/MenuItemsRenderer';
+import MenuItemsRenderer from './MenuItemsRenderer';
 
 import { AppState, useAppDispatch } from 'store/store';
 import { UserRole } from 'ducks/auth/roles/roles';
 import { changeUserRoleTo } from 'ducks/auth/roles/roles-creators';
 import { MenuContext } from 'providers/MenuContext/MenuContext';
-import { CompanyName, MenuItemsWrapper, MenuWrapper, RedirectPanel, StyledMenuSvg, ArrowIcon, ArrowWrapper, RedirectText } from './Menu.styles';
+import {
+  CompanyName,
+  MenuItemsWrapper,
+  MenuWrapper,
+  RedirectPanel,
+  StyledMenuSvg,
+  ArrowIcon,
+  ArrowWrapper,
+  RedirectText
+} from './Menu.styles';
 
 const Menu: React.FC<RouteComponentProps> = ({ history }) => {
   const dispatch = useAppDispatch();
