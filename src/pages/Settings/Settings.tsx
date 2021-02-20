@@ -16,7 +16,7 @@ import { ContentWrapper, ListItems, StyledList } from './Settings.styles';
 
 import { AppState } from 'store/store';
 
-const SettingsPage: React.FC = () => {
+const Settings: React.FC = () => {
   const { role } = useSelector((state: AppState) => state.auth.roles);
   const [subcategory, setSubcategory] = useState<AdminSettingsSubcategories | UserSettingsSubcategories>(
     UserSettingsSubcategories.AccountSettings
@@ -55,4 +55,4 @@ const SettingsPage: React.FC = () => {
   );
 };
 
-export default SettingsPage;
+export default Settings;

@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import AddNewButton from 'components/atoms/AddNewButton/AddNewButton';
-import Spinner from 'components/atoms/Spinner/Spinner';
+import { Spinner } from 'components';
 import ListBox from 'components/molecules/ListBox/ListBox';
 import RemoveAdminPopup from 'components/molecules/RemoveAdminPopup/RemoveAdminPopup';
-
 import { CompanyOwnersInterface } from 'types/modelsTypes';
 import { AppState, useAppDispatch } from 'store/store';
 import { NotificationTypes } from 'types/globalTypes';
 import { setNotificationMessage } from 'ducks/popup/popup';
 import { getAllCompanyEmployees } from 'ducks/employees/employees-data/employees-data-creators';
 import { getCompanyOwners, addNewCompanyOwner } from 'ducks/company/company-owners/company-owners-creators';
+
 import { SpinnerWrapper } from 'styles/shared';
 import { Wrapper, ColumnWrapper, Heading } from './AdminSettings.styles';
 

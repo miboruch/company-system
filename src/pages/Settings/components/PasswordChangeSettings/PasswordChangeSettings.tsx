@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Formik } from 'formik';
 
-import Button from 'components/atoms/Button/Button';
-
+import { Button } from 'components';
 import { useAppDispatch } from 'store/store';
 import { editPassword } from 'ducks/auth/account/account-creators';
+
 import { Heading, StyledForm } from '../AccountSettings/AccountSettings.styles';
 import { StyledInput } from 'styles/compoundStyles';
 import { DoubleFlexWrapper } from 'styles/shared';
@@ -33,7 +33,7 @@ const PasswordChangeSettings: React.FC = () => {
 
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize={true}>
-      {({ handleChange, values }) => (
+      {({ handleChange, values, isSubmitting }) => (
         <StyledForm>
           <Heading>Zmień hasło</Heading>
           <StyledInput
@@ -57,7 +57,9 @@ const PasswordChangeSettings: React.FC = () => {
             labelText={'Powtórz hasło'}
           />
           <DoubleFlexWrapper>
-            <Button type={'submit'} text={'Zapisz'} disabled={values.password !== values.repeatedPassword} />
+            <Button type={'submit'} disabled={values.password !== values.repeatedPassword || isSubmitting}>
+              Zapisz
+            </Button>
           </DoubleFlexWrapper>
         </StyledForm>
       )}

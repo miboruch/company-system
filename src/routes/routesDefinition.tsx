@@ -7,7 +7,7 @@ import TaskPage from '../pages/TaskPage/TaskPage';
 import ClientsPage from '../pages/ClientsPage/ClientsPage';
 import AttendancePage from '../pages/AttendancePage/AttendancePage';
 import FinancesPage from '../pages/FinancesPage/FinancesPage';
-import SettingsPage from '../pages/SettingsPage/SettingsPage';
+import Settings from 'pages/Settings/Settings';
 
 import { HomeIcon, PaymentIcon, ListIcon, SupportIcon, UserIcon, SettingsIcon } from 'styles/shared';
 
@@ -89,7 +89,7 @@ export const adminRoutes: Routes[] = [
     path: '/admin/settings/:id',
     main: '/admin/settings',
     exact: false,
-    component: SettingsPage,
+    component: Settings,
     name: 'Ustawienia',
     icon: <SettingsIcon />,
     isGuarded: true
@@ -137,7 +137,7 @@ export const userRoutes: Routes[] = [
     path: '/user/settings/:id',
     main: '/user/settings',
     exact: false,
-    component: SettingsPage,
+    component: Settings,
     name: 'Ustawienia',
     icon: <SettingsIcon />,
     isGuarded: true

@@ -55,7 +55,7 @@ const AccountSettings: React.FC = () => {
         <StyledForm>
           <Heading>Ustawienia konta</Heading>
           {accountSettingsFields.map((field) => (
-            <FormField key={field.name} {...field} />
+            <FormField key={field.name} {...field} spacing={true} />
           ))}
           <DoubleFlexWrapper style={{ marginBottom: '2rem' }}>
             <Button type={'submit'} disabled={isSubmitting}>
