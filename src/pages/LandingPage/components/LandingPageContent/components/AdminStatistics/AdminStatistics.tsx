@@ -14,7 +14,7 @@ import { modalOpenAnimation } from 'animations/animations';
 import { SpinnerWrapper } from 'styles/shared';
 import { getEmployeeHours, getEmployeeSalary } from 'ducks/employees/employees-data/employees-data-creators';
 import { CloseButtonWrapper } from 'styles/compoundControllerStyles';
-import { Heading, Paragraph } from 'styles/typography/typography';
+import { Heading, Paragraph } from 'styles';
 import { StyledWrapper, Box, ListWrapper, ContentWrapper, StyledHeading, TextWrapper, Span } from './AdminStatistics.styles';
 
 interface Props {

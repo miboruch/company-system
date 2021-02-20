@@ -7,7 +7,7 @@ import LoginTemplate, { TemplatePage } from '../../components/templates/LoginTem
 import { FormField, Spinner, Button } from 'components';
 import { useSubmit } from 'components/hooks';
 import { login, LoginData } from 'api';
-import { AppState } from 'store/store';
+import { AppState, useAppDispatch } from 'store/store';
 import { LoginSchema } from 'validation/loginValidation';
 
 import { ErrorParagraph } from 'styles/typography/typography';
@@ -21,15 +21,21 @@ import {
   StyledForm,
   StyledLink
 } from 'pages/Login/Login.styles';
+import { setTokens } from 'ducks/auth/tokens/tokens';
 
 const Login: React.FC = () => {
+  const dispatch = useAppDispatch();
   const history = useHistory();
   const { isLoginLoading, loginError } = useSelector((state: AppState) => state.auth.login);
 
   const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit<typeof login, LoginData>(login);
 
-  onSubmitSuccess(() => {
-    history.push('/select');
+  onSubmitSuccess((payload) => {
+    if (payload) {
+      const { token, refreshToken } = payload;
+      dispatch(setTokens({ token, refreshToken }));
+      history.push('/select');
+    }
   });
 
   const initialValues: LoginData = {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { CartesianGrid, XAxis, YAxis, Tooltip, Legend, AreaChart, Area } from 'recharts';
 
-import { ChartWrapper, StyledResponsiveContainer, RowWrapper, FlexRowWrapper, StyledParagraph } from './Chart.styles';
+import { ChartWrapper, StyledResponsiveContainer, RowWrapper, FlexRowWrapper, StyledParagraph } from 'styles';
 import { chartButtons } from 'utils/staticData';
 
 interface Props {
@@ -15,7 +15,16 @@ interface Props {
   daysBack: number;
 }
 
-const Chart: React.FC<Props> = ({ data, xAxisDataKey, barDataKey, secondBarDataKey, secondBarDataName, barDataName, setDaysBack, daysBack }) => {
+const Chart: React.FC<Props> = ({
+  data,
+  xAxisDataKey,
+  barDataKey,
+  secondBarDataKey,
+  secondBarDataName,
+  barDataName,
+  setDaysBack,
+  daysBack
+}) => {
   return (
     <ChartWrapper>
       <RowWrapper>
@@ -55,7 +64,9 @@ const Chart: React.FC<Props> = ({ data, xAxisDataKey, barDataKey, secondBarDataK
           />
           <Legend iconSize={16} />
           <Area type={'monotone'} dataKey={barDataKey} name={barDataName} fill={'url(#incomeColor)'} />
-          {secondBarDataKey && secondBarDataName && <Area type={'monotone'} dataKey={secondBarDataKey} name={secondBarDataName} fill={'url(#expenseColor)'} />}
+          {secondBarDataKey && secondBarDataName && (
+            <Area type={'monotone'} dataKey={secondBarDataKey} name={secondBarDataName} fill={'url(#expenseColor)'} />
+          )}
         </AreaChart>
       </StyledResponsiveContainer>
     </ChartWrapper>

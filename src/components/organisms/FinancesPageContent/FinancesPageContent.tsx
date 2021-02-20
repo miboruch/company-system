@@ -14,13 +14,21 @@ import { AppState, useAppDispatch } from 'store/store';
 import { contentAnimation } from 'animations/animations';
 import { roundTo2 } from 'utils/functions';
 import { ContentGridWrapper } from 'styles/HomePageContentGridStyles';
-import { Heading } from 'styles/typography/typography';
+import { Heading } from 'styles';
 import { getIncomeExpenseInTimePeriod } from 'ducks/finances/income-expense/income-expense-creators';
 import { currencyTypes, getCurrencyValue } from 'ducks/currency/currency-creators';
 import { appCurrencies } from 'utils/config';
-import { InfoWrapper, StatisticsHeading } from '../LandingPageContent/LandingPageContent.styles';
+import { InfoWrapper, StatisticsHeading } from 'pages/LandingPage/components/LandingPageContent/LandingPageContent.styles';
 import { ArrowIcon } from 'styles/iconStyles';
-import { Content, BudgetWrapper, InfoBoxWrapper, ButtonWrapper, IncomeExpenseField, RightIncomeExpenseField, CurrencyBox } from './FinancesPageContent.styles';
+import {
+  Content,
+  BudgetWrapper,
+  InfoBoxWrapper,
+  ButtonWrapper,
+  IncomeExpenseField,
+  RightIncomeExpenseField,
+  CurrencyBox
+} from './FinancesPageContent.styles';
 
 const FinancesPageContent: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -42,7 +50,11 @@ const FinancesPageContent: React.FC = () => {
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
 
   const prepareExpenseValue = (history: IncomeInterface | ExpenseInterface) =>
-    history.expenseValue ? -1 * roundTo2(history.expenseValue * currency.value) : history.incomeValue ? roundTo2(history.incomeValue * currency.value) : 0;
+    history.expenseValue
+      ? -1 * roundTo2(history.expenseValue * currency.value)
+      : history.incomeValue
+      ? roundTo2(history.incomeValue * currency.value)
+      : 0;
   const prepareCurrencyValue = (currencyName: currencyTypes) => () => dispatch(getCurrencyValue(currencyName));
 
   const handleIncomePopupOpen = () => {
@@ -72,7 +84,12 @@ const FinancesPageContent: React.FC = () => {
           <BudgetWrapper>
             <BudgetTile description={'Budżet firmy'} name={'Aktualny budżet firmy'} value={roundTo2(budget * currency.value)} />
             {budgetHistoryData.slice(0, 2).map((history) => (
-              <BudgetTile key={history._id} description={'Finanse'} value={prepareExpenseValue(history)} name={history.description} />
+              <BudgetTile
+                key={history._id}
+                description={'Finanse'}
+                value={prepareExpenseValue(history)}
+                name={history.description}
+              />
             ))}
           </BudgetWrapper>
           <Chart
@@ -88,7 +105,11 @@ const FinancesPageContent: React.FC = () => {
           <BudgetHistoryList budgetHistory={budgetHistoryData} />
           <InfoBoxWrapper noPadding={true}>
             {appCurrencies.map((currencyName) => (
-              <CurrencyBox key={currencyName} isActive={currencyName === currency.name} onClick={prepareCurrencyValue(currencyName)}>
+              <CurrencyBox
+                key={currencyName}
+                isActive={currencyName === currency.name}
+                onClick={prepareCurrencyValue(currencyName)}
+              >
                 <Heading>{currencyName}</Heading>
               </CurrencyBox>
             ))}

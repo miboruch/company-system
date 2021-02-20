@@ -4,13 +4,13 @@ import { useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter, useParams } from 'react-router-dom';
 
 import GridWrapper from 'components/templates/GridWrapper/GridWrapper';
-import TaskTile from 'components/molecules/TaskTile/TaskTile';
 import Chart from 'components/molecules/Chart/Chart';
-import AttendanceList from 'components/organisms/AttendanceList/AttendanceList';
 import AttendancePopup from 'components/molecules/AttendancePopup/AttendancePopup';
-import AdminStatistics from 'components/organisms/AdminStatistics/AdminStatistics';
-import BarChart from 'components/molecules/BarChart/BarChart';
-import InformationBox from 'components/molecules/InformationBox/InformationBox';
+import TaskTile from './components/TaskTile/TaskTile';
+import BarChart from './components/BarChart/BarChart';
+import AttendanceList from './components/AttendanceList/AttendanceList';
+import AdminStatistics from './components/AdminStatistics/AdminStatistics';
+import InformationBox from './components/InformationBox/InformationBox';
 
 import { AppState, useAppDispatch } from 'store/store';
 import { AttendanceInterface, IncomeDataInterface, TaskInterface } from 'types/modelsTypes';
@@ -19,7 +19,13 @@ import { contentAnimation } from 'animations/animations';
 import { redirectToTask } from 'ducks/tasks/tasks-toggle/tasks-toggle-creators';
 import { ContentGridWrapper } from 'styles/HomePageContentGridStyles';
 import { getSingleDayAttendance } from 'ducks/attendance/attendance-data/attendance-data-creators';
-import { getCompanyTasks, getCompletedTasks, getEmployeeTasks, getTasksInTimePeriod, TaskPeriodInterface } from 'ducks/tasks/tasks-data/task-data-creators';
+import {
+  getCompanyTasks,
+  getCompletedTasks,
+  getEmployeeTasks,
+  getTasksInTimePeriod,
+  TaskPeriodInterface
+} from 'ducks/tasks/tasks-data/task-data-creators';
 import { getIncomeExpenseInTimePeriod } from 'ducks/finances/income-expense/income-expense-creators';
 import { ArrowIcon } from 'styles/iconStyles';
 import { getAllCompanyEmployees } from 'ducks/employees/employees-data/employees-data-creators';
@@ -28,7 +34,7 @@ import { getAllAppUsers } from 'ducks/users/all-users-creators';
 
 const LandingPageContent: React.FC<RouteComponentProps<any>> = ({ history }) => {
   const dispatch = useAppDispatch();
-  const { id } = useParams<{id: string}>();
+  const { id } = useParams<{ id: string }>();
   const { role } = useSelector((state: AppState) => state.auth.roles);
   const { employeeData } = useSelector((state: AppState) => state.auth.data);
   const { allCompanyTasks, completedTasks } = useSelector((state: AppState) => state.tasks.taskData);
@@ -58,7 +64,9 @@ const LandingPageContent: React.FC<RouteComponentProps<any>> = ({ history }) => 
   const handleTaskClick = (task: TaskInterface) => () => dispatch(redirectToTask(history, task, id));
 
   useEffect(() => {
-    role === UserRole.Admin ? dispatch(getIncomeExpenseInTimePeriod({ daysBack, setData })) : dispatch(getTasksInTimePeriod({ daysBack, setData: setTaskData }));
+    role === UserRole.Admin
+      ? dispatch(getIncomeExpenseInTimePeriod({ daysBack, setData }))
+      : dispatch(getTasksInTimePeriod({ daysBack, setData: setTaskData }));
   }, [daysBack]);
 
   useEffect(() => {
@@ -89,12 +97,28 @@ const LandingPageContent: React.FC<RouteComponentProps<any>> = ({ history }) => 
               setDaysBack={setDaysBackTo}
             />
           ) : (
-            <BarChart data={taskData} xAxisDataKey={'date'} barDataKey={'totalTasks'} barDataName={'Zadania'} setDaysBack={setDaysBackTo} daysBack={daysBack} />
+            <BarChart
+              data={taskData}
+              xAxisDataKey={'date'}
+              barDataKey={'totalTasks'}
+              barDataName={'Zadania'}
+              setDaysBack={setDaysBackTo}
+              daysBack={daysBack}
+            />
           )}
-          <AttendanceList singleDayAttendance={singleDayAttendance} setSelectedAttendance={setSelectedAttendance} setAttendanceOpen={setAttendanceOpen} />
+          <AttendanceList
+            singleDayAttendance={singleDayAttendance}
+            setSelectedAttendance={setSelectedAttendance}
+            setAttendanceOpen={setAttendanceOpen}
+          />
           <InfoBoxWrapper>
             <InformationBox title={'Pracownicy'} value={companyEmployeesCounter} areaName={'employees'} chartAnimationDelay={0} />
-            <InformationBox title={'Wykonane zadania (30d)'} value={completedTasks} areaName={'attendance'} chartAnimationDelay={800} />
+            <InformationBox
+              title={'Wykonane zadania (30d)'}
+              value={completedTasks}
+              areaName={'attendance'}
+              chartAnimationDelay={800}
+            />
           </InfoBoxWrapper>
           <InfoWrapper onClick={handleStatisticsOpen}>
             <StatisticsHeading>Zobacz statystyki pracowników</StatisticsHeading>

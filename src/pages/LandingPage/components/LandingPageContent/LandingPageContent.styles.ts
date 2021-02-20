@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Heading } from '../../../styles/typography/typography';
+import { Heading } from 'styles';
 
 const Content = styled.div`
   width: 100%;

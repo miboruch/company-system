@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { ResponsiveContainer } from 'recharts';
-import { Paragraph } from '../../../styles/typography/typography';
+import { Paragraph } from 'styles';
 
 const ChartWrapper = styled.div`
   width: 100%;
