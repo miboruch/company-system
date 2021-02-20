@@ -5,14 +5,15 @@ import { useHistory } from 'react-router-dom';
 import { FormField, Button } from 'components';
 
 import { useAppDispatch } from 'store/store';
-import { RegisterDataContext } from '../context/RegisterDataContext';
-import { PageContext } from '../context/PageContext';
+import { RegisterDataContext } from '../../context/RegisterDataContext';
+import { PageContext } from '../../context/PageContext';
 import { Heading, StyledForm } from 'pages/Login/Login.styles';
 import { Paragraph } from 'styles/typography/typography';
 import { DoubleFlexWrapper } from 'styles/shared';
 import { register } from 'ducks/auth/register/register-creators';
 import { registerFromLink } from 'ducks/auth/link-registration/link-registration-creators';
-import { ContactDataSchema } from '../validation/validation';
+import { ContactDataSchema } from '../../validation/validation';
+import { contactFields } from './contact.fields';
 
 type defaultValues = {
   phoneNumber: string;
@@ -26,7 +27,7 @@ interface Props {
   token?: string;
 }
 
-const ContactData: React.FC<Props> = ({ isRegistrationLink, token }) => {
+const Contact: React.FC<Props> = ({ isRegistrationLink, token }) => {
   const history = useHistory();
   const dispatch = useAppDispatch();
 
@@ -92,10 +93,9 @@ const ContactData: React.FC<Props> = ({ isRegistrationLink, token }) => {
       {({ isSubmitting }) => (
         <StyledForm>
           <Heading>Podaj informacje kontaktowe</Heading>
-          <FormField name={'address'} type={'text'} label={'Adres'} required={true} spacing={true} />
-          <FormField name={'city'} type={'text'} label={'Miasto'} required={true} spacing={true} />
-          <FormField name={'country'} type={'text'} label={'Państwo'} required={true} spacing={true} />
-          <FormField name={'phoneNumber'} type={'phone'} label={'Numer telefonu'} required={true} spacing={true} />
+          {contactFields.map((field) => (
+            <FormField key={field.name} {...field} spacing={true} />
+          ))}
           <DoubleFlexWrapper>
             <Paragraph type={'back'} onClick={handlePageBack}>
               Wstecz
@@ -110,4 +110,4 @@ const ContactData: React.FC<Props> = ({ isRegistrationLink, token }) => {
   );
 };
 
-export default ContactData;
+export default Contact;

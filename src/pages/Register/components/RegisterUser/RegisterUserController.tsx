@@ -2,10 +2,10 @@ import React from 'react';
 
 import PageContextProvider from './context/PageContext';
 import RegisterTemplate from './templates/RegisterTemplate/RegisterTemplate';
-import MainRegisterData from './pages/MainRegisterData';
-import Password from './pages/Password';
-import ContactData from './pages/ContactData';
 import RegisterDataContextProvider from './context/RegisterDataContext';
+import MainRegisterData from './pages/MainRegisterData/MainRegisterData';
+import Password from './pages/Password/Password';
+import Contact from './pages/Contact/Contact';
 
 const RegisterUserController: React.FC = () => {
   return (
@@ -18,7 +18,7 @@ const RegisterUserController: React.FC = () => {
           <Password />
         </RegisterTemplate>
         <RegisterTemplate pageIndex={2}>
-          <ContactData isRegistrationLink={false} />
+          <Contact isRegistrationLink={false} />
         </RegisterTemplate>
       </PageContextProvider>
     </RegisterDataContextProvider>
