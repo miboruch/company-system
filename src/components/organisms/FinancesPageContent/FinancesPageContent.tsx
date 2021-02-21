@@ -18,7 +18,7 @@ import { Heading } from 'styles';
 import { getIncomeExpenseInTimePeriod } from 'ducks/finances/income-expense/income-expense-creators';
 import { currencyTypes, getCurrencyValue } from 'ducks/currency/currency-creators';
 import { appCurrencies } from 'utils/config';
-import { InfoWrapper, StatisticsHeading } from 'pages/LandingPage/components/LandingPageContent/LandingPageContent.styles';
+import { InfoWrapper, StatisticsHeading } from 'pages/Landing/components/LandingPageContent/LandingPageContent.styles';
 import { ArrowIcon } from 'styles/iconStyles';
 import {
   Content,

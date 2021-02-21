@@ -2,9 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useSelector } from 'react-redux';
 
-import ListBox from 'components/molecules/ListBox/ListBox';
+import { ListBox, Spinner } from 'components';
 import CloseButton from 'components/atoms/CloseButton/CloseButton';
-import Spinner from 'components/atoms/Spinner/Spinner';
 import MonthDropdown from 'components/atoms/MonthDropdown/MonthDropdown';
 
 import { EmployeeDataInterface } from 'types/modelsTypes';
@@ -37,12 +36,26 @@ const AdminStatistics: React.FC<Props> = ({ isOpen, setOpen }) => {
   useEffect(() => {
     const currentMonthIndex = new Date().getMonth();
     if (selectedEmployee) {
-      dispatch(getEmployeeSalary({ userId: selectedEmployee.userId._id, monthIndex: selectedMonth ? selectedMonth.index : currentMonthIndex, setSalary: setUserSalary }));
-      dispatch(getEmployeeHours({ userId: selectedEmployee.userId._id, monthIndex: selectedMonth ? selectedMonth.index : currentMonthIndex, setHours: setUserHours }));
+      dispatch(
+        getEmployeeSalary({
+          userId: selectedEmployee.userId._id,
+          monthIndex: selectedMonth ? selectedMonth.index : currentMonthIndex,
+          setSalary: setUserSalary
+        })
+      );
+      dispatch(
+        getEmployeeHours({
+          userId: selectedEmployee.userId._id,
+          monthIndex: selectedMonth ? selectedMonth.index : currentMonthIndex,
+          setHours: setUserHours
+        })
+      );
     }
   }, [selectedEmployee?.userId, selectedMonth]);
 
-  const selectedEmployeeSalary = selectedEmployee?.pricePerHour ? `${selectedEmployee.pricePerHour} zł/h` : `${selectedEmployee?.monthlyPrice} miesięcznie`;
+  const selectedEmployeeSalary = selectedEmployee?.pricePerHour
+    ? `${selectedEmployee.pricePerHour} zł/h`
+    : `${selectedEmployee?.monthlyPrice} miesięcznie`;
 
   useEffect(() => {
     modalOpenAnimation(tl, mainWrapperRef, wrapperRef);

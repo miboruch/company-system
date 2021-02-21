@@ -3,7 +3,7 @@ import React from 'react';
 import MenuTemplate from '../../components/templates/MenuTemplate/MenuTemplate';
 import LandingPageContent from './components/LandingPageContent/LandingPageContent';
 
-const LandingPage: React.FC = () => {
+const Landing: React.FC = () => {
   return (
     <MenuTemplate>
       <LandingPageContent />
@@ -11,4 +11,4 @@ const LandingPage: React.FC = () => {
   );
 };
 
-export default LandingPage;
+export default Landing;

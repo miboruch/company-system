@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Paragraph } from '../../../styles/typography/typography';
+import { Paragraph } from 'styles';
 
 const Wrapper = styled.div`
   width: 100%;

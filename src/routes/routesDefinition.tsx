@@ -1,6 +1,6 @@
 import React from 'react';
 
-import LandingPage from '../pages/LandingPage/LandingPage';
+import Landing from 'pages/Landing/Landing';
 import Companies from 'pages/Companies/Companies';
 import EmployeePage from '../pages/EmployeePage/EmployeePage';
 import TaskPage from '../pages/TaskPage/TaskPage';
@@ -26,7 +26,7 @@ export const adminRoutes: Routes[] = [
     path: '/admin/home/:id',
     main: '/admin/home',
     exact: false,
-    component: LandingPage,
+    component: Landing,
     name: 'Strona główna',
     icon: <HomeIcon />,
     isGuarded: true
@@ -101,7 +101,7 @@ export const userRoutes: Routes[] = [
     path: '/user/home/:id',
     main: '/user/home',
     exact: false,
-    component: LandingPage,
+    component: Landing,
     name: 'Strona główna',
     icon: <HomeIcon />,
     isGuarded: true

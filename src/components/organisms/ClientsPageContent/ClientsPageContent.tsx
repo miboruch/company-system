@@ -2,9 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useSelector } from 'react-redux';
 
-import GridWrapper from 'components/templates/GridWrapper/GridWrapper';
-import Spinner from 'components/atoms/Spinner/Spinner';
-import ListBox from 'components/molecules/ListBox/ListBox';
+import { Spinner, ListBox, GridWrapper } from 'components/index';
 import ContentTemplate from 'components/templates/ContentTemplate/ContentTemplate';
 import ClientInfo from 'components/organisms/ClientInfo/ClientInfo';
 import AddClientController from 'components/compound/AddClient/AddClientController';
@@ -24,7 +22,9 @@ import { AddIcon, AddWrapper, List, SpinnerWrapper } from 'styles/shared';
 
 const ClientsPageContent: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { isEditClientCoordsOpen, isClientInfoOpen, selectedClient } = useSelector((state: AppState) => state.client.clientToggle);
+  const { isEditClientCoordsOpen, isClientInfoOpen, selectedClient } = useSelector(
+    (state: AppState) => state.client.clientToggle
+  );
   const { allCompanyClients, areClientsLoading } = useSelector((state: AppState) => state.client.clientData);
 
   const listRef = useRef<HTMLDivElement | null>(null);
@@ -91,7 +91,13 @@ const ClientsPageContent: React.FC = () => {
         }
       />
       {selectedClient && (
-        <MapCoordsEdit isOpen={isEditClientCoordsOpen} closeMap={() => dispatch(setEditClientCoordsOpen(false))} lat={selectedClient.lat} long={selectedClient.long} type={CoordsEditType.Client} />
+        <MapCoordsEdit
+          isOpen={isEditClientCoordsOpen}
+          closeMap={() => dispatch(setEditClientCoordsOpen(false))}
+          lat={selectedClient.lat}
+          long={selectedClient.long}
+          type={CoordsEditType.Client}
+        />
       )}
     </>
   );
