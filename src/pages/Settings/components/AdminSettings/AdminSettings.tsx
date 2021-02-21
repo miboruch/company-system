@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import AddNewButton from 'components/atoms/AddNewButton/AddNewButton';
-import { Spinner, ListBox } from 'components';
+import { Spinner, ListBox, AddNewButton } from 'components';
 import RemoveAdminPopup from 'components/molecules/RemoveAdminPopup/RemoveAdminPopup';
 import { CompanyOwnersInterface } from 'types/modelsTypes';
 import { AppState, useAppDispatch } from 'store/store';

@@ -10,7 +10,7 @@ import MainCompanyInfo from './pages/MainCompanyInfo/MainCompanyInfo';
 import MapPage from './pages/MapPage/MapPage';
 import AddressInfo from './pages/AddressInfo/AddressInfo';
 import StepList from './components/StepList/StepList';
-import CloseButton from 'components/atoms/CloseButton/CloseButton';
+import { CloseButton } from 'components';
 
 import { AppState } from 'store/store';
 import { setAddCompanyOpen } from 'ducks/company/company-toggle/company-toggle';

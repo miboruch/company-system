@@ -9,8 +9,8 @@ import Routes from './routes/Routes';
 import Select from 'pages/Select/Select';
 import NotificationPopup from './components/molecules/NotificationPopup/NotificationPopup';
 import RegisterFromLink from './pages/RegisterFromLink/RegisterFromLink';
-import Spinner from './components/atoms/Spinner/Spinner';
 import NotAuthRoute from './hoc/NotAuthRoute';
+import { Spinner } from 'components';
 
 import { AppState, useAppDispatch } from 'store/store';
 import { authCheck } from 'ducks/auth/check/check-creators';

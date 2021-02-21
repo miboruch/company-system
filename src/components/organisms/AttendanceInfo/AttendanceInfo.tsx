@@ -1,11 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import Spinner from 'components/atoms/Spinner/Spinner';
+import { Spinner } from 'components/index';
 import WeekAttendanceComponent from 'components/molecules/WeekAttendanceComponent/WeekAttendanceComponent';
-
 import { AppState } from 'store/store';
-import { Paragraph } from 'styles/typography/typography';
+
+import { Paragraph } from 'styles';
 import { Wrapper, HeaderWrapper, EmployeeInfoBox, Title } from 'styles/contentStyles';
 import { SpinnerWrapper } from 'styles/shared';
 

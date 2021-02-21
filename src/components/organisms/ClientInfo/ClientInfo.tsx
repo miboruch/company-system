@@ -2,16 +2,25 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik } from 'formik';
 
-import Button from 'components/atoms/Button/Button';
-
+import { Button, FormField } from 'components';
 import { AppState } from 'store/store';
 import { setEditClientCoordsOpen } from 'ducks/client/client-toggle/client-toggle';
-import { Paragraph } from 'styles/typography/typography';
-import { StyledInput } from 'styles/compoundStyles';
-import { DeleteIcon, EditIcon, LocationIcon } from 'styles/iconStyles';
 import { editClient } from 'ducks/client/client-creators';
 import { ClientSchema } from 'validation/modelsValidation';
-import { ButtonWrapper, EmployeeInfoBox, HeaderWrapper, InputWrapper, RowIconWrapper, StyledForm, Title, Wrapper } from 'styles/contentStyles';
+import { clientInfoFields } from 'components/organisms/ClientInfo/client-info.fields';
+
+import { Paragraph } from 'styles';
+import { DeleteIcon, EditIcon, LocationIcon } from 'styles/iconStyles';
+import {
+  ButtonWrapper,
+  EmployeeInfoBox,
+  HeaderWrapper,
+  InputWrapper,
+  RowIconWrapper,
+  StyledForm,
+  Title,
+  Wrapper
+} from 'styles/contentStyles';
 
 interface InitialValues {
   name: string;
@@ -57,8 +66,15 @@ const ClientInfo: React.FC<Props> = ({ isEditToggled, setEditToggled, setDeleteO
   return (
     <Wrapper>
       {!!selectedClient && (
-        <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize={true} validationSchema={ClientSchema} validateOnChange={false} validateOnBlur={false}>
-          {({ handleChange, values, errors }) => (
+        <Formik
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+          enableReinitialize={true}
+          validationSchema={ClientSchema}
+          validateOnChange={false}
+          validateOnBlur={false}
+        >
+          {({ isSubmitting, values }) => (
             <StyledForm>
               <Paragraph>Data dodania: {new Date(selectedClient?.createdDate).toLocaleDateString()}</Paragraph>
               <HeaderWrapper>
@@ -75,25 +91,19 @@ const ClientInfo: React.FC<Props> = ({ isEditToggled, setEditToggled, setDeleteO
                   Adres: {values.address}, {values.city}
                 </Paragraph>
               </EmployeeInfoBox>
-              <Paragraph type={'text'}>Jeżeli chcesz edytować dane klienta, naciśnij przycisk edycji obok nazwy zadania. Pozwoli to na odblokwanie wszystkich pól oraz edycję danych.</Paragraph>
+              <Paragraph type={'text'}>
+                Jeżeli chcesz edytować dane klienta, naciśnij przycisk edycji obok nazwy zadania. Pozwoli to na odblokwanie
+                wszystkich pól oraz edycję danych.
+              </Paragraph>
               <InputWrapper>
-                <StyledInput onChange={handleChange} name={'name'} required={true} type={'text'} labelText={errors.name || 'Nazwa'} value={values.name} disabled={!isEditToggled} />
-                <StyledInput onChange={handleChange} name={'email'} required={true} type={'email'} labelText={errors.email || 'Email'} value={values.email} disabled={!isEditToggled} />
-                <StyledInput
-                  onChange={handleChange}
-                  name={'phoneNumber'}
-                  required={true}
-                  type={'text'}
-                  labelText={errors.phoneNumber || 'Numer telefonu'}
-                  value={values.phoneNumber}
-                  disabled={!isEditToggled}
-                />
-                <StyledInput onChange={handleChange} name={'address'} type={'text'} required={true} labelText={errors.address || 'Adres'} value={values.address} disabled={!isEditToggled} />
-                <StyledInput onChange={handleChange} name={'city'} type={'text'} required={true} labelText={errors.city || 'Miasto'} value={values.city} disabled={!isEditToggled} />
-                <StyledInput onChange={handleChange} name={'country'} type={'text'} required={true} labelText={errors.country || 'Państwo'} value={values.country} disabled={!isEditToggled} />
+                {clientInfoFields(isEditToggled).map((field) => (
+                  <FormField key={field.name} {...field} />
+                ))}
               </InputWrapper>
               <ButtonWrapper>
-                <Button type={'submit'} text={'Zapisz'} />
+                <Button type={'submit'} disabled={isSubmitting}>
+                  Zapisz
+                </Button>
               </ButtonWrapper>
             </StyledForm>
           )}

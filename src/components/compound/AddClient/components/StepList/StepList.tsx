@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 
-import CompoundStepBox from 'components/molecules/CompoundStepBox/CompoundStepBox';
-
+import { CompoundStepBox } from 'components/index';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { ClientDataContext } from '../../context/ClientDataContext';
 import { ListWrapper } from 'styles/compoundStyles';

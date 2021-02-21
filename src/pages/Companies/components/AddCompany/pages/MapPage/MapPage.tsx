@@ -2,9 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import * as Leaflet from 'leaflet';
 import { Map, Marker, TileLayer } from 'react-leaflet';
 
-import Spinner from 'components/atoms/Spinner/Spinner';
-import Button from 'components/atoms/Button/Button';
-
+import { Spinner, Button } from 'components';
 import { Coords } from 'types/globalTypes';
 import { getLocation } from 'utils/mapFunctions';
 import { SpinnerWrapper } from 'styles/shared';
@@ -61,14 +59,19 @@ const MapPage: React.FC = () => {
                 setData({ ...data, lat: e.latlng.lat, long: e.latlng.lng });
               }}
             >
-              <TileLayer attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
+              <TileLayer
+                attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+              />
               {coords.lat && coords.long && <Marker icon={markerCustomIcon} position={[coords.lat, coords.long]} />}
             </Map>
             <ButtonWrapper>
               <StyledBackParagraph type={'back'} onClick={handlePreviousPage}>
                 Wstecz
               </StyledBackParagraph>
-              <Button onClick={handleNextPage} type={'button'} text={'Dalej'} disabled={!coords.lat || !coords.long} />
+              <Button onClick={handleNextPage} type={'button'} disabled={!coords.lat || !coords.long}>
+                Dalej
+              </Button>
             </ButtonWrapper>
           </>
         )}

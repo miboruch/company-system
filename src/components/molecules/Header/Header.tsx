@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import Hamburger from 'components/atoms/Hamburger/Hamburger';
-import HeaderSlider from 'components/molecules/HeaderSlider/HeaderSlider';
-import SearchInput from 'components/atoms/SearchInput/SearchInput';
-import ArrowButton from 'components/atoms/ArrowButton/ArrowButton';
+import HeaderSlider from './components/HeaderSlider/HeaderSlider';
+import { ArrowButton, SearchInput, Hamburger } from 'components';
 import Notifications from 'components/organisms/Notifications/Notifications';
-
 import { Direction } from 'types/globalTypes';
 import { AppState } from 'store/store';
+
 import { Circle, IconWrapper, NameParagraph, StyledHeader, UserWrapper, MobileCircle } from './Header.styles';
 import { NotificationIcon } from 'styles/iconStyles';
 

@@ -1,12 +1,8 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import {
-  render,
-  screen,
-  fireEvent
-} from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 
-import Button from 'components/atoms/Button/Button';
+import Button from './Button';
 
 import { theme } from 'styles/theme';
 
@@ -15,7 +11,7 @@ describe('button', () => {
   it('renders properly', () => {
     const { getByText } = render(
       <ThemeProvider theme={theme}>
-        <Button type={'button'} text={buttonText} />
+        <Button type={'button'}>{buttonText}</Button>
       </ThemeProvider>
     );
 
@@ -24,11 +20,9 @@ describe('button', () => {
   it('renders disabled button', () => {
     const { getByText } = render(
       <ThemeProvider theme={theme}>
-        <Button
-          type={'button'}
-          text={buttonText}
-          disabled={true}
-        />
+        <Button type={'button'} disabled={true}>
+          {buttonText}
+        </Button>
       </ThemeProvider>
     );
 
@@ -38,11 +32,9 @@ describe('button', () => {
     const handleClick = jest.fn();
     render(
       <ThemeProvider theme={theme}>
-        <Button
-          type={'button'}
-          text={buttonText}
-          onClick={handleClick}
-        />
+        <Button type={'button'} onClick={handleClick}>
+          {buttonText}
+        </Button>
       </ThemeProvider>
     );
 
@@ -54,12 +46,9 @@ describe('button', () => {
     const handleClick = jest.fn();
     render(
       <ThemeProvider theme={theme}>
-        <Button
-          type={'button'}
-          text={buttonText}
-          onClick={handleClick}
-          disabled={true}
-        />
+        <Button type={'button'} onClick={handleClick} disabled={true}>
+          {buttonText}
+        </Button>
       </ThemeProvider>
     );
 

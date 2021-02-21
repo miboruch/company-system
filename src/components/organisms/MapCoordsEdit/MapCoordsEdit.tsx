@@ -4,10 +4,7 @@ import gsap from 'gsap';
 import { useSelector } from 'react-redux';
 import { Map, Marker, TileLayer } from 'react-leaflet';
 
-import Button from 'components/atoms/Button/Button';
-import Spinner from 'components/atoms/Spinner/Spinner';
-import CloseButton from 'components/atoms/CloseButton/CloseButton';
-
+import { Button, Spinner, CloseButton } from 'components';
 import { AppState, useAppDispatch } from 'store/store';
 import { modalOpenAnimation } from 'animations/animations';
 import { ButtonWrapper, CenterBox } from 'styles/compoundStyles';
@@ -111,7 +108,9 @@ const MapCoordsEdit: React.FC<Props> = ({ isOpen, closeMap, lat, long, type }) =
               </Map>
               {type !== CoordsEditType.View && (
                 <ButtonWrapper>
-                  <Button onClick={handleSubmit} type={'button'} text={'Dalej'} />
+                  <Button onClick={handleSubmit} type={'button'}>
+                    Dalej
+                  </Button>
                 </ButtonWrapper>
               )}
             </>
