@@ -10,14 +10,14 @@ import { ContentTemplate, GridWrapper, ListBox, Spinner, MenuTemplate } from 'co
 import { selectEmployee } from 'ducks/employees/employees-toggle/employees-toggle-creators';
 import { setAddNewEmployeeOpen, setEmployeeInfoOpen } from 'ducks/employees/employees-toggle/employees-toggle';
 import { listAnimation } from 'animations/animations';
-import { Employee } from 'types';
+import { Employee as EmployeeType } from 'types';
 import { AppState, useAppDispatch } from 'store/store';
 import { UserRole } from 'ducks/auth/roles/roles';
 import { getAllAppUsers } from 'ducks/users/all-users-creators';
 import { getAllCompanyEmployees } from 'ducks/employees/employees-data/employees-data-creators';
 import { AddIcon, AddWrapper, List, Paragraph, SpinnerWrapper } from 'styles';
 
-const EmployeePage: React.FC = () => {
+const Employee: React.FC = () => {
   const dispatch = useAppDispatch();
   const { role } = useSelector((state: AppState) => state.auth.roles);
   const { selectedEmployee, isEmployeeInfoOpen } = useSelector((state: AppState) => state.employees.employeesToggle);
@@ -26,7 +26,7 @@ const EmployeePage: React.FC = () => {
   const [filterText, setFilterText] = useState<string>('');
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
 
-  const filterByEmployeeName = (filterText: string, allEmployees: Employee[]): Employee[] => {
+  const filterByEmployeeName = (filterText: string, allEmployees: EmployeeType[]): EmployeeType[] => {
     return allEmployees.filter((employee) =>
       `${employee.userId.name} ${employee.userId.lastName}`.toLowerCase().includes(filterText.toLowerCase())
     );
@@ -96,4 +96,4 @@ const EmployeePage: React.FC = () => {
   );
 };
 
-export default EmployeePage;
+export default Employee;

@@ -2,9 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import * as Leaflet from 'leaflet';
 import { Map, Marker, TileLayer } from 'react-leaflet';
 
-import Spinner from 'components/atoms/Spinner/Spinner';
-import Button from 'components/atoms/Button/Button';
-
+import { Spinner, Button } from 'components/index';
 import { Coords } from 'types/globalTypes';
 import { getLocation } from 'utils/mapFunctions';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
@@ -81,7 +79,9 @@ const MapPage: React.FC = () => {
               <StyledBackParagraph type={'back'} onClick={handlePreviousPage}>
                 Wstecz
               </StyledBackParagraph>
-              <Button onClick={handleSubmit} type={'button'} text={'Dodaj'} disabled={!coords.lat || !coords.long} />
+              <Button onClick={handleSubmit} type={'button'} disabled={!coords.lat || !coords.long}>
+                Dodaj
+              </Button>
             </ButtonWrapper>
           </>
         )}

@@ -1,14 +1,13 @@
-import React, { useContext, useState } from 'react';
-import NumberFormat from 'react-number-format';
+import React, { useContext } from 'react';
 import { Formik } from 'formik';
 
-import Button from 'components/atoms/Button/Button';
-
+import { Button, FormField } from 'components';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { ClientDataContext } from '../../context/ClientDataContext';
-import { FlexWrapper, StyledLabel } from 'styles/shared';
-import { HeadingWrapper, MobileCompoundTitle, StyledForm, StyledInput, Subheading, Wrapper } from 'styles/compoundStyles';
 import { MainClientDataSchema } from '../../validation/validation';
+
+import { FlexWrapper } from 'styles';
+import { HeadingWrapper, MobileCompoundTitle, StyledForm, Subheading, Wrapper } from 'styles/compoundStyles';
 
 type defaultValues = {
   name: string;
@@ -19,7 +18,6 @@ type defaultValues = {
 const MainClientPage: React.FC = () => {
   const { data, setData } = useContext(ClientDataContext);
   const { setCurrentPage } = useContext(PageContext);
-  const [formattedPhoneNumber, setFormattedPhoneNumber] = useState<string>('');
 
   const initialValues: defaultValues = {
     name: data?.name || '',
@@ -33,31 +31,27 @@ const MainClientPage: React.FC = () => {
   };
 
   return (
-    <Formik onSubmit={handleSubmit} initialValues={initialValues} validationSchema={MainClientDataSchema} validateOnChange={false} validateOnBlur={false}>
-      {({ handleChange, values, setFieldValue, errors }) => (
+    <Formik
+      onSubmit={handleSubmit}
+      initialValues={initialValues}
+      validationSchema={MainClientDataSchema}
+      validateOnChange={false}
+      validateOnBlur={false}
+    >
+      {({ isSubmitting }) => (
         <Wrapper>
           <StyledForm>
             <HeadingWrapper>
               <MobileCompoundTitle>Główne informacje o kliencie</MobileCompoundTitle>
               <Subheading>Wszystkie pola są wymagane</Subheading>
             </HeadingWrapper>
-            <StyledInput onChange={handleChange} name={'name'} value={values.name} required={true} type={'text'} labelText={errors.name || 'Nazwa'} />
-            <StyledInput onChange={handleChange} name={'email'} value={values.email} required={true} type={'email'} labelText={errors.email || 'Email'} />
-            <div>
-              <StyledLabel>{errors.phoneNumber || 'Numer telefonu'}</StyledLabel>
-              <NumberFormat
-                onValueChange={({ formattedValue, value }) => {
-                  setFieldValue('phoneNumber', value);
-                  setFormattedPhoneNumber(formattedValue);
-                }}
-                name={'phoneNumber'}
-                value={formattedPhoneNumber || values.phoneNumber}
-                format={'### ### ###'}
-                className={'phone-input'}
-              />
-            </div>
+            <FormField name={'name'} type={'text'} label={'Nazwa'} required={true} spacing={true} />
+            <FormField name={'email'} type={'email'} label={'Email'} required={true} spacing={true} />
+            <FormField name={'phoneNumber'} type={'phone'} label={'Numer telefonu'} required={true} spacing={true} />
             <FlexWrapper>
-              <Button type={'submit'} text={'Dalej'} />
+              <Button type={'submit'} disabled={isSubmitting}>
+                Dalej
+              </Button>
             </FlexWrapper>
           </StyledForm>
         </Wrapper>

@@ -2,7 +2,7 @@ import React from 'react';
 
 import Landing from 'pages/Landing/Landing';
 import Companies from 'pages/Companies/Companies';
-import EmployeePage from '../pages/EmployeePage/EmployeePage';
+import Employee from 'pages/Employee/Employee';
 import Task from 'pages/Task/Task';
 import ClientsPage from '../pages/ClientsPage/ClientsPage';
 import AttendancePage from '../pages/AttendancePage/AttendancePage';
@@ -35,7 +35,7 @@ export const adminRoutes: Routes[] = [
     path: '/admin/employees/:id',
     main: '/admin/employees',
     exact: false,
-    component: EmployeePage,
+    component: Employee,
     name: 'Pracownicy',
     icon: <UserIcon />,
     isGuarded: true

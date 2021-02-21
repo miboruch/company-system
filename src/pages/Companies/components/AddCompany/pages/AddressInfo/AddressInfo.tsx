@@ -2,14 +2,14 @@ import React, { useContext } from 'react';
 import { Formik } from 'formik';
 import { useAppDispatch } from 'store/store';
 
-import Button from 'components/atoms/Button/Button';
-
-import { DoubleFlexWrapper } from 'styles/shared';
+import { Button, FormField } from 'components';
 import { CompanyDataContext } from '../../context/CompanyDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
-import { HeadingWrapper, MobileCompoundTitle, StyledForm, StyledInput, Subheading, Wrapper, StyledBackParagraph } from 'styles/compoundStyles';
 import { AddressDataSchema } from '../../validation/validation';
 import { createNewCompany } from 'ducks/company/companies/companies-creators';
+
+import { DoubleFlexWrapper } from 'styles';
+import { HeadingWrapper, MobileCompoundTitle, StyledForm, Subheading, Wrapper, StyledBackParagraph } from 'styles/compoundStyles';
 
 type defaultValues = {
   address: string;
@@ -51,22 +51,31 @@ const AddressInfo: React.FC = () => {
   const handlePreviousPage = () => setCurrentPage(PageSettingEnum.Second);
 
   return (
-    <Formik onSubmit={handleSubmit} initialValues={initialValues} validationSchema={AddressDataSchema} validateOnChange={false} validateOnBlur={false}>
-      {({ handleChange, values, errors }) => (
+    <Formik
+      onSubmit={handleSubmit}
+      initialValues={initialValues}
+      validationSchema={AddressDataSchema}
+      validateOnChange={false}
+      validateOnBlur={false}
+    >
+      {({ isSubmitting }) => (
         <Wrapper>
           <StyledForm>
             <HeadingWrapper>
               <MobileCompoundTitle>Główne informacje o twojej firmie</MobileCompoundTitle>
               <Subheading>Wszystkie pola są wymagane</Subheading>
             </HeadingWrapper>
-            <StyledInput onChange={handleChange} name={'address'} value={values.address} required={true} type={'text'} labelText={errors.address || 'Adres'} />
-            <StyledInput onChange={handleChange} name={'city'} value={values.city} required={true} type={'text'} labelText={errors.city || 'Miasto'} />
-            <StyledInput onChange={handleChange} name={'country'} value={values.country} required={true} type={'text'} labelText={errors.country || 'Kraj'} />
+            <FormField name={'address'} type={'text'} label={'Adres'} required={true} spacing={true} />
+            <FormField name={'city'} type={'text'} label={'Miasto'} required={true} spacing={true} />
+            <FormField name={'country'} type={'text'} label={'Państwo'} required={true} spacing={true} />
+
             <DoubleFlexWrapper>
               <StyledBackParagraph type={'back'} onClick={handlePreviousPage}>
                 Wstecz
               </StyledBackParagraph>
-              <Button type={'submit'} text={'Dalej'} />
+              <Button type={'submit'} disabled={isSubmitting}>
+                Dalej
+              </Button>
             </DoubleFlexWrapper>
           </StyledForm>
         </Wrapper>

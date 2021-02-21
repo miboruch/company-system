@@ -1,14 +1,14 @@
-import React, { useContext, useState } from 'react';
-import NumberFormat from 'react-number-format';
+import React, { useContext } from 'react';
 import { Formik } from 'formik';
 
-import Button from 'components/atoms/Button/Button';
-
-import { FlexWrapper, StyledLabel } from 'styles/shared';
+import { Button, FormField } from 'components';
 import { CompanyDataContext } from '../../context/CompanyDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
-import { Wrapper, StyledForm, StyledInput, MobileCompoundTitle, Subheading, HeadingWrapper } from 'styles/compoundStyles';
 import { MainCompanyDataSchema } from '../../validation/validation';
+import { mainCompanyInfoFields } from './main-company-info.fields';
+
+import { FlexWrapper } from 'styles';
+import { Wrapper, StyledForm, MobileCompoundTitle, Subheading, HeadingWrapper } from 'styles/compoundStyles';
 
 type defaultValues = {
   name: string;
@@ -20,7 +20,6 @@ type defaultValues = {
 const MainCompanyInfo: React.FC = () => {
   const { data, setData } = useContext(CompanyDataContext);
   const { setCurrentPage } = useContext(PageContext);
-  const [formattedPhoneNumber, setFormattedPhoneNumber] = useState<string | null>(null);
 
   const initialValues: defaultValues = {
     name: data.name ? data.name : '',
@@ -35,32 +34,27 @@ const MainCompanyInfo: React.FC = () => {
   };
 
   return (
-    <Formik onSubmit={handleSubmit} initialValues={initialValues} validationSchema={MainCompanyDataSchema} validateOnBlur={false} validateOnChange={false}>
-      {({ handleChange, values, setFieldValue, errors }) => (
+    <Formik
+      onSubmit={handleSubmit}
+      initialValues={initialValues}
+      validationSchema={MainCompanyDataSchema}
+      validateOnBlur={false}
+      validateOnChange={false}
+    >
+      {({ isSubmitting }) => (
         <Wrapper>
           <StyledForm>
             <HeadingWrapper>
               <MobileCompoundTitle>Główne informacje o twojej firmie</MobileCompoundTitle>
               <Subheading>Wszystkie pola są wymagane</Subheading>
             </HeadingWrapper>
-            <StyledInput onChange={handleChange} name={'name'} value={values.name} required={true} type={'text'} labelText={errors.name || 'Naza firmy'} />
-            <StyledInput onChange={handleChange} name={'nip'} value={values.nip} required={true} type={'text'} labelText={errors.nip || 'NIP'} />
-            <StyledInput onChange={handleChange} name={'email'} value={values.email} required={true} type={'email'} labelText={errors.email || 'Email'} />
-            <div>
-              <StyledLabel>{errors.phoneNumber || 'Numer telefonu'}</StyledLabel>
-              <NumberFormat
-                onValueChange={({ formattedValue, value }) => {
-                  setFieldValue('phoneNumber', value);
-                  setFormattedPhoneNumber(formattedValue);
-                }}
-                name={'phoneNumber'}
-                value={formattedPhoneNumber || values.phoneNumber}
-                format={'### ### ###'}
-                className={'phone-input'}
-              />
-            </div>
+            {mainCompanyInfoFields.map((field) => (
+              <FormField key={field.name} {...field} />
+            ))}
             <FlexWrapper>
-              <Button type={'submit'} text={'Dalej'} />
+              <Button type={'submit'} disabled={isSubmitting}>
+                Dalej
+              </Button>
             </FlexWrapper>
           </StyledForm>
         </Wrapper>

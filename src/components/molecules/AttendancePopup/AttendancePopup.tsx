@@ -1,10 +1,9 @@
 import React from 'react';
 import { Formik } from 'formik';
 
-import PopupTemplate from 'components/templates/PopupTemplate/PopupTemplate';
 import ModalButton, { ButtonType } from 'components/atoms/ModalButton/ModalButton';
-import Input from 'components/atoms/Input/Input';
-import Checkbox from 'components/atoms/Checkbox/Checkbox';
+import Input from 'components/form/Input/Input';
+import { Checkbox, FormField, PopupTemplate } from 'components';
 
 import { AttendanceInterface } from 'types/modelsTypes';
 import { useAppDispatch } from 'store/store';
@@ -37,7 +36,8 @@ const AttendancePopup: React.FC<Props> = ({ attendance, isOpen, setOpen, date })
     setOpen(false);
     if (attendance) {
       if (attendance?.attendance) {
-        wasPresent !== null && dispatch(updateAttendance({ attendanceId: attendance.attendance._id, wasPresent: wasPresent, hours }));
+        wasPresent !== null &&
+          dispatch(updateAttendance({ attendanceId: attendance.attendance._id, wasPresent: wasPresent, hours }));
       } else {
         wasPresent !== null && dispatch(addAttendance({ userId: attendance.user._id, date, wasPresent: wasPresent, hours }));
       }
@@ -47,7 +47,14 @@ const AttendancePopup: React.FC<Props> = ({ attendance, isOpen, setOpen, date })
   return (
     <PopupTemplate isOpen={isOpen} headerText={`Obecność z dnia ${date.toLocaleDateString()}`} isHigher={false}>
       <div>
-        <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize={true} validationSchema={AttendanceSchema} validateOnChange={false} validateOnBlur={false}>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+          enableReinitialize={true}
+          validationSchema={AttendanceSchema}
+          validateOnChange={false}
+          validateOnBlur={false}
+        >
           {({ handleChange, values, setFieldValue, errors }) =>
             !!attendance && (
               <StyledForm>
@@ -60,8 +67,20 @@ const AttendancePopup: React.FC<Props> = ({ attendance, isOpen, setOpen, date })
                   </FlexWrapper>
                   <StyledFlexWrapper>
                     <StyledParagraph type={'info'}>Obecność</StyledParagraph>
-                    <Checkbox onChange={() => setFieldValue('wasPresent', true)} name={'wasPresent'} labelText={'TAK'} checked={values.wasPresent !== null && values.wasPresent} />
-                    <Checkbox onChange={() => setFieldValue('wasPresent', false)} name={'wasPresent'} labelText={'NIE'} checked={!values.wasPresent} />
+                    <FormField type={'checkbox'} label={'TAK'} name={'wasPresent'} />
+                    <FormField type={'checkbox'} label={'NIE'} name={'wasPresent'} />
+                    {/*<Checkbox*/}
+                    {/*  onChange={() => setFieldValue('wasPresent', true)}*/}
+                    {/*  name={'wasPresent'}*/}
+                    {/*  labelText={'TAK'}*/}
+                    {/*  checked={values.wasPresent !== null && values.wasPresent}*/}
+                    {/*/>*/}
+                    {/*<Checkbox*/}
+                    {/*  onChange={() => setFieldValue('wasPresent', false)}*/}
+                    {/*  name={'wasPresent'}*/}
+                    {/*  labelText={'NIE'}*/}
+                    {/*  checked={!values.wasPresent}*/}
+                    {/*/>*/}
                   </StyledFlexWrapper>
                   <InputWrapper>
                     <Input

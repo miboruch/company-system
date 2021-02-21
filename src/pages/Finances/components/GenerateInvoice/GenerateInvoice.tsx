@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { Formik } from 'formik';
 
+import InvoiceItem from './components/InvoiceItemForm/InvoiceItemForm';
 import { Button, CloseButton, FormField } from 'components';
-import InvoiceItem from 'components/molecules/InvoiceItemForm/InvoiceItemForm';
 import { useAppDispatch } from 'store/store';
 import { modalOpenAnimation } from 'animations/animations';
 import { InvoiceItem as InvoiceItemInterface } from 'types';

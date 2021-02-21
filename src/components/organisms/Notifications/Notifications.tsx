@@ -3,13 +3,13 @@ import gsap from 'gsap';
 import { useSelector } from 'react-redux';
 
 import NotificationBox from 'components/molecules/NotificationBox/NotificationBox';
-import Spinner from 'components/atoms/Spinner/Spinner';
-
+import { Spinner } from 'components';
 import { AppState } from 'store/store';
 import { useOutsideClick } from 'utils/customHooks';
 import { notificationsAnimation } from 'animations/animations';
+
 import { StyledWrapper, Header, Content, EmptyWrapper } from './Notifications.styles';
-import { Paragraph } from 'styles/typography/typography';
+import { Paragraph } from 'styles';
 
 interface Props {
   isOpen: boolean;
@@ -44,7 +44,13 @@ const Notifications: React.FC<Props> = ({ isOpen, setOpen }) => {
           <Content ref={contentRef}>
             {notifications.length > 0 ? (
               notifications.map((notification, index) => (
-                <NotificationBox key={index} title={notification.title} description={notification.description} createdDate={new Date(notification.createdDate)} wasOpened={notification.wasOpened} />
+                <NotificationBox
+                  key={index}
+                  title={notification.title}
+                  description={notification.description}
+                  createdDate={new Date(notification.createdDate)}
+                  wasOpened={notification.wasOpened}
+                />
               ))
             ) : (
               <EmptyWrapper>

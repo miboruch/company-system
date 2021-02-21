@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 
 import RegistrationLinkController from 'pages/Register/components/RegisterUser/RegistrationLinkController';
-import Spinner from '../../components/atoms/Spinner/Spinner';
 import LoginTemplate, { TemplatePage } from '../../components/templates/LoginTemplate/LoginTemplate';
+import { Spinner } from 'components';
 import { AppState, useAppDispatch } from 'store/store';
 import { validateRegistrationToken } from 'ducks/auth/link-registration/link-registration-creators';
 

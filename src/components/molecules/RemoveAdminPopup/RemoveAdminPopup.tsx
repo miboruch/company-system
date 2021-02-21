@@ -1,15 +1,23 @@
 import React from 'react';
 import { Formik } from 'formik';
 
-import PopupTemplate from 'components/templates/PopupTemplate/PopupTemplate';
-import Checkbox from 'components/atoms/Checkbox/Checkbox';
+import { Checkbox, FormField, PopupTemplate } from 'components';
 import ModalButton, { ButtonType } from 'components/atoms/ModalButton/ModalButton';
 
 import { CompanyOwnersInterface } from 'types/modelsTypes';
 import { useAppDispatch } from 'store/store';
 import { Paragraph } from 'styles/typography/typography';
-import { ContentWrapper, StyledForm, StyledButtonWrapper, StyledInput, RowWrapper, InputRowWrapper, StyledInfoParagraph } from './RemoveAdminPopup.styles';
+import {
+  ContentWrapper,
+  StyledForm,
+  StyledButtonWrapper,
+  StyledInput,
+  RowWrapper,
+  InputRowWrapper,
+  StyledInfoParagraph
+} from './RemoveAdminPopup.styles';
 import { removeCompanyOwner } from 'ducks/company/company-owners/company-owners-creators';
+import { StyledFlexWrapper } from 'components/molecules/AttendancePopup/AttendancePopup.styles';
 
 interface DefaultState {
   addEmployee: boolean;
@@ -32,7 +40,8 @@ const RemoveAdminPopup: React.FC<Props> = ({ isOpen, closePopup, companyOwnerToD
   };
 
   const handleSubmit = ({ addEmployee, pricePerHour, monthlyPrice }: DefaultState) => {
-    companyOwnerToDelete && dispatch(removeCompanyOwner({ userId: companyOwnerToDelete._id, addEmployee, pricePerHour, monthlyPrice }));
+    companyOwnerToDelete &&
+      dispatch(removeCompanyOwner({ userId: companyOwnerToDelete._id, addEmployee, pricePerHour, monthlyPrice }));
   };
 
   return (
@@ -41,15 +50,43 @@ const RemoveAdminPopup: React.FC<Props> = ({ isOpen, closePopup, companyOwnerToD
         <Formik initialValues={initialValues} onSubmit={handleSubmit}>
           {({ handleChange, values, setFieldValue }) => (
             <StyledForm>
-              <Paragraph type={'text'}>Usuwasz administratora, czy chcesz aby pozostał on w twojej firmie jako pracownik?</Paragraph>
+              <Paragraph type={'text'}>
+                Usuwasz administratora, czy chcesz aby pozostał on w twojej firmie jako pracownik?
+              </Paragraph>
               <StyledInfoParagraph type={'info'}>Jeżeli tak - uzupełnij dane</StyledInfoParagraph>
               <RowWrapper>
-                <Checkbox onChange={() => setFieldValue('addEmployee', true)} name={'addEmployee'} labelText={'TAK'} checked={values.addEmployee} />
-                <Checkbox onChange={() => setFieldValue('addEmployee', false)} name={'addEmployee'} labelText={'NIE'} checked={!values.addEmployee} />
+                <FormField type={'checkbox'} label={'TAK'} name={'addEmployee'} />
+                <FormField type={'checkbox'} label={'NIE'} name={'addEmployee'} />
+                {/*<Checkbox*/}
+                {/*  onChange={() => setFieldValue('addEmployee', true)}*/}
+                {/*  name={'addEmployee'}*/}
+                {/*  labelText={'TAK'}*/}
+                {/*  checked={values.addEmployee}*/}
+                {/*/>*/}
+                {/*<Checkbox*/}
+                {/*  onChange={() => setFieldValue('addEmployee', false)}*/}
+                {/*  name={'addEmployee'}*/}
+                {/*  labelText={'NIE'}*/}
+                {/*  checked={!values.addEmployee}*/}
+                {/*/>*/}
               </RowWrapper>
               <InputRowWrapper>
-                <StyledInput onChange={handleChange} name={'pricePerHour'} required={false} type={'number'} labelText={'Stawka godzinowa'} disabled={!values.addEmployee || !!values.monthlyPrice} />
-                <StyledInput onChange={handleChange} name={'monthlyPrice'} required={false} type={'number'} labelText={'Stawka miesięczna'} disabled={!values.addEmployee || !!values.pricePerHour} />
+                <StyledInput
+                  onChange={handleChange}
+                  name={'pricePerHour'}
+                  required={false}
+                  type={'number'}
+                  labelText={'Stawka godzinowa'}
+                  disabled={!values.addEmployee || !!values.monthlyPrice}
+                />
+                <StyledInput
+                  onChange={handleChange}
+                  name={'monthlyPrice'}
+                  required={false}
+                  type={'number'}
+                  labelText={'Stawka miesięczna'}
+                  disabled={!values.addEmployee || !!values.pricePerHour}
+                />
               </InputRowWrapper>
               <StyledButtonWrapper>
                 <ModalButton onClick={closePopup} buttonType={ButtonType.Cancel} text={'Zamknij'} />
