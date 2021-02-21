@@ -1,16 +1,16 @@
 import React, { useContext } from 'react';
 import { Formik } from 'formik';
 
-import Button from 'components/atoms/Button/Button';
-
+import { Button, FormField } from 'components';
 import { useAppDispatch } from 'store/store';
-import { HeadingWrapper, MobileCompoundTitle, StyledBackParagraph, StyledForm, StyledInput, Subheading, Wrapper } from 'styles/compoundStyles';
-import { DoubleFlexWrapper } from 'styles/shared';
 import { EmployeeDataContext } from '../../context/EmployeeDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { sendRegistrationMail } from 'ducks/auth/link-registration/link-registration-creators';
 import { addNewEmployee } from 'ducks/employees/employees-data/employees-data-creators';
 import { EmployeeSalarySchema } from '../../validation/validation';
+
+import { HeadingWrapper, MobileCompoundTitle, StyledBackParagraph, StyledForm, Subheading, Wrapper } from 'styles/compoundStyles';
+import { DoubleFlexWrapper } from 'styles/shared';
 
 type DefaultValues = {
   email?: string;
@@ -18,7 +18,7 @@ type DefaultValues = {
   monthlyPrice: number;
 };
 
-const SalaryPage: React.FC = () => {
+const Salary: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const { data, setData } = useContext(EmployeeDataContext);
@@ -47,38 +47,30 @@ const SalaryPage: React.FC = () => {
   };
 
   return (
-    <Formik onSubmit={handleSubmit} initialValues={initialValues} validationSchema={EmployeeSalarySchema} validateOnBlur={false} validateOnChange={false}>
-      {({ handleChange, values, errors }) => (
+    <Formik
+      onSubmit={handleSubmit}
+      initialValues={initialValues}
+      validationSchema={EmployeeSalarySchema}
+      validateOnBlur={false}
+      validateOnChange={false}
+    >
+      {({ isSubmitting }) => (
         <Wrapper>
           <StyledForm>
             <HeadingWrapper>
               <MobileCompoundTitle>Informacje szczegółowe</MobileCompoundTitle>
               <Subheading>Uzupełnij informacje</Subheading>
             </HeadingWrapper>
-            {data.registerWithMail && <StyledInput onChange={handleChange} name={'email'} value={values.email} type={'email'} required={true} labelText={errors.email || 'Email'} />}
-            <StyledInput
-              onChange={handleChange}
-              name={'pricePerHour'}
-              value={values.pricePerHour}
-              type={'number'}
-              required={false}
-              labelText={errors.pricePerHour || 'Stawka godzinowa'}
-              disabled={!!values.monthlyPrice}
-            />
-            <StyledInput
-              onChange={handleChange}
-              name={'monthlyPrice'}
-              value={values.monthlyPrice}
-              type={'number'}
-              required={false}
-              labelText={errors.monthlyPrice || 'Stawka miesięczna'}
-              disabled={!!values.pricePerHour}
-            />
+            {data.registerWithMail && <FormField name={'email'} type={'email'} label={'Email'} required={true} />}
+            <FormField name={'pricePerHour'} type={'number'} label={'Stawka godzinowa'} required={false} />
+            <FormField name={'monthlyPrice'} type={'number'} label={'Stawka miesięczna'} required={false} />
             <DoubleFlexWrapper>
               <StyledBackParagraph type={'back'} onClick={handlePageBack}>
                 Wstecz
               </StyledBackParagraph>
-              <Button type={'submit'} text={'Dodaj'} />
+              <Button type={'submit'} disabled={isSubmitting}>
+                Dodaj
+              </Button>
             </DoubleFlexWrapper>
           </StyledForm>
         </Wrapper>
@@ -87,4 +79,4 @@ const SalaryPage: React.FC = () => {
   );
 };
 
-export default SalaryPage;
+export default Salary;

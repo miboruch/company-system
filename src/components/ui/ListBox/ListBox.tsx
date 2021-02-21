@@ -1,7 +1,6 @@
 import React from 'react';
 
-import ArrowButton from 'components/atoms/ArrowButton/ArrowButton';
-
+import { ArrowButton } from 'components';
 import { ContentWrapper, Name, Subparagraph, Wrapper, ValueParagraph } from './ListBox.styles';
 import { CheckedIcon, EmptyIcon, NotCheckedIcon, EditIcon } from 'styles/iconStyles';
 
@@ -19,7 +18,17 @@ interface Props {
 
 export type ListBoxProps = Props;
 
-const ListBox: React.FC<ListBoxProps> = ({ name, topDescription, bottomDescription, callback, isEmpty, isChecked, isCompanyBox, value, editCallback }) => {
+const ListBox: React.FC<ListBoxProps> = ({
+  name,
+  topDescription,
+  bottomDescription,
+  callback,
+  isEmpty,
+  isChecked,
+  isCompanyBox,
+  value,
+  editCallback
+}) => {
   return (
     <Wrapper onClick={() => callback && callback()}>
       <ContentWrapper>

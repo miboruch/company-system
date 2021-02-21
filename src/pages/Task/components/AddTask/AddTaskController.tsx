@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import TaskDataContextProvider from './context/TaskDataContext';
 import PageContextProvider from './context/PageContext';
-import CloseButton from 'components/atoms/CloseButton/CloseButton';
 import AddTaskHeader from './components/AddTaskHeader/AddTaskHeader';
 import StepList from './components/StepList/StepList';
 import AddTaskTemplate from './templates/AddTaskTemplate';
 import TaskInfo from './pages/TaskInfo/TaskInfo';
 import SpecificInfo from './pages/SpecificInfo/SpecificInfo';
+import { CloseButton } from 'components';
 import { AppState } from 'store/store';
 import { PageSettingEnum } from './context/PageContext';
 import { modalOpenAnimation } from 'animations/animations';

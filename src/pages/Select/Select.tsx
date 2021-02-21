@@ -1,8 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import ArrowButton from '../../components/atoms/ArrowButton/ArrowButton';
-
+import { ArrowButton } from 'components';
 import { UserRole } from 'ducks/auth/roles/roles';
 import { Direction } from 'types/globalTypes';
 import { useAppDispatch } from 'store/store';

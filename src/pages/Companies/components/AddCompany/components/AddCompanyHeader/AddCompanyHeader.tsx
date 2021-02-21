@@ -1,9 +1,7 @@
 import React, { useContext } from 'react';
 import { useDispatch } from 'react-redux';
 
-import ArrowButton from 'components/atoms/ArrowButton/ArrowButton';
-import CloseButton from 'components/atoms/CloseButton/CloseButton';
-
+import { ArrowButton, CloseButton } from 'components';
 import { Direction } from 'types/globalTypes';
 import { setAddCompanyOpen } from 'ducks/company/company-toggle/company-toggle';
 import { PageContext } from '../../context/PageContext';

@@ -3,19 +3,17 @@ import styled from 'styled-components';
 import { Formik } from 'formik';
 import { useSelector } from 'react-redux';
 
-import Button from 'components/atoms/Button/Button';
-import UserBox from 'components/molecules/UserBox/UserBox';
-
+import { Button } from 'components';
+import UserBox from './components/UserBox/UserBox';
 import { UserDataInterface } from 'types/modelsTypes';
 import { AppState } from 'store/store';
 import { removeDuplicates } from 'utils/functions';
-
-import { HeadingWrapper, MobileCompoundTitle, StyledForm, Subheading, Wrapper } from 'styles/compoundStyles';
-import { DoubleFlexWrapper } from 'styles/shared';
 import { EmployeeDataContext } from '../../context/EmployeeDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
-import { Paragraph } from 'styles/typography/typography';
 import { MainEmployeeSchema } from '../../validation/validation';
+
+import { HeadingWrapper, MobileCompoundTitle, StyledForm, Subheading, Wrapper } from 'styles/compoundStyles';
+import { Paragraph, DoubleFlexWrapper } from 'styles';
 
 const UsersWrapper = styled.div`
   width: 100%;
@@ -61,13 +59,21 @@ const SelectEmployee: React.FC = () => {
   };
 
   return (
-    <Formik onSubmit={handleSubmit} initialValues={initialValues} validationSchema={MainEmployeeSchema} validateOnChange={false} validateOnBlur={false}>
+    <Formik
+      onSubmit={handleSubmit}
+      initialValues={initialValues}
+      validationSchema={MainEmployeeSchema}
+      validateOnChange={false}
+      validateOnBlur={false}
+    >
       {({ setFieldValue }) => (
         <Wrapper>
           <StyledForm>
             <HeadingWrapper>
               <MobileCompoundTitle>Wybierz użytkownika</MobileCompoundTitle>
-              <Subheading>Wybierz jednego użytkownika lub wyślij zaproszenie jeżeli twój pracownik nie posiada jeszcze konta</Subheading>
+              <Subheading>
+                Wybierz jednego użytkownika lub wyślij zaproszenie jeżeli twój pracownik nie posiada jeszcze konta
+              </Subheading>
             </HeadingWrapper>
             <UsersWrapper>
               {users.length === 0 ? (
@@ -92,7 +98,7 @@ const SelectEmployee: React.FC = () => {
             <DoubleFlexWrapper>
               <Paragraph
                 type={'text'}
-                style={{cursor: 'pointer'}}
+                style={{ cursor: 'pointer' }}
                 onClick={() => {
                   setFieldValue('userId', undefined);
                   setFieldValue('registerWithMail', true);
@@ -102,7 +108,9 @@ const SelectEmployee: React.FC = () => {
               >
                 Wyślij zaproszenie na maila
               </Paragraph>
-              <Button type={'submit'} text={'Dalej'} disabled={!data.userId && !data.registerWithMail} />
+              <Button type={'submit'} disabled={!data.userId && !data.registerWithMail}>
+                Dalej
+              </Button>
             </DoubleFlexWrapper>
           </StyledForm>
         </Wrapper>

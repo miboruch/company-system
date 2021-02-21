@@ -11,7 +11,7 @@ import {
   UserSettingsSubcategories
 } from './settings.config';
 
-import { AddNewParagraph } from 'components/atoms/AddNewButton/AddNewButton.styles';
+import { AddNewParagraph } from 'components/ui/AddNewButton/AddNewButton.styles';
 import { ContentWrapper, ListItems, StyledList } from './Settings.styles';
 
 import { AppState } from 'store/store';

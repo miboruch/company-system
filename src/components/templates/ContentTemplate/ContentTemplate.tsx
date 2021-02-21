@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 
-import ArrowButton from 'components/atoms/ArrowButton/ArrowButton';
-
-import { ContentWrapper, ArrowAbsoluteWrapper } from './ContentTemplate.styles';
+import { ArrowButton } from 'components';
 import { Direction } from 'types/globalTypes';
+import { ContentWrapper, ArrowAbsoluteWrapper } from './ContentTemplate.styles';
 
 interface Props {
   children: React.ReactNode;
@@ -23,7 +22,11 @@ const ContentTemplate: React.FC<Props> = ({ children, isOpen, close }) => {
       gsap.set(contentWrapper, { x: '100%' });
       gsap.set([...contentWrapper.children], { autoAlpha: 0 });
 
-      tl.fromTo(contentWrapper, { x: '100%' }, { x: 0, duration: 0.3 }).fromTo(contentWrapper.children, { y: '+=30' }, { autoAlpha: 1, y: 0, stagger: 0.4 });
+      tl.fromTo(contentWrapper, { x: '100%' }, { x: 0, duration: 0.3 }).fromTo(
+        contentWrapper.children,
+        { y: '+=30' },
+        { autoAlpha: 1, y: 0, stagger: 0.4 }
+      );
     }
   }, []);
 

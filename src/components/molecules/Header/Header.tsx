@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import Hamburger from 'components/atoms/Hamburger/Hamburger';
 import HeaderSlider from 'components/molecules/HeaderSlider/HeaderSlider';
 import SearchInput from 'components/atoms/SearchInput/SearchInput';
-import ArrowButton from 'components/atoms/ArrowButton/ArrowButton';
+import { ArrowButton } from 'components';
 import Notifications from 'components/organisms/Notifications/Notifications';
 
 import { Direction } from 'types/globalTypes';

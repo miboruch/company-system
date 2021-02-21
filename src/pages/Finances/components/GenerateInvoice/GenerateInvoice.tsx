@@ -1,25 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { Formik } from 'formik';
-import { useSelector } from 'react-redux';
 
-import CloseButton from 'components/atoms/CloseButton/CloseButton';
+import { Button, CloseButton, FormField } from 'components';
 import InvoiceItem from 'components/molecules/InvoiceItemForm/InvoiceItemForm';
-import Button from 'components/atoms/Button/Button';
-
-import { AppState, useAppDispatch } from 'store/store';
+import { useAppDispatch } from 'store/store';
 import { modalOpenAnimation } from 'animations/animations';
-import { StyledInput } from 'styles/compoundStyles';
-import { Paragraph } from 'styles/typography/typography';
+import { InvoiceItem as InvoiceItemInterface } from 'types';
 import { generateInvoice } from 'ducks/invoice/invoice-creators';
-import { Wrapper, Box, StyledForm, FormContentWrapper, ColumnWrapper, CloseButtonWrapper, StyledHeading } from './GenerateInvoice.styles';
+import { generateInvoiceFields } from './generate-invoice.fields';
 
-export interface ItemInterface {
-  item: string;
-  description: string;
-  quantity: number;
-  amount: number;
-}
+import { Paragraph } from 'styles';
+import {
+  Wrapper,
+  Box,
+  StyledForm,
+  FormContentWrapper,
+  ColumnWrapper,
+  CloseButtonWrapper,
+  StyledHeading
+} from './GenerateInvoice.styles';
 
 interface InvoiceInitialValues {
   name: string;
@@ -39,7 +39,7 @@ const GenerateInvoice: React.FC<Props> = ({ isOpen, setOpen }) => {
   const boxRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
 
-  const [items, setItems] = useState<ItemInterface[]>([]);
+  const [items, setItems] = useState<InvoiceItemInterface[]>([]);
 
   const initialValues: InvoiceInitialValues = {
     name: '',
@@ -67,21 +67,22 @@ const GenerateInvoice: React.FC<Props> = ({ isOpen, setOpen }) => {
           <CloseButton close={() => setOpen(false)} />
         </CloseButtonWrapper>
         <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-          {({ handleChange, values }) => (
+          {({ isSubmitting }) => (
             <StyledForm>
               <FormContentWrapper>
                 <ColumnWrapper>
                   <StyledHeading>Dane klienta</StyledHeading>
-                  <StyledInput type={'text'} name={'name'} value={values.name} onChange={handleChange} labelText={'Nazwa odbiorcy'} required={true} />
-                  <StyledInput type={'text'} name={'address'} value={values.address} onChange={handleChange} labelText={'Adres odbiorcy'} required={true} />
-                  <StyledInput type={'text'} name={'city'} value={values.city} onChange={handleChange} labelText={'Miasto'} required={true} />
-                  <StyledInput type={'text'} name={'country'} value={values.country} onChange={handleChange} labelText={'Kraj'} required={true} />
+                  {generateInvoiceFields.map((field) => (
+                    <FormField key={field.name} {...field} />
+                  ))}
                 </ColumnWrapper>
                 <ColumnWrapper>
                   <InvoiceItem items={items} setItems={setItems} />
                 </ColumnWrapper>
               </FormContentWrapper>
-              <Button type={'submit'} text={'Generuj'} />
+              <Button type={'submit'} disabled={isSubmitting}>
+                Generuj
+              </Button>
               {items.map((item, index) => (
                 <Paragraph key={index}>{item.item}</Paragraph>
               ))}

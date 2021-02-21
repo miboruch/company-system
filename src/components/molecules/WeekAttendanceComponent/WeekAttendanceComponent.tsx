@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import ArrowButton from 'components/atoms/ArrowButton/ArrowButton';
-
+import { ArrowButton } from 'components';
 import { WeekAttendance } from 'types/modelsTypes';
 import { AppState, useAppDispatch } from 'store/store';
 import { Direction } from 'types/globalTypes';
@@ -10,7 +9,16 @@ import { compareDates } from 'utils/functions';
 import { getWeekAttendance } from 'ducks/attendance/week-attendance-data/week-attendance-data-creators';
 import { months, weekDays } from 'utils/config';
 import { Paragraph } from 'styles/typography/typography';
-import { MainWrapper, Header, StyledWrapper, SingleAttendanceWrapper, WeekDayParagraph, DateParagraph, StyledEmptyIcon, StyledNotCheckedIcon } from './WeekAttendanceComponent.styles';
+import {
+  MainWrapper,
+  Header,
+  StyledWrapper,
+  SingleAttendanceWrapper,
+  WeekDayParagraph,
+  DateParagraph,
+  StyledEmptyIcon,
+  StyledNotCheckedIcon
+} from './WeekAttendanceComponent.styles';
 
 interface Props {
   weekAttendance: WeekAttendance[];
