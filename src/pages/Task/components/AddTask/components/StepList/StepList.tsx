@@ -3,8 +3,9 @@ import React, { useContext } from 'react';
 import CompoundStepBox from 'components/molecules/CompoundStepBox/CompoundStepBox';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { addTaskSteps } from '../../utils/addTaskSteps';
-import { ListWrapper } from 'styles/compoundStyles';
 import { TaskDataContext } from '../../context/TaskDataContext';
+
+import { ListWrapper } from 'styles/compoundStyles';
 
 const StepList: React.FC = () => {
   const { data } = useContext(TaskDataContext);

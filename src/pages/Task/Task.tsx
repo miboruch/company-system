@@ -3,12 +3,10 @@ import { useSelector } from 'react-redux';
 import gsap from 'gsap';
 
 import TaskInfo from './components/TaskInfo/TaskInfo';
-import { ListBox, GridWrapper, MenuTemplate } from 'components';
-import ContentTemplate from 'components/templates/ContentTemplate/ContentTemplate';
+import { ListBox, GridWrapper, MenuTemplate, ContentTemplate, Spinner } from 'components';
+import AddTaskController from './components/AddTask/AddTaskController';
 import DeletePopup from 'components/molecules/DeletePopup/DeletePopup';
-import AddTaskController from 'components/compound/AddTask/AddTaskController';
 import MapCoordsEdit, { CoordsEditType } from 'components/organisms/MapCoordsEdit/MapCoordsEdit';
-import { Spinner } from 'components';
 import { UserRole } from 'ducks/auth/roles/roles';
 import { AppState, useAppDispatch } from 'store/store';
 import { TaskInterface } from 'types/modelsTypes';
@@ -19,7 +17,7 @@ import { deleteTask, getCompanyTasks } from 'ducks/tasks/tasks-data/task-data-cr
 
 import { AddIcon, AddWrapper, List, Paragraph, SpinnerWrapper } from 'styles';
 
-const TaskPage: React.FC = () => {
+const Task: React.FC = () => {
   const dispatch = useAppDispatch();
   const { allCompanyTasks, areTasksLoading } = useSelector((state: AppState) => state.tasks.taskData);
   const { isTaskInfoOpen, isTaskMapPreviewOpen, selectedTask } = useSelector((state: AppState) => state.tasks.taskToggle);
@@ -106,4 +104,4 @@ const TaskPage: React.FC = () => {
   );
 };
 
-export default TaskPage;
+export default Task;

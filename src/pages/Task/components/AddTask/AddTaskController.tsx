@@ -2,19 +2,19 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useDispatch, useSelector } from 'react-redux';
 
-import TaskDataContextProvider from 'components/compound/AddTask/context/TaskDataContext';
+import TaskDataContextProvider from './context/TaskDataContext';
 import PageContextProvider from './context/PageContext';
 import CloseButton from 'components/atoms/CloseButton/CloseButton';
-import AddTaskHeader from 'components/compound/AddTask/components/AddTaskHeader/AddTaskHeader';
-import StepList from 'components/compound/AddTask/components/StepList/StepList';
-import AddTaskTemplate from 'components/compound/AddTask/templates/AddTaskTemplate';
-import TaskInfoPage from 'components/compound/AddTask/pages/TaskInfoPage/TaskInfoPage';
-import SpecificInfoPage from 'components/compound/AddTask/pages/SpecificInfoPage/SpecificInfoPage';
-
+import AddTaskHeader from './components/AddTaskHeader/AddTaskHeader';
+import StepList from './components/StepList/StepList';
+import AddTaskTemplate from './templates/AddTaskTemplate';
+import TaskInfo from './pages/TaskInfo/TaskInfo';
+import SpecificInfo from './pages/SpecificInfo/SpecificInfo';
 import { AppState } from 'store/store';
 import { PageSettingEnum } from './context/PageContext';
 import { modalOpenAnimation } from 'animations/animations';
 import { setAddNewTaskOpen } from 'ducks/tasks/tasks-toggle/tasks-toggle';
+
 import { CloseButtonWrapper, CompoundTitle, ContentWrapper, MainWrapper, Wrapper } from 'styles/compoundControllerStyles';
 import { StandardCompoundTitle } from 'styles/compoundStyles';
 
@@ -50,10 +50,10 @@ const AddTaskController: React.FC = () => {
             <StepList />
             <ContentWrapper>
               <AddTaskTemplate pageIndex={PageSettingEnum.First}>
-                <TaskInfoPage />
+                <TaskInfo />
               </AddTaskTemplate>
               <AddTaskTemplate pageIndex={PageSettingEnum.Second}>
-                <SpecificInfoPage />
+                <SpecificInfo />
               </AddTaskTemplate>
             </ContentWrapper>
           </Wrapper>

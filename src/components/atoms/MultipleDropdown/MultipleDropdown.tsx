@@ -2,12 +2,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import Downshift, { ControllerStateAndHelpers } from 'downshift';
 
 import Input from 'components/atoms/Input/Input';
-
 import { EmployeeDataInterface } from 'types/modelsTypes';
-import { TaskDataContext } from '../../compound/AddTask/context/TaskDataContext';
+import { TaskDataContext } from 'pages/Task/components/AddTask/context/TaskDataContext';
+
 import { Menu, Item, Form } from 'styles/dropdownStyles';
-import { StyledLabel } from 'styles/shared';
-import { Paragraph } from 'styles/typography/typography';
+import { Paragraph, StyledLabel } from 'styles';
 import { StyledFlexWrapper, UserBox } from './MultipleDropdown.styles';
 
 const changeHandler = (
@@ -24,7 +23,12 @@ const changeHandler = (
   };
 };
 
-const removeSelectedItemByIndex = (index: number, selectedItems: any, setSelectedItems: any, onSelectionItemsChange: any) => () => {
+const removeSelectedItemByIndex = (
+  index: number,
+  selectedItems: any,
+  setSelectedItems: any,
+  onSelectionItemsChange: any
+) => () => {
   const temp = [...selectedItems];
   temp.splice(index, 1);
   setSelectedItems(temp);
@@ -48,7 +52,19 @@ const MultipleDropdown: React.FC<Props> = ({ items, labelText, onSelectionItemsC
 
   return (
     <Downshift {...rest} onChange={changeHandler(selectedItems, setSelectedItems, onSelectionItemsChange)}>
-      {({ getLabelProps, getInputProps, getRootProps, getMenuProps, getItemProps, getToggleButtonProps, clearSelection, highlightedIndex, isOpen, selectedItem, inputValue }) => {
+      {({
+        getLabelProps,
+        getInputProps,
+        getRootProps,
+        getMenuProps,
+        getItemProps,
+        getToggleButtonProps,
+        clearSelection,
+        highlightedIndex,
+        isOpen,
+        selectedItem,
+        inputValue
+      }) => {
         return (
           <Form {...getRootProps()}>
             <StyledFlexWrapper>
@@ -70,7 +86,12 @@ const MultipleDropdown: React.FC<Props> = ({ items, labelText, onSelectionItemsC
             <Input {...getInputProps()} type='text' />
             <Menu {...getMenuProps()} isOpen={isOpen}>
               {items
-                .filter((item) => !selectedItems.find(({ _id }) => _id === item._id) && inputValue && `${item.userId.name} ${item.userId.lastName}`.includes(inputValue))
+                .filter(
+                  (item) =>
+                    !selectedItems.find(({ _id }) => _id === item._id) &&
+                    inputValue &&
+                    `${item.userId.name} ${item.userId.lastName}`.includes(inputValue)
+                )
                 .map((item, index) => {
                   return (
                     <Item

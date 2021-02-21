@@ -3,16 +3,16 @@ import { Formik } from 'formik';
 import { useSelector } from 'react-redux';
 
 import Dropdown from 'components/atoms/Dropdown/Dropdown';
-import Button from 'components/atoms/Button/Button';
-
+import { Button, FormField } from 'components';
 import { AppState, useAppDispatch } from 'store/store';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
-import { HeadingWrapper, MobileCompoundTitle, StyledBackParagraph, StyledForm, StyledInput, Subheading, Wrapper } from 'styles/compoundStyles';
-import { DoubleFlexWrapper } from 'styles/shared';
 import { TaskDataContext } from '../../context/TaskDataContext';
 import { addNewTask } from 'ducks/tasks/tasks-data/task-data-creators';
 import { getCompanyClients } from 'ducks/client/client-data/client-data-creators';
 import { TaskSpecificInfoSchema } from '../../validation/validation';
+
+import { HeadingWrapper, MobileCompoundTitle, StyledBackParagraph, StyledForm, Subheading, Wrapper } from 'styles/compoundStyles';
+import { DoubleFlexWrapper } from 'styles/shared';
 
 interface DefaultValues {
   timeEstimate: number;
@@ -21,7 +21,7 @@ interface DefaultValues {
   clientId: string | null;
 }
 
-const SpecificInfoPage: React.FC = () => {
+const SpecificInfo: React.FC = () => {
   const dispatch = useAppDispatch();
   const { allCompanyClients } = useSelector((state: AppState) => state.client.clientData);
 
@@ -62,8 +62,14 @@ const SpecificInfoPage: React.FC = () => {
   }, []);
 
   return (
-    <Formik onSubmit={handleSubmit} initialValues={initialValues} validationSchema={TaskSpecificInfoSchema} validateOnBlur={false} validateOnChange={false}>
-      {({ handleChange, values, setFieldValue, errors }) => (
+    <Formik
+      onSubmit={handleSubmit}
+      initialValues={initialValues}
+      validationSchema={TaskSpecificInfoSchema}
+      validateOnBlur={false}
+      validateOnChange={false}
+    >
+      {({ isSubmitting, setFieldValue }) => (
         <Wrapper>
           <StyledForm>
             <HeadingWrapper>
@@ -72,17 +78,21 @@ const SpecificInfoPage: React.FC = () => {
             </HeadingWrapper>
             <Dropdown
               options={allCompanyClients}
-              onChange={(selectedItem) => setFieldValue('clientId', allCompanyClients.find((client) => client.name === selectedItem)?._id)}
+              onChange={(selectedItem) =>
+                setFieldValue('clientId', allCompanyClients.find((client) => client.name === selectedItem)?._id)
+              }
               labelText={'Wybierz klienta'}
             />
-            <StyledInput onChange={handleChange} name={'timeEstimate'} value={values.timeEstimate} required={true} type={'number'} labelText={errors.timeEstimate || 'Szacowany czas *'} />
-            <StyledInput onChange={handleChange} name={'taskIncome'} value={values.taskIncome} required={false} type={'number'} labelText={errors.taskIncome || 'Przychód z zadania *'} />
-            <StyledInput onChange={handleChange} name={'taskExpense'} value={values.taskExpense} required={false} type={'number'} labelText={errors.taskExpense || 'Wydatek na zadanie *'} />
+            <FormField name={'timeEstimate'} type={'number'} label={'Szacowany czas *'} required={true} />
+            <FormField name={'taskIncome'} type={'number'} label={'Przychód z zadania *'} required={false} />
+            <FormField name={'taskExpense'} type={'number'} label={'Wydatek na zadanie *'} required={false} />
             <DoubleFlexWrapper>
               <StyledBackParagraph type={'back'} onClick={handlePreviousPage}>
                 Wstecz
               </StyledBackParagraph>
-              <Button type={'submit'} text={'Dodaj'} />
+              <Button type={'submit'} disabled={isSubmitting}>
+                Dodaj
+              </Button>
             </DoubleFlexWrapper>
           </StyledForm>
         </Wrapper>
@@ -91,4 +101,4 @@ const SpecificInfoPage: React.FC = () => {
   );
 };
 
-export default SpecificInfoPage;
+export default SpecificInfo;

@@ -3,7 +3,7 @@ import React from 'react';
 import Landing from 'pages/Landing/Landing';
 import Companies from 'pages/Companies/Companies';
 import EmployeePage from '../pages/EmployeePage/EmployeePage';
-import TaskPage from '../pages/TaskPage/TaskPage';
+import Task from 'pages/Task/Task';
 import ClientsPage from '../pages/ClientsPage/ClientsPage';
 import AttendancePage from '../pages/AttendancePage/AttendancePage';
 import FinancesPage from '../pages/FinancesPage/FinancesPage';
@@ -44,7 +44,7 @@ export const adminRoutes: Routes[] = [
     path: '/admin/tasks/:id',
     main: '/admin/tasks',
     exact: false,
-    component: TaskPage,
+    component: Task,
     name: 'Zadania',
     icon: <ListIcon />,
     isGuarded: true
@@ -110,7 +110,7 @@ export const userRoutes: Routes[] = [
     path: '/user/tasks/:id',
     main: '/user/tasks',
     exact: false,
-    component: TaskPage,
+    component: Task,
     name: 'Zadania',
     icon: <ListIcon />,
     isGuarded: true

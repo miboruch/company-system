@@ -1,18 +1,17 @@
 import React, { useContext } from 'react';
-import DatePicker from 'react-datepicker';
 import { Formik } from 'formik';
 import { useSelector } from 'react-redux';
 
-import Button from 'components/atoms/Button/Button';
 import MultipleDropdown from 'components/atoms/MultipleDropdown/MultipleDropdown';
-
+import { FormField, Button } from 'components';
 import { AppState } from 'store/store';
 import { EmployeeDataInterface } from 'types/modelsTypes';
-import { HeadingWrapper, MobileCompoundTitle, StyledForm, StyledInput, Subheading, Wrapper } from 'styles/compoundStyles';
-import { DoubleFlexWrapper, StyledLabel } from 'styles/shared';
 import { TaskDataContext } from '../../context/TaskDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { TaskInfoSchema } from '../../validation/validation';
+
+import { HeadingWrapper, MobileCompoundTitle, StyledForm, Subheading, Wrapper } from 'styles/compoundStyles';
+import { DoubleFlexWrapper } from 'styles/shared';
 
 interface DefaultValues {
   name: string;
@@ -22,7 +21,7 @@ interface DefaultValues {
   selectedEmployees: string[];
 }
 
-const TaskInfoPage: React.FC = () => {
+const TaskInfo: React.FC = () => {
   const { data, setData } = useContext(TaskDataContext);
   const { setCurrentPage } = useContext(PageContext);
 
@@ -42,8 +41,14 @@ const TaskInfoPage: React.FC = () => {
   };
 
   return (
-    <Formik onSubmit={handleSubmit} initialValues={initialValues} validationSchema={TaskInfoSchema} validateOnChange={false} validateOnBlur={false}>
-      {({ handleChange, values, setFieldValue, errors }) => {
+    <Formik
+      onSubmit={handleSubmit}
+      initialValues={initialValues}
+      validationSchema={TaskInfoSchema}
+      validateOnChange={false}
+      validateOnBlur={false}
+    >
+      {({ isSubmitting, setFieldValue }) => {
         const handleEmployeeSelect = (selectedItems: EmployeeDataInterface[]) => {
           const temp = selectedItems.map((employee) => employee._id);
           setFieldValue('selectedEmployees', temp.length > 0 ? temp : []);
@@ -56,15 +61,18 @@ const TaskInfoPage: React.FC = () => {
                 <MobileCompoundTitle>Główne informacje o zadaniu</MobileCompoundTitle>
                 <Subheading>Wszystkie pola są wymagane</Subheading>
               </HeadingWrapper>
-              <MultipleDropdown items={allCompanyEmployees} labelText={'Wybierz pracownika'} onSelectionItemsChange={handleEmployeeSelect} />
-              <StyledInput onChange={handleChange} name={'name'} value={values.name} required={true} type={'text'} labelText={errors.name || 'Nazwa zadania'} />
-              <StyledInput onChange={handleChange} name={'description'} value={values.description} required={true} type={'text'} labelText={errors.description || 'Opis zadania'} />
-              <div>
-                <StyledLabel>{errors.date || 'Data zadania'}</StyledLabel>
-                <DatePicker selected={values.date} onChange={(date) => setFieldValue('date', date)} dateFormat={'dd/MM/yyyy'} />
-              </div>
+              <MultipleDropdown
+                items={allCompanyEmployees}
+                labelText={'Wybierz pracownika'}
+                onSelectionItemsChange={handleEmployeeSelect}
+              />
+              <FormField name={'name'} type={'text'} label={'Nazwa zadania'} required={true} />
+              <FormField name={'description'} type={'text'} label={'Opis zadania'} required={true} />
+              <FormField name={'date'} type={'date'} label={'Data zadania'} required={true} />
               <DoubleFlexWrapper>
-                <Button type={'submit'} text={'Dalej'} />
+                <Button type={'submit'} disabled={isSubmitting}>
+                  Dalej
+                </Button>
               </DoubleFlexWrapper>
             </StyledForm>
           </Wrapper>
@@ -74,4 +82,4 @@ const TaskInfoPage: React.FC = () => {
   );
 };
 
-export default TaskInfoPage;
+export default TaskInfo;
