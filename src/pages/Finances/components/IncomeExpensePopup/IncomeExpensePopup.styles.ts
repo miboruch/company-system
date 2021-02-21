@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Form } from 'formik';
-import Input from '../../atoms/Input/Input';
+import Input from 'components/form/Input/Input';
 
 const StyledForm = styled(Form)`
   width: 100%;

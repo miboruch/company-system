@@ -6,7 +6,7 @@ import EmployeePage from '../pages/EmployeePage/EmployeePage';
 import Task from 'pages/Task/Task';
 import ClientsPage from '../pages/ClientsPage/ClientsPage';
 import AttendancePage from '../pages/AttendancePage/AttendancePage';
-import FinancesPage from '../pages/FinancesPage/FinancesPage';
+import Finances from 'pages/Finances/Finances';
 import Settings from 'pages/Settings/Settings';
 
 import { HomeIcon, PaymentIcon, ListIcon, SupportIcon, UserIcon, SettingsIcon } from 'styles/shared';
@@ -53,7 +53,7 @@ export const adminRoutes: Routes[] = [
     path: '/admin/finances/:id',
     main: '/admin/finances',
     exact: false,
-    component: FinancesPage,
+    component: Finances,
     name: 'Finanse',
     icon: <PaymentIcon />,
     isGuarded: true

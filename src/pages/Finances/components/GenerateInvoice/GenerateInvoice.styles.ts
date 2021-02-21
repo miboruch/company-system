@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Form } from 'formik';
-import { Heading } from '../../../styles/typography/typography';
+
+import { Heading } from 'styles';
 
 const Wrapper = styled.div`
   position: fixed;
