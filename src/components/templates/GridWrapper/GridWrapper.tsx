@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Header from 'components/molecules/Header/Header';
 
 import { StyledWrapper, TitleWrapper } from './GridWrapper.styles';
-import { PageNameHeading } from 'styles/typography/typography';
+import { PageNameHeading } from 'styles';
 
 interface Props {
   onlyHeader?: boolean;
@@ -20,13 +20,26 @@ interface ChildrenPropsInterface extends Props {
 
 interface RenderPropsInterface extends Props {
   children?: never;
-  render: (isEditToggled: boolean, setEditToggled: (isToggled: boolean) => void, isDeleteOpen: boolean, setDeleteOpen: (isOpen: boolean) => void) => void;
+  render: (
+    isEditToggled: boolean,
+    setEditToggled: (isToggled: boolean) => void,
+    isDeleteOpen: boolean,
+    setDeleteOpen: (isOpen: boolean) => void
+  ) => void;
 }
 
 type ConnectedProps = ChildrenPropsInterface | RenderPropsInterface;
 
 //* This component will have grid declaration on hdReady resolutions
-const GridWrapper: React.FC<ConnectedProps> = ({ children, render, onlyHeader, mobilePadding, isSettingsPage, pageName, setFilterText }) => {
+const GridWrapper: React.FC<ConnectedProps> = ({
+  children,
+  render,
+  onlyHeader,
+  mobilePadding,
+  isSettingsPage,
+  pageName,
+  setFilterText
+}) => {
   const [isEditToggled, setEditToggled] = useState<boolean>(false);
   const [isDeleteOpen, setDeleteOpen] = useState<boolean>(false);
 

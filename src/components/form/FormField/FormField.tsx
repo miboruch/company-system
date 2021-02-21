@@ -9,7 +9,6 @@ import { phoneFormat } from 'utils/format';
 
 import { StyledLabel } from 'styles/shared';
 
-
 interface Props {
   type: React.HTMLProps<HTMLInputElement>['type'] | 'phone' | 'date' | 'checkbox' | 'textarea' | 'zipCode';
   name: string;
@@ -51,13 +50,16 @@ const FormField: React.FC<FormFieldProps> = ({ type = 'text', name, spacing, lab
 
   if (type === 'date') {
     return (
-      <DatePicker
-        {...[rest as any]}
-        onChange={onDateSelect}
-        selected={field.value}
-        onInputError={onFieldError}
-        dateFormat={'dd/MM/yyyy'}
-      />
+      <>
+        <StyledLabel>{label}</StyledLabel>
+        <DatePicker
+          {...[rest as any]}
+          onChange={onDateSelect}
+          selected={field.value}
+          onInputError={onFieldError}
+          dateFormat={'dd/MM/yyyy'}
+        />
+      </>
     );
   }
 
@@ -104,7 +106,16 @@ const FormField: React.FC<FormFieldProps> = ({ type = 'text', name, spacing, lab
     );
   }
 
-  return <Input {...rest} type={type} spacing={spacing} field={{ ...field, onChange: onInputChange }} labelText={label} errorMessage={error} />;
+  return (
+    <Input
+      {...rest}
+      type={type}
+      spacing={spacing}
+      field={{ ...field, onChange: onInputChange }}
+      labelText={label}
+      errorMessage={error}
+    />
+  );
 };
 
 export default FormField;

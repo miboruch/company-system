@@ -4,11 +4,10 @@ import DatePicker from 'react-datepicker';
 import { useSelector } from 'react-redux';
 
 import GridWrapper from 'components/templates/GridWrapper/GridWrapper';
-import Spinner from 'components/atoms/Spinner/Spinner';
 import ContentTemplate from 'components/templates/ContentTemplate/ContentTemplate';
 import AttendanceInfo from 'components/organisms/AttendanceInfo/AttendanceInfo';
 import AttendancePopup from 'components/molecules/AttendancePopup/AttendancePopup';
-import ListBox from 'components/molecules/ListBox/ListBox';
+import { ListBox, Spinner } from 'components/index';
 
 import { AttendanceInterface } from 'types/modelsTypes';
 import { AppState, useAppDispatch } from 'store/store';
@@ -34,7 +33,9 @@ const AttendancePageContent: React.FC = () => {
   const [isAttendanceOpen, setAttendanceOpen] = useState<boolean>(false);
 
   const filterByUserName = (filterText: string, dayAttendance: AttendanceInterface[]): AttendanceInterface[] => {
-    return dayAttendance.filter((attendance) => `${attendance.user.name} ${attendance.user.lastName}`.toLowerCase().includes(filterText.toLowerCase()));
+    return dayAttendance.filter((attendance) =>
+      `${attendance.user.name} ${attendance.user.lastName}`.toLowerCase().includes(filterText.toLowerCase())
+    );
   };
 
   const handleAttendanceInfoClose = () => dispatch(setAttendanceInfoOpen(false));
@@ -63,7 +64,11 @@ const AttendancePageContent: React.FC = () => {
           <ListWrapper>
             <DatePickerWrapper>
               <StyledLabel>Data</StyledLabel>
-              <DatePicker selected={new Date(attendanceDate)} onChange={(date) => date && date instanceof Date && dispatch(setDate(date))} dateFormat={'dd/MM/yyyy'} />
+              <DatePicker
+                selected={new Date(attendanceDate)}
+                onChange={(date) => date && date instanceof Date && dispatch(setDate(date))}
+                dateFormat={'dd/MM/yyyy'}
+              />
             </DatePickerWrapper>
             <List ref={listRef}>
               {filterByUserName(filterText, singleDayAttendance).map((attendance) => (
@@ -86,7 +91,12 @@ const AttendancePageContent: React.FC = () => {
           </ContentTemplate>
         </>
       )}
-      <AttendancePopup attendance={selectedAttendance} isOpen={isAttendanceOpen} setOpen={setAttendanceOpen} date={new Date(attendanceDate)} />
+      <AttendancePopup
+        attendance={selectedAttendance}
+        isOpen={isAttendanceOpen}
+        setOpen={setAttendanceOpen}
+        date={new Date(attendanceDate)}
+      />
     </GridWrapper>
   );
 };

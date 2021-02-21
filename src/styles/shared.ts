@@ -145,6 +145,12 @@ const EmptyWrapper = styled.div`
   place-items: center;
 `;
 
+const AddNewParagraph = styled.p`
+  font-size: 13px;
+  font-weight: ${({ theme }) => theme.font.weight.medium};
+  letter-spacing: -1px;
+`;
+
 export {
   HomeIcon,
   PaymentIcon,
@@ -161,5 +167,6 @@ export {
   List,
   AddWrapper,
   EmptyWrapper,
-  MainSpinnerWrapper
+  MainSpinnerWrapper,
+  AddNewParagraph
 };

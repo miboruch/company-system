@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { AppState } from 'store/store';
-import { Tile, Name, Description } from '../TaskTile/TaskTile.styles';
+import { Tile, Name, Description } from 'pages/Landing/components/LandingPageContent/components/TaskTile/TaskTile.styles';
 import { Paragraph } from 'styles/typography/typography';
 
 interface Props {

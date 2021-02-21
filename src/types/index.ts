@@ -5,3 +5,4 @@ export * from './attendance/attendance.model';
 export * from './client/client.model';
 export * from './employee/employee.model';
 export * from './notification/notification.model';
+export * from './utils/field.model';

@@ -1,13 +1,13 @@
 import React from 'react';
 
-import LandingPage from '../pages/LandingPage/LandingPage';
+import Landing from 'pages/Landing/Landing';
 import Companies from 'pages/Companies/Companies';
 import EmployeePage from '../pages/EmployeePage/EmployeePage';
-import TaskPage from '../pages/TaskPage/TaskPage';
+import Task from 'pages/Task/Task';
 import ClientsPage from '../pages/ClientsPage/ClientsPage';
 import AttendancePage from '../pages/AttendancePage/AttendancePage';
 import FinancesPage from '../pages/FinancesPage/FinancesPage';
-import SettingsPage from '../pages/SettingsPage/SettingsPage';
+import Settings from 'pages/Settings/Settings';
 
 import { HomeIcon, PaymentIcon, ListIcon, SupportIcon, UserIcon, SettingsIcon } from 'styles/shared';
 
@@ -26,7 +26,7 @@ export const adminRoutes: Routes[] = [
     path: '/admin/home/:id',
     main: '/admin/home',
     exact: false,
-    component: LandingPage,
+    component: Landing,
     name: 'Strona główna',
     icon: <HomeIcon />,
     isGuarded: true
@@ -44,7 +44,7 @@ export const adminRoutes: Routes[] = [
     path: '/admin/tasks/:id',
     main: '/admin/tasks',
     exact: false,
-    component: TaskPage,
+    component: Task,
     name: 'Zadania',
     icon: <ListIcon />,
     isGuarded: true
@@ -89,7 +89,7 @@ export const adminRoutes: Routes[] = [
     path: '/admin/settings/:id',
     main: '/admin/settings',
     exact: false,
-    component: SettingsPage,
+    component: Settings,
     name: 'Ustawienia',
     icon: <SettingsIcon />,
     isGuarded: true
@@ -101,7 +101,7 @@ export const userRoutes: Routes[] = [
     path: '/user/home/:id',
     main: '/user/home',
     exact: false,
-    component: LandingPage,
+    component: Landing,
     name: 'Strona główna',
     icon: <HomeIcon />,
     isGuarded: true
@@ -110,7 +110,7 @@ export const userRoutes: Routes[] = [
     path: '/user/tasks/:id',
     main: '/user/tasks',
     exact: false,
-    component: TaskPage,
+    component: Task,
     name: 'Zadania',
     icon: <ListIcon />,
     isGuarded: true
@@ -137,7 +137,7 @@ export const userRoutes: Routes[] = [
     path: '/user/settings/:id',
     main: '/user/settings',
     exact: false,
-    component: SettingsPage,
+    component: Settings,
     name: 'Ustawienia',
     icon: <SettingsIcon />,
     isGuarded: true

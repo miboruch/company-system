@@ -2,9 +2,9 @@ import React from 'react';
 
 import PageContextProvider from './context/PageContext';
 import RegisterTemplate from './templates/RegisterTemplate/RegisterTemplate';
-import MainRegisterData from './pages/MainRegisterData';
-import Password from './pages/Password';
-import ContactData from './pages/ContactData';
+import MainRegisterData from './pages/MainRegisterData/MainRegisterData';
+import Password from './pages/Password/Password';
+import Contact from './pages/Contact/Contact';
 import RegisterDataContextProvider from './context/RegisterDataContext';
 
 import { RegistrationVerifyTokenResponse } from 'pages/RegisterFromLink/RegisterFromLink';
@@ -25,7 +25,7 @@ const RegistrationLinkController: React.FC<Props> = ({ response, token }) => {
           <Password />
         </RegisterTemplate>
         <RegisterTemplate pageIndex={2}>
-          <ContactData isRegistrationLink={true} token={token} />
+          <Contact isRegistrationLink={true} token={token} />
         </RegisterTemplate>
       </PageContextProvider>
     </RegisterDataContextProvider>

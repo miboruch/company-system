@@ -2,7 +2,7 @@ import React from 'react';
 
 import ArrowButton from 'components/atoms/ArrowButton/ArrowButton';
 
-import { Name, Subparagraph } from '../ListBox/ListBox.styles';
+import { Name, Subparagraph } from 'components/ui/ListBox/ListBox.styles';
 import { Wrapper, ContentWrapper } from './UserBox.styles';
 import { EmptyIcon } from 'styles/iconStyles';
 

@@ -2,9 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import Spinner from 'components/atoms/Spinner/Spinner';
-import GridWrapper from 'components/templates/GridWrapper/GridWrapper';
-import ListBox from 'components/molecules/ListBox/ListBox';
+import { ListBox, Spinner, GridWrapper } from 'components';
 import AddCompanyController from '../AddCompany/AddCompanyController';
 import { useFetch, useShowContent } from 'components/hooks';
 

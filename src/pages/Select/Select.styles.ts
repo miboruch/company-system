@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { CompanyName } from '../../components/organisms/Menu/Menu.styles';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -112,6 +111,22 @@ const ArrowWrapper = styled.div`
 
   ${({ theme }) => theme.mq.standard} {
     display: none;
+  }
+`;
+
+const CompanyName = styled.h3`
+  font-size: 18px;
+  font-weight: ${({ theme }) => theme.font.weight.bold};
+  color: ${({ theme }) => theme.colors.dark};
+  letter-spacing: -1px;
+  margin-top: 4rem;
+
+  ${({ theme }) => theme.mq.tablet} {
+    margin-top: 2rem;
+  }
+
+  ${({ theme }) => theme.mq.standard} {
+    margin-top: 0;
   }
 `;
 

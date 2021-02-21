@@ -2,12 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useSelector } from 'react-redux';
 
-import GridWrapper from 'components/templates/GridWrapper/GridWrapper';
-import Spinner from 'components/atoms/Spinner/Spinner';
 import EmployeeInfo from 'components/organisms/EmployeeInfo/EmployeeInfo';
 import DeletePopup from 'components/molecules/DeletePopup/DeletePopup';
 import AddEmployeeController from 'components/compound/AddEmployee/AddEmployeeController';
-import ListBox from 'components/molecules/ListBox/ListBox';
+import { ListBox, Spinner, GridWrapper } from 'components/index';
 import ContentTemplate from 'components/templates/ContentTemplate/ContentTemplate';
 
 import { EmployeeDataInterface } from 'types/modelsTypes';
@@ -28,7 +26,9 @@ const EmployeesPageContent: React.FC = () => {
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
 
   const filterByEmployeeName = (filterText: string, allEmployees: EmployeeDataInterface[]): EmployeeDataInterface[] => {
-    return allEmployees.filter((employee) => `${employee.userId.name} ${employee.userId.lastName}`.toLowerCase().includes(filterText.toLowerCase()));
+    return allEmployees.filter((employee) =>
+      `${employee.userId.name} ${employee.userId.lastName}`.toLowerCase().includes(filterText.toLowerCase())
+    );
   };
 
   const handleEmployeeInfoClose = () => dispatch(setEmployeeInfoOpen(false));
