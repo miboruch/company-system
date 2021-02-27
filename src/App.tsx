@@ -7,15 +7,14 @@ import Login from 'pages/Login/Login';
 import Register from 'pages/Register/Register';
 import Routes from './routes/Routes';
 import Select from 'pages/Select/Select';
-import NotificationPopup from './components/molecules/NotificationPopup/NotificationPopup';
 import RegisterFromLink from './pages/RegisterFromLink/RegisterFromLink';
 import NotAuthRoute from './hoc/NotAuthRoute';
-import { Spinner } from 'components';
-
+import { Spinner, NotificationPopup } from 'components';
 import { AppState, useAppDispatch } from 'store/store';
 import { authCheck } from 'ducks/auth/check/check-creators';
 import { handleCompanyRefreshToken, handleAuthRefreshToken } from 'api/middleware';
 import { authApi, companyApi } from 'api';
+
 import { MainSpinnerWrapper } from 'styles/shared';
 
 import './App.css';

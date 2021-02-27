@@ -1,9 +1,9 @@
 import React from 'react';
 
-import PopupTemplate from 'components/templates/PopupTemplate/PopupTemplate';
-import ModalButton, { ButtonType } from 'components/atoms/ModalButton/ModalButton';
+import { ModalButton, PopupTemplate } from 'components';
+import { ButtonType } from 'types';
 
-import { Paragraph } from 'styles/typography/typography';
+import { Paragraph } from 'styles';
 import { ContentWrapper, ButtonWrapper } from 'styles/popupStyles';
 
 interface Props {

@@ -2,8 +2,8 @@ import React from 'react';
 import { Formik } from 'formik';
 import { useAppDispatch } from 'store/store';
 
-import { Input, PopupTemplate } from 'components';
-import ModalButton, { ButtonType } from 'components/atoms/ModalButton/ModalButton';
+import { Input, PopupTemplate, ModalButton } from 'components';
+import { ButtonType } from 'types';
 import { addIncome, addExpense } from 'ducks/finances/income-expense/income-expense-creators';
 
 import { ButtonWrapper, ContentWrapper } from 'styles/popupStyles';

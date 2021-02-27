@@ -3,8 +3,7 @@ import gsap from 'gsap';
 import { useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter, useParams } from 'react-router-dom';
 
-import GridWrapper from 'components/templates/GridWrapper/GridWrapper';
-import Chart from 'components/molecules/Chart/Chart';
+import { GridWrapper, Chart } from 'components';
 import TaskTile from './components/TaskTile/TaskTile';
 import BarChart from './components/BarChart/BarChart';
 import AttendanceList from './components/AttendanceList/AttendanceList';

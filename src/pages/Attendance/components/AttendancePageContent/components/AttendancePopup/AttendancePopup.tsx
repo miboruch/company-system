@@ -1,9 +1,9 @@
 import React from 'react';
 import { Formik } from 'formik';
 
-import ModalButton, { ButtonType } from 'components/atoms/ModalButton/ModalButton';
 import Input from 'components/form/Input/Input';
-import { Checkbox, FormField, PopupTemplate } from 'components';
+import { Checkbox, FormField, PopupTemplate, ModalButton } from 'components';
+import { ButtonType } from 'types';
 import { AttendanceInterface } from 'types/modelsTypes';
 import { useAppDispatch } from 'store/store';
 import { addAttendance, updateAttendance } from 'ducks/attendance/attendance-creators';
