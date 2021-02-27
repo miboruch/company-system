@@ -3,9 +3,8 @@ import { useSelector } from 'react-redux';
 import gsap from 'gsap';
 
 import TaskInfo from './components/TaskInfo/TaskInfo';
-import { ListBox, GridWrapper, MenuTemplate, ContentTemplate, Spinner } from 'components';
+import { ListBox, GridWrapper, MenuTemplate, ContentTemplate, Spinner, DeletePopup } from 'components';
 import AddTaskController from './components/AddTask/AddTaskController';
-import DeletePopup from 'components/molecules/DeletePopup/DeletePopup';
 import MapCoordsEdit, { CoordsEditType } from 'components/organisms/MapCoordsEdit/MapCoordsEdit';
 import { UserRole } from 'ducks/auth/roles/roles';
 import { AppState, useAppDispatch } from 'store/store';

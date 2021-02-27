@@ -5,7 +5,8 @@ import { ArrowButton, CloseButton } from 'components/index';
 import { Direction } from 'types/globalTypes';
 import { setAddNewClientOpen } from 'ducks/client/client-toggle/client-toggle';
 import { PageContext } from '../../context/PageContext';
-import { StyledHeader } from '../../../styles/headerStyles';
+
+import {StyledHeader} from 'components/compound/styles/headerStyles';
 import { Paragraph } from 'styles/typography/typography';
 
 const AddClientHeader: React.FC = () => {

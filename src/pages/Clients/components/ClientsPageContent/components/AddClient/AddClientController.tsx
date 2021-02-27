@@ -2,19 +2,19 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useSelector, useDispatch } from 'react-redux';
 
-import ClientDataContextProvider from 'components/compound/AddClient/context/ClientDataContext';
-import PageContextProvider, { PageSettingEnum } from 'components/compound/AddClient/context/PageContext';
-import AddClientHeader from 'components/compound/AddClient/components/AddClientHeader/AddClientHeader';
-import AddClientTemplate from 'components/compound/AddClient/templates/AddClientTemplate';
-import StepList from 'components/compound/AddClient/components/StepList/StepList';
-import MainClientPage from 'components/compound/AddClient/pages/MainClientPage/MainClientPage';
-import MapPage from 'components/compound/AddClient/pages/MapPage/MapPage';
-import AddressPage from 'components/compound/AddClient/pages/AddressPage/AddressPage';
+import ClientDataContextProvider from './context/ClientDataContext';
+import PageContextProvider, { PageSettingEnum } from './context/PageContext';
+import AddClientHeader from './components/AddClientHeader/AddClientHeader';
+import AddClientTemplate from './templates/AddClientTemplate';
+import StepList from './components/StepList/StepList';
+import MainClientPage from './pages/MainClientPage/MainClientPage';
+import MapPage from './pages/MapPage/MapPage';
+import AddressPage from './pages/AddressPage/AddressPage';
 import { CloseButton } from 'components';
-
 import { AppState } from 'store/store';
 import { modalOpenAnimation } from 'animations/animations';
 import { setAddNewClientOpen } from 'ducks/client/client-toggle/client-toggle';
+
 import { CloseButtonWrapper, CompoundTitle, ContentWrapper, MainWrapper, Wrapper } from 'styles/compoundControllerStyles';
 import { StandardCompoundTitle } from 'styles/compoundStyles';
 

@@ -2,13 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useSelector } from 'react-redux';
 
-import { Spinner, ListBox, GridWrapper } from 'components/index';
-import ContentTemplate from 'components/templates/ContentTemplate/ContentTemplate';
-import ClientInfo from 'components/organisms/ClientInfo/ClientInfo';
-import AddClientController from 'components/compound/AddClient/AddClientController';
-import DeletePopup from 'components/molecules/DeletePopup/DeletePopup';
+import ClientInfo from '../ClientInfo/ClientInfo';
+import AddClientController from './components/AddClient/AddClientController';
 import MapCoordsEdit, { CoordsEditType } from 'components/organisms/MapCoordsEdit/MapCoordsEdit';
-
+import { Spinner, ListBox, GridWrapper, ContentTemplate, DeletePopup } from 'components';
 import { ClientInterface } from 'types/modelsTypes';
 import { AppState, useAppDispatch } from 'store/store';
 import { listAnimation } from 'animations/animations';
@@ -17,6 +14,7 @@ import { setAddNewClientOpen, setClientInfoOpen } from 'ducks/client/client-togg
 import { setEditClientCoordsOpen } from 'ducks/client/client-toggle/client-toggle';
 import { deleteClient } from 'ducks/client/client-creators';
 import { getCompanyClients } from 'ducks/client/client-data/client-data-creators';
+
 import { Paragraph } from 'styles/typography/typography';
 import { AddIcon, AddWrapper, List, SpinnerWrapper } from 'styles/shared';
 

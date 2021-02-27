@@ -5,9 +5,9 @@ import { Formik } from 'formik';
 import { Button, FormField } from 'components';
 import { AppState } from 'store/store';
 import { setEditClientCoordsOpen } from 'ducks/client/client-toggle/client-toggle';
+import { clientInfoFields } from './client-info.fields';
 import { editClient } from 'ducks/client/client-creators';
 import { ClientSchema } from 'validation/modelsValidation';
-import { clientInfoFields } from 'components/organisms/ClientInfo/client-info.fields';
 
 import { Paragraph } from 'styles';
 import { DeleteIcon, EditIcon, LocationIcon } from 'styles/iconStyles';

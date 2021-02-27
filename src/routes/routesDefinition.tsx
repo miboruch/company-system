@@ -4,7 +4,7 @@ import Landing from 'pages/Landing/Landing';
 import Companies from 'pages/Companies/Companies';
 import Employee from 'pages/Employee/Employee';
 import Task from 'pages/Task/Task';
-import ClientsPage from '../pages/ClientsPage/ClientsPage';
+import Clients from 'pages/Clients/Clients';
 import AttendancePage from '../pages/AttendancePage/AttendancePage';
 import Finances from 'pages/Finances/Finances';
 import Settings from 'pages/Settings/Settings';
@@ -62,7 +62,7 @@ export const adminRoutes: Routes[] = [
     path: '/admin/clients/:id',
     main: '/admin/clients',
     exact: false,
-    component: ClientsPage,
+    component: Clients,
     name: 'Klienci',
     icon: <SupportIcon />,
     isGuarded: true

@@ -15,3 +15,4 @@ export { default as ArrowButton } from './ui/ArrowButton/ArrowButton';
 export { default as CloseButton } from './ui/CloseButton/CloseButton';
 export { default as SearchInput } from './form/SearchInput/SearchInput';
 export { default as Hamburger } from './ui/Hamburger/Hamburger';
+export { default as DeletePopup } from './ui/DeletePopup/DeletePopup';
