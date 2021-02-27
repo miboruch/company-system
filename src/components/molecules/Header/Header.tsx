@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import HeaderSlider from './components/HeaderSlider/HeaderSlider';
+import Notifications from './components/Notifications/Notifications';
 import { ArrowButton, SearchInput, Hamburger } from 'components';
-import Notifications from 'components/organisms/Notifications/Notifications';
 import { Direction } from 'types/globalTypes';
 import { AppState } from 'store/store';
 

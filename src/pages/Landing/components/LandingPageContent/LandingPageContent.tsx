@@ -3,14 +3,13 @@ import gsap from 'gsap';
 import { useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter, useParams } from 'react-router-dom';
 
-import GridWrapper from 'components/templates/GridWrapper/GridWrapper';
-import Chart from 'components/molecules/Chart/Chart';
-import AttendancePopup from 'components/molecules/AttendancePopup/AttendancePopup';
+import { GridWrapper, Chart } from 'components';
 import TaskTile from './components/TaskTile/TaskTile';
 import BarChart from './components/BarChart/BarChart';
 import AttendanceList from './components/AttendanceList/AttendanceList';
 import AdminStatistics from './components/AdminStatistics/AdminStatistics';
 import InformationBox from './components/InformationBox/InformationBox';
+import AttendancePopup from 'pages/Attendance/components/AttendancePageContent/components/AttendancePopup/AttendancePopup';
 
 import { AppState, useAppDispatch } from 'store/store';
 import { AttendanceInterface, IncomeDataInterface, TaskInterface } from 'types/modelsTypes';

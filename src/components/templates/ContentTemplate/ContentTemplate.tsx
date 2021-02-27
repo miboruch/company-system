@@ -37,7 +37,7 @@ const ContentTemplate: React.FC<Props> = ({ children, isOpen, close }) => {
   return (
     <ContentWrapper ref={contentWrapperRef}>
       <ArrowAbsoluteWrapper>
-        <ArrowButton onClick={() => close()} direction={Direction.Left} />
+        <ArrowButton onClick={close} direction={Direction.Left} />
       </ArrowAbsoluteWrapper>
       {children}
     </ContentWrapper>

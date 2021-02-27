@@ -4,8 +4,8 @@ import Landing from 'pages/Landing/Landing';
 import Companies from 'pages/Companies/Companies';
 import Employee from 'pages/Employee/Employee';
 import Task from 'pages/Task/Task';
-import ClientsPage from '../pages/ClientsPage/ClientsPage';
-import AttendancePage from '../pages/AttendancePage/AttendancePage';
+import Clients from 'pages/Clients/Clients';
+import Attendance from 'pages/Attendance/Attendance';
 import Finances from 'pages/Finances/Finances';
 import Settings from 'pages/Settings/Settings';
 
@@ -62,7 +62,7 @@ export const adminRoutes: Routes[] = [
     path: '/admin/clients/:id',
     main: '/admin/clients',
     exact: false,
-    component: ClientsPage,
+    component: Clients,
     name: 'Klienci',
     icon: <SupportIcon />,
     isGuarded: true
@@ -71,7 +71,7 @@ export const adminRoutes: Routes[] = [
     path: '/admin/attendance/:id',
     main: '/admin/attendance',
     exact: false,
-    component: AttendancePage,
+    component: Attendance,
     name: 'Lista obecności',
     icon: <ListIcon />,
     isGuarded: true
@@ -119,7 +119,7 @@ export const userRoutes: Routes[] = [
     path: '/user/attendance/:id',
     main: '/user/attendance',
     exact: false,
-    component: AttendancePage,
+    component: Attendance,
     name: 'Lista obecności',
     icon: <ListIcon />,
     isGuarded: true

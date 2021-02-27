@@ -1,15 +1,14 @@
 import React from 'react';
 import { Formik } from 'formik';
+import { useAppDispatch } from 'store/store';
 
-import PopupTemplate from 'components/templates/PopupTemplate/PopupTemplate';
-import Input from 'components/atoms/Input/Input';
-import ModalButton, { ButtonType } from 'components/atoms/ModalButton/ModalButton';
-
+import { Input, PopupTemplate, ModalButton } from 'components';
+import { ButtonType } from 'types';
 import { addIncome, addExpense } from 'ducks/finances/income-expense/income-expense-creators';
+
 import { ButtonWrapper, ContentWrapper } from 'styles/popupStyles';
 import { StyledForm, StyledInput } from './IncomeExpensePopup.styles';
 import { IncomeExpenseSchema } from 'validation/modelsValidation';
-import { useAppDispatch } from 'store/store';
 
 export enum FinancePopupInterface {
   Income = 'income',
@@ -43,9 +42,20 @@ const IncomeExpensePopup: React.FC<Props> = ({ type, isOpen, setOpen }) => {
   const handleClose = () => setOpen(false);
 
   return (
-    <PopupTemplate isOpen={isOpen} headerText={`Dodaj ${type === FinancePopupInterface.Expense ? 'wydatek' : 'przychód'}`} isHigher={false}>
+    <PopupTemplate
+      isOpen={isOpen}
+      headerText={`Dodaj ${type === FinancePopupInterface.Expense ? 'wydatek' : 'przychód'}`}
+      isHigher={false}
+    >
       <div>
-        <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize={true} validationSchema={IncomeExpenseSchema} validateOnBlur={false} validateOnChange={false}>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+          enableReinitialize={true}
+          validationSchema={IncomeExpenseSchema}
+          validateOnBlur={false}
+          validateOnChange={false}
+        >
           {({ handleChange, values, errors }) => (
             <StyledForm>
               <ContentWrapper>
@@ -57,7 +67,14 @@ const IncomeExpensePopup: React.FC<Props> = ({ type, isOpen, setOpen }) => {
                   type={'number'}
                   labelText={errors.value || type === FinancePopupInterface.Expense ? 'Wydatek' : 'Przychód'}
                 />
-                <Input onChange={handleChange} name={'description'} required={true} value={values.description} type={'text'} labelText={errors.description || 'Opis'} />
+                <Input
+                  onChange={handleChange}
+                  name={'description'}
+                  required={true}
+                  value={values.description}
+                  type={'text'}
+                  labelText={errors.description || 'Opis'}
+                />
               </ContentWrapper>
               <ButtonWrapper>
                 <ModalButton onClick={handleClose} buttonType={ButtonType.Cancel} text={'Zamknij'} />

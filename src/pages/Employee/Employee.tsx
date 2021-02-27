@@ -3,10 +3,8 @@ import { useSelector } from 'react-redux';
 import gsap from 'gsap';
 
 import EmployeeInfo from './components/EmployeeInfo/EmployeeInfo';
-import DeletePopup from 'components/molecules/DeletePopup/DeletePopup';
 import AddEmployeeController from './components/AddEmployee/AddEmployeeController';
-
-import { ContentTemplate, GridWrapper, ListBox, Spinner, MenuTemplate } from 'components';
+import { ContentTemplate, GridWrapper, ListBox, Spinner, MenuTemplate, DeletePopup } from 'components';
 import { selectEmployee } from 'ducks/employees/employees-toggle/employees-toggle-creators';
 import { setAddNewEmployeeOpen, setEmployeeInfoOpen } from 'ducks/employees/employees-toggle/employees-toggle';
 import { listAnimation } from 'animations/animations';

@@ -1,12 +1,13 @@
 import React from 'react';
 import { Formik } from 'formik';
 
-import { Checkbox, FormField, PopupTemplate } from 'components';
-import ModalButton, { ButtonType } from 'components/atoms/ModalButton/ModalButton';
-
+import { Checkbox, FormField, PopupTemplate, ModalButton } from 'components';
 import { CompanyOwnersInterface } from 'types/modelsTypes';
+import { ButtonType } from 'types';
 import { useAppDispatch } from 'store/store';
-import { Paragraph } from 'styles/typography/typography';
+import { removeCompanyOwner } from 'ducks/company/company-owners/company-owners-creators';
+
+import { Paragraph } from 'styles';
 import {
   ContentWrapper,
   StyledForm,
@@ -16,8 +17,6 @@ import {
   InputRowWrapper,
   StyledInfoParagraph
 } from './RemoveAdminPopup.styles';
-import { removeCompanyOwner } from 'ducks/company/company-owners/company-owners-creators';
-import { StyledFlexWrapper } from 'components/molecules/AttendancePopup/AttendancePopup.styles';
 
 interface DefaultState {
   addEmployee: boolean;

@@ -6,8 +6,7 @@ import { Direction } from 'types/globalTypes';
 import { setAddNewTaskOpen } from 'ducks/tasks/tasks-toggle/tasks-toggle';
 import { PageContext } from '../../context/PageContext';
 
-import { StyledHeader } from 'components/compound/styles/headerStyles';
-import { Paragraph } from 'styles';
+import { Paragraph, StyledHeader } from 'styles';
 
 const AddTaskHeader: React.FC = () => {
   const dispatch = useDispatch();

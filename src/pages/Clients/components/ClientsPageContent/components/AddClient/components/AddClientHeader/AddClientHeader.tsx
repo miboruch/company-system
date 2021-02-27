@@ -1,19 +1,19 @@
 import React, { useContext } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { ArrowButton, CloseButton } from 'components';
+import { ArrowButton, CloseButton } from 'components/index';
 import { Direction } from 'types/globalTypes';
-import { setAddNewEmployeeOpen } from 'ducks/employees/employees-toggle/employees-toggle';
+import { setAddNewClientOpen } from 'ducks/client/client-toggle/client-toggle';
 import { PageContext } from '../../context/PageContext';
 
 import { Paragraph, StyledHeader } from 'styles';
 
-const AddEmployeeHeader: React.FC = () => {
+const AddClientHeader: React.FC = () => {
   const dispatch = useDispatch();
   const { currentPage, setCurrentPage } = useContext(PageContext);
 
   const handleArrowClick = () => currentPage !== 0 && setCurrentPage(currentPage - 1);
-  const handleClose = () => dispatch(setAddNewEmployeeOpen(false));
+  const handleClose = () => dispatch(setAddNewClientOpen(false));
 
   return (
     <StyledHeader>
@@ -24,4 +24,4 @@ const AddEmployeeHeader: React.FC = () => {
   );
 };
 
-export default AddEmployeeHeader;
+export default AddClientHeader;

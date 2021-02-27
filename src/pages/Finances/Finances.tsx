@@ -2,15 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import gsap from 'gsap';
 
-import { fetchAllFinancesData } from 'ducks/finances/finances-creators';
-import { AppState, useAppDispatch } from 'store/store';
-import { GridWrapper, MenuTemplate } from 'components';
-
 import GenerateInvoice from './components/GenerateInvoice/GenerateInvoice';
 import BudgetTile from './components/BudgetTile/BudgetTile';
-import Chart from 'components/molecules/Chart/Chart';
 import BudgetHistoryList from './components/BudgetHistoryList/BudgetHistoryList';
 import IncomeExpensePopup, { FinancePopupInterface } from './components/IncomeExpensePopup/IncomeExpensePopup';
+import { fetchAllFinancesData } from 'ducks/finances/finances-creators';
+import { AppState, useAppDispatch } from 'store/store';
+import { GridWrapper, MenuTemplate, Chart } from 'components';
 import { ExpenseInterface, IncomeDataInterface, IncomeInterface } from 'types';
 import { currencyTypes, getCurrencyValue } from 'ducks/currency/currency-creators';
 import { contentAnimation } from 'animations/animations';

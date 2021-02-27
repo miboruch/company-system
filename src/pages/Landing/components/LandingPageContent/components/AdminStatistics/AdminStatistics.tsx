@@ -2,8 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useSelector } from 'react-redux';
 
-import { ListBox, Spinner, CloseButton } from 'components';
-import MonthDropdown from 'components/atoms/MonthDropdown/MonthDropdown';
+import { ListBox, Spinner, CloseButton, MonthDropdown } from 'components';
 
 import { EmployeeDataInterface } from 'types/modelsTypes';
 import { AppState, useAppDispatch } from 'store/store';
