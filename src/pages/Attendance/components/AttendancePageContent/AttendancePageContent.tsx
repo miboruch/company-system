@@ -3,12 +3,9 @@ import gsap from 'gsap';
 import DatePicker from 'react-datepicker';
 import { useSelector } from 'react-redux';
 
-import GridWrapper from 'components/templates/GridWrapper/GridWrapper';
-import ContentTemplate from 'components/templates/ContentTemplate/ContentTemplate';
-import AttendanceInfo from 'components/organisms/AttendanceInfo/AttendanceInfo';
-import AttendancePopup from 'components/molecules/AttendancePopup/AttendancePopup';
-import { ListBox, Spinner } from 'components/index';
-
+import AttendanceInfo from './components/AttendanceInfo/AttendanceInfo';
+import AttendancePopup from './components/AttendancePopup/AttendancePopup';
+import { ListBox, Spinner, GridWrapper, ContentTemplate } from 'components';
 import { AttendanceInterface } from 'types/modelsTypes';
 import { AppState, useAppDispatch } from 'store/store';
 import { listAnimation } from 'animations/animations';
@@ -16,9 +13,9 @@ import { selectAttendance } from 'ducks/attendance/attendance-toggle/attendance-
 import { setAttendanceInfoOpen, setDate } from 'ducks/attendance/attendance-toggle/attendance-toggle';
 import { isEmpty } from 'utils/functions';
 import { getSingleDayAttendance } from 'ducks/attendance/attendance-data/attendance-data-creators';
-import { StyledLabel } from 'styles/shared';
-import { SpinnerWrapper } from 'styles/shared';
+
 import { ListWrapper, List, DatePickerWrapper } from './AttendancePageContent.styles';
+import { StyledLabel, SpinnerWrapper } from 'styles';
 
 const AttendancePageContent: React.FC = () => {
   const dispatch = useAppDispatch();

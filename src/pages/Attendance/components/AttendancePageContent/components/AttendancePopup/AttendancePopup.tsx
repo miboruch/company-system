@@ -4,14 +4,14 @@ import { Formik } from 'formik';
 import ModalButton, { ButtonType } from 'components/atoms/ModalButton/ModalButton';
 import Input from 'components/form/Input/Input';
 import { Checkbox, FormField, PopupTemplate } from 'components';
-
 import { AttendanceInterface } from 'types/modelsTypes';
 import { useAppDispatch } from 'store/store';
+import { addAttendance, updateAttendance } from 'ducks/attendance/attendance-creators';
+import { AttendanceSchema } from 'validation/modelsValidation';
+
 import { ButtonWrapper, ContentWrapper } from 'styles/popupStyles';
 import { CheckedIcon, NotCheckedIcon, EmptyIcon } from 'styles/iconStyles';
 import { FlexWrapper, StyledForm, StyledParagraph, StyledFlexWrapper, InputWrapper } from './AttendancePopup.styles';
-import { addAttendance, updateAttendance } from 'ducks/attendance/attendance-creators';
-import { AttendanceSchema } from 'validation/modelsValidation';
 
 interface Props {
   attendance: AttendanceInterface | null;

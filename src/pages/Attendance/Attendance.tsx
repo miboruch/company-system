@@ -1,9 +1,9 @@
 import React from 'react';
 
 import MenuTemplate from '../../components/templates/MenuTemplate/MenuTemplate';
-import AttendancePageContent from '../../components/organisms/AttendancePageContent/AttendancePageContent';
+import AttendancePageContent from './components/AttendancePageContent/AttendancePageContent';
 
-const AttendancePage: React.FC = () => {
+const Attendance: React.FC = () => {
   return (
     <MenuTemplate>
       <AttendancePageContent />
@@ -11,4 +11,4 @@ const AttendancePage: React.FC = () => {
   );
 };
 
-export default AttendancePage;
+export default Attendance;

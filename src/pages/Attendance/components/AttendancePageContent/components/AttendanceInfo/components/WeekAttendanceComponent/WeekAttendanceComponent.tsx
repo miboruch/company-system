@@ -8,7 +8,8 @@ import { Direction } from 'types/globalTypes';
 import { compareDates } from 'utils/functions';
 import { getWeekAttendance } from 'ducks/attendance/week-attendance-data/week-attendance-data-creators';
 import { months, weekDays } from 'utils/config';
-import { Paragraph } from 'styles/typography/typography';
+
+import { Paragraph } from 'styles';
 import {
   MainWrapper,
   Header,
