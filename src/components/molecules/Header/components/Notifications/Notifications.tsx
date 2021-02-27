@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useSelector } from 'react-redux';
 
-import NotificationBox from 'components/molecules/NotificationBox/NotificationBox';
+import NotificationBox from './components/NotificationBox/NotificationBox';
 import { Spinner } from 'components';
 import { AppState } from 'store/store';
 import { useOutsideClick } from 'utils/customHooks';

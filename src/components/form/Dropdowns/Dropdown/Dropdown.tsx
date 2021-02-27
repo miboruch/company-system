@@ -1,8 +1,7 @@
 import React from 'react';
 import Downshift from 'downshift';
 
-import Input from 'components/atoms/Input/Input';
-
+import { Input } from 'components';
 import { ClientInterface } from 'types/modelsTypes';
 import { StyledLabel } from 'styles/shared';
 import { Menu, Item, Form } from 'styles/dropdownStyles';

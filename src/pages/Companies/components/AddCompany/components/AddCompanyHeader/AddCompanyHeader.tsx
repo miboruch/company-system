@@ -5,8 +5,8 @@ import { ArrowButton, CloseButton } from 'components';
 import { Direction } from 'types/globalTypes';
 import { setAddCompanyOpen } from 'ducks/company/company-toggle/company-toggle';
 import { PageContext } from '../../context/PageContext';
-import { StyledHeader } from 'components/compound/styles/headerStyles';
-import { Paragraph } from 'styles/typography/typography';
+
+import { Paragraph, StyledHeader } from 'styles';
 
 const AddCompanyHeader: React.FC = () => {
   const dispatch = useDispatch();

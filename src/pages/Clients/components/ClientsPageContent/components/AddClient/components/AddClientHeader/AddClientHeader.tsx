@@ -6,8 +6,7 @@ import { Direction } from 'types/globalTypes';
 import { setAddNewClientOpen } from 'ducks/client/client-toggle/client-toggle';
 import { PageContext } from '../../context/PageContext';
 
-import {StyledHeader} from 'components/compound/styles/headerStyles';
-import { Paragraph } from 'styles/typography/typography';
+import { Paragraph, StyledHeader } from 'styles';
 
 const AddClientHeader: React.FC = () => {
   const dispatch = useDispatch();

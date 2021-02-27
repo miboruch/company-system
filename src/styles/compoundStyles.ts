@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import Input from '../components/atoms/Input/Input';
 import { Form } from 'formik';
-import {Paragraph} from './typography/typography';
+
+import { Input } from 'components';
+import { Paragraph } from 'styles';
 
 const Wrapper = styled.div`
   width: 100%;

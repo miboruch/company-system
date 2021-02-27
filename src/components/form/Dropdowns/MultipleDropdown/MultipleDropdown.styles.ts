@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { FlexWrapper } from '../../../styles/shared';
+import { FlexWrapper } from 'styles';
 
 const StyledFlexWrapper = styled(FlexWrapper)`
   justify-content: flex-start;

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import { Paragraph } from '../../../styles/typography/typography';
 import { Form } from 'formik';
+
+import { Paragraph } from 'styles';
 
 const FlexWrapper = styled.div`
   display: flex;

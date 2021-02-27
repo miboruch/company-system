@@ -6,8 +6,7 @@ import { Direction } from 'types/globalTypes';
 import { setAddNewEmployeeOpen } from 'ducks/employees/employees-toggle/employees-toggle';
 import { PageContext } from '../../context/PageContext';
 
-import { StyledHeader } from 'components/compound/styles/headerStyles';
-import { Paragraph } from 'styles/typography/typography';
+import { Paragraph, StyledHeader } from 'styles';
 
 const AddEmployeeHeader: React.FC = () => {
   const dispatch = useDispatch();

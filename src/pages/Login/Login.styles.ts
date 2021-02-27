@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { Form } from 'formik';
-import Input from '../../components/atoms/Input/Input';
 import { Link } from 'react-router-dom';
+
+import { Input } from 'components';
 
 const AuthWrapper = styled.div`
   width: 100%;

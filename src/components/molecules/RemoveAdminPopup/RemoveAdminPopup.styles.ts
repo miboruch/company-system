@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 import { Form } from 'formik';
-import { ButtonWrapper } from '../../../styles/popupStyles';
-import Input from '../../atoms/Input/Input';
-import { Paragraph } from '../../../styles/typography/typography';
+
+import { Input } from 'components';
+
+import { ButtonWrapper } from 'styles/popupStyles';
+import { Paragraph } from 'styles';
 
 const ContentWrapper = styled.div`
   display: grid;

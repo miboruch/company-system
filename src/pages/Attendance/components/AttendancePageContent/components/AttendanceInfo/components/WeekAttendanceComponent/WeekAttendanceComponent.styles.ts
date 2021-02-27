@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { CheckedIcon, EmptyIcon, NotCheckedIcon } from '../../../styles/iconStyles';
+import { CheckedIcon, EmptyIcon, NotCheckedIcon } from 'styles/iconStyles';
 
 const MainWrapper = styled.div`
   width: 100%;
@@ -86,4 +86,14 @@ const StyledNotCheckedIcon = styled(NotCheckedIcon)`
   ${iconStyles};
 `;
 
-export { MainWrapper, Header, StyledWrapper, SingleAttendanceWrapper, DateParagraph, WeekDayParagraph, StyledCheckedIcon, StyledEmptyIcon, StyledNotCheckedIcon };
+export {
+  MainWrapper,
+  Header,
+  StyledWrapper,
+  SingleAttendanceWrapper,
+  DateParagraph,
+  WeekDayParagraph,
+  StyledCheckedIcon,
+  StyledEmptyIcon,
+  StyledNotCheckedIcon
+};

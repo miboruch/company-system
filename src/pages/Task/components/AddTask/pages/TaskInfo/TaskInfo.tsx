@@ -2,8 +2,7 @@ import React, { useContext } from 'react';
 import { Formik } from 'formik';
 import { useSelector } from 'react-redux';
 
-import MultipleDropdown from 'components/atoms/MultipleDropdown/MultipleDropdown';
-import { FormField, Button } from 'components';
+import { FormField, Button, MultipleDropdown } from 'components';
 import { AppState } from 'store/store';
 import { EmployeeDataInterface } from 'types/modelsTypes';
 import { TaskDataContext } from '../../context/TaskDataContext';
