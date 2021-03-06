@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import Header from 'components/molecules/Header/Header';
+import Header from 'components/navigation/Header/Header';
 
 import { StyledWrapper, TitleWrapper } from './GridWrapper.styles';
 import { PageNameHeading } from 'styles';

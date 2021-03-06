@@ -1,4 +1,4 @@
-export interface ClientInterface {
+export interface ClientModel {
   createdDate: Date;
   _id: string;
   name: string;

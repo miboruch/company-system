@@ -4,18 +4,17 @@ import { useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter, useParams } from 'react-router-dom';
 
 import { GridWrapper, Chart } from 'components';
-import TaskTile from './components/TaskTile/TaskTile';
 import BarChart from './components/BarChart/BarChart';
 import AttendanceList from './components/AttendanceList/AttendanceList';
 import AdminStatistics from './components/AdminStatistics/AdminStatistics';
 import InformationBox from './components/InformationBox/InformationBox';
+import TaskTiles from './components/TaskTiles/TaskTiles';
 import AttendancePopup from 'pages/Attendance/components/AttendancePageContent/components/AttendancePopup/AttendancePopup';
 
 import { AppState, useAppDispatch } from 'store/store';
-import { AttendanceInterface, IncomeDataInterface, TaskInterface } from 'types/modelsTypes';
+import { AttendanceInterface, IncomeDataInterface } from 'types/modelsTypes';
 import { UserRole } from 'ducks/auth/roles/roles';
 import { contentAnimation } from 'animations/animations';
-import { redirectToTask } from 'ducks/tasks/tasks-toggle/tasks-toggle-creators';
 import { ContentGridWrapper } from 'styles/HomePageContentGridStyles';
 import { getSingleDayAttendance } from 'ducks/attendance/attendance-data/attendance-data-creators';
 import {
@@ -28,15 +27,15 @@ import {
 import { getIncomeExpenseInTimePeriod } from 'ducks/finances/income-expense/income-expense-creators';
 import { ArrowIcon } from 'styles/iconStyles';
 import { getAllCompanyEmployees } from 'ducks/employees/employees-data/employees-data-creators';
-import { Content, InfoBoxWrapper, InfoWrapper, StatisticsHeading, TileWrapper } from './LandingPageContent.styles';
+import { Content, InfoBoxWrapper, InfoWrapper, StatisticsHeading } from './LandingPageContent.styles';
 import { getAllAppUsers } from 'ducks/users/all-users-creators';
 
-const LandingPageContent: React.FC<RouteComponentProps<any>> = ({ history }) => {
+const LandingPageContent: React.FC = () => {
   const dispatch = useAppDispatch();
   const { id } = useParams<{ id: string }>();
   const { role } = useSelector((state: AppState) => state.auth.roles);
   const { employeeData } = useSelector((state: AppState) => state.auth.data);
-  const { allCompanyTasks, completedTasks } = useSelector((state: AppState) => state.tasks.taskData);
+  const { completedTasks } = useSelector((state: AppState) => state.tasks.taskData);
   const { companyEmployeesCounter } = useSelector((state: AppState) => state.employees.employeesData);
   const { singleDayAttendance } = useSelector((state: AppState) => state.attendance.attendanceData);
 
@@ -60,7 +59,6 @@ const LandingPageContent: React.FC<RouteComponentProps<any>> = ({ history }) => 
   }, [employeeData]);
 
   const handleStatisticsOpen = () => setStatisticsOpen(true);
-  const handleTaskClick = (task: TaskInterface) => () => dispatch(redirectToTask(history, task, id));
 
   useEffect(() => {
     role === UserRole.Admin
@@ -79,11 +77,7 @@ const LandingPageContent: React.FC<RouteComponentProps<any>> = ({ history }) => 
     <GridWrapper mobilePadding={true} onlyHeader={true} pageName={'Home'}>
       <Content>
         <ContentGridWrapper ref={contentRef}>
-          <TileWrapper>
-            {allCompanyTasks.slice(0, 3).map((task) => (
-              <TaskTile key={task._id} task={task} onClick={handleTaskClick(task)} />
-            ))}
-          </TileWrapper>
+          <TaskTiles/>
           {role === UserRole.Admin ? (
             <Chart
               xAxisDataKey={'createdDate'}

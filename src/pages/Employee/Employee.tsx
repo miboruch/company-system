@@ -8,7 +8,7 @@ import { ContentTemplate, GridWrapper, ListBox, Spinner, MenuTemplate, DeletePop
 import { selectEmployee } from 'ducks/employees/employees-toggle/employees-toggle-creators';
 import { setAddNewEmployeeOpen, setEmployeeInfoOpen } from 'ducks/employees/employees-toggle/employees-toggle';
 import { listAnimation } from 'animations/animations';
-import { Employee as EmployeeType } from 'types';
+import { EmployeeModel } from 'types';
 import { AppState, useAppDispatch } from 'store/store';
 import { UserRole } from 'ducks/auth/roles/roles';
 import { getAllAppUsers } from 'ducks/users/all-users-creators';
@@ -24,7 +24,7 @@ const Employee: React.FC = () => {
   const [filterText, setFilterText] = useState<string>('');
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
 
-  const filterByEmployeeName = (filterText: string, allEmployees: EmployeeType[]): EmployeeType[] => {
+  const filterByEmployeeName = (filterText: string, allEmployees: EmployeeModel[]): EmployeeModel[] => {
     return allEmployees.filter((employee) =>
       `${employee.userId.name} ${employee.userId.lastName}`.toLowerCase().includes(filterText.toLowerCase())
     );

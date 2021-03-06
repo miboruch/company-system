@@ -8,4 +8,6 @@ export * from './notification/notification.model';
 export * from './utils/field.model';
 export * from './finance/finance.model';
 export * from './invoice/invoice.model';
+export * from './task/task.model';
 export * from './utils/button.model';
+export * from './utils/params.model';

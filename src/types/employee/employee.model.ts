@@ -1,6 +1,6 @@
 import { UserDataInterface } from 'types/modelsTypes';
 
-export interface Employee {
+export interface EmployeeModel {
   _id: string;
   userId: UserDataInterface;
   pricePerHour?: number;
