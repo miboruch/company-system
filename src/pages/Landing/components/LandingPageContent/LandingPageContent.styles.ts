@@ -89,4 +89,4 @@ const StatisticsHeading = styled(Heading)`
   }
 `;
 
-export { Content, List, Header, Test, TileWrapper, InfoBoxWrapper, InfoWrapper, StatisticsHeading };
+export { Content, List, Header, Test, InfoBoxWrapper, InfoWrapper, StatisticsHeading };
