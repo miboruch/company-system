@@ -7,11 +7,11 @@ import { useAppDispatch } from 'store/store';
 import { useFetch, useShowContent } from 'components/hooks';
 import { fetchClients } from 'api/clients/api.clients';
 import { setAddNewClientOpen } from 'ducks/client/client-toggle/client-toggle';
+import { selectClient } from 'ducks/client/client-toggle/client-toggle-creators';
 import { ClientModel } from 'types';
 
 import { AddIcon, AddWrapper, List, Paragraph } from 'styles';
 import { ClientInterface } from 'types/modelsTypes';
-import { selectClient } from 'ducks/client/client-toggle/client-toggle-creators';
 
 interface Props {
   filterText: string;
