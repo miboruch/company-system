@@ -1,4 +1,5 @@
 import { ErrorResponse, Status } from 'api/api.middleware';
+import { isEmptyObject } from 'utils/functions';
 
 interface ShowContentProps {
   loading: boolean;
@@ -7,7 +8,7 @@ interface ShowContentProps {
   status: Status;
 }
 
-interface ShowContentReturnInterface {
+export interface ShowContentReturnInterface {
   showLoader: boolean;
   showContent: boolean;
   showNoContent: boolean;
@@ -15,10 +16,23 @@ interface ShowContentReturnInterface {
 }
 
 const useShowContent = ({ loading, payload, error, status }: ShowContentProps): ShowContentReturnInterface => {
+  const checkPayload = (): boolean => {
+    if (payload) {
+      if (Array.isArray(payload)) {
+        return Boolean(payload.length);
+      }
+      return !isEmptyObject(payload);
+    }
+
+    return false;
+  };
+
+  const hasPayload = checkPayload();
+
   const showLoader = loading;
-  const showContent = payload && !error;
-  const showNoContent = !payload && !loading && !error;
-  const showError = !!error && !payload && !loading && !status.isCanceled;
+  const showContent = hasPayload && !loading && !error;
+  const showNoContent = !hasPayload && !loading && !error;
+  const showError = !!error && !hasPayload && !loading && !status?.isCanceled;
 
   return {
     showLoader,

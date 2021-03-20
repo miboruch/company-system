@@ -9,9 +9,12 @@ import { setEmployeeInfoOpen } from 'ducks/employees/employees-toggle/employees-
 import { AppState, useAppDispatch } from 'store/store';
 import { UserRole } from 'ducks/auth/roles/roles';
 import { getAllAppUsers } from 'ducks/users/all-users-creators';
+import { useQuery } from 'components/hooks';
 
 const Employee: React.FC = () => {
   const dispatch = useAppDispatch();
+  const {setQuery, query, resetQueries} = useQuery();
+  const [isInfoOpen, setInfoOpen] = useState<boolean>(false);
   const { role } = useSelector((state: AppState) => state.auth.roles);
   const { selectedEmployee, isEmployeeInfoOpen } = useSelector((state: AppState) => state.employees.employeesToggle);
   const [filterText, setFilterText] = useState<string>('');
@@ -22,6 +25,10 @@ const Employee: React.FC = () => {
     role === UserRole.Admin && dispatch(getAllAppUsers());
   }, []);
 
+  useEffect(() => {
+    setInfoOpen(!!query.employee);
+  }, [query.employee]);
+
   return (
     <MenuTemplate>
       <GridWrapper
@@ -31,7 +38,7 @@ const Employee: React.FC = () => {
         render={(isDeleteOpen, setDeleteOpen) => (
           <>
             <EmployeeList filterText={filterText} />
-            <ContentTemplate isOpen={isEmployeeInfoOpen} close={handleEmployeeInfoClose}>
+            <ContentTemplate isOpen={isInfoOpen} close={resetQueries}>
               <EmployeeInfo setDeleteOpen={setDeleteOpen} />
             </ContentTemplate>
             <DeletePopup

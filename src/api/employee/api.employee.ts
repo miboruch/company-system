@@ -1,6 +1,6 @@
-import { UserRole } from 'ducks/auth/roles/roles';
 import fetchMiddleware from 'api/api.middleware';
-import { EmployeeModel } from 'types';
+import { UserRole } from 'ducks/auth/roles/roles';
+import { EmployeeModel, ParamsId } from 'types';
 
 interface EmployeeReturn {
   employees: EmployeeModel[];
@@ -10,5 +10,11 @@ interface EmployeeReturn {
 export const fetchEmployees = (role: UserRole) => () =>
   fetchMiddleware<EmployeeReturn>({
     method: 'get',
-    url: role === UserRole.Admin ? `/employee/get-company-employees` : `/employee/employee-data`
+    url: role === UserRole.Admin ? `/employee/company` : `/employee/current`
+  });
+
+export const fetchSingleEmployee = (id: ParamsId) => () =>
+  fetchMiddleware<EmployeeModel>({
+    method: 'get',
+    url: `/employee/${id}`
   });

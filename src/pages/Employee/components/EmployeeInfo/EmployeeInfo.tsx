@@ -2,7 +2,7 @@ import React from 'react';
 import { Formik } from 'formik';
 import { useSelector } from 'react-redux';
 
-import { Button, FormField } from 'components';
+import { Button, FormField, Spinner } from 'components';
 import { AppState, useAppDispatch } from 'store/store';
 import { Wrapper, StyledForm, HeaderWrapper, EmployeeInfoBox, Title, InputWrapper } from 'styles/contentStyles';
 import { updateEmployeeSalary } from 'ducks/employees/employees-data/employees-data-creators';
@@ -10,6 +10,9 @@ import { EmployeeSchema } from 'validation/modelsValidation';
 
 import { Paragraph } from 'styles';
 import { DeleteIcon } from 'styles/iconStyles';
+import { useFetch, useShowContent, useQuery } from 'components/hooks';
+import { fetchSingleEmployee } from 'api';
+import { SpinnerWrapper } from 'styles';
 
 interface InitialValues {
   hourSalary?: number;
@@ -22,11 +25,17 @@ interface Props {
 
 const EmployeeInfo: React.FC<Props> = ({ setDeleteOpen }) => {
   const dispatch = useAppDispatch();
-  const { selectedEmployee } = useSelector((state: AppState) => state.employees.employeesToggle);
+  const { query } = useQuery();
+
+  const employeeData = useFetch<typeof fetchSingleEmployee>(fetchSingleEmployee(query.employee), {
+    dependencies: [query.employee]
+  });
+  const { showContent, showLoader, showNoContent, showError } = useShowContent(employeeData);
+  const { payload: employee } = employeeData;
 
   const initialValues: InitialValues = {
-    hourSalary: selectedEmployee?.pricePerHour,
-    monthlySalary: selectedEmployee?.monthlyPrice
+    hourSalary: employee?.pricePerHour,
+    monthlySalary: employee?.monthlyPrice
   };
 
   const handleSubmit = ({ hourSalary, monthlySalary }: InitialValues): void => {
@@ -37,7 +46,14 @@ const EmployeeInfo: React.FC<Props> = ({ setDeleteOpen }) => {
 
   return (
     <Wrapper>
-      {!!selectedEmployee && (
+      {showLoader && (
+        <SpinnerWrapper>
+          <Spinner />
+        </SpinnerWrapper>
+      )}
+      {showNoContent && <Paragraph>Brak danych</Paragraph>}
+      {showError && <Paragraph>Problem z załadowaniem danych</Paragraph>}
+      {showContent && employee && (
         <Formik
           initialValues={initialValues}
           onSubmit={handleSubmit}
@@ -46,21 +62,21 @@ const EmployeeInfo: React.FC<Props> = ({ setDeleteOpen }) => {
           validateOnChange={false}
           validateOnBlur={false}
         >
-          {({ handleChange, values, errors }) => (
+          {({ values }) => (
             <StyledForm>
-              <Paragraph>W firmie od: {new Date(selectedEmployee.userId.createdDate).toLocaleDateString()}</Paragraph>
+              <Paragraph>W firmie od: {new Date(employee.userId.createdDate).toLocaleDateString()}</Paragraph>
               <HeaderWrapper>
                 <Title>
-                  {selectedEmployee.userId.name} {selectedEmployee.userId.lastName}
+                  {employee.userId.name} {employee.userId.lastName}
                 </Title>
                 <DeleteIcon onClick={handleDeleteOpen} />
               </HeaderWrapper>
               <EmployeeInfoBox>
                 <Paragraph type={'subparagraph'}>
-                  Data urodzenia: {new Date(selectedEmployee.userId.dateOfBirth).toLocaleDateString()}
+                  Data urodzenia: {new Date(employee.userId.dateOfBirth).toLocaleDateString()}
                 </Paragraph>
-                <Paragraph type={'subparagraph'}>{selectedEmployee.userId.email}</Paragraph>
-                <Paragraph type={'subparagraph'}>{selectedEmployee.userId.phoneNumber}</Paragraph>
+                <Paragraph type={'subparagraph'}>{employee.userId.email}</Paragraph>
+                <Paragraph type={'subparagraph'}>{employee.userId.phoneNumber}</Paragraph>
               </EmployeeInfoBox>
               <Paragraph type={'text'}>
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aperiam architecto beatae cum distinctio
