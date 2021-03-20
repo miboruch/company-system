@@ -3,7 +3,7 @@ import { useParams, useHistory } from 'react-router-dom';
 
 import TaskTile from '../TaskTile/TaskTile';
 import { useFetch, useShowContent } from 'components/hooks';
-import { fetchTasks } from 'api/tasks/api.tasks';
+import { fetchTasks } from 'api';
 import { TaskInterface } from 'types/modelsTypes';
 
 import { TileWrapper } from './TaskTiles.styles';

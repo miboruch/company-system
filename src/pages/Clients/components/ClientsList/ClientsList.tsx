@@ -5,7 +5,7 @@ import { ListBox } from 'components';
 import { listAnimation } from 'animations/animations';
 import { useAppDispatch } from 'store/store';
 import { useFetch, useShowContent } from 'components/hooks';
-import { fetchClients } from 'api/clients/api.clients';
+import { fetchClients } from 'api';
 import { setAddNewClientOpen } from 'ducks/client/client-toggle/client-toggle';
 import { selectClient } from 'ducks/client/client-toggle/client-toggle-creators';
 import { ClientModel } from 'types';
