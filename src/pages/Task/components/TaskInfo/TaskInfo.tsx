@@ -23,6 +23,8 @@ import {
   Wrapper
 } from 'styles/contentStyles';
 import { CheckedIcon, DeleteIcon, EditIcon, LocationIcon, NotCheckedIcon } from 'styles/iconStyles';
+import { useQuery, useFetch, useShowContent, useSubmit } from 'components/hooks';
+import { fetchTask } from 'api';
 
 interface ParagraphInterface {
   isCompleted: boolean;
@@ -52,18 +54,23 @@ interface Props {
 
 const TaskInfo: React.FC<Props> = ({ isEditToggled, setEditToggled, setDeleteOpen }) => {
   const dispatch = useAppDispatch();
+  const {query} = useQuery();
   const { role } = useSelector((state: AppState) => state.auth.roles);
   const { selectedTask } = useSelector((state: AppState) => state.tasks.taskToggle);
 
+  const taskData = useFetch<typeof fetchTask>(fetchTask(query.task), {dependencies: [query.task]})
+  const {showContent, showNoContent, showLoader, showError}= useShowContent(taskData);
+  const {payload: task} = taskData;
+
   const initialValues: InitialValues = {
-    name: selectedTask?.name || '',
-    description: selectedTask?.description || '',
-    timeEstimate: selectedTask?.timeEstimate || 0,
-    clientId: selectedTask?.clientId,
-    taskIncome: selectedTask?.taskIncome ? selectedTask.taskIncome : 0,
-    taskExpense: selectedTask?.taskExpense ? selectedTask.taskExpense : 0,
-    isCompleted: selectedTask?.isCompleted || false,
-    date: selectedTask?.date || new Date()
+    name: task?.name || '',
+    description: task?.description || '',
+    timeEstimate: task?.timeEstimate || 0,
+    clientId: task?.clientId,
+    taskIncome: task?.taskIncome ? task.taskIncome : 0,
+    taskExpense: task?.taskExpense ? task.taskExpense : 0,
+    isCompleted: task?.isCompleted || false,
+    date: task?.date || new Date()
   };
 
   const handleSubmit = ({ date, name, description, timeEstimate, taskIncome, taskExpense }: InitialValues) => {

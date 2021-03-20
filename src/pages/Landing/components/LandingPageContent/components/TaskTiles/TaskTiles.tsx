@@ -4,7 +4,6 @@ import { useParams, useHistory } from 'react-router-dom';
 import TaskTile from '../TaskTile/TaskTile';
 import { useFetch, useShowContent } from 'components/hooks';
 import { fetchTasks } from 'api';
-import { TaskInterface } from 'types/modelsTypes';
 
 import { TileWrapper } from './TaskTiles.styles';
 import { Paragraph } from 'styles';
@@ -12,11 +11,11 @@ import { Paragraph } from 'styles';
 const TaskTiles: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const history = useHistory();
-  const tasksData = useFetch<typeof fetchTasks>(fetchTasks(id));
+  const tasksData = useFetch<typeof fetchTasks>(fetchTasks);
   const { showContent, showNoContent, showError, showLoader } = useShowContent(tasksData);
   const { payload } = tasksData;
 
-  const handleTaskClick = (task: TaskInterface) => () => history.push(`/admin/tasks/${id}`);
+  const handleTaskClick = (taskId: string) => () => history.push(`/admin/tasks/${id}?task=${taskId}`);
 
   return (
     <TileWrapper>
@@ -25,7 +24,7 @@ const TaskTiles: React.FC = () => {
       {showError && <Paragraph>Problem z pobraniem danych</Paragraph>}
       {showContent &&
         payload &&
-        payload.slice(0, 3).map((task) => <TaskTile key={task._id} task={task} onClick={handleTaskClick(task)} />)}
+        payload.slice(0, 3).map((task) => <TaskTile key={task._id} task={task} onClick={handleTaskClick(task._id)} />)}
     </TileWrapper>
   );
 };

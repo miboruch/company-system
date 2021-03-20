@@ -1,47 +1,29 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import gsap from 'gsap';
 
+import TaskList from './components/TaskList/TaskList';
 import TaskInfo from './components/TaskInfo/TaskInfo';
-import { ListBox, GridWrapper, MenuTemplate, ContentTemplate, Spinner, DeletePopup } from 'components';
 import AddTaskController from './components/AddTask/AddTaskController';
 import MapCoordsEdit, { CoordsEditType } from 'components/organisms/MapCoordsEdit/MapCoordsEdit';
-import { UserRole } from 'ducks/auth/roles/roles';
+import { GridWrapper, MenuTemplate, ContentTemplate, Spinner, DeletePopup } from 'components';
+import { useQuery } from 'components/hooks';
+import { setTaskMapPreviewOpen } from 'ducks/tasks/tasks-toggle/tasks-toggle';
 import { AppState, useAppDispatch } from 'store/store';
-import { TaskInterface } from 'types/modelsTypes';
-import { selectTask } from 'ducks/tasks/tasks-toggle/tasks-toggle-creators';
-import { setAddNewTaskOpen, setTaskInfoOpen, setTaskMapPreviewOpen } from 'ducks/tasks/tasks-toggle/tasks-toggle';
-import { listAnimation } from 'animations/animations';
-import { deleteTask, getCompanyTasks } from 'ducks/tasks/tasks-data/task-data-creators';
+import { deleteTask } from 'ducks/tasks/tasks-data/task-data-creators';
 
-import { AddIcon, AddWrapper, List, Paragraph, SpinnerWrapper } from 'styles';
+import { SpinnerWrapper } from 'styles';
 
 const Task: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { allCompanyTasks, areTasksLoading } = useSelector((state: AppState) => state.tasks.taskData);
-  const { isTaskInfoOpen, isTaskMapPreviewOpen, selectedTask } = useSelector((state: AppState) => state.tasks.taskToggle);
-  const { role } = useSelector((state: AppState) => state.auth.roles);
-  const listRef = useRef<HTMLDivElement | null>(null);
+  const { query, resetQueries } = useQuery();
+  const { areTasksLoading } = useSelector((state: AppState) => state.tasks.taskData);
+  const { isTaskMapPreviewOpen, selectedTask } = useSelector((state: AppState) => state.tasks.taskToggle);
   const [filterText, setFilterText] = useState<string>('');
-  const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
 
-  const filterByTaskName = (filterText: string, allTasks: TaskInterface[]): TaskInterface[] => {
-    return allTasks.filter((task) => task.name.toLowerCase().includes(filterText.toLowerCase()));
-  };
-
-  const handleSelectTask = (task: TaskInterface) => () => dispatch(selectTask(task));
   const handleCloseTaskMapPreview = () => dispatch(setTaskMapPreviewOpen(false));
-  const handleAddNewTaskOpen = () => dispatch(setAddNewTaskOpen(true));
-  const handleTaskInfoClose = () => dispatch(setTaskInfoOpen(false));
   const handleDeleteTask = (id: string) => dispatch(deleteTask(id));
 
-  useEffect(() => {
-    listAnimation(tl, listRef, areTasksLoading);
-  }, [areTasksLoading]);
-
-  useEffect(() => {
-    dispatch(getCompanyTasks());
-  }, []);
+  const handleTaskInfoClose = () => resetQueries();
 
   return (
     <MenuTemplate>
@@ -56,26 +38,8 @@ const Task: React.FC = () => {
             </SpinnerWrapper>
           ) : (
             <>
-              <List ref={listRef}>
-                {filterByTaskName(filterText, allCompanyTasks).map((task) => (
-                  <ListBox
-                    key={task._id}
-                    name={task.name}
-                    topDescription={new Date(task.date).toLocaleDateString()}
-                    bottomDescription={task.description}
-                    isCompanyBox={false}
-                    isChecked={task.isCompleted}
-                    callback={handleSelectTask(task)}
-                  />
-                ))}
-                {role === UserRole.Admin && (
-                  <AddWrapper onClick={handleAddNewTaskOpen}>
-                    <AddIcon />
-                    <Paragraph type={'add'}>Dodaj zadanie</Paragraph>
-                  </AddWrapper>
-                )}
-              </List>
-              <ContentTemplate isOpen={isTaskInfoOpen} close={handleTaskInfoClose}>
+              <TaskList filterText={filterText} />
+              <ContentTemplate isOpen={!!query.task} close={handleTaskInfoClose}>
                 <TaskInfo isEditToggled={isEditToggled} setDeleteOpen={setDeleteOpen} setEditToggled={setEditToggled} />
               </ContentTemplate>
               <DeletePopup

@@ -1,8 +1,14 @@
 import fetchMiddleware from 'api/api.middleware';
 import { TaskModel, ParamsId } from 'types';
 
-export const fetchTasks = (companyId: ParamsId) => () =>
+export const fetchTasks = () =>
   fetchMiddleware<TaskModel[]>({
     method: 'get',
-    url: `/task/get-company-tasks?company_id=${companyId}`
+    url: `/task/company`
+  });
+
+export const fetchTask = (taskId: ParamsId) => () =>
+  fetchMiddleware<TaskModel>({
+    method: 'get',
+    url: `/task/${taskId}`
   });
