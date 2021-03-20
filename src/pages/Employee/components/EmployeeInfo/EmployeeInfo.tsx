@@ -3,7 +3,7 @@ import { Formik } from 'formik';
 
 import PersonalInfo from './components/PersonalInfo/PersonalInfo';
 import { useFetch, useShowContent, useSubmit, useQuery } from 'components/hooks';
-import { Button, FormField, Spinner } from 'components';
+import { Button, DeletePopup, FormField, Spinner } from 'components';
 import { fetchSingleEmployee, updateEmployee, EmployeeUpdate } from 'api';
 import { useAppDispatch } from 'store/store';
 import { setNotification } from 'ducks/popup/popup';
@@ -14,10 +14,11 @@ import { DeleteIcon } from 'styles/iconStyles';
 import { Wrapper, StyledForm, HeaderWrapper, Title, InputWrapper } from 'styles/contentStyles';
 
 interface Props {
+  isDeleteOpen: boolean;
   setDeleteOpen: (isOpen: boolean) => void;
 }
 
-const EmployeeInfo: React.FC<Props> = ({ setDeleteOpen }) => {
+const EmployeeInfo: React.FC<Props> = ({ isDeleteOpen, setDeleteOpen }) => {
   const dispatch = useAppDispatch();
   const { query } = useQuery();
 
@@ -27,7 +28,9 @@ const EmployeeInfo: React.FC<Props> = ({ setDeleteOpen }) => {
   const { showContent, showLoader, showNoContent, showError } = useShowContent(employeeData);
   const { payload: employee, refresh } = employeeData;
 
-  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit<typeof updateEmployee, EmployeeUpdate>(updateEmployee(query.employee));
+  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit<typeof updateEmployee, EmployeeUpdate>(
+    updateEmployee(query.employee)
+  );
   onSubmitSuccess(async () => {
     dispatch(setNotification({ message: 'Zaktualizowano', notificationType: 'success' }));
     await refresh();
@@ -51,27 +54,42 @@ const EmployeeInfo: React.FC<Props> = ({ setDeleteOpen }) => {
       {showNoContent && <Paragraph>Brak danych</Paragraph>}
       {showError && <Paragraph>Problem z załadowaniem danych</Paragraph>}
       {showContent && employee && (
-        <Formik initialValues={initialValues} onSubmit={onSubmit} enableReinitialize={true} validationSchema={EmployeeSchema} validateOnChange={false} validateOnBlur={false}>
-          {({ values, isSubmitting }) => (
-            <StyledForm>
-              <Paragraph>W firmie od: {new Date(employee.userId.createdDate).toLocaleDateString()}</Paragraph>
-              <HeaderWrapper>
-                <Title>
-                  {employee.userId.name} {employee.userId.lastName}
-                </Title>
-                <DeleteIcon onClick={handleDeleteOpen} />
-              </HeaderWrapper>
-              <PersonalInfo employee={employee} />
-              <InputWrapper>
-                <FormField name={'hourSalary'} type={'number'} label={'Stawka godzinowa'} required={false} spacing={true} />
-                <FormField name={'monthlySalary'} type={'number'} label={'Stawka miesięczna'} required={false} spacing={true} />
-              </InputWrapper>
-              <Button type={'submit'} disabled={(!values.hourSalary && !values.monthlySalary) || isSubmitting}>
-                Zapisz
-              </Button>
-            </StyledForm>
-          )}
-        </Formik>
+        <>
+          <Formik
+            initialValues={initialValues}
+            onSubmit={onSubmit}
+            enableReinitialize={true}
+            validationSchema={EmployeeSchema}
+            validateOnChange={false}
+            validateOnBlur={false}
+          >
+            {({ values, isSubmitting }) => (
+              <StyledForm>
+                <Paragraph>W firmie od: {new Date(employee.userId.createdDate).toLocaleDateString()}</Paragraph>
+                <HeaderWrapper>
+                  <Title>
+                    {employee.userId.name} {employee.userId.lastName}
+                  </Title>
+                  <DeleteIcon onClick={handleDeleteOpen} />
+                </HeaderWrapper>
+                <PersonalInfo employee={employee} />
+                <InputWrapper>
+                  <FormField name={'hourSalary'} type={'number'} label={'Stawka godzinowa'} required={false} spacing={true} />
+                  <FormField name={'monthlySalary'} type={'number'} label={'Stawka miesięczna'} required={false} spacing={true} />
+                </InputWrapper>
+                <Button type={'submit'} disabled={(!values.hourSalary && !values.monthlySalary) || isSubmitting}>
+                  Zapisz
+                </Button>
+              </StyledForm>
+            )}
+          </Formik>
+          <DeletePopup
+            isOpen={isDeleteOpen}
+            setOpen={setDeleteOpen}
+            headerText={'Usuń pracownika'}
+            text={`${employee.userId.name} ${employee.userId.lastName}`}
+          />
+        </>
       )}
     </Wrapper>
   );

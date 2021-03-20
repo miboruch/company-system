@@ -83,7 +83,7 @@ const Task: React.FC = () => {
                 setOpen={setDeleteOpen}
                 headerText={'Usuń zadanie'}
                 text={`${selectedTask?.name}`}
-                callback={() => selectedTask && handleDeleteTask(selectedTask._id)}
+                handleDelete={() => selectedTask && handleDeleteTask(selectedTask._id)}
               />
               <AddTaskController />
             </>

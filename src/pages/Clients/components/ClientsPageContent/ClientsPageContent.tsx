@@ -45,7 +45,7 @@ const ClientsPageContent: React.FC = () => {
               setOpen={setDeleteOpen}
               headerText={'Usuń klienta'}
               text={`${selectedClient?.name}`}
-              callback={() => selectedClient?._id && dispatch(deleteClient(selectedClient._id))}
+              handleDelete={() => selectedClient?._id && dispatch(deleteClient(selectedClient._id))}
             />
           </>
         )}
