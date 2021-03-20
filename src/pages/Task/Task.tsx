@@ -23,8 +23,6 @@ const Task: React.FC = () => {
   const handleCloseTaskMapPreview = () => dispatch(setTaskMapPreviewOpen(false));
   const handleDeleteTask = (id: string) => dispatch(deleteTask(id));
 
-  const handleTaskInfoClose = () => resetQueries();
-
   return (
     <MenuTemplate>
       <GridWrapper
@@ -39,7 +37,7 @@ const Task: React.FC = () => {
           ) : (
             <>
               <TaskList filterText={filterText} />
-              <ContentTemplate isOpen={!!query.task} close={handleTaskInfoClose}>
+              <ContentTemplate isOpen={!!query.task} close={resetQueries}>
                 <TaskInfo isEditToggled={isEditToggled} setDeleteOpen={setDeleteOpen} setEditToggled={setEditToggled} />
               </ContentTemplate>
               <DeletePopup

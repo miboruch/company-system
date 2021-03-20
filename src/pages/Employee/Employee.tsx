@@ -13,7 +13,6 @@ import { getAllAppUsers } from 'ducks/users/all-users-creators';
 const Employee: React.FC = () => {
   const dispatch = useAppDispatch();
   const { query, resetQueries } = useQuery();
-  const [isInfoOpen, setInfoOpen] = useState<boolean>(false);
   const [filterText, setFilterText] = useState<string>('');
 
   const { role } = useSelector((state: AppState) => state.auth.roles);
@@ -21,10 +20,6 @@ const Employee: React.FC = () => {
   useEffect(() => {
     role === UserRole.Admin && dispatch(getAllAppUsers());
   }, []);
-
-  useEffect(() => {
-    setInfoOpen(!!query.employee);
-  }, [query.employee]);
 
   return (
     <MenuTemplate>
@@ -35,7 +30,7 @@ const Employee: React.FC = () => {
         render={(isDeleteOpen, setDeleteOpen) => (
           <>
             <EmployeeList filterText={filterText} />
-            <ContentTemplate isOpen={isInfoOpen} close={resetQueries}>
+            <ContentTemplate isOpen={!!query.employee} close={resetQueries}>
               <EmployeeInfo isDeleteOpen={isDeleteOpen} setDeleteOpen={setDeleteOpen} />
             </ContentTemplate>
             <AddEmployeeController />
