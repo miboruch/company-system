@@ -7,6 +7,10 @@ interface EmployeeReturn {
   employeesCounter: number;
 }
 
+/**
+ * @get
+ */
+
 export const fetchEmployees = (role: UserRole) => () =>
   fetchMiddleware<EmployeeReturn>({
     method: 'get',
@@ -18,3 +22,27 @@ export const fetchSingleEmployee = (id: ParamsId) => () =>
     method: 'get',
     url: `/employee/${id}`
   });
+
+/**
+ * @post
+ */
+
+/**
+ * @put
+ */
+
+export interface EmployeeUpdate {
+  hourSalary?: number;
+  monthlySalary?: number;
+}
+
+export const updateEmployee = (id: ParamsId) => (data: EmployeeUpdate) =>
+  fetchMiddleware({
+    method: 'put',
+    url: `/employee/${id}`,
+    data
+  });
+
+/**
+ * @delete
+ */

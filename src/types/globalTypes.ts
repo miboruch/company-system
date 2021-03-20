@@ -19,7 +19,14 @@ export interface CurrencyInterface {
   value: number;
 }
 
-export interface NotificationMessage {
+type Notification = 'success' | 'error';
+
+export interface NotificationMessageTemp {
   notificationType?: NotificationTypes;
+  message: string;
+}
+
+export interface NotificationMessage{
+  notificationType?: Notification;
   message: string;
 }
