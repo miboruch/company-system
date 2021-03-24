@@ -59,8 +59,8 @@ export const adminRoutes: Routes[] = [
     isGuarded: true
   },
   {
-    path: '/admin/clients/:id',
-    main: '/admin/clients',
+    path: '/admin/client/:id',
+    main: '/admin/client',
     exact: false,
     component: Clients,
     name: 'Klienci',

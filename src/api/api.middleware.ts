@@ -74,6 +74,7 @@ const handlePrepareData = (payload: any, isFormData: boolean) => {
 };
 
 const handleHeaders = (params: ParamsProps, isFormData: boolean) => {
+  const token = localStorage.getItem('token');
   const headers: HeadersInit = {};
 
   if (!isFormData) {
@@ -81,6 +82,10 @@ const handleHeaders = (params: ParamsProps, isFormData: boolean) => {
   }
 
   Object.assign(headers, params.headers);
+
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
 
   return headers;
 };

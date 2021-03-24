@@ -10,10 +10,9 @@ import AddEmployeeHeader from './components/AddEmployeeHeader/AddEmployeeHeader'
 import SelectEmployee from './pages/SelectEmployee/SelectEmployee';
 import SalaryPage from './pages/Salary/Salary';
 import { CloseButton } from 'components';
-
-import { AppState } from 'store/store';
 import { setAddNewEmployeeOpen } from 'ducks/employees/employees-toggle/employees-toggle';
 import { modalOpenAnimation } from 'animations/animations';
+import { AppState } from 'store/store';
 
 import { MainWrapper, CompoundTitle, CloseButtonWrapper, ContentWrapper, Wrapper } from 'styles/compoundControllerStyles';
 import { StandardCompoundTitle } from 'styles/compoundStyles';

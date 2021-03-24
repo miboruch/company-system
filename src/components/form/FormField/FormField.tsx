@@ -31,7 +31,7 @@ const FormField: React.FC<FormFieldProps> = ({ type = 'text', name, spacing, lab
   const labelText = label ? (error ? error : label) : '';
 
   const handleSetValue = (value: any) => {
-    setValue(value);
+    type === 'number' ? setValue(parseInt(value)) : setValue(value);
     onFieldChange && onFieldChange();
   };
 

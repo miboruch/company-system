@@ -24,4 +24,8 @@ export const extractNumberFromString = (text: string | number): number => {
   }
 };
 
+export const isEmptyObject = (obj: Record<string, unknown>): boolean =>
+  obj && Object.keys(obj).length === 0 && obj.constructor === Object;
+
+
 export const roundTo2 = (value: number):number => Math.round((value + Number.EPSILON) * 100) / 100;

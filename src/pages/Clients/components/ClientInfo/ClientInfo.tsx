@@ -2,36 +2,20 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik } from 'formik';
 
-import { Button, FormField } from 'components';
-import { AppState } from 'store/store';
+import ClientHeader from './components/ClientHeader/ClientHeader';
+import ClientMainInfo from './components/ClientMainInfo/ClientMainInfo';
+import MapCoordsEdit, { CoordsEditType } from 'components/organisms/MapCoordsEdit/MapCoordsEdit';
+import { Button, Spinner } from 'components';
+import { prepareClientValues } from './client-info.values';
+import { useFetch, useShowContent, useSubmit, useQuery } from 'components/hooks';
+import { fetchClient, putClient, PutClientInfo } from 'api';
+import { setNotification } from 'ducks/popup/popup';
 import { setEditClientCoordsOpen } from 'ducks/client/client-toggle/client-toggle';
-import { clientInfoFields } from './client-info.fields';
-import { editClient } from 'ducks/client/client-creators';
+import { AppState } from 'store/store';
 import { ClientSchema } from 'validation/modelsValidation';
 
-import { Paragraph } from 'styles';
-import { DeleteIcon, EditIcon, LocationIcon } from 'styles/iconStyles';
-import {
-  ButtonWrapper,
-  EmployeeInfoBox,
-  HeaderWrapper,
-  InputWrapper,
-  RowIconWrapper,
-  StyledForm,
-  Title,
-  Wrapper
-} from 'styles/contentStyles';
-
-interface InitialValues {
-  name: string;
-  email: string;
-  lat?: number;
-  long?: number;
-  phoneNumber: string;
-  address: string;
-  city: string;
-  country: string;
-}
+import { Paragraph, SpinnerWrapper } from 'styles';
+import { ButtonWrapper, StyledForm, Wrapper } from 'styles/contentStyles';
 
 interface Props {
   isEditToggled: boolean;
@@ -41,70 +25,64 @@ interface Props {
 
 const ClientInfo: React.FC<Props> = ({ isEditToggled, setEditToggled, setDeleteOpen }) => {
   const dispatch = useDispatch();
-  const { selectedClient } = useSelector((state: AppState) => state.client.clientToggle);
+  const { query } = useQuery();
+  const { isEditClientCoordsOpen } = useSelector((state: AppState) => state.client.clientToggle);
 
-  const initialValues: InitialValues = {
-    name: selectedClient?.name || '',
-    email: selectedClient?.email || '',
-    lat: selectedClient?.lat,
-    long: selectedClient?.long,
-    phoneNumber: selectedClient?.phoneNumber || '',
-    address: selectedClient?.address || '',
-    city: selectedClient?.city || '',
-    country: selectedClient?.country || ''
-  };
+  const clientData = useFetch<typeof fetchClient>(fetchClient(query.client), {
+    dependencies: [query.client],
+    conditions: !!query.client,
+    onError: (error) => dispatch(setNotification({ message: error}))
+  });
+  const { showContent, showNoContent, showLoader, showError } = useShowContent(clientData);
+  const { payload: client, refresh } = clientData;
 
-  const handleSubmit = ({ name, email, phoneNumber, address, city, country }: InitialValues) => {
-    if (selectedClient) {
-      const { _id } = selectedClient;
-      dispatch(editClient({ clientId: _id, name, email, phoneNumber, address, city, country }));
-    }
-  };
+  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit<typeof putClient, PutClientInfo>(putClient(query.client));
+  onSubmitSuccess(async () => {
+    dispatch(setNotification({ message: 'Zaktualizowano', notificationType: 'success' }));
+    await refresh();
+  });
+  onSubmitError(({ message }) => dispatch(setNotification({ message })));
 
-  const handleEditCoordsOpen = () => dispatch(setEditClientCoordsOpen(true));
+  const initialValues = prepareClientValues(client);
+
+  const handleDeleteOpen = () => setDeleteOpen(true);
+  const handleEditToggle = () => setEditToggled(!isEditToggled);
 
   return (
     <Wrapper>
-      {!!selectedClient && (
+      {showLoader && (
+        <SpinnerWrapper>
+          <Spinner />
+        </SpinnerWrapper>
+      )}
+      {showNoContent && <Paragraph>Brak danych</Paragraph>}
+      {showError && <Paragraph>Problem z załadowaniem danych</Paragraph>}
+      {showContent && client && (
         <Formik
           initialValues={initialValues}
-          onSubmit={handleSubmit}
+          onSubmit={onSubmit}
           enableReinitialize={true}
           validationSchema={ClientSchema}
           validateOnChange={false}
           validateOnBlur={false}
         >
-          {({ isSubmitting, values }) => (
+          {({ isSubmitting }) => (
             <StyledForm>
-              <Paragraph>Data dodania: {new Date(selectedClient?.createdDate).toLocaleDateString()}</Paragraph>
-              <HeaderWrapper>
-                <Title>{values.name}</Title>
-                <RowIconWrapper>
-                  <LocationIcon onClick={handleEditCoordsOpen} />
-                  <EditIcon onClick={() => setEditToggled(!isEditToggled)} />
-                  <DeleteIcon onClick={() => setDeleteOpen(true)} />
-                </RowIconWrapper>
-              </HeaderWrapper>
-              <EmployeeInfoBox>
-                <Paragraph type={'subparagraph'}>Email: {values.email}</Paragraph>
-                <Paragraph type={'subparagraph'}>
-                  Adres: {values.address}, {values.city}
-                </Paragraph>
-              </EmployeeInfoBox>
-              <Paragraph type={'text'}>
-                Jeżeli chcesz edytować dane klienta, naciśnij przycisk edycji obok nazwy zadania. Pozwoli to na odblokwanie
-                wszystkich pól oraz edycję danych.
-              </Paragraph>
-              <InputWrapper>
-                {clientInfoFields(isEditToggled).map((field) => (
-                  <FormField key={field.name} {...field} />
-                ))}
-              </InputWrapper>
+              <ClientHeader client={client} handleDeleteOpen={handleDeleteOpen} handleEditToggle={handleEditToggle} />
+              <ClientMainInfo isEditToggled={isEditToggled} />
               <ButtonWrapper>
                 <Button type={'submit'} disabled={isSubmitting}>
                   Zapisz
                 </Button>
               </ButtonWrapper>
+              {/*TODO: move to Clients.tsx*/}
+              <MapCoordsEdit
+                isOpen={isEditClientCoordsOpen}
+                closeMap={() => dispatch(setEditClientCoordsOpen(false))}
+                lat={client.lat}
+                long={client.long}
+                type={CoordsEditType.Client}
+              />
             </StyledForm>
           )}
         </Formik>

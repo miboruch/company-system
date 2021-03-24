@@ -8,12 +8,6 @@ export const fetchEmployeeData = (token: string) =>
     url: '/employee/employee-data',
     headers: { Authorization: `Bearer ${token}` }
   });
-export const fetchEmployees = () =>
-  fetchMiddleware<EmployeeDataInterface>({
-    method: 'get',
-    url: '/employee/employee-data',
-    headers: { Authorization: `Bearer 123` }
-  });
 
 export interface LoginData {
   email: string;

@@ -44,18 +44,6 @@ const Test = styled.section`
   }
 `;
 
-const TileWrapper = styled.section`
-  width: 100%;
-  display: -webkit-box;
-  display: -moz-box;
-  overflow-x: scroll;
-  flex-direction: row;
-
-  ${({ theme }) => theme.mq.hdReady} {
-    grid-area: task;
-  }
-`;
-
 const InfoBoxWrapper = styled.div`
   width: 100%;
   display: flex;
@@ -101,4 +89,4 @@ const StatisticsHeading = styled(Heading)`
   }
 `;
 
-export { Content, List, Header, Test, TileWrapper, InfoBoxWrapper, InfoWrapper, StatisticsHeading };
+export { Content, List, Header, Test, InfoBoxWrapper, InfoWrapper, StatisticsHeading };

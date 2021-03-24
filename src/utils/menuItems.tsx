@@ -30,7 +30,7 @@ export const adminMenuItems: MenuItem[] = [
   },
   {
     name: 'Klienci',
-    link: '/admin/clients',
+    link: '/admin/client',
     icon: <SupportIcon />
   },
   {

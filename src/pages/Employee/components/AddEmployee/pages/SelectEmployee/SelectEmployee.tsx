@@ -14,6 +14,8 @@ import { MainEmployeeSchema } from '../../validation/validation';
 
 import { HeadingWrapper, MobileCompoundTitle, StyledForm, Subheading, Wrapper } from 'styles/compoundStyles';
 import { Paragraph, DoubleFlexWrapper } from 'styles';
+import { useFetch, useShowContent } from 'components/hooks';
+import { fetchAppUsers } from 'api/app/api.app';
 
 const UsersWrapper = styled.div`
   width: 100%;
@@ -37,6 +39,10 @@ type DefaultValues = SelectUserDefaultValues | SetMailDefaultValues;
 const SelectEmployee: React.FC = () => {
   const { allUsers } = useSelector((state: AppState) => state.allUsers);
   const { allCompanyEmployees } = useSelector((state: AppState) => state.employees.employeesData);
+
+  const appUsers = useFetch<typeof fetchAppUsers>(fetchAppUsers);
+  const { showContent, showLoader, showNoContent, showError } = useShowContent(appUsers);
+  const { payload } = appUsers;
 
   const { data, setData } = useContext(EmployeeDataContext);
   const { setCurrentPage } = useContext(PageContext);
