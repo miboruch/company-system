@@ -39,6 +39,17 @@ export const putTask = (taskId: ParamsId) => (data: TaskValues) =>
     data
   });
 
+type TaskCompletedData = {
+  isCompleted: boolean;
+};
+
+export const putTaskCompleted = (taskId: ParamsId, data: TaskCompletedData) =>
+  fetchMiddleware({
+    method: 'put',
+    url: `/task/completed/${taskId}`,
+    data
+  });
+
 interface PostTaskValues extends TaskValues {
   employees: string[];
 }
