@@ -4,14 +4,12 @@ import gsap from 'gsap';
 import { ListBox } from 'components';
 import { listAnimation } from 'animations/animations';
 import { useAppDispatch } from 'store/store';
-import { useFetch, useShowContent } from 'components/hooks';
+import { useFetch, useShowContent, useQuery } from 'components/hooks';
 import { fetchClients } from 'api';
 import { setAddNewClientOpen } from 'ducks/client/client-toggle/client-toggle';
-import { selectClient } from 'ducks/client/client-toggle/client-toggle-creators';
-import { ClientModel } from 'types';
+import { ClientModel, ParamsId } from 'types';
 
 import { AddIcon, AddWrapper, List, Paragraph } from 'styles';
-import { ClientInterface } from 'types/modelsTypes';
 
 interface Props {
   filterText: string;
@@ -19,6 +17,7 @@ interface Props {
 
 const ClientsList: React.FC<Props> = ({ filterText }) => {
   const dispatch = useAppDispatch();
+  const { query, setQuery } = useQuery();
   const listRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
 
@@ -26,12 +25,12 @@ const ClientsList: React.FC<Props> = ({ filterText }) => {
   const { showContent, showNoContent, showLoader, showError } = useShowContent(clientsData);
   const { payload } = clientsData;
 
-  useEffect(() => {
-    showContent && listAnimation(tl, listRef);
-  }, [showContent]);
-
   const clientFilter = (client: ClientModel) => client.name.toLowerCase().includes(filterText.toLowerCase());
-  const handleSelectClient = (client: ClientInterface) => () => dispatch(selectClient(client));
+  const handleClientClick = (clientId: ParamsId) => () => setQuery('client', clientId);
+
+  useEffect(() => {
+    listAnimation(tl, listRef);
+  }, [showContent]);
 
   return (
     <List ref={listRef}>
@@ -48,7 +47,7 @@ const ClientsList: React.FC<Props> = ({ filterText }) => {
               name={client.name}
               topDescription={`${client.address}, ${client.city}`}
               bottomDescription={client.email}
-              callback={handleSelectClient(client)}
+              callback={handleClientClick(client._id)}
               isCompanyBox={false}
               isEmpty={true}
             />

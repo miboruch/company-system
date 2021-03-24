@@ -2,14 +2,14 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik } from 'formik';
 
-import { Button, FormField } from 'components';
+import { Button, FormField, Spinner } from 'components';
 import { AppState } from 'store/store';
 import { setEditClientCoordsOpen } from 'ducks/client/client-toggle/client-toggle';
 import { clientInfoFields } from './client-info.fields';
 import { editClient } from 'ducks/client/client-creators';
 import { ClientSchema } from 'validation/modelsValidation';
 
-import { Paragraph } from 'styles';
+import { Paragraph, SpinnerWrapper } from 'styles';
 import { DeleteIcon, EditIcon, LocationIcon } from 'styles/iconStyles';
 import {
   ButtonWrapper,
@@ -21,6 +21,11 @@ import {
   Title,
   Wrapper
 } from 'styles/contentStyles';
+import { prepareClientValues } from './client-info.values';
+import { useFetch, useShowContent, useSubmit, useQuery } from 'components/hooks';
+import { fetchClient, putClient, PutClientInfo } from 'api';
+import { setNotification } from 'ducks/popup/popup';
+import MapCoordsEdit, { CoordsEditType } from 'components/organisms/MapCoordsEdit/MapCoordsEdit';
 
 interface InitialValues {
   name: string;
@@ -41,34 +46,40 @@ interface Props {
 
 const ClientInfo: React.FC<Props> = ({ isEditToggled, setEditToggled, setDeleteOpen }) => {
   const dispatch = useDispatch();
-  const { selectedClient } = useSelector((state: AppState) => state.client.clientToggle);
+  const { query } = useQuery();
+  const { isEditClientCoordsOpen } = useSelector((state: AppState) => state.client.clientToggle);
 
-  const initialValues: InitialValues = {
-    name: selectedClient?.name || '',
-    email: selectedClient?.email || '',
-    lat: selectedClient?.lat,
-    long: selectedClient?.long,
-    phoneNumber: selectedClient?.phoneNumber || '',
-    address: selectedClient?.address || '',
-    city: selectedClient?.city || '',
-    country: selectedClient?.country || ''
-  };
+  const clientData = useFetch<typeof fetchClient>(fetchClient(query.client), {
+    dependencies: [query.client],
+    conditions: !!query.client
+  });
+  const { showContent, showNoContent, showLoader, showError } = useShowContent(clientData);
+  const { payload: client, refresh } = clientData;
 
-  const handleSubmit = ({ name, email, phoneNumber, address, city, country }: InitialValues) => {
-    if (selectedClient) {
-      const { _id } = selectedClient;
-      dispatch(editClient({ clientId: _id, name, email, phoneNumber, address, city, country }));
-    }
-  };
+  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit<typeof putClient, PutClientInfo>(putClient(query.client));
+  onSubmitSuccess(async () => {
+    dispatch(setNotification({ message: 'Zaktualizowano', notificationType: 'success' }));
+    await refresh();
+  });
+  onSubmitError(({ message }) => dispatch(setNotification({ message })));
+
+  const initialValues = prepareClientValues(client);
 
   const handleEditCoordsOpen = () => dispatch(setEditClientCoordsOpen(true));
 
   return (
     <Wrapper>
-      {!!selectedClient && (
+      {showLoader && (
+        <SpinnerWrapper>
+          <Spinner />
+        </SpinnerWrapper>
+      )}
+      {showNoContent && <Paragraph>Brak danych</Paragraph>}
+      {showError && <Paragraph>Problem z załadowaniem danych</Paragraph>}
+      {showContent && client && (
         <Formik
           initialValues={initialValues}
-          onSubmit={handleSubmit}
+          onSubmit={onSubmit}
           enableReinitialize={true}
           validationSchema={ClientSchema}
           validateOnChange={false}
@@ -76,7 +87,7 @@ const ClientInfo: React.FC<Props> = ({ isEditToggled, setEditToggled, setDeleteO
         >
           {({ isSubmitting, values }) => (
             <StyledForm>
-              <Paragraph>Data dodania: {new Date(selectedClient?.createdDate).toLocaleDateString()}</Paragraph>
+              <Paragraph>Data dodania: {new Date(client.createdDate).toLocaleDateString()}</Paragraph>
               <HeaderWrapper>
                 <Title>{values.name}</Title>
                 <RowIconWrapper>
@@ -105,6 +116,13 @@ const ClientInfo: React.FC<Props> = ({ isEditToggled, setEditToggled, setDeleteO
                   Zapisz
                 </Button>
               </ButtonWrapper>
+              <MapCoordsEdit
+                isOpen={isEditClientCoordsOpen}
+                closeMap={() => dispatch(setEditClientCoordsOpen(false))}
+                lat={client.lat}
+                long={client.long}
+                type={CoordsEditType.Client}
+              />
             </StyledForm>
           )}
         </Formik>
