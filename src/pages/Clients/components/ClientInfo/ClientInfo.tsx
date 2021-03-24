@@ -30,7 +30,8 @@ const ClientInfo: React.FC<Props> = ({ isEditToggled, setEditToggled, setDeleteO
 
   const clientData = useFetch<typeof fetchClient>(fetchClient(query.client), {
     dependencies: [query.client],
-    conditions: !!query.client
+    conditions: !!query.client,
+    onError: (error) => dispatch(setNotification({ message: error}))
   });
   const { showContent, showNoContent, showLoader, showError } = useShowContent(clientData);
   const { payload: client, refresh } = clientData;
@@ -74,6 +75,7 @@ const ClientInfo: React.FC<Props> = ({ isEditToggled, setEditToggled, setDeleteO
                   Zapisz
                 </Button>
               </ButtonWrapper>
+              {/*TODO: move to Clients.tsx*/}
               <MapCoordsEdit
                 isOpen={isEditClientCoordsOpen}
                 closeMap={() => dispatch(setEditClientCoordsOpen(false))}

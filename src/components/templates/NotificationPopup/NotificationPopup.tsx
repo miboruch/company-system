@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 import { NotificationTypes } from 'types/globalTypes';
 import { AppState, useAppDispatch } from 'store/store';
-import { setNotificationMessage } from 'ducks/popup/popup';
+import { setNotification } from 'ducks/popup/popup';
 import { NOTIFICATION_VISIBILITY_TIME } from 'utils/config';
 import { CheckedIcon, NotCheckedIcon } from 'styles/iconStyles';
 import { NotificationWrapper, NotificationParagraph } from './NotificationPopup.styles';
@@ -42,7 +42,7 @@ const NotificationPopup: React.FC = () => {
     // * one second after animation end, we set redux state to null
     if (!shouldPopupBeOpen) {
       setTimeout(() => {
-        dispatch(setNotificationMessage({ message: '', notificationType: undefined }));
+        dispatch(setNotification({ message: '', notificationType: undefined }));
       }, 1000);
     }
   }, [shouldPopupBeOpen]);

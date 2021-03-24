@@ -1,3 +1,5 @@
+import { ErrorResponse } from 'api/api.middleware';
+
 export enum Direction {
   Left = 'left',
   Right = 'right',
@@ -28,5 +30,5 @@ export interface NotificationMessageTemp {
 
 export interface NotificationMessage{
   notificationType?: Notification;
-  message: string;
+  message: string | ErrorResponse;
 }
