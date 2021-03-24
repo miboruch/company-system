@@ -43,4 +43,8 @@ interface PostTaskValues extends TaskValues {
   employees: string[];
 }
 
-// `/task/edit-task`,
+export const deleteTask = (taskId: ParamsId) =>
+  fetchMiddleware({
+    method: 'delete',
+    url: `/task/${taskId}`
+  });

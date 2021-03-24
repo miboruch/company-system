@@ -194,7 +194,7 @@ export const deleteTask = createAsyncThunk<void, string, baseStoreType>(
 
     try {
       if (currentCompany && token) {
-        await companyApi.delete(`/task/delete-task/${taskId}`, {
+        await companyApi.delete(`/task/${taskId}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }

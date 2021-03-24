@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { Formik } from 'formik';
 
-import { Button, FormField, Spinner } from 'components';
+import { Button, FormField, MenuTemplate, Spinner } from 'components';
 import { AppState, useAppDispatch } from 'store/store';
 import { UserRole } from 'ducks/auth/roles/roles';
 import { setTaskMapPreviewOpen } from 'ducks/tasks/tasks-toggle/tasks-toggle';
@@ -27,6 +27,8 @@ import { useQuery, useFetch, useShowContent, useSubmit } from 'components/hooks'
 import { fetchTask, putTask, TaskValues } from 'api';
 import { setNotification } from 'ducks/popup/popup';
 import { prepareValues } from './task-info.values';
+import MapCoordsEdit, { CoordsEditType } from 'components/organisms/MapCoordsEdit/MapCoordsEdit';
+import TaskHeader from 'pages/Task/components/TaskInfo/components/TaskHeader/TaskHeader';
 
 interface ParagraphInterface {
   isCompleted: boolean;
@@ -47,7 +49,9 @@ const TaskInfo: React.FC<Props> = ({ isEditToggled, setEditToggled, setDeleteOpe
   const dispatch = useAppDispatch();
   const { query } = useQuery();
   const { role } = useSelector((state: AppState) => state.auth.roles);
-  const { selectedTask } = useSelector((state: AppState) => state.tasks.taskToggle);
+  const { selectedTask, isTaskMapPreviewOpen } = useSelector((state: AppState) => state.tasks.taskToggle);
+
+  const handleCloseTaskMapPreview = () => dispatch(setTaskMapPreviewOpen(false));
 
   const taskData = useFetch<typeof fetchTask>(fetchTask(query.task), { dependencies: [query.task], conditions: !!query.task });
   const { showContent, showNoContent, showLoader, showError } = useShowContent(taskData);
@@ -58,7 +62,7 @@ const TaskInfo: React.FC<Props> = ({ isEditToggled, setEditToggled, setDeleteOpe
     dispatch(setNotification({ message: 'Zaktualizowano', notificationType: 'success' }));
     await refresh();
   });
-  onSubmitError(() => dispatch(setNotification({ message: 'Bład' })));
+  onSubmitError(({ message }) => dispatch(setNotification({ message })));
 
   const initialValues = prepareValues(task);
 
@@ -75,6 +79,8 @@ const TaskInfo: React.FC<Props> = ({ isEditToggled, setEditToggled, setDeleteOpe
       );
     }
   };
+
+  //TODO: new smaller componetns - useFormikContext
 
   return (
     <Wrapper>
@@ -93,55 +99,50 @@ const TaskInfo: React.FC<Props> = ({ isEditToggled, setEditToggled, setDeleteOpe
           validateOnBlur={false}
           validateOnChange={false}
         >
-          {({ isSubmitting, values }) => {
-            console.log(values);
-            return(
-              <StyledForm>
-                <Paragraph>Data dodania: {new Date(task.addedDate).toLocaleDateString()}</Paragraph>
-                <HeaderWrapper>
-                  <Title>{values.name}</Title>
-                  <RowIconWrapper>
-                    {values.isCompleted ? <CheckedIcon /> : <NotCheckedIcon />}
-                    {values?.clientId && <LocationIcon onClick={handleTaskMapPreview} />}
-                    {role === UserRole.Admin && (
-                      <>
-                        <EditIcon onClick={handleEditToggle} />
-                        <DeleteIcon onClick={handleDeleteOpen} />
-                      </>
-                    )}
-                  </RowIconWrapper>
-                </HeaderWrapper>
-                <EmployeeInfoBox>
-                  <Paragraph type={'subparagraph'}>Data zadania do wykonania: {new Date(values.date).toLocaleDateString()}</Paragraph>
-                  <Paragraph type={'subparagraph'}>{values.description}</Paragraph>
-                  {role === UserRole.Admin && (
-                    <ColoredParagraph isCompleted={values.isCompleted || false} onClick={handleTaskStateChange}>
-                      Oznacz jako {values.isCompleted ? 'niewykonane' : 'wykonane'}
-                    </ColoredParagraph>
-                  )}
-                </EmployeeInfoBox>
-                <InputWrapper>
-                  <FormField name={'date'} type={'date'} label={'Data wykonania zadania'} required={true} />
-                </InputWrapper>
-                <Paragraph type={'text'}>
-                  Jeżeli chcesz edytować zadanie, naciśnij przycisk edycji obok nazwy zadania. Pozwoli to na odblokwanie wszystkich
-                  pól oraz edycję danych.
+          {({ isSubmitting, values }) => (
+            <StyledForm>
+              <TaskHeader task={task} handleEditToggle={handleEditToggle} handleDeleteOpen={handleDeleteOpen} />
+              <EmployeeInfoBox>
+                <Paragraph type={'subparagraph'}>
+                  Data zadania do wykonania: {new Date(values.date).toLocaleDateString()}
                 </Paragraph>
-                <InputWrapper>
-                  {taskInfoFields.map((field) => (
-                    <FormField key={field.name} {...field} spacing={true} />
-                  ))}
-                </InputWrapper>
+                <Paragraph type={'subparagraph'}>{values.description}</Paragraph>
                 {role === UserRole.Admin && (
-                  <ButtonWrapper>
-                    <Button type={'submit'} disabled={isSubmitting}>
-                      Zapisz
-                    </Button>
-                  </ButtonWrapper>
+                  <ColoredParagraph isCompleted={values.isCompleted || false} onClick={handleTaskStateChange}>
+                    Oznacz jako {values.isCompleted ? 'niewykonane' : 'wykonane'}
+                  </ColoredParagraph>
                 )}
-              </StyledForm>
-            )
-          }}
+              </EmployeeInfoBox>
+              <InputWrapper>
+                <FormField name={'date'} type={'date'} label={'Data wykonania zadania'} required={true} />
+              </InputWrapper>
+              <Paragraph type={'text'}>
+                Jeżeli chcesz edytować zadanie, naciśnij przycisk edycji obok nazwy zadania. Pozwoli to na odblokwanie wszystkich
+                pól oraz edycję danych.
+              </Paragraph>
+              <InputWrapper>
+                {taskInfoFields.map((field) => (
+                  <FormField key={field.name} {...field} spacing={true} />
+                ))}
+              </InputWrapper>
+              {role === UserRole.Admin && (
+                <ButtonWrapper>
+                  <Button type={'submit'} disabled={isSubmitting}>
+                    Zapisz
+                  </Button>
+                </ButtonWrapper>
+              )}
+            </StyledForm>
+          )}
+          {task.clientId && (
+            <MapCoordsEdit
+              isOpen={isTaskMapPreviewOpen}
+              closeMap={handleCloseTaskMapPreview}
+              lat={task.clientId.lat}
+              long={task.clientId.long}
+              type={CoordsEditType.View}
+            />
+          )}
         </Formik>
       )}
     </Wrapper>
