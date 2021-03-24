@@ -2,41 +2,20 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik } from 'formik';
 
-import { Button, FormField, Spinner } from 'components';
-import { AppState } from 'store/store';
-import { setEditClientCoordsOpen } from 'ducks/client/client-toggle/client-toggle';
-import { clientInfoFields } from './client-info.fields';
-import { editClient } from 'ducks/client/client-creators';
-import { ClientSchema } from 'validation/modelsValidation';
-
-import { Paragraph, SpinnerWrapper } from 'styles';
-import { DeleteIcon, EditIcon, LocationIcon } from 'styles/iconStyles';
-import {
-  ButtonWrapper,
-  EmployeeInfoBox,
-  HeaderWrapper,
-  InputWrapper,
-  RowIconWrapper,
-  StyledForm,
-  Title,
-  Wrapper
-} from 'styles/contentStyles';
+import ClientHeader from './components/ClientHeader/ClientHeader';
+import ClientMainInfo from './components/ClientMainInfo/ClientMainInfo';
+import MapCoordsEdit, { CoordsEditType } from 'components/organisms/MapCoordsEdit/MapCoordsEdit';
+import { Button, Spinner } from 'components';
 import { prepareClientValues } from './client-info.values';
 import { useFetch, useShowContent, useSubmit, useQuery } from 'components/hooks';
 import { fetchClient, putClient, PutClientInfo } from 'api';
 import { setNotification } from 'ducks/popup/popup';
-import MapCoordsEdit, { CoordsEditType } from 'components/organisms/MapCoordsEdit/MapCoordsEdit';
+import { setEditClientCoordsOpen } from 'ducks/client/client-toggle/client-toggle';
+import { AppState } from 'store/store';
+import { ClientSchema } from 'validation/modelsValidation';
 
-interface InitialValues {
-  name: string;
-  email: string;
-  lat?: number;
-  long?: number;
-  phoneNumber: string;
-  address: string;
-  city: string;
-  country: string;
-}
+import { Paragraph, SpinnerWrapper } from 'styles';
+import { ButtonWrapper, StyledForm, Wrapper } from 'styles/contentStyles';
 
 interface Props {
   isEditToggled: boolean;
@@ -65,7 +44,8 @@ const ClientInfo: React.FC<Props> = ({ isEditToggled, setEditToggled, setDeleteO
 
   const initialValues = prepareClientValues(client);
 
-  const handleEditCoordsOpen = () => dispatch(setEditClientCoordsOpen(true));
+  const handleDeleteOpen = () => setDeleteOpen(true);
+  const handleEditToggle = () => setEditToggled(!isEditToggled);
 
   return (
     <Wrapper>
@@ -85,32 +65,10 @@ const ClientInfo: React.FC<Props> = ({ isEditToggled, setEditToggled, setDeleteO
           validateOnChange={false}
           validateOnBlur={false}
         >
-          {({ isSubmitting, values }) => (
+          {({ isSubmitting }) => (
             <StyledForm>
-              <Paragraph>Data dodania: {new Date(client.createdDate).toLocaleDateString()}</Paragraph>
-              <HeaderWrapper>
-                <Title>{values.name}</Title>
-                <RowIconWrapper>
-                  <LocationIcon onClick={handleEditCoordsOpen} />
-                  <EditIcon onClick={() => setEditToggled(!isEditToggled)} />
-                  <DeleteIcon onClick={() => setDeleteOpen(true)} />
-                </RowIconWrapper>
-              </HeaderWrapper>
-              <EmployeeInfoBox>
-                <Paragraph type={'subparagraph'}>Email: {values.email}</Paragraph>
-                <Paragraph type={'subparagraph'}>
-                  Adres: {values.address}, {values.city}
-                </Paragraph>
-              </EmployeeInfoBox>
-              <Paragraph type={'text'}>
-                Jeżeli chcesz edytować dane klienta, naciśnij przycisk edycji obok nazwy zadania. Pozwoli to na odblokwanie
-                wszystkich pól oraz edycję danych.
-              </Paragraph>
-              <InputWrapper>
-                {clientInfoFields(isEditToggled).map((field) => (
-                  <FormField key={field.name} {...field} />
-                ))}
-              </InputWrapper>
+              <ClientHeader client={client} handleDeleteOpen={handleDeleteOpen} handleEditToggle={handleEditToggle} />
+              <ClientMainInfo isEditToggled={isEditToggled} />
               <ButtonWrapper>
                 <Button type={'submit'} disabled={isSubmitting}>
                   Zapisz
