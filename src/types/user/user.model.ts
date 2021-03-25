@@ -1,4 +1,4 @@
-export interface UserDataInterface {
+export interface UserFullModel {
   createdDate: string | Date;
   _id: string;
   role: string;
@@ -13,7 +13,7 @@ export interface UserDataInterface {
   address: string;
 }
 
-export interface UserAuthData {
+export interface UserModel {
   userId: string;
   email: string;
   name: string;

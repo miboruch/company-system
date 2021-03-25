@@ -22,3 +22,4 @@ export * from './client/api.client';
 export * from './company/api.company';
 export * from './employee/api.employee';
 export * from './tasks/api.tasks';
+export * from './user/api.user'
