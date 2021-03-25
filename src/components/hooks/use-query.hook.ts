@@ -1,5 +1,5 @@
 import { useLocation, useHistory } from 'react-router-dom';
-import queryString, { ParsedQuery } from 'query-string';
+import queryString from 'query-string';
 
 type QueryParam = string | number;
 
@@ -12,6 +12,7 @@ export type QueryReturn = {
   search: string;
   setQuery: (key: string, value: QueryParam) => void;
   setQueries: (value: QueryParams) => void;
+  removeQuery: (key: string) => void;
   resetQueries: () => void;
 };
 
@@ -42,6 +43,14 @@ const useQuery = (): QueryReturn => {
     history.replace({ search: queries });
   };
 
+  const removeQuery = (key: string) => {
+    const prevQuery = { ...query };
+    delete prevQuery[key];
+
+    const queries = queryString.stringify(prevQuery, options);
+    history.replace({ search: queries });
+  };
+
   const resetQueries = () => {
     const queries = queryString.stringify({}, options);
 
@@ -53,6 +62,7 @@ const useQuery = (): QueryReturn => {
     search,
     setQuery,
     setQueries,
+    removeQuery,
     resetQueries
   };
 };

@@ -1,65 +1,39 @@
 import React from 'react';
+
 import AccountSettings from './components/AccountSettings/AccountSettings';
 import AdminSettings from './components/AdminSettings/AdminSettings';
 import CompanySettings from './components/CompanySettings/CompanySettings';
 import PasswordChangeSettings from './components/PasswordChangeSettings/PasswordChangeSettings';
 
-export enum AdminSettingsSubcategories {
-  AccountSettings = 'accountSettings',
-  CompanySettings = 'companySettings',
-  ChangePassword = 'changePassword',
-  AddAdmin = 'addAdmin'
-}
-
-export enum UserSettingsSubcategories {
-  AccountSettings = 'accountSettings',
-  ChangePassword = 'changePassword'
-}
+export type AdminSettingsType = 'account' | 'company' | 'admins' | 'password';
+export type UserSettingsType = 'account' | 'password';
 
 interface SettingsInterface {
   name: string;
-  roleEnum: AdminSettingsSubcategories | UserSettingsSubcategories;
+  roleEnum: AdminSettingsType | UserSettingsType;
 }
 
 export const adminSettings: SettingsInterface[] = [
-  {
-    name: 'Ustawienia konta',
-    roleEnum: AdminSettingsSubcategories.AccountSettings
-  },
-  {
-    name: 'Edycja firmy',
-    roleEnum: AdminSettingsSubcategories.CompanySettings
-  },
-  {
-    name: 'Dodaj administratorów',
-    roleEnum: AdminSettingsSubcategories.AddAdmin
-  },
-  {
-    name: 'Zmiana hasła',
-    roleEnum: AdminSettingsSubcategories.ChangePassword
-  }
+  { name: 'Ustawienia konta', roleEnum: 'account' },
+  { name: 'Edycja firmy', roleEnum: 'company' },
+  { name: 'Dodaj administratorów', roleEnum: 'admins' },
+  { name: 'Zmiana hasła', roleEnum: 'password' }
 ];
 
 export const userSettings: SettingsInterface[] = [
-  {
-    name: 'Ustawienia konta',
-    roleEnum: UserSettingsSubcategories.AccountSettings
-  },
-  {
-    name: 'Zmiana hasła',
-    roleEnum: UserSettingsSubcategories.ChangePassword
-  }
+  { name: 'Ustawienia konta', roleEnum: 'account' },
+  { name: 'Zmiana hasła', roleEnum: 'password' }
 ];
 
-export const renderSettings = (subcategory: AdminSettingsSubcategories | UserSettingsSubcategories): React.ReactNode => {
+export const renderSettings = (subcategory: AdminSettingsType | UserSettingsType): React.ReactNode => {
   switch (subcategory) {
-    case AdminSettingsSubcategories.AccountSettings || UserSettingsSubcategories.AccountSettings:
+    case 'account':
       return AccountSettings;
-    case AdminSettingsSubcategories.ChangePassword || UserSettingsSubcategories.ChangePassword:
+    case 'password':
       return PasswordChangeSettings;
-    case AdminSettingsSubcategories.AddAdmin:
+    case 'admins':
       return AdminSettings;
-    case AdminSettingsSubcategories.CompanySettings:
+    case 'company':
       return CompanySettings;
   }
 };

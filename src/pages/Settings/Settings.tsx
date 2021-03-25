@@ -3,13 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { MenuTemplate, GridWrapper } from 'components';
 import { UserRole } from 'ducks/auth/roles/roles';
-import {
-  adminSettings,
-  AdminSettingsSubcategories,
-  renderSettings,
-  userSettings,
-  UserSettingsSubcategories
-} from './settings.config';
+import { renderSettings, adminSettings, userSettings, AdminSettingsType, UserSettingsType } from './settings.config';
 
 import { AddNewParagraph } from 'components/ui/AddNewButton/AddNewButton.styles';
 import { ContentWrapper, ListItems, StyledList } from './Settings.styles';
@@ -18,9 +12,7 @@ import { AppState } from 'store/store';
 
 const Settings: React.FC = () => {
   const { role } = useSelector((state: AppState) => state.auth.roles);
-  const [subcategory, setSubcategory] = useState<AdminSettingsSubcategories | UserSettingsSubcategories>(
-    UserSettingsSubcategories.AccountSettings
-  );
+  const [subcategory, setSubcategory] = useState<AdminSettingsType | UserSettingsType>('account');
 
   return (
     <MenuTemplate>

@@ -11,18 +11,19 @@ import { setNotification } from 'ducks/popup/popup';
 
 const Clients: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { query, resetQueries } = useQuery();
+  const { query, removeQuery } = useQuery();
   const [filterText, setFilterText] = useState<string>('');
   const [refreshDate, setRefreshDate] = useState<Date>(new Date());
 
   const { submit, onCallSuccess, onCallError } = useCall<typeof deleteClient>(deleteClient);
   onCallSuccess(() => {
-    resetQueries();
+    removeQuery('client');
     setRefreshDate(new Date());
   });
   onCallError(({ message }) => dispatch(setNotification({ message })));
 
   const handleDeleteClient = () => submit(query.client);
+  const handleClientClose = () => removeQuery('client');
 
   return (
     <MenuTemplate>
@@ -33,7 +34,7 @@ const Clients: React.FC = () => {
         render={(isEditToggled, setEditToggled, isDeleteOpen, setDeleteOpen) => (
           <>
             <ClientsList filterText={filterText} refreshDate={refreshDate} />
-            <ContentTemplate isOpen={!!query.client} close={resetQueries}>
+            <ContentTemplate isOpen={!!query.client} close={handleClientClose}>
               <ClientInfo isEditToggled={isEditToggled} setEditToggled={setEditToggled} setDeleteOpen={setDeleteOpen} />
             </ContentTemplate>
             <AddClientController />
