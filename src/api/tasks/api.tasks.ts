@@ -1,5 +1,7 @@
 import fetchMiddleware from 'api/api.middleware';
 import { TaskModel, ParamsId, ClientModel } from 'types';
+import queryString from 'query-string';
+import { queryOptions } from 'utils/config';
 
 /**
  * @get
@@ -16,6 +18,14 @@ export const fetchTask = (taskId: ParamsId) => () =>
     method: 'get',
     url: `/task/${taskId}`
   });
+
+export const fetchCompletedTasks = (daysBack?: number | 30) => {
+  const query = queryString.stringify({ daysBack }, queryOptions);
+  return fetchMiddleware<{completedTasks: number}>({
+    method: 'get',
+    url: `/task/completed?${query}`
+  });
+};
 
 /**
  * @put

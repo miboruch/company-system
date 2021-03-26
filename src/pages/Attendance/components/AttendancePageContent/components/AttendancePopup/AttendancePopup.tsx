@@ -2,7 +2,7 @@ import React from 'react';
 import { Formik } from 'formik';
 
 import Input from 'components/form/Input/Input';
-import { Checkbox, FormField, PopupTemplate, ModalButton } from 'components';
+import { FormField, PopupTemplate, ModalButton } from 'components';
 import { ButtonType } from 'types';
 import { AttendanceInterface } from 'types/modelsTypes';
 import { useAppDispatch } from 'store/store';

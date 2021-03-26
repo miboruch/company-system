@@ -9,12 +9,12 @@ import IncomeExpensePopup, { FinancePopupInterface } from './components/IncomeEx
 import { fetchAllFinancesData } from 'ducks/finances/finances-creators';
 import { AppState, useAppDispatch } from 'store/store';
 import { GridWrapper, MenuTemplate, Chart } from 'components';
-import { ExpenseInterface, IncomeDataInterface, IncomeInterface } from 'types';
+import { ExpenseInterface, IncomeModel, IncomeInterface } from 'types';
 import { currencyTypes, getCurrencyValue } from 'ducks/currency/currency-creators';
 import { contentAnimation } from 'animations/animations';
 import { roundTo2 } from 'utils/functions';
 import { appCurrencies } from 'utils/config';
-import { InfoWrapper, StatisticsHeading } from 'pages/Landing/components/LandingPageContent/LandingPageContent.styles';
+import { InfoWrapper, StatisticsHeading } from 'pages/Landing/Landing.styles';
 import { getIncomeExpenseInTimePeriod } from 'ducks/finances/income-expense/income-expense-creators';
 
 import { Heading } from 'styles';
@@ -38,7 +38,7 @@ const Finances: React.FC = () => {
   const [isPopupOpen, setPopupOpen] = useState<boolean>(false);
   const [isGenerateInvoiceOpen, setGenerateInvoiceOpen] = useState<boolean>(false);
   const [popupType, setPopupType] = useState<FinancePopupInterface>(FinancePopupInterface.Income);
-  const [chartData, setChartData] = useState<Array<IncomeDataInterface> | null>(null);
+  const [chartData, setChartData] = useState<Array<IncomeModel> | null>(null);
   const [daysBack, setDaysBackTo] = useState<number>(7);
   const [budgetHistoryData, setBudgetHistoryData] = useState<(IncomeInterface | ExpenseInterface)[]>([]);
 

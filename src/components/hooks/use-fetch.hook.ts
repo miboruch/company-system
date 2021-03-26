@@ -107,7 +107,7 @@ function useFetch<T>(
         setStatus({ status, isCanceled });
         setLoading(false);
       }
-      if (!isCanceled) {
+      if (!isCanceled && !error) {
         setData(data);
         onSuccess && onSuccess(data);
         setStatus({ status, isCanceled });
