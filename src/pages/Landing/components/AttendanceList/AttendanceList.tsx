@@ -1,13 +1,12 @@
 import React from 'react';
 
 import { ListBox, Spinner } from 'components';
-
-import { AttendanceInterface } from 'types/modelsTypes';
 import { isEmpty } from 'utils/functions';
+import { fetchDayAttendance } from 'api';
 import { useFetch, useShowContent, useQuery } from 'components/hooks';
-import { StyledWrapper, DateHeading } from './AttendanceList.styles';
-import { fetchSingleDayAttendance } from 'api/attendance/api.attendance';
+import { AttendanceInterface } from 'types/modelsTypes';
 
+import { StyledWrapper, DateHeading } from './AttendanceList.styles';
 import { SpinnerWrapper, Paragraph } from 'styles';
 
 interface Props {
@@ -16,15 +15,14 @@ interface Props {
 }
 
 const AttendanceList: React.FC<Props> = ({ setSelectedAttendance, setAttendanceOpen }) => {
-  const {query, setQuery} = useQuery();
+  const { query, setQuery } = useQuery();
   const currentLocalDate = new Date().toLocaleDateString();
 
-  const dayAttendance = useFetch<typeof fetchSingleDayAttendance>(fetchSingleDayAttendance(new Date()));
+  const dayAttendance = useFetch<typeof fetchDayAttendance>(fetchDayAttendance(new Date()));
   const { showContent, showLoader, showNoContent, showError } = useShowContent(dayAttendance);
   const { payload: attendance } = dayAttendance;
 
   const listBoxCallback = (attendance: AttendanceInterface) => () => {
-
     !!setSelectedAttendance && setSelectedAttendance(attendance);
     !!setAttendanceOpen && setAttendanceOpen(true);
   };

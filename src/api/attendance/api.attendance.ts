@@ -10,7 +10,7 @@ export const fetchUserAttendance = (date: Date) => () => {
   });
 };
 
-export const fetchSingleDayAttendance = (date: Date) => () => {
+export const fetchDayAttendance = (date: Date) => () => {
   const query = queryString.stringify({ date: new Date(date).toISOString() });
   return fetchMiddleware<AttendanceModel[]>({
     method: 'get',
