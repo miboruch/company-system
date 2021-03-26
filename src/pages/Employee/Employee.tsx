@@ -7,8 +7,10 @@ import { useQuery } from 'components/hooks';
 import { ContentTemplate, GridWrapper, MenuTemplate } from 'components';
 
 const Employee: React.FC = () => {
-  const { query, resetQueries } = useQuery();
+  const { query, removeQuery } = useQuery();
   const [filterText, setFilterText] = useState<string>('');
+
+  const removeEmployeeQuery = () => removeQuery('employee');
 
   return (
     <MenuTemplate>
@@ -19,7 +21,7 @@ const Employee: React.FC = () => {
         render={(isDeleteOpen, setDeleteOpen) => (
           <>
             <EmployeeList filterText={filterText} />
-            <ContentTemplate isOpen={!!query.employee} close={resetQueries}>
+            <ContentTemplate isOpen={!!query.employee} close={removeEmployeeQuery}>
               <EmployeeInfo isDeleteOpen={isDeleteOpen} setDeleteOpen={setDeleteOpen} />
             </ContentTemplate>
             <AddEmployeeController />

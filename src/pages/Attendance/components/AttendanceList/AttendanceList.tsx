@@ -15,11 +15,12 @@ import { Paragraph, StyledLabel } from 'styles';
 interface Props {
   filterText: string;
   editAttendanceCallback: (attendance: AttendanceModel) => () => void;
+  date: Date;
+  setDate: (date: Date) => void;
 }
 
-const AttendanceList: React.FC<Props> = ({ filterText, editAttendanceCallback }) => {
+const AttendanceList: React.FC<Props> = ({ filterText, editAttendanceCallback, date, setDate }) => {
   const { setQuery } = useQuery();
-  const [date, setDate] = useState<Date>(new Date());
 
   const listRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
