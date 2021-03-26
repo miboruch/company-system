@@ -7,7 +7,7 @@ import BarChart from './components/BarChart/BarChart';
 import AttendanceList from './components/AttendanceList/AttendanceList';
 import AdminStatistics from './components/AdminStatistics/AdminStatistics';
 import TaskTiles from './components/TaskTiles/TaskTiles';
-import AttendancePopup from 'pages/Attendance/components/AttendancePageContent/components/AttendancePopup/AttendancePopup';
+import AttendancePopup from 'pages/Attendance/components/AttendancePopup/AttendancePopup';
 import { MenuTemplate, Chart, GridWrapper } from 'components';
 import { contentAnimation } from 'animations/animations';
 import { AppState, useAppDispatch } from 'store/store';

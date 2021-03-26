@@ -5,6 +5,7 @@ import { Formik } from 'formik';
 
 import LoginTemplate, { TemplatePage } from '../../components/templates/LoginTemplate/LoginTemplate';
 import { FormField, Spinner, Button } from 'components';
+import { setTokens } from 'ducks/auth/tokens/tokens';
 import { useSubmit } from 'components/hooks';
 import { login, LoginData } from 'api';
 import { AppState, useAppDispatch } from 'store/store';
@@ -21,7 +22,6 @@ import {
   StyledForm,
   StyledLink
 } from 'pages/Login/Login.styles';
-import { setTokens } from 'ducks/auth/tokens/tokens';
 
 const Login: React.FC = () => {
   const dispatch = useAppDispatch();
