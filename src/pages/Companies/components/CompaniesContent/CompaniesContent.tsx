@@ -2,10 +2,9 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { ListBox, Spinner, GridWrapper } from 'components';
 import AddCompanyController from '../AddCompany/AddCompanyController';
+import { ListBox, Spinner, GridWrapper } from 'components';
 import { useFetch, useShowContent } from 'components/hooks';
-
 import { fetchAdminCompanies, fetchEmployeeCompanies } from 'api/company/api.company';
 import { setCurrentCompany } from 'ducks/company/current-company/current-company-creators';
 import { setAddCompanyOpen } from 'ducks/company/company-toggle/company-toggle';

@@ -11,9 +11,10 @@ import { Paragraph } from 'styles';
 const TaskTiles: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const history = useHistory();
+
   const tasksData = useFetch<typeof fetchTasks>(fetchTasks);
   const { showContent, showNoContent, showError, showLoader } = useShowContent(tasksData);
-  const { payload } = tasksData;
+  const { payload: tasks } = tasksData;
 
   const handleTaskClick = (taskId: string) => () => history.push(`/admin/tasks/${id}?task=${taskId}`);
 
@@ -23,8 +24,8 @@ const TaskTiles: React.FC = () => {
       {showNoContent && <Paragraph>Brak danych</Paragraph>}
       {showError && <Paragraph>Problem z pobraniem danych</Paragraph>}
       {showContent &&
-        payload &&
-        payload.slice(0, 3).map((task) => <TaskTile key={task._id} task={task} onClick={handleTaskClick(task._id)} />)}
+        tasks &&
+        tasks.slice(0, 3).map((task) => <TaskTile key={task._id} task={task} onClick={handleTaskClick(task._id)} />)}
     </TileWrapper>
   );
 };

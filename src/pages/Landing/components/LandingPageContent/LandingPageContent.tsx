@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useSelector } from 'react-redux';
-import { RouteComponentProps, withRouter, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { GridWrapper, Chart } from 'components';
 import BarChart from './components/BarChart/BarChart';
@@ -16,11 +16,9 @@ import { AttendanceInterface, IncomeDataInterface } from 'types/modelsTypes';
 import { UserRole } from 'ducks/auth/roles/roles';
 import { contentAnimation } from 'animations/animations';
 import { ContentGridWrapper } from 'styles/HomePageContentGridStyles';
-import { getSingleDayAttendance } from 'ducks/attendance/attendance-data/attendance-data-creators';
 import {
   getCompanyTasks,
   getCompletedTasks,
-  getEmployeeTasks,
   getTasksInTimePeriod,
   TaskPeriodInterface
 } from 'ducks/tasks/tasks-data/task-data-creators';
@@ -34,13 +32,13 @@ const LandingPageContent: React.FC = () => {
   const dispatch = useAppDispatch();
   const { id } = useParams<{ id: string }>();
   const { role } = useSelector((state: AppState) => state.auth.roles);
-  const { employeeData } = useSelector((state: AppState) => state.auth.data);
+
   const { completedTasks } = useSelector((state: AppState) => state.tasks.taskData);
   const { companyEmployeesCounter } = useSelector((state: AppState) => state.employees.employeesData);
-  const { singleDayAttendance } = useSelector((state: AppState) => state.attendance.attendanceData);
 
   const [data, setData] = useState<Array<IncomeDataInterface> | null>(null);
   const [taskData, setTaskData] = useState<Array<TaskPeriodInterface> | null>(null);
+
   const [selectedAttendance, setSelectedAttendance] = useState<AttendanceInterface | null>(null);
   const [isAttendanceOpen, setAttendanceOpen] = useState<boolean>(false);
   const [areStatisticsOpen, setStatisticsOpen] = useState<boolean>(false);
@@ -54,10 +52,6 @@ const LandingPageContent: React.FC = () => {
     dispatch(getCompanyTasks());
   }, []);
 
-  useEffect(() => {
-    role === UserRole.User && employeeData && dispatch(getEmployeeTasks());
-  }, [employeeData]);
-
   const handleStatisticsOpen = () => setStatisticsOpen(true);
 
   useEffect(() => {
@@ -67,11 +61,12 @@ const LandingPageContent: React.FC = () => {
   }, [daysBack]);
 
   useEffect(() => {
-    dispatch(getSingleDayAttendance(new Date()));
     dispatch(getCompletedTasks());
     dispatch(getAllCompanyEmployees());
     role === UserRole.Admin && dispatch(getAllAppUsers());
   }, []);
+
+  const handleAttendanceClose = () => setAttendanceOpen(false);
 
   return (
     <GridWrapper mobilePadding={true} onlyHeader={true} pageName={'Home'}>
@@ -100,7 +95,6 @@ const LandingPageContent: React.FC = () => {
             />
           )}
           <AttendanceList
-            singleDayAttendance={singleDayAttendance}
             setSelectedAttendance={setSelectedAttendance}
             setAttendanceOpen={setAttendanceOpen}
           />
@@ -119,10 +113,10 @@ const LandingPageContent: React.FC = () => {
           </InfoWrapper>
         </ContentGridWrapper>
       </Content>
-      <AttendancePopup attendance={selectedAttendance} isOpen={isAttendanceOpen} setOpen={setAttendanceOpen} date={new Date()} />
+      <AttendancePopup attendance={selectedAttendance} isOpen={isAttendanceOpen} handleClose={handleAttendanceClose} date={new Date()} />
       <AdminStatistics isOpen={areStatisticsOpen} setOpen={setStatisticsOpen} />
     </GridWrapper>
   );
 };
 
-export default withRouter(LandingPageContent);
+export default LandingPageContent;

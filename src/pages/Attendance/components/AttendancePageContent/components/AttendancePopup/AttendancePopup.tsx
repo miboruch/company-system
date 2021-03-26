@@ -16,7 +16,7 @@ import { FlexWrapper, StyledForm, StyledParagraph, StyledFlexWrapper, InputWrapp
 interface Props {
   attendance: AttendanceInterface | null;
   isOpen: boolean;
-  setOpen: (isOpen: boolean) => void;
+  handleClose: () => void;
   date: Date;
 }
 
@@ -25,7 +25,7 @@ interface DefaultValues {
   hours: number;
 }
 
-const AttendancePopup: React.FC<Props> = ({ attendance, isOpen, setOpen, date }) => {
+const AttendancePopup: React.FC<Props> = ({ attendance, isOpen, handleClose, date }) => {
   const dispatch = useAppDispatch();
   const initialValues: DefaultValues = {
     wasPresent: !attendance?.attendance ? null : attendance.attendance.wasPresent,
@@ -33,7 +33,7 @@ const AttendancePopup: React.FC<Props> = ({ attendance, isOpen, setOpen, date })
   };
 
   const handleSubmit = ({ wasPresent, hours }: DefaultValues) => {
-    setOpen(false);
+    handleClose();
     if (attendance) {
       if (attendance?.attendance) {
         wasPresent !== null &&
@@ -95,7 +95,7 @@ const AttendancePopup: React.FC<Props> = ({ attendance, isOpen, setOpen, date })
                   </InputWrapper>
                 </ContentWrapper>
                 <ButtonWrapper>
-                  <ModalButton onClick={() => setOpen(false)} buttonType={ButtonType.Cancel} text={'Zamknij'} />
+                  <ModalButton onClick={handleClose} buttonType={ButtonType.Cancel} text={'Zamknij'} />
                   <ModalButton submit={true} buttonType={ButtonType.Add} text={'Akceptuj'} />
                 </ButtonWrapper>
               </StyledForm>

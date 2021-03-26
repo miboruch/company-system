@@ -50,6 +50,8 @@ const AttendancePageContent: React.FC = () => {
     dispatch(getSingleDayAttendance());
   }, [attendanceDate]);
 
+  const handleAttendanceClose = () => setAttendanceOpen(false);
+
   return (
     <GridWrapper mobilePadding={false} pageName={'Lista obecności'} setFilterText={setFilterText}>
       {isAttendanceLoading ? (
@@ -91,7 +93,7 @@ const AttendancePageContent: React.FC = () => {
       <AttendancePopup
         attendance={selectedAttendance}
         isOpen={isAttendanceOpen}
-        setOpen={setAttendanceOpen}
+        handleClose={handleAttendanceClose}
         date={new Date(attendanceDate)}
       />
     </GridWrapper>
