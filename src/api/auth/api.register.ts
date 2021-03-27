@@ -1,10 +1,6 @@
 import fetchMiddleware from 'api/api.middleware';
 
-export const validateRegistrationToken = (token: string) =>
-  fetchMiddleware({ method: 'post', url: '/auth/verify-registration-token', data: { token } });
-
-export interface RegisterInterface {
-  email: string;
+interface RegisterCommonData {
   password: string;
   repeatedPassword: string;
   name: string;
@@ -16,4 +12,18 @@ export interface RegisterInterface {
   address: string;
 }
 
+export const validateRegistrationToken = (token: string) =>
+  fetchMiddleware({ method: 'post', url: '/auth/verify-registration-token', data: { token } });
+
+export interface RegisterInterface extends RegisterCommonData {
+  email: string;
+}
+
 export const register = (data: RegisterInterface) => fetchMiddleware({ method: 'post', url: '/auth/register', data });
+
+export interface LinkRegisterInterface extends RegisterCommonData {
+  token: string;
+}
+
+export const linkRegister = (data: LinkRegisterInterface) =>
+  fetchMiddleware({ method: 'post', url: '/auth/link-register', data });

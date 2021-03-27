@@ -45,7 +45,7 @@ export const registerFromLink = createAsyncThunk<void, RegisterFromLinkInterface
   'link-registration/registerFromLink',
   async ({ callback, ...values }, { rejectWithValue, dispatch }) => {
     try {
-      const { data } = await api.post(`/auth/register-from-link`, { values });
+      const { data } = await api.post(`/auth/link-register`, { values });
 
       dispatch(setTokens({ token: data.token, refreshToken: data.refreshToken }));
       dispatch(setNotificationMessage({ message: 'Utworzono nowe konto' }));

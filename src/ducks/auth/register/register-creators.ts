@@ -19,16 +19,19 @@ interface RegisterInterface {
   callback: () => void;
 }
 
-export const register = createAsyncThunk<void, RegisterInterface, baseStoreType>('register/register', async ({ callback, ...values }, { rejectWithValue, dispatch }) => {
-  try {
-    const { data } = await api.post(`/auth/register`, { ...values });
+export const register = createAsyncThunk<void, RegisterInterface, baseStoreType>(
+  'register/register',
+  async ({ callback, ...values }, { rejectWithValue, dispatch }) => {
+    try {
+      const { data } = await api.post(`/auth/register`, { ...values });
 
-    //TODO: dispatch actions
-    dispatch(setTokens({ token: data.token, refreshToken: data.refreshToken }));
-    dispatch(getUserData());
-    dispatch(getUserNotifications(1));
-    callback();
-  } catch (error) {
-    return rejectWithValue(error.response.statusText);
+      //TODO: dispatch actions
+      dispatch(setTokens({ token: data.token, refreshToken: data.refreshToken }));
+      dispatch(getUserData());
+      dispatch(getUserNotifications(1));
+      callback();
+    } catch (error) {
+      return rejectWithValue(error.response.statusText);
+    }
   }
-});
+);

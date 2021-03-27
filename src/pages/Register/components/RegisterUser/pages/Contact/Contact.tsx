@@ -6,20 +6,18 @@ import { FormField, Button } from 'components';
 
 import { useAppDispatch } from 'store/store';
 import { mainRegisterValues } from '../MainRegisterData/main-register.values';
+import { passwordValues } from '../Password/password.values';
 import { MainRegisterInterface, PasswordData, RegisterDataContext } from '../../context/RegisterDataContext';
 import { PageContext } from '../../context/PageContext';
 import { Heading, StyledForm } from 'pages/Login/Login.styles';
 import { Paragraph } from 'styles/typography/typography';
 import { DoubleFlexWrapper } from 'styles/shared';
-// import { register } from 'ducks/auth/register/register-creators';
 import { register, RegisterInterface } from 'api';
 import { setNotification } from 'ducks/popup/popup';
 import { useSubmit } from 'components/hooks';
 import { registerFromLink } from 'ducks/auth/link-registration/link-registration-creators';
 import { ContactDataSchema } from '../../validation/validation';
 import { contactFields } from './contact.fields';
-
-import { preparePasswordValues } from '../Password/Password';
 
 type CompoundRegisterInterface = MainRegisterInterface & PasswordData;
 
@@ -48,17 +46,18 @@ const Contact: React.FC<Props> = ({ isRegistrationLink, token }) => {
 
   const initialValues: DefaultValues = {
     ...mainRegisterValues(mainData),
-    ...preparePasswordValues(passwordData),
+    ...passwordValues(passwordData),
     address: '',
     city: '',
     country: '',
     phoneNumber: ''
   };
 
-  const { onSubmit, onSubmitSuccess, onSubmitError, mapData } = useSubmit<typeof register, RegisterInterface>(register);
+  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit<typeof register, RegisterInterface>(register);
   onSubmitSuccess(() => {
     history.push('/select');
     resetData();
+    //TODO: dispatch get user data (headers etc.)
   });
   onSubmitError(() => dispatch(setNotification({ message: 'Błąd rejestracji' })));
 
