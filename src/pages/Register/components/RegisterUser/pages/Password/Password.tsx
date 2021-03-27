@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Formik } from 'formik';
 
 import { FormField, Button } from 'components';
-import {passwordValues} from './password.values';
+import { passwordValues } from './password.values';
 import { PageContext } from '../../context/PageContext';
 import { PasswordSchema } from '../../validation/validation';
 import { RegisterDataContext, PasswordData } from '../../context/RegisterDataContext';
@@ -21,7 +21,7 @@ const Password: React.FC = () => {
   const initialValues = passwordValues(passwordData);
 
   const handleSubmit = (values: PasswordData): void => {
-    setPasswordData({...values });
+    setPasswordData({ ...values });
     setCurrentPage(currentPage + 1);
   };
 
