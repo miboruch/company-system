@@ -28,5 +28,5 @@ export interface AttendanceModel {
   pricePerHour: number;
   companyId: string;
   attendance?: Attendance;
-  user: AttendanceUserModel;
+  userId: AttendanceUserModel;
 }

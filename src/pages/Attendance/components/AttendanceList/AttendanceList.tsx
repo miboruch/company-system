@@ -28,10 +28,11 @@ const AttendanceList: React.FC<Props> = ({ filterText, editAttendanceCallback, d
   const attendanceData = useFetch<typeof fetchDayAttendance>(fetchDayAttendance(date), { dependencies: [date] });
   const { showContent, showLoader, showNoContent, showError } = useShowContent(attendanceData);
   const { payload: attendance } = attendanceData;
+  console.log(attendance);
 
   const filterByUserName = (attendance: AttendanceModel) =>
-    `${attendance.user.name} ${attendance.user.lastName}`.toLowerCase().includes(filterText.toLowerCase());
-  const handleSelectAttendance = (id: string) => () => setQuery('attendance', id);
+    `${attendance.userId.name} ${attendance.userId.lastName}`.toLowerCase().includes(filterText.toLowerCase());
+  const handleSelectAttendance = (id?: string) => () => setQuery('attendance', id ? id : 'none');
 
   useEffect(() => {
     showContent && listAnimation(tl, listRef);
@@ -58,14 +59,14 @@ const AttendanceList: React.FC<Props> = ({ filterText, editAttendanceCallback, d
             .map((attendance) => (
               <ListBox
                 key={attendance._id}
-                name={`${attendance.user.name} ${attendance.user.lastName}`}
+                name={`${attendance.userId.name} ${attendance.userId.lastName}`}
                 topDescription={new Date(date).toLocaleDateString()}
-                bottomDescription={attendance.user.email}
+                bottomDescription={attendance.userId.email}
                 isCompanyBox={false}
                 isEmpty={isEmpty(attendance.attendance)}
                 isChecked={!isEmpty(attendance.attendance) && attendance.attendance?.wasPresent}
                 editCallback={editAttendanceCallback(attendance)}
-                callback={handleSelectAttendance(attendance._id)}
+                callback={handleSelectAttendance(attendance.attendance?._id)}
               />
             ))}
       </List>

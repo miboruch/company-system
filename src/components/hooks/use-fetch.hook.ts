@@ -6,7 +6,11 @@ const SET_DATA = 'SET_DATA';
 const SET_ERROR = 'SET_ERROR';
 const SET_STATUS = 'SET_STATUS';
 
-type PromiseUnwrap<T> = T extends (...args: any) => () => Promise<infer U> ? U : T extends (...args: any) => Promise<infer U> ? U : T;
+type PromiseUnwrap<T> = T extends (...args: any) => () => Promise<infer U>
+  ? U
+  : T extends (...args: any) => Promise<infer U>
+  ? U
+  : T;
 
 interface Options<T> {
   // @ts-ignore
@@ -92,10 +96,10 @@ function useFetch<T>(
   const handleFetch = async () => {
     const { setLoading, setData, setError, setStatus } = actions;
 
-    setLoading(true);
-    setError(null);
-
     if (conditions) {
+      setLoading(true);
+      setError(null);
+
       const [data, error, { status, isCanceled }] = await asyncApiCall();
 
       if (!componentIsMounted.current) {

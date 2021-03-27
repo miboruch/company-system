@@ -3,7 +3,7 @@ import { Formik } from 'formik';
 
 import Input from 'components/form/Input/Input';
 import { FormField, PopupTemplate, ModalButton } from 'components';
-import { ButtonType } from 'types';
+import { AttendanceModel, ButtonType } from 'types';
 import { AttendanceInterface } from 'types/modelsTypes';
 import { useAppDispatch } from 'store/store';
 import { addAttendance, updateAttendance } from 'ducks/attendance/attendance-creators';
@@ -14,7 +14,7 @@ import { CheckedIcon, NotCheckedIcon, EmptyIcon } from 'styles/iconStyles';
 import { FlexWrapper, StyledForm, StyledParagraph, StyledFlexWrapper, InputWrapper } from './AttendancePopup.styles';
 
 interface Props {
-  attendance: AttendanceInterface | null;
+  attendance: AttendanceModel | null;
   isOpen: boolean;
   handleClose: () => void;
   date: Date;
@@ -39,7 +39,7 @@ const AttendancePopup: React.FC<Props> = ({ attendance, isOpen, handleClose, dat
         wasPresent !== null &&
           dispatch(updateAttendance({ attendanceId: attendance.attendance._id, wasPresent: wasPresent, hours }));
       } else {
-        wasPresent !== null && dispatch(addAttendance({ userId: attendance.user._id, date, wasPresent: wasPresent, hours }));
+        wasPresent !== null && dispatch(addAttendance({ userId: attendance.userId._id, date, wasPresent: wasPresent, hours }));
       }
     }
   };
@@ -62,7 +62,7 @@ const AttendancePopup: React.FC<Props> = ({ attendance, isOpen, handleClose, dat
                   <FlexWrapper>
                     {values.wasPresent === null ? <EmptyIcon /> : values.wasPresent ? <CheckedIcon /> : <NotCheckedIcon />}
                     <StyledParagraph type={'text'}>
-                      {attendance.user.name} {attendance.user.lastName}
+                      {attendance.userId.name} {attendance.userId.lastName}
                     </StyledParagraph>
                   </FlexWrapper>
                   <StyledFlexWrapper>

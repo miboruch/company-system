@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { Spinner, ListBox, AddNewButton } from 'components';
-import RemoveAdminPopup from 'components/molecules/RemoveAdminPopup/RemoveAdminPopup';
+import RemoveAdminPopup from './components/RemoveAdminPopup/RemoveAdminPopup';
 import { CompanyOwnersInterface } from 'types/modelsTypes';
 import { AppState, useAppDispatch } from 'store/store';
 import { NotificationTypes } from 'types/globalTypes';

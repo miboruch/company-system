@@ -4,13 +4,13 @@ import { ListBox, Spinner } from 'components';
 import { isEmpty } from 'utils/functions';
 import { fetchDayAttendance } from 'api';
 import { useFetch, useShowContent, useQuery } from 'components/hooks';
-import { AttendanceInterface } from 'types/modelsTypes';
+import { AttendanceModel } from 'types';
 
 import { StyledWrapper, DateHeading } from './AttendanceList.styles';
 import { SpinnerWrapper, Paragraph } from 'styles';
 
 interface Props {
-  setSelectedAttendance?: React.Dispatch<React.SetStateAction<AttendanceInterface | null>>;
+  setSelectedAttendance?: React.Dispatch<React.SetStateAction<AttendanceModel | null>>;
   setAttendanceOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -22,7 +22,7 @@ const AttendanceList: React.FC<Props> = ({ setSelectedAttendance, setAttendanceO
   const { showContent, showLoader, showNoContent, showError } = useShowContent(dayAttendance);
   const { payload: attendance } = dayAttendance;
 
-  const listBoxCallback = (attendance: AttendanceInterface) => () => {
+  const listBoxCallback = (attendance: AttendanceModel) => () => {
     !!setSelectedAttendance && setSelectedAttendance(attendance);
     !!setAttendanceOpen && setAttendanceOpen(true);
   };
@@ -42,9 +42,9 @@ const AttendanceList: React.FC<Props> = ({ setSelectedAttendance, setAttendanceO
         attendance.map((attendance) => (
           <ListBox
             key={attendance._id}
-            name={`${attendance.user.name} ${attendance.user.lastName}`}
+            name={`${attendance.userId.name} ${attendance.userId.lastName}`}
             topDescription={currentLocalDate}
-            bottomDescription={attendance.user.email}
+            bottomDescription={attendance.userId.email}
             isCompanyBox={false}
             isEmpty={isEmpty(attendance.attendance)}
             isChecked={!isEmpty(attendance.attendance) && attendance.attendance?.wasPresent}
