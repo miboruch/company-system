@@ -5,22 +5,30 @@ import { useHistory } from 'react-router-dom';
 import { FormField, Button } from 'components';
 
 import { useAppDispatch } from 'store/store';
-import { RegisterDataContext } from '../../context/RegisterDataContext';
+import { mainRegisterValues } from '../MainRegisterData/main-register.values';
+import { MainRegisterInterface, PasswordData, RegisterDataContext } from '../../context/RegisterDataContext';
 import { PageContext } from '../../context/PageContext';
 import { Heading, StyledForm } from 'pages/Login/Login.styles';
 import { Paragraph } from 'styles/typography/typography';
 import { DoubleFlexWrapper } from 'styles/shared';
-import { register } from 'ducks/auth/register/register-creators';
+// import { register } from 'ducks/auth/register/register-creators';
+import { register, RegisterInterface } from 'api';
+import { setNotification } from 'ducks/popup/popup';
+import { useSubmit } from 'components/hooks';
 import { registerFromLink } from 'ducks/auth/link-registration/link-registration-creators';
 import { ContactDataSchema } from '../../validation/validation';
 import { contactFields } from './contact.fields';
 
-type defaultValues = {
+import { preparePasswordValues } from '../Password/Password';
+
+type CompoundRegisterInterface = MainRegisterInterface & PasswordData;
+
+interface DefaultValues extends CompoundRegisterInterface {
   phoneNumber: string;
   address: string;
   city: string;
   country: string;
-};
+}
 
 interface Props {
   isRegistrationLink: boolean;
@@ -31,65 +39,77 @@ const Contact: React.FC<Props> = ({ isRegistrationLink, token }) => {
   const history = useHistory();
   const dispatch = useAppDispatch();
 
-  const { data, setData } = useContext(RegisterDataContext);
+  const { mainData, passwordData, resetData } = useContext(RegisterDataContext);
   const { currentPage, setCurrentPage } = useContext(PageContext);
 
   const handlePageBack = (): void => {
     setCurrentPage(currentPage - 1);
   };
 
-  const initialValues: defaultValues = {
-    address: data.address || '',
-    city: data.city || '',
-    country: data.country || '',
-    phoneNumber: data.phoneNumber || ''
+  const initialValues: DefaultValues = {
+    ...mainRegisterValues(mainData),
+    ...preparePasswordValues(passwordData),
+    address: '',
+    city: '',
+    country: '',
+    phoneNumber: ''
   };
 
-  const handleSubmit = (values: defaultValues): void => {
-    if (isRegistrationLink) {
-      if (token && data.password && data.repeatedPassword && data.name && data.lastName && data.dateOfBirth) {
-        const { password, repeatedPassword, name, lastName, dateOfBirth } = data;
+  const { onSubmit, onSubmitSuccess, onSubmitError, mapData } = useSubmit<typeof register, RegisterInterface>(register);
+  onSubmitSuccess(() => {
+    history.push('/select');
+    resetData();
+  });
+  onSubmitError(() => dispatch(setNotification({ message: 'Błąd rejestracji' })));
 
-        dispatch(
-          registerFromLink({
-            token,
-            password,
-            repeatedPassword,
-            name,
-            lastName,
-            dateOfBirth,
-            ...values,
-            callback: () => {
-              history.push('/select');
-              setData({});
-            }
-          })
-        );
-      }
-    } else {
-      if (data.email && data.password && data.repeatedPassword && data.name && data.lastName && data.dateOfBirth) {
-        const { email, password, repeatedPassword, name, lastName, dateOfBirth } = data;
-        dispatch(
-          register({
-            email,
-            password,
-            repeatedPassword,
-            name,
-            lastName,
-            dateOfBirth,
-            ...values,
-            callback: () => {
-              history.push('/select');
-              setData({});
-            }
-          })
-        );
-      }
-    }
-  };
+  // const handleSubmit = (values: DefaultValues): void => {
+  //   if (isRegistrationLink) {
+  //     if (token && passwordData && mainData) {
+  //       const { name, lastName, dateOfBirth } = mainData;
+  //       const { password, repeatedPassword } = passwordData;
+  //
+  //       dispatch(
+  //         registerFromLink({
+  //           token,
+  //           password,
+  //           repeatedPassword,
+  //           name,
+  //           lastName,
+  //           dateOfBirth,
+  //           ...values,
+  //           callback: () => {
+  //             history.push('/select');
+  //             resetData();
+  //           }
+  //         })
+  //       );
+  //     }
+  //   } else {
+  //     if (mainData && passwordData) {
+  //       const { email, name, lastName, dateOfBirth } = mainData;
+  //       const { password, repeatedPassword } = passwordData;
+  //
+  //       // dispatch(
+  //       //   register({
+  //       //     email,
+  //       //     password,
+  //       //     repeatedPassword,
+  //       //     name,
+  //       //     lastName,
+  //       //     dateOfBirth,
+  //       //     ...values,
+  //       //     callback: () => {
+  //       //       history.push('/select');
+  //       //       setData({});
+  //       //     }
+  //       //   })
+  //       // );
+  //     }
+  //   }
+  // };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={ContactDataSchema}>
+    <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={ContactDataSchema}>
       {({ isSubmitting }) => (
         <StyledForm>
           <Heading>Podaj informacje kontaktowe</Heading>

@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import { FormField, Button } from 'components';
 import { PageContext } from '../../context/PageContext';
 import { PasswordSchema } from '../../validation/validation';
-import { RegisterDataContext } from '../../context/RegisterDataContext';
+import { RegisterDataContext, PasswordData } from '../../context/RegisterDataContext';
 
 import { Heading, StyledForm } from 'pages/Login/Login.styles';
 import { Paragraph, ErrorParagraph, DoubleFlexWrapper } from 'styles';
@@ -14,21 +14,23 @@ type defaultValues = {
   repeatedPassword: string;
 };
 
+export const preparePasswordValues = (passwordData?: PasswordData): PasswordData => ({
+  password: passwordData?.password || '',
+  repeatedPassword: passwordData?.repeatedPassword || ''
+})
+
 const Password: React.FC = () => {
-  const { data, setData } = useContext(RegisterDataContext);
+  const { passwordData, setPasswordData } = useContext(RegisterDataContext);
   const { currentPage, setCurrentPage } = useContext(PageContext);
 
   const handlePageBack = (): void => {
     setCurrentPage(currentPage - 1);
   };
 
-  const initialValues: defaultValues = {
-    password: data.password || '',
-    repeatedPassword: data.repeatedPassword || ''
-  };
+  const initialValues = preparePasswordValues(passwordData);
 
   const handleSubmit = (values: defaultValues): void => {
-    setData({ ...data, ...values });
+    setPasswordData({...values });
     setCurrentPage(currentPage + 1);
   };
 

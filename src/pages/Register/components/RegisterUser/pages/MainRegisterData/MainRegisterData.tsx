@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import { Formik } from 'formik';
 
 import { Button, FormField } from 'components';
-import { RegisterDataContext } from '../../context/RegisterDataContext';
+import { mainRegisterValues } from './main-register.values';
+import { RegisterDataContext, MainRegisterInterface } from '../../context/RegisterDataContext';
 import { PageContext } from '../../context/PageContext';
 import { MainRegisterDataSchema } from '../../validation/validation';
 import { mainRegisterFields } from './main-register.fields';
@@ -11,36 +12,24 @@ import { StyledForm, Heading } from 'pages/Login/Login.styles';
 import { FlexWrapper } from 'styles/shared';
 import 'react-datepicker/dist/react-datepicker.css';
 
-type defaultValues = {
-  email: string;
-  name: string;
-  lastName: string;
-  dateOfBirth: Date | undefined | null;
-};
-
 interface Props {
   isRegistrationLink: boolean;
 }
 
 const MainRegisterData: React.FC<Props> = () => {
-  const { data, setData } = useContext(RegisterDataContext);
+  const { mainData, setMainData } = useContext(RegisterDataContext);
   const { currentPage, setCurrentPage } = useContext(PageContext);
 
-  const initialValues: defaultValues = {
-    email: data?.email || '',
-    name: data?.name || '',
-    lastName: data?.lastName || '',
-    dateOfBirth: data?.dateOfBirth || null
-  };
+  const registerMainValues = mainRegisterValues(mainData);
 
-  const handleSubmit = (values: defaultValues): void => {
-    setData({ ...data, ...values });
+  const handleSubmit = (values: MainRegisterInterface): void => {
+    setMainData({ ...values });
     setCurrentPage(currentPage + 1);
   };
 
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={registerMainValues}
       onSubmit={handleSubmit}
       validationSchema={MainRegisterDataSchema}
       validateOnChange={false}
