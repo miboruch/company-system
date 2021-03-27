@@ -5,6 +5,7 @@ import { Formik } from 'formik';
 
 import LoginTemplate, { TemplatePage } from '../../components/templates/LoginTemplate/LoginTemplate';
 import { FormField, Spinner, Button } from 'components';
+import { setTokens } from 'ducks/auth/tokens/tokens';
 import { useSubmit } from 'components/hooks';
 import { login, LoginData } from 'api';
 import { AppState, useAppDispatch } from 'store/store';
@@ -21,15 +22,13 @@ import {
   StyledForm,
   StyledLink
 } from 'pages/Login/Login.styles';
-import { setTokens } from 'ducks/auth/tokens/tokens';
 
 const Login: React.FC = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const { isLoginLoading, loginError } = useSelector((state: AppState) => state.auth.login);
+  const { loginError } = useSelector((state: AppState) => state.auth.login);
 
   const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit<typeof login, LoginData>(login);
-
   onSubmitSuccess((payload) => {
     if (payload) {
       const { token, refreshToken } = payload;
@@ -49,7 +48,7 @@ const Login: React.FC = () => {
         <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={LoginSchema}>
           {({ isSubmitting }) => (
             <StyledForm>
-              {isLoginLoading ? (
+              {isSubmitting ? (
                 <SpinnerWrapper>
                   <Spinner />
                 </SpinnerWrapper>

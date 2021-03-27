@@ -44,18 +44,6 @@ const Test = styled.section`
   }
 `;
 
-const InfoBoxWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin: 3rem 0;
-
-  ${({ theme }) => theme.mq.hdReady} {
-    display: contents;
-  }
-`;
-
 const InfoWrapper = styled.section`
   width: 100%;
   display: flex;
@@ -89,4 +77,4 @@ const StatisticsHeading = styled(Heading)`
   }
 `;
 
-export { Content, List, Header, Test, InfoBoxWrapper, InfoWrapper, StatisticsHeading };
+export { Content, List, Header, Test, InfoWrapper, StatisticsHeading };

@@ -8,7 +8,7 @@ export const getUserData = createAsyncThunk<UserAuthData, string | void, baseSto
     const { token } = getState().auth.tokens;
 
     if (argToken) {
-      const { data } = await authApi.get(`/user/user-data`, {
+      const { data } = await authApi.get(`/user`, {
         headers: {
           Authorization: `Bearer ${argToken}`
         }

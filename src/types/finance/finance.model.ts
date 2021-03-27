@@ -1,4 +1,4 @@
-export interface IncomeDataInterface {
+export interface IncomeModel {
   createdDate: string | Date;
   _id: string;
   companyId: string;

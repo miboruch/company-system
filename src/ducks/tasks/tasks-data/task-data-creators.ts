@@ -15,7 +15,7 @@ export const getCompanyTasks = createAsyncThunk<TaskInterface[], void, baseStore
 
     try {
       if (currentCompany && token) {
-        const { data } = await companyApi.get(`/task/get-company-tasks?company_id=${currentCompany._id}`, {
+        const { data } = await companyApi.get(`/task/company`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -67,7 +67,7 @@ export const getCompletedTasks = createAsyncThunk<number, void, baseStoreType>(
     try {
       if (currentCompany && token) {
         const { data } = await companyApi.get(
-          `/task/count-last-completed-tasks?company_id=${currentCompany._id}&daysBack=${DAYS_BACK}`,
+          `/task/completed?daysBack=${DAYS_BACK}`,
           {
             headers: {
               Authorization: `Bearer ${token}`

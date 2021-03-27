@@ -5,13 +5,13 @@ type Token = string | null;
 export const fetchAdminCompanies = (token: Token) => () =>
   fetchMiddleware<CompanyInterface[]>({
     method: 'get',
-    url: '/user/get-user-companies',
+    url: '/user/companies',
     headers: { Authorization: `Bearer ${token}` }
   });
 
 export const fetchEmployeeCompanies = (token: Token) => () =>
   fetchMiddleware<CompanyInterface[]>({
     method: 'get',
-    url: '/employee/get-employee-companies',
+    url: '/employee/companies',
     headers: { Authorization: `Bearer ${token}` }
   });

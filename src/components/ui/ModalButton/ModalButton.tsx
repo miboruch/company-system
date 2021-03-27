@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { HTMLProps } from 'react';
 
 import { Button } from './ModalButton.styles';
 
@@ -9,7 +9,7 @@ export enum ButtonType {
   Submit = 'submit'
 }
 
-interface Props {
+interface Props extends HTMLProps<HTMLButtonElement>{
   onClick?: () => void;
   buttonType: ButtonType;
   text: string;

@@ -1,27 +1,31 @@
 import React, { useState } from 'react';
 
-interface RegisterDataInterface {
-  isRegistrationLink?: boolean;
-  email?: string;
-  name?: string;
-  lastName?: string;
-  dateOfBirth?: Date | undefined | null;
-  password?: string;
-  repeatedPassword?: string;
-  phoneNumber?: string;
-  address?: string;
-  city?: string;
-  country?: string;
+export interface MainRegisterInterface {
+  email: string;
+  name: string;
+  lastName: string;
+  dateOfBirth: Date;
+}
+
+export interface PasswordData {
+  password: string;
+  repeatedPassword: string;
 }
 
 type RegisterDataContextType = {
-  data: RegisterDataInterface;
-  setData: (data: object) => void;
+  mainData?: MainRegisterInterface;
+  setMainData: (data: MainRegisterInterface) => void;
+  passwordData?: PasswordData;
+  setPasswordData: (data: PasswordData) => void;
+  resetData: () => void;
 };
 
 export const RegisterDataContext = React.createContext<RegisterDataContextType>({
-  data: {},
-  setData: (data: object) => {}
+  mainData: undefined,
+  setMainData: (data: MainRegisterInterface) => {},
+  passwordData: undefined,
+  setPasswordData: (data: PasswordData) => {},
+  resetData: () => {}
 });
 
 interface Props {
@@ -31,8 +35,19 @@ interface Props {
 }
 
 const RegisterDataContextProvider: React.FC<Props> = ({ children, isRegistrationLink, email }) => {
-  const [data, setData] = useState<RegisterDataInterface>(isRegistrationLink ? {email: email} : {});
-  return <RegisterDataContext.Provider value={{ data, setData }}>{children}</RegisterDataContext.Provider>;
+  const [mainData, setMainData] = useState<MainRegisterInterface>();
+  const [passwordData, setPasswordData] = useState<PasswordData>();
+
+  const resetData = () => {
+    setMainData(undefined);
+    setPasswordData(undefined);
+  }
+
+  return (
+    <RegisterDataContext.Provider value={{ mainData, setMainData, passwordData, setPasswordData, resetData }}>
+      {children}
+    </RegisterDataContext.Provider>
+  );
 };
 
 export default RegisterDataContextProvider;

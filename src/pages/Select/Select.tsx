@@ -1,22 +1,11 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { ArrowButton } from 'components';
-import { UserRole } from 'ducks/auth/roles/roles';
-import { Direction } from 'types/globalTypes';
+import SelectBox from './components/SelectBox/SelectBox';
 import { useAppDispatch } from 'store/store';
 import { changeUserRoleTo } from 'ducks/auth/roles/roles-creators';
-import {
-  ArrowWrapper,
-  ContentBox,
-  ContentWrapper,
-  Header,
-  Heading,
-  Paragraph,
-  StyledCompanyName,
-  StyledHeading,
-  Wrapper
-} from 'pages/Select/Select.styles';
+import { UserRole } from 'ducks/auth/roles/roles';
+import { ContentWrapper, Header, Heading, StyledCompanyName, Wrapper } from 'pages/Select/Select.styles';
 
 const Select: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -32,24 +21,16 @@ const Select: React.FC = () => {
         <Heading>Wybierz panel</Heading>
       </Header>
       <ContentWrapper>
-        <ContentBox onClick={handleAdminRole}>
-          <div>
-            <StyledHeading>Panel administratora</StyledHeading>
-            <Paragraph>Przejdź do panelu administratora, aby zarządzać i optymalizować pracę swojej firmy.</Paragraph>
-          </div>
-          <ArrowWrapper>
-            <ArrowButton direction={Direction.Right} />
-          </ArrowWrapper>
-        </ContentBox>
-        <ContentBox onClick={handleUserRole}>
-          <div>
-            <StyledHeading>Panel pracownika</StyledHeading>
-            <Paragraph>Przejdź do panelu pracownika, aby przeglądać swoje dane, wyniki oraz osiągnięcia w firmie.</Paragraph>
-          </div>
-          <ArrowWrapper>
-            <ArrowButton direction={Direction.Right} />
-          </ArrowWrapper>
-        </ContentBox>
+        <SelectBox
+          onClick={handleAdminRole}
+          heading={'Panel administratora'}
+          text={'Przejdź do panelu administratora, aby zarządzać i optymalizować pracę swojej firmy.'}
+        />
+        <SelectBox
+          onClick={handleUserRole}
+          heading={'Panel pracownika'}
+          text={'Przejdź do panelu pracownika, aby przeglądać swoje dane, wyniki oraz osiągnięcia w firmie.'}
+        />
       </ContentWrapper>
     </Wrapper>
   );

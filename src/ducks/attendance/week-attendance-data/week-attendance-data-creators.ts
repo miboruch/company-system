@@ -11,7 +11,7 @@ export const getWeekAttendance = createAsyncThunk<WeekAttendance[], number, base
     if (selectedAttendance && token) {
       const { user } = selectedAttendance;
 
-      const { data } = await companyApi.get(`/attendance/user-week-attendance?user_id=${user._id}&week=${weekCounter}`, {
+      const { data } = await companyApi.get(`/attendance/user-week?user_id=${user._id}&week=${weekCounter}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

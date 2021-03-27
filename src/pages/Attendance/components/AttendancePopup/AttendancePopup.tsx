@@ -2,8 +2,8 @@ import React from 'react';
 import { Formik } from 'formik';
 
 import Input from 'components/form/Input/Input';
-import { Checkbox, FormField, PopupTemplate, ModalButton } from 'components';
-import { ButtonType } from 'types';
+import { FormField, PopupTemplate, ModalButton } from 'components';
+import { AttendanceModel, ButtonType } from 'types';
 import { AttendanceInterface } from 'types/modelsTypes';
 import { useAppDispatch } from 'store/store';
 import { addAttendance, updateAttendance } from 'ducks/attendance/attendance-creators';
@@ -14,9 +14,9 @@ import { CheckedIcon, NotCheckedIcon, EmptyIcon } from 'styles/iconStyles';
 import { FlexWrapper, StyledForm, StyledParagraph, StyledFlexWrapper, InputWrapper } from './AttendancePopup.styles';
 
 interface Props {
-  attendance: AttendanceInterface | null;
+  attendance: AttendanceModel | null;
   isOpen: boolean;
-  setOpen: (isOpen: boolean) => void;
+  handleClose: () => void;
   date: Date;
 }
 
@@ -25,7 +25,7 @@ interface DefaultValues {
   hours: number;
 }
 
-const AttendancePopup: React.FC<Props> = ({ attendance, isOpen, setOpen, date }) => {
+const AttendancePopup: React.FC<Props> = ({ attendance, isOpen, handleClose, date }) => {
   const dispatch = useAppDispatch();
   const initialValues: DefaultValues = {
     wasPresent: !attendance?.attendance ? null : attendance.attendance.wasPresent,
@@ -33,13 +33,13 @@ const AttendancePopup: React.FC<Props> = ({ attendance, isOpen, setOpen, date })
   };
 
   const handleSubmit = ({ wasPresent, hours }: DefaultValues) => {
-    setOpen(false);
+    handleClose();
     if (attendance) {
       if (attendance?.attendance) {
         wasPresent !== null &&
           dispatch(updateAttendance({ attendanceId: attendance.attendance._id, wasPresent: wasPresent, hours }));
       } else {
-        wasPresent !== null && dispatch(addAttendance({ userId: attendance.user._id, date, wasPresent: wasPresent, hours }));
+        wasPresent !== null && dispatch(addAttendance({ userId: attendance.userId._id, date, wasPresent: wasPresent, hours }));
       }
     }
   };
@@ -62,7 +62,7 @@ const AttendancePopup: React.FC<Props> = ({ attendance, isOpen, setOpen, date })
                   <FlexWrapper>
                     {values.wasPresent === null ? <EmptyIcon /> : values.wasPresent ? <CheckedIcon /> : <NotCheckedIcon />}
                     <StyledParagraph type={'text'}>
-                      {attendance.user.name} {attendance.user.lastName}
+                      {attendance.userId.name} {attendance.userId.lastName}
                     </StyledParagraph>
                   </FlexWrapper>
                   <StyledFlexWrapper>
@@ -95,7 +95,7 @@ const AttendancePopup: React.FC<Props> = ({ attendance, isOpen, setOpen, date })
                   </InputWrapper>
                 </ContentWrapper>
                 <ButtonWrapper>
-                  <ModalButton onClick={() => setOpen(false)} buttonType={ButtonType.Cancel} text={'Zamknij'} />
+                  <ModalButton onClick={handleClose} buttonType={ButtonType.Cancel} text={'Zamknij'} />
                   <ModalButton submit={true} buttonType={ButtonType.Add} text={'Akceptuj'} />
                 </ButtonWrapper>
               </StyledForm>

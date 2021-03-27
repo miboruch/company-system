@@ -3,93 +3,57 @@ import { Formik } from 'formik';
 import { useHistory } from 'react-router-dom';
 
 import { FormField, Button } from 'components';
-
+import { useSubmit } from 'components/hooks';
 import { useAppDispatch } from 'store/store';
+import { mainRegisterValues } from '../MainRegisterData/main-register.values';
+import { passwordValues } from '../Password/password.values';
+import { register, RegisterInterface } from 'api';
+import { setNotification } from 'ducks/popup/popup';
 import { RegisterDataContext } from '../../context/RegisterDataContext';
 import { PageContext } from '../../context/PageContext';
-import { Heading, StyledForm } from 'pages/Login/Login.styles';
-import { Paragraph } from 'styles/typography/typography';
-import { DoubleFlexWrapper } from 'styles/shared';
-import { register } from 'ducks/auth/register/register-creators';
-import { registerFromLink } from 'ducks/auth/link-registration/link-registration-creators';
 import { ContactDataSchema } from '../../validation/validation';
 import { contactFields } from './contact.fields';
 
-type defaultValues = {
-  phoneNumber: string;
-  address: string;
-  city: string;
-  country: string;
-};
+import { Heading, StyledForm } from 'pages/Login/Login.styles';
+import { Paragraph } from 'styles/typography/typography';
+import { DoubleFlexWrapper } from 'styles/shared';
 
 interface Props {
   isRegistrationLink: boolean;
   token?: string;
 }
 
-const Contact: React.FC<Props> = ({ isRegistrationLink, token }) => {
+const Contact: React.FC<Props> = () => {
+  //TODO: link register feature
   const history = useHistory();
   const dispatch = useAppDispatch();
 
-  const { data, setData } = useContext(RegisterDataContext);
+  const { mainData, passwordData, resetData } = useContext(RegisterDataContext);
   const { currentPage, setCurrentPage } = useContext(PageContext);
 
   const handlePageBack = (): void => {
     setCurrentPage(currentPage - 1);
   };
 
-  const initialValues: defaultValues = {
-    address: data.address || '',
-    city: data.city || '',
-    country: data.country || '',
-    phoneNumber: data.phoneNumber || ''
+  const initialValues: RegisterInterface = {
+    ...mainRegisterValues(mainData),
+    ...passwordValues(passwordData),
+    address: '',
+    city: '',
+    country: '',
+    phoneNumber: ''
   };
 
-  const handleSubmit = (values: defaultValues): void => {
-    if (isRegistrationLink) {
-      if (token && data.password && data.repeatedPassword && data.name && data.lastName && data.dateOfBirth) {
-        const { password, repeatedPassword, name, lastName, dateOfBirth } = data;
-
-        dispatch(
-          registerFromLink({
-            token,
-            password,
-            repeatedPassword,
-            name,
-            lastName,
-            dateOfBirth,
-            ...values,
-            callback: () => {
-              history.push('/select');
-              setData({});
-            }
-          })
-        );
-      }
-    } else {
-      if (data.email && data.password && data.repeatedPassword && data.name && data.lastName && data.dateOfBirth) {
-        const { email, password, repeatedPassword, name, lastName, dateOfBirth } = data;
-        dispatch(
-          register({
-            email,
-            password,
-            repeatedPassword,
-            name,
-            lastName,
-            dateOfBirth,
-            ...values,
-            callback: () => {
-              history.push('/select');
-              setData({});
-            }
-          })
-        );
-      }
-    }
-  };
+  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit<typeof register, RegisterInterface>(register);
+  onSubmitSuccess(() => {
+    history.push('/select');
+    resetData();
+    //TODO: dispatch get user data (headers etc.)
+  });
+  onSubmitError(() => dispatch(setNotification({ message: 'Błąd rejestracji' })));
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={ContactDataSchema}>
+    <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={ContactDataSchema}>
       {({ isSubmitting }) => (
         <StyledForm>
           <Heading>Podaj informacje kontaktowe</Heading>
