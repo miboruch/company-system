@@ -4,60 +4,49 @@ import { useSelector } from 'react-redux';
 
 import { Button, FormField, Dropdown } from 'components';
 import { AppState, useAppDispatch } from 'store/store';
+import { useSubmit, useFetch, useShowContent } from 'components/hooks';
+import { fetchClients, postTask, PostTaskData } from 'api';
+import { setNotification } from 'ducks/popup/popup';
+import { taskInfoValues } from '../TaskInfo/task-info.values';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { TaskDataContext } from '../../context/TaskDataContext';
-import { addNewTask } from 'ducks/tasks/tasks-data/task-data-creators';
 import { getCompanyClients } from 'ducks/client/client-data/client-data-creators';
 import { TaskSpecificInfoSchema } from '../../validation/validation';
 
 import { HeadingWrapper, MobileCompoundTitle, StyledBackParagraph, StyledForm, Subheading, Wrapper } from 'styles/compoundStyles';
-import { DoubleFlexWrapper } from 'styles/shared';
-
-interface DefaultValues {
-  timeEstimate: number;
-  taskIncome?: number;
-  taskExpense?: number;
-  clientId: string | null;
-}
+import { Paragraph, DoubleFlexWrapper } from 'styles';
 
 interface Props {
   handleClose: () => void;
   setRefreshDate: (date: Date) => void;
 }
 
-const SpecificInfo: React.FC<Props> = ({handleClose, setRefreshDate}) => {
+const SpecificInfo: React.FC<Props> = ({ handleClose, setRefreshDate }) => {
   const dispatch = useAppDispatch();
   const { allCompanyClients } = useSelector((state: AppState) => state.client.clientData);
 
-  const { data, setData } = useContext(TaskDataContext);
+  const { mainData } = useContext(TaskDataContext);
   const { setCurrentPage } = useContext(PageContext);
 
-  const initialValues: DefaultValues = {
-    timeEstimate: data.timeEstimate ? data.timeEstimate : 0,
-    taskIncome: data.taskIncome ? data.taskIncome : 0,
-    taskExpense: data.taskExpense ? data.taskExpense : 0,
-    clientId: data.clientId ? data.clientId : null
+  const initialValues: PostTaskData = {
+    ...taskInfoValues(mainData),
+    timeEstimate: 0,
+    taskIncome: 0,
+    taskExpense: 0,
+    clientId: null
   };
 
-  const handleSubmit = ({ timeEstimate, taskIncome, taskExpense, clientId }: DefaultValues): void => {
-    setData({ ...data, timeEstimate, taskIncome, taskExpense, clientId });
+  const clientsData = useFetch<typeof fetchClients>(fetchClients);
+  const { showContent, showNoContent } = useShowContent(clientsData);
+  const { payload: clients } = clientsData;
 
-    if (data.date && data.name && data.description && data.selectedEmployees && data.isCompleted !== undefined) {
-      dispatch(
-        addNewTask({
-          date: data.date,
-          timeEstimate,
-          name: data.name,
-          description: data.description,
-          isCompleted: data.isCompleted,
-          taskIncome,
-          taskExpense,
-          clientId,
-          employees: data.selectedEmployees
-        })
-      );
-    }
-  };
+  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit<typeof postTask, PostTaskData>(postTask);
+  onSubmitSuccess(() => {
+    handleClose();
+    setRefreshDate(new Date());
+    dispatch(setNotification({ message: 'Dodano zadanie', notificationType: 'success' }));
+  });
+  onSubmitError((message) => dispatch(setNotification({ message })));
 
   const handlePreviousPage = () => setCurrentPage(PageSettingEnum.First);
 
@@ -67,7 +56,7 @@ const SpecificInfo: React.FC<Props> = ({handleClose, setRefreshDate}) => {
 
   return (
     <Formik
-      onSubmit={handleSubmit}
+      onSubmit={onSubmit}
       initialValues={initialValues}
       validationSchema={TaskSpecificInfoSchema}
       validateOnBlur={false}
@@ -80,16 +69,19 @@ const SpecificInfo: React.FC<Props> = ({handleClose, setRefreshDate}) => {
               <MobileCompoundTitle>Szczegółowe informacje o zadaniu</MobileCompoundTitle>
               <Subheading>Uzupełnij informacje</Subheading>
             </HeadingWrapper>
-            <Dropdown
-              options={allCompanyClients}
-              onChange={(selectedItem) =>
-                setFieldValue('clientId', allCompanyClients.find((client) => client.name === selectedItem)?._id)
-              }
-              labelText={'Wybierz klienta'}
-            />
-            <FormField name={'timeEstimate'} type={'number'} label={'Szacowany czas *'} required={true} />
-            <FormField name={'taskIncome'} type={'number'} label={'Przychód z zadania *'} required={false} />
-            <FormField name={'taskExpense'} type={'number'} label={'Wydatek na zadanie *'} required={false} />
+            {showContent && clients && (
+              <Dropdown
+                options={allCompanyClients}
+                onChange={(selectedItem) =>
+                  setFieldValue('clientId', allCompanyClients.find((client) => client.name === selectedItem)?._id)
+                }
+                labelText={'Wybierz klienta'}
+              />
+            )}
+            {showNoContent && <Paragraph>Brak klientów</Paragraph>}
+            <FormField name={'timeEstimate'} type={'number'} label={'Szacowany czas *'} required={true} spacing={true} />
+            <FormField name={'taskIncome'} type={'number'} label={'Przychód z zadania *'} required={false} spacing={true} />
+            <FormField name={'taskExpense'} type={'number'} label={'Wydatek na zadanie *'} required={false} spacing={true} />
             <DoubleFlexWrapper>
               <StyledBackParagraph type={'back'} onClick={handlePreviousPage}>
                 Wstecz

@@ -236,7 +236,7 @@ export const addNewTask = createAsyncThunk<void, AddNewTaskInterface, baseStoreT
     try {
       if (token) {
         await companyApi.post(
-          `/task/add-new-task`,
+          `/task`,
           {
             date,
             timeEstimate,

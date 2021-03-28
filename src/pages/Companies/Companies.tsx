@@ -18,14 +18,14 @@ const Companies: React.FC = () => {
   const history = useHistory();
   const dispatch = useAppDispatch();
   const { role } = useSelector((state: AppState) => state.auth.roles);
-  const token = localStorage.getItem('token');
+
   const [isAddCompanyOpen, setAddCompanyOpen] = useState<boolean>(false);
   const [refreshDate, setRefreshDate] = useState<Date>(new Date());
 
   const companiesData =
     role === UserRole.Admin
-      ? useFetch<typeof fetchAdminCompanies>(fetchAdminCompanies(token), {dependencies: [refreshDate]})
-      : useFetch<typeof fetchEmployeeCompanies>(fetchEmployeeCompanies(token), {dependencies: [refreshDate]});
+      ? useFetch<typeof fetchAdminCompanies>(fetchAdminCompanies, {dependencies: [refreshDate]})
+      : useFetch<typeof fetchEmployeeCompanies>(fetchEmployeeCompanies, {dependencies: [refreshDate]});
   const { showContent, showLoader, showNoContent } = useShowContent(companiesData);
   const { payload } = companiesData;
 

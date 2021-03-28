@@ -8,7 +8,7 @@ export const getCompanyClients = createAsyncThunk<ClientInterface[], void, baseS
 
   try {
     if (token) {
-      const { data } = await companyApi.get(`/client/get-company-clients`, {
+      const { data } = await companyApi.get(`/client/company`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

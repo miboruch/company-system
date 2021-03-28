@@ -1,19 +1,16 @@
 import fetchMiddleware from 'api/api.middleware';
 import { CompanyInterface } from 'types/modelsTypes';
-type Token = string | null;
 
-export const fetchAdminCompanies = (token: Token) => () =>
+export const fetchAdminCompanies = () =>
   fetchMiddleware<CompanyInterface[]>({
     method: 'get',
     url: '/user/companies',
-    // headers: { Authorization: `Bearer ${token}` }
   });
 
-export const fetchEmployeeCompanies = (token: Token) => () =>
+export const fetchEmployeeCompanies = () =>
   fetchMiddleware<CompanyInterface[]>({
     method: 'get',
     url: '/employee/companies',
-    // headers: { Authorization: `Bearer ${token}` }
   });
 
 export interface PostCompanyData {
