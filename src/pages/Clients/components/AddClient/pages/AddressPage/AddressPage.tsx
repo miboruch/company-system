@@ -23,7 +23,6 @@ const AddressPage: React.FC<Props> = ({ handleClose, setRefreshDate }) => {
   const dispatch = useDispatch();
   const { mainData, mapData } = useContext(ClientDataContext);
   const { setCurrentPage } = useContext(PageContext);
-  console.log(mainData);
 
   const initialValues: PostClientInfo = {
     ...clientMainValues(mainData),
@@ -33,8 +32,6 @@ const AddressPage: React.FC<Props> = ({ handleClose, setRefreshDate }) => {
     city: '',
     country: ''
   };
-
-  console.log(initialValues);
 
   const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit<typeof postClient, PostClientInfo>(postClient);
   onSubmitSuccess(() => {

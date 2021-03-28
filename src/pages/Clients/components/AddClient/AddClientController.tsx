@@ -1,6 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
-import { useDispatch } from 'react-redux';
+import React from 'react';
 
 import ClientDataContextProvider from './context/ClientDataContext';
 import PageContextProvider, { PageSettingEnum } from './context/PageContext';
@@ -11,8 +9,7 @@ import MainClientPage from './pages/MainClientPage/MainClientPage';
 import MapPage from './pages/MapPage/MapPage';
 import AddressPage from './pages/AddressPage/AddressPage';
 import { CloseButton } from 'components';
-import { modalOpenAnimation } from 'animations/animations';
-import { setAddNewClientOpen } from 'ducks/client/client-toggle/client-toggle';
+import { useModal } from 'components/hooks';
 
 import { CloseButtonWrapper, CompoundTitle, ContentWrapper, MainWrapper, Wrapper } from 'styles/compoundControllerStyles';
 import { StandardCompoundTitle } from 'styles/compoundStyles';
@@ -24,29 +21,15 @@ interface Props {
 }
 
 const AddClientController: React.FC<Props> = ({ isOpen, handleClose, setRefreshDate }) => {
-  const dispatch = useDispatch();
-
-  const mainWrapperRef = useRef<HTMLDivElement | null>(null);
-  const wrapperRef = useRef<HTMLDivElement | null>(null);
-  const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
-
-  useEffect(() => {
-    modalOpenAnimation(tl, mainWrapperRef, wrapperRef);
-  }, []);
-
-  useEffect(() => {
-    isOpen ? tl.play() : tl.reverse();
-  }, [isOpen]);
-
-  const handleAddClientClose = () => dispatch(setAddNewClientOpen(false));
+  const { wrapperRef, boxRef } = useModal(isOpen);
 
   return (
     <ClientDataContextProvider>
       <PageContextProvider>
-        <MainWrapper ref={mainWrapperRef}>
-          <Wrapper ref={wrapperRef}>
+        <MainWrapper ref={wrapperRef}>
+          <Wrapper ref={boxRef}>
             <CloseButtonWrapper>
-              <CloseButton close={handleAddClientClose} />
+              <CloseButton close={handleClose} />
             </CloseButtonWrapper>
             <AddClientHeader />
             <CompoundTitle>Dodaj klienta</CompoundTitle>
