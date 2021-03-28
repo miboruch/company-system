@@ -1,12 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { baseStoreType } from 'store/store';
-import { companyApi } from 'api';
-import { ExpenseInterface, IncomeDataInterface, IncomeInterface } from 'types/modelsTypes';
-
 
 import { setNotificationMessage } from '../../popup/popup';
-import { NotificationTypes } from 'types/globalTypes';
 import { fetchAllFinancesData } from '../finances-creators';
+import { baseStoreType } from 'store/store';
+import { IncomeModel, ExpenseModel } from 'types';
+import { NotificationTypes } from 'types/globalTypes';
+import { companyApi } from 'api';
 
 export interface IncomeExpenseReturnInterface {
   income: number;
@@ -38,8 +37,8 @@ export const getCompanyIncomeAndExpense = createAsyncThunk<IncomeExpenseReturnIn
 );
 
 export interface LastIncomesExpensesReturnInterface {
-  lastIncomes: IncomeInterface[];
-  lastExpenses: ExpenseInterface[];
+  lastIncomes: IncomeModel[];
+  lastExpenses: ExpenseModel[];
 }
 
 export const getLastIncomesAndExpenses = createAsyncThunk<LastIncomesExpensesReturnInterface, number, baseStoreType>(
@@ -135,45 +134,51 @@ export const addExpense = createAsyncThunk<void, AddExpenseInterface, baseStoreT
 );
 
 // +loading
-export const deleteIncome = createAsyncThunk<void, number, baseStoreType>('incomeExpense/deleteIncome', async (incomeId, { dispatch, getState, rejectWithValue }) => {
-  const { token } = getState().auth.tokens;
+export const deleteIncome = createAsyncThunk<void, number, baseStoreType>(
+  'incomeExpense/deleteIncome',
+  async (incomeId, { dispatch, getState, rejectWithValue }) => {
+    const { token } = getState().auth.tokens;
 
-  try {
-    if (token) {
-      await companyApi.delete(`/income/remove-income/${incomeId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+    try {
+      if (token) {
+        await companyApi.delete(`/income/remove-income/${incomeId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
 
-      dispatch(fetchAllFinancesData());
-      dispatch(setNotificationMessage({ message: 'Usunięto przychód' }));
+        dispatch(fetchAllFinancesData());
+        dispatch(setNotificationMessage({ message: 'Usunięto przychód' }));
+      }
+    } catch (error) {
+      dispatch(setNotificationMessage({ message: 'Problem z usunięciem przychodu', notificationType: NotificationTypes.Error }));
+      return rejectWithValue(error.response.data);
     }
-  } catch (error) {
-    dispatch(setNotificationMessage({ message: 'Problem z usunięciem przychodu', notificationType: NotificationTypes.Error }));
-    return rejectWithValue(error.response.data);
   }
-});
+);
 
 // +loading
-export const deleteExpense = createAsyncThunk<void, number, baseStoreType>('incomeExpense/deleteExpense', async (expenseId, { dispatch, getState, rejectWithValue }) => {
-  const { token } = getState().auth.tokens;
-  try {
-    if (token) {
-      await companyApi.delete(`/expense/remove-expense/${expenseId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+export const deleteExpense = createAsyncThunk<void, number, baseStoreType>(
+  'incomeExpense/deleteExpense',
+  async (expenseId, { dispatch, getState, rejectWithValue }) => {
+    const { token } = getState().auth.tokens;
+    try {
+      if (token) {
+        await companyApi.delete(`/expense/remove-expense/${expenseId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
 
-      dispatch(fetchAllFinancesData());
-      dispatch(setNotificationMessage({ message: 'Usunięto wydatek' }));
+        dispatch(fetchAllFinancesData());
+        dispatch(setNotificationMessage({ message: 'Usunięto wydatek' }));
+      }
+    } catch (error) {
+      dispatch(setNotificationMessage({ message: 'Problem z usunięciem wydatku', notificationType: NotificationTypes.Error }));
+      return rejectWithValue(error.response.data);
     }
-  } catch (error) {
-    dispatch(setNotificationMessage({ message: 'Problem z usunięciem wydatku', notificationType: NotificationTypes.Error }));
-    return rejectWithValue(error.response.data);
   }
-});
+);
 
 interface GetIncomeExpenseDataInterface {
   daysBack: number;
@@ -200,7 +205,7 @@ export const getIncomeExpenseInTimePeriod = createAsyncThunk<void, GetIncomeExpe
         });
 
         setData(
-          data.map((income: IncomeDataInterface, index: number) => ({
+          data.map((income: IncomeModel, index: number) => ({
             ...income,
             expenseValue: expenseData[index].expenseValue,
             createdDate: new Date(income.createdDate).toLocaleDateString()

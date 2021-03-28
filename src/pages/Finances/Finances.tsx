@@ -9,7 +9,7 @@ import IncomeExpensePopup, { FinancePopupInterface } from './components/IncomeEx
 import { fetchAllFinancesData } from 'ducks/finances/finances-creators';
 import { AppState, useAppDispatch } from 'store/store';
 import { GridWrapper, MenuTemplate, Chart } from 'components';
-import { ExpenseInterface, IncomeModel, IncomeInterface } from 'types';
+import { ExpenseModel, IncomeModel } from 'types';
 import { currencyTypes, getCurrencyValue } from 'ducks/currency/currency-creators';
 import { contentAnimation } from 'animations/animations';
 import { roundTo2 } from 'utils/functions';
@@ -40,7 +40,7 @@ const Finances: React.FC = () => {
   const [popupType, setPopupType] = useState<FinancePopupInterface>(FinancePopupInterface.Income);
   const [chartData, setChartData] = useState<Array<IncomeModel> | null>(null);
   const [daysBack, setDaysBackTo] = useState<number>(7);
-  const [budgetHistoryData, setBudgetHistoryData] = useState<(IncomeInterface | ExpenseInterface)[]>([]);
+  const [budgetHistoryData, setBudgetHistoryData] = useState<(IncomeModel | ExpenseModel)[]>([]);
 
   useEffect(() => {
     setBudgetHistoryData([...lastExpenses, ...lastIncomes]);
@@ -49,7 +49,7 @@ const Finances: React.FC = () => {
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
 
-  const prepareExpenseValue = (history: IncomeInterface | ExpenseInterface) =>
+  const prepareExpenseValue = (history: IncomeModel | ExpenseModel) =>
     history.expenseValue
       ? -1 * roundTo2(history.expenseValue * currency.value)
       : history.incomeValue

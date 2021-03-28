@@ -2,22 +2,21 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { ListBox } from 'components';
-
-import { ExpenseInterface, IncomeInterface } from 'types/modelsTypes';
-import { AppState } from 'store/store';
 import { roundTo2 } from 'utils/functions';
-import { Paragraph } from 'styles/typography/typography';
-import { EmptyWrapper } from 'styles/shared';
+import { IncomeModel, ExpenseModel } from 'types';
+import { AppState } from 'store/store';
+
+import { Paragraph, EmptyWrapper } from 'styles';
 import { StyledWrapper, ContentWrapper, Title } from './BudgetHistoryList.styles';
 
 interface Props {
-  budgetHistory: (IncomeInterface | ExpenseInterface)[];
+  budgetHistory: (IncomeModel | ExpenseModel)[];
 }
 
 const BudgetHistoryList: React.FC<Props> = ({ budgetHistory }) => {
   const { currency } = useSelector((state: AppState) => state.currency);
 
-  const prepareExpenseValue = (history: IncomeInterface | ExpenseInterface) =>
+  const prepareExpenseValue = (history: IncomeModel | ExpenseModel) =>
     `${
       history.expenseValue
         ? -1 * roundTo2(history.expenseValue * currency.value)
