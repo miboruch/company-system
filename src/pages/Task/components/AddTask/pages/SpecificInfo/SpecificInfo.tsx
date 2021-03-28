@@ -20,7 +20,12 @@ interface DefaultValues {
   clientId: string | null;
 }
 
-const SpecificInfo: React.FC = () => {
+interface Props {
+  handleClose: () => void;
+  setRefreshDate: (date: Date) => void;
+}
+
+const SpecificInfo: React.FC<Props> = ({handleClose, setRefreshDate}) => {
   const dispatch = useAppDispatch();
   const { allCompanyClients } = useSelector((state: AppState) => state.client.clientData);
 
