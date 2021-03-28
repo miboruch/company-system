@@ -1,17 +1,4 @@
-export interface CompanyInterface {
-  address: string;
-  city: string;
-  country: string;
-  createdDate: string | Date;
-  email: string;
-  lat: number;
-  long: number;
-  name: string;
-  nip: string;
-  owners: Array<string>;
-  phoneNumber: string;
-  _id: string;
-}
+import { EmployeeModel } from 'types/employee/employee.model';
 
 export interface CompanyOwnersInterface {
   _id: string;
@@ -36,41 +23,6 @@ export interface ExpenseDataInterface {
   description: string;
 }
 
-export interface UserDataInterface {
-  createdDate: string | Date;
-  _id: string;
-  role: string;
-  email: string;
-  password: string;
-  name: string;
-  lastName: string;
-  dateOfBirth: string;
-  phoneNumber: string;
-  country: string;
-  city: string;
-  address: string;
-}
-
-export interface UserAuthData {
-  userId: string;
-  email: string;
-  name: string;
-  lastName: string;
-  dateOfBirth: Date;
-  phoneNumber: string;
-  country: string;
-  city: string;
-  address: string;
-}
-
-export interface EmployeeDataInterface {
-  _id: string;
-  userId: UserDataInterface;
-  pricePerHour?: number;
-  monthlyPrice?: number;
-  companyId: string;
-}
-
 export interface ClientInterface {
   createdDate: Date;
   _id: string;
@@ -93,7 +45,7 @@ export interface TaskInterface {
   timeEstimate: number;
   name: string;
   description: string;
-  employees: EmployeeDataInterface[]; //?
+  employees: EmployeeModel[]; //?
   clientId?: ClientInterface | null;
   companyId: string;
   taskIncome?: number;

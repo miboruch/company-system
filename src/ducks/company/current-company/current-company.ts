@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
-import { CompanyInterface } from '../../../types/modelsTypes';
+import { CompanyModel } from 'types';
 
 interface InitialStateInterface {
-  currentCompany: CompanyInterface | null;
-  userCompanies: CompanyInterface[];
+  currentCompany: CompanyModel | null;
+  userCompanies: CompanyModel[];
   userCompaniesError: string | undefined;
 }
 
@@ -18,7 +18,7 @@ const currentCompanySlice = createSlice({
   initialState,
   reducers: {
     resetCurrentCompany: () => initialState,
-    setCompany: (state, { payload }: PayloadAction<CompanyInterface | null>) => {
+    setCompany: (state, { payload }: PayloadAction<CompanyModel | null>) => {
       state.currentCompany = payload;
     }
   }

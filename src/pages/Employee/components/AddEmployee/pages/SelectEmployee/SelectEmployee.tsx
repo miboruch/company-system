@@ -5,18 +5,17 @@ import { useSelector } from 'react-redux';
 
 import { Button } from 'components';
 import UserBox from './components/UserBox/UserBox';
-import { UserDataInterface } from 'types/modelsTypes';
-import { AppState } from 'store/store';
+import { useFetch, useShowContent } from 'components/hooks';
+import { fetchAppUsers } from 'api/app/api.app';
 import { removeDuplicates } from 'utils/functions';
+import { UserModel } from 'types';
+import { AppState } from 'store/store';
 import { EmployeeDataContext } from '../../context/EmployeeDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { MainEmployeeSchema } from '../../validation/validation';
 
 import { HeadingWrapper, MobileCompoundTitle, StyledForm, Subheading, Wrapper } from 'styles/compoundStyles';
 import { Paragraph, DoubleFlexWrapper } from 'styles';
-import { useFetch, useShowContent } from 'components/hooks';
-import { fetchAppUsers } from 'api/app/api.app';
-
 const UsersWrapper = styled.div`
   width: 100%;
   min-height: 300px;
@@ -40,13 +39,13 @@ const SelectEmployee: React.FC = () => {
   const { allUsers } = useSelector((state: AppState) => state.allUsers);
   const { allCompanyEmployees } = useSelector((state: AppState) => state.employees.employeesData);
 
-  const appUsers = useFetch<typeof fetchAppUsers>(fetchAppUsers);
-  const { showContent, showLoader, showNoContent, showError } = useShowContent(appUsers);
-  const { payload } = appUsers;
+  const appUsersData = useFetch<typeof fetchAppUsers>(fetchAppUsers);
+  const { showContent, showLoader, showNoContent, showError } = useShowContent(appUsersData);
+  const { payload: appUsers } = appUsersData;
 
   const { data, setData } = useContext(EmployeeDataContext);
   const { setCurrentPage } = useContext(PageContext);
-  const [users, setUsers] = useState<UserDataInterface[]>([]);
+  const [users, setUsers] = useState<UserModel[]>([]);
 
   const initialValues: DefaultValues = {
     userId: '',

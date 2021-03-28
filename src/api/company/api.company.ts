@@ -1,16 +1,16 @@
 import fetchMiddleware from 'api/api.middleware';
-import { CompanyInterface } from 'types/modelsTypes';
+import { CompanyModel } from 'types';
 
 export const fetchAdminCompanies = () =>
-  fetchMiddleware<CompanyInterface[]>({
+  fetchMiddleware<CompanyModel[]>({
     method: 'get',
-    url: '/user/companies',
+    url: '/user/companies'
   });
 
 export const fetchEmployeeCompanies = () =>
-  fetchMiddleware<CompanyInterface[]>({
+  fetchMiddleware<CompanyModel[]>({
     method: 'get',
-    url: '/employee/companies',
+    url: '/employee/companies'
   });
 
 export interface PostCompanyData {

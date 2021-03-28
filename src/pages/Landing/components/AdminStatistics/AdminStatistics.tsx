@@ -3,15 +3,14 @@ import gsap from 'gsap';
 import { useSelector } from 'react-redux';
 
 import { ListBox, Spinner, CloseButton, MonthDropdown } from 'components';
-
-import { EmployeeDataInterface } from 'types/modelsTypes';
+import { EmployeeModel } from 'types';
 import { AppState, useAppDispatch } from 'store/store';
 import { MonthInterface, months } from 'utils/staticData';
 import { modalOpenAnimation } from 'animations/animations';
-import { SpinnerWrapper } from 'styles/shared';
 import { getEmployeeHours, getEmployeeSalary } from 'ducks/employees/employees-data/employees-data-creators';
+
+import { Heading, Paragraph, SpinnerWrapper } from 'styles';
 import { CloseButtonWrapper } from 'styles/compoundControllerStyles';
-import { Heading, Paragraph } from 'styles';
 import { StyledWrapper, Box, ListWrapper, ContentWrapper, StyledHeading, TextWrapper, Span } from './AdminStatistics.styles';
 
 interface Props {
@@ -23,7 +22,7 @@ const AdminStatistics: React.FC<Props> = ({ isOpen, setOpen }) => {
   const dispatch = useAppDispatch();
   const { allCompanyEmployees, areEmployeesLoading } = useSelector((state: AppState) => state.employees.employeesData);
 
-  const [selectedEmployee, setSelectedEmployee] = useState<EmployeeDataInterface | null>(null);
+  const [selectedEmployee, setSelectedEmployee] = useState<EmployeeModel | null>(null);
   const [userSalary, setUserSalary] = useState<number>(0);
   const [userHours, setUserHours] = useState<number>(0);
   const [selectedMonth, setSelectedMonth] = useState<MonthInterface | null>(null);

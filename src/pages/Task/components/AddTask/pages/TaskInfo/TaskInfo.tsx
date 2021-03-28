@@ -7,7 +7,7 @@ import { taskInfoValues } from './task-info.values';
 import { fetchEmployees } from 'api';
 import { useFetch, useShowContent } from 'components/hooks';
 import { AppState } from 'store/store';
-import { EmployeeDataInterface } from 'types/modelsTypes';
+import { EmployeeModel } from 'types';
 import { TaskDataContext, MainTaskInfo } from '../../context/TaskDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { TaskInfoSchema } from '../../validation/validation';
@@ -40,7 +40,7 @@ const TaskInfo: React.FC = () => {
       validateOnBlur={false}
     >
       {({ isSubmitting, setFieldValue }) => {
-        const handleEmployeeSelect = (selectedItems: EmployeeDataInterface[]) => {
+        const handleEmployeeSelect = (selectedItems: EmployeeModel[]) => {
           const temp = selectedItems.map((employee) => employee._id);
           setFieldValue('employees', temp.length > 0 ? temp : []);
         };

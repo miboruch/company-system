@@ -9,7 +9,7 @@ import { fetchAdminCompanies, fetchEmployeeCompanies } from 'api';
 import { setCurrentCompany } from 'ducks/company/current-company/current-company-creators';
 import { AppState, useAppDispatch } from 'store/store';
 import { UserRole } from 'ducks/auth/roles/roles';
-import { CompanyInterface } from 'types/modelsTypes';
+import { CompanyModel } from 'types';
 
 import { AddIcon, AddWrapper, Paragraph, SpinnerWrapper } from 'styles';
 import { Table, Wrapper } from 'pages/Companies/Companies.styles';
@@ -24,14 +24,14 @@ const Companies: React.FC = () => {
 
   const companiesData =
     role === UserRole.Admin
-      ? useFetch<typeof fetchAdminCompanies>(fetchAdminCompanies, {dependencies: [refreshDate]})
-      : useFetch<typeof fetchEmployeeCompanies>(fetchEmployeeCompanies, {dependencies: [refreshDate]});
+      ? useFetch<typeof fetchAdminCompanies>(fetchAdminCompanies, { dependencies: [refreshDate] })
+      : useFetch<typeof fetchEmployeeCompanies>(fetchEmployeeCompanies, { dependencies: [refreshDate] });
   const { showContent, showLoader, showNoContent } = useShowContent(companiesData);
   const { payload } = companiesData;
 
   const handleAddCompanyOpen = (isOpen: boolean) => () => setAddCompanyOpen(isOpen);
 
-  const handleCompanyClick = (company: CompanyInterface) => () =>
+  const handleCompanyClick = (company: CompanyModel) => () =>
     dispatch(
       setCurrentCompany(company, () =>
         history.push(role === UserRole.Admin ? `/admin/home/${company._id}` : `/user/home/${company._id}`)
@@ -68,7 +68,11 @@ const Companies: React.FC = () => {
             </AddWrapper>
           </Wrapper>
         )}
-        <AddCompanyController isOpen={isAddCompanyOpen} handleClose={handleAddCompanyOpen(false)} setRefreshDate={setRefreshDate} />
+        <AddCompanyController
+          isOpen={isAddCompanyOpen}
+          handleClose={handleAddCompanyOpen(false)}
+          setRefreshDate={setRefreshDate}
+        />
       </GridWrapper>
     </MenuTemplate>
   );

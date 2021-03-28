@@ -1,4 +1,4 @@
-export interface CompanyInterface {
+export interface CompanyModel {
   address: string;
   city: string;
   country: string;
@@ -8,7 +8,7 @@ export interface CompanyInterface {
   long: number;
   name: string;
   nip: string;
-  owners: Array<string>;
+  owners: string[];
   phoneNumber: string;
   _id: string;
 }
