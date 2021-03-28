@@ -2,8 +2,7 @@ import React from 'react';
 import { Formik } from 'formik';
 
 import { Checkbox, FormField, PopupTemplate, ModalButton } from 'components';
-import { CompanyOwnersInterface } from 'types/modelsTypes';
-import { ButtonType } from 'types';
+import { ButtonType, CompanyOwnersModel } from 'types';
 import { useAppDispatch } from 'store/store';
 import { removeCompanyOwner } from 'ducks/company/company-owners/company-owners-creators';
 
@@ -27,7 +26,7 @@ interface DefaultState {
 interface Props {
   isOpen: boolean;
   closePopup: () => void;
-  companyOwnerToDelete: CompanyOwnersInterface | null;
+  companyOwnerToDelete: CompanyOwnersModel | null;
 }
 
 const RemoveAdminPopup: React.FC<Props> = ({ isOpen, closePopup, companyOwnerToDelete }) => {

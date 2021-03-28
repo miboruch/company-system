@@ -3,11 +3,10 @@ import gsap from 'gsap';
 import { useSelector } from 'react-redux';
 
 import { ListBox } from 'components';
-import { setAddNewTaskOpen } from 'ducks/tasks/tasks-toggle/tasks-toggle';
 import { useFetch, useShowContent, useQuery } from 'components/hooks';
 import { listAnimation } from 'animations/animations';
 import { fetchTasks } from 'api';
-import { AppState, useAppDispatch } from 'store/store';
+import { AppState } from 'store/store';
 import { UserRole } from 'ducks/auth/roles/roles';
 import { TaskModel } from 'types';
 
@@ -16,10 +15,10 @@ import { AddIcon, AddWrapper, List, Paragraph } from 'styles';
 interface Props {
   filterText: string;
   refreshDate: Date;
+  handleAddTaskOpen: () => void;
 }
 
-const TaskList: React.FC<Props> = ({ filterText, refreshDate }) => {
-  const dispatch = useAppDispatch();
+const TaskList: React.FC<Props> = ({ filterText, refreshDate, handleAddTaskOpen }) => {
   const { setQuery } = useQuery();
   const { role } = useSelector((state: AppState) => state.auth.roles);
   const listRef = useRef<HTMLDivElement | null>(null);
@@ -33,7 +32,6 @@ const TaskList: React.FC<Props> = ({ filterText, refreshDate }) => {
     return allTasks.filter((task) => task.name.toLowerCase().includes(filterText.toLowerCase()));
   };
 
-  const handleAddNewTaskOpen = () => dispatch(setAddNewTaskOpen(true));
   const handleTaskClick = (taskId: string) => () => setQuery('task', taskId);
 
   useEffect(() => {
@@ -59,7 +57,7 @@ const TaskList: React.FC<Props> = ({ filterText, refreshDate }) => {
           />
         ))}
       {role === UserRole.Admin && (
-        <AddWrapper onClick={handleAddNewTaskOpen}>
+        <AddWrapper onClick={handleAddTaskOpen}>
           <AddIcon />
           <Paragraph type={'add'}>Dodaj zadanie</Paragraph>
         </AddWrapper>

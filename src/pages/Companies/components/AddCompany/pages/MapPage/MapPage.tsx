@@ -2,24 +2,29 @@ import React, { useContext, useEffect, useState } from 'react';
 import * as Leaflet from 'leaflet';
 import { Map, Marker, TileLayer } from 'react-leaflet';
 
-import { Spinner, Button } from 'components';
-import { Coords } from 'types/globalTypes';
-import { getLocation } from 'utils/mapFunctions';
-import { SpinnerWrapper } from 'styles/shared';
+import { Button, Spinner } from 'components';
+import { getLocation } from 'utils/map-location';
 import { markerCustomIcon } from '../../utils/customMapIcons';
 import { CompanyDataContext } from '../../context/CompanyDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
-import { StyledBackParagraph } from 'styles/compoundStyles';
-import { MobileCompoundTitle } from 'styles/compoundStyles';
-import { MapHeadingWrapper, MapWrapper, CenterBox, ButtonWrapper } from 'styles/compoundStyles';
+
+import { SpinnerWrapper } from 'styles/shared';
+import {
+  ButtonWrapper,
+  CenterBox,
+  MapHeadingWrapper,
+  MapWrapper,
+  MobileCompoundTitle,
+  StyledBackParagraph
+} from 'styles/compoundStyles';
 
 import 'leaflet/dist/leaflet.css';
 
 const MapPage: React.FC = () => {
-  const { data, setData } = useContext(CompanyDataContext);
+  const { mapData, setMapData } = useContext(CompanyDataContext);
   const { setCurrentPage } = useContext(PageContext);
+
   const [isLoading, setLoading] = useState<boolean>(false);
-  const [coords, setCoords] = useState<Coords>({ lat: data.lat || null, long: data.long || null });
   const [mapPositionLat, setMapPositionLat] = useState<number | null | undefined>(null);
   const [mapPositionLong, setMapPositionLong] = useState<number | null | undefined>(null);
   const [coordsError, setCoordsError] = useState<boolean>(false);
@@ -29,12 +34,13 @@ const MapPage: React.FC = () => {
   }, []);
 
   const handleCenterMap = () => {
-    setMapPositionLat(data.lat);
-    setMapPositionLong(data.long);
+    setMapPositionLat(mapData?.lat);
+    setMapPositionLong(mapData?.long);
   };
+  const handleMapClick = (e: Leaflet.LeafletMouseEvent) => setMapData({ lat: e.latlng.lat, long: e.latlng.lng });
+  const handlePageChange = (page: PageSettingEnum) => () => setCurrentPage(page);
 
-  const handlePreviousPage = () => setCurrentPage(PageSettingEnum.First);
-  const handleNextPage = () => setCurrentPage(PageSettingEnum.Third);
+  const displayMarkerCondition = mapData?.lat && mapData?.long;
 
   return (
     <>
@@ -48,28 +54,29 @@ const MapPage: React.FC = () => {
           </SpinnerWrapper>
         ) : (
           <>
-            {data.lat && data.long && <CenterBox onClick={handleCenterMap}>Wyśrodkuj</CenterBox>}
+            {displayMarkerCondition && <CenterBox onClick={handleCenterMap}>Wyśrodkuj</CenterBox>}
             <Map
               center={[mapPositionLat ? mapPositionLat : 52, mapPositionLong ? mapPositionLong : 20]}
               whenReady={() => setLoading(false)}
               zoom={mapPositionLat && mapPositionLong ? 13 : 5}
               zoomControl={false}
-              onClick={(e: Leaflet.LeafletMouseEvent) => {
-                setCoords({ lat: e.latlng.lat, long: e.latlng.lng });
-                setData({ ...data, lat: e.latlng.lat, long: e.latlng.lng });
-              }}
+              onClick={handleMapClick}
             >
               <TileLayer
                 attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
               />
-              {coords.lat && coords.long && <Marker icon={markerCustomIcon} position={[coords.lat, coords.long]} />}
+              {mapData?.lat && mapData?.long && <Marker icon={markerCustomIcon} position={[mapData.lat, mapData.long]} />}
             </Map>
             <ButtonWrapper>
-              <StyledBackParagraph type={'back'} onClick={handlePreviousPage}>
+              <StyledBackParagraph type={'back'} onClick={handlePageChange(PageSettingEnum.First)}>
                 Wstecz
               </StyledBackParagraph>
-              <Button onClick={handleNextPage} type={'button'} disabled={!coords.lat || !coords.long}>
+              <Button
+                onClick={handlePageChange(PageSettingEnum.Third)}
+                type={'button'}
+                disabled={!mapData?.lat || !mapData?.long}
+              >
                 Dalej
               </Button>
             </ButtonWrapper>

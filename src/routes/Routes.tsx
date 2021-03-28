@@ -7,7 +7,7 @@ import UserRoute from '../hoc/UserRoute';
 
 import { AppState } from 'store/store';
 import { UserRole } from 'ducks/auth/roles/roles';
-import { adminRoutes, userRoutes } from './routesDefinition';
+import { adminRoutes, userRoutes } from 'routes/routes.config';
 
 const Routes: React.FC = () => {
   const { role } = useSelector((state: AppState) => state.auth.roles);

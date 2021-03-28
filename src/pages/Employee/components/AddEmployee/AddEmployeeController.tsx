@@ -1,6 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 
 import EmployeeDataContextProvider from './context/EmployeeDataContext';
 import PageContextProvider, { PageSettingEnum } from './context/PageContext';
@@ -10,38 +8,28 @@ import AddEmployeeHeader from './components/AddEmployeeHeader/AddEmployeeHeader'
 import SelectEmployee from './pages/SelectEmployee/SelectEmployee';
 import SalaryPage from './pages/Salary/Salary';
 import { CloseButton } from 'components';
-import { setAddNewEmployeeOpen } from 'ducks/employees/employees-toggle/employees-toggle';
-import { modalOpenAnimation } from 'animations/animations';
-import { AppState } from 'store/store';
+import { useModal } from 'components/hooks';
 
 import { MainWrapper, CompoundTitle, CloseButtonWrapper, ContentWrapper, Wrapper } from 'styles/compoundControllerStyles';
 import { StandardCompoundTitle } from 'styles/compoundStyles';
 
-const AddEmployeeController: React.FC = () => {
-  const dispatch = useDispatch();
-  const { isAddNewOpen } = useSelector((state: AppState) => state.employees.employeesToggle);
 
-  const mainWrapperRef = useRef<HTMLDivElement | null>(null);
-  const wrapperRef = useRef<HTMLDivElement | null>(null);
-  const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
+interface Props {
+  isOpen: boolean;
+  handleClose: () => void;
+  setRefreshDate: (date: Date) => void;
+}
 
-  useEffect(() => {
-    modalOpenAnimation(tl, mainWrapperRef, wrapperRef);
-  }, []);
-
-  useEffect(() => {
-    isAddNewOpen ? tl.play() : tl.reverse();
-  }, [isAddNewOpen]);
-
-  const handleCloseAddEmployee = () => dispatch(setAddNewEmployeeOpen(false));
+const AddEmployeeController: React.FC<Props> = ({isOpen, handleClose, setRefreshDate}) => {
+  const { wrapperRef, boxRef } = useModal(isOpen);
 
   return (
     <EmployeeDataContextProvider>
       <PageContextProvider>
-        <MainWrapper ref={mainWrapperRef}>
-          <Wrapper ref={wrapperRef}>
+        <MainWrapper ref={wrapperRef}>
+          <Wrapper ref={boxRef}>
             <CloseButtonWrapper>
-              <CloseButton close={handleCloseAddEmployee} />
+              <CloseButton close={handleClose} />
             </CloseButtonWrapper>
             <AddEmployeeHeader />
             <CompoundTitle>Dodaj pracownika</CompoundTitle>

@@ -2,13 +2,13 @@ import React from 'react';
 import Downshift from 'downshift';
 
 import { Input } from 'components';
-import { ClientInterface } from 'types/modelsTypes';
+import { ClientModel } from 'types';
 import { StyledLabel } from 'styles/shared';
 import { Menu, Item, Form } from 'styles/dropdownStyles';
 
 interface Props {
-  options: ClientInterface[];
-  onChange: (selectedItem: string | null) => ClientInterface | void;
+  options: ClientModel[];
+  onChange: (selectedItem: string | null) => ClientModel | void;
   labelText: string;
 }
 

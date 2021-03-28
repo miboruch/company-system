@@ -3,10 +3,8 @@ import gsap from 'gsap';
 
 import { ListBox } from 'components';
 import { listAnimation } from 'animations/animations';
-import { useAppDispatch } from 'store/store';
 import { useFetch, useShowContent, useQuery } from 'components/hooks';
 import { fetchClients } from 'api';
-import { setAddNewClientOpen } from 'ducks/client/client-toggle/client-toggle';
 import { ClientModel, ParamsId } from 'types';
 
 import { AddIcon, AddWrapper, List, Paragraph } from 'styles';
@@ -14,10 +12,10 @@ import { AddIcon, AddWrapper, List, Paragraph } from 'styles';
 interface Props {
   filterText: string;
   refreshDate: Date;
+  handleAddClientOpen: () => void;
 }
 
-const ClientsList: React.FC<Props> = ({ filterText, refreshDate }) => {
-  const dispatch = useAppDispatch();
+const ClientsList: React.FC<Props> = ({ filterText, refreshDate, handleAddClientOpen }) => {
   const { setQuery } = useQuery();
   const listRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
@@ -53,7 +51,7 @@ const ClientsList: React.FC<Props> = ({ filterText, refreshDate }) => {
               isEmpty={true}
             />
           ))}
-      <AddWrapper onClick={() => dispatch(setAddNewClientOpen(true))}>
+      <AddWrapper onClick={handleAddClientOpen}>
         <AddIcon />
         <Paragraph type={'add'}>Dodaj klienta</Paragraph>
       </AddWrapper>

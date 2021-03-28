@@ -8,14 +8,14 @@ import { TaskDataContext } from '../../context/TaskDataContext';
 import { ListWrapper } from 'styles/compoundStyles';
 
 const StepList: React.FC = () => {
-  const { data } = useContext(TaskDataContext);
+  const { mainData } = useContext(TaskDataContext);
   const { setCurrentPage } = useContext(PageContext);
   const isStepCompleted = (page: PageSettingEnum): boolean => {
     switch (page) {
       case PageSettingEnum.First:
-        return !!(data.name && data.description && data.date);
-      case PageSettingEnum.Second:
-        return !!data.timeEstimate;
+        return !!(mainData?.name && mainData?.description && mainData?.date);
+      default:
+        return false;
     }
   };
 

@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { EmployeeDataInterface } from '../../../types/modelsTypes';
+import { EmployeeModel } from 'types';
 
 interface InitialStateInterface {
-  selectedEmployee: EmployeeDataInterface | null;
+  selectedEmployee: EmployeeModel | null;
   isEmployeeInfoOpen: boolean;
   isAddNewOpen: boolean;
   isEditEmployeeOpen: boolean;
@@ -19,7 +19,7 @@ const employeesToggleSlice = createSlice({
   name: 'employeesToggle',
   initialState,
   reducers: {
-    setSelectedEmployee: (state, { payload }: PayloadAction<EmployeeDataInterface | null>) => {
+    setSelectedEmployee: (state, { payload }: PayloadAction<EmployeeModel | null>) => {
       state.selectedEmployee = payload;
     },
     setEmployeeInfoOpen: (state, { payload }: PayloadAction<boolean>) => {
@@ -35,6 +35,12 @@ const employeesToggleSlice = createSlice({
   }
 });
 
-export const { setSelectedEmployee, setEmployeeInfoOpen, setAddNewEmployeeOpen, setIsEditEmployeeOpen, resetEmployeesToggle } = employeesToggleSlice.actions;
+export const {
+  setSelectedEmployee,
+  setEmployeeInfoOpen,
+  setAddNewEmployeeOpen,
+  setIsEditEmployeeOpen,
+  resetEmployeesToggle
+} = employeesToggleSlice.actions;
 
 export default employeesToggleSlice.reducer;

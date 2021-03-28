@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { ArrowButton, CloseButton } from 'components';
-import { Direction } from 'types/globalTypes';
 import { setAddNewTaskOpen } from 'ducks/tasks/tasks-toggle/tasks-toggle';
 import { PageContext } from '../../context/PageContext';
 
@@ -17,7 +16,7 @@ const AddTaskHeader: React.FC = () => {
 
   return (
     <StyledHeader>
-      <ArrowButton direction={Direction.Left} isHidden={currentPage === 0} onClick={handleArrowClick} />
+      <ArrowButton direction={'left'} isHidden={currentPage === 0} onClick={handleArrowClick} />
       <Paragraph type={'main'}>Krok {currentPage + 1}</Paragraph>
       <CloseButton close={handleAddTaskClose} />
     </StyledHeader>

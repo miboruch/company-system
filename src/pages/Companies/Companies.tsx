@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -6,11 +6,10 @@ import AddCompanyController from './components/AddCompany/AddCompanyController';
 import { GridWrapper, ListBox, Spinner, MenuTemplate } from 'components';
 import { useFetch, useShowContent } from 'components/hooks';
 import { fetchAdminCompanies, fetchEmployeeCompanies } from 'api';
-import { setAddCompanyOpen } from 'ducks/company/company-toggle/company-toggle';
 import { setCurrentCompany } from 'ducks/company/current-company/current-company-creators';
 import { AppState, useAppDispatch } from 'store/store';
 import { UserRole } from 'ducks/auth/roles/roles';
-import { CompanyInterface } from 'types/modelsTypes';
+import { CompanyModel } from 'types';
 
 import { AddIcon, AddWrapper, Paragraph, SpinnerWrapper } from 'styles';
 import { Table, Wrapper } from 'pages/Companies/Companies.styles';
@@ -19,18 +18,20 @@ const Companies: React.FC = () => {
   const history = useHistory();
   const dispatch = useAppDispatch();
   const { role } = useSelector((state: AppState) => state.auth.roles);
-  const token = localStorage.getItem('token');
+
+  const [isAddCompanyOpen, setAddCompanyOpen] = useState<boolean>(false);
+  const [refreshDate, setRefreshDate] = useState<Date>(new Date());
 
   const companiesData =
     role === UserRole.Admin
-      ? useFetch<typeof fetchAdminCompanies>(fetchAdminCompanies(token))
-      : useFetch<typeof fetchEmployeeCompanies>(fetchEmployeeCompanies(token));
+      ? useFetch<typeof fetchAdminCompanies>(fetchAdminCompanies, { dependencies: [refreshDate] })
+      : useFetch<typeof fetchEmployeeCompanies>(fetchEmployeeCompanies, { dependencies: [refreshDate] });
   const { showContent, showLoader, showNoContent } = useShowContent(companiesData);
   const { payload } = companiesData;
 
-  const handleAddCompanyOpen = () => dispatch(setAddCompanyOpen(true));
+  const handleAddCompanyOpen = (isOpen: boolean) => () => setAddCompanyOpen(isOpen);
 
-  const handleCompanyClick = (company: CompanyInterface) => () =>
+  const handleCompanyClick = (company: CompanyModel) => () =>
     dispatch(
       setCurrentCompany(company, () =>
         history.push(role === UserRole.Admin ? `/admin/home/${company._id}` : `/user/home/${company._id}`)
@@ -61,13 +62,17 @@ const Companies: React.FC = () => {
                   />
                 ))}
             </Table>
-            <AddWrapper onClick={handleAddCompanyOpen}>
+            <AddWrapper onClick={handleAddCompanyOpen(true)}>
               <AddIcon />
               <Paragraph type={'add'}>Dodaj firme</Paragraph>
             </AddWrapper>
           </Wrapper>
         )}
-        <AddCompanyController />
+        <AddCompanyController
+          isOpen={isAddCompanyOpen}
+          handleClose={handleAddCompanyOpen(false)}
+          setRefreshDate={setRefreshDate}
+        />
       </GridWrapper>
     </MenuTemplate>
   );

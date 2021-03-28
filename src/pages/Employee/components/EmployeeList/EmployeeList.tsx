@@ -6,25 +6,25 @@ import { ListBox } from 'components';
 import { useFetch, useShowContent, useQuery } from 'components/hooks';
 import { fetchEmployees } from 'api';
 import { listAnimation } from 'animations/animations';
-import { selectEmployee } from 'ducks/employees/employees-toggle/employees-toggle-creators';
-import { setAddNewEmployeeOpen } from 'ducks/employees/employees-toggle/employees-toggle';
-import { AppState, useAppDispatch } from 'store/store';
+import { AppState } from 'store/store';
 import { EmployeeModel } from 'types';
 
 import { AddIcon, AddWrapper, List, Paragraph } from 'styles';
 
 interface Props {
   filterText: string;
+  refreshDate: Date;
+  handleAddEmployeeOpen: () => void;
 }
 
-const EmployeeList: React.FC<Props> = ({ filterText }) => {
-  const dispatch = useAppDispatch();
+const EmployeeList: React.FC<Props> = ({ filterText, refreshDate, handleAddEmployeeOpen }) => {
   const { setQuery } = useQuery();
   const { role } = useSelector((state: AppState) => state.auth.roles);
+
   const listRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
 
-  const employeeData = useFetch<typeof fetchEmployees>(fetchEmployees(role));
+  const employeeData = useFetch<typeof fetchEmployees>(fetchEmployees(role), { dependencies: [refreshDate] });
   const { showContent, showNoContent, showLoader, showError } = useShowContent(employeeData);
   const { payload } = employeeData;
 
@@ -32,7 +32,6 @@ const EmployeeList: React.FC<Props> = ({ filterText }) => {
     showContent && listAnimation(tl, listRef);
   }, [showContent]);
 
-  const handleAddEmployeeOpen = () => dispatch(setAddNewEmployeeOpen(true));
   const employeeFilter = (employee: EmployeeModel) =>
     `${employee.userId.name} ${employee.userId.lastName}`.toLowerCase().includes(filterText.toLowerCase());
 

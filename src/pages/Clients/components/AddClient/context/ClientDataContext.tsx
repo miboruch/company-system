@@ -1,44 +1,28 @@
 import React, { useState } from 'react';
 
-type MainPageData = {
+export interface MainClientData {
   name: string;
   email: string;
   phoneNumber: string;
-};
+}
 
-type MapData = {
+export interface MapData {
   lat: number;
   long: number;
-};
-
-type AddressPageData = {
-  address: string;
-  city: string;
-  country: string;
-};
-
-type ConnectedPagesData = MainPageData | MapData | AddressPageData;
-type ClientData = MainPageData & MapData & AddressPageData;
-
-export interface ClientDataInterface {
-  email?: string;
-  name?: string;
-  address?: string;
-  city?: string;
-  country?: string;
-  lat?: number;
-  long?: number;
-  phoneNumber?: string;
 }
 
 type ClientDataContextType = {
-  data: ClientDataInterface;
-  setData: (data: object) => void;
+  mainData?: MainClientData;
+  setMainData: (data: MainClientData) => void;
+  mapData?: MapData;
+  setMapData: (data: MapData) => void;
 };
 
 export const ClientDataContext = React.createContext<ClientDataContextType>({
-  data: {},
-  setData: (data: object) => {}
+  mainData: undefined,
+  setMainData: (data: MainClientData) => {},
+  mapData: undefined,
+  setMapData: (data: MapData) => {}
 });
 
 interface Props {
@@ -46,8 +30,12 @@ interface Props {
 }
 
 const ClientDataContextProvider: React.FC<Props> = ({ children }) => {
-  const [data, setData] = useState<ClientDataInterface>({});
-  return <ClientDataContext.Provider value={{ data, setData }}>{children}</ClientDataContext.Provider>;
+  const [mainData, setMainData] = useState<MainClientData>();
+  const [mapData, setMapData] = useState<MapData>();
+
+  return (
+    <ClientDataContext.Provider value={{ mainData, setMainData, mapData, setMapData }}>{children}</ClientDataContext.Provider>
+  );
 };
 
 export default ClientDataContextProvider;

@@ -1,7 +1,6 @@
 import { PageSettingEnum } from '../context/PageContext';
-import {CompanyDataInterface} from '../context/CompanyDataContext';
 
-export const isStepCompleted = (data:CompanyDataInterface ,page: PageSettingEnum): boolean => {
+export const isStepCompleted = (data: any, page: PageSettingEnum): boolean => {
   switch (page) {
     case PageSettingEnum.First:
       return !!(data.name && data.nip && data.email && data.phoneNumber);

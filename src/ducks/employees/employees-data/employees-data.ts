@@ -1,9 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { EmployeeDataInterface } from '../../../types/modelsTypes';
-import { getAllCompanyEmployees, getEmployeeHours, getEmployeeSalary, AllCompanyEmployeesReturnInterface } from './employees-data-creators';
+import { EmployeeModel } from 'types';
+import {
+  getAllCompanyEmployees,
+  getEmployeeHours,
+  getEmployeeSalary,
+  AllCompanyEmployeesReturnInterface
+} from './employees-data-creators';
 
 interface InitialStateInterface {
-  allCompanyEmployees: EmployeeDataInterface[];
+  allCompanyEmployees: EmployeeModel[];
   areEmployeesLoading: boolean;
   employeesError: string | undefined;
   companyEmployeesCounter: number;
@@ -27,11 +32,14 @@ const employeesDataSlice = createSlice({
       state.areEmployeesLoading = true;
       state.employeesError = undefined;
     });
-    builder.addCase(getAllCompanyEmployees.fulfilled.type, (state, { payload }: PayloadAction<AllCompanyEmployeesReturnInterface>) => {
-      state.areEmployeesLoading = false;
-      state.allCompanyEmployees = payload.employees;
-      state.companyEmployeesCounter = payload.employeesCounter;
-    });
+    builder.addCase(
+      getAllCompanyEmployees.fulfilled.type,
+      (state, { payload }: PayloadAction<AllCompanyEmployeesReturnInterface>) => {
+        state.areEmployeesLoading = false;
+        state.allCompanyEmployees = payload.employees;
+        state.companyEmployeesCounter = payload.employeesCounter;
+      }
+    );
     builder.addCase(getAllCompanyEmployees.rejected.type, (state, { payload }: PayloadAction<string | undefined>) => {
       state.areEmployeesLoading = false;
       state.employeesError = payload;

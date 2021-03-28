@@ -3,39 +3,31 @@ import { Formik } from 'formik';
 import { useSelector } from 'react-redux';
 
 import { FormField, Button, MultipleDropdown } from 'components';
+import { taskInfoValues } from './task-info.values';
+import { fetchEmployees } from 'api';
+import { useFetch, useShowContent } from 'components/hooks';
 import { AppState } from 'store/store';
-import { EmployeeDataInterface } from 'types/modelsTypes';
-import { TaskDataContext } from '../../context/TaskDataContext';
+import { EmployeeModel } from 'types';
+import { TaskDataContext, MainTaskInfo } from '../../context/TaskDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { TaskInfoSchema } from '../../validation/validation';
 
 import { HeadingWrapper, MobileCompoundTitle, StyledForm, Subheading, Wrapper } from 'styles/compoundStyles';
-import { DoubleFlexWrapper } from 'styles/shared';
-
-interface DefaultValues {
-  name: string;
-  description: string;
-  date: Date;
-  isCompleted: boolean;
-  selectedEmployees: string[];
-}
+import { Paragraph, DoubleFlexWrapper } from 'styles';
 
 const TaskInfo: React.FC = () => {
-  const { data, setData } = useContext(TaskDataContext);
+  const { mainData, setMainData } = useContext(TaskDataContext);
   const { setCurrentPage } = useContext(PageContext);
+  const { role } = useSelector((state: AppState) => state.auth.roles);
 
-  const { allCompanyEmployees } = useSelector((state: AppState) => state.employees.employeesData);
+  const employeesData = useFetch<typeof fetchEmployees>(fetchEmployees(role));
+  const { showContent, showNoContent } = useShowContent(employeesData);
+  const { payload: employees } = employeesData;
 
-  const initialValues: DefaultValues = {
-    name: data.name ? data.name : '',
-    description: data.description ? data.description : '',
-    date: data.date ? data.date : new Date(),
-    isCompleted: data.isCompleted ? data.isCompleted : false,
-    selectedEmployees: data.selectedEmployees ? data.selectedEmployees : []
-  };
+  const initialValues = taskInfoValues(mainData);
 
-  const handleSubmit = (values: DefaultValues): void => {
-    setData({ ...data, ...values });
+  const handleSubmit = (values: MainTaskInfo): void => {
+    setMainData({ ...values });
     setCurrentPage(PageSettingEnum.Second);
   };
 
@@ -48,9 +40,9 @@ const TaskInfo: React.FC = () => {
       validateOnBlur={false}
     >
       {({ isSubmitting, setFieldValue }) => {
-        const handleEmployeeSelect = (selectedItems: EmployeeDataInterface[]) => {
+        const handleEmployeeSelect = (selectedItems: EmployeeModel[]) => {
           const temp = selectedItems.map((employee) => employee._id);
-          setFieldValue('selectedEmployees', temp.length > 0 ? temp : []);
+          setFieldValue('employees', temp.length > 0 ? temp : []);
         };
 
         return (
@@ -60,14 +52,17 @@ const TaskInfo: React.FC = () => {
                 <MobileCompoundTitle>Główne informacje o zadaniu</MobileCompoundTitle>
                 <Subheading>Wszystkie pola są wymagane</Subheading>
               </HeadingWrapper>
-              <MultipleDropdown
-                items={allCompanyEmployees}
-                labelText={'Wybierz pracownika'}
-                onSelectionItemsChange={handleEmployeeSelect}
-              />
-              <FormField name={'name'} type={'text'} label={'Nazwa zadania'} required={true} />
-              <FormField name={'description'} type={'text'} label={'Opis zadania'} required={true} />
-              <FormField name={'date'} type={'date'} label={'Data zadania'} required={true} />
+              {showContent && employees && (
+                <MultipleDropdown
+                  items={employees.employees}
+                  labelText={'Wybierz pracownika'}
+                  onSelectionItemsChange={handleEmployeeSelect}
+                />
+              )}
+              {showNoContent && <Paragraph>Brak pracowników</Paragraph>}
+              <FormField name={'name'} type={'text'} label={'Nazwa zadania'} required={true} spacing={true} />
+              <FormField name={'description'} type={'text'} label={'Opis zadania'} required={true} spacing={true} />
+              <FormField name={'date'} type={'date'} label={'Data zadania'} required={true} spacing={true} />
               <DoubleFlexWrapper>
                 <Button type={'submit'} disabled={isSubmitting}>
                   Dalej

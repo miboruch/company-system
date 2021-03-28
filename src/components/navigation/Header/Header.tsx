@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import HeaderSlider from './components/HeaderSlider/HeaderSlider';
 import Notifications from './components/Notifications/Notifications';
 import { ArrowButton, SearchInput, Hamburger } from 'components';
-import { Direction } from 'types/globalTypes';
 import { AppState } from 'store/store';
 
 import { Circle, IconWrapper, NameParagraph, StyledHeader, UserWrapper, MobileCircle } from './Header.styles';
@@ -41,7 +40,7 @@ const Header: React.FC<Props> = ({ setFilterText }) => {
           </NameParagraph>
         )}
         <Circle />
-        <ArrowButton direction={Direction.Bottom} isSmaller={true} onClick={toggleHeaderSlider} />
+        <ArrowButton direction={'bottom'} isSmaller={true} onClick={toggleHeaderSlider} />
         <IconWrapper>
           <NotificationIcon onClick={toggleNotifications} />
         </IconWrapper>

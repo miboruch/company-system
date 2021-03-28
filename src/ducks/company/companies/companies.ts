@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CompanyInterface } from '../../../types/modelsTypes';
+import { CompanyModel } from 'types';
 import { getUserCompanies } from './companies-creators';
 
 interface InitialStateInterface {
   areUserCompaniesLoading: boolean;
-  userCompanies: CompanyInterface[];
+  userCompanies: CompanyModel[];
   userCompaniesError: string | undefined;
 }
 
@@ -25,7 +25,7 @@ const companiesSlice = createSlice({
       state.areUserCompaniesLoading = true;
       state.userCompaniesError = undefined;
     });
-    builder.addCase(getUserCompanies.fulfilled.type, (state, { payload }: PayloadAction<CompanyInterface[]>) => {
+    builder.addCase(getUserCompanies.fulfilled.type, (state, { payload }: PayloadAction<CompanyModel[]>) => {
       state.areUserCompaniesLoading = false;
       state.userCompanies = payload;
     });

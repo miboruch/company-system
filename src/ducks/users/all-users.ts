@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getAllAppUsers } from './all-users-creators';
-import { UserDataInterface } from '../../types/modelsTypes';
+import { UserModel } from 'types';
 
 interface InitialStateInterface {
   areAllUsersLoading: boolean;
@@ -25,7 +25,7 @@ const allUsersSlice = createSlice({
       state.areAllUsersLoading = true;
       state.allUsersError = undefined;
     });
-    builder.addCase(getAllAppUsers.fulfilled.type, (state, { payload }: PayloadAction<UserDataInterface[]>) => {
+    builder.addCase(getAllAppUsers.fulfilled.type, (state, { payload }: PayloadAction<UserModel[]>) => {
       state.areAllUsersLoading = false;
       state.allUsers = payload;
     });

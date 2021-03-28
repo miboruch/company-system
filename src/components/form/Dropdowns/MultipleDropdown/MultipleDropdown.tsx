@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import Downshift, { ControllerStateAndHelpers } from 'downshift';
 
 import { Input } from 'components';
-import { EmployeeDataInterface } from 'types/modelsTypes';
+import { EmployeeModel } from 'types';
 import { TaskDataContext } from 'pages/Task/components/AddTask/context/TaskDataContext';
 
 import { Menu, Item, Form } from 'styles/dropdownStyles';
@@ -10,11 +10,11 @@ import { Paragraph, StyledLabel } from 'styles';
 import { StyledFlexWrapper, UserBox } from './MultipleDropdown.styles';
 
 const changeHandler = (
-  selectedItems: EmployeeDataInterface[],
-  setSelectedItems: React.Dispatch<React.SetStateAction<EmployeeDataInterface[]>>,
-  onSelectionItemsChange: (selectedItems: EmployeeDataInterface[]) => void
+  selectedItems: EmployeeModel[],
+  setSelectedItems: React.Dispatch<React.SetStateAction<EmployeeModel[]>>,
+  onSelectionItemsChange: (selectedItems: EmployeeModel[]) => void
 ) => {
-  return (selectedItem: EmployeeDataInterface | null, stateAndHelpers: ControllerStateAndHelpers<EmployeeDataInterface>) => {
+  return (selectedItem: EmployeeModel | null, stateAndHelpers: ControllerStateAndHelpers<EmployeeModel>) => {
     if (!selectedItem) return;
     const i = selectedItems.findIndex((item) => item._id === selectedItem._id);
     if (i === -1) setSelectedItems([...selectedItems, selectedItem]);
@@ -36,18 +36,18 @@ const removeSelectedItemByIndex = (
 };
 
 interface Props {
-  items: EmployeeDataInterface[];
+  items: EmployeeModel[];
   labelText: string;
-  onSelectionItemsChange: (selectedItems: EmployeeDataInterface[]) => void;
+  onSelectionItemsChange: (selectedItems: EmployeeModel[]) => void;
 }
 
 const MultipleDropdown: React.FC<Props> = ({ items, labelText, onSelectionItemsChange, ...rest }) => {
-  const { data } = useContext(TaskDataContext);
-  const [selectedItems, setSelectedItems] = useState<EmployeeDataInterface[]>([]);
+  const { mainData } = useContext(TaskDataContext);
+  const [selectedItems, setSelectedItems] = useState<EmployeeModel[]>([]);
 
   useEffect(() => {
-    const result = items.filter((employee) => data.selectedEmployees?.includes(employee._id));
-    data.selectedEmployees ? setSelectedItems(result) : setSelectedItems([]);
+    const result = items.filter((employee) => mainData?.employees.includes(employee._id));
+    mainData?.employees ? setSelectedItems(result) : setSelectedItems([]);
   }, []);
 
   return (

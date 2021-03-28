@@ -7,16 +7,17 @@ import { ListWrapper } from 'styles/compoundStyles';
 import { addClientSteps } from '../../utils/AddClientSteps';
 
 const StepList: React.FC = () => {
-  const { data } = useContext(ClientDataContext);
+  const { mainData, mapData } = useContext(ClientDataContext);
   const { setCurrentPage } = useContext(PageContext);
+
   const isStepCompleted = (page: PageSettingEnum): boolean => {
     switch (page) {
       case PageSettingEnum.First:
-        return !!(data.name && data.email && data.phoneNumber);
+        return !!(mainData?.name && mainData?.email && mainData?.phoneNumber);
       case PageSettingEnum.Second:
-        return !!(data.lat && data.long);
-      case PageSettingEnum.Third:
-        return !!(data.address && data.city && data.country);
+        return !!(mapData?.lat && mapData?.long);
+      default:
+        return false;
     }
   };
   return (

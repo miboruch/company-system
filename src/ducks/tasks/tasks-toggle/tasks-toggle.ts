@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TaskInterface } from '../../../types/modelsTypes';
+import { TaskModel } from 'types';
 
 interface InitialStateInterface {
-  selectedTask: TaskInterface | null;
+  selectedTask: TaskModel | null;
   isTaskInfoOpen: boolean;
   isAddNewTaskOpen: boolean;
   isTaskMapPreviewOpen: boolean;
@@ -19,7 +19,7 @@ const tasksToggleSlice = createSlice({
   name: 'tasksToggle',
   initialState,
   reducers: {
-    setSelectedTask: (state, { payload }: PayloadAction<TaskInterface | null>) => {
+    setSelectedTask: (state, { payload }: PayloadAction<TaskModel | null>) => {
       state.selectedTask = payload;
     },
     setTaskInfoOpen: (state, { payload }: PayloadAction<boolean>) => {
@@ -35,6 +35,12 @@ const tasksToggleSlice = createSlice({
   }
 });
 
-export const { setSelectedTask, setTaskInfoOpen, setAddNewTaskOpen, setTaskMapPreviewOpen, resetTaskToggle } = tasksToggleSlice.actions;
+export const {
+  setSelectedTask,
+  setTaskInfoOpen,
+  setAddNewTaskOpen,
+  setTaskMapPreviewOpen,
+  resetTaskToggle
+} = tasksToggleSlice.actions;
 
 export default tasksToggleSlice.reducer;

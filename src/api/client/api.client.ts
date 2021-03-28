@@ -13,6 +13,24 @@ export const fetchClient = (clientId: ParamsId) => () =>
     url: `/client/${clientId}`
   });
 
+export interface PostClientInfo {
+  name: string;
+  address: string;
+  email: string;
+  phoneNumber: string;
+  city: string;
+  country: string;
+  lat: number;
+  long: number;
+}
+
+export const postClient = (data: PostClientInfo) =>
+  fetchMiddleware({
+    method: 'post',
+    url: `/client`,
+    data
+  });
+
 export interface PutClientInfo {
   name: string;
   email: string;

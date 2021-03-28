@@ -1,25 +1,21 @@
 import React, { useState } from 'react';
 
-export interface TaskDataInterface {
-  date?: Date;
-  timeEstimate?: number;
-  name?: string;
-  description?: string;
-  isCompleted?: boolean;
-  taskIncome?: number;
-  taskExpense?: number;
-  clientId?: string;
-  selectedEmployees?: string[]
+export interface MainTaskInfo {
+  name: string;
+  description: string;
+  date: Date;
+  isCompleted: boolean;
+  employees: string[];
 }
 
 type TaskDataContextType = {
-  data: TaskDataInterface;
-  setData: (data: object) => void;
+  mainData?: MainTaskInfo;
+  setMainData: (data: MainTaskInfo) => void;
 };
 
 export const TaskDataContext = React.createContext<TaskDataContextType>({
-  data: {},
-  setData: (data: object) => {}
+  mainData: undefined,
+  setMainData: (data: MainTaskInfo) => {}
 });
 
 interface Props {
@@ -27,8 +23,9 @@ interface Props {
 }
 
 const TaskDataContextProvider: React.FC<Props> = ({ children }) => {
-  const [data, setData] = useState<TaskDataInterface>({});
-  return <TaskDataContext.Provider value={{ data, setData }}>{children}</TaskDataContext.Provider>;
+  const [mainData, setMainData] = useState<MainTaskInfo>();
+
+  return <TaskDataContext.Provider value={{ mainData, setMainData }}>{children}</TaskDataContext.Provider>;
 };
 
 export default TaskDataContextProvider;

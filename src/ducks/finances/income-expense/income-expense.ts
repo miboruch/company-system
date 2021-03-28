@@ -1,13 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ExpenseInterface, IncomeInterface } from '../../../types/modelsTypes';
-import { getLastIncomesAndExpenses, getCompanyIncomeAndExpense, IncomeExpenseReturnInterface, LastIncomesExpensesReturnInterface } from './income-expense-creators';
+import { IncomeModel, ExpenseModel } from 'types';
+import {
+  getLastIncomesAndExpenses,
+  getCompanyIncomeAndExpense,
+  IncomeExpenseReturnInterface,
+  LastIncomesExpensesReturnInterface
+} from './income-expense-creators';
 
 interface InitialStateInterface {
   isLoading: boolean;
   income: number;
   expense: number;
-  lastIncomes: IncomeInterface[];
-  lastExpenses: ExpenseInterface[];
+  lastIncomes: IncomeModel[];
+  lastExpenses: ExpenseModel[];
   incomeError: string | undefined;
 }
 
@@ -31,11 +36,14 @@ const incomeExpenseSlice = createSlice({
       state.isLoading = true;
       state.incomeError = undefined;
     });
-    builder.addCase(getCompanyIncomeAndExpense.fulfilled.type, (state, { payload }: PayloadAction<IncomeExpenseReturnInterface>) => {
-      state.isLoading = false;
-      state.income = payload.income;
-      state.expense = payload.expense;
-    });
+    builder.addCase(
+      getCompanyIncomeAndExpense.fulfilled.type,
+      (state, { payload }: PayloadAction<IncomeExpenseReturnInterface>) => {
+        state.isLoading = false;
+        state.income = payload.income;
+        state.expense = payload.expense;
+      }
+    );
     builder.addCase(getCompanyIncomeAndExpense.rejected.type, (state, { payload }: PayloadAction<string | undefined>) => {
       state.isLoading = false;
       state.income = 0;
@@ -46,21 +54,23 @@ const incomeExpenseSlice = createSlice({
       state.isLoading = true;
       state.incomeError = undefined;
     });
-    builder.addCase(getLastIncomesAndExpenses.fulfilled.type, (state, { payload }: PayloadAction<LastIncomesExpensesReturnInterface>) => {
-      state.isLoading = false;
-      state.lastIncomes = payload.lastIncomes;
-      state.lastExpenses = payload.lastExpenses;
-    });
+    builder.addCase(
+      getLastIncomesAndExpenses.fulfilled.type,
+      (state, { payload }: PayloadAction<LastIncomesExpensesReturnInterface>) => {
+        state.isLoading = false;
+        state.lastIncomes = payload.lastIncomes;
+        state.lastExpenses = payload.lastExpenses;
+      }
+    );
     builder.addCase(getLastIncomesAndExpenses.rejected.type, (state, { payload }: PayloadAction<string | undefined>) => {
       state.isLoading = false;
       state.lastIncomes = [];
       state.lastExpenses = [];
       state.incomeError = payload;
     });
-
   }
 });
 
-export const {resetIncomeExpense} = incomeExpenseSlice.actions;
+export const { resetIncomeExpense } = incomeExpenseSlice.actions;
 
 export default incomeExpenseSlice.reducer;

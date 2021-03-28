@@ -1,13 +1,13 @@
 import { NotificationTypes } from 'types/globalTypes';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { baseStoreType } from 'store/store';
-import { TaskInterface } from 'types/modelsTypes';
+import { TaskModel } from 'types';
 import { companyApi } from 'api';
 import { setNotificationMessage } from '../../popup/popup';
 import { selectTask } from '../tasks-toggle/tasks-toggle-creators';
 import { setSelectedTask, setTaskInfoOpen, setAddNewTaskOpen } from '../tasks-toggle/tasks-toggle';
 
-export const getCompanyTasks = createAsyncThunk<TaskInterface[], void, baseStoreType>(
+export const getCompanyTasks = createAsyncThunk<TaskModel[], void, baseStoreType>(
   'tasksData/getCompanyTasks',
   async (_arg, { dispatch, rejectWithValue, getState }) => {
     const { token } = getState().auth.tokens;
@@ -21,7 +21,7 @@ export const getCompanyTasks = createAsyncThunk<TaskInterface[], void, baseStore
           }
         });
 
-        return data as TaskInterface[];
+        return data as TaskModel[];
       } else {
         return rejectWithValue('Brak danych');
       }
@@ -32,7 +32,7 @@ export const getCompanyTasks = createAsyncThunk<TaskInterface[], void, baseStore
   }
 );
 
-export const getEmployeeTasks = createAsyncThunk<TaskInterface[], void, baseStoreType>(
+export const getEmployeeTasks = createAsyncThunk<TaskModel[], void, baseStoreType>(
   'tasksData/getEmployeeTasks',
   async (_arg, { dispatch, rejectWithValue, getState }) => {
     const { token } = getState().auth.tokens;
@@ -46,7 +46,7 @@ export const getEmployeeTasks = createAsyncThunk<TaskInterface[], void, baseStor
           }
         });
 
-        return data as TaskInterface[];
+        return data as TaskModel[];
       } else {
         return rejectWithValue('Brak danych');
       }
@@ -66,14 +66,11 @@ export const getCompletedTasks = createAsyncThunk<number, void, baseStoreType>(
 
     try {
       if (currentCompany && token) {
-        const { data } = await companyApi.get(
-          `/task/completed?daysBack=${DAYS_BACK}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
+        const { data } = await companyApi.get(`/task/completed?daysBack=${DAYS_BACK}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
           }
-        );
+        });
 
         return data.completedTasks;
       }
@@ -236,7 +233,7 @@ export const addNewTask = createAsyncThunk<void, AddNewTaskInterface, baseStoreT
     try {
       if (token) {
         await companyApi.post(
-          `/task/add-new-task`,
+          `/task`,
           {
             date,
             timeEstimate,

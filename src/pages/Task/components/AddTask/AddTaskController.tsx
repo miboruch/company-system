@@ -1,6 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 
 import TaskDataContextProvider from './context/TaskDataContext';
 import PageContextProvider from './context/PageContext';
@@ -10,39 +8,28 @@ import AddTaskTemplate from './templates/AddTaskTemplate';
 import TaskInfo from './pages/TaskInfo/TaskInfo';
 import SpecificInfo from './pages/SpecificInfo/SpecificInfo';
 import { CloseButton } from 'components';
-import { AppState } from 'store/store';
+import { useModal } from 'components/hooks';
 import { PageSettingEnum } from './context/PageContext';
-import { modalOpenAnimation } from 'animations/animations';
-import { setAddNewTaskOpen } from 'ducks/tasks/tasks-toggle/tasks-toggle';
 
 import { CloseButtonWrapper, CompoundTitle, ContentWrapper, MainWrapper, Wrapper } from 'styles/compoundControllerStyles';
 import { StandardCompoundTitle } from 'styles/compoundStyles';
 
-const AddTaskController: React.FC = () => {
-  const dispatch = useDispatch();
-  const { isAddNewTaskOpen } = useSelector((state: AppState) => state.tasks.taskToggle);
+interface Props {
+  isOpen: boolean;
+  handleClose: () => void;
+  setRefreshDate: (date: Date) => void;
+}
 
-  const mainWrapperRef = useRef<HTMLDivElement | null>(null);
-  const wrapperRef = useRef<HTMLDivElement | null>(null);
-  const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
-
-  const handleAddNewTaskClose = () => dispatch(setAddNewTaskOpen(false));
-
-  useEffect(() => {
-    modalOpenAnimation(tl, mainWrapperRef, wrapperRef);
-  }, []);
-
-  useEffect(() => {
-    isAddNewTaskOpen ? tl.play() : tl.reverse();
-  }, [isAddNewTaskOpen]);
+const AddTaskController: React.FC<Props> = ({ isOpen, handleClose, setRefreshDate }) => {
+  const { wrapperRef, boxRef } = useModal(isOpen);
 
   return (
     <TaskDataContextProvider>
       <PageContextProvider>
-        <MainWrapper ref={mainWrapperRef}>
-          <Wrapper ref={wrapperRef}>
+        <MainWrapper ref={wrapperRef}>
+          <Wrapper ref={boxRef}>
             <CloseButtonWrapper>
-              <CloseButton close={handleAddNewTaskClose} />
+              <CloseButton close={handleClose} />
             </CloseButtonWrapper>
             <AddTaskHeader />
             <CompoundTitle>Nowe zadanie</CompoundTitle>
@@ -53,7 +40,7 @@ const AddTaskController: React.FC = () => {
                 <TaskInfo />
               </AddTaskTemplate>
               <AddTaskTemplate pageIndex={PageSettingEnum.Second}>
-                <SpecificInfo />
+                <SpecificInfo handleClose={handleClose} setRefreshDate={setRefreshDate} />
               </AddTaskTemplate>
             </ContentWrapper>
           </Wrapper>

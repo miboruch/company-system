@@ -2,31 +2,22 @@ import React, { useContext } from 'react';
 import { Formik } from 'formik';
 
 import { Button, FormField } from 'components';
+import { clientMainValues } from './main-client.values';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
-import { ClientDataContext } from '../../context/ClientDataContext';
+import { ClientDataContext, MainClientData } from '../../context/ClientDataContext';
 import { MainClientDataSchema } from '../../validation/validation';
 
 import { FlexWrapper } from 'styles';
 import { HeadingWrapper, MobileCompoundTitle, StyledForm, Subheading, Wrapper } from 'styles/compoundStyles';
 
-type defaultValues = {
-  name: string;
-  email: string;
-  phoneNumber: string;
-};
-
 const MainClientPage: React.FC = () => {
-  const { data, setData } = useContext(ClientDataContext);
+  const { mainData, setMainData } = useContext(ClientDataContext);
   const { setCurrentPage } = useContext(PageContext);
 
-  const initialValues: defaultValues = {
-    name: data?.name || '',
-    email: data?.email || '',
-    phoneNumber: data?.phoneNumber || ''
-  };
+  const initialValues = clientMainValues(mainData);
 
-  const handleSubmit = (values: defaultValues): void => {
-    setData({ ...data, ...values });
+  const handleSubmit = (values: MainClientData): void => {
+    setMainData({ ...values });
     setCurrentPage(PageSettingEnum.Second);
   };
 

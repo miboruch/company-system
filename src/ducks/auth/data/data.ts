@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { EmployeeDataInterface, UserAuthData } from '../../../types/modelsTypes';
+import { UserAuthModel, EmployeeModel } from 'types';
 import { getUserData, getOwnEmployeeData } from './data-creators';
 
 interface InitialStateInterface {
-  userData: null | UserAuthData;
-  employeeData: null | EmployeeDataInterface;
+  userData: null | UserAuthModel;
+  employeeData: null | EmployeeModel;
 }
 
 const initialState: InitialStateInterface = {
@@ -25,10 +25,10 @@ const authDataSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
-    builder.addCase(getUserData.fulfilled.type, (state, { payload }: PayloadAction<UserAuthData>) => {
+    builder.addCase(getUserData.fulfilled.type, (state, { payload }: PayloadAction<UserAuthModel>) => {
       state.userData = payload;
     });
-    builder.addCase(getOwnEmployeeData.fulfilled.type, (state, { payload }: PayloadAction<EmployeeDataInterface>) => {
+    builder.addCase(getOwnEmployeeData.fulfilled.type, (state, { payload }: PayloadAction<EmployeeModel>) => {
       state.employeeData = payload;
     });
   }

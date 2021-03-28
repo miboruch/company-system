@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useSelector } from 'react-redux';
 
+import BarChart from 'components/charts/BarChart/BarChart';
 import InfoBox from './components/InfoBox/InfoBox';
-import BarChart from './components/BarChart/BarChart';
 import AttendanceList from './components/AttendanceList/AttendanceList';
 import AdminStatistics from './components/AdminStatistics/AdminStatistics';
 import TaskTiles from './components/TaskTiles/TaskTiles';
@@ -12,8 +12,7 @@ import { MenuTemplate, Chart, GridWrapper } from 'components';
 import { contentAnimation } from 'animations/animations';
 import { AppState, useAppDispatch } from 'store/store';
 import { UserRole } from 'ducks/auth/roles/roles';
-import { AttendanceModel } from 'types';
-import { IncomeDataInterface } from 'types/modelsTypes';
+import { AttendanceModel, IncomeModel } from 'types';
 import { getIncomeExpenseInTimePeriod } from 'ducks/finances/income-expense/income-expense-creators';
 import { getCompletedTasks, getTasksInTimePeriod, TaskPeriodInterface } from 'ducks/tasks/tasks-data/task-data-creators';
 
@@ -25,7 +24,7 @@ const Landing: React.FC = () => {
   const dispatch = useAppDispatch();
   const { role } = useSelector((state: AppState) => state.auth.roles);
 
-  const [data, setData] = useState<Array<IncomeDataInterface> | null>(null);
+  const [data, setData] = useState<IncomeModel[] | null>(null);
   const [taskData, setTaskData] = useState<Array<TaskPeriodInterface> | null>(null);
 
   const [selectedAttendance, setSelectedAttendance] = useState<AttendanceModel | null>(null);

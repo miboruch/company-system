@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { WeekAttendance } from '../../../types/modelsTypes';
+import { WeekAttendanceModel } from 'types';
 import { getWeekAttendance } from './week-attendance-data-creators';
 
 interface InitialStateInterface {
   isContentLoading: boolean;
   weekAttendanceError: string | undefined;
-  weekAttendance: WeekAttendance[] | null;
+  weekAttendance: WeekAttendanceModel[] | null;
 }
 
 const initialState: InitialStateInterface = {
@@ -25,7 +25,7 @@ const weekAttendanceDataSlice = createSlice({
       .addCase(getWeekAttendance.pending.type, (state) => {
         state.weekAttendanceError = undefined;
       })
-      .addCase(getWeekAttendance.fulfilled.type, (state, { payload }: PayloadAction<WeekAttendance[]>) => {
+      .addCase(getWeekAttendance.fulfilled.type, (state, { payload }: PayloadAction<WeekAttendanceModel[]>) => {
         state.weekAttendance = payload;
       })
       .addCase(getWeekAttendance.rejected.type, (state, { payload }: PayloadAction<string | undefined>) => {

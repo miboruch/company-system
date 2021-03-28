@@ -2,12 +2,12 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { AppState } from 'store/store';
-import { TaskInterface } from 'types/modelsTypes';
+import { TaskModel } from 'types';
 import { roundTo2 } from 'utils/functions';
 import { Tile, Description, Name, IncomeWrapper, TaskIncome, TaskExpense } from './TaskTile.styles';
 
 interface Props {
-  task: TaskInterface;
+  task: TaskModel;
   onClick?: () => void;
 }
 

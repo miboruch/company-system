@@ -1,10 +1,10 @@
-import { NotificationInterface } from '../../types/modelsTypes';
+import { NotificationModel } from 'types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getUserNotifications } from './notifications-creators';
 
 interface InitialStateInterface {
   areNotificationsLoading: boolean;
-  notifications: NotificationInterface[];
+  notifications: NotificationModel[];
   notificationsError: string | undefined;
 }
 
@@ -23,7 +23,7 @@ const notificationSlice = createSlice({
       state.areNotificationsLoading = true;
       state.notificationsError = undefined;
     });
-    builder.addCase(getUserNotifications.fulfilled.type, (state, { payload }: PayloadAction<NotificationInterface[]>) => {
+    builder.addCase(getUserNotifications.fulfilled.type, (state, { payload }: PayloadAction<NotificationModel[]>) => {
       state.areNotificationsLoading = false;
       state.notifications = payload;
     });

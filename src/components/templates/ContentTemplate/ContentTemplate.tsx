@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 
 import { ArrowButton } from 'components';
-import { Direction } from 'types/globalTypes';
 import { ContentWrapper, ArrowAbsoluteWrapper } from './ContentTemplate.styles';
 
 interface Props {
@@ -37,7 +36,7 @@ const ContentTemplate: React.FC<Props> = ({ children, isOpen, close }) => {
   return (
     <ContentWrapper ref={contentWrapperRef}>
       <ArrowAbsoluteWrapper>
-        <ArrowButton onClick={close} direction={Direction.Left} />
+        <ArrowButton onClick={close} direction={'left'} />
       </ArrowAbsoluteWrapper>
       {children}
     </ContentWrapper>

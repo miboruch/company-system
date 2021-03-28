@@ -14,6 +14,7 @@ const Task: React.FC = () => {
   const { query, resetQueries } = useQuery();
   const [filterText, setFilterText] = useState<string>('');
   const [refreshDate, setRefreshDate] = useState<Date>(new Date());
+  const [isAddTaskOpen, setAddTaskOpen] = useState<boolean>(false);
 
   const { submit, onCallSuccess, onCallError } = useCall<typeof deleteTask>(deleteTask);
   onCallSuccess(() => {
@@ -24,6 +25,8 @@ const Task: React.FC = () => {
 
   const handleDeleteTask = () => submit(query.task);
 
+  const handleAddTaskOpen = (isOpen: boolean) => () => setAddTaskOpen(isOpen);
+
   return (
     <MenuTemplate>
       <GridWrapper
@@ -32,7 +35,7 @@ const Task: React.FC = () => {
         setFilterText={setFilterText}
         render={(isEditToggled, setEditToggled, isDeleteOpen, setDeleteOpen) => (
           <>
-            <TaskList filterText={filterText} refreshDate={refreshDate} />
+            <TaskList filterText={filterText} refreshDate={refreshDate} handleAddTaskOpen={handleAddTaskOpen(true)} />
             <ContentTemplate isOpen={!!query.task} close={resetQueries}>
               <TaskInfo isEditToggled={isEditToggled} setDeleteOpen={setDeleteOpen} setEditToggled={setEditToggled} />
             </ContentTemplate>
@@ -43,7 +46,7 @@ const Task: React.FC = () => {
               text={`zadanie`}
               handleDelete={handleDeleteTask}
             />
-            <AddTaskController />
+            <AddTaskController isOpen={isAddTaskOpen} handleClose={handleAddTaskOpen(false)} setRefreshDate={setRefreshDate} />
           </>
         )}
       />

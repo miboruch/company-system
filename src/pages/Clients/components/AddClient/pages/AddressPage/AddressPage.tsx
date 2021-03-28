@@ -3,54 +3,49 @@ import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 
 import { Button, FormField } from 'components';
+import { useSubmit } from 'components/hooks';
+import { postClient, PostClientInfo } from 'api';
+import { clientMainValues } from '../MainClientPage/main-client.values';
+import { setNotification } from 'ducks/popup/popup';
 import { ClientDataContext } from '../../context/ClientDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
-import { addNewClient } from 'ducks/client/client-creators';
 import { AddressDataSchema } from '../../validation/validation';
 
 import { Paragraph, DoubleFlexWrapper } from 'styles';
 import { HeadingWrapper, MobileCompoundTitle, StyledForm, Subheading, Wrapper } from 'styles/compoundStyles';
 
-type defaultValues = {
-  address: string;
-  city: string;
-  country: string;
-};
+interface Props {
+  handleClose: () => void;
+  setRefreshDate: (date: Date) => void;
+}
 
-const AddressPage: React.FC = () => {
+const AddressPage: React.FC<Props> = ({ handleClose, setRefreshDate }) => {
   const dispatch = useDispatch();
-  const { data, setData } = useContext(ClientDataContext);
+  const { mainData, mapData } = useContext(ClientDataContext);
   const { setCurrentPage } = useContext(PageContext);
 
-  const initialValues: defaultValues = {
-    address: data?.address || '',
-    city: data?.city || '',
-    country: data?.country || ''
+  const initialValues: PostClientInfo = {
+    ...clientMainValues(mainData),
+    lat: mapData?.lat || 0,
+    long: mapData?.long || 0,
+    address: '',
+    city: '',
+    country: ''
   };
 
-  const handleSubmit = ({ address, city, country }: defaultValues): void => {
-    setData({ ...data, address, city, country });
-    if (data.name && data.email && data.phoneNumber && data.lat && data.long) {
-      dispatch(
-        addNewClient({
-          name: data.name,
-          address,
-          email: data.email,
-          phoneNumber: data.phoneNumber,
-          city,
-          country,
-          lat: data.lat,
-          long: data.long
-        })
-      );
-    }
-  };
+  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit<typeof postClient, PostClientInfo>(postClient);
+  onSubmitSuccess(() => {
+    setRefreshDate(new Date());
+    handleClose();
+    dispatch(setNotification({ message: 'Dodano klienta', notificationType: 'success' }));
+  });
+  onSubmitError((message) => dispatch(setNotification({ message })));
 
   const handlePreviousPage = () => setCurrentPage(PageSettingEnum.Second);
 
   return (
     <Formik
-      onSubmit={handleSubmit}
+      onSubmit={onSubmit}
       initialValues={initialValues}
       validationSchema={AddressDataSchema}
       validateOnChange={false}

@@ -1,38 +1,46 @@
-import { UserRole } from '../../auth/roles/roles';
-import { NotificationTypes } from 'types/globalTypes';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { EmployeeDataInterface } from 'types/modelsTypes';
-import { baseStoreType } from 'store/store';
-import { companyApi } from 'api';
+
 import { setNotificationMessage } from '../../popup/popup';
 import { setSelectedEmployee, setEmployeeInfoOpen } from '../employees-toggle/employees-toggle';
 
+import { UserRole } from '../../auth/roles/roles';
+import { NotificationTypes } from 'types/globalTypes';
+import { EmployeeModel } from 'types';
+import { baseStoreType } from 'store/store';
+import { companyApi } from 'api';
+
 export interface AllCompanyEmployeesReturnInterface {
-  employees: EmployeeDataInterface[];
+  employees: EmployeeModel[];
   employeesCounter: number;
 }
 
-export const getAllCompanyEmployees = createAsyncThunk<AllCompanyEmployeesReturnInterface, void, baseStoreType>('employeesData/getAllCompanyEmployees', async (_arg, { rejectWithValue, getState }) => {
-  const { token } = getState().auth.tokens;
-  const { role } = getState().auth.roles;
-  const { currentCompany } = getState().company.currentCompany;
+export const getAllCompanyEmployees = createAsyncThunk<AllCompanyEmployeesReturnInterface, void, baseStoreType>(
+  'employeesData/getAllCompanyEmployees',
+  async (_arg, { rejectWithValue, getState }) => {
+    const { token } = getState().auth.tokens;
+    const { role } = getState().auth.roles;
+    const { currentCompany } = getState().company.currentCompany;
 
-  try {
-    if (currentCompany && token) {
-      const { data } = await companyApi.get(role === UserRole.Admin ? `/employee/get-company-employees` : `/employee/employee-data`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+    try {
+      if (currentCompany && token) {
+        const { data } = await companyApi.get(
+          role === UserRole.Admin ? `/employee/get-company-employees` : `/employee/employee-data`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
 
-      return data as AllCompanyEmployeesReturnInterface;
-    } else {
-      return rejectWithValue('Brak uwierzytelnienia');
+        return data as AllCompanyEmployeesReturnInterface;
+      } else {
+        return rejectWithValue('Brak uwierzytelnienia');
+      }
+    } catch (error) {
+      return rejectWithValue(error.response.data);
     }
-  } catch (error) {
-    return rejectWithValue(error.response.data);
   }
-});
+);
 
 interface MainDataInterface {
   employeeId: string;
@@ -96,32 +104,37 @@ interface AddEmployeeInterface {
   monthlyPrice: number;
 }
 
-export const addNewEmployee = createAsyncThunk<void, AddEmployeeInterface, baseStoreType>('employeesData/addNewEmployee', async (values, { dispatch, rejectWithValue, getState }) => {
-  const { token } = getState().auth.tokens;
+export const addNewEmployee = createAsyncThunk<void, AddEmployeeInterface, baseStoreType>(
+  'employeesData/addNewEmployee',
+  async (values, { dispatch, rejectWithValue, getState }) => {
+    const { token } = getState().auth.tokens;
 
-  try {
-    if (token) {
-      await companyApi.post(
-        '/employee/add-employee',
-        { ...values },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
+    try {
+      if (token) {
+        await companyApi.post(
+          '/employee/add-employee',
+          { ...values },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
           }
-        }
-      );
+        );
 
-      dispatch(getAllCompanyEmployees());
-      dispatch(setNotificationMessage({ message: 'Dodano nowego pracownika', notificationType: NotificationTypes.Error }));
-    } else {
-      dispatch(setNotificationMessage({ message: 'Problem z dodaniem nowego pracownika', notificationType: NotificationTypes.Error }));
-      return rejectWithValue('Brak uwierzytelnienia');
+        dispatch(getAllCompanyEmployees());
+        dispatch(setNotificationMessage({ message: 'Dodano nowego pracownika', notificationType: NotificationTypes.Error }));
+      } else {
+        dispatch(
+          setNotificationMessage({ message: 'Problem z dodaniem nowego pracownika', notificationType: NotificationTypes.Error })
+        );
+        return rejectWithValue('Brak uwierzytelnienia');
+      }
+    } catch (error) {
+      dispatch(setNotificationMessage({ message: error.response.data, notificationType: NotificationTypes.Error }));
+      return rejectWithValue(error.response.data);
     }
-  } catch (error) {
-    dispatch(setNotificationMessage({ message: error.response.data, notificationType: NotificationTypes.Error }));
-    return rejectWithValue(error.response.data);
   }
-});
+);
 
 interface GetEmployeeHoursInterface {
   userId: string;

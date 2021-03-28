@@ -10,9 +10,9 @@ import Select from 'pages/Select/Select';
 import RegisterFromLink from './pages/RegisterFromLink/RegisterFromLink';
 import NotAuthRoute from './hoc/NotAuthRoute';
 import { Spinner, NotificationPopup } from 'components';
-import { AppState, useAppDispatch } from 'store/store';
 import { authCheck } from 'ducks/auth/check/check-creators';
 import { handleCompanyRefreshToken, handleAuthRefreshToken } from 'api/middleware';
+import { AppState, useAppDispatch } from 'store/store';
 import { authApi, companyApi } from 'api';
 
 import { MainSpinnerWrapper } from 'styles/shared';

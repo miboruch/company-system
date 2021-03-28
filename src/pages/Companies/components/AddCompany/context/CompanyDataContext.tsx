@@ -1,25 +1,29 @@
 import React, { useState } from 'react';
 
-export interface CompanyDataInterface {
-  email?: string;
-  name?: string;
-  nip?: string;
-  address?: string;
-  city?: string;
-  country?: string;
-  lat?: number;
-  long?: number;
-  phoneNumber?: string;
+export interface MainCompanyData {
+  name: string;
+  nip: string;
+  email: string;
+  phoneNumber: string;
+}
+
+export interface MapData {
+  lat: number;
+  long: number;
 }
 
 type CompanyDataContextType = {
-  data: CompanyDataInterface;
-  setData: (data: object) => void;
+  mainData?: MainCompanyData;
+  setMainData: (data: MainCompanyData) => void;
+  mapData?: MapData;
+  setMapData: (data: MapData) => void;
 };
 
 export const CompanyDataContext = React.createContext<CompanyDataContextType>({
-  data: {},
-  setData: (data: object) => {}
+  mainData: undefined,
+  setMainData: (data: MainCompanyData) => {},
+  mapData: undefined,
+  setMapData: (data: MapData) => {}
 });
 
 interface Props {
@@ -27,8 +31,12 @@ interface Props {
 }
 
 const CompanyDataContextProvider: React.FC<Props> = ({ children }) => {
-  const [data, setData] = useState<CompanyDataInterface>({});
-  return <CompanyDataContext.Provider value={{ data, setData }}>{children}</CompanyDataContext.Provider>;
+  const [mainData, setMainData] = useState<MainCompanyData>();
+  const [mapData, setMapData] = useState<MapData>();
+
+  return (
+    <CompanyDataContext.Provider value={{ mainData, setMainData, mapData, setMapData }}>{children}</CompanyDataContext.Provider>
+  );
 };
 
 export default CompanyDataContextProvider;

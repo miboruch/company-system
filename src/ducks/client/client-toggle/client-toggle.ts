@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ClientInterface } from '../../../types/modelsTypes';
+import { ClientModel } from 'types';
 
 interface InitialStateInterface {
-  selectedClient: ClientInterface | null;
+  selectedClient: ClientModel | null;
   isClientInfoOpen: boolean;
   isEditClientCoordsOpen: boolean;
   isAddNewClientOpen: boolean;
@@ -19,7 +19,7 @@ const clientToggleSlice = createSlice({
   name: 'clientToggle',
   initialState,
   reducers: {
-    setSelectedClient: (state, { payload }: PayloadAction<ClientInterface | null>) => {
+    setSelectedClient: (state, { payload }: PayloadAction<ClientModel | null>) => {
       state.selectedClient = payload;
     },
     setClientInfoOpen: (state, { payload }: PayloadAction<boolean>) => {
@@ -35,6 +35,12 @@ const clientToggleSlice = createSlice({
   }
 });
 
-export const { setSelectedClient, setClientInfoOpen, setAddNewClientOpen, setEditClientCoordsOpen, resetClientToggle } = clientToggleSlice.actions;
+export const {
+  setSelectedClient,
+  setClientInfoOpen,
+  setAddNewClientOpen,
+  setEditClientCoordsOpen,
+  resetClientToggle
+} = clientToggleSlice.actions;
 
 export default clientToggleSlice.reducer;

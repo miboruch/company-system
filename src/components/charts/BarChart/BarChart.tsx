@@ -1,8 +1,8 @@
 import React from 'react';
 import { CartesianGrid, XAxis, YAxis, Tooltip, Legend, BarChart as Chart, Bar } from 'recharts';
 
-import { ChartWrapper, StyledResponsiveContainer, RowWrapper, FlexRowWrapper, StyledParagraph } from 'styles';
-import { chartButtons } from 'utils/staticData';
+import { ChartWrapper, StyledResponsiveContainer, RowWrapper, FlexRowWrapper, StyledParagraph } from '../chart.styles';
+import { chartButtons } from 'utils/static-data';
 
 interface Props {
   data: Array<any> | null;

@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux';
 
 import NotificationBox from './components/NotificationBox/NotificationBox';
 import { Spinner } from 'components';
-import { AppState } from 'store/store';
-import { useOutsideClick } from 'utils/customHooks';
+import { useOutsideClick } from 'components/hooks';
 import { notificationsAnimation } from 'animations/animations';
+import { AppState } from 'store/store';
 
 import { StyledWrapper, Header, Content, EmptyWrapper } from './Notifications.styles';
 import { Paragraph } from 'styles';

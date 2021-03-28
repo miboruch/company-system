@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ClientInterface } from '../../../types/modelsTypes';
+import { ClientModel } from 'types';
 import { getCompanyClients } from './client-data-creators';
 
 interface InitialStateInterface {
-  allCompanyClients: ClientInterface[];
+  allCompanyClients: ClientModel[];
   areClientsLoading: boolean;
   clientError: string | undefined;
 }
@@ -25,7 +25,7 @@ const clientDataSlice = createSlice({
       state.areClientsLoading = true;
       state.clientError = undefined;
     });
-    builder.addCase(getCompanyClients.fulfilled.type, (state, { payload }: PayloadAction<ClientInterface[]>) => {
+    builder.addCase(getCompanyClients.fulfilled.type, (state, { payload }: PayloadAction<ClientModel[]>) => {
       state.areClientsLoading = false;
       state.allCompanyClients = payload;
     });
