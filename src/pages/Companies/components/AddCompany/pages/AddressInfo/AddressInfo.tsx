@@ -1,58 +1,51 @@
 import React, { useContext } from 'react';
 import { Formik } from 'formik';
-import { useAppDispatch } from 'store/store';
 
 import { Button, FormField } from 'components';
+import { postCompany, PostCompanyData } from 'api';
+import { mainCompanyValues } from '../MainCompanyInfo/main-company.values';
+import { setNotification } from 'ducks/popup/popup';
+import { useSubmit } from 'components/hooks';
+import { useAppDispatch } from 'store/store';
 import { CompanyDataContext } from '../../context/CompanyDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { AddressDataSchema } from '../../validation/validation';
-import { createNewCompany } from 'ducks/company/companies/companies-creators';
 
 import { DoubleFlexWrapper } from 'styles';
 import { HeadingWrapper, MobileCompoundTitle, StyledForm, Subheading, Wrapper, StyledBackParagraph } from 'styles/compoundStyles';
 
-type defaultValues = {
-  address: string;
-  city: string;
-  country: string;
-};
+interface Props {
+  handleClose: () => void;
+  setRefreshDate: (date: Date) => void;
+}
 
-const AddressInfo: React.FC = () => {
+const AddressInfo: React.FC<Props> = ({ handleClose, setRefreshDate }) => {
   const dispatch = useAppDispatch();
-  const { data, setData } = useContext(CompanyDataContext);
+  const { mainData, mapData } = useContext(CompanyDataContext);
   const { setCurrentPage } = useContext(PageContext);
 
-  const initialValues: defaultValues = {
-    address: data.address ? data.address : '',
-    city: data.city ? data.city : '',
-    country: data.country ? data.country : ''
+  const initialValues: PostCompanyData = {
+    ...mainCompanyValues(mainData),
+    lat: mapData?.lat || 0,
+    long: mapData?.long || 0,
+    address: '',
+    city: '',
+    country: ''
   };
 
-  const handleSubmit = ({ address, city, country }: defaultValues): void => {
-    setData({ ...data, address, city, country });
-    if (data.name && data.nip && data.email && data.lat && data.long && data.phoneNumber) {
-      dispatch(
-        createNewCompany({
-          name: data.name,
-          nip: data.nip,
-          email: data.email,
-          lat: data.lat,
-          long: data.long,
-          phoneNumber: data.phoneNumber,
-          address,
-          city,
-          country,
-          callback: () => console.log('added')
-        })
-      );
-    }
-  };
+  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit<typeof postCompany, PostCompanyData>(postCompany);
+  onSubmitSuccess(() => {
+    setRefreshDate(new Date());
+    handleClose();
+    dispatch(setNotification({ message: 'Dodano nową firmę', notificationType: 'success' }));
+  });
+  onSubmitError((message) => dispatch(setNotification({ message })));
 
   const handlePreviousPage = () => setCurrentPage(PageSettingEnum.Second);
 
   return (
     <Formik
-      onSubmit={handleSubmit}
+      onSubmit={onSubmit}
       initialValues={initialValues}
       validationSchema={AddressDataSchema}
       validateOnChange={false}

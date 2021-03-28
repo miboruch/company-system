@@ -1,6 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
 
 import PageContextProvider, { PageSettingEnum } from './context/PageContext';
 import AddCompanyTemplate from './templates/AddCompanyTemplate/AddCompanyTemplate';
@@ -11,37 +9,27 @@ import MapPage from './pages/MapPage/MapPage';
 import AddressInfo from './pages/AddressInfo/AddressInfo';
 import StepList from './components/StepList/StepList';
 import { CloseButton } from 'components';
+import { useModal } from 'components/hooks';
 
-import { AppState } from 'store/store';
-import { setAddCompanyOpen } from 'ducks/company/company-toggle/company-toggle';
-import { modalOpenAnimation } from 'animations/animations';
 import { StandardCompoundTitle } from 'styles/compoundStyles';
 import { MainWrapper, CloseButtonWrapper, Wrapper, ContentWrapper, CompoundTitle } from 'styles/compoundControllerStyles';
 
-const AddCompanyController: React.FC = () => {
-  const dispatch = useDispatch();
-  const { isAddCompanyOpen } = useSelector((state: AppState) => state.company.companyToggle);
-  const mainWrapperRef = useRef<HTMLDivElement | null>(null);
-  const wrapperRef = useRef<HTMLDivElement | null>(null);
-  const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
+interface Props {
+  isOpen: boolean;
+  handleClose: () => void;
+  setRefreshDate: (date: Date) => void;
+}
 
-  useEffect(() => {
-    modalOpenAnimation(tl, mainWrapperRef, wrapperRef);
-  }, []);
-
-  useEffect(() => {
-    isAddCompanyOpen ? tl.play() : tl.reverse();
-  }, [isAddCompanyOpen]);
-
-  const handleAddCompanyClose = () => dispatch(setAddCompanyOpen(false));
+const AddCompanyController: React.FC<Props> = ({ isOpen, handleClose, setRefreshDate }) => {
+  const { wrapperRef, boxRef } = useModal(isOpen);
 
   return (
     <CompanyDataContextProvider>
       <PageContextProvider>
-        <MainWrapper ref={mainWrapperRef}>
-          <Wrapper ref={wrapperRef}>
+        <MainWrapper ref={wrapperRef}>
+          <Wrapper ref={boxRef}>
             <CloseButtonWrapper>
-              <CloseButton close={handleAddCompanyClose} />
+              <CloseButton close={handleClose} />
             </CloseButtonWrapper>
             <AddCompanyHeader />
             <CompoundTitle>Dodaj firme</CompoundTitle>
@@ -55,7 +43,7 @@ const AddCompanyController: React.FC = () => {
                 <MapPage />
               </AddCompanyTemplate>
               <AddCompanyTemplate pageIndex={PageSettingEnum.Third}>
-                <AddressInfo />
+                <AddressInfo handleClose={handleClose} setRefreshDate={setRefreshDate} />
               </AddCompanyTemplate>
             </ContentWrapper>
           </Wrapper>

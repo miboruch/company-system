@@ -50,7 +50,7 @@ export const createNewCompany = createAsyncThunk<void, CreateCompanyInterface, b
   try {
     if (token) {
       await companyApi.post(
-        '/company/create-company',
+        '/company',
         { ...companyData },
         {
           headers: {

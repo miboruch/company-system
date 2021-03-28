@@ -7,16 +7,16 @@ import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { CompanyDataContext } from '../../context/CompanyDataContext';
 
 const StepList: React.FC = () => {
-  const { data } = useContext(CompanyDataContext);
+  const { mainData, mapData } = useContext(CompanyDataContext);
   const { setCurrentPage } = useContext(PageContext);
   const isStepCompleted = (page: PageSettingEnum): boolean => {
     switch (page) {
       case PageSettingEnum.First:
-        return !!(data.name && data.nip && data.email && data.phoneNumber);
+        return !!(mainData?.name && mainData?.nip && mainData?.email && mainData?.phoneNumber);
       case PageSettingEnum.Second:
-        return !!(data.lat && data.long);
-      case PageSettingEnum.Third:
-        return !!(data.address && data.city && data.country);
+        return !!(mapData?.lat && mapData?.long);
+      default:
+        return false;
     }
   };
 
