@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import ClientDataContextProvider from './context/ClientDataContext';
 import PageContextProvider, { PageSettingEnum } from './context/PageContext';
@@ -11,16 +11,20 @@ import MainClientPage from './pages/MainClientPage/MainClientPage';
 import MapPage from './pages/MapPage/MapPage';
 import AddressPage from './pages/AddressPage/AddressPage';
 import { CloseButton } from 'components';
-import { AppState } from 'store/store';
 import { modalOpenAnimation } from 'animations/animations';
 import { setAddNewClientOpen } from 'ducks/client/client-toggle/client-toggle';
 
 import { CloseButtonWrapper, CompoundTitle, ContentWrapper, MainWrapper, Wrapper } from 'styles/compoundControllerStyles';
 import { StandardCompoundTitle } from 'styles/compoundStyles';
 
-const AddClientController: React.FC = () => {
+interface Props {
+  isOpen: boolean;
+  handleClose: () => void;
+  setRefreshDate: (date: Date) => void;
+}
+
+const AddClientController: React.FC<Props> = ({ isOpen, handleClose, setRefreshDate }) => {
   const dispatch = useDispatch();
-  const { isAddNewClientOpen } = useSelector((state: AppState) => state.client.clientToggle);
 
   const mainWrapperRef = useRef<HTMLDivElement | null>(null);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
@@ -31,8 +35,8 @@ const AddClientController: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    isAddNewClientOpen ? tl.play() : tl.reverse();
-  }, [isAddNewClientOpen]);
+    isOpen ? tl.play() : tl.reverse();
+  }, [isOpen]);
 
   const handleAddClientClose = () => dispatch(setAddNewClientOpen(false));
 
@@ -56,7 +60,7 @@ const AddClientController: React.FC = () => {
                 <MapPage />
               </AddClientTemplate>
               <AddClientTemplate pageIndex={PageSettingEnum.Third}>
-                <AddressPage />
+                <AddressPage handleClose={handleClose} setRefreshDate={setRefreshDate} />
               </AddClientTemplate>
             </ContentWrapper>
           </Wrapper>

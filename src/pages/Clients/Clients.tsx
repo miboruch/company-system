@@ -14,6 +14,7 @@ const Clients: React.FC = () => {
   const { query, removeQuery } = useQuery();
   const [filterText, setFilterText] = useState<string>('');
   const [refreshDate, setRefreshDate] = useState<Date>(new Date());
+  const [isAddClientOpen, setAddClientOpen] = useState<boolean>(false);
 
   const { submit, onCallSuccess, onCallError } = useCall<typeof deleteClient>(deleteClient);
   onCallSuccess(() => {
@@ -24,6 +25,7 @@ const Clients: React.FC = () => {
 
   const handleDeleteClient = () => submit(query.client);
   const handleClientClose = () => removeQuery('client');
+  const handleAddClientOpen = (isOpen: boolean) => () => setAddClientOpen(isOpen);
 
   return (
     <MenuTemplate>
@@ -33,11 +35,11 @@ const Clients: React.FC = () => {
         setFilterText={setFilterText}
         render={(isEditToggled, setEditToggled, isDeleteOpen, setDeleteOpen) => (
           <>
-            <ClientsList filterText={filterText} refreshDate={refreshDate} />
+            <ClientsList filterText={filterText} refreshDate={refreshDate} handleAddClientOpen={handleAddClientOpen(true)} />
             <ContentTemplate isOpen={!!query.client} close={handleClientClose}>
               <ClientInfo isEditToggled={isEditToggled} setEditToggled={setEditToggled} setDeleteOpen={setDeleteOpen} />
             </ContentTemplate>
-            <AddClientController />
+            <AddClientController isOpen={isAddClientOpen} handleClose={handleAddClientOpen(false)} setRefreshDate={setRefreshDate} />
             <DeletePopup
               isOpen={isDeleteOpen}
               setOpen={setDeleteOpen}
