@@ -1,8 +1,9 @@
 import styled, { css } from 'styled-components';
-import { Direction } from '../../../types/globalTypes';
+
+import { ArrowDirections } from './ArrowButton';
 
 interface ArrowButtonInterface {
-  direction: Direction;
+  direction: ArrowDirections;
   isHidden: boolean;
   isSmaller: boolean;
 }
@@ -17,26 +18,24 @@ const StyledArrowButton = styled.div<ArrowButtonInterface>`
   padding: 2rem;
   opacity: ${({ isHidden }) => (isHidden ? 0 : 1)};
   //visibility: ${({ isHidden }) => (isHidden ? 'hidden' : 'visible')};
-  
+
   ${({ direction }) =>
-    direction === Direction.Right &&
+    direction === 'right' &&
     css`
       transform: rotate(180deg);
     `}
-  
+
   ${({ direction }) =>
-    direction === Direction.Left &&
+    direction === 'left' &&
     css`
       transform: rotate(0);
     `}
    
   ${({ direction }) =>
-    direction === Direction.Bottom &&
+    direction === 'bottom' &&
     css`
       transform: rotate(-90deg);
     `}
-   
-   
 
   &:focus {
     outline: none;
@@ -46,7 +45,7 @@ const StyledArrowButton = styled.div<ArrowButtonInterface>`
   &::after {
     content: '';
     position: absolute;
-    width: ${({isSmaller}) => isSmaller ? '7px' : '14px'};
+    width: ${({ isSmaller }) => (isSmaller ? '7px' : '14px')};
     height: 1px;
     background-color: ${({ theme }) => theme.colors.black};
     transition: all 0.5s ease;

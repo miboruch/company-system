@@ -2,7 +2,7 @@ import React from 'react';
 import Downshift from 'downshift';
 
 import { Input } from 'components/index';
-import { MonthInterface } from 'utils/staticData';
+import { MonthInterface } from 'utils/config';
 import { StyledLabel } from 'styles/shared';
 import { Form, Menu, Item } from 'styles/dropdownStyles';
 

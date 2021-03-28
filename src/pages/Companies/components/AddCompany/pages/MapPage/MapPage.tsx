@@ -3,7 +3,7 @@ import * as Leaflet from 'leaflet';
 import { Map, Marker, TileLayer } from 'react-leaflet';
 
 import { Button, Spinner } from 'components';
-import { getLocation } from 'utils/mapFunctions';
+import { getLocation } from 'utils/map-location';
 import { markerCustomIcon } from '../../utils/customMapIcons';
 import { CompanyDataContext } from '../../context/CompanyDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';

@@ -4,7 +4,7 @@ import { TinyLineChart } from 'components';
 
 import { UserIcon } from 'styles/iconStyles';
 import { Wrapper, RowWrapper, TitleParagraph, Value } from './InformationBox.styles';
-import { tinyChartData } from 'utils/staticData';
+import { tinyChartData } from 'utils/static-data';
 
 interface Props {
   title: string;

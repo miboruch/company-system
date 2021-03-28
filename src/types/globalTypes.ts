@@ -1,11 +1,5 @@
 import { ErrorResponse } from 'api/api.middleware';
 
-export enum Direction {
-  Left = 'left',
-  Right = 'right',
-  Bottom = 'bottom'
-}
-
 export enum NotificationTypes {
   Success = 'success',
   Error = 'error'

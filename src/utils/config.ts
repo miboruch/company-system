@@ -8,9 +8,26 @@ export const NOTIFICATION_VISIBILITY_TIME = 5000;
 
 export const FINANCES_DATA_DAYS_BACK = 30;
 
-export const DEFAULT_COMPANY_ID = '5f79a8e665bf093c1f418ee9';
+export interface MonthInterface {
+  name: string;
+  index: number;
+}
 
-export const months = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'];
+export const monthsNames = [
+  'Styczeń',
+  'Luty',
+  'Marzec',
+  'Kwiecień',
+  'Maj',
+  'Czerwiec',
+  'Lipiec',
+  'Sierpień',
+  'Wrzesień',
+  'Październik',
+  'Listopad',
+  'Grudzień'
+];
+export const months: MonthInterface[] = monthsNames.map((month, index) => ({ name: month, index }));
 export const weekDays = ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Niedziela'];
 
 export const lorem =
@@ -21,4 +38,4 @@ export const appCurrencies: currencyTypes[] = ['PLN', 'EUR', 'USD'];
 export const queryOptions = {
   skipNull: true,
   skipEmptyString: true
-}
+};

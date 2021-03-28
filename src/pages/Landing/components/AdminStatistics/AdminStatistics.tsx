@@ -3,10 +3,10 @@ import gsap from 'gsap';
 import { useSelector } from 'react-redux';
 
 import { ListBox, Spinner, CloseButton, MonthDropdown } from 'components';
+import { modalOpenAnimation } from 'animations/animations';
 import { EmployeeModel } from 'types';
 import { AppState, useAppDispatch } from 'store/store';
-import { MonthInterface, months } from 'utils/staticData';
-import { modalOpenAnimation } from 'animations/animations';
+import { MonthInterface, months } from 'utils/config';
 import { getEmployeeHours, getEmployeeSalary } from 'ducks/employees/employees-data/employees-data-creators';
 
 import { Heading, Paragraph, SpinnerWrapper } from 'styles';

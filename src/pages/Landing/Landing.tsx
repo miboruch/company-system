@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useSelector } from 'react-redux';
 
+import BarChart from 'components/charts/BarChart/BarChart';
 import InfoBox from './components/InfoBox/InfoBox';
-import BarChart from './components/BarChart/BarChart';
 import AttendanceList from './components/AttendanceList/AttendanceList';
 import AdminStatistics from './components/AdminStatistics/AdminStatistics';
 import TaskTiles from './components/TaskTiles/TaskTiles';

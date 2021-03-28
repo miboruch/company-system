@@ -4,7 +4,7 @@ import { useParams, useRouteMatch } from 'react-router-dom';
 
 import { AppState } from 'store/store';
 import { UserRole } from 'ducks/auth/roles/roles';
-import { adminRoutes, userRoutes } from 'routes/routesDefinition';
+import { adminRoutes, userRoutes } from 'routes/routes.config';
 import { LinkWrapper, StyledLink } from './Menu.styles';
 import { MenuContext } from 'providers/MenuContext/MenuContext';
 

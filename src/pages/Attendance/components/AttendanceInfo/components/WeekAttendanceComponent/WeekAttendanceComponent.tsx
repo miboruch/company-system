@@ -5,10 +5,9 @@ import { useAppDispatch } from 'store/store';
 import { compareDates } from 'utils/functions';
 import { useFetch, useShowContent } from 'components/hooks';
 import { fetchUserWeekAttendance } from 'api';
-import { Direction } from 'types/globalTypes';
 import { WeekAttendanceModel } from 'types';
 import { getWeekAttendance } from 'ducks/attendance/week-attendance-data/week-attendance-data-creators';
-import { months, weekDays } from 'utils/config';
+import { monthsNames, weekDays } from 'utils/config';
 
 import { Paragraph, SpinnerWrapper } from 'styles';
 import {
@@ -56,11 +55,11 @@ const WeekAttendanceComponent: React.FC<Props> = ({ userId }) => {
       {showContent && weekAttendance && (
         <>
           <Header>
-            <ArrowButton direction={Direction.Left} onClick={decreaseWeek} />
+            <ArrowButton direction={'left'} onClick={decreaseWeek} />
             <Paragraph type={'main'} style={{ marginBottom: '0' }}>
-              {months[new Date(weekAttendance[3].date).getMonth()]}
+              {monthsNames[new Date(weekAttendance[3].date).getMonth()]}
             </Paragraph>
-            <ArrowButton direction={Direction.Right} onClick={increaseWeek} />
+            <ArrowButton direction={'right'} onClick={increaseWeek} />
           </Header>
           <StyledWrapper>
             {weekAttendance.map((attendance, index) => {

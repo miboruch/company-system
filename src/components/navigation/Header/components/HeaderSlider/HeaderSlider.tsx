@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { AppState } from 'store/store';
 import { UserRole } from 'ducks/auth/roles/roles';
 import { useAppDispatch } from 'store/store';
-import { useOutsideClick } from 'utils/customHooks';
+import { useOutsideClick } from 'components/hooks';
 import { notificationsAnimation } from 'animations/animations';
 import { logout } from 'ducks/auth/logout/logout-creators';
 import { LogoutIcon } from 'styles/iconStyles';

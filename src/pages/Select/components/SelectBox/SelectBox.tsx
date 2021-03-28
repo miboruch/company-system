@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { ArrowButton } from 'components';
-import { Direction } from 'types/globalTypes';
 
 import { ArrowWrapper, ContentBox, Paragraph, StyledHeading } from './SelectBox.styles';
 
@@ -19,7 +18,7 @@ const SelectBox: React.FC<Props> = ({ onClick, heading, text }) => {
         <Paragraph>{text}</Paragraph>
       </div>
       <ArrowWrapper>
-        <ArrowButton direction={Direction.Right} />
+        <ArrowButton />
       </ArrowWrapper>
     </ContentBox>
   );

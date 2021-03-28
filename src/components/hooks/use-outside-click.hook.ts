@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-export const useOutsideClick = (ref: React.RefObject<HTMLElement>, isOpen:boolean, callback: () => void) => {
+const useOutsideClick = (ref: React.RefObject<HTMLElement>, isOpen:boolean, callback: () => void) => {
   useEffect(() => {
     if (isOpen) {
       const handleOutsideClick = (event: MouseEvent): any => {
@@ -17,3 +17,5 @@ export const useOutsideClick = (ref: React.RefObject<HTMLElement>, isOpen:boolea
     }
   }, [ref, isOpen]);
 };
+
+export default useOutsideClick;
