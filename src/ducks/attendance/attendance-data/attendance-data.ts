@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AttendanceInterface } from '../../../types/modelsTypes';
+import { AttendanceModel } from 'types';
 import { getSingleDayAttendance } from './attendance-data-creators';
 
 interface InitialStateInterface {
   isAttendanceLoading: boolean;
   attendanceError: string | undefined;
-  singleDayAttendance: AttendanceInterface[];
+  singleDayAttendance: AttendanceModel[];
 }
 
 const initialState: InitialStateInterface = {
@@ -26,7 +26,7 @@ const attendanceDataSlice = createSlice({
         state.isAttendanceLoading = true;
         state.attendanceError = undefined;
       })
-      .addCase(getSingleDayAttendance.fulfilled.type, (state, { payload }: PayloadAction<AttendanceInterface[]>) => {
+      .addCase(getSingleDayAttendance.fulfilled.type, (state, { payload }: PayloadAction<AttendanceModel[]>) => {
         state.isAttendanceLoading = false;
         state.singleDayAttendance = payload;
       })

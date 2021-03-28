@@ -1,102 +1,9 @@
-import { EmployeeModel } from 'types/employee/employee.model';
-
-export interface CompanyOwnersInterface {
-  _id: string;
-  email: string;
-  name: string;
-  lastName: string;
-}
-
 export interface IncomeDataInterface {
   createdDate: string | Date;
   _id: string;
   companyId: string;
   incomeValue: number;
   description: string;
-}
-
-export interface ExpenseDataInterface {
-  createdDate: string | Date;
-  _id: string;
-  companyId: string;
-  incomeValue: number;
-  description: string;
-}
-
-export interface ClientInterface {
-  createdDate: Date;
-  _id: string;
-  name: string;
-  companyId: string;
-  address: string;
-  lat: number;
-  long: number;
-  phoneNumber: string;
-  email: string;
-  country: string;
-  city: string;
-}
-
-export interface TaskInterface {
-  isCompleted: boolean;
-  addedDate: Date | string;
-  _id: string;
-  date: Date;
-  timeEstimate: number;
-  name: string;
-  description: string;
-  employees: EmployeeModel[]; //?
-  clientId?: ClientInterface | null;
-  companyId: string;
-  taskIncome?: number;
-  taskExpense?: number;
-}
-
-export interface ClientInterface {
-  createdDate: Date;
-  _id: string;
-  name: string;
-  companyId: string;
-  address: string;
-  lat: number;
-  long: number;
-  phoneNumber: string;
-  email: string;
-  country: string;
-  city: string;
-}
-
-interface Attendance {
-  _id: string;
-  userId: string;
-  date: Date;
-  companyId: string;
-  wasPresent: boolean;
-  hours: number;
-}
-
-export interface WeekAttendance {
-  userId: string | null;
-  date: Date;
-  wasPresent: boolean | null;
-  hours: number | null;
-}
-
-interface AttendanceUserInterface {
-  _id: string;
-  email: string;
-  name: string;
-  lastName: string;
-  dateOfBirth: Date;
-  phoneNumber: string;
-}
-
-export interface AttendanceInterface {
-  _id: string;
-  pricePerHour: number;
-  companyId: string;
-  attendance?: Attendance;
-  user: AttendanceUserInterface;
 }
 
 export interface NotificationInterface {
@@ -128,12 +35,4 @@ export interface IncomeInterface extends IncomeExpenseInterface {
 export interface ExpenseInterface extends IncomeExpenseInterface {
   expenseValue: number;
   incomeValue?: never;
-}
-
-export interface NotificationInterface {
-  userId: string;
-  title: string;
-  description: string;
-  wasOpened: boolean;
-  createdDate: Date;
 }

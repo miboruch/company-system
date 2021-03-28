@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
-import { CompanyOwnersInterface } from '../../../types/modelsTypes';
+
+import { CompanyOwnersModel } from 'types';
 import { getCompanyOwners } from './company-owners-creators';
 
 interface InitialStateInterface {
   areOwnersLoading: boolean;
-  companyOwners: CompanyOwnersInterface[];
+  companyOwners: CompanyOwnersModel[];
 }
 
 const initialState: InitialStateInterface = {
@@ -22,7 +23,7 @@ const companyOwnersSlice = createSlice({
     builder.addCase(getCompanyOwners.pending.type, (state) => {
       state.areOwnersLoading = true;
     });
-    builder.addCase(getCompanyOwners.fulfilled.type, (state, { payload }: PayloadAction<CompanyOwnersInterface[]>) => {
+    builder.addCase(getCompanyOwners.fulfilled.type, (state, { payload }: PayloadAction<CompanyOwnersModel[]>) => {
       state.areOwnersLoading = false;
       state.companyOwners = payload;
     });

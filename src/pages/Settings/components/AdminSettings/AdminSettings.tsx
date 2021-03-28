@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux';
 
 import { Spinner, ListBox, AddNewButton } from 'components';
 import RemoveAdminPopup from './components/RemoveAdminPopup/RemoveAdminPopup';
-import { CompanyOwnersInterface } from 'types/modelsTypes';
+import { setNotificationMessage } from 'ducks/popup/popup';
+import { CompanyOwnersModel } from 'types';
 import { AppState, useAppDispatch } from 'store/store';
 import { NotificationTypes } from 'types/globalTypes';
-import { setNotificationMessage } from 'ducks/popup/popup';
 import { getAllCompanyEmployees } from 'ducks/employees/employees-data/employees-data-creators';
 import { getCompanyOwners, addNewCompanyOwner } from 'ducks/company/company-owners/company-owners-creators';
 
@@ -22,7 +22,7 @@ const AdminSettings: React.FC = () => {
 
   const [isAddNewToggled, setAddNewToggled] = useState<boolean>(false);
   const [isRemoveOpen, setRemoveOpen] = useState<boolean>(false);
-  const [companyOwnerToDelete, setCompanyOwnerToDelete] = useState<CompanyOwnersInterface | null>(null);
+  const [companyOwnerToDelete, setCompanyOwnerToDelete] = useState<CompanyOwnersModel | null>(null);
 
   useEffect(() => {
     allCompanyEmployees.length === 0 && dispatch(getAllCompanyEmployees());
@@ -33,7 +33,7 @@ const AdminSettings: React.FC = () => {
     dispatch(addNewCompanyOwner(userId));
   };
 
-  const listBoxCallback = (owner: CompanyOwnersInterface) => () => {
+  const listBoxCallback = (owner: CompanyOwnersModel) => () => {
     if (owner._id === userData?.userId) {
       dispatch(setNotificationMessage({ message: 'Nie możesz usunąc samego siebie', notificationType: NotificationTypes.Error }));
     } else {

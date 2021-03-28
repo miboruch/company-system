@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
 import { ArrowButton, Spinner } from 'components';
-import { WeekAttendance } from 'types/modelsTypes';
 import { useAppDispatch } from 'store/store';
-import { Direction } from 'types/globalTypes';
 import { compareDates } from 'utils/functions';
 import { useFetch, useShowContent } from 'components/hooks';
+import { fetchUserWeekAttendance } from 'api';
+import { Direction } from 'types/globalTypes';
+import { WeekAttendanceModel } from 'types';
 import { getWeekAttendance } from 'ducks/attendance/week-attendance-data/week-attendance-data-creators';
 import { months, weekDays } from 'utils/config';
 
@@ -20,10 +21,9 @@ import {
   StyledEmptyIcon,
   StyledNotCheckedIcon
 } from './WeekAttendanceComponent.styles';
-import { fetchUserWeekAttendance } from 'api';
 
 interface Props {
-  weekAttendance: WeekAttendance[];
+  weekAttendance: WeekAttendanceModel[];
   userId: string;
 }
 

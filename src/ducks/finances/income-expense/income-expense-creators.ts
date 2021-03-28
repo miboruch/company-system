@@ -2,6 +2,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { baseStoreType } from 'store/store';
 import { companyApi } from 'api';
 import { ExpenseInterface, IncomeDataInterface, IncomeInterface } from 'types/modelsTypes';
+
+
 import { setNotificationMessage } from '../../popup/popup';
 import { NotificationTypes } from 'types/globalTypes';
 import { fetchAllFinancesData } from '../finances-creators';

@@ -4,7 +4,6 @@ import { Formik } from 'formik';
 import Input from 'components/form/Input/Input';
 import { FormField, PopupTemplate, ModalButton } from 'components';
 import { AttendanceModel, ButtonType } from 'types';
-import { AttendanceInterface } from 'types/modelsTypes';
 import { useAppDispatch } from 'store/store';
 import { addAttendance, updateAttendance } from 'ducks/attendance/attendance-creators';
 import { AttendanceSchema } from 'validation/modelsValidation';

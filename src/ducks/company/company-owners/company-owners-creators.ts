@@ -1,53 +1,60 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { CompanyOwnersInterface } from 'types/modelsTypes';
-import { baseStoreType } from 'store/store';
-import { companyApi } from 'api';
+
 import { setNotificationMessage } from '../../popup/popup';
+import { CompanyOwnersModel } from 'types';
+import { baseStoreType } from 'store/store';
 import { NotificationTypes } from 'types/globalTypes';
+import { companyApi } from 'api';
 import { getAllCompanyEmployees } from '../../employees/employees-data/employees-data-creators';
 
-export const getCompanyOwners = createAsyncThunk<CompanyOwnersInterface[], void, baseStoreType>('companyOwners/getCompanyOwners', async (_arg, { dispatch, rejectWithValue, getState }) => {
-  try {
-    const { token } = getState().auth.tokens;
+export const getCompanyOwners = createAsyncThunk<CompanyOwnersModel[], void, baseStoreType>(
+  'companyOwners/getCompanyOwners',
+  async (_arg, { dispatch, rejectWithValue, getState }) => {
+    try {
+      const { token } = getState().auth.tokens;
 
-    if (token) {
-      const { data } = await companyApi.get('/company/get-company-owners', {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-
-      return data.owners as CompanyOwnersInterface[];
-    } else {
-      return [] as CompanyOwnersInterface[];
-    }
-  } catch (error) {
-    dispatch(setNotificationMessage({ message: error.response.data, notificationType: NotificationTypes.Error }));
-    return rejectWithValue(error.response.data);
-  }
-});
-
-export const addNewCompanyOwner = createAsyncThunk<void, string, baseStoreType>('companyOwners/addNewCompanyOwner', async (userId, { dispatch, getState }) => {
-  try {
-    const { token } = getState().auth.tokens;
-
-    if (token) {
-      await companyApi.post(
-        '/company/add-company-owner',
-        { toBeOwnerId: userId },
-        {
+      if (token) {
+        const { data } = await companyApi.get('/company/get-company-owners', {
           headers: {
             Authorization: `Bearer ${token}`
           }
-        }
-      );
+        });
 
-      dispatch(getCompanyOwners());
+        return data.owners as CompanyOwnersModel[];
+      } else {
+        return [] as CompanyOwnersModel[];
+      }
+    } catch (error) {
+      dispatch(setNotificationMessage({ message: error.response.data, notificationType: NotificationTypes.Error }));
+      return rejectWithValue(error.response.data);
     }
-  } catch (error) {
-    dispatch(setNotificationMessage({ message: error.response.data, notificationType: NotificationTypes.Error }));
   }
-});
+);
+
+export const addNewCompanyOwner = createAsyncThunk<void, string, baseStoreType>(
+  'companyOwners/addNewCompanyOwner',
+  async (userId, { dispatch, getState }) => {
+    try {
+      const { token } = getState().auth.tokens;
+
+      if (token) {
+        await companyApi.post(
+          '/company/add-company-owner',
+          { toBeOwnerId: userId },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
+
+        dispatch(getCompanyOwners());
+      }
+    } catch (error) {
+      dispatch(setNotificationMessage({ message: error.response.data, notificationType: NotificationTypes.Error }));
+    }
+  }
+);
 
 interface RemoveCompanyOwnerInterface {
   userId: string;

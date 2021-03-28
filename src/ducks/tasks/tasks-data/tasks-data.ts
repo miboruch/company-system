@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TaskInterface } from 'types/modelsTypes';
+import { TaskModel } from 'types';
 import { getCompanyTasks, getCompletedTasks, getEmployeeTasks } from './task-data-creators';
 
 interface InitialStateInterface {
-  allCompanyTasks: TaskInterface[];
+  allCompanyTasks: TaskModel[];
   areTasksLoading: boolean;
   tasksError: string | undefined;
   completedTasks: number;
@@ -27,7 +27,7 @@ const tasksDataSlice = createSlice({
       state.areTasksLoading = true;
       state.tasksError = undefined;
     });
-    builder.addCase(getCompanyTasks.fulfilled.type, (state, { payload }: PayloadAction<TaskInterface[]>) => {
+    builder.addCase(getCompanyTasks.fulfilled.type, (state, { payload }: PayloadAction<TaskModel[]>) => {
       state.areTasksLoading = false;
       state.tasksError = undefined;
       state.allCompanyTasks = payload;
@@ -36,7 +36,7 @@ const tasksDataSlice = createSlice({
       state.areTasksLoading = false;
       state.tasksError = payload;
     });
-    builder.addCase(getEmployeeTasks.fulfilled.type, (state, { payload }: PayloadAction<TaskInterface[]>) => {
+    builder.addCase(getEmployeeTasks.fulfilled.type, (state, { payload }: PayloadAction<TaskModel[]>) => {
       state.allCompanyTasks = payload;
     });
     builder.addCase(getCompletedTasks.fulfilled.type, (state, { payload }: PayloadAction<number>) => {

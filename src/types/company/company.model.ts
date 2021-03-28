@@ -12,3 +12,10 @@ export interface CompanyModel {
   phoneNumber: string;
   _id: string;
 }
+
+export interface CompanyOwnersModel {
+  _id: string;
+  email: string;
+  name: string;
+  lastName: string;
+}

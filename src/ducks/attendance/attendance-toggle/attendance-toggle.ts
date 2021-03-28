@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AttendanceInterface } from '../../../types/modelsTypes';
+import { AttendanceModel } from 'types';
 
 interface InitialStateInterface {
   isAttendanceInfoOpen: boolean;
   isAddNewAttendanceOpen: boolean;
-  selectedAttendance: AttendanceInterface | null;
+  selectedAttendance: AttendanceModel | null;
   attendanceDate: Date | string;
 }
 
@@ -19,7 +19,7 @@ const attendanceToggleSlice = createSlice({
   name: 'attendanceToggle',
   initialState,
   reducers: {
-    setSelectedAttendance: (state, { payload }: PayloadAction<AttendanceInterface | null>) => {
+    setSelectedAttendance: (state, { payload }: PayloadAction<AttendanceModel | null>) => {
       state.selectedAttendance = payload;
     },
     setDate: (state, { payload }: PayloadAction<Date>) => {
@@ -35,6 +35,12 @@ const attendanceToggleSlice = createSlice({
   }
 });
 
-export const { setSelectedAttendance, setDate, setAttendanceInfoOpen, setAddNewAttendanceOpen, resetAttendanceToggle } = attendanceToggleSlice.actions;
+export const {
+  setSelectedAttendance,
+  setDate,
+  setAttendanceInfoOpen,
+  setAddNewAttendanceOpen,
+  resetAttendanceToggle
+} = attendanceToggleSlice.actions;
 
 export default attendanceToggleSlice.reducer;
