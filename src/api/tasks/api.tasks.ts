@@ -19,11 +19,19 @@ export const fetchTask = (taskId: ParamsId) => () =>
     url: `/task/${taskId}`
   });
 
-export const fetchCompletedTasks = (daysBack?: number | 30) => {
+export const fetchCompletedTasks = ({ daysBack = 30 }: { daysBack?: number }) => () => {
   const query = queryString.stringify({ daysBack }, queryOptions);
   return fetchMiddleware<{ completedTasks: number }>({
     method: 'get',
     url: `/task/completed?${query}`
+  });
+};
+
+export const fetchCompletedPeriodTasks = ({ daysBack = 7 }: { daysBack: number }) => () => {
+  const query = queryString.stringify({ daysBack }, queryOptions);
+  return fetchMiddleware<{ date: Date; totalTasks: number }[]>({
+    method: 'get',
+    url: `/task/completed-tasks-period?${query}`
   });
 };
 

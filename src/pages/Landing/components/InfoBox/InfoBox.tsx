@@ -15,7 +15,7 @@ const InfoBox: React.FC = () => {
   const { showContent } = useShowContent(employeeData);
   const { payload: employeesCounter } = employeeData;
 
-  const completedTasksData = useFetch<typeof fetchCompletedTasks>(fetchCompletedTasks);
+  const completedTasksData = useFetch<typeof fetchCompletedTasks>(fetchCompletedTasks({ daysBack: 30 }));
   const { showContent: showTasksCounter } = useShowContent(employeeData);
   const { payload: completedTasks } = completedTasksData;
 
