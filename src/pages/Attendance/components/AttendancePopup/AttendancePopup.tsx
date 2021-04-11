@@ -11,12 +11,13 @@ import { AttendanceSchema } from 'validation/modelsValidation';
 import { ButtonWrapper, ContentWrapper } from 'styles/popupStyles';
 import { CheckedIcon, NotCheckedIcon, EmptyIcon } from 'styles/iconStyles';
 import { FlexWrapper, StyledForm, StyledParagraph, StyledFlexWrapper, InputWrapper } from './AttendancePopup.styles';
+import { useQuery } from 'components/hooks';
 
 interface Props {
   attendance: AttendanceModel | null;
   isOpen: boolean;
   handleClose: () => void;
-  date: Date;
+  date?: Date;
 }
 
 interface DefaultValues {
@@ -24,7 +25,8 @@ interface DefaultValues {
   hours: number;
 }
 
-const AttendancePopup: React.FC<Props> = ({ attendance, isOpen, handleClose, date }) => {
+const AttendancePopup: React.FC<Props> = ({ attendance, isOpen, handleClose, date = new Date() }) => {
+  const { removeQuery } = useQuery();
   const dispatch = useAppDispatch();
   const initialValues: DefaultValues = {
     wasPresent: !attendance?.attendance ? null : attendance.attendance.wasPresent,
@@ -41,6 +43,11 @@ const AttendancePopup: React.FC<Props> = ({ attendance, isOpen, handleClose, dat
         wasPresent !== null && dispatch(addAttendance({ userId: attendance.userId._id, date, wasPresent: wasPresent, hours }));
       }
     }
+  };
+
+  const close = () => {
+    handleClose();
+    removeQuery('attendance');
   };
 
   return (
@@ -94,7 +101,7 @@ const AttendancePopup: React.FC<Props> = ({ attendance, isOpen, handleClose, dat
                   </InputWrapper>
                 </ContentWrapper>
                 <ButtonWrapper>
-                  <ModalButton onClick={handleClose} buttonType={ButtonType.Cancel} text={'Zamknij'} />
+                  <ModalButton onClick={close} buttonType={ButtonType.Cancel} text={'Zamknij'} />
                   <ModalButton submit={true} buttonType={ButtonType.Add} text={'Akceptuj'} />
                 </ButtonWrapper>
               </StyledForm>

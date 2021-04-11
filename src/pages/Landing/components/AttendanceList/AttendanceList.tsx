@@ -10,11 +10,11 @@ import { StyledWrapper, DateHeading } from './AttendanceList.styles';
 import { SpinnerWrapper, Paragraph } from 'styles';
 
 interface Props {
+  handleAttendanceOpen: () => void;
   setSelectedAttendance?: React.Dispatch<React.SetStateAction<AttendanceModel | null>>;
-  setAttendanceOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const AttendanceList: React.FC<Props> = ({ setSelectedAttendance, setAttendanceOpen }) => {
+const AttendanceList: React.FC<Props> = ({ setSelectedAttendance, handleAttendanceOpen }) => {
   const { query, setQuery } = useQuery();
   const currentLocalDate = new Date().toLocaleDateString();
 
@@ -23,8 +23,9 @@ const AttendanceList: React.FC<Props> = ({ setSelectedAttendance, setAttendanceO
   const { payload: attendance } = dayAttendance;
 
   const listBoxCallback = (attendance: AttendanceModel) => () => {
+    setQuery('attendance', attendance._id);
     !!setSelectedAttendance && setSelectedAttendance(attendance);
-    !!setAttendanceOpen && setAttendanceOpen(true);
+    handleAttendanceOpen();
   };
 
   return (

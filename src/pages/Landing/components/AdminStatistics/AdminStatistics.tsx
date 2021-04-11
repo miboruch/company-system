@@ -15,10 +15,10 @@ import { StyledWrapper, Box, ListWrapper, ContentWrapper, StyledHeading, TextWra
 
 interface Props {
   isOpen: boolean;
-  setOpen: (isOpen: boolean) => void;
+  handleClose: () => void;
 }
 
-const AdminStatistics: React.FC<Props> = ({ isOpen, setOpen }) => {
+const AdminStatistics: React.FC<Props> = ({ isOpen, handleClose }) => {
   const dispatch = useAppDispatch();
   const { allCompanyEmployees, areEmployeesLoading } = useSelector((state: AppState) => state.employees.employeesData);
 
@@ -66,7 +66,7 @@ const AdminStatistics: React.FC<Props> = ({ isOpen, setOpen }) => {
     <StyledWrapper ref={mainWrapperRef}>
       <Box ref={wrapperRef}>
         <CloseButtonWrapper>
-          <CloseButton close={() => setOpen(false)} />
+          <CloseButton close={handleClose} />
         </CloseButtonWrapper>
         <ListWrapper>
           <StyledHeading>Pracownicy</StyledHeading>
