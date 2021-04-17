@@ -26,4 +26,7 @@ export * from './employee/api.employee';
 export * from './tasks/api.tasks';
 export * from './user/api.user';
 export * from './attendance/api.attendance';
+
 export * from './finances/api.finances';
+export * from './finances/api.income';
+export * from './finances/api.expense';

@@ -3,16 +3,14 @@ import { useSelector } from 'react-redux';
 import gsap from 'gsap';
 
 import GenerateInvoice from './components/GenerateInvoice/GenerateInvoice';
-import BudgetTile from './components/BudgetTile/BudgetTile';
 import BudgetHistoryList from './components/BudgetHistoryList/BudgetHistoryList';
 import IncomeExpensePopup, { FinancePopupInterface } from './components/IncomeExpensePopup/IncomeExpensePopup';
 import { fetchAllFinancesData } from 'ducks/finances/finances-creators';
 import { AppState, useAppDispatch } from 'store/store';
-import { GridWrapper, MenuTemplate, Chart } from 'components';
+import { GridWrapper, MenuTemplate } from 'components';
 import { ExpenseModel, IncomeModel } from 'types';
 import { currencyTypes, getCurrencyValue } from 'ducks/currency/currency-creators';
 import { contentAnimation } from 'animations/animations';
-import { roundTo2 } from 'utils/functions';
 import { appCurrencies } from 'utils/config';
 import { InfoWrapper, StatisticsHeading } from 'pages/Landing/Landing.styles';
 import { getIncomeExpenseInTimePeriod } from 'ducks/finances/income-expense/income-expense-creators';
@@ -20,7 +18,6 @@ import { getIncomeExpenseInTimePeriod } from 'ducks/finances/income-expense/inco
 import { Heading } from 'styles';
 import { ArrowIcon } from 'styles/iconStyles';
 import {
-  BudgetWrapper,
   ButtonWrapper,
   Content,
   CurrencyBox,
@@ -30,6 +27,7 @@ import {
 } from 'pages/Finances/Finances.styles';
 import { ContentGridWrapper } from 'styles/HomePageContentGridStyles';
 import FinancesChart from './components/FinancesChart/FinancesChart';
+import BudgetInfo from './components/BudgetInfo/BudgetInfo';
 
 const Finances: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -50,12 +48,6 @@ const Finances: React.FC = () => {
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
 
-  const prepareExpenseValue = (history: IncomeModel | ExpenseModel) =>
-    history.expenseValue
-      ? -1 * roundTo2(history.expenseValue * currency.value)
-      : history.incomeValue
-      ? roundTo2(history.incomeValue * currency.value)
-      : 0;
   const prepareCurrencyValue = (currencyName: currencyTypes) => () => dispatch(getCurrencyValue(currencyName));
 
   const handleIncomePopupOpen = () => {
@@ -87,17 +79,7 @@ const Finances: React.FC = () => {
       <GridWrapper mobilePadding={true} onlyHeader={true} pageName={'Finanse'}>
         <Content>
           <ContentGridWrapper ref={contentRef} isFinancesPage={true}>
-            <BudgetWrapper>
-              <BudgetTile description={'Budżet firmy'} name={'Aktualny budżet firmy'} value={roundTo2(budget * currency.value)} />
-              {budgetHistoryData.slice(0, 2).map((history) => (
-                <BudgetTile
-                  key={history._id}
-                  description={'Finanse'}
-                  value={prepareExpenseValue(history)}
-                  name={history.description}
-                />
-              ))}
-            </BudgetWrapper>
+            <BudgetInfo />
             <FinancesChart />
             <BudgetHistoryList budgetHistory={budgetHistoryData} />
             <InfoBoxWrapper noPadding={true}>

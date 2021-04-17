@@ -48,7 +48,7 @@ export const getLastIncomesAndExpenses = createAsyncThunk<LastIncomesExpensesRet
 
     try {
       if (token) {
-        const { data } = await companyApi.get(`/budget/get-last-income-expense`, {
+        const { data } = await companyApi.get(`/budget/last-income-expense`, {
           headers: {
             Authorization: `Bearer ${token}`
           }

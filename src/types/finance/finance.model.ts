@@ -19,3 +19,14 @@ export interface FinancesModel extends IncomeExpenseInterface {
   incomeValue: number;
   expenseValue: number;
 }
+
+export interface LastIncomeExpense {
+  incomes: IncomeModel[];
+  expenses: ExpenseModel[];
+}
+
+export interface CompanyBudget {
+  budget: number;
+  _id: string;
+  companyId: string;
+}
