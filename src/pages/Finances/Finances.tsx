@@ -29,6 +29,7 @@ import {
   RightIncomeExpenseField
 } from 'pages/Finances/Finances.styles';
 import { ContentGridWrapper } from 'styles/HomePageContentGridStyles';
+import FinancesChart from './components/FinancesChart/FinancesChart';
 
 const Finances: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -97,16 +98,7 @@ const Finances: React.FC = () => {
                 />
               ))}
             </BudgetWrapper>
-            <Chart
-              xAxisDataKey={'createdDate'}
-              secondBarDataKey={'expenseValue'}
-              secondBarDataName={'Wydatek'}
-              barDataKey={'incomeValue'}
-              barDataName={'Dochód'}
-              data={chartData}
-              setDaysBack={setDaysBackTo}
-              daysBack={daysBack}
-            />
+            <FinancesChart />
             <BudgetHistoryList budgetHistory={budgetHistoryData} />
             <InfoBoxWrapper noPadding={true}>
               {appCurrencies.map((currencyName) => (

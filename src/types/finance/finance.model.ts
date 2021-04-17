@@ -14,3 +14,8 @@ export interface ExpenseModel extends IncomeExpenseInterface {
   expenseValue: number;
   incomeValue?: never;
 }
+
+export interface FinancesModel extends IncomeExpenseInterface {
+  incomeValue: number;
+  expenseValue: number;
+}

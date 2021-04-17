@@ -12,33 +12,36 @@ interface AddAttendanceInterface {
   hours: number;
 }
 
-export const addAttendance = createAsyncThunk<void, AddAttendanceInterface, baseStoreType>('attendance/addAttendance', async ({ userId, date, wasPresent, hours }, { dispatch, getState }) => {
-  const { token } = getState().auth.tokens;
+export const addAttendance = createAsyncThunk<void, AddAttendanceInterface, baseStoreType>(
+  'attendance/addAttendance',
+  async ({ userId, date, wasPresent, hours }, { dispatch, getState }) => {
+    const { token } = getState().auth.tokens;
 
-  try {
-    if (token) {
-      await companyApi.post(
-        `/attendance/add-new`,
-        {
-          userId,
-          date,
-          wasPresent,
-          hours: hours ? hours : 0
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
+    try {
+      if (token) {
+        await companyApi.post(
+          `/attendance/add-new`,
+          {
+            userId,
+            date,
+            wasPresent,
+            hours: hours ? hours : 0
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
           }
-        }
-      );
+        );
 
-      dispatch(setNotificationMessage({ message: 'Dodano obecność' }));
-      dispatch(getSingleDayAttendance());
+        dispatch(setNotificationMessage({ message: 'Dodano obecność' }));
+        dispatch(getSingleDayAttendance());
+      }
+    } catch (error) {
+      dispatch(setNotificationMessage({ message: error.response.data, notificationType: NotificationTypes.Error }));
     }
-  } catch (error) {
-    dispatch(setNotificationMessage({ message: error.response.data, notificationType: NotificationTypes.Error }));
   }
-});
+);
 
 interface UpdateAttendanceInterface {
   attendanceId: string;
@@ -46,29 +49,31 @@ interface UpdateAttendanceInterface {
   hours: number;
 }
 
-export const updateAttendance = createAsyncThunk<void, UpdateAttendanceInterface, baseStoreType>('attendance/updateAttendance', async ({ attendanceId, wasPresent, hours }, { dispatch, getState }) => {
-  const { token } = getState().auth.tokens;
+export const updateAttendance = createAsyncThunk<void, UpdateAttendanceInterface, baseStoreType>(
+  'attendance/updateAttendance',
+  async ({ attendanceId, wasPresent, hours }, { dispatch, getState }) => {
+    const { token } = getState().auth.tokens;
 
-  try {
-    if (token) {
-      await companyApi.put(
-        `/attendance/edit-attendance`,
-        {
-          attendanceId,
-          wasPresent,
-          hours
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
+    try {
+      if (token) {
+        await companyApi.put(
+          `/attendance/${attendanceId}`,
+          {
+            wasPresent,
+            hours
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
           }
-        }
-      );
+        );
 
-      dispatch(setNotificationMessage({ message: 'Zaktualizowano obecność' }));
-      dispatch(getSingleDayAttendance());
+        dispatch(setNotificationMessage({ message: 'Zaktualizowano obecność' }));
+        dispatch(getSingleDayAttendance());
+      }
+    } catch (error) {
+      dispatch(setNotificationMessage({ message: error.response.data, notificationType: NotificationTypes.Error }));
     }
-  } catch (error) {
-    dispatch(setNotificationMessage({ message: error.response.data, notificationType: NotificationTypes.Error }));
   }
-});
+);
