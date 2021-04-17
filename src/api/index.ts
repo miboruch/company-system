@@ -18,7 +18,6 @@ const companyApi = axios.create({
 export { api, authApi, companyApi };
 
 export * from './auth/api.auth';
-export * from './auth/api.register';
 
 export * from './client/api.client';
 export * from './company/api.company';

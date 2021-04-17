@@ -39,7 +39,7 @@ export const getSingleCompany = createAsyncThunk<void, string, baseStoreType>(
     try {
       const { token } = getState().auth.tokens;
       if (token) {
-        const { data } = await companyApi.get(`/company/get-company-info/${companyId}`, {
+        const { data } = await companyApi.get(`/company/${companyId}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -71,7 +71,7 @@ export const editCompany = createAsyncThunk<void, EditCompanyInterface, baseStor
 
     try {
       if (token && currentCompany) {
-        await companyApi.put(`/company/edit-company`, values, {
+        await companyApi.put(`/company`, values, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -96,7 +96,7 @@ export const editCompanyCoords = createAsyncThunk<void, { lat: number; long: num
     try {
       if (token && currentCompany) {
         await companyApi.put(
-          `/company/edit-company-coords`,
+          `/company/coords`,
           { lat, long },
           {
             headers: {
@@ -122,7 +122,7 @@ export const deleteCompany = createAsyncThunk<void, () => void, baseStoreType>(
 
     try {
       if (token) {
-        await companyApi.put(`/company/remove-company`, {
+        await companyApi.delete(`/company`, {
           headers: {
             Authorization: `Bearer ${token}`
           }

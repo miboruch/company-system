@@ -15,3 +15,10 @@ export interface EditAccountData {
 }
 
 export const putUserData = (data: EditAccountData) => fetchMiddleware({ method: 'put', url: '/user', data });
+
+interface EditPasswordData {
+  password: string;
+  repeatedPassword: string;
+}
+
+export const putUserPassword = (data: EditPasswordData) => fetchMiddleware({ method: 'put', url: '/user/password', data });

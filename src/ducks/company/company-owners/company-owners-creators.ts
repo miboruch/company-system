@@ -14,7 +14,7 @@ export const getCompanyOwners = createAsyncThunk<CompanyOwnersModel[], void, bas
       const { token } = getState().auth.tokens;
 
       if (token) {
-        const { data } = await companyApi.get('/company/get-company-owners', {
+        const { data } = await companyApi.get('/company/owners', {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -39,7 +39,7 @@ export const addNewCompanyOwner = createAsyncThunk<void, string, baseStoreType>(
 
       if (token) {
         await companyApi.post(
-          '/company/add-company-owner',
+          '/company/owner',
           { toBeOwnerId: userId },
           {
             headers: {
@@ -71,7 +71,7 @@ export const removeCompanyOwner = createAsyncThunk<void, RemoveCompanyOwnerInter
 
       if (token) {
         await companyApi.post(
-          '/company/remove-company-owner',
+          '/company/owner',
           { toBeRemovedId: userId, addEmployee, pricePerHour, monthlyPrice },
           {
             headers: {
