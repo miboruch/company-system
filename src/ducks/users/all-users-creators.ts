@@ -10,7 +10,7 @@ export const getAllAppUsers = createAsyncThunk<UserModel[], void, baseStoreType>
 
     try {
       if (token) {
-        const { data } = await companyApi.get(`/user/app-users`, {
+        const { data } = await companyApi.get(`/user/app`, {
           headers: {
             Authorization: `Bearer ${token}`
           }

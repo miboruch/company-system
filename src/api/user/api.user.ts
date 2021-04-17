@@ -1,7 +1,9 @@
 import fetchMiddleware from 'api/api.middleware';
-import { UserAuthModel } from 'types';
+import { UserAuthModel, UserModel } from 'types';
 
 export const fetchUserData = () => fetchMiddleware<UserAuthModel>({ method: 'get', url: '/user' });
+
+export const fetchAppUsers = () => fetchMiddleware<UserModel[]>({ method: 'get', url: '/user/app' });
 
 export interface EditAccountData {
   email: string;
