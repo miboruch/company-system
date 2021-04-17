@@ -18,13 +18,13 @@ const popupSlice = createSlice({
     setNotificationMessage: (state, { payload }: PayloadAction<NotificationMessageTemp>) => {
       state.isNotificationOpen = !!payload.message;
       state.notificationMessage = {
-        notificationType: payload.notificationType || NotificationTypes.Success,
+        type: payload.notificationType || NotificationTypes.Success,
         message: payload.message
       };
     },
     setNotification: (state, { payload }: PayloadAction<NotificationMessage>) => {
       state.isNotificationOpen = !!payload.message;
-      state.notificationMessage = { notificationType: payload.notificationType || 'error', message: payload.message };
+      state.notificationMessage = { type: payload.type || 'error', message: payload.message };
     }
   }
 });

@@ -10,13 +10,10 @@ import { ButtonWrapper, ContentWrapper } from 'styles/popupStyles';
 import { StyledForm, StyledInput } from './IncomeExpensePopup.styles';
 import { IncomeExpenseSchema } from 'validation/modelsValidation';
 
-export enum FinancePopupInterface {
-  Income = 'income',
-  Expense = 'expense'
-}
+export type PopupType = 'income' | 'expense';
 
 interface Props {
-  type: FinancePopupInterface;
+  type: PopupType;
   isOpen: boolean;
   setOpen: (isOpen: boolean) => void;
 }
@@ -34,7 +31,7 @@ const IncomeExpensePopup: React.FC<Props> = ({ type, isOpen, setOpen }) => {
   };
 
   const handleSubmit = ({ value, description }: DefaultValue) => {
-    type === FinancePopupInterface.Income
+    type === 'income'
       ? dispatch(addIncome({ incomeValue: value, description, callback: () => setOpen(false) }))
       : dispatch(addExpense({ expenseValue: value, description, callback: () => setOpen(false) }));
   };
@@ -44,7 +41,7 @@ const IncomeExpensePopup: React.FC<Props> = ({ type, isOpen, setOpen }) => {
   return (
     <PopupTemplate
       isOpen={isOpen}
-      headerText={`Dodaj ${type === FinancePopupInterface.Expense ? 'wydatek' : 'przychód'}`}
+      headerText={`Dodaj ${type === 'expense' ? 'wydatek' : 'przychód'}`}
       isHigher={false}
     >
       <div>
@@ -65,7 +62,7 @@ const IncomeExpensePopup: React.FC<Props> = ({ type, isOpen, setOpen }) => {
                   required={true}
                   value={values.value}
                   type={'number'}
-                  labelText={errors.value || type === FinancePopupInterface.Expense ? 'Wydatek' : 'Przychód'}
+                  labelText={errors.value || type === 'expense' ? 'Wydatek' : 'Przychód'}
                 />
                 <Input
                   onChange={handleChange}

@@ -32,7 +32,7 @@ const EmployeeInfo: React.FC<Props> = ({ isDeleteOpen, setDeleteOpen }) => {
     updateEmployee(query.employee)
   );
   onSubmitSuccess(async () => {
-    dispatch(setNotification({ message: 'Zaktualizowano', notificationType: 'success' }));
+    dispatch(setNotification({ message: 'Zaktualizowano', type: 'success' }));
     await refresh();
   });
   onSubmitError(({ message }) => dispatch(setNotification({ message })));

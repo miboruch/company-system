@@ -1,63 +1,43 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
 import gsap from 'gsap';
 
-import GenerateInvoice from './components/GenerateInvoice/GenerateInvoice';
-import BudgetHistoryList from './components/BudgetHistoryList/BudgetHistoryList';
-import IncomeExpensePopup, { FinancePopupInterface } from './components/IncomeExpensePopup/IncomeExpensePopup';
-import { fetchAllFinancesData } from 'ducks/finances/finances-creators';
-import { AppState, useAppDispatch } from 'store/store';
-import { GridWrapper, MenuTemplate } from 'components';
-import { ExpenseModel, IncomeModel } from 'types';
-import { currencyTypes, getCurrencyValue } from 'ducks/currency/currency-creators';
-import { contentAnimation } from 'animations/animations';
-import { appCurrencies } from 'utils/config';
-import { InfoWrapper, StatisticsHeading } from 'pages/Landing/Landing.styles';
-import { getIncomeExpenseInTimePeriod } from 'ducks/finances/income-expense/income-expense-creators';
-
-import { Heading } from 'styles';
-import { ArrowIcon } from 'styles/iconStyles';
-import {
-  ButtonWrapper,
-  Content,
-  CurrencyBox,
-  IncomeExpenseField,
-  InfoBoxWrapper,
-  RightIncomeExpenseField
-} from 'pages/Finances/Finances.styles';
-import { ContentGridWrapper } from 'styles/HomePageContentGridStyles';
 import FinancesChart from './components/FinancesChart/FinancesChart';
 import BudgetInfo from './components/BudgetInfo/BudgetInfo';
+import Currency from './components/Currency/Currency';
+import GenerateInvoice from './components/GenerateInvoice/GenerateInvoice';
+import BudgetHistoryList from './components/BudgetHistoryList/BudgetHistoryList';
+import IncomeExpensePopup, { PopupType } from './components/IncomeExpensePopup/IncomeExpensePopup';
+import { fetchAllFinancesData } from 'ducks/finances/finances-creators';
+import { useAppDispatch } from 'store/store';
+import { GridWrapper, MenuTemplate } from 'components';
+import { contentAnimation } from 'animations/animations';
+import { ExpenseModel, IncomeModel } from 'types';
+import { InfoWrapper, StatisticsHeading } from 'pages/Landing/Landing.styles';
+
+import { ArrowIcon } from 'styles/iconStyles';
+import { ContentGridWrapper } from 'styles/HomePageContentGridStyles';
+import { ButtonWrapper, Content, IncomeExpenseField, RightIncomeExpenseField } from 'pages/Finances/Finances.styles';
 
 const Finances: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { currency } = useSelector((state: AppState) => state.currency);
-  const { lastIncomes, lastExpenses } = useSelector((state: AppState) => state.finances.incomeExpense);
-  const { budget } = useSelector((state: AppState) => state.finances.budget);
-  const [isPopupOpen, setPopupOpen] = useState<boolean>(false);
-  const [isGenerateInvoiceOpen, setGenerateInvoiceOpen] = useState<boolean>(false);
-  const [popupType, setPopupType] = useState<FinancePopupInterface>(FinancePopupInterface.Income);
-  const [chartData, setChartData] = useState<Array<IncomeModel> | null>(null);
-  const [daysBack, setDaysBackTo] = useState<number>(7);
-  const [budgetHistoryData, setBudgetHistoryData] = useState<(IncomeModel | ExpenseModel)[]>([]);
 
-  useEffect(() => {
-    setBudgetHistoryData([...lastExpenses, ...lastIncomes]);
-  }, [lastIncomes, lastExpenses]);
+  const [isPopupOpen, setPopupOpen] = useState<boolean>(false);
+  const [popupType, setPopupType] = useState<PopupType>('income');
+  const [finances, setFinances] = useState<(IncomeModel | ExpenseModel)[]>([]);
+
+  const [isGenerateInvoiceOpen, setGenerateInvoiceOpen] = useState<boolean>(false);
 
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
 
-  const prepareCurrencyValue = (currencyName: currencyTypes) => () => dispatch(getCurrencyValue(currencyName));
-
   const handleIncomePopupOpen = () => {
     setPopupOpen(true);
-    setPopupType(FinancePopupInterface.Income);
+    setPopupType('income');
   };
 
   const handleExpensePopupOpen = () => {
     setPopupOpen(true);
-    setPopupType(FinancePopupInterface.Expense);
+    setPopupType('expense');
   };
 
   const handleInvoiceOpen = () => setGenerateInvoiceOpen(true);
@@ -65,10 +45,6 @@ const Finances: React.FC = () => {
   useEffect(() => {
     contentAnimation(tl, contentRef);
   }, []);
-
-  useEffect(() => {
-    dispatch(getIncomeExpenseInTimePeriod({ daysBack, setData: setChartData }));
-  }, [daysBack]);
 
   useEffect(() => {
     dispatch(fetchAllFinancesData());
@@ -79,20 +55,10 @@ const Finances: React.FC = () => {
       <GridWrapper mobilePadding={true} onlyHeader={true} pageName={'Finanse'}>
         <Content>
           <ContentGridWrapper ref={contentRef} isFinancesPage={true}>
-            <BudgetInfo />
+            <BudgetInfo setFinances={setFinances} />
             <FinancesChart />
-            <BudgetHistoryList budgetHistory={budgetHistoryData} />
-            <InfoBoxWrapper noPadding={true}>
-              {appCurrencies.map((currencyName) => (
-                <CurrencyBox
-                  key={currencyName}
-                  isActive={currencyName === currency.name}
-                  onClick={prepareCurrencyValue(currencyName)}
-                >
-                  <Heading>{currencyName}</Heading>
-                </CurrencyBox>
-              ))}
-            </InfoBoxWrapper>
+            <BudgetHistoryList finances={finances} />
+            <Currency />
             <ButtonWrapper>
               <IncomeExpenseField onClick={handleIncomePopupOpen}>
                 <StatisticsHeading>Dochód</StatisticsHeading>

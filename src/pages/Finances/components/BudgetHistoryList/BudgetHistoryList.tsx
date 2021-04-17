@@ -3,49 +3,38 @@ import { useSelector } from 'react-redux';
 
 import { ListBox } from 'components';
 import { roundTo2 } from 'utils/functions';
-import { IncomeModel, ExpenseModel } from 'types';
 import { AppState } from 'store/store';
+import { ExpenseModel, IncomeModel } from 'types';
 
-import { Paragraph, EmptyWrapper } from 'styles';
+import { Paragraph } from 'styles';
 import { StyledWrapper, ContentWrapper, Title } from './BudgetHistoryList.styles';
 
 interface Props {
-  budgetHistory: (IncomeModel | ExpenseModel)[];
+  finances: (IncomeModel | ExpenseModel)[];
 }
 
-const BudgetHistoryList: React.FC<Props> = ({ budgetHistory }) => {
+const BudgetHistoryList: React.FC<Props> = ({ finances }) => {
   const { currency } = useSelector((state: AppState) => state.currency);
 
-  const prepareExpenseValue = (history: IncomeModel | ExpenseModel) =>
-    `${
-      history.expenseValue
-        ? -1 * roundTo2(history.expenseValue * currency.value)
-        : history.incomeValue
-        ? roundTo2(history.incomeValue * currency.value)
-        : 0
-    } ${currency.name}`;
+  const prepareExpenseValue = (income?: number, expense?: number) =>
+    `${expense ? -1 * roundTo2(expense * currency.value) : income ? roundTo2(income * currency.value) : 0} ${currency.name}`;
 
   return (
     <StyledWrapper>
       <Title>Historia</Title>
       <ContentWrapper>
-        {budgetHistory.length === 0 ? (
-          <EmptyWrapper>
-            <Paragraph type={'empty'}>Brak danych</Paragraph>
-          </EmptyWrapper>
-        ) : (
-          budgetHistory.map((history, index: number) => (
-            <ListBox
-              key={history._id}
-              name={history.description}
-              topDescription={new Date(history.createdDate).toLocaleDateString()}
-              bottomDescription={history.incomeValue ? 'Przychód' : 'Wydatek'}
-              isCompanyBox={false}
-              isEmpty={true}
-              value={prepareExpenseValue(history)}
-            />
-          ))
-        )}
+        {finances.length === 0 && <Paragraph>Brak danych</Paragraph>}
+        {finances.map(({ _id, description, createdDate, incomeValue, expenseValue }) => (
+          <ListBox
+            key={_id}
+            name={description}
+            topDescription={new Date(createdDate).toLocaleDateString()}
+            bottomDescription={incomeValue ? 'Przychód' : 'Wydatek'}
+            isCompanyBox={false}
+            isEmpty={true}
+            value={prepareExpenseValue(incomeValue, expenseValue)}
+          />
+        ))}
       </ContentWrapper>
     </StyledWrapper>
   );

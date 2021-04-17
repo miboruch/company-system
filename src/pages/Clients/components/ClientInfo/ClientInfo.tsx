@@ -38,7 +38,7 @@ const ClientInfo: React.FC<Props> = ({ isEditToggled, setEditToggled, setDeleteO
 
   const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit<typeof putClient, PutClientInfo>(putClient(query.client));
   onSubmitSuccess(async () => {
-    dispatch(setNotification({ message: 'Zaktualizowano', notificationType: 'success' }));
+    dispatch(setNotification({ message: 'Zaktualizowano', type: 'success' }));
     await refresh();
   });
   onSubmitError(({ message }) => dispatch(setNotification({ message })));
