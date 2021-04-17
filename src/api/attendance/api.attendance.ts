@@ -20,6 +20,15 @@ export const fetchUserWeekAttendance = (userId: ParamsId, week: number) => () =>
   return fetchMiddleware<WeekAttendanceModel[]>({ method: 'get', url: `/attendance/user-week?${query}` });
 };
 
+export interface PostAttendanceData {
+  userId: ParamsId;
+  date: Date;
+  wasPresent: boolean;
+  hours: number;
+}
+
+export const postAttendance = (data: PostAttendanceData) => fetchMiddleware({ method: 'post', url: `/attendance`, data });
+
 export interface UpdateAttendanceData {
   wasPresent: boolean;
   hours: number;

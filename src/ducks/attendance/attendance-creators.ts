@@ -20,7 +20,7 @@ export const addAttendance = createAsyncThunk<void, AddAttendanceInterface, base
     try {
       if (token) {
         await companyApi.post(
-          `/attendance/add-new`,
+          `/attendance`,
           {
             userId,
             date,

@@ -6,6 +6,7 @@ import { AttendanceModel } from 'types';
 import { baseStoreType } from 'store/store';
 import { API_URL } from 'utils/config';
 
+//---------------------
 export const getSingleDayAttendance = createAsyncThunk<AttendanceModel[], Date | void, baseStoreType>(
   'attendanceData/getSingleDayAttendance',
   async (date, { rejectWithValue, getState }) => {
