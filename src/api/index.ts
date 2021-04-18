@@ -29,3 +29,5 @@ export * from './attendance/api.attendance';
 export * from './finances/api.finances';
 export * from './finances/api.income';
 export * from './finances/api.expense';
+
+export * from './notification/api.notification';

@@ -1,11 +1,8 @@
 import fetchMiddleware from 'api/api.middleware';
-import { TaskModel, TaskDataModel, ParamsId, ClientModel } from 'types';
 import queryString from 'query-string';
-import { queryOptions } from 'utils/config';
 
-/**
- * @get
- */
+import { TaskModel, TaskDataModel, ParamsId, ClientModel } from 'types';
+import { queryOptions } from 'utils/config';
 
 export const fetchTasks = () => fetchMiddleware<TaskModel[]>({ method: 'get', url: `/task/company` });
 

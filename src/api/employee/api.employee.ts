@@ -1,4 +1,5 @@
 import fetchMiddleware from 'api/api.middleware';
+
 import { UserRole } from 'ducks/auth/roles/roles';
 import { EmployeeModel, ParamsId } from 'types';
 
