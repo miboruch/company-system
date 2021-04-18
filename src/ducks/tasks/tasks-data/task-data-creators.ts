@@ -40,7 +40,7 @@ export const getEmployeeTasks = createAsyncThunk<TaskModel[], void, baseStoreTyp
 
     try {
       if (token && employeeData) {
-        const { data } = await companyApi.get(`/task/get-employee-tasks/${employeeData._id}`, {
+        const { data } = await companyApi.get(`/task/employee/${employeeData._id}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
