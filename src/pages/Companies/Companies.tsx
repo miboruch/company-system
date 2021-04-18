@@ -34,7 +34,8 @@ const Companies: React.FC = () => {
   const handleCompanyClick = (company: CompanyModel) => () =>
     dispatch(
       setCurrentCompany(company, () =>
-        history.push(role === UserRole.Admin ? `/admin/home/${company._id}` : `/user/home/${company._id}`)
+        // history.push(role === UserRole.Admin ? `/admin/home/${company._id}` : `/user/home/${company._id}`)
+        history.push(role === UserRole.Admin ? `/company/${company._id}/home` : `/company/${company._id}/home`)
       )
     );
   return (

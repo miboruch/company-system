@@ -4,7 +4,7 @@ import { useParams, useRouteMatch } from 'react-router-dom';
 
 import { AppState } from 'store/store';
 import { UserRole } from 'ducks/auth/roles/roles';
-import { adminRoutes, userRoutes } from 'routes/routes.config';
+import { adminRoutes, userRoutes } from 'routes/menu.routes';
 import { LinkWrapper, StyledLink } from './Menu.styles';
 import { MenuContext } from 'providers/MenuContext/MenuContext';
 
@@ -24,10 +24,10 @@ const MenuItemsRenderer: React.FC = () => {
 
   const renderAdminRoutes = adminRoutes
     .filter((route) => (condition ? route : !route.isGuarded))
-    .map(({ name, main, icon }) => (
+    .map(({ name, path, main, icon }) => (
       <LinkWrapper isActive={url.includes(main)} key={main}>
         {icon}
-        <StyledLink to={`${main}/${id}`} onClick={handleCloseMenu}>
+        <StyledLink to={`/company/${id}${path}`} onClick={handleCloseMenu}>
           {name}
         </StyledLink>
       </LinkWrapper>
@@ -35,10 +35,10 @@ const MenuItemsRenderer: React.FC = () => {
 
   const renderUserRoutes = userRoutes
     .filter((route) => (condition ? route : !route.isGuarded))
-    .map(({ name, main, icon }) => (
+    .map(({ name, path, main, icon }) => (
       <LinkWrapper isActive={url.includes(main)} key={main}>
         {icon}
-        <StyledLink to={`${main}/${id}`} onClick={handleCloseMenu}>
+        <StyledLink to={`/company/${id}${path}`} onClick={handleCloseMenu}>
           {name}
         </StyledLink>
       </LinkWrapper>

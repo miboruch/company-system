@@ -10,7 +10,7 @@ interface InitialStateInterface {
 }
 
 const initialState: InitialStateInterface = {
-  role: UserRole.User
+  role: UserRole.Admin
 };
 
 const roleSlice = createSlice({

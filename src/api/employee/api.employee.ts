@@ -29,3 +29,5 @@ export interface UpdateEmployeeData {
 
 export const updateEmployee = (id: ParamsId) => (data: UpdateEmployeeData) =>
   fetchMiddleware({ method: 'put', url: `/employee/${id}`, data });
+
+export const deleteEmployee = (id: ParamsId) => fetchMiddleware({ method: 'put', url: `/employee/${id}` });

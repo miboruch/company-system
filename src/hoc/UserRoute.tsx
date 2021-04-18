@@ -15,7 +15,11 @@ const UserRoute: React.FC<Props> = ({ component: Component, path, exact }) => {
   const { role } = useSelector((state: AppState) => state.auth.roles);
   const { isLoggedIn } = useSelector((state: AppState) => state.auth.check);
 
-  return isLoggedIn && role === UserRole.User ? <Route path={path} exact={exact} component={Component} /> : <Redirect to='/login' />;
+  return isLoggedIn && role === UserRole.User ? (
+    <Route path={path} exact={exact} component={Component} />
+  ) : (
+    <Redirect to='/login' />
+  );
 };
 
 export default UserRoute;

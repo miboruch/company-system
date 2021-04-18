@@ -8,87 +8,70 @@ import Clients from 'pages/Clients/Clients';
 import Attendance from 'pages/Attendance/Attendance';
 import Finances from 'pages/Finances/Finances';
 import Settings from 'pages/Settings/Settings';
+import { MenuItem, Route } from 'types';
 
 import { HomeIcon, PaymentIcon, ListIcon, SupportIcon, UserIcon, SettingsIcon } from 'styles/shared';
 
-interface Routes {
-  path: string;
-  main: string;
-  exact: boolean;
-  component: React.FC;
-  name: string;
-  icon: React.ReactNode;
-  isGuarded: boolean;
-}
-
-export const adminRoutes: Routes[] = [
+export const adminRoutes: MenuItem[] = [
   {
-    path: '/admin/home/:id',
+    path: '/home',
     main: '/admin/home',
-    exact: false,
     component: Landing,
     name: 'Strona główna',
     icon: <HomeIcon />,
     isGuarded: true
   },
   {
-    path: '/admin/employees/:id',
+    path: '/employees',
     main: '/admin/employees',
-    exact: false,
     component: Employee,
     name: 'Pracownicy',
     icon: <UserIcon />,
     isGuarded: true
   },
   {
-    path: '/admin/tasks/:id',
+    path: '/tasks',
     main: '/admin/tasks',
-    exact: false,
     component: Task,
     name: 'Zadania',
     icon: <ListIcon />,
     isGuarded: true
   },
   {
-    path: '/admin/finances/:id',
+    path: '/finances',
     main: '/admin/finances',
-    exact: false,
     component: Finances,
     name: 'Finanse',
     icon: <PaymentIcon />,
     isGuarded: true
   },
   {
-    path: '/admin/client/:id',
+    path: '/client',
     main: '/admin/client',
-    exact: false,
     component: Clients,
     name: 'Klienci',
     icon: <SupportIcon />,
     isGuarded: true
   },
   {
-    path: '/admin/attendance/:id',
+    path: '/attendance',
     main: '/admin/attendance',
-    exact: false,
     component: Attendance,
     name: 'Lista obecności',
     icon: <ListIcon />,
     isGuarded: true
   },
   {
-    path: '/admin/companies',
+    path: '/companies',
     main: '/admin/companies',
-    exact: false,
     component: Companies,
     name: 'Twoje firmy',
     icon: <HomeIcon />,
     isGuarded: false
   },
   {
-    path: '/admin/settings/:id',
+    path: '/settings',
     main: '/admin/settings',
-    exact: false,
     component: Settings,
     name: 'Ustawienia',
     icon: <SettingsIcon />,
@@ -96,11 +79,10 @@ export const adminRoutes: Routes[] = [
   }
 ];
 
-export const userRoutes: Routes[] = [
+export const userRoutes: MenuItem[] = [
   {
     path: '/user/home/:id',
     main: '/user/home',
-    exact: false,
     component: Landing,
     name: 'Strona główna',
     icon: <HomeIcon />,
@@ -109,7 +91,6 @@ export const userRoutes: Routes[] = [
   {
     path: '/user/tasks/:id',
     main: '/user/tasks',
-    exact: false,
     component: Task,
     name: 'Zadania',
     icon: <ListIcon />,
@@ -118,7 +99,6 @@ export const userRoutes: Routes[] = [
   {
     path: '/user/attendance/:id',
     main: '/user/attendance',
-    exact: false,
     component: Attendance,
     name: 'Lista obecności',
     icon: <ListIcon />,
@@ -127,7 +107,6 @@ export const userRoutes: Routes[] = [
   {
     path: '/user/companies',
     main: '/user/companies',
-    exact: false,
     component: Companies,
     name: 'Twoje firmy',
     icon: <HomeIcon />,
@@ -136,7 +115,6 @@ export const userRoutes: Routes[] = [
   {
     path: '/user/settings/:id',
     main: '/user/settings',
-    exact: false,
     component: Settings,
     name: 'Ustawienia',
     icon: <SettingsIcon />,
