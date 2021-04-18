@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import PersonalInfo from './components/PersonalInfo/PersonalInfo';
 import { useFetch, useShowContent, useSubmit, useQuery } from 'components/hooks';
 import { Button, DeletePopup, FormField, Spinner } from 'components';
-import { fetchSingleEmployee, updateEmployee, EmployeeUpdate } from 'api';
+import { fetchSingleEmployee, updateEmployee, UpdateEmployeeData } from 'api';
 import { useAppDispatch } from 'store/store';
 import { setNotification } from 'ducks/popup/popup';
 import { EmployeeSchema } from 'validation/modelsValidation';
@@ -28,7 +28,7 @@ const EmployeeInfo: React.FC<Props> = ({ isDeleteOpen, setDeleteOpen }) => {
   const { showContent, showLoader, showNoContent, showError } = useShowContent(employeeData);
   const { payload: employee, refresh } = employeeData;
 
-  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit<typeof updateEmployee, EmployeeUpdate>(
+  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit<typeof updateEmployee, UpdateEmployeeData>(
     updateEmployee(query.employee)
   );
   onSubmitSuccess(async () => {
@@ -37,7 +37,7 @@ const EmployeeInfo: React.FC<Props> = ({ isDeleteOpen, setDeleteOpen }) => {
   });
   onSubmitError(({ message }) => dispatch(setNotification({ message })));
 
-  const initialValues: EmployeeUpdate = {
+  const initialValues: UpdateEmployeeData = {
     hourSalary: employee?.pricePerHour,
     monthlySalary: employee?.monthlyPrice
   };

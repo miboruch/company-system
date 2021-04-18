@@ -20,6 +20,22 @@ export const fetchUserWeekAttendance = (userId: ParamsId, week: number) => () =>
   return fetchMiddleware<WeekAttendanceModel[]>({ method: 'get', url: `/attendance/user-week?${query}` });
 };
 
+export const fetchEmployeeSalary = (userId: ParamsId, monthIndex: number) => () => {
+  const query = queryString.stringify({ month: monthIndex });
+  return fetchMiddleware<{ salary: number }>({
+    method: 'get',
+    url: userId ? `/attendance/salary/${userId}?${query}` : `/attendance/own-salary?${query}`
+  });
+};
+
+export const fetchEmployeeHours = (userId: ParamsId, monthIndex: number) => () => {
+  const query = queryString.stringify({ month: monthIndex });
+  return fetchMiddleware<{ salary: number }>({
+    method: 'get',
+    url: userId ? `/attendance/hours/${userId}?${query}` : `/attendance/own-hours?${query}`
+  });
+};
+
 export interface PostAttendanceData {
   userId: ParamsId;
   date: Date;

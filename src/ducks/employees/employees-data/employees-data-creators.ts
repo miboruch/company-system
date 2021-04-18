@@ -24,7 +24,7 @@ export const getAllCompanyEmployees = createAsyncThunk<AllCompanyEmployeesReturn
     try {
       if (currentCompany && token) {
         const { data } = await companyApi.get(
-          role === UserRole.Admin ? `/employee/get-company-employees` : `/employee/employee-data`,
+          role === UserRole.Admin ? `/employee/company` : `/employee/employee-data`,
           {
             headers: {
               Authorization: `Bearer ${token}`
@@ -77,7 +77,7 @@ export const updateEmployeeSalary = createAsyncThunk<void, UpdateEmployeeSalaryI
               monthlyPrice: monthlyPrice
             };
 
-        await companyApi.put('/employee/update-employee', data, {
+        await companyApi.put(`/employee/${selectedEmployee._id}`, data, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -112,7 +112,7 @@ export const addNewEmployee = createAsyncThunk<void, AddEmployeeInterface, baseS
     try {
       if (token) {
         await companyApi.post(
-          '/employee/add-employee',
+          '/employee',
           { ...values },
           {
             headers: {
@@ -152,7 +152,7 @@ export const getEmployeeHours = createAsyncThunk<void, GetEmployeeHoursInterface
     try {
       if (currentCompany && token) {
         if (role === UserRole.User) {
-          const { data } = await companyApi.get(`/attendance/count-user-hours?month=${monthIndex}`, {
+          const { data } = await companyApi.get(`/attendance/own-hours?month=${monthIndex}`, {
             headers: {
               Authorization: `Bearer ${token}`
             }
@@ -160,7 +160,7 @@ export const getEmployeeHours = createAsyncThunk<void, GetEmployeeHoursInterface
 
           setHours(data.totalHours);
         } else {
-          const { data } = await companyApi.get(`/attendance/get-single-user-hours/${userId}?month=${monthIndex}`, {
+          const { data } = await companyApi.get(`/attendance/hours/${userId}?month=${monthIndex}`, {
             headers: {
               Authorization: `Bearer ${token}`
             }
@@ -191,7 +191,7 @@ export const getEmployeeSalary = createAsyncThunk<void, GetEmployeeSalaryInterfa
     try {
       if (currentCompany?._id && token) {
         if (role === UserRole.User) {
-          const { data } = await companyApi.get(`/attendance/count-user-salary?month=${monthIndex}`, {
+          const { data } = await companyApi.get(`/attendance/own-salary?month=${monthIndex}`, {
             headers: {
               Authorization: `Bearer ${token}`
             }
@@ -199,7 +199,7 @@ export const getEmployeeSalary = createAsyncThunk<void, GetEmployeeSalaryInterfa
 
           setSalary(data.salary);
         } else {
-          const { data } = await companyApi.get(`/attendance/get-single-user-salary/${userId}?month=${monthIndex}`, {
+          const { data } = await companyApi.get(`/attendance/salary/${userId}?month=${monthIndex}`, {
             headers: {
               Authorization: `Bearer ${token}`
             }
