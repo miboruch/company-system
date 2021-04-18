@@ -12,6 +12,7 @@ export interface IncomeExpenseReturnInterface {
   expense: number;
 }
 
+//TODO?
 export const getCompanyIncomeAndExpense = createAsyncThunk<IncomeExpenseReturnInterface, number, baseStoreType>(
   'incomeExpense/getCompanyIncomeAndExpense',
   async (daysBack, { dispatch, getState, rejectWithValue }) => {
@@ -48,7 +49,7 @@ export const getLastIncomesAndExpenses = createAsyncThunk<LastIncomesExpensesRet
 
     try {
       if (token) {
-        const { data } = await companyApi.get(`/budget/get-last-income-expense`, {
+        const { data } = await companyApi.get(`/budget/last-income-expense`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -79,7 +80,7 @@ export const addIncome = createAsyncThunk<void, AddIncomeInterface, baseStoreTyp
     try {
       if (token) {
         await companyApi.post(
-          `/income/add-income`,
+          `/income`,
           { incomeValue, description },
           {
             headers: {
@@ -104,6 +105,7 @@ interface AddExpenseInterface {
   description: string;
   callback: () => void;
 }
+
 // +loading
 export const addExpense = createAsyncThunk<void, AddExpenseInterface, baseStoreType>(
   'incomeExpense/addExpense',
@@ -113,7 +115,7 @@ export const addExpense = createAsyncThunk<void, AddExpenseInterface, baseStoreT
     try {
       if (token) {
         await companyApi.post(
-          `/expense/add-expense`,
+          `/expense`,
           { expenseValue, description },
           {
             headers: {
@@ -141,7 +143,7 @@ export const deleteIncome = createAsyncThunk<void, number, baseStoreType>(
 
     try {
       if (token) {
-        await companyApi.delete(`/income/remove-income/${incomeId}`, {
+        await companyApi.delete(`/income/${incomeId}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -164,7 +166,7 @@ export const deleteExpense = createAsyncThunk<void, number, baseStoreType>(
     const { token } = getState().auth.tokens;
     try {
       if (token) {
-        await companyApi.delete(`/expense/remove-expense/${expenseId}`, {
+        await companyApi.delete(`/expense/${expenseId}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }

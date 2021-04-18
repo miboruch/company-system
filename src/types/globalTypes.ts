@@ -13,6 +13,6 @@ export interface NotificationMessageTemp {
 }
 
 export interface NotificationMessage {
-  notificationType?: Notification;
+  type?: Notification;
   message: string | ErrorResponse;
 }

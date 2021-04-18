@@ -14,3 +14,13 @@ export interface TaskModel {
   taskIncome?: number;
   taskExpense?: number;
 }
+
+export interface TaskDataModel {
+  date: Date;
+  name: string;
+  description: string;
+  timeEstimate: number;
+  taskIncome?: number;
+  taskExpense?: number;
+  isCompleted: boolean;
+}

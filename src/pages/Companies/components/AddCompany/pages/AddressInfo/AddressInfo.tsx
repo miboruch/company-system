@@ -37,7 +37,7 @@ const AddressInfo: React.FC<Props> = ({ handleClose, setRefreshDate }) => {
   onSubmitSuccess(() => {
     setRefreshDate(new Date());
     handleClose();
-    dispatch(setNotification({ message: 'Dodano nową firmę', notificationType: 'success' }));
+    dispatch(setNotification({ message: 'Dodano nową firmę', type: 'success' }));
   });
   onSubmitError((message) => dispatch(setNotification({ message })));
 

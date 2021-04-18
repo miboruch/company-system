@@ -23,7 +23,7 @@ export const generateInvoice = createAsyncThunk<void, InvoiceInterface, baseStor
     try {
       if (token) {
         const { data } = await companyApi.post(
-          `/invoice/create-invoice`,
+          `/invoice`,
           { ...values },
           {
             headers: {

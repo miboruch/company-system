@@ -1,5 +1,5 @@
-import { ClientModel, ParamsId } from 'types';
 import fetchMiddleware from 'api/api.middleware';
+import { ClientModel, ParamsId, Coords } from 'types';
 
 export const fetchClients = () =>
   fetchMiddleware<ClientModel[]>({
@@ -44,6 +44,13 @@ export const putClient = (clientId: ParamsId) => (data: PutClientInfo) =>
   fetchMiddleware({
     method: 'put',
     url: `/client/${clientId}`,
+    data
+  });
+
+export const putClientCoords = (clientId: ParamsId) => (data: Coords) =>
+  fetchMiddleware({
+    method: 'put',
+    url: `/client/coords/${clientId}`,
     data
   });
 

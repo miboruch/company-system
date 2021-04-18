@@ -19,7 +19,7 @@ interface EditAccountInterface {
 export const editAccount = createAsyncThunk<void, EditAccountInterface, baseStoreType>('account/editAccount', async (values, { rejectWithValue, dispatch, getState }) => {
   const { token } = getState().auth.tokens;
   try {
-    await authApi.put(`/user/edit-user`, values, {
+    await authApi.put(`/user`, values, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -43,7 +43,7 @@ export const editPassword = createAsyncThunk<void, EditPasswordInterface, baseSt
   const { token } = getState().auth.tokens;
   try {
     await authApi.put(
-      `/user/password-edit`,
+      `/user/password`,
       { values },
       {
         headers: {

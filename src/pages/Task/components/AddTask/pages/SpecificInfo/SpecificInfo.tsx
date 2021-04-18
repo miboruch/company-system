@@ -44,7 +44,7 @@ const SpecificInfo: React.FC<Props> = ({ handleClose, setRefreshDate }) => {
   onSubmitSuccess(() => {
     handleClose();
     setRefreshDate(new Date());
-    dispatch(setNotification({ message: 'Dodano zadanie', notificationType: 'success' }));
+    dispatch(setNotification({ message: 'Dodano zadanie', type: 'success' }));
   });
   onSubmitError((message) => dispatch(setNotification({ message })));
 

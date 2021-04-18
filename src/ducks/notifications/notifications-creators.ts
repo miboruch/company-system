@@ -12,7 +12,7 @@ export const getUserNotifications = createAsyncThunk<NotificationModel[], number
 
     try {
       if (token) {
-        const { data } = await authApi.get(`/notification/get-notifications?page=${page}`, {
+        const { data } = await authApi.get(`/notification?page=${page}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -35,17 +35,11 @@ export const checkAsOpen = createAsyncThunk<void, string, baseStoreType>(
 
     try {
       if (token) {
-        await authApi.put(
-          `/notification/check-as-open`,
-          {
-            notificationId: notificationId
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
+        await authApi.put(`/notification/open/${notificationId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
           }
-        );
+        });
 
         dispatch(getUserNotifications(1));
       }
@@ -62,7 +56,7 @@ export const deleteNotification = createAsyncThunk<void, string, baseStoreType>(
 
     try {
       if (token) {
-        await authApi.delete(`/notification/delete-notification/${notificationId}`, {
+        await authApi.delete(`/notification/${notificationId}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }

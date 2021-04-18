@@ -154,8 +154,8 @@ export const editClientCoords = createAsyncThunk<void, EditClientCoorsInterface,
     try {
       if (token) {
         await companyApi.put(
-          `/client/edit-client-coords`,
-          { clientId, lat, long },
+          `/client/coords/${clientId}`,
+          { lat, long },
           {
             headers: {
               Authorization: `Bearer ${token}`

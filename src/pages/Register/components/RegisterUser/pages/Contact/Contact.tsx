@@ -7,7 +7,8 @@ import { useSubmit } from 'components/hooks';
 import { useAppDispatch } from 'store/store';
 import { mainRegisterValues } from '../MainRegisterData/main-register.values';
 import { passwordValues } from '../Password/password.values';
-import { register, RegisterInterface } from 'api';
+import { register } from 'api';
+import { RegisterData } from 'types';
 import { setNotification } from 'ducks/popup/popup';
 import { RegisterDataContext } from '../../context/RegisterDataContext';
 import { PageContext } from '../../context/PageContext';
@@ -35,7 +36,7 @@ const Contact: React.FC<Props> = () => {
     setCurrentPage(currentPage - 1);
   };
 
-  const initialValues: RegisterInterface = {
+  const initialValues: RegisterData = {
     ...mainRegisterValues(mainData),
     ...passwordValues(passwordData),
     address: '',
@@ -44,7 +45,7 @@ const Contact: React.FC<Props> = () => {
     phoneNumber: ''
   };
 
-  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit<typeof register, RegisterInterface>(register);
+  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit<typeof register, RegisterData>(register);
   onSubmitSuccess(() => {
     history.push('/select');
     resetData();

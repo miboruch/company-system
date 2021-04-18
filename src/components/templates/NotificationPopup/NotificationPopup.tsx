@@ -42,7 +42,7 @@ const NotificationPopup: React.FC = () => {
     // * one second after animation end, we set redux state to null
     if (!shouldPopupBeOpen) {
       setTimeout(() => {
-        dispatch(setNotification({ message: '', notificationType: undefined }));
+        dispatch(setNotification({ message: '', type: undefined }));
       }, 1000);
     }
   }, [shouldPopupBeOpen]);
@@ -61,7 +61,7 @@ const NotificationPopup: React.FC = () => {
   return (
     <NotificationWrapper ref={wrapperRef}>
       <NotificationParagraph>{notificationMessage && notificationMessage.message}</NotificationParagraph>
-      {notificationMessage && notificationMessage.notificationType === NotificationTypes.Success ? <CheckedIcon /> : <NotCheckedIcon />}
+      {notificationMessage && notificationMessage.type === NotificationTypes.Success ? <CheckedIcon /> : <NotCheckedIcon />}
     </NotificationWrapper>
   );
 };

@@ -37,7 +37,7 @@ const AddressPage: React.FC<Props> = ({ handleClose, setRefreshDate }) => {
   onSubmitSuccess(() => {
     setRefreshDate(new Date());
     handleClose();
-    dispatch(setNotification({ message: 'Dodano klienta', notificationType: 'success' }));
+    dispatch(setNotification({ message: 'Dodano klienta', type: 'success' }));
   });
   onSubmitError((message) => dispatch(setNotification({ message })));
 

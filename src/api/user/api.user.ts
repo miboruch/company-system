@@ -1,7 +1,9 @@
 import fetchMiddleware from 'api/api.middleware';
-import { UserAuthModel } from 'types';
+import { UserAuthModel, UserModel } from 'types';
 
 export const fetchUserData = () => fetchMiddleware<UserAuthModel>({ method: 'get', url: '/user' });
+
+export const fetchAppUsers = () => fetchMiddleware<UserModel[]>({ method: 'get', url: '/user/app' });
 
 export interface EditAccountData {
   email: string;
@@ -15,3 +17,10 @@ export interface EditAccountData {
 }
 
 export const putUserData = (data: EditAccountData) => fetchMiddleware({ method: 'put', url: '/user', data });
+
+interface EditPasswordData {
+  password: string;
+  repeatedPassword: string;
+}
+
+export const putUserPassword = (data: EditPasswordData) => fetchMiddleware({ method: 'put', url: '/user/password', data });

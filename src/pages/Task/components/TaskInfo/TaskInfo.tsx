@@ -35,7 +35,7 @@ const TaskInfo: React.FC<Props> = ({ isEditToggled, setEditToggled, setDeleteOpe
 
   const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit<typeof putTask, TaskValues>(putTask(query.task));
   onSubmitSuccess(async () => {
-    dispatch(setNotification({ message: 'Zaktualizowano', notificationType: 'success' }));
+    dispatch(setNotification({ message: 'Zaktualizowano', type: 'success' }));
     await refresh();
   });
   onSubmitError(({ message }) => dispatch(setNotification({ message })));

@@ -1,40 +1,30 @@
 import fetchMiddleware from 'api/api.middleware';
-import { TaskModel, ParamsId, ClientModel } from 'types';
 import queryString from 'query-string';
+
+import { TaskModel, TaskDataModel, ParamsId, ClientModel } from 'types';
 import { queryOptions } from 'utils/config';
 
-/**
- * @get
- */
+export const fetchTasks = () => fetchMiddleware<TaskModel[]>({ method: 'get', url: `/task/company` });
 
-export const fetchTasks = () =>
-  fetchMiddleware<TaskModel[]>({
-    method: 'get',
-    url: `/task/company`
-  });
+export const fetchTask = (taskId: ParamsId) => () => fetchMiddleware<TaskModel>({ method: 'get', url: `/task/${taskId}` });
 
-export const fetchTask = (taskId: ParamsId) => () =>
-  fetchMiddleware<TaskModel>({
-    method: 'get',
-    url: `/task/${taskId}`
-  });
-
-export const fetchCompletedTasks = (daysBack?: number | 30) => {
+export const fetchCompletedTasks = ({ daysBack = 30 }: { daysBack?: number }) => () => {
   const query = queryString.stringify({ daysBack }, queryOptions);
-  return fetchMiddleware<{ completedTasks: number }>({
+  return fetchMiddleware<{ completedTasks: number }>({ method: 'get', url: `/task/completed?${query}` });
+};
+
+export const fetchCompletedPeriodTasks = ({ daysBack = 7 }: { daysBack: number }) => () => {
+  const query = queryString.stringify({ daysBack }, queryOptions);
+  return fetchMiddleware<{ date: Date; totalTasks: number }[]>({
     method: 'get',
-    url: `/task/completed?${query}`
+    url: `/task/completed-tasks-period?${query}`
   });
 };
 
-export interface PostTaskData {
-  date: Date;
-  timeEstimate: number;
-  name: string;
-  description: string;
-  isCompleted: boolean;
-  taskIncome?: number;
-  taskExpense?: number;
+export const fetchEmployeeTasks = (employeeId: ParamsId) => () =>
+  fetchMiddleware<TaskModel[]>({ method: 'get', url: `/task/employee/${employeeId}` });
+
+export interface PostTaskData extends TaskDataModel {
   clientId?: string | null;
   employees: string[];
 }
@@ -46,18 +36,7 @@ export const postTask = (data: PostTaskData) =>
     data
   });
 
-/**
- * @put
- */
-
-export interface TaskValues {
-  date: Date;
-  name: string;
-  description: string;
-  timeEstimate: number;
-  taskIncome?: number;
-  taskExpense?: number;
-  isCompleted?: boolean;
+export interface TaskValues extends TaskDataModel {
   clientId?: ClientModel | null;
 }
 
@@ -78,10 +57,6 @@ export const putTaskCompleted = (taskId: ParamsId, data: TaskCompletedData) =>
     url: `/task/completed/${taskId}`,
     data
   });
-
-interface PostTaskValues extends TaskValues {
-  employees: string[];
-}
 
 export const deleteTask = (taskId: ParamsId) =>
   fetchMiddleware({
