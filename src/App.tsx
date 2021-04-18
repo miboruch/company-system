@@ -59,9 +59,9 @@ const App: React.FC = () => {
           <NotAuthRoute path={'/login'} exact component={Login} />
           <NotAuthRoute path={'/register'} component={Register} />
           <NotAuthRoute path={'/link-register/:token'} component={RegisterFromLink} />
-          <Route path={'/company/:id'} component={Company}/>
-          <Route path={'/companies'} component={Companies}/>
-          <Routes />
+          <Route path={'/company/:id'} component={Company} />
+          <Route path={'/companies'} component={Companies} />
+          {/*<Routes />*/}
           <Redirect from={'*'} to={'/select'} />
         </Switch>
       )}

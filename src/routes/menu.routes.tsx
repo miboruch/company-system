@@ -1,4 +1,5 @@
 import React from 'react';
+import { AnyMongoAbility } from '@casl/ability';
 
 import Landing from 'pages/Landing/Landing';
 import Companies from 'pages/Companies/Companies';
@@ -8,18 +9,19 @@ import Clients from 'pages/Clients/Clients';
 import Attendance from 'pages/Attendance/Attendance';
 import Finances from 'pages/Finances/Finances';
 import Settings from 'pages/Settings/Settings';
-import { MenuItem, Route } from 'types';
+import { MenuItem } from 'types';
 
 import { HomeIcon, PaymentIcon, ListIcon, SupportIcon, UserIcon, SettingsIcon } from 'styles/shared';
 
-export const adminRoutes: MenuItem[] = [
+export const menuItems = (ability: AnyMongoAbility): MenuItem[] => [
   {
     path: '/home',
     main: '/admin/home',
     component: Landing,
     name: 'Strona główna',
     icon: <HomeIcon />,
-    isGuarded: true
+    isGuarded: true,
+    isVisible: true
   },
   {
     path: '/employees',
@@ -27,7 +29,8 @@ export const adminRoutes: MenuItem[] = [
     component: Employee,
     name: 'Pracownicy',
     icon: <UserIcon />,
-    isGuarded: true
+    isGuarded: true,
+    isVisible: ability.can('read', 'Employee')
   },
   {
     path: '/tasks',
@@ -35,7 +38,8 @@ export const adminRoutes: MenuItem[] = [
     component: Task,
     name: 'Zadania',
     icon: <ListIcon />,
-    isGuarded: true
+    isGuarded: true,
+    isVisible: ability.can('read', 'Task')
   },
   {
     path: '/finances',
@@ -43,7 +47,8 @@ export const adminRoutes: MenuItem[] = [
     component: Finances,
     name: 'Finanse',
     icon: <PaymentIcon />,
-    isGuarded: true
+    isGuarded: true,
+    isVisible: ability.can('read', 'Budget')
   },
   {
     path: '/client',
@@ -51,7 +56,8 @@ export const adminRoutes: MenuItem[] = [
     component: Clients,
     name: 'Klienci',
     icon: <SupportIcon />,
-    isGuarded: true
+    isGuarded: true,
+    isVisible: ability.can('read', 'Client')
   },
   {
     path: '/attendance',
@@ -59,7 +65,8 @@ export const adminRoutes: MenuItem[] = [
     component: Attendance,
     name: 'Lista obecności',
     icon: <ListIcon />,
-    isGuarded: true
+    isGuarded: true,
+    isVisible: ability.can('read', 'Attendance')
   },
   {
     path: '/companies',
@@ -67,7 +74,8 @@ export const adminRoutes: MenuItem[] = [
     component: Companies,
     name: 'Twoje firmy',
     icon: <HomeIcon />,
-    isGuarded: false
+    isGuarded: false,
+    isVisible: true
   },
   {
     path: '/settings',
@@ -75,49 +83,7 @@ export const adminRoutes: MenuItem[] = [
     component: Settings,
     name: 'Ustawienia',
     icon: <SettingsIcon />,
-    isGuarded: true
-  }
-];
-
-export const userRoutes: MenuItem[] = [
-  {
-    path: '/user/home/:id',
-    main: '/user/home',
-    component: Landing,
-    name: 'Strona główna',
-    icon: <HomeIcon />,
-    isGuarded: true
-  },
-  {
-    path: '/user/tasks/:id',
-    main: '/user/tasks',
-    component: Task,
-    name: 'Zadania',
-    icon: <ListIcon />,
-    isGuarded: true
-  },
-  {
-    path: '/user/attendance/:id',
-    main: '/user/attendance',
-    component: Attendance,
-    name: 'Lista obecności',
-    icon: <ListIcon />,
-    isGuarded: true
-  },
-  {
-    path: '/user/companies',
-    main: '/user/companies',
-    component: Companies,
-    name: 'Twoje firmy',
-    icon: <HomeIcon />,
-    isGuarded: false
-  },
-  {
-    path: '/user/settings/:id',
-    main: '/user/settings',
-    component: Settings,
-    name: 'Ustawienia',
-    icon: <SettingsIcon />,
-    isGuarded: true
+    isGuarded: true,
+    isVisible: true
   }
 ];

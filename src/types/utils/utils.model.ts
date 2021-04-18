@@ -24,6 +24,7 @@ export interface Route {
   exact: boolean;
   component: React.FC;
   isGuarded: boolean;
+  isVisible?: boolean;
 }
 
 export interface MenuItem {
@@ -33,4 +34,5 @@ export interface MenuItem {
   name?: string;
   icon?: React.ReactNode;
   isGuarded: boolean;
+  isVisible?: boolean;
 }

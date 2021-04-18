@@ -1,4 +1,5 @@
 import React from 'react';
+import { AnyMongoAbility } from '@casl/ability';
 
 import Landing from 'pages/Landing/Landing';
 import Companies from 'pages/Companies/Companies';
@@ -10,99 +11,69 @@ import Finances from 'pages/Finances/Finances';
 import Settings from 'pages/Settings/Settings';
 import { Route } from 'types';
 
-export const adminRoutes: Route[] = [
+export const routes = (ability: AnyMongoAbility): Route[] => [
   {
     path: '/home',
     main: '/admin/home',
     exact: false,
     component: Landing,
-    isGuarded: true
+    isGuarded: true,
+    isVisible: true
   },
   {
     path: '/employees',
     main: '/admin/employees',
     exact: false,
     component: Employee,
-    isGuarded: true
+    isGuarded: true,
+    isVisible: ability.can('read', 'Employee')
   },
   {
     path: '/tasks',
     main: '/admin/tasks',
     exact: false,
     component: Task,
-    isGuarded: true
+    isGuarded: true,
+    isVisible: ability.can('read', 'Task')
   },
   {
     path: '/finances',
     main: '/admin/finances',
     exact: false,
     component: Finances,
-    isGuarded: true
+    isGuarded: true,
+    isVisible: ability.can('read', 'Budget')
   },
   {
     path: '/client',
     main: '/admin/client',
     exact: false,
     component: Clients,
-    isGuarded: true
+    isGuarded: true,
+    isVisible: ability.can('read', 'Client')
   },
   {
     path: '/attendance',
     main: '/admin/attendance',
     exact: false,
     component: Attendance,
-    isGuarded: true
+    isGuarded: true,
+    isVisible: ability.can('read', 'Attendance')
   },
   {
     path: '/admin/companies',
     main: '/admin/companies',
     exact: false,
     component: Companies,
-    isGuarded: false
+    isGuarded: false,
+    isVisible: true
   },
   {
     path: '/settings',
     main: '/admin/settings',
     exact: false,
     component: Settings,
-    isGuarded: true
-  }
-];
-
-export const userRoutes: Route[] = [
-  {
-    path: '/home',
-    main: '/user/home',
-    exact: false,
-    component: Landing,
-    isGuarded: true
-  },
-  {
-    path: '/tasks',
-    main: '/user/tasks',
-    exact: false,
-    component: Task,
-    isGuarded: true
-  },
-  {
-    path: '/attendance',
-    main: '/user/attendance',
-    exact: false,
-    component: Attendance,
-    isGuarded: true
-  },
-  {
-    path: '/user/companies',
-    main: '/user/companies',
-    exact: false,
-    component: Companies,
-    isGuarded: false
-  },
-  {
-    path: '/settings',
-    main: '/user/settings',
-    exact: false,
-    component: Settings,
-    isGuarded: true
+    isGuarded: true,
+    isVisible: true
   }
 ];

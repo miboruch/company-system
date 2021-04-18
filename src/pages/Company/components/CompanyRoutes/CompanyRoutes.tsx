@@ -1,21 +1,18 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { Switch, useParams, useRouteMatch } from 'react-router-dom';
+import { useAbility } from '@casl/react';
+import { Route, Switch, useParams, useRouteMatch } from 'react-router-dom';
 
-import AdminRoute from 'hoc/AdminRoute';
-import UserRoute from 'hoc/UserRoute';
 import { useFetch } from 'components/hooks';
 import { updateCompanyPermissions } from 'guard/update/company-update.permission';
 import { fetchPermission } from 'api/permission/api.permission';
-import { UserRole } from 'ducks/auth/roles/roles';
-import { AppState } from 'store/store';
-import { adminRoutes, userRoutes } from 'routes/company.routes';
+import { routes } from 'routes/company.routes';
+import { CompanyPermissionsContext } from 'guard/context/company-permissions.context';
 import companyPermissions from 'guard/company.permission';
 
 const CompanyRoutes: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { path: routePath } = useRouteMatch();
-  const { role } = useSelector((state: AppState) => state.auth.roles);
+  const ability = useAbility(CompanyPermissionsContext);
 
   useFetch<typeof fetchPermission>(fetchPermission, {
     dependencies: [id],
@@ -23,18 +20,14 @@ const CompanyRoutes: React.FC = () => {
   });
 
   const handlePreparePath = (path: string, routePath: string): string => `${path}${routePath}`;
-  // const isAdmin = role === UserRole.Admin;
-  const isAdmin = true;
 
   return (
     <Switch>
-      {isAdmin
-        ? adminRoutes.map(({ path, component, exact }) => (
-            <AdminRoute key={path} path={handlePreparePath(routePath, path)} exact={exact} component={component} />
-          ))
-        : userRoutes.map(({ path, component, exact }) => (
-            <UserRoute key={path} path={handlePreparePath(routePath, path)} exact={exact} component={component} />
-          ))}
+      {routes(ability)
+        .filter((route) => route.isVisible)
+        .map(({ path, component, exact }) => (
+          <Route key={path} path={handlePreparePath(routePath, path)} component={component} exact={exact} />
+        ))}
     </Switch>
   );
 };
