@@ -11,6 +11,12 @@ import { ErrorResponse, Status } from 'api/api.middleware';
 type Unwrap<T> = T extends (...args: any) => () => Promise<infer U> ? U : T extends (...args: any) => Promise<infer U> ? U : T;
 type Argument<T> = T extends (...args: infer A) => any ? A : never;
 
+type ApiCall = (...args: any) => Promise<[any | null, ErrorResponse | null, Status]>;
+type ApiCallArguments<T> = T extends (...args: infer A) => any ? A : never;
+type ApiCallReturnType = ReturnType<ApiCall>;
+
+type ResolvedPromise<T extends ApiCallReturnType> = T extends Promise<[infer R, ErrorResponse | null, Status]> ? R : never;
+
 type SuccessCallback<T> = (
   // @ts-ignore
   callback: (payload: NonNullable<Unwrap<T>>[0]) => void,

@@ -12,7 +12,6 @@ const MenuItemsRenderer: React.FC = () => {
   const { url } = useRouteMatch();
 
   const ability = useAbility(CompanyPermissionsContext);
-
   const { setMenuOpen } = useContext(MenuContext);
 
   const handleCloseMenu = () => setMenuOpen(false);
