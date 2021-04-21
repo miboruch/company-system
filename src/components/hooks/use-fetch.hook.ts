@@ -6,18 +6,27 @@ const SET_DATA = 'SET_DATA';
 const SET_ERROR = 'SET_ERROR';
 const SET_STATUS = 'SET_STATUS';
 
-type PromiseUnwrap<T> = T extends (...args: any) => () => Promise<infer U>
-  ? U
-  : T extends (...args: any) => Promise<infer U>
-  ? U
-  : T;
+type ApiCall = () => Promise<[any | null, ErrorResponse | null, Status]>;
+type ApiCallReturnType = ReturnType<ApiCall>;
+
+type ResolvedPromise<T extends ApiCallReturnType> = T extends Promise<[infer R, ErrorResponse | null, Status]> ? R : never;
 
 interface Options<T> {
   // @ts-ignore
-  onSuccess?: (payload: NonNullable<PromiseUnwrap<T>[0]>) => void;
+  onSuccess?: (payload: NonNullable<ResolvedPromise<ReturnType<T>>>) => void;
   onError?: (error: NonNullable<ErrorResponse>) => void;
   dependencies?: any[];
   conditions?: boolean;
+}
+
+export interface UseFetchReturnData<T> {
+  // @ts-ignore
+  payload: ResolvedPromise<ReturnType<T>>;
+  loading: boolean;
+  error: null | ErrorResponse;
+  status: Status;
+  actions: Actions;
+  refresh: () => Promise<void>;
 }
 
 interface Actions {
@@ -25,16 +34,6 @@ interface Actions {
   setData: (data: any) => void;
   setError: (error: any) => void;
   setStatus: (status: Status) => void;
-}
-
-export interface UseFetchReturnData<T> {
-  // @ts-ignore
-  payload: PromiseUnwrap<T>[0];
-  loading: boolean;
-  error: null | ErrorResponse;
-  status: Status;
-  actions: Actions;
-  refresh: () => Promise<void>;
 }
 
 type Action =
@@ -72,8 +71,8 @@ const reducer = (state: any, action: Action) => {
   }
 };
 
-function useFetch<T>(
-  asyncApiCall: (...options: any) => Promise<[any | null, null | ErrorResponse, Status]>,
+function useFetch<T extends ApiCall>(
+  asyncApiCall: T,
   { dependencies = [], conditions = true, onSuccess = () => null, onError = () => null }: Options<T> = initialOptions
 ): UseFetchReturnData<T> {
   const componentIsMounted = useRef(true);
