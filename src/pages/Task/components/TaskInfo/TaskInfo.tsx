@@ -29,7 +29,7 @@ const TaskInfo: React.FC<Props> = ({ isEditToggled, setEditToggled, setDeleteOpe
   const { query } = useQuery();
   const { isTaskMapPreviewOpen } = useSelector((state: AppState) => state.tasks.taskToggle);
 
-  const taskData = useFetch<typeof fetchTask>(fetchTask(query.task), { dependencies: [query.task], conditions: !!query.task });
+  const taskData = useFetch(fetchTask(query.task), { dependencies: [query.task], conditions: !!query.task });
   const { showContent, showNoContent, showLoader, showError } = useShowContent(taskData);
   const { payload: task, refresh } = taskData;
 

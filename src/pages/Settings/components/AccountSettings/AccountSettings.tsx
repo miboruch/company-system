@@ -18,7 +18,7 @@ import { SpinnerWrapper } from 'styles/shared';
 const AccountSettings: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  const userData = useFetch<typeof fetchUserData>(fetchUserData);
+  const userData = useFetch(fetchUserData);
   const { showContent, showLoader, showNoContent, showError } = useShowContent(userData);
   const { payload: user, refresh } = userData;
 

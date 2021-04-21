@@ -22,7 +22,7 @@ const EmployeeInfo: React.FC<Props> = ({ isDeleteOpen, setDeleteOpen }) => {
   const dispatch = useAppDispatch();
   const { query } = useQuery();
 
-  const employeeData = useFetch<typeof fetchSingleEmployee>(fetchSingleEmployee(query.employee), {
+  const employeeData = useFetch(fetchSingleEmployee(query.employee), {
     dependencies: [query.employee]
   });
   const { showContent, showLoader, showNoContent, showError } = useShowContent(employeeData);

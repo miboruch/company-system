@@ -24,8 +24,8 @@ const Companies: React.FC = () => {
 
   const companiesData =
     role === UserRole.Admin
-      ? useFetch<typeof fetchAdminCompanies>(fetchAdminCompanies, { dependencies: [refreshDate] })
-      : useFetch<typeof fetchEmployeeCompanies>(fetchEmployeeCompanies, { dependencies: [refreshDate] });
+      ? useFetch(fetchAdminCompanies, { dependencies: [refreshDate] })
+      : useFetch(fetchEmployeeCompanies, { dependencies: [refreshDate] });
   const { showContent, showLoader, showNoContent } = useShowContent(companiesData);
   const { payload } = companiesData;
 

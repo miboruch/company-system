@@ -21,11 +21,11 @@ const Charts: React.FC<Props> = () => {
   const { role } = useSelector((state: AppState) => state.auth.roles);
   const [daysBack, setDaysBackTo] = useState<number>(7);
 
-  const financesData = useFetch<typeof fetchFinances>(fetchFinances({ daysBack }), { dependencies: [daysBack] });
+  const financesData = useFetch(fetchFinances({ daysBack }), { dependencies: [daysBack] });
   const { showContent, showLoader } = useShowContent(financesData);
   const { payload: finances } = financesData;
 
-  const tasksData = useFetch<typeof fetchCompletedPeriodTasks>(fetchCompletedPeriodTasks({ daysBack }), {
+  const tasksData = useFetch(fetchCompletedPeriodTasks({ daysBack }), {
     dependencies: [daysBack]
   });
   const { showContent: showTaskContent, showLoader: showTaskLoader } = useShowContent(financesData);

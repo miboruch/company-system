@@ -28,7 +28,7 @@ const ClientInfo: React.FC<Props> = ({ isEditToggled, setEditToggled, setDeleteO
   const { query } = useQuery();
   const { isEditClientCoordsOpen } = useSelector((state: AppState) => state.client.clientToggle);
 
-  const clientData = useFetch<typeof fetchClient>(fetchClient(query.client), {
+  const clientData = useFetch(fetchClient(query.client), {
     dependencies: [query.client],
     conditions: !!query.client,
     onError: (error) => dispatch(setNotification({ message: error}))

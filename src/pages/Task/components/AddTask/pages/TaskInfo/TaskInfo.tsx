@@ -20,7 +20,7 @@ const TaskInfo: React.FC = () => {
   const { setCurrentPage } = useContext(PageContext);
   const { role } = useSelector((state: AppState) => state.auth.roles);
 
-  const employeesData = useFetch<typeof fetchEmployees>(fetchEmployees(role));
+  const employeesData = useFetch(fetchEmployees(role));
   const { showContent, showNoContent } = useShowContent(employeesData);
   const { payload: employees } = employeesData;
 

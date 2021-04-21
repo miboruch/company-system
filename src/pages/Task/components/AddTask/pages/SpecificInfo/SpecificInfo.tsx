@@ -36,7 +36,7 @@ const SpecificInfo: React.FC<Props> = ({ handleClose, setRefreshDate }) => {
     clientId: null
   };
 
-  const clientsData = useFetch<typeof fetchClients>(fetchClients);
+  const clientsData = useFetch(fetchClients);
   const { showContent, showNoContent } = useShowContent(clientsData);
   const { payload: clients } = clientsData;
 

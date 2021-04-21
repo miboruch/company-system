@@ -15,7 +15,7 @@ const AttendanceInfo: React.FC = () => {
   const { query } = useQuery();
   console.log(query.attendance !== 'none');
 
-  const attendanceData = useFetch<typeof fetchSingleAttendance>(fetchSingleAttendance(query.attendance), {
+  const attendanceData = useFetch(fetchSingleAttendance(query.attendance), {
     dependencies: [query.attendance],
     conditions: !!query.attendance && query.attendance !== 'none'
   });

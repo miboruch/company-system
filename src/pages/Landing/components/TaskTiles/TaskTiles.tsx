@@ -12,7 +12,7 @@ const TaskTiles: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const history = useHistory();
 
-  const tasksData = useFetch<typeof fetchTasks>(fetchTasks);
+  const tasksData = useFetch(fetchTasks);
   const { showContent, showNoContent, showError, showLoader } = useShowContent(tasksData);
   const { payload: tasks } = tasksData;
 

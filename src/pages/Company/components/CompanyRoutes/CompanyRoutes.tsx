@@ -14,7 +14,7 @@ const CompanyRoutes: React.FC = () => {
   const { path: routePath } = useRouteMatch();
   const ability = useAbility(CompanyPermissionsContext);
 
-  useFetch<typeof fetchPermission>(fetchPermission, {
+  useFetch(fetchPermission, {
     dependencies: [id],
     onSuccess: (permission) => updateCompanyPermissions(companyPermissions, permission)
   });

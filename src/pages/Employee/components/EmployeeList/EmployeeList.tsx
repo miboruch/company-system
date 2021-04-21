@@ -24,7 +24,7 @@ const EmployeeList: React.FC<Props> = ({ filterText, refreshDate, handleAddEmplo
   const listRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
 
-  const employeeData = useFetch<typeof fetchEmployees>(fetchEmployees(role), { dependencies: [refreshDate] });
+  const employeeData = useFetch(fetchEmployees(role), { dependencies: [refreshDate] });
   const { showContent, showNoContent, showLoader, showError } = useShowContent(employeeData);
   const { payload } = employeeData;
 
