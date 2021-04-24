@@ -22,7 +22,7 @@ const AccountSettings: React.FC = () => {
   const { showContent, showLoader, showNoContent, showError } = useShowContent(userData);
   const { payload: user, refresh } = userData;
 
-  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit<typeof putUserData, EditAccountData>(putUserData);
+  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit(putUserData);
   onSubmitSuccess(async () => {
     dispatch(setNotification({ message: 'Zaktualizowano' }));
     await refresh();

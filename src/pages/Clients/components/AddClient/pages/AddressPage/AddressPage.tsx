@@ -33,7 +33,7 @@ const AddressPage: React.FC<Props> = ({ handleClose, setRefreshDate }) => {
     country: ''
   };
 
-  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit<typeof postClient, PostClientInfo>(postClient);
+  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit(postClient);
   onSubmitSuccess(() => {
     setRefreshDate(new Date());
     handleClose();

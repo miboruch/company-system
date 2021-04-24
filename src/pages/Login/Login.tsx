@@ -28,7 +28,7 @@ const Login: React.FC = () => {
   const history = useHistory();
   const { loginError } = useSelector((state: AppState) => state.auth.login);
 
-  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit<typeof login, LoginData>(login);
+  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit(login);
   onSubmitSuccess((payload) => {
     if (payload) {
       const { token, refreshToken } = payload;

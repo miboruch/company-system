@@ -40,7 +40,7 @@ const SpecificInfo: React.FC<Props> = ({ handleClose, setRefreshDate }) => {
   const { showContent, showNoContent } = useShowContent(clientsData);
   const { payload: clients } = clientsData;
 
-  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit<typeof postTask, PostTaskData>(postTask);
+  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit(postTask);
   onSubmitSuccess(() => {
     handleClose();
     setRefreshDate(new Date());

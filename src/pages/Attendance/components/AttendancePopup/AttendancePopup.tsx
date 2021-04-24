@@ -40,7 +40,7 @@ const AttendancePopup: React.FC<Props> = ({ isOpen, handleClose, date = new Date
     hours: !attendance?.attendance ? 0 : attendance.attendance.hours
   };
 
-  // const {onSubmit} = useSubmit<typeof putAttendance, UpdateAttendanceData>(attendance?.attendance?._id && putAttendance(attendance.attendance._id))
+  // const {onSubmit} = useSubmit(attendance?.attendance?._id && putAttendance(attendance.attendance._id))
 
   const handleSubmit = ({ wasPresent, hours }: DefaultValues) => {
     handleClose();

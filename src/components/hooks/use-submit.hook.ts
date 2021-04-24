@@ -4,29 +4,30 @@ import { FormikHelpers } from 'formik';
 
 import { ErrorResponse, Status } from 'api/api.middleware';
 
-type Unwrap<T> = T extends (...args: any) => () => Promise<infer U> ? U : T extends (...args: any) => Promise<infer U> ? U : T;
+type ApiCall = (...args: any) => Promise<[any | null, ErrorResponse | null, Status]>;
+type ApiCallArguments<T> = T extends (arg: infer A) => any ? A : never;
+type ApiCallReturnType = ReturnType<ApiCall>;
 
-type SuccessCallback<T, V> = (
-  // @ts-ignore
-  callback: (payload: NonNullable<Unwrap<T>>[0], values: V) => void,
+type ResolvedPromise<T extends ApiCallReturnType> = T extends Promise<[infer R, ErrorResponse | null, Status]> ? R : never;
+
+type ErrorCallback = (callback: (error: NonNullable<ErrorResponse>) => void, dependencies?: any[]) => void;
+type MapData<Values> = (callback: (data: Values) => void, dependencies?: any[]) => void;
+type SuccessCallback<T> = (
+  callback: (payload: NonNullable<ResolvedPromise<ApiCallReturnType>>, values: ApiCallArguments<T>) => void,
   dependencies?: any[]
 ) => void;
 
-type ErrorCallback = (callback: (error: NonNullable<ErrorResponse>) => void, dependencies?: any[]) => void;
-type MapData<V> = (callback: (data: V) => void, dependencies?: any[]) => void;
-
-interface Options<T, Values> {
-  // @ts-ignore
-  onSubmitSuccess?: (payload: NonNullable<Unwrap<T>>[0], values: Values) => void;
-  onSubmitError?: (error: NonNullable<ErrorResponse>, values: Values) => void;
-  onMapData?: (values: Values) => void;
+interface Options<T> {
+  onSubmitSuccess?: (payload: NonNullable<ResolvedPromise<ApiCallReturnType>>, values: ApiCallArguments<T>) => void;
+  onSubmitError?: (error: NonNullable<ErrorResponse>, values: ApiCallArguments<T>) => void;
+  onMapData?: (values: ApiCallArguments<T>) => void;
 }
 
 const memoizeOptions = {
   normalizer: (args: any) => JSON.stringify(args[1])
 };
 
-function useSubmit<T, Values>(asyncApiCall: (...options: any) => Promise<[any | null, ErrorResponse | null, Status]>) {
+function useSubmit<T extends ApiCall>(asyncApiCall: T) {
   const isComponentMounted = useRef(true);
 
   const handleComponentMount = () => {
@@ -42,18 +43,18 @@ function useSubmit<T, Values>(asyncApiCall: (...options: any) => Promise<[any | 
     return () => handleWillComponentUnmount();
   }, []);
 
-  const onSuccess = useRef<Options<T, Values>['onSubmitSuccess'] | null>(null);
-  const onError = useRef<Options<T, Values>['onSubmitError'] | null>(null);
-  const onMapData = useRef<Options<T, Values>['onMapData'] | null>(null);
+  const onSuccess = useRef<Options<T>['onSubmitSuccess'] | null>(null);
+  const onError = useRef<Options<T>['onSubmitError'] | null>(null);
+  const onMapData = useRef<Options<T>['onMapData'] | null>(null);
 
-  const getMapData = (data: Values) => {
+  const getMapData = (data: ApiCallArguments<T>) => {
     if (onMapData.current) {
       onMapData.current(data);
     }
     return data;
   };
 
-  const sendSubmit = async (values: Values, { resetForm, setSubmitting }: FormikHelpers<Values>) => {
+  const sendSubmit = async (values: ApiCallArguments<T>, { resetForm, setSubmitting }: FormikHelpers<ApiCallArguments<T>>) => {
     const data = getMapData(values);
     const [payload, error] = await asyncApiCall(data);
 
@@ -71,23 +72,23 @@ function useSubmit<T, Values>(asyncApiCall: (...options: any) => Promise<[any | 
     }
   };
 
-  const handleSuccess = memoizee((submitSuccess: Options<T, Values>['onSubmitSuccess']) => {
+  const handleSuccess = memoizee((submitSuccess: Options<T>['onSubmitSuccess']) => {
     onSuccess.current = submitSuccess;
   }, memoizeOptions);
 
-  const handleError = memoizee((submitError: Options<T, Values>['onSubmitError']) => {
+  const handleError = memoizee((submitError: Options<T>['onSubmitError']) => {
     onError.current = submitError;
   }, memoizeOptions);
 
-  const mapData = memoizee((mapDataCallback: Options<T, Values>['onMapData']) => {
+  const mapData = memoizee((mapDataCallback: Options<T>['onMapData']) => {
     onMapData.current = mapDataCallback;
   });
 
   return {
-    onSubmitSuccess: handleSuccess as SuccessCallback<T, Values>,
+    onSubmitSuccess: handleSuccess as SuccessCallback<T>,
     onSubmitError: handleError as ErrorCallback,
     onSubmit: sendSubmit,
-    mapData: mapData as MapData<Values>
+    mapData: mapData as MapData<ApiCallArguments<T>>
   };
 }
 
