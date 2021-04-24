@@ -8,27 +8,27 @@ const SET_STATUS = 'SET_STATUS';
 
 import { ErrorResponse, Status } from 'api/api.middleware';
 
-type Unwrap<T> = T extends (...args: any) => () => Promise<infer U> ? U : T extends (...args: any) => Promise<infer U> ? U : T;
-type Argument<T> = T extends (...args: infer A) => any ? A : never;
-
 type ApiCall = (...args: any) => Promise<[any | null, ErrorResponse | null, Status]>;
 type ApiCallArguments<T> = T extends (...args: infer A) => any ? A : never;
 type ApiCallReturnType = ReturnType<ApiCall>;
 
 type ResolvedPromise<T extends ApiCallReturnType> = T extends Promise<[infer R, ErrorResponse | null, Status]> ? R : never;
 
-type SuccessCallback<T> = (
-  // @ts-ignore
-  callback: (payload: NonNullable<Unwrap<T>>[0]) => void,
-  dependencies?: any[]
-) => void;
-
-type ErrorCallback = (callback: (error: ErrorResponse) => void, dependencies?: any[]) => void;
+type SuccessCallback<T extends ApiCall> = (callback: (payload: NonNullable<ResolvedPromise<ReturnType<T>>>) => void) => void;
+type ErrorCallback = (callback: (error: NonNullable<ErrorResponse>) => void, dependencies?: any[]) => void;
 
 interface Options<T> {
   // @ts-ignore
-  onCallSuccess?: (payload: NonNullable<Unwrap<T>>[0]) => void;
+  onCallSuccess?: (payload: NonNullable<ResolvedPromise<ApiCallReturnType>>) => void;
   onCallError?: (error: NonNullable<ErrorResponse>) => void;
+}
+
+interface ReturnHookTypes<T extends ApiCall> {
+  error: ErrorResponse;
+  isSubmitting: boolean;
+  submit: (...args: ApiCallArguments<T>) => Promise<void>;
+  onCallSuccess: SuccessCallback<T>;
+  onCallError: ErrorCallback;
 }
 
 type Action =
@@ -66,7 +66,7 @@ const reducer = (state = initialState, action: Action) => {
   }
 };
 
-function useCall<T>(asyncApiCall: (...options: any) => Promise<[any | null, null | ErrorResponse, Status]>) {
+function useCall<T extends ApiCall>(asyncApiCall: T): ReturnHookTypes<T> {
   const componentIsMounted = useRef(true);
 
   const handleComponentMount = () => {
@@ -97,7 +97,7 @@ function useCall<T>(asyncApiCall: (...options: any) => Promise<[any | null, null
     normalizer: (args: any) => JSON.stringify(args[1])
   };
 
-  const handleCall = async (...args: Argument<T>) => {
+  const handleCall = async (...args: ApiCallArguments<T>) => {
     const { setSubmitting, setData, setError, setStatus } = actions;
 
     setSubmitting(true);
@@ -107,14 +107,12 @@ function useCall<T>(asyncApiCall: (...options: any) => Promise<[any | null, null
 
     if (!componentIsMounted.current) {
       return;
-    }
-    if (error && !status.isCanceled && status.status !== 0) {
+    } else if (error && !status.isCanceled) {
       setError(error);
       setStatus(status);
       onCallError.current && onCallError.current(error);
       setSubmitting(false);
-    }
-    if (!status.isCanceled) {
+    } else if (!status.isCanceled) {
       setData(payload);
       setStatus(status);
       onCallSuccess.current && onCallSuccess.current(payload);
@@ -134,8 +132,8 @@ function useCall<T>(asyncApiCall: (...options: any) => Promise<[any | null, null
     error: state.error as ErrorResponse,
     isSubmitting: state.isSubmitting,
     submit: handleCall,
-    onCallSuccess: handleSuccess as SuccessCallback<T>,
-    onCallError: handleError as ErrorCallback
+    onCallSuccess: handleSuccess,
+    onCallError: handleError
   };
 }
 

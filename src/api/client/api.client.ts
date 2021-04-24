@@ -55,7 +55,7 @@ export const putClientCoords = (clientId: ParamsId) => (data: Coords) =>
   });
 
 export const deleteClient = (clientId: ParamsId) =>
-  fetchMiddleware({
+  fetchMiddleware<{id: string}>({
     method: 'delete',
     url: `/client/${clientId}`
   });
