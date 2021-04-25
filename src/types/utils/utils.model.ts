@@ -20,10 +20,9 @@ export interface RouteConfig {
 
 export interface Route {
   path: string;
-  main: string;
   exact: boolean;
   component: React.FC;
-  isGuarded: boolean;
+  isGuarded?: boolean;
   isVisible?: boolean;
 }
 

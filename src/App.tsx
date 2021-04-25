@@ -5,7 +5,6 @@ import { useLocation, useHistory, Redirect, Route, Switch } from 'react-router-d
 import Layout from './components/Layout';
 import Login from 'pages/Login/Login';
 import Register from 'pages/Register/Register';
-import Routes from './routes/Routes';
 import Select from 'pages/Select/Select';
 import Company from 'pages/Company/Company';
 import RegisterFromLink from './pages/RegisterFromLink/RegisterFromLink';

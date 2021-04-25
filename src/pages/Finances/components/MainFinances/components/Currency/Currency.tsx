@@ -6,7 +6,7 @@ import { currencyTypes, getCurrencyValue } from 'ducks/currency/currency-creator
 import { appCurrencies } from 'utils/config';
 
 import { Heading } from 'styles';
-import { CurrencyBox, InfoBoxWrapper } from '../../Finances.styles';
+import { CurrencyBox, InfoBoxWrapper } from './Currency.styles';
 
 const Currency: React.FC = () => {
   const dispatch = useAppDispatch();

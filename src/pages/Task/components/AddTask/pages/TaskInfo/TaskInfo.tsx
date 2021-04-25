@@ -1,12 +1,10 @@
 import React, { useContext } from 'react';
 import { Formik } from 'formik';
-import { useSelector } from 'react-redux';
 
 import { FormField, Button, MultipleDropdown } from 'components';
 import { taskInfoValues } from './task-info.values';
 import { fetchEmployees } from 'api';
 import { useFetch, useShowContent } from 'components/hooks';
-import { AppState } from 'store/store';
 import { EmployeeModel } from 'types';
 import { TaskDataContext, MainTaskInfo } from '../../context/TaskDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
@@ -18,9 +16,8 @@ import { Paragraph, DoubleFlexWrapper } from 'styles';
 const TaskInfo: React.FC = () => {
   const { mainData, setMainData } = useContext(TaskDataContext);
   const { setCurrentPage } = useContext(PageContext);
-  const { role } = useSelector((state: AppState) => state.auth.roles);
 
-  const employeesData = useFetch(fetchEmployees(role));
+  const employeesData = useFetch(fetchEmployees);
   const { showContent, showNoContent } = useShowContent(employeesData);
   const { payload: employees } = employeesData;
 

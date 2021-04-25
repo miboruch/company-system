@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
-import { useSelector } from 'react-redux';
 
 import { ListBox } from 'components';
 import { useFetch, useShowContent, useQuery } from 'components/hooks';
 import { fetchEmployees } from 'api';
 import { listAnimation } from 'animations/animations';
-import { AppState } from 'store/store';
 import { EmployeeModel } from 'types';
 
 import { AddIcon, AddWrapper, List, Paragraph } from 'styles';
@@ -19,12 +17,11 @@ interface Props {
 
 const EmployeeList: React.FC<Props> = ({ filterText, refreshDate, handleAddEmployeeOpen }) => {
   const { setQuery } = useQuery();
-  const { role } = useSelector((state: AppState) => state.auth.roles);
 
   const listRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
 
-  const employeeData = useFetch(fetchEmployees(role), { dependencies: [refreshDate] });
+  const employeeData = useFetch(fetchEmployees, { dependencies: [refreshDate] });
   const { showContent, showNoContent, showLoader, showError } = useShowContent(employeeData);
   const { payload } = employeeData;
 

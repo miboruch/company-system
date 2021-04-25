@@ -14,7 +14,6 @@ import { Route } from 'types';
 export const routes = (ability: AnyMongoAbility): Route[] => [
   {
     path: '/home',
-    main: '/admin/home',
     exact: false,
     component: Landing,
     isGuarded: true,
@@ -22,7 +21,6 @@ export const routes = (ability: AnyMongoAbility): Route[] => [
   },
   {
     path: '/employees',
-    main: '/admin/employees',
     exact: false,
     component: Employee,
     isGuarded: true,
@@ -30,7 +28,6 @@ export const routes = (ability: AnyMongoAbility): Route[] => [
   },
   {
     path: '/tasks',
-    main: '/admin/tasks',
     exact: false,
     component: Task,
     isGuarded: true,
@@ -38,7 +35,6 @@ export const routes = (ability: AnyMongoAbility): Route[] => [
   },
   {
     path: '/finances',
-    main: '/admin/finances',
     exact: false,
     component: Finances,
     isGuarded: true,
@@ -46,7 +42,6 @@ export const routes = (ability: AnyMongoAbility): Route[] => [
   },
   {
     path: '/client',
-    main: '/admin/client',
     exact: false,
     component: Clients,
     isGuarded: true,
@@ -54,7 +49,6 @@ export const routes = (ability: AnyMongoAbility): Route[] => [
   },
   {
     path: '/attendance',
-    main: '/admin/attendance',
     exact: false,
     component: Attendance,
     isGuarded: true,
@@ -62,7 +56,6 @@ export const routes = (ability: AnyMongoAbility): Route[] => [
   },
   {
     path: '/admin/companies',
-    main: '/admin/companies',
     exact: false,
     component: Companies,
     isGuarded: false,
@@ -70,7 +63,6 @@ export const routes = (ability: AnyMongoAbility): Route[] => [
   },
   {
     path: '/settings',
-    main: '/admin/settings',
     exact: false,
     component: Settings,
     isGuarded: true,
