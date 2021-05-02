@@ -1,5 +1,6 @@
 import React from 'react';
 
+import HistoryRenderer from './components/HistoryRenderer/HistoryRenderer';
 import HistoryHeader from './components/HistoryHeader/HistoryHeader';
 import { Button } from 'components';
 import { HistoryType } from '../../History';
@@ -27,6 +28,7 @@ const Table: React.FC<Props> = ({ type, setType }) => {
         <Button onClick={handleButtonClick}>{buttonText}</Button>
       </Controller>
       <HistoryHeader />
+      <HistoryRenderer type={type} />
     </Wrapper>
   );
 };

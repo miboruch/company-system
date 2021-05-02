@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import Table from './components/Table/Table';
 import { GridWrapper } from 'components';
+
 import { Content } from './History.styles';
 
 export type HistoryType = 'income' | 'expense';
