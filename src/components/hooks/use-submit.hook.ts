@@ -12,8 +12,8 @@ type ResolvedPromise<T extends ApiCallReturnType> = T extends Promise<[infer R, 
 
 type ErrorCallback = (callback: (error: NonNullable<ErrorResponse>) => void, dependencies?: any[]) => void;
 type MapData<Values> = (callback: (data: Values) => void, dependencies?: any[]) => void;
-type SuccessCallback<T> = (
-  callback: (payload: NonNullable<ResolvedPromise<ApiCallReturnType>>, values: ApiCallArguments<T>) => void,
+type SuccessCallback<T extends ApiCall> = (
+  callback: (payload: NonNullable<ResolvedPromise<ReturnType<T>>>, values: ApiCallArguments<T>) => void,
   dependencies?: any[]
 ) => void;
 
@@ -23,11 +23,18 @@ interface Options<T> {
   onMapData?: (values: ApiCallArguments<T>) => void;
 }
 
+interface ReturnHookTypes<T extends ApiCall> {
+  onSubmitSuccess: SuccessCallback<T>;
+  onSubmitError: ErrorCallback;
+  onSubmit: (...args: any) => Promise<void>;
+  mapData: MapData<ApiCallArguments<T>>;
+}
+
 const memoizeOptions = {
   normalizer: (args: any) => JSON.stringify(args[1])
 };
 
-function useSubmit<T extends ApiCall>(asyncApiCall: T) {
+function useSubmit<T extends ApiCall>(asyncApiCall: T): ReturnHookTypes<T> {
   const isComponentMounted = useRef(true);
 
   const handleComponentMount = () => {

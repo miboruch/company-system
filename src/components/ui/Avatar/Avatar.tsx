@@ -7,15 +7,20 @@ import { Wrapper } from './avatar.styles';
 
 interface Props {
   name: string;
+  onClick?: () => void;
 }
 
-const Avatar: React.FC<Props> = ({ name }) => {
+const Avatar: React.FC<Props> = ({ name, onClick }) => {
   const colorHash = new ColorHash();
 
   const color = colorHash.hex(name);
   const nameLetters = getNameShortcut(name);
 
-  return <Wrapper color={color}>{nameLetters}</Wrapper>;
+  return (
+    <Wrapper color={color} onClick={onClick}>
+      {nameLetters}
+    </Wrapper>
+  );
 };
 
 export default Avatar;

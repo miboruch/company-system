@@ -6,7 +6,7 @@ import Notifications from './components/Notifications/Notifications';
 import { ArrowButton, SearchInput, Hamburger } from 'components';
 import { AppState } from 'store/store';
 
-import { IconWrapper, NameParagraph, StyledHeader, UserWrapper, MobileCircle } from './Header.styles';
+import { IconWrapper, NameParagraph, StyledHeader, UserWrapper, MobileWrapper } from './Header.styles';
 import { NotificationIcon } from 'styles/iconStyles';
 import Avatar from 'components/ui/Avatar/Avatar';
 
@@ -46,7 +46,7 @@ const Header: React.FC<Props> = ({ setFilterText }) => {
         <Notifications isOpen={areNotificationsOpen} setOpen={setNotificationsOpen} />
         <HeaderSlider isOpen={isSliderOpen} setOpen={setSliderOpen} />
       </UserWrapper>
-      <MobileCircle onClick={toggleHeaderSlider} />
+      <MobileWrapper>{userName && <Avatar name={userName} onClick={toggleHeaderSlider} />}</MobileWrapper>
       <HeaderSlider isOpen={isSliderOpen} setOpen={setSliderOpen} isMobile={true} />
     </StyledHeader>
   );

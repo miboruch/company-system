@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import gsap from 'gsap';
 
 import BudgetInfo from './components/BudgetInfo/BudgetInfo';
@@ -8,9 +9,7 @@ import Currency from './components/Currency/Currency';
 import GenerateInvoice from '../GenerateInvoice/GenerateInvoice';
 import IncomeExpensePopup, { PopupType } from '../IncomeExpensePopup/IncomeExpensePopup';
 import { GridWrapper } from 'components';
-import { fetchAllFinancesData } from 'ducks/finances/finances-creators';
 import { contentAnimation } from 'animations/animations';
-import { useAppDispatch } from 'store/store';
 import { ExpenseModel, IncomeModel } from 'types';
 
 import { InfoWrapper, StatisticsHeading } from 'pages/Landing/Landing.styles';
@@ -19,7 +18,8 @@ import { ContentGridWrapper } from 'styles/HomePageContentGridStyles';
 import { ArrowIcon } from 'styles/iconStyles';
 
 const MainFinances: React.FC = () => {
-  const dispatch = useAppDispatch();
+  const history = useHistory();
+  const { url } = useRouteMatch();
 
   const [isPopupOpen, setPopupOpen] = useState<boolean>(false);
   const [popupType, setPopupType] = useState<PopupType>('income');
@@ -40,14 +40,10 @@ const MainFinances: React.FC = () => {
     setPopupType('expense');
   };
 
-  const handleInvoiceOpen = () => setGenerateInvoiceOpen(true);
+  const handleInvoiceOpen = () => history.push(`${url}/invoice`);
 
   useEffect(() => {
     contentAnimation(tl, contentRef);
-  }, []);
-
-  useEffect(() => {
-    dispatch(fetchAllFinancesData());
   }, []);
 
   return (

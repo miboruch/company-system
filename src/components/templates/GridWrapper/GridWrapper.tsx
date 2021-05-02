@@ -11,6 +11,7 @@ interface Props {
   isSettingsPage?: boolean;
   pageName: string;
   setFilterText?: (filterText: string) => void;
+  color?: string;
 }
 
 interface ChildrenPropsInterface extends Props {
@@ -38,13 +39,14 @@ const GridWrapper: React.FC<ConnectedProps> = ({
   mobilePadding,
   isSettingsPage,
   pageName,
-  setFilterText
+  setFilterText,
+  color
 }) => {
   const [isEditToggled, setEditToggled] = useState<boolean>(false);
   const [isDeleteOpen, setDeleteOpen] = useState<boolean>(false);
 
   return (
-    <StyledWrapper mobilePadding={mobilePadding} onlyHeader={onlyHeader} isSettingsPage={!!isSettingsPage}>
+    <StyledWrapper mobilePadding={mobilePadding} onlyHeader={onlyHeader} isSettingsPage={!!isSettingsPage} color={color}>
       <Header setFilterText={setFilterText} />
       <TitleWrapper>
         <PageNameHeading>{pageName}</PageNameHeading>

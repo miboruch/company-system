@@ -4,6 +4,7 @@ interface GridProps {
   onlyHeader?: boolean;
   mobilePadding: boolean;
   isSettingsPage: boolean;
+  color?: string;
 }
 
 const StyledWrapper = styled.div<GridProps>`
@@ -15,17 +16,15 @@ const StyledWrapper = styled.div<GridProps>`
   align-items: center;
   flex-direction: column;
   overflow: hidden;
-  //background: rgb(247,247,249);
-  //background: linear-gradient(60deg, rgba(247,247,249,1) 0%, rgba(255,255,255,1) 100%);
 
   ${({ theme }) => theme.mq.hdReady} {
     height: 100vh;
     place-items: center;
     justify-content: flex-start;
     display: grid;
-    background-color: ${({ theme }) => theme.colors.borderBottomLight};
+    background-color: ${({ theme, color }) => (color ? color : theme.colors.borderBottomLight)};
     padding: 0;
-    grid-template-columns: ${({isSettingsPage}) => isSettingsPage ? '25% 75%' : '35% 65%'};
+    grid-template-columns: ${({ isSettingsPage }) => (isSettingsPage ? '25% 75%' : '35% 65%')};
     grid-gap: ${({ onlyHeader }) => !onlyHeader && '1px'};
     grid-template-rows: 100px auto;
     grid-template-areas: ${({ onlyHeader }) => (onlyHeader ? `'name header' 'content content'` : `'name header' 'list content'`)};
