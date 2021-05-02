@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 interface HeaderProps {
   isInput: boolean;
+  color?: string;
 }
 
 const StyledHeader = styled.header<HeaderProps>`
@@ -21,7 +22,7 @@ const StyledHeader = styled.header<HeaderProps>`
     height: 100%;
     display: flex;
     padding-right: 5rem;
-    background-color: #fff;
+    background-color: ${({ color }) => (color ? color : '#fff')};
     flex-direction: row;
     justify-content: ${({ isInput }) => (isInput ? 'space-between' : 'flex-end')};
     align-items: center;

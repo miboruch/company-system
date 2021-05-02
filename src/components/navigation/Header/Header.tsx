@@ -12,9 +12,10 @@ import Avatar from 'components/ui/Avatar/Avatar';
 
 interface Props {
   setFilterText?: (filterText: string) => void;
+  color?: string;
 }
 
-const Header: React.FC<Props> = ({ setFilterText }) => {
+const Header: React.FC<Props> = ({ setFilterText, color }) => {
   const { userData } = useSelector((state: AppState) => state.auth.data);
 
   const [areNotificationsOpen, setNotificationsOpen] = useState<boolean>(false);
@@ -33,7 +34,7 @@ const Header: React.FC<Props> = ({ setFilterText }) => {
   const userName = userData && `${userData.name} ${userData.lastName}`;
 
   return (
-    <StyledHeader isInput={!!setFilterText}>
+    <StyledHeader isInput={!!setFilterText} color={color}>
       <Hamburger />
       <SearchInput onChange={setFilterText && handleChange} />
       <UserWrapper>

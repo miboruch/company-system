@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { GridWrapper } from 'components';
 
+import Table from './components/Table/Table';
+import { GridWrapper } from 'components';
 import { Content } from './History.styles';
-import Table from 'pages/Finances/components/History/components/Table/Table';
 
 export type HistoryType = 'income' | 'expense';
 

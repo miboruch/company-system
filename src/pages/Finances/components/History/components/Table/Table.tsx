@@ -1,24 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
+
+import HistoryHeader from './components/HistoryHeader/HistoryHeader';
 import { Button } from 'components';
 import { HistoryType } from '../../History';
 
-const Wrapper = styled.div`
-  width: 100%;
-  min-height: 100%;
-  background-color: #fff;
-  display: flex;
-  flex-direction: column;
-`;
-
-const Controller = styled.div`
-  width: 100%;
-  height: 40px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 0 2rem;
-`;
+import { Wrapper, Controller } from './Table.styles';
 
 interface Props {
   type: HistoryType;
@@ -40,6 +26,7 @@ const Table: React.FC<Props> = ({ type, setType }) => {
         </div>
         <Button onClick={handleButtonClick}>{buttonText}</Button>
       </Controller>
+      <HistoryHeader />
     </Wrapper>
   );
 };

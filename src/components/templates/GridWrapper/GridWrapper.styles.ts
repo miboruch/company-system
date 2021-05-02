@@ -31,12 +31,12 @@ const StyledWrapper = styled.div<GridProps>`
   }
 `;
 
-const TitleWrapper = styled.div`
+const TitleWrapper = styled.div<{ color?: string }>`
   align-self: flex-start;
   ${({ theme }) => theme.mq.hdReady} {
     width: 100%;
     height: 100%;
-    background-color: #fff;
+    background-color: ${({ color }) => (color ? color : '#fff')};
     display: flex;
     align-items: center;
   }

@@ -47,8 +47,9 @@ const GridWrapper: React.FC<ConnectedProps> = ({
 
   return (
     <StyledWrapper mobilePadding={mobilePadding} onlyHeader={onlyHeader} isSettingsPage={!!isSettingsPage} color={color}>
-      <Header setFilterText={setFilterText} />
-      <TitleWrapper>
+
+      <Header setFilterText={setFilterText} color={color} />
+      <TitleWrapper color={color}>
         <PageNameHeading>{pageName}</PageNameHeading>
       </TitleWrapper>
       {render ? render(isEditToggled, setEditToggled, isDeleteOpen, setDeleteOpen) : children}
