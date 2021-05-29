@@ -8,7 +8,7 @@ import { roundTo2 } from 'utils/functions';
 import { AppState } from 'store/store';
 
 import { Paragraph } from 'styles';
-import { BudgetWrapper } from '../../Finances.styles';
+import { BudgetWrapper } from './BudgetInfo.styles';
 import { ExpenseModel, IncomeModel } from 'types';
 
 interface Props {
@@ -18,14 +18,13 @@ interface Props {
 const BudgetInfo: React.FC<Props> = ({ setFinances }) => {
   const { currency } = useSelector((state: AppState) => state.currency);
 
-  const companyBudgetData = useFetch<typeof fetchCompanyBudget>(fetchCompanyBudget);
+  const companyBudgetData = useFetch(fetchCompanyBudget);
   const { showNoContent, showError } = useShowContent(companyBudgetData);
   const { payload: companyBudget } = companyBudgetData;
 
-  const incomeExpenseData = useFetch<typeof fetchIncomeExpense>(fetchIncomeExpense);
+  const incomeExpenseData = useFetch(fetchIncomeExpense);
   const { showContent, showLoader, showError: incomeExpenseError } = useShowContent(incomeExpenseData);
   const { payload: incomeExpense } = incomeExpenseData;
-  console.log(incomeExpense);
 
   const financesHistory = useMemo(() => {
     if (incomeExpense) {

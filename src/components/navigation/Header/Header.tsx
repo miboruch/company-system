@@ -6,14 +6,16 @@ import Notifications from './components/Notifications/Notifications';
 import { ArrowButton, SearchInput, Hamburger } from 'components';
 import { AppState } from 'store/store';
 
-import { Circle, IconWrapper, NameParagraph, StyledHeader, UserWrapper, MobileCircle } from './Header.styles';
+import { IconWrapper, NameParagraph, StyledHeader, UserWrapper, MobileWrapper } from './Header.styles';
 import { NotificationIcon } from 'styles/iconStyles';
+import Avatar from 'components/ui/Avatar/Avatar';
 
 interface Props {
   setFilterText?: (filterText: string) => void;
+  color?: string;
 }
 
-const Header: React.FC<Props> = ({ setFilterText }) => {
+const Header: React.FC<Props> = ({ setFilterText, color }) => {
   const { userData } = useSelector((state: AppState) => state.auth.data);
 
   const [areNotificationsOpen, setNotificationsOpen] = useState<boolean>(false);
@@ -29,17 +31,15 @@ const Header: React.FC<Props> = ({ setFilterText }) => {
     setFilterText && setFilterText(e.target.value);
   };
 
+  const userName = userData && `${userData.name} ${userData.lastName}`;
+
   return (
-    <StyledHeader isInput={!!setFilterText}>
+    <StyledHeader isInput={!!setFilterText} color={color}>
       <Hamburger />
       <SearchInput onChange={setFilterText && handleChange} />
       <UserWrapper>
-        {userData?.name && userData.lastName && (
-          <NameParagraph>
-            {userData.name} {userData.lastName}
-          </NameParagraph>
-        )}
-        <Circle />
+        {<NameParagraph>{userName}</NameParagraph>}
+        {userName && <Avatar name={userName} />}
         <ArrowButton direction={'bottom'} isSmaller={true} onClick={toggleHeaderSlider} />
         <IconWrapper>
           <NotificationIcon onClick={toggleNotifications} />
@@ -47,7 +47,7 @@ const Header: React.FC<Props> = ({ setFilterText }) => {
         <Notifications isOpen={areNotificationsOpen} setOpen={setNotificationsOpen} />
         <HeaderSlider isOpen={isSliderOpen} setOpen={setSliderOpen} />
       </UserWrapper>
-      <MobileCircle onClick={toggleHeaderSlider} />
+      <MobileWrapper>{userName && <Avatar name={userName} onClick={toggleHeaderSlider} />}</MobileWrapper>
       <HeaderSlider isOpen={isSliderOpen} setOpen={setSliderOpen} isMobile={true} />
     </StyledHeader>
   );

@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@casl/ability": "^5.2.2",
+    "@casl/react": "^2.2.2",
     "@reduxjs/toolkit": "^1.5.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "@types/color-hash": "^1.0.0",
     "@types/file-saver": "^2.0.1",
     "@types/gsap": "^1.20.2",
     "@types/jest": "^24.9.1",
@@ -24,6 +27,7 @@
     "@types/styled-components": "^5.1.9",
     "@types/yup": "^0.29.11",
     "axios": "^0.20.0",
+    "color-hash": "^2.0.0",
     "downshift": "^6.1.1",
     "file-saver": "^2.0.5",
     "formik": "^2.2.6",
@@ -53,7 +57,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -76,6 +81,9 @@
     "cypress": "^6.8.0",
     "eslint": "^7.23.0",
     "eslint-plugin-react": "^7.23.1",
+    "eslint-plugin-unused-imports": "^1.1.1",
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0",
     "prettier": "^2.2.1"
   }
 }

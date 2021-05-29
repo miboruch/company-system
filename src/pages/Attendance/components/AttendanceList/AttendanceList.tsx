@@ -25,7 +25,7 @@ const AttendanceList: React.FC<Props> = ({ filterText, editAttendanceCallback, d
   const listRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
 
-  const attendanceData = useFetch<typeof fetchDayAttendance>(fetchDayAttendance(date), { dependencies: [date] });
+  const attendanceData = useFetch(fetchDayAttendance(date), { dependencies: [date] });
   const { showContent, showLoader, showNoContent, showError } = useShowContent(attendanceData);
   const { payload: attendance } = attendanceData;
   console.log(attendance);

@@ -1,50 +1,33 @@
 import React, { useContext } from 'react';
-import { useSelector } from 'react-redux';
 import { useParams, useRouteMatch } from 'react-router-dom';
+import { useAbility } from '@casl/react';
 
-import { AppState } from 'store/store';
-import { UserRole } from 'ducks/auth/roles/roles';
-import { adminRoutes, userRoutes } from 'routes/routes.config';
+import { menuItems } from 'routes/menu.routes';
 import { LinkWrapper, StyledLink } from './Menu.styles';
 import { MenuContext } from 'providers/MenuContext/MenuContext';
+import { CompanyPermissionsContext } from 'guard/context/company-permissions.context';
 
 const MenuItemsRenderer: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { url } = useRouteMatch();
 
-  const { role } = useSelector((state: AppState) => state.auth.roles);
-  const { userData } = useSelector((state: AppState) => state.auth.data);
-  const { token } = useSelector((state: AppState) => state.auth.tokens);
-  const { currentCompany } = useSelector((state: AppState) => state.company.currentCompany);
+  const ability = useAbility(CompanyPermissionsContext);
   const { setMenuOpen } = useContext(MenuContext);
-
-  const condition: boolean = !!(userData && token && currentCompany);
 
   const handleCloseMenu = () => setMenuOpen(false);
 
-  const renderAdminRoutes = adminRoutes
-    .filter((route) => (condition ? route : !route.isGuarded))
-    .map(({ name, main, icon }) => (
+  const renderAdminRoutes = menuItems(ability)
+    .filter((route) => route.isVisible)
+    .map(({ name, path, main, icon }) => (
       <LinkWrapper isActive={url.includes(main)} key={main}>
         {icon}
-        <StyledLink to={`${main}/${id}`} onClick={handleCloseMenu}>
+        <StyledLink to={`/company/${id}${path}`} onClick={handleCloseMenu}>
           {name}
         </StyledLink>
       </LinkWrapper>
     ));
 
-  const renderUserRoutes = userRoutes
-    .filter((route) => (condition ? route : !route.isGuarded))
-    .map(({ name, main, icon }) => (
-      <LinkWrapper isActive={url.includes(main)} key={main}>
-        {icon}
-        <StyledLink to={`${main}/${id}`} onClick={handleCloseMenu}>
-          {name}
-        </StyledLink>
-      </LinkWrapper>
-    ));
-
-  return <>{role === UserRole.Admin ? renderAdminRoutes : renderUserRoutes}</>;
+  return <>{renderAdminRoutes}</>;
 };
 
 export default MenuItemsRenderer;

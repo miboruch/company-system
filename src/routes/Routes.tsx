@@ -1,22 +1,21 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { Switch } from 'react-router-dom';
+import { useAbility } from '@casl/react';
+import { Route, Switch } from 'react-router-dom';
 
-import AdminRoute from '../hoc/AdminRoute';
-import UserRoute from '../hoc/UserRoute';
+import { routes } from 'routes/company.routes';
 
-import { AppState } from 'store/store';
-import { UserRole } from 'ducks/auth/roles/roles';
-import { adminRoutes, userRoutes } from 'routes/routes.config';
+import { CompanyPermissionsContext } from 'guard/context/company-permissions.context';
 
 const Routes: React.FC = () => {
-  const { role } = useSelector((state: AppState) => state.auth.roles);
+  const ability = useAbility(CompanyPermissionsContext);
 
   return (
     <Switch>
-      {role === UserRole.Admin
-        ? adminRoutes.map((route) => <AdminRoute key={route.path} {...route} />)
-        : userRoutes.map((route) => <UserRoute key={route.path} {...route} />)}
+      {routes(ability)
+        .filter((route) => route.isVisible)
+        .map((route) => (
+          <Route key={route.path} {...route} />
+        ))}
     </Switch>
   );
 };

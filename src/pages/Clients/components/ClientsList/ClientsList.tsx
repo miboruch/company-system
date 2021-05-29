@@ -20,7 +20,7 @@ const ClientsList: React.FC<Props> = ({ filterText, refreshDate, handleAddClient
   const listRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
 
-  const clientsData = useFetch<typeof fetchClients>(fetchClients, { dependencies: [refreshDate] });
+  const clientsData = useFetch(fetchClients, { dependencies: [refreshDate] });
   const { showContent, showNoContent, showLoader, showError } = useShowContent(clientsData);
   const { payload } = clientsData;
 

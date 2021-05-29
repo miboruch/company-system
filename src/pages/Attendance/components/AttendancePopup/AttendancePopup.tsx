@@ -31,7 +31,7 @@ const AttendancePopup: React.FC<Props> = ({ isOpen, handleClose, date = new Date
   const dispatch = useAppDispatch();
   const { query, removeQuery } = useQuery();
 
-  const attendanceData = useFetch<typeof fetchSingleAttendance>(fetchSingleAttendance(query.attendance));
+  const attendanceData = useFetch(fetchSingleAttendance(query.attendance));
   const { showContent, showNoContent, showError, showLoader } = useShowContent(attendanceData);
   const { payload: attendance } = attendanceData;
 
@@ -40,7 +40,7 @@ const AttendancePopup: React.FC<Props> = ({ isOpen, handleClose, date = new Date
     hours: !attendance?.attendance ? 0 : attendance.attendance.hours
   };
 
-  // const {onSubmit} = useSubmit<typeof putAttendance, UpdateAttendanceData>(attendance?.attendance?._id && putAttendance(attendance.attendance._id))
+  // const {onSubmit} = useSubmit(attendance?.attendance?._id && putAttendance(attendance.attendance._id))
 
   const handleSubmit = ({ wasPresent, hours }: DefaultValues) => {
     handleClose();

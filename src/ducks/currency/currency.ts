@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CurrenctModel } from 'types';
+import { CurrencyModel } from 'types';
 import { getCurrencyValue, CurrencyReturnInterface } from './currency-creators';
 
 interface InitialStateInterface {
   isCurrencyLoading: boolean;
-  currency: CurrenctModel;
+  currency: CurrencyModel;
 }
 
 const initialState: InitialStateInterface = {

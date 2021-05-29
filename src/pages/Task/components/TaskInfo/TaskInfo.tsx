@@ -7,16 +7,14 @@ import TaskMainInfo from './components/TaskMainInfo/TaskMainInfo';
 import TaskFields from './components/TaskFields/TaskFields';
 import MapCoordsEdit, { CoordsEditType } from 'components/organisms/MapCoordsEdit/MapCoordsEdit';
 import { useQuery, useFetch, useShowContent, useSubmit } from 'components/hooks';
-import { fetchTask, putTask, TaskValues } from 'api';
-import { setNotification } from 'ducks/popup/popup';
+import { Spinner, notifications } from 'components';
+import { fetchTask, putTask } from 'api';
 import { prepareValues } from './task-info.values';
-import { Spinner } from 'components';
 import { setTaskMapPreviewOpen } from 'ducks/tasks/tasks-toggle/tasks-toggle';
 import { AppState, useAppDispatch } from 'store/store';
 
-import { Paragraph } from 'styles/typography/typography';
 import { StyledForm, Wrapper } from 'styles/contentStyles';
-import { SpinnerWrapper } from 'styles';
+import { SpinnerWrapper, Paragraph } from 'styles';
 
 interface Props {
   isEditToggled: boolean;
@@ -29,16 +27,16 @@ const TaskInfo: React.FC<Props> = ({ isEditToggled, setEditToggled, setDeleteOpe
   const { query } = useQuery();
   const { isTaskMapPreviewOpen } = useSelector((state: AppState) => state.tasks.taskToggle);
 
-  const taskData = useFetch<typeof fetchTask>(fetchTask(query.task), { dependencies: [query.task], conditions: !!query.task });
+  const taskData = useFetch(fetchTask(query.task), { dependencies: [query.task], conditions: !!query.task });
   const { showContent, showNoContent, showLoader, showError } = useShowContent(taskData);
   const { payload: task, refresh } = taskData;
 
-  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit<typeof putTask, TaskValues>(putTask(query.task));
+  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit(putTask(query.task));
   onSubmitSuccess(async () => {
-    dispatch(setNotification({ message: 'Zaktualizowano', type: 'success' }));
+    notifications.success('Zaktualizowano');
     await refresh();
   });
-  onSubmitError(({ message }) => dispatch(setNotification({ message })));
+  onSubmitError(({ message }) => notifications.error(message));
 
   const initialValues = prepareValues(task);
 

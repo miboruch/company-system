@@ -39,7 +39,7 @@ const SelectEmployee: React.FC = () => {
   const { allUsers } = useSelector((state: AppState) => state.allUsers);
   const { allCompanyEmployees } = useSelector((state: AppState) => state.employees.employeesData);
 
-  const appUsersData = useFetch<typeof fetchAppUsers>(fetchAppUsers);
+  const appUsersData = useFetch(fetchAppUsers);
   const { showContent, showLoader, showNoContent, showError } = useShowContent(appUsersData);
   const { payload: appUsers } = appUsersData;
 

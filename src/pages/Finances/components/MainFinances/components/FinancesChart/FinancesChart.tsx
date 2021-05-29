@@ -6,7 +6,7 @@ import { Chart, Spinner } from 'components';
 const FinancesChart: React.FC = () => {
   const [daysBack, setDaysBackTo] = useState<number>(7);
 
-  const financesData = useFetch<typeof fetchFinances>(fetchFinances({ daysBack }), { dependencies: [daysBack] });
+  const financesData = useFetch(fetchFinances({ daysBack }), { dependencies: [daysBack] });
   const { showContent, showLoader } = useShowContent(financesData);
   const { payload: finances } = financesData;
 

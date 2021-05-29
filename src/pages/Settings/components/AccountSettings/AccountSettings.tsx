@@ -1,33 +1,27 @@
 import React from 'react';
 import { Formik } from 'formik';
 
-import { Button, FormField, Spinner } from 'components';
-import { useAppDispatch } from 'store/store';
+import { Button, FormField, Spinner, notifications } from 'components';
 import { useFetch, useSubmit, useShowContent } from 'components/hooks';
-import { setNotification } from 'ducks/popup/popup';
 import { accountInitialValues } from './account-settings.values';
-import { fetchUserData, putUserData, EditAccountData } from 'api';
+import { fetchUserData, putUserData } from 'api';
 import { AccountSchema } from 'validation/modelsValidation';
 import { accountSettingsFields } from './account-settings.fields';
 
-import { DoubleFlexWrapper } from 'styles/shared';
 import { StyledForm, Heading } from './AccountSettings.styles';
-import { Paragraph } from 'styles';
-import { SpinnerWrapper } from 'styles/shared';
+import { Paragraph, SpinnerWrapper, DoubleFlexWrapper } from 'styles';
 
 const AccountSettings: React.FC = () => {
-  const dispatch = useAppDispatch();
-
-  const userData = useFetch<typeof fetchUserData>(fetchUserData);
+  const userData = useFetch(fetchUserData);
   const { showContent, showLoader, showNoContent, showError } = useShowContent(userData);
   const { payload: user, refresh } = userData;
 
-  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit<typeof putUserData, EditAccountData>(putUserData);
+  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit(putUserData);
   onSubmitSuccess(async () => {
-    dispatch(setNotification({ message: 'Zaktualizowano' }));
+    notifications.success('Zaktualizowano');
     await refresh();
   });
-  onSubmitError((message) => dispatch(setNotification({ message })));
+  onSubmitError(({ message }) => notifications.error(message));
 
   const initialValues = accountInitialValues(user);
 

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
-import { AppState } from 'store/store';
-import { UserRole } from 'ducks/auth/roles/roles';
-import { Chart, Spinner } from 'components';
+import { useAbility } from '@casl/react';
+
 import BarChart from 'components/charts/BarChart/BarChart';
+import { Chart, Spinner } from 'components';
 import { useFetch, useShowContent } from 'components/hooks';
 import { fetchFinances, fetchCompletedPeriodTasks } from 'api';
+import { CompanyPermissionsContext } from 'guard/context/company-permissions.context';
 
 const ChartSpinnerWrapper = styled.div`
   width: 100%;
@@ -15,24 +15,23 @@ const ChartSpinnerWrapper = styled.div`
   place-items: center;
 `;
 
-interface Props {}
-
-const Charts: React.FC<Props> = () => {
-  const { role } = useSelector((state: AppState) => state.auth.roles);
+const Charts: React.FC = () => {
+  const ability = useAbility(CompanyPermissionsContext);
   const [daysBack, setDaysBackTo] = useState<number>(7);
 
-  const financesData = useFetch<typeof fetchFinances>(fetchFinances({ daysBack }), { dependencies: [daysBack] });
-  const { showContent, showLoader } = useShowContent(financesData);
+  const financesData = useFetch(fetchFinances({ daysBack }), { dependencies: [daysBack] });
+  const { showLoader } = useShowContent(financesData);
   const { payload: finances } = financesData;
 
-  const tasksData = useFetch<typeof fetchCompletedPeriodTasks>(fetchCompletedPeriodTasks({ daysBack }), {
+  const tasksData = useFetch(fetchCompletedPeriodTasks({ daysBack }), {
     dependencies: [daysBack]
   });
   const { showContent: showTaskContent, showLoader: showTaskLoader } = useShowContent(financesData);
   const { payload: completedTasks } = tasksData;
 
-  const isAdmin = role === UserRole.Admin;
   const isLoading = showLoader || showTaskLoader;
+
+  const canReadBudget = ability.can('read', 'Budget');
 
   return (
     <>
@@ -41,7 +40,7 @@ const Charts: React.FC<Props> = () => {
           <Spinner />
         </ChartSpinnerWrapper>
       )}
-      {isAdmin && showContent && finances && (
+      {canReadBudget && (
         <Chart
           xAxisDataKey={'createdDate'}
           secondBarDataKey={'expenseValue'}
@@ -53,7 +52,7 @@ const Charts: React.FC<Props> = () => {
           setDaysBack={setDaysBackTo}
         />
       )}
-      {!isAdmin && showTaskContent && completedTasks && (
+      {!canReadBudget && (
         <BarChart
           data={completedTasks}
           xAxisDataKey={'date'}

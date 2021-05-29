@@ -8,12 +8,14 @@ import { ExpenseModel, IncomeModel } from 'types';
 
 import { Paragraph } from 'styles';
 import { StyledWrapper, ContentWrapper, Title } from './BudgetHistoryList.styles';
+import { useRouteMatch } from 'react-router-dom';
 
 interface Props {
   finances: (IncomeModel | ExpenseModel)[];
 }
 
 const BudgetHistoryList: React.FC<Props> = ({ finances }) => {
+  const { url } = useRouteMatch();
   const { currency } = useSelector((state: AppState) => state.currency);
 
   const prepareExpenseValue = (income?: number, expense?: number) =>
@@ -21,7 +23,7 @@ const BudgetHistoryList: React.FC<Props> = ({ finances }) => {
 
   return (
     <StyledWrapper>
-      <Title>Historia</Title>
+      <Title to={`${url}/history`}>Historia</Title>
       <ContentWrapper>
         {finances.length === 0 && <Paragraph>Brak danych</Paragraph>}
         {finances.map(({ _id, description, createdDate, incomeValue, expenseValue }) => (

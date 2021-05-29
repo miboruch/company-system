@@ -1,9 +1,6 @@
 import axios from 'axios';
 import store from '../store/store';
-import {
-  clearStorage,
-  logout
-} from 'ducks/auth/logout/logout-creators';
+import { clearStorage, logout } from 'ducks/auth/logout/logout-creators';
 import { resetState } from 'ducks/reset/reset-creators';
 import { setTokens } from 'ducks/auth/tokens/tokens';
 import { setNotificationMessage } from 'ducks/popup/popup';
@@ -11,9 +8,7 @@ import { NotificationTypes } from 'types/globalTypes';
 
 const logoutUser = (refreshToken: string | null) => {
   if (refreshToken) {
-    store.dispatch(
-      logout(() => history.pushState({}, '', '/login'))
-    );
+    store.dispatch(logout(() => history.pushState({}, '', '/login')));
   } else {
     store.dispatch(clearStorage());
     store.dispatch(resetState());
@@ -25,22 +20,14 @@ export const handleAuthRefreshToken = (error: any) => {
   const originalRequest = error.config;
   const status = error?.response?.status;
   const isAuthorizationError = status === 401;
-  if (
-    isAuthorizationError &&
-    originalRequest.url.includes('/auth/company-token')
-  ) {
+  if (isAuthorizationError && originalRequest.url.includes('/auth/company-token')) {
     history.pushState({}, '', '/login');
     return Promise.reject(error);
   }
-  if (
-    isAuthorizationError &&
-    !originalRequest._isRetryRequest
-  ) {
+  if (isAuthorizationError && !originalRequest._isRetryRequest) {
     originalRequest._isRetryRequest = true;
 
-    const refreshToken = localStorage.getItem(
-      'refreshToken'
-    );
+    const refreshToken = localStorage.getItem('refreshToken');
 
     return axios
       .post(`${process.env.REACT_APP_API_URL}/auth/token`, {
@@ -50,13 +37,9 @@ export const handleAuthRefreshToken = (error: any) => {
         const token = res?.data?.accessToken;
         if (token && refreshToken) {
           localStorage.setItem('token', token);
-          originalRequest.headers[
-            'Authorization'
-          ] = `Bearer ${token}`;
+          originalRequest.headers['Authorization'] = `Bearer ${token}`;
 
-          store.dispatch(
-            setTokens({ refreshToken, token })
-          );
+          store.dispatch(setTokens({ refreshToken, token }));
 
           return axios(originalRequest);
         }
@@ -75,49 +58,32 @@ export const handleAuthRefreshToken = (error: any) => {
   return Promise.reject(error);
 };
 
-export const handleCompanyRefreshToken = (
-  error: any
-): Promise<any> => {
+export const handleCompanyRefreshToken = (error: any): Promise<any> => {
   const originalRequest = error.config;
   const status = error?.response?.status;
   const isAuthorizationError = status === 401;
 
-  if (
-    isAuthorizationError &&
-    originalRequest.url.includes('/auth/company-token')
-  ) {
+  if (isAuthorizationError && originalRequest.url.includes('/auth/company-token')) {
     history.pushState({}, '', '/login');
     return Promise.reject(error);
   }
-  if (
-    isAuthorizationError &&
-    !originalRequest._isRetryRequest
-  ) {
+  if (isAuthorizationError && !originalRequest._isRetryRequest) {
     originalRequest._isRetryRequest = true;
 
-    const refreshToken = localStorage.getItem(
-      'refreshToken'
-    );
+    const refreshToken = localStorage.getItem('refreshToken');
 
     return axios
-      .post(
-        `${process.env.REACT_APP_API_URL}/auth/company-token`,
-        {
-          refreshToken: refreshToken,
-          companyId: localStorage.getItem('companyId')
-        }
-      )
+      .post(`${process.env.REACT_APP_API_URL}/auth/company-token`, {
+        refreshToken: refreshToken,
+        companyId: localStorage.getItem('companyId')
+      })
       .then((res) => {
         const token = res?.data?.accessToken;
         if (token && refreshToken) {
           localStorage.setItem('token', token);
-          originalRequest.headers[
-            'Authorization'
-          ] = `Bearer ${token}`;
+          originalRequest.headers['Authorization'] = `Bearer ${token}`;
 
-          store.dispatch(
-            setTokens({ refreshToken, token })
-          );
+          store.dispatch(setTokens({ refreshToken, token }));
 
           return axios(originalRequest);
         }

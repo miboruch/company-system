@@ -26,3 +26,4 @@ export { default as ModalButton } from './ui/ModalButton/ModalButton';
 export { default as Chart } from './charts/Chart/Chart';
 export { default as TinyLineChart } from './charts/TinyLineChart/TinyLineChart';
 
+export { default as notifications } from './notifications/notifications';

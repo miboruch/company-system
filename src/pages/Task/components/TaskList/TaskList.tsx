@@ -24,7 +24,7 @@ const TaskList: React.FC<Props> = ({ filterText, refreshDate, handleAddTaskOpen 
   const listRef = useRef<HTMLDivElement | null>(null);
   const [tl] = useState<GSAPTimeline>(gsap.timeline({ defaults: { ease: 'Power3.inOut' } }));
 
-  const tasksData = useFetch<typeof fetchTasks>(fetchTasks, { dependencies: [refreshDate] });
+  const tasksData = useFetch(fetchTasks, { dependencies: [refreshDate] });
   const { showContent, showLoader, showNoContent, showError } = useShowContent(tasksData);
   const { payload: tasks } = tasksData;
 

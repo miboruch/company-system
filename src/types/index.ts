@@ -14,3 +14,4 @@ export * from './utils/params.model';
 export * from './utils/utils.model';
 export * from './utils/field.model';
 export * from './auth/auth.model';
+export * from './permission/permission.model';

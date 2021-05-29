@@ -12,11 +12,11 @@ const TaskTiles: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const history = useHistory();
 
-  const tasksData = useFetch<typeof fetchTasks>(fetchTasks);
+  const tasksData = useFetch(fetchTasks);
   const { showContent, showNoContent, showError, showLoader } = useShowContent(tasksData);
   const { payload: tasks } = tasksData;
 
-  const handleTaskClick = (taskId: string) => () => history.push(`/admin/tasks/${id}?task=${taskId}`);
+  const handleTaskClick = (taskId: string) => () => history.push(`/company/${id}/tasks?task=${taskId}`);
 
   return (
     <TileWrapper>

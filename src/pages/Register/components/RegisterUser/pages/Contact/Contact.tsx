@@ -45,7 +45,7 @@ const Contact: React.FC<Props> = () => {
     phoneNumber: ''
   };
 
-  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit<typeof register, RegisterData>(register);
+  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit(register);
   onSubmitSuccess(() => {
     history.push('/select');
     resetData();

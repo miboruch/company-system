@@ -5,8 +5,8 @@ import { useLocation, useHistory, Redirect, Route, Switch } from 'react-router-d
 import Layout from './components/Layout';
 import Login from 'pages/Login/Login';
 import Register from 'pages/Register/Register';
-import Routes from './routes/Routes';
 import Select from 'pages/Select/Select';
+import Company from 'pages/Company/Company';
 import RegisterFromLink from './pages/RegisterFromLink/RegisterFromLink';
 import NotAuthRoute from './hoc/NotAuthRoute';
 import { Spinner, NotificationPopup } from 'components';
@@ -18,6 +18,7 @@ import { authApi, companyApi } from 'api';
 import { MainSpinnerWrapper } from 'styles/shared';
 
 import './App.css';
+import Companies from 'pages/Companies/Companies';
 
 const App: React.FC = () => {
   const { pathname } = useLocation();
@@ -57,7 +58,9 @@ const App: React.FC = () => {
           <NotAuthRoute path={'/login'} exact component={Login} />
           <NotAuthRoute path={'/register'} component={Register} />
           <NotAuthRoute path={'/link-register/:token'} component={RegisterFromLink} />
-          <Routes />
+          <Route path={'/company/:id'} component={Company} />
+          <Route path={'/companies'} component={Companies} />
+          {/*<Routes />*/}
           <Redirect from={'*'} to={'/select'} />
         </Switch>
       )}

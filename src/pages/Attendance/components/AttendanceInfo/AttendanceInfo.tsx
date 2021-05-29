@@ -13,9 +13,8 @@ import { Wrapper, HeaderWrapper, EmployeeInfoBox, Title } from 'styles/contentSt
 const AttendanceInfo: React.FC = () => {
   const { weekAttendance } = useSelector((state: AppState) => state.attendance.weekAttendanceData);
   const { query } = useQuery();
-  console.log(query.attendance !== 'none');
 
-  const attendanceData = useFetch<typeof fetchSingleAttendance>(fetchSingleAttendance(query.attendance), {
+  const attendanceData = useFetch(fetchSingleAttendance(query.attendance), {
     dependencies: [query.attendance],
     conditions: !!query.attendance && query.attendance !== 'none'
   });
@@ -23,8 +22,6 @@ const AttendanceInfo: React.FC = () => {
   const { payload: attendance } = attendanceData;
 
   const showUpdate = query.attendance === 'none';
-
-  console.log(attendance);
 
   return (
     <Wrapper>

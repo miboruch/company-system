@@ -24,8 +24,8 @@ const Companies: React.FC = () => {
 
   const companiesData =
     role === UserRole.Admin
-      ? useFetch<typeof fetchAdminCompanies>(fetchAdminCompanies, { dependencies: [refreshDate] })
-      : useFetch<typeof fetchEmployeeCompanies>(fetchEmployeeCompanies, { dependencies: [refreshDate] });
+      ? useFetch(fetchAdminCompanies, { dependencies: [refreshDate] })
+      : useFetch(fetchEmployeeCompanies, { dependencies: [refreshDate] });
   const { showContent, showLoader, showNoContent } = useShowContent(companiesData);
   const { payload } = companiesData;
 
@@ -34,7 +34,8 @@ const Companies: React.FC = () => {
   const handleCompanyClick = (company: CompanyModel) => () =>
     dispatch(
       setCurrentCompany(company, () =>
-        history.push(role === UserRole.Admin ? `/admin/home/${company._id}` : `/user/home/${company._id}`)
+        // history.push(role === UserRole.Admin ? `/admin/home/${company._id}` : `/user/home/${company._id}`)
+        history.push(role === UserRole.Admin ? `/company/${company._id}/home` : `/company/${company._id}/home`)
       )
     );
   return (

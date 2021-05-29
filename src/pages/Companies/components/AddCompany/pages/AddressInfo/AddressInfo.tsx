@@ -33,7 +33,7 @@ const AddressInfo: React.FC<Props> = ({ handleClose, setRefreshDate }) => {
     country: ''
   };
 
-  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit<typeof postCompany, PostCompanyData>(postCompany);
+  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit(postCompany);
   onSubmitSuccess(() => {
     setRefreshDate(new Date());
     handleClose();

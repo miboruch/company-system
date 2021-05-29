@@ -18,7 +18,7 @@ const AttendanceList: React.FC<Props> = ({ setSelectedAttendance, handleAttendan
   const { query, setQuery } = useQuery();
   const currentLocalDate = new Date().toLocaleDateString();
 
-  const dayAttendance = useFetch<typeof fetchDayAttendance>(fetchDayAttendance(new Date()));
+  const dayAttendance = useFetch(fetchDayAttendance(new Date()));
   const { showContent, showLoader, showNoContent, showError } = useShowContent(dayAttendance);
   const { payload: attendance } = dayAttendance;
 

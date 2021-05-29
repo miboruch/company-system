@@ -33,7 +33,7 @@ const WeekAttendanceComponent: React.FC<Props> = ({ userId }) => {
   const increaseWeek = () => setWeek((prevCounter) => prevCounter + 1);
   const decreaseWeek = () => setWeek((prevCounter) => prevCounter - 1);
 
-  const weekAttendanceData = useFetch<typeof fetchUserWeekAttendance>(fetchUserWeekAttendance(userId, week), {
+  const weekAttendanceData = useFetch(fetchUserWeekAttendance(userId, week), {
     dependencies: [week]
   });
   const { showContent, showNoContent, showLoader, showError } = useShowContent(weekAttendanceData);

@@ -6,11 +6,11 @@ interface Props {
   onClick?: () => void;
   children: React.ReactNode;
   isPrimary?: boolean;
-  type: 'button' | 'submit' | 'reset' | undefined;
+  type?: 'button' | 'submit' | 'reset' | undefined;
   disabled?: boolean;
 }
 
-const Button: React.FC<Props> = ({ onClick, disabled, type, children, isPrimary }) => {
+const Button: React.FC<Props> = ({ onClick, disabled, type = 'button', children, isPrimary }) => {
   return (
     <StyledButton type={type} onClick={onClick} disabled={disabled}>
       {children}

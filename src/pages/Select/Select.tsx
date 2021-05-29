@@ -11,8 +11,8 @@ const Select: React.FC = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
 
-  const handleAdminRole = () => dispatch(changeUserRoleTo(UserRole.Admin, () => history.push('/admin/companies')));
-  const handleUserRole = () => dispatch(changeUserRoleTo(UserRole.User, () => history.push('/user/companies')));
+  const handleAdminRole = () => dispatch(changeUserRoleTo(UserRole.Admin, () => history.push('/companies')));
+  const handleUserRole = () => dispatch(changeUserRoleTo(UserRole.User, () => history.push('/companies')));
 
   return (
     <Wrapper>
