@@ -2,10 +2,10 @@ import React from 'react';
 import { useFormikContext } from 'formik';
 import { useSelector } from 'react-redux';
 
+import { notifications } from 'components';
 import { putTaskCompleted, TaskValues } from 'api';
 import { useQuery, useCall } from 'components/hooks';
-import { setNotification } from 'ducks/popup/popup';
-import { AppState, useAppDispatch } from 'store/store';
+import { AppState } from 'store/store';
 import { UserRole } from 'ducks/auth/roles/roles';
 
 import { EmployeeInfoBox } from 'styles/contentStyles';
@@ -17,14 +17,13 @@ interface Props {
 }
 
 const TaskMainInfo: React.FC<Props> = ({ refresh }) => {
-  const dispatch = useAppDispatch();
   const { query } = useQuery();
   const { values } = useFormikContext<TaskValues>();
   const { role } = useSelector((state: AppState) => state.auth.roles);
 
   const { submit, onCallSuccess, onCallError } = useCall<typeof putTaskCompleted>(putTaskCompleted);
   onCallSuccess(refresh);
-  onCallError(({ message }) => dispatch(setNotification({ message })));
+  onCallError(({ message }) => notifications.error(message));
 
   const handleTaskStateChange = (isCompleted: boolean) => () => submit(query.task, { isCompleted });
 

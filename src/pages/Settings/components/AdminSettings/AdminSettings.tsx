@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { Spinner, ListBox, AddNewButton } from 'components';
+import { Spinner, ListBox, AddNewButton, notifications } from 'components';
 import RemoveAdminPopup from './components/RemoveAdminPopup/RemoveAdminPopup';
-import { setNotificationMessage } from 'ducks/popup/popup';
 import { CompanyOwnersModel } from 'types';
 import { AppState, useAppDispatch } from 'store/store';
-import { NotificationTypes } from 'types/globalTypes';
 import { getAllCompanyEmployees } from 'ducks/employees/employees-data/employees-data-creators';
 import { getCompanyOwners, addNewCompanyOwner } from 'ducks/company/company-owners/company-owners-creators';
 
-import { SpinnerWrapper } from 'styles/shared';
+import { SpinnerWrapper } from 'styles';
 import { Wrapper, ColumnWrapper, Heading } from './AdminSettings.styles';
 
 const AdminSettings: React.FC = () => {
@@ -35,7 +33,7 @@ const AdminSettings: React.FC = () => {
 
   const listBoxCallback = (owner: CompanyOwnersModel) => () => {
     if (owner._id === userData?.userId) {
-      dispatch(setNotificationMessage({ message: 'Nie możesz usunąc samego siebie', notificationType: NotificationTypes.Error }));
+      notifications.error('Nie możesz usunąc samego siebie');
     } else {
       setRemoveOpen(true);
       setCompanyOwnerToDelete(owner);

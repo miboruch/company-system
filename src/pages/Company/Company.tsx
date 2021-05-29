@@ -1,8 +1,8 @@
 import React from 'react';
 
 import CompanyRoutes from './components/CompanyRoutes/CompanyRoutes';
-import { CompanyPermissionsContext } from 'guard/context/company-permissions.context';
 import companyPermissions from 'guard/company.permission';
+import { CompanyPermissionsContext } from 'guard/context/company-permissions.context';
 
 import { Wrapper } from './Company.styles';
 

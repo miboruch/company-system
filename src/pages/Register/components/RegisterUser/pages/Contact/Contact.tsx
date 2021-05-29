@@ -2,22 +2,19 @@ import React, { useContext } from 'react';
 import { Formik } from 'formik';
 import { useHistory } from 'react-router-dom';
 
-import { FormField, Button } from 'components';
+import { FormField, Button, notifications } from 'components';
 import { useSubmit } from 'components/hooks';
-import { useAppDispatch } from 'store/store';
 import { mainRegisterValues } from '../MainRegisterData/main-register.values';
 import { passwordValues } from '../Password/password.values';
 import { register } from 'api';
 import { RegisterData } from 'types';
-import { setNotification } from 'ducks/popup/popup';
 import { RegisterDataContext } from '../../context/RegisterDataContext';
 import { PageContext } from '../../context/PageContext';
 import { ContactDataSchema } from '../../validation/validation';
 import { contactFields } from './contact.fields';
 
 import { Heading, StyledForm } from 'pages/Login/Login.styles';
-import { Paragraph } from 'styles/typography/typography';
-import { DoubleFlexWrapper } from 'styles/shared';
+import { DoubleFlexWrapper, Paragraph } from 'styles';
 
 interface Props {
   isRegistrationLink: boolean;
@@ -27,7 +24,6 @@ interface Props {
 const Contact: React.FC<Props> = () => {
   //TODO: link register feature
   const history = useHistory();
-  const dispatch = useAppDispatch();
 
   const { mainData, passwordData, resetData } = useContext(RegisterDataContext);
   const { currentPage, setCurrentPage } = useContext(PageContext);
@@ -51,7 +47,7 @@ const Contact: React.FC<Props> = () => {
     resetData();
     //TODO: dispatch get user data (headers etc.)
   });
-  onSubmitError(() => dispatch(setNotification({ message: 'Błąd rejestracji' })));
+  onSubmitError(() => notifications.error('Błąd rejestracji'));
 
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={ContactDataSchema}>

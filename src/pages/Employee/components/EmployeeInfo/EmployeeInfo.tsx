@@ -3,10 +3,8 @@ import { Formik } from 'formik';
 
 import PersonalInfo from './components/PersonalInfo/PersonalInfo';
 import { useFetch, useShowContent, useSubmit, useQuery } from 'components/hooks';
-import { Button, DeletePopup, FormField, Spinner } from 'components';
+import { Button, DeletePopup, FormField, Spinner, notifications } from 'components';
 import { fetchSingleEmployee, updateEmployee, UpdateEmployeeData } from 'api';
-import { useAppDispatch } from 'store/store';
-import { setNotification } from 'ducks/popup/popup';
 import { EmployeeSchema } from 'validation/modelsValidation';
 
 import { Paragraph, SpinnerWrapper } from 'styles';
@@ -19,7 +17,6 @@ interface Props {
 }
 
 const EmployeeInfo: React.FC<Props> = ({ isDeleteOpen, setDeleteOpen }) => {
-  const dispatch = useAppDispatch();
   const { query } = useQuery();
 
   const employeeData = useFetch(fetchSingleEmployee(query.employee), {
@@ -29,14 +26,12 @@ const EmployeeInfo: React.FC<Props> = ({ isDeleteOpen, setDeleteOpen }) => {
   const { showContent, showLoader, showNoContent, showError } = useShowContent(employeeData);
   const { payload: employee, refresh } = employeeData;
 
-  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit(
-    updateEmployee(query.employee)
-  );
+  const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit(updateEmployee(query.employee));
   onSubmitSuccess(async () => {
-    dispatch(setNotification({ message: 'Zaktualizowano', type: 'success' }));
+    notifications.success('Zaktualizowano');
     await refresh();
   });
-  onSubmitError(({ message }) => dispatch(setNotification({ message })));
+  onSubmitError(({ message }) => notifications.error(message));
 
   const initialValues: UpdateEmployeeData = {
     hourSalary: employee?.pricePerHour,

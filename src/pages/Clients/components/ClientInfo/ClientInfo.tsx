@@ -5,11 +5,10 @@ import { Formik } from 'formik';
 import ClientHeader from './components/ClientHeader/ClientHeader';
 import ClientMainInfo from './components/ClientMainInfo/ClientMainInfo';
 import MapCoordsEdit, { CoordsEditType } from 'components/organisms/MapCoordsEdit/MapCoordsEdit';
-import { Button, Spinner } from 'components';
+import { Button, Spinner, notifications } from 'components';
 import { prepareClientValues } from './client-info.values';
 import { useFetch, useShowContent, useSubmit, useQuery } from 'components/hooks';
-import { fetchClient, putClient, PutClientInfo } from 'api';
-import { setNotification } from 'ducks/popup/popup';
+import { fetchClient, putClient } from 'api';
 import { setEditClientCoordsOpen } from 'ducks/client/client-toggle/client-toggle';
 import { AppState } from 'store/store';
 import { ClientSchema } from 'validation/modelsValidation';
@@ -31,22 +30,23 @@ const ClientInfo: React.FC<Props> = ({ isEditToggled, setEditToggled, setDeleteO
   const clientData = useFetch(fetchClient(query.client), {
     dependencies: [query.client],
     conditions: !!query.client,
-    onError: (error) => dispatch(setNotification({ message: error}))
+    onError: ({ message }) => notifications.error(message)
   });
   const { showContent, showNoContent, showLoader, showError } = useShowContent(clientData);
   const { payload: client, refresh } = clientData;
 
   const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit(putClient(query.client));
   onSubmitSuccess(async () => {
-    dispatch(setNotification({ message: 'Zaktualizowano', type: 'success' }));
+    notifications.success('Zaktualizowano');
     await refresh();
   });
-  onSubmitError(({ message }) => dispatch(setNotification({ message })));
+  onSubmitError(({ message }) => notifications.error(message));
 
   const initialValues = prepareClientValues(client);
 
   const handleDeleteOpen = () => setDeleteOpen(true);
   const handleEditToggle = () => setEditToggled(!isEditToggled);
+  const handleMapClose = () => dispatch(setEditClientCoordsOpen(false));
 
   return (
     <Wrapper>
@@ -78,7 +78,7 @@ const ClientInfo: React.FC<Props> = ({ isEditToggled, setEditToggled, setDeleteO
               {/*TODO: move to Clients.tsx*/}
               <MapCoordsEdit
                 isOpen={isEditClientCoordsOpen}
-                closeMap={() => dispatch(setEditClientCoordsOpen(false))}
+                closeMap={handleMapClose}
                 lat={client.lat}
                 long={client.long}
                 type={CoordsEditType.Client}

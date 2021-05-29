@@ -5,6 +5,13 @@ export const fetchAdminCompanies = () => fetchMiddleware<CompanyModel[]>({ metho
 
 export const fetchEmployeeCompanies = () => fetchMiddleware<CompanyModel[]>({ method: 'get', url: '/employee/companies' });
 
+interface Companies {
+  _id: string;
+  companyId: CompanyModel;
+}
+
+export const fetchUserCompanies = () => fetchMiddleware<Companies[]>({ method: 'get', url: '/company' });
+
 export const fetchSingleCompany = (companyId: string) => () =>
   fetchMiddleware<CompanyModel>({ method: 'get', url: `/company/${companyId}` });
 

@@ -2,12 +2,12 @@ import React from 'react';
 import { useAbility } from '@casl/react';
 import { Route, Switch, useParams, useRouteMatch } from 'react-router-dom';
 
+import companyPermissions from 'guard/company.permission';
 import { useFetch } from 'components/hooks';
 import { updateCompanyPermissions } from 'guard/update/company-update.permission';
 import { fetchPermission } from 'api/permission/api.permission';
 import { routes } from 'routes/company.routes';
 import { CompanyPermissionsContext } from 'guard/context/company-permissions.context';
-import companyPermissions from 'guard/company.permission';
 
 const CompanyRoutes: React.FC = () => {
   const { id } = useParams<{ id: string }>();

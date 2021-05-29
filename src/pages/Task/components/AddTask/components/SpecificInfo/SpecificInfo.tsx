@@ -2,15 +2,14 @@ import React, { useContext, useEffect } from 'react';
 import { Formik } from 'formik';
 import { useSelector } from 'react-redux';
 
-import { Button, FormField, Dropdown } from 'components';
-import { AppState, useAppDispatch } from 'store/store';
+import { Button, FormField, Dropdown, notifications } from 'components';
+import { useAppDispatch, AppState } from 'store/store';
 import { useSubmit, useFetch, useShowContent } from 'components/hooks';
 import { fetchClients, postTask, PostTaskData } from 'api';
-import { setNotification } from 'ducks/popup/popup';
 import { taskInfoValues } from '../TaskInfo/task-info.values';
+import { getCompanyClients } from 'ducks/client/client-data/client-data-creators';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { TaskDataContext } from '../../context/TaskDataContext';
-import { getCompanyClients } from 'ducks/client/client-data/client-data-creators';
 import { TaskSpecificInfoSchema } from '../../validation/validation';
 
 import { HeadingWrapper, MobileCompoundTitle, StyledBackParagraph, StyledForm, Subheading, Wrapper } from 'styles/compoundStyles';
@@ -44,9 +43,9 @@ const SpecificInfo: React.FC<Props> = ({ handleClose, setRefreshDate }) => {
   onSubmitSuccess(() => {
     handleClose();
     setRefreshDate(new Date());
-    dispatch(setNotification({ message: 'Dodano zadanie', type: 'success' }));
+    notifications.success('Dodano zadanie');
   });
-  onSubmitError((message) => dispatch(setNotification({ message })));
+  onSubmitError(({ message }) => notifications.error(message));
 
   const handlePreviousPage = () => setCurrentPage(PageSettingEnum.First);
 

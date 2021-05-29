@@ -1,12 +1,10 @@
 import React, { useContext } from 'react';
 import { Formik } from 'formik';
 
-import { Button, FormField } from 'components';
+import { Button, FormField, notifications } from 'components';
 import { postCompany, PostCompanyData } from 'api';
 import { mainCompanyValues } from '../MainCompanyInfo/main-company.values';
-import { setNotification } from 'ducks/popup/popup';
 import { useSubmit } from 'components/hooks';
-import { useAppDispatch } from 'store/store';
 import { CompanyDataContext } from '../../context/CompanyDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { AddressDataSchema } from '../../validation/validation';
@@ -20,7 +18,6 @@ interface Props {
 }
 
 const AddressInfo: React.FC<Props> = ({ handleClose, setRefreshDate }) => {
-  const dispatch = useAppDispatch();
   const { mainData, mapData } = useContext(CompanyDataContext);
   const { setCurrentPage } = useContext(PageContext);
 
@@ -37,9 +34,9 @@ const AddressInfo: React.FC<Props> = ({ handleClose, setRefreshDate }) => {
   onSubmitSuccess(() => {
     setRefreshDate(new Date());
     handleClose();
-    dispatch(setNotification({ message: 'Dodano nową firmę', type: 'success' }));
+    notifications.success('Dodano nową firmę');
   });
-  onSubmitError((message) => dispatch(setNotification({ message })));
+  onSubmitError(({ message }) => notifications.error(message));
 
   const handlePreviousPage = () => setCurrentPage(PageSettingEnum.Second);
 

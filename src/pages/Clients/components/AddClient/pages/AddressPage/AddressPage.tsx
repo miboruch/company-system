@@ -1,12 +1,10 @@
 import React, { useContext } from 'react';
-import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 
-import { Button, FormField } from 'components';
+import { Button, FormField, notifications } from 'components';
 import { useSubmit } from 'components/hooks';
 import { postClient, PostClientInfo } from 'api';
 import { clientMainValues } from '../MainClientPage/main-client.values';
-import { setNotification } from 'ducks/popup/popup';
 import { ClientDataContext } from '../../context/ClientDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
 import { AddressDataSchema } from '../../validation/validation';
@@ -20,7 +18,6 @@ interface Props {
 }
 
 const AddressPage: React.FC<Props> = ({ handleClose, setRefreshDate }) => {
-  const dispatch = useDispatch();
   const { mainData, mapData } = useContext(ClientDataContext);
   const { setCurrentPage } = useContext(PageContext);
 
@@ -37,9 +34,9 @@ const AddressPage: React.FC<Props> = ({ handleClose, setRefreshDate }) => {
   onSubmitSuccess(() => {
     setRefreshDate(new Date());
     handleClose();
-    dispatch(setNotification({ message: 'Dodano klienta', type: 'success' }));
+    notifications.success('Dodano klienta');
   });
-  onSubmitError((message) => dispatch(setNotification({ message })));
+  onSubmitError(({ message }) => notifications.error(message));
 
   const handlePreviousPage = () => setCurrentPage(PageSettingEnum.Second);
 

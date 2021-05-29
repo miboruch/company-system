@@ -3,14 +3,11 @@ import React, { useState } from 'react';
 import ClientsList from './components/ClientsList/ClientsList';
 import ClientInfo from './components/ClientInfo/ClientInfo';
 import AddClientController from './components/AddClient/AddClientController';
-import { ContentTemplate, DeletePopup, GridWrapper, MenuTemplate } from 'components';
+import { ContentTemplate, DeletePopup, GridWrapper, MenuTemplate, notifications } from 'components';
 import { deleteClient } from 'api';
-import { useAppDispatch } from 'store/store';
 import { useCall, useQuery } from 'components/hooks';
-import { setNotification } from 'ducks/popup/popup';
 
 const Clients: React.FC = () => {
-  const dispatch = useAppDispatch();
   const { query, removeQuery } = useQuery();
   const [filterText, setFilterText] = useState<string>('');
   const [refreshDate, setRefreshDate] = useState<Date>(new Date());
@@ -21,7 +18,7 @@ const Clients: React.FC = () => {
     removeQuery('client');
     setRefreshDate(new Date());
   });
-  onCallError(({ message }) => dispatch(setNotification({ message })));
+  onCallError(({ message }) => notifications.error(message));
 
   const handleDeleteClient = () => submit(query.client);
   const handleClientClose = () => removeQuery('client');

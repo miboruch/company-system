@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 import AddCompanyController from './components/AddCompany/AddCompanyController';
 import { GridWrapper, ListBox, Spinner, MenuTemplate } from 'components';
 import { useFetch, useShowContent } from 'components/hooks';
-import { fetchAdminCompanies, fetchEmployeeCompanies } from 'api';
+import { fetchUserCompanies } from 'api';
 import { setCurrentCompany } from 'ducks/company/current-company/current-company-creators';
-import { AppState, useAppDispatch } from 'store/store';
-import { UserRole } from 'ducks/auth/roles/roles';
+import { useAppDispatch } from 'store/store';
 import { CompanyModel } from 'types';
 
 import { AddIcon, AddWrapper, Paragraph, SpinnerWrapper } from 'styles';
@@ -17,27 +15,19 @@ import { Table, Wrapper } from 'pages/Companies/Companies.styles';
 const Companies: React.FC = () => {
   const history = useHistory();
   const dispatch = useAppDispatch();
-  const { role } = useSelector((state: AppState) => state.auth.roles);
 
   const [isAddCompanyOpen, setAddCompanyOpen] = useState<boolean>(false);
   const [refreshDate, setRefreshDate] = useState<Date>(new Date());
 
-  const companiesData =
-    role === UserRole.Admin
-      ? useFetch(fetchAdminCompanies, { dependencies: [refreshDate] })
-      : useFetch(fetchEmployeeCompanies, { dependencies: [refreshDate] });
+  const companiesData = useFetch(fetchUserCompanies, { dependencies: [refreshDate] });
   const { showContent, showLoader, showNoContent } = useShowContent(companiesData);
   const { payload } = companiesData;
 
   const handleAddCompanyOpen = (isOpen: boolean) => () => setAddCompanyOpen(isOpen);
 
   const handleCompanyClick = (company: CompanyModel) => () =>
-    dispatch(
-      setCurrentCompany(company, () =>
-        // history.push(role === UserRole.Admin ? `/admin/home/${company._id}` : `/user/home/${company._id}`)
-        history.push(role === UserRole.Admin ? `/company/${company._id}/home` : `/company/${company._id}/home`)
-      )
-    );
+    dispatch(setCurrentCompany(company, () => history.push(`/company/${company._id}/home`)));
+
   return (
     <MenuTemplate>
       <GridWrapper mobilePadding={true} onlyHeader={true} pageName={'Twoje firmy'}>
@@ -50,8 +40,7 @@ const Companies: React.FC = () => {
             <Table isEmpty={showNoContent}>
               {showNoContent && <Paragraph type={'empty'}>Brak firm</Paragraph>}
               {showContent &&
-                payload &&
-                payload.map((company) => (
+                payload?.map(({ companyId: company }) => (
                   <ListBox
                     key={company._id}
                     name={company.name}

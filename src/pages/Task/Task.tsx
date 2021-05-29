@@ -3,14 +3,11 @@ import React, { useState } from 'react';
 import TaskList from './components/TaskList/TaskList';
 import TaskInfo from './components/TaskInfo/TaskInfo';
 import AddTaskController from './components/AddTask/AddTaskController';
-import { GridWrapper, MenuTemplate, ContentTemplate, DeletePopup } from 'components';
+import { GridWrapper, MenuTemplate, ContentTemplate, DeletePopup, notifications } from 'components';
 import { useCall, useQuery } from 'components/hooks';
-import { setNotification } from 'ducks/popup/popup';
 import { deleteTask } from 'api';
-import { useAppDispatch } from 'store/store';
 
 const Task: React.FC = () => {
-  const dispatch = useAppDispatch();
   const { query, resetQueries } = useQuery();
   const [filterText, setFilterText] = useState<string>('');
   const [refreshDate, setRefreshDate] = useState<Date>(new Date());
@@ -21,7 +18,7 @@ const Task: React.FC = () => {
     resetQueries();
     setRefreshDate(new Date());
   });
-  onCallError(({ message }) => dispatch(setNotification({ message })));
+  onCallError(({ message }) => notifications.error(message));
 
   const handleDeleteTask = () => submit(query.task);
 
