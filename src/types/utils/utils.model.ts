@@ -28,7 +28,6 @@ export interface Route {
 
 export interface MenuItem {
   path: string;
-  main: string;
   component: React.FC;
   name?: string;
   icon?: React.ReactNode;

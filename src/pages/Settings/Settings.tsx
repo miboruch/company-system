@@ -10,6 +10,13 @@ import { ContentWrapper, ListItems, StyledList } from './Settings.styles';
 
 import { AppState } from 'store/store';
 
+/**
+ * TODO: nested routes
+ * divide settings - company settings and user profile settings
+ * profile settings - /settings
+ * company settings - /company/:id/settings
+ */
+
 const Settings: React.FC = () => {
   const { role } = useSelector((state: AppState) => state.auth.roles);
   const [subcategory, setSubcategory] = useState<AdminSettingsType | UserSettingsType>('account');
@@ -32,7 +39,6 @@ const Settings: React.FC = () => {
           ))}
         </StyledList>
         <ContentWrapper>{renderSettings(subcategory)}</ContentWrapper>
-        {/*TODO: nested routes*/}
       </GridWrapper>
     </MenuTemplate>
   );

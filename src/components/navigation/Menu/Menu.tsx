@@ -1,13 +1,12 @@
 import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
-import MenuItemsRenderer from './MenuItemsRenderer';
+import MenuItemsRenderer from './components/MenuItemsRenderer/MenuItemsRenderer';
 
-import { AppState, useAppDispatch } from 'store/store';
-import { UserRole } from 'ducks/auth/roles/roles';
-import { changeUserRoleTo } from 'ducks/auth/roles/roles-creators';
+import { AppState } from 'store/store';
 import { MenuContext } from 'providers/MenuContext/MenuContext';
+
 import {
   CompanyName,
   MenuItemsWrapper,
@@ -19,21 +18,14 @@ import {
   RedirectText
 } from './Menu.styles';
 
-const Menu: React.FC<RouteComponentProps> = ({ history }) => {
-  const dispatch = useAppDispatch();
+const Menu: React.FC = () => {
+  const history = useHistory();
   const { currentCompany } = useSelector((state: AppState) => state.company.currentCompany);
-  const { role } = useSelector((state: AppState) => state.auth.roles);
   const { isMenuOpen } = useContext(MenuContext);
 
-  const changePanelTo = `Przejdź do panelu ${role === UserRole.Admin ? 'użytkownika' : 'administratora'}`;
+  const changePanelTo = `Przejdź do innej firmy`;
 
-  const handleChangeRole = () => {
-    if (role === UserRole.Admin) {
-      dispatch(changeUserRoleTo(UserRole.User, () => history.push('/user/companies')));
-    } else {
-      dispatch(changeUserRoleTo(UserRole.Admin, () => history.push('/admin/companies')));
-    }
-  };
+  const selectCompaniesRedirect = () => history.push('/companies');
 
   return (
     <MenuWrapper isOpen={isMenuOpen}>
@@ -44,7 +36,7 @@ const Menu: React.FC<RouteComponentProps> = ({ history }) => {
       <RedirectPanel>
         <StyledMenuSvg />
         <RedirectText>{changePanelTo}</RedirectText>
-        <ArrowWrapper onClick={handleChangeRole}>
+        <ArrowWrapper onClick={selectCompaniesRedirect}>
           <ArrowIcon />
         </ArrowWrapper>
       </RedirectPanel>
@@ -52,4 +44,4 @@ const Menu: React.FC<RouteComponentProps> = ({ history }) => {
   );
 };
 
-export default withRouter(Menu);
+export default Menu;
