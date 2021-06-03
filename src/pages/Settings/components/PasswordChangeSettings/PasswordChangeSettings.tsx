@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { Formik } from 'formik';
 
 import { Button } from 'components';
-import { useAppDispatch } from 'store/store';
-import { editPassword } from 'ducks/auth/account/account-creators';
 
 import { Heading, StyledForm } from '../AccountSettings/AccountSettings.styles';
 import { StyledInput } from 'styles/compoundStyles';
@@ -15,7 +13,6 @@ interface DefaultValues {
 }
 
 const PasswordChangeSettings: React.FC = () => {
-  const dispatch = useAppDispatch();
   const [isPasswordShown, setPasswordShown] = useState<boolean>(false);
   const [isRepeatedPasswordShown, setRepeatedPasswordShown] = useState<boolean>(false);
 
@@ -25,7 +22,7 @@ const PasswordChangeSettings: React.FC = () => {
   };
 
   const handleSubmit = ({ password, repeatedPassword }: DefaultValues) => {
-    dispatch(editPassword({ password, repeatedPassword }));
+    //TODO: reset password api call
   };
 
   const togglePasswordInput = () => setPasswordShown(!isPasswordShown);

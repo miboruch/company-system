@@ -6,32 +6,28 @@ import { companyApi } from 'api';
 import { setNotificationMessage } from '../../popup/popup';
 import { NotificationTypes } from 'types/globalTypes';
 import { getCompanyAccessToken } from '../../auth/tokens/tokens-creators';
-import { getOwnEmployeeData } from '../../auth/data/data-creators';
 
-export const setCurrentCompany = (company: CompanyModel | null, successCallback?: () => void) => (
-  dispatch: AppDispatch,
-  getState: () => AppState
-) => {
-  const { refreshToken } = getState().auth.tokens;
+export const setCurrentCompany =
+  (company: CompanyModel | null, successCallback?: () => void) => (dispatch: AppDispatch, getState: () => AppState) => {
+    const { refreshToken } = getState().auth.tokens;
 
-  if (refreshToken && company) {
-    dispatch(
-      getCompanyAccessToken({
-        refreshToken,
-        companyId: company._id,
-        successCallback: () => {
-          !!successCallback && successCallback();
-          localStorage.setItem('companyId', company._id);
-        }
-      })
-    );
-  } else {
-    company && dispatch(getOwnEmployeeData(company._id));
-    !!successCallback && successCallback();
-  }
+    if (refreshToken && company) {
+      dispatch(
+        getCompanyAccessToken({
+          refreshToken,
+          companyId: company._id,
+          successCallback: () => {
+            !!successCallback && successCallback();
+            localStorage.setItem('companyId', company._id);
+          }
+        })
+      );
+    } else {
+      !!successCallback && successCallback();
+    }
 
-  dispatch(setCompany(company));
-};
+    dispatch(setCompany(company));
+  };
 
 export const getSingleCompany = createAsyncThunk<void, string, baseStoreType>(
   'currentCompany/getSingleCompany',

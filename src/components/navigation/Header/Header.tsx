@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 
 import HeaderSlider from './components/HeaderSlider/HeaderSlider';
 import Notifications from './components/Notifications/Notifications';
 import Avatar from 'components/ui/Avatar/Avatar';
 import { ArrowButton, SearchInput, Hamburger } from 'components';
 import { useUser } from 'components/hooks';
-import { AppState } from 'store/store';
 
 import { IconWrapper, NameParagraph, StyledHeader, UserWrapper, MobileWrapper } from './Header.styles';
 import { NotificationIcon } from 'styles/iconStyles';
@@ -17,7 +15,6 @@ interface Props {
 }
 
 const Header: React.FC<Props> = ({ setFilterText, color }) => {
-  const { userData } = useSelector((state: AppState) => state.auth.data);
   const { user } = useUser();
 
   const [areNotificationsOpen, setNotificationsOpen] = useState<boolean>(false);

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { Spinner, ListBox, AddNewButton, notifications } from 'components';
 import RemoveAdminPopup from './components/RemoveAdminPopup/RemoveAdminPopup';
+import { Spinner, ListBox, AddNewButton, notifications } from 'components';
+import { useUser } from 'components/hooks';
 import { CompanyOwnersModel } from 'types';
 import { AppState, useAppDispatch } from 'store/store';
 import { getAllCompanyEmployees } from 'ducks/employees/employees-data/employees-data-creators';
@@ -13,9 +14,9 @@ import { Wrapper, ColumnWrapper, Heading } from './AdminSettings.styles';
 
 const AdminSettings: React.FC = () => {
   const dispatch = useAppDispatch();
+  const { user } = useUser();
   const { allCompanyEmployees } = useSelector((state: AppState) => state.employees.employeesData);
 
-  const { userData } = useSelector((state: AppState) => state.auth.data);
   const { areOwnersLoading, companyOwners } = useSelector((state: AppState) => state.company.companyOwners);
 
   const [isAddNewToggled, setAddNewToggled] = useState<boolean>(false);
@@ -32,7 +33,7 @@ const AdminSettings: React.FC = () => {
   };
 
   const listBoxCallback = (owner: CompanyOwnersModel) => () => {
-    if (owner._id === userData?.userId) {
+    if (owner._id === user?._id) {
       notifications.error('Nie możesz usunąc samego siebie');
     } else {
       setRemoveOpen(true);

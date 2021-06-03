@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { Formik } from 'formik';
 
 import LoginTemplate, { TemplatePage } from '../../components/templates/LoginTemplate/LoginTemplate';
-import { FormField, Spinner, Button } from 'components';
+import { FormField, Spinner, Button, notifications } from 'components';
 import { setTokens } from 'ducks/auth/tokens/tokens';
 import { useSubmit, useUser } from 'components/hooks';
 import { login, LoginData } from 'api';
-import { AppState, useAppDispatch } from 'store/store';
+import { useAppDispatch } from 'store/store';
 import { LoginSchema } from 'validation/loginValidation';
 
 import { SpinnerWrapper, ErrorParagraph } from 'styles';
@@ -26,11 +25,16 @@ const Login: React.FC = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
   const { setUser } = useUser();
-  const { loginError } = useSelector((state: AppState) => state.auth.login);
+  const [error, setError] = useState<string | null>(null);
 
   const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit(login);
+  onSubmitError(({ message }) => {
+    setError(message);
+    notifications.error('Błąd podczas logowania');
+  });
   onSubmitSuccess((payload) => {
     if (payload) {
+      setError(null);
       const { token, refreshToken, user } = payload;
       dispatch(setTokens({ token, refreshToken }));
       setUser(user);
@@ -68,7 +72,7 @@ const Login: React.FC = () => {
                       Nie masz konta? <StyledLink to={'/register'}>zarejestruj się</StyledLink>
                     </AccountParagraph>
                   </FlexWrapperDefault>
-                  <ErrorParagraph isVisible={!!loginError}>{loginError}</ErrorParagraph>
+                  <ErrorParagraph isVisible={!!error}>{error}</ErrorParagraph>
                 </>
               )}
             </StyledForm>

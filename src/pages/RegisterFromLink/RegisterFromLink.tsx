@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, useParams } from 'react-router-dom';
 
 import RegistrationLinkController from 'pages/Register/components/RegisterUser/RegistrationLinkController';
 import LoginTemplate, { TemplatePage } from '../../components/templates/LoginTemplate/LoginTemplate';
-import { Spinner } from 'components';
-import { AppState, useAppDispatch } from 'store/store';
-import { validateRegistrationToken } from 'ducks/auth/link-registration/link-registration-creators';
+import { useCall } from 'components/hooks';
+import { verifyRegistrationToken } from 'api';
+import { Spinner, notifications } from 'components';
 
 interface RegistrationTokenResponse {
   companyId: string;
@@ -35,22 +34,24 @@ interface MatchProps {
 type ConnectedProps = RouteComponentProps<MatchProps>;
 
 const RegisterFromLink: React.FC<ConnectedProps> = ({ match }) => {
-  const dispatch = useAppDispatch();
-  const { isValidateLoading } = useSelector((state: AppState) => state.auth.linkRegistration);
+  const { token } = useParams<{ token: string }>();
 
   const [response, setResponse] = useState<RegistrationVerifyTokenResponse | null>(null);
 
+  const { submit: verifyToken, onCallSuccess, onCallError, isSubmitting } = useCall(verifyRegistrationToken);
+  onCallSuccess((payload) => setResponse(payload));
+  onCallError(() => notifications.error('Niepoprawny token'));
+
   useEffect(() => {
-    dispatch(validateRegistrationToken({ token: match.params.token, setResponse }));
+    (async () => {
+      await verifyToken({ token });
+    })();
   }, [match.params]);
 
   return (
     <LoginTemplate page={TemplatePage.Register} companyName={response?.companyName}>
-      {isValidateLoading ? (
-        <Spinner />
-      ) : (
-        !!response && <RegistrationLinkController response={response} token={match.params.token} />
-      )}
+      {isSubmitting && <Spinner />}
+      {!isSubmitting && !!response && <RegistrationLinkController response={response} token={match.params.token} />}
     </LoginTemplate>
   );
 };

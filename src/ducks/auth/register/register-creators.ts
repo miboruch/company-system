@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { api } from 'api';
 import { setTokens } from '../tokens/tokens';
-import { getUserData } from '../data/data-creators';
 import { baseStoreType } from 'store/store';
 import { getUserNotifications } from '../../notifications/notifications-creators';
 
@@ -27,7 +26,6 @@ export const register = createAsyncThunk<void, RegisterInterface, baseStoreType>
 
       //TODO: dispatch actions
       dispatch(setTokens({ token: data.token, refreshToken: data.refreshToken }));
-      dispatch(getUserData());
       dispatch(getUserNotifications(1));
       callback();
     } catch (error) {

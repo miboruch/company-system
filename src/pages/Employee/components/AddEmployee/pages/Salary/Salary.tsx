@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
 import { Formik } from 'formik';
 
-import { Button, FormField } from 'components';
+import { Button, FormField, notifications } from 'components';
 import { useAppDispatch } from 'store/store';
+import { useCall } from 'components/hooks';
+import { sendRegistrationMail } from 'api';
 import { EmployeeDataContext } from '../../context/EmployeeDataContext';
 import { PageContext, PageSettingEnum } from '../../context/PageContext';
-import { sendRegistrationMail } from 'ducks/auth/link-registration/link-registration-creators';
 import { addNewEmployee } from 'ducks/employees/employees-data/employees-data-creators';
 import { EmployeeSalarySchema } from '../../validation/validation';
 
@@ -24,17 +25,22 @@ const Salary: React.FC = () => {
   const { data, setData } = useContext(EmployeeDataContext);
   const { setCurrentPage } = useContext(PageContext);
 
+  const { submit, onCallSuccess, onCallError } = useCall(sendRegistrationMail);
+  onCallSuccess(() => notifications.success('Wysłano zaproszenie na adres e-mail'));
+  onCallError(() => notifications.error('Błąd podczas wysyłania zaproszenia'));
+
   const initialValues: DefaultValues = {
-    email: data.registerWithMail ? data.email || '' : undefined,
+    email: data.registerWithMail ? data.email : '',
     pricePerHour: data.pricePerHour || 0,
     monthlyPrice: data.monthlyPrice || 0
   };
 
-  const handleSubmit = ({ email, pricePerHour, monthlyPrice }: DefaultValues): void => {
+  const handleSubmit = async ({ email, pricePerHour, monthlyPrice }: DefaultValues) => {
     setData({ ...data, email, pricePerHour, monthlyPrice });
     if (data.registerWithMail) {
       if (email) {
-        dispatch(sendRegistrationMail({ email, pricePerHour, monthlyPrice }));
+        //TODO: change company name to company id
+        await submit({ email, pricePerHour, monthlyPrice, companyName: 'test' });
       }
     } else {
       data.userId && dispatch(addNewEmployee({ userId: data.userId, pricePerHour, monthlyPrice }));
