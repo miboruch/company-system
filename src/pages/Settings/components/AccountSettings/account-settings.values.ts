@@ -1,6 +1,6 @@
-import { UserAuthModel } from 'types';
+import { UserModel } from 'types';
 
-export const accountInitialValues = (user: UserAuthModel | null) => ({
+export const accountInitialValues = (user: UserModel | null) => ({
   email: user?.email || '',
   name: user?.name || '',
   lastName: user?.lastName || '',

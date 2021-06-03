@@ -3,9 +3,11 @@ import { Formik } from 'formik';
 import { useHistory } from 'react-router-dom';
 
 import { FormField, Button, notifications } from 'components';
-import { useSubmit } from 'components/hooks';
+import { useSubmit, useUser } from 'components/hooks';
 import { mainRegisterValues } from '../MainRegisterData/main-register.values';
 import { passwordValues } from '../Password/password.values';
+import { setTokens } from 'ducks/auth/tokens/tokens';
+import { useAppDispatch } from 'store/store';
 import { register } from 'api';
 import { RegisterData } from 'types';
 import { RegisterDataContext } from '../../context/RegisterDataContext';
@@ -23,7 +25,9 @@ interface Props {
 
 const Contact: React.FC<Props> = () => {
   //TODO: link register feature
+  const dispatch = useAppDispatch();
   const history = useHistory();
+  const { setUser } = useUser();
 
   const { mainData, passwordData, resetData } = useContext(RegisterDataContext);
   const { currentPage, setCurrentPage } = useContext(PageContext);
@@ -42,10 +46,12 @@ const Contact: React.FC<Props> = () => {
   };
 
   const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit(register);
-  onSubmitSuccess(() => {
+  onSubmitSuccess((payload) => {
+    const { token, refreshToken, user } = payload;
     history.push('/select');
     resetData();
-    //TODO: dispatch get user data (headers etc.)
+    setUser(user);
+    dispatch(setTokens({ token, refreshToken }));
   });
   onSubmitError(() => notifications.error('Błąd rejestracji'));
 

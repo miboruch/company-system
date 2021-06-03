@@ -6,13 +6,12 @@ import { Formik } from 'formik';
 import LoginTemplate, { TemplatePage } from '../../components/templates/LoginTemplate/LoginTemplate';
 import { FormField, Spinner, Button } from 'components';
 import { setTokens } from 'ducks/auth/tokens/tokens';
-import { useSubmit } from 'components/hooks';
+import { useSubmit, useUser } from 'components/hooks';
 import { login, LoginData } from 'api';
 import { AppState, useAppDispatch } from 'store/store';
 import { LoginSchema } from 'validation/loginValidation';
 
-import { ErrorParagraph } from 'styles/typography/typography';
-import { SpinnerWrapper } from 'styles/shared';
+import { SpinnerWrapper, ErrorParagraph } from 'styles';
 import {
   AccountParagraph,
   AuthWrapper,
@@ -26,13 +25,15 @@ import {
 const Login: React.FC = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
+  const { setUser } = useUser();
   const { loginError } = useSelector((state: AppState) => state.auth.login);
 
   const { onSubmit, onSubmitSuccess, onSubmitError } = useSubmit(login);
   onSubmitSuccess((payload) => {
     if (payload) {
-      const { token, refreshToken } = payload;
+      const { token, refreshToken, user } = payload;
       dispatch(setTokens({ token, refreshToken }));
+      setUser(user);
       history.push('/select');
     }
   });

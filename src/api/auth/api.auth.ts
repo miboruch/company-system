@@ -7,8 +7,9 @@ import {
   MailRegistrationData,
   MailRegistrationResposne
 } from 'types/auth/auth.model';
+import { UserModel } from 'types';
 
-type AuthResponse = { token: string; refreshToken: string; id: string };
+type AuthResponse = { token: string; refreshToken: string; id: string; user: UserModel };
 
 export interface LoginData {
   email: string;

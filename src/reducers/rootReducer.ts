@@ -7,6 +7,7 @@ import { employees } from 'ducks/employees/employees';
 import { tasks } from 'ducks/tasks/tasks';
 import { client } from 'ducks/client/client';
 import { finances } from 'ducks/finances/finances';
+import user from 'ducks/user/user';
 import notifications from 'ducks/notifications/notifications';
 import currency from 'ducks/currency/currency';
 import popup from 'ducks/popup/popup';
@@ -21,6 +22,7 @@ export const rootReducer = combineReducers({
   client,
   attendance,
   finances,
+  user,
   currency,
   notifications,
   popup,

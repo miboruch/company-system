@@ -10,10 +10,11 @@ import Company from 'pages/Company/Company';
 import RegisterFromLink from './pages/RegisterFromLink/RegisterFromLink';
 import NotAuthRoute from './hoc/NotAuthRoute';
 import { Spinner, NotificationPopup } from 'components';
+import { useFetch, useUser } from 'components/hooks';
 import { authCheck } from 'ducks/auth/check/check-creators';
 import { handleCompanyRefreshToken, handleAuthRefreshToken } from 'api/middleware';
 import { AppState, useAppDispatch } from 'store/store';
-import { authApi, companyApi } from 'api';
+import { authApi, companyApi, fetchUserData } from 'api';
 
 import { MainSpinnerWrapper } from 'styles/shared';
 
@@ -21,11 +22,13 @@ import './App.css';
 import Companies from 'pages/Companies/Companies';
 
 const App: React.FC = () => {
-  const { pathname } = useLocation();
-  const history = useHistory();
   const dispatch = useAppDispatch();
+  const history = useHistory();
+  const { setUser } = useUser();
+  const { pathname } = useLocation();
   const { isLoading } = useSelector((state: AppState) => state.initialLoad);
-  const { token } = useSelector((state: AppState) => state.auth.tokens);
+
+  useFetch(fetchUserData, { onSuccess: (payload) => setUser(payload) });
 
   useEffect(() => {
     dispatch(authCheck(pathname, history));
