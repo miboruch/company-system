@@ -1,4 +1,3 @@
-import React from 'react';
 import { AnyMongoAbility } from '@casl/ability';
 
 import Landing from 'pages/Landing/Landing';

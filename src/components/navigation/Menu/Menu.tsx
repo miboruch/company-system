@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import MenuItemsRenderer from './components/MenuItemsRenderer/MenuItemsRenderer';
-
 import { AppState } from 'store/store';
 import { MenuContext } from 'providers/MenuContext/MenuContext';
 
@@ -23,8 +22,6 @@ const Menu: React.FC = () => {
   const { currentCompany } = useSelector((state: AppState) => state.company.currentCompany);
   const { isMenuOpen } = useContext(MenuContext);
 
-  const changePanelTo = `Przejdź do innej firmy`;
-
   const selectCompaniesRedirect = () => history.push('/companies');
 
   return (
@@ -35,7 +32,7 @@ const Menu: React.FC = () => {
       </MenuItemsWrapper>
       <RedirectPanel>
         <StyledMenuSvg />
-        <RedirectText>{changePanelTo}</RedirectText>
+        <RedirectText>Przejdź do innej firmy</RedirectText>
         <ArrowWrapper onClick={selectCompaniesRedirect}>
           <ArrowIcon />
         </ArrowWrapper>
